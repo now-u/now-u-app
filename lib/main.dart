@@ -39,6 +39,11 @@ class _MyAppState extends State<MyApp> {
                     color: Color.fromRGBO(36, 35, 52, 1),
                     fontWeight: FontWeight.w300,
                   ),  
+              subtitle: TextStyle(
+                    fontSize: 30, 
+                    color: Color.fromRGBO(36, 35, 52, 1),
+                    fontWeight: FontWeight.w300,
+                  ),  
               
               headline : TextStyle(
                     fontSize: 32, 
@@ -49,8 +54,13 @@ class _MyAppState extends State<MyApp> {
                     fontSize: 28,
                     color: Colors.white,
                     fontWeight: FontWeight.w300
-                  )
-
+                  ),
+              display1: TextStyle(
+                    fontSize: 32,
+                    color: Colors.white,
+                    fontFamily: 'PeaceSans',
+                  ),
+              
             ),
         //primarySwatch: Colors.blue,
         buttonTheme: ButtonThemeData(

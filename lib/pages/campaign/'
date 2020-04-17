@@ -6,7 +6,7 @@ Campaign _campaign;
 class CampaignTile extends StatelessWidget {
   
   CampaignTile(campaign) {
-    _campaign = campaign;
+    _campign = campaign;
   }
 
   @override
@@ -17,7 +17,7 @@ class CampaignTile extends StatelessWidget {
                 // Image
                 Container(decoration: BoxDecoration(
                   image: DecorationImage( 
-                             image: NetworkImage(_campaign.getHeaderImage()), 
+                             image: NetworkImage(_campaign.getHeaderImage), 
                              fit: BoxFit.cover, 
                          ),
                   )
@@ -41,8 +41,7 @@ class CampaignTile extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
-                              Text(_campaign.getTitle().toUpperCase(), style: Theme.of(context).primaryTextTheme.display1,),
-                              Text(_campaign.getNumberOfCampaigners().toString() + " campaigners"),
+                              Text("Refugees"),
                             ], 
                           ),
                           ) 

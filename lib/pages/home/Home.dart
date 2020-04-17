@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:app/assets/components/customBottomNavBar.dart';
 import 'package:app/pages/home/HomeTile.dart';
 
 class Home extends StatelessWidget {
