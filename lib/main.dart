@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:app/pages/home/Home.dart';
 import 'package:app/pages/profile/Profile.dart';
+import 'package:app/pages/campaign/Campaigns.dart';
 
 void main() => runApp(MyApp());
 
-List<Widget> _pages = <Widget>[Home(), Home(), Profile()];
+List<Widget> _pages = <Widget>[Campaigns(), Home(), Profile()];
 
 class MyApp extends StatefulWidget {
   @override
@@ -14,7 +15,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   
-  int _currentIndex = 0;
+  int _currentIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +44,18 @@ class _MyAppState extends State<MyApp> {
                     fontSize: 32, 
                     color: Color.fromRGBO(36, 35, 52, 1),
                     fontWeight: FontWeight.w300,
-                  )  
+                  ),
+              button : TextStyle(
+                    fontSize: 28,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w300
+                  )
+
             ),
-        primarySwatch: Colors.blue,
+        //primarySwatch: Colors.blue,
         buttonTheme: ButtonThemeData(
-               
+              buttonColor: Color.fromRGBO(36, 35, 52, 1), 
+              textTheme: ButtonTextTheme.primary
             ),
         primaryColorDark: Color.fromRGBO(36, 35, 52, 1),
         buttonColor: Color.fromRGBO(36, 35, 52, 1),
