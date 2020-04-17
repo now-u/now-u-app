@@ -5,6 +5,10 @@ import 'package:app/pages/campaign/Campaigns.dart';
 
 void main() => runApp(MyApp());
 
+// This is a really annoying color thing --> Makes our fav color into material colour
+Map<int, Color> darkBlueMap ={50:Color.fromRGBO(36,35,52, .1),100:Color.fromRGBO(36,35,52, .2),200:Color.fromRGBO(36,35,52, .3),300:Color.fromRGBO(36,35,52, .4),400:Color.fromRGBO(36,35,52, .5),500:Color.fromRGBO(36,35,52, .6),600:Color.fromRGBO(36,35,52, .7),700:Color.fromRGBO(36,35,52, .8),800:Color.fromRGBO(36,35,52, .9),900:Color.fromRGBO(36,35,52, 1),};
+MaterialColor darkBlue = MaterialColor(0xFF242334, darkBlueMap);
+
 List<Widget> _pages = <Widget>[Campaigns(), Home(), Profile()];
 
 class MyApp extends StatefulWidget {
@@ -15,9 +19,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   
-  int _currentIndex = 1;
-
-  @override
+  int _currentIndex = 1; @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
@@ -50,6 +52,16 @@ class _MyAppState extends State<MyApp> {
                     color: Color.fromRGBO(36, 35, 52, 1),
                     fontWeight: FontWeight.w300,
                   ),
+              body1: TextStyle(
+                    fontSize: 22,
+                    color: Color.fromRGBO(36, 35, 52, 1),
+                    fontWeight: FontWeight.w300,
+                  ),
+              body2: TextStyle(
+                    fontSize: 22, 
+                    color: Colors.white,
+                    fontWeight: FontWeight.w300,
+                  ),
               button : TextStyle(
                     fontSize: 28,
                     color: Colors.white,
@@ -62,14 +74,18 @@ class _MyAppState extends State<MyApp> {
                   ),
               
             ),
-        //primarySwatch: Colors.blue,
+        primarySwatch: darkBlue,
         buttonTheme: ButtonThemeData(
+            colorScheme: ColorScheme.fromSwatch(
+                backgroundColor: Color.fromRGBO(36, 35, 52, 1),
+                ),
               buttonColor: Color.fromRGBO(36, 35, 52, 1), 
               textTheme: ButtonTextTheme.primary
             ),
         primaryColorDark: Color.fromRGBO(36, 35, 52, 1),
         buttonColor: Color.fromRGBO(36, 35, 52, 1),
         textSelectionColor: Colors.white, // Text used on top of 
+
       ),
       home: Scaffold(
             body: _pages[_currentIndex],

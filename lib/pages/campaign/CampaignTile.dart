@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:app/models/Campaign.dart';
-
-Campaign _campaign;
+import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
+import 'package:app/assets/routes/customRoute.dart';
 
 class CampaignTile extends StatelessWidget {
+  
+  Campaign _campaign;
   
   CampaignTile(campaign) {
     _campaign = campaign;
@@ -12,15 +14,26 @@ class CampaignTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-       child: Stack(
+       child: GestureDetector(
+           onTap: () {
+              Navigator.push(
+                    context, 
+                    CustomRoute(builder: (context) => CampaignInfo(_campaign))
+                  );
+           },
+           child: Stack(
               children: <Widget>[
                 // Image
-                Container(decoration: BoxDecoration(
-                  image: DecorationImage( 
-                             image: NetworkImage(_campaign.getHeaderImage()), 
-                             fit: BoxFit.cover, 
-                         ),
-                  )
+                Hero(
+                    tag: "CampaignHeaderImage${_campaign.getId()}",
+                    child: 
+                      Container(decoration: BoxDecoration(
+                        image: DecorationImage( 
+                                   image: NetworkImage(_campaign.getHeaderImage()), 
+                                   fit: BoxFit.cover, 
+                               ),
+                        )
+                      ),
                 ),
                 // Gradient
                 Container(
@@ -42,13 +55,14 @@ class CampaignTile extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
                               Text(_campaign.getTitle().toUpperCase(), style: Theme.of(context).primaryTextTheme.display1,),
-                              Text(_campaign.getNumberOfCampaigners().toString() + " campaigners"),
+                              Text(_campaign.getNumberOfCampaigners().toString() + " campaigners", style: Theme.of(context).primaryTextTheme.body2,),
                             ], 
                           ),
                           ) 
                    )
               ], 
            ),
+          )
     );
   }
 }
