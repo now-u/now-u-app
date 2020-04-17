@@ -3,7 +3,7 @@ import 'package:app/pages/home/Home.dart';
 
 void main() => runApp(MyApp());
 
-List<Widget> _pages = <Widget>[Home()];
+List<Widget> _pages = <Widget>[Home(), Home(), Home()];
 
 class MyApp extends StatefulWidget {
   @override
@@ -53,10 +53,7 @@ class _MyAppState extends State<MyApp> {
         textSelectionColor: Colors.white, // Text used on top of 
       ),
       home: Scaffold(
-            body: PageView.builder(
-                  itemBuilder: (context, position) => _pages[position],
-                  itemCount: _pages.length,
-                ),
+            body: _pages[_currentIndex],
             bottomNavigationBar: BottomNavigationBar(
               currentIndex: _currentIndex, 
               type: BottomNavigationBarType.fixed, 
