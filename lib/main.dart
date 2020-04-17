@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:app/pages/home/Home.dart';
+import 'package:app/pages/profile/Profile.dart';
 
 void main() => runApp(MyApp());
 
-List<Widget> _pages = <Widget>[Home(), Home(), Home()];
+List<Widget> _pages = <Widget>[Home(), Home(), Profile()];
 
 class MyApp extends StatefulWidget {
   @override
@@ -57,9 +58,9 @@ class _MyAppState extends State<MyApp> {
             bottomNavigationBar: BottomNavigationBar(
               currentIndex: _currentIndex, 
               type: BottomNavigationBarType.fixed, 
-              iconSize: 40,
+              iconSize: 35,
               unselectedFontSize: 15,
-              selectedFontSize: 20,
+              selectedFontSize: 18,
               items: [
                 BottomNavigationBarItem(
                     icon: Icon(Icons.check),
