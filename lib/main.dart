@@ -3,8 +3,18 @@ import 'package:app/pages/home/Home.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+List<Widget> _pages = <Widget>[Home()];
+
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+  
+  int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -42,7 +52,38 @@ class MyApp extends StatelessWidget {
         buttonColor: Color.fromRGBO(36, 35, 52, 1),
         textSelectionColor: Colors.white, // Text used on top of 
       ),
-      home: Home(),
+      home: Scaffold(
+            body: PageView.builder(
+                  itemBuilder: (context, position) => _pages[position],
+                  itemCount: _pages.length,
+                ),
+            bottomNavigationBar: BottomNavigationBar(
+              currentIndex: _currentIndex, 
+              type: BottomNavigationBarType.fixed, 
+              iconSize: 40,
+              unselectedFontSize: 15,
+              selectedFontSize: 20,
+              items: [
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.check),
+                    title: Text("Campaings"),
+                ),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.home),
+                    title: Text("Home"),
+                ),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.menu),
+                    title: Text("Profile"),
+                ),
+              ],
+              onTap: (index) {
+                setState(() {
+                  _currentIndex = index; 
+                }); 
+              },
+            ),
+          ),
     );
   }
 }
