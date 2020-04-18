@@ -1,5 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:app/pages/profile/ProfileTile.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+var profileTiles = <ProfileTile> [
+   ProfileTile("Details", FontAwesomeIcons.solidUser),
+   ProfileTile("Progress", FontAwesomeIcons.spinner),
+   ProfileTile("Network", FontAwesomeIcons.users),
+   ProfileTile("Rewards", FontAwesomeIcons.ribbon),
+   ProfileTile("Offers", FontAwesomeIcons.percent),
+   ProfileTile("Feedback", FontAwesomeIcons.solidComment),
+];
+
 
 class Profile extends StatelessWidget {
   @override
@@ -13,12 +24,10 @@ class Profile extends StatelessWidget {
                   ),
               Expanded(
                 child:
-                  ListView(
-                    children: <Widget>[
-                      ProfileTile(),
-                      ProfileTile(),
-                      ProfileTile(),
-                    ], 
+                  ListView.separated(
+                    separatorBuilder: (context, index) => Divider(),
+                    itemCount: profileTiles.length,
+                    itemBuilder: (context, index) => profileTiles[index],
                   ),
               ),
             ]
