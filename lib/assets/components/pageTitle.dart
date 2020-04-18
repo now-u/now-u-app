@@ -9,7 +9,7 @@ class PageTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Padding(
-              padding: EdgeInsets.all(25),
+              padding: EdgeInsets.fromLTRB(0, 30, 0, 20),
               child: 
                 Text(_title, style: Theme.of(context).primaryTextTheme.title), 
             )
