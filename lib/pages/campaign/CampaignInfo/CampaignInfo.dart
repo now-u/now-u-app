@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app/models/Campaign.dart';
-import 'package:app/assets/components/videoPlayer.dart';
+import 'package:app/assets/components/videoPlayerFlutterSimple.dart';
 
 class CampaignInfo extends StatelessWidget {
   Campaign _campaign;
@@ -52,11 +52,30 @@ class CampaignInfo extends StatelessWidget {
          body: 
           Column(
             children: <Widget>[
-              Container(
-                child: Container(
-                   child: VideoPlayer(),  
-                ), 
-              ) 
+              Padding(
+                 padding: EdgeInsets.all(25),
+                 child: 
+                  Container(
+                    height: 300,
+                    color: Colors.red,
+                    //child: Material(
+                      //child: VideoPlayer(),  
+                    //), 
+                    ) 
+                  ),
+              Row(
+                  children: <Widget>[
+                    Padding(
+                        padding: EdgeInsets.all(25),
+                        child: Text(_campaign.getDescription(), style: Theme.of(context).primaryTextTheme.body1),
+                      ),
+                    ]
+              ),
+              Padding(
+                  padding: EdgeInsets.all(25),
+                  child: Text("Actions of the Week", style: Theme.of(context).primaryTextTheme.headline,),
+                  
+                  )
             ], 
           ),
           

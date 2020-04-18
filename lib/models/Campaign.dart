@@ -4,13 +4,15 @@ class Campaign {
   String _description;
   int _numberOfCampaingers;
   String _headerImage;
+  bool _isSelected;
   
-  Campaign(id, title, description, numberOfCampaigners, headerImage) {
+  Campaign(id, title, description, numberOfCampaigners, headerImage, isSelected) {
     _id = id; 
     _title = title;
     _description = description;
     _numberOfCampaingers = numberOfCampaigners;
     _headerImage = headerImage;
+    _isSelected = isSelected;
   }
 
   int getId() {
@@ -27,5 +29,11 @@ class Campaign {
   }
   String getHeaderImage() {
     return _headerImage;
+  }
+  bool isSelected() {
+    return _isSelected;
+  }
+  void setSelected(bool isSelected) {
+    _isSelected = isSelected;
   }
 }

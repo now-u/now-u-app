@@ -90,19 +90,13 @@ class _CampaignTileState extends State<CampaignTile> {
                         Material(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(45),
-                          shadowColor:  Color.fromRGBO(69, 91, 99, 0.4),
-                          elevation: 30.0,
+                          shadowColor:  Color.fromRGBO(69, 91, 99, 0.2),
+                          elevation: 10.0,
                           child: 
                             Container(
-                              height: widget._campaign.isSelected() && widget._selectionMode 
-                                      ? 90 
-                                      : 0,  
-                              width: widget._campaign.isSelected() && widget._selectionMode 
-                                     ? 90 
-                                     : 0,  
-                              child: widget._campaign.isSelected() && widget._selectionMode 
-                                     ? Icon(Icons.check, size: 50,) 
-                                     : null,
+                              height: 90,  
+                              width: 90,  
+                              child: Icon(Icons.check),
                             ),
                         )
                      )

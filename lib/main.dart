@@ -2,8 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:app/pages/home/Home.dart';
 import 'package:app/pages/profile/Profile.dart';
 import 'package:app/pages/campaign/Campaigns.dart';
+import 'package:flutter/services.dart';
+import 'package:app/assets/components/videoPlayerFlutterSimple.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: darkBlue
+    ),
+  );
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  runApp(MyApp());
+}
 
 // This is a really annoying color thing --> Makes our fav color into material colour
 Map<int, Color> darkBlueMap ={50:Color.fromRGBO(36,35,52, .1),100:Color.fromRGBO(36,35,52, .2),200:Color.fromRGBO(36,35,52, .3),300:Color.fromRGBO(36,35,52, .4),400:Color.fromRGBO(36,35,52, .5),500:Color.fromRGBO(36,35,52, .6),600:Color.fromRGBO(36,35,52, .7),700:Color.fromRGBO(36,35,52, .8),800:Color.fromRGBO(36,35,52, .9),900:Color.fromRGBO(36,35,52, 1),};
@@ -19,7 +30,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   
-  int _currentIndex = 1; @override
+  int _currentIndex = 1; 
+  
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
@@ -53,7 +66,7 @@ class _MyAppState extends State<MyApp> {
                     fontWeight: FontWeight.w300,
                   ),
               body1: TextStyle(
-                    fontSize: 22,
+                    fontSize: 26,
                     color: Color.fromRGBO(36, 35, 52, 1),
                     fontWeight: FontWeight.w300,
                   ),
