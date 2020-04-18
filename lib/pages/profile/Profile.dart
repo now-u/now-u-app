@@ -1,13 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:app/pages/profile/ProfileTile.dart';
 
 class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text("Hello") 
-        ], 
+    return Padding(
+          padding: EdgeInsets.all(15),
+          child: Column(
+            children: <Widget>[
+              SafeArea(
+                child: Text("Your Profile", style: Theme.of(context).primaryTextTheme.title),
+                  ),
+              Expanded(
+                child:
+                  ListView(
+                    children: <Widget>[
+                      ProfileTile(),
+                      ProfileTile(),
+                      ProfileTile(),
+                    ], 
+                  ),
+              ),
+            ]
+          )
         );
   }
 }
