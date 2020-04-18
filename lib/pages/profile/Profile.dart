@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app/pages/profile/ProfileTile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:app/assets/components/pageTitle.dart';
 
 var profileTiles = <ProfileTile> [
    ProfileTile("Details", FontAwesomeIcons.solidUser),
@@ -15,13 +16,9 @@ var profileTiles = <ProfileTile> [
 class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-          padding: EdgeInsets.all(15),
-          child: Column(
+    return Column(
             children: <Widget>[
-              SafeArea(
-                child: Text("Your Profile", style: Theme.of(context).primaryTextTheme.title),
-                  ),
+              PageTitle("Your Profile"),
               Expanded(
                 child:
                   ListView.separated(
@@ -31,8 +28,7 @@ class Profile extends StatelessWidget {
                   ),
               ),
             ]
-          )
-        );
+          );
   }
 }
 

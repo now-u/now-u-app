@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/pages/campaign/CampaignTile.dart';
 import 'package:app/models/Campaign.dart';
+import 'package:app/assets/components/pageTitle.dart';
 
 var campaigns = new List<Campaign>(3);
 
@@ -23,14 +24,12 @@ class _CampaignsState extends State<Campaigns> {
         body: SafeArea(
                 child: Column(
                   children: <Widget>[
-                    Padding(
-                        padding: EdgeInsets.all(15),
-                        child: Text("Campaigns", style: Theme.of(context).primaryTextTheme.title),
-                    ),
-                    
+                    PageTitle("Campaigns"),
                     Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
-                        child: Text("Click to learn more...", style: Theme.of(context).primaryTextTheme.subtitle),
+                        child: Text(
+                            _selectionMode ? "Tap to Select" : "Click to learn more...", 
+                            style: Theme.of(context).primaryTextTheme.subtitle),
                     ),
                     
                     CampaignTile(campaigns[0], selectionMode: _selectionMode),

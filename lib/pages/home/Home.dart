@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app/pages/home/HomeTile.dart';
+import 'package:app/assets/components/pageTitle.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -9,14 +10,7 @@ class Home extends StatelessWidget {
               color: Colors.white,
               child: Column(
                   children: <Widget>[
-                    SafeArea(
-                          child: Padding(
-                                padding: EdgeInsets.all(20),
-                                child: 
-                                  Text("Home", style: Theme.of(context).primaryTextTheme.title), 
-                              )
-                          
-                        ),
+                    PageTitle("Home"),
                     HomeTile(
                         Container(
                               child: Column(
