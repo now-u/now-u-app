@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-VoidCallback _onPressed;
-String _text;
-
 class DarkButton extends StatelessWidget {
+
+  VoidCallback _onPressed;
+  String _text;
 
   DarkButton( 
     String text, 
