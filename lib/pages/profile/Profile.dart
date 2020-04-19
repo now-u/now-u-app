@@ -33,7 +33,7 @@ class _ProfileState extends State<Profile> {
   };
   var profileTiles = <Map> [
       {  'profileTile': ProfileTile("Details", FontAwesomeIcons.solidUser) , 'page': DetailsPage(_user, goBack ), },
-      {  'profileTile': ProfileTile("Progress", FontAwesomeIcons.spinner) },
+      {  'profileTile': ProfileTile("Progress", FontAwesomeIcons.spinner), 'page':ProgressPage(goBack)},
       {  'profileTile': ProfileTile("Network", FontAwesomeIcons.users) },
       {  'profileTile': ProfileTile("Rewards", FontAwesomeIcons.ribbon), 'page' : RewardsPage(goBack) },
       {  'profileTile': ProfileTile("Offers", FontAwesomeIcons.percent), 'page': OffersPage(goBack) },
