@@ -9,7 +9,7 @@ import 'package:app/pages/profile/profilePages/NetworkPage.dart';
 import 'package:app/pages/profile/profilePages/RewardsPage.dart';
 import 'package:app/pages/profile/profilePages/OffersPage.dart';
 import 'package:app/pages/profile/profilePages/FeedbackPage.dart';
-//import 'package:app/pages/profile/profilePages/SupportPage.dart';
+import 'package:app/pages/profile/profilePages/SupportPage.dart';
 
 User _user;
 
@@ -38,6 +38,7 @@ class _ProfileState extends State<Profile> {
       {  'profileTile': ProfileTile("Rewards", FontAwesomeIcons.ribbon) },
       {  'profileTile': ProfileTile("Offers", FontAwesomeIcons.percent), 'page': OffersPage(goBack) },
       {  'profileTile': ProfileTile("Feedback", FontAwesomeIcons.solidComment) },
+      {  'profileTile': ProfileTile("Support", FontAwesomeIcons.question), 'page':SupportPage(goBack) },
   ];
     return _currentPage == 0 ? 
         Column(
