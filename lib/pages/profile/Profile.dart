@@ -2,21 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:app/pages/profile/ProfileTile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app/assets/components/pageTitle.dart';
+import 'package:app/models/User.dart';
+import 'package:app/pages/profile/profilePages/DetailsPage.dart';
+import 'package:app/pages/profile/profilePages/ProgressPage.dart';
+import 'package:app/pages/profile/profilePages/NetworkPage.dart';
+import 'package:app/pages/profile/profilePages/RewardsPage.dart';
+import 'package:app/pages/profile/profilePages/OffersPage.dart';
+import 'package:app/pages/profile/profilePages/FeedbackPage.dart';
+//import 'package:app/pages/profile/profilePages/SupportPage.dart';
 
-var profileTiles = <ProfileTile> [
-   ProfileTile("Details", FontAwesomeIcons.solidUser),
-   ProfileTile("Progress", FontAwesomeIcons.spinner),
-   ProfileTile("Network", FontAwesomeIcons.users),
-   ProfileTile("Rewards", FontAwesomeIcons.ribbon),
-   ProfileTile("Offers", FontAwesomeIcons.percent),
-   ProfileTile("Feedback", FontAwesomeIcons.solidComment),
-];
+User _user;
 
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
+  Profile(User user) {
+    _user = user; 
+  }
+  @override
+  _ProfileState createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  var _currentPage = 0;
   @override
   Widget build(BuildContext context) {
-    return Column(
+  GestureTapCallback goBack = () {
+    setState(() {
+      _currentPage = 0;  
+    });
+  };
+  var profileTiles = <Map> [
+      {  'profileTile': ProfileTile("Details", FontAwesomeIcons.solidUser) , 'page': DetailsPage(_user, goBack ), },
+      {  'profileTile': ProfileTile("Progress", FontAwesomeIcons.spinner) },
+      {  'profileTile': ProfileTile("Network", FontAwesomeIcons.users) },
+      {  'profileTile': ProfileTile("Rewards", FontAwesomeIcons.ribbon) },
+      {  'profileTile': ProfileTile("Offers", FontAwesomeIcons.percent), 'page': OffersPage(goBack) },
+      {  'profileTile': ProfileTile("Feedback", FontAwesomeIcons.solidComment) },
+  ];
+    return _currentPage == 0 ? 
+        Column(
             children: <Widget>[
               PageTitle("Your Profile"),
               Expanded(
@@ -24,11 +48,19 @@ class Profile extends StatelessWidget {
                   ListView.separated(
                     separatorBuilder: (context, index) => Divider(),
                     itemCount: profileTiles.length,
-                    itemBuilder: (context, index) => profileTiles[index],
+                    itemBuilder: (context, index) => 
+                      GestureDetector(
+                        onTap: () => setState(() {
+                          _currentPage = index + 1;
+                        }),
+                        child: profileTiles[index]["profileTile"],
+                      ),
                   ),
               ),
             ]
-          );
+          )
+        : profileTiles[_currentPage - 1]["page"]
+        ;
   }
 }
 

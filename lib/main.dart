@@ -4,6 +4,19 @@ import 'package:app/pages/profile/Profile.dart';
 import 'package:app/pages/campaign/Campaigns.dart';
 import 'package:flutter/services.dart';
 import 'package:app/assets/components/videoPlayerFlutterSimple.dart';
+import 'package:app/models/User.dart';
+  
+
+int _currentIndex = 1; 
+User _user = User(
+      id: 0,
+      fullName: "Andrew",
+      username: "Andy123",
+      age: 21,
+      location: "Bristol",
+      monthlyDonationLimit: 20.0,
+      homeOwner: false,
+    );
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +33,7 @@ void main() {
 Map<int, Color> darkBlueMap ={50:Color.fromRGBO(36,35,52, .1),100:Color.fromRGBO(36,35,52, .2),200:Color.fromRGBO(36,35,52, .3),300:Color.fromRGBO(36,35,52, .4),400:Color.fromRGBO(36,35,52, .5),500:Color.fromRGBO(36,35,52, .6),600:Color.fromRGBO(36,35,52, .7),700:Color.fromRGBO(36,35,52, .8),800:Color.fromRGBO(36,35,52, .9),900:Color.fromRGBO(36,35,52, 1),};
 MaterialColor darkBlue = MaterialColor(0xFF242334, darkBlueMap);
 
-List<Widget> _pages = <Widget>[Campaigns(), Home(), Profile()];
+List<Widget> _pages = <Widget>[Campaigns(), Home(), Profile(_user)];
 
 class MyApp extends StatefulWidget {
   @override
@@ -30,7 +43,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   
-  int _currentIndex = 1; 
   
   @override
   Widget build(BuildContext context) {
