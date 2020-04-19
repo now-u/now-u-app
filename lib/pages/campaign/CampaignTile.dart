@@ -35,7 +35,8 @@ class _CampaignTileState extends State<CampaignTile> {
       });
     };
 
-    return Expanded(
+    return Container(
+       height: 350,
        child: GestureDetector(
            onTap: widget._selectionMode ? _onTapSelect : _onTapMoreInfo,
            child: Stack(

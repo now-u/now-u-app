@@ -78,7 +78,7 @@ class _MyAppState extends State<MyApp> {
                     fontWeight: FontWeight.w300,
                   ),
               body1: TextStyle(
-                    fontSize: 17,
+                    fontSize: 18,
                     color: Color.fromRGBO(36, 35, 52, 1),
                     fontWeight: FontWeight.w300,
                   ),
