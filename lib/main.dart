@@ -73,7 +73,7 @@ class _MyAppState extends State<MyApp> {
                   ),  
               
               headline : TextStyle(
-                    fontSize: 32, 
+                    fontSize: 31,
                     color: Color.fromRGBO(36, 35, 52, 1),
                     fontWeight: FontWeight.w300,
                   ),
