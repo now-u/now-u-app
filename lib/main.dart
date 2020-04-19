@@ -78,7 +78,7 @@ class _MyAppState extends State<MyApp> {
                     fontWeight: FontWeight.w300,
                   ),
               body1: TextStyle(
-                    fontSize: 26,
+                    fontSize: 17,
                     color: Color.fromRGBO(36, 35, 52, 1),
                     fontWeight: FontWeight.w300,
                   ),
@@ -96,6 +96,16 @@ class _MyAppState extends State<MyApp> {
                     fontSize: 32,
                     color: Colors.white,
                     fontFamily: 'PeaceSans',
+                  ),
+              display2: TextStyle(
+                    fontSize: 26,
+                    color: Color.fromRGBO(36, 35, 52, 1),
+                    fontWeight: FontWeight.w300,
+                  ),
+              display3: TextStyle(
+                    fontSize: 20,
+                    color: Color.fromRGBO(36, 35, 52, 1),
+                    fontWeight: FontWeight.w300,
                   ),
               
             ),
