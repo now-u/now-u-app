@@ -8,9 +8,9 @@ class CampaignTile extends StatefulWidget {
   bool _selectionMode;
   Campaign _campaign;
 
-  CampaignTile(campaign, { @required selectionMode }) {
+  CampaignTile(campaign, { selectionMode }) {
     _campaign = campaign;
-    _selectionMode = selectionMode;
+    _selectionMode = selectionMode != null ? selectionMode : false;
   }
   
   @override

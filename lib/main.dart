@@ -26,7 +26,7 @@ void main() {
     ),
   );
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(MyApp());
+  runApp(App());
 }
 
 // This is a really annoying color thing --> Makes our fav color into material colour
@@ -35,14 +35,22 @@ MaterialColor darkBlue = MaterialColor(0xFF242334, darkBlueMap);
 
 List<Widget> _pages = <Widget>[Campaigns(), Home(), Profile(_user)];
 
-class MyApp extends StatefulWidget {
+class App extends StatefulWidget {
+  int _currentIndex;
+  App({currentIndex}) {
+    _currentIndex = currentIndex != null ? currentIndex : 1;
+  }
   @override
-  _MyAppState createState() => _MyAppState();
+  _AppState createState() => _AppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _AppState extends State<App> {
   // This widget is the root of your application.
-  
+  @override
+  void initState() {
+    _currentIndex = widget._currentIndex;
+    super.initState();
+  }
   
   @override
   Widget build(BuildContext context) {
