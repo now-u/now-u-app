@@ -63,7 +63,7 @@ class OfferTile extends StatelessWidget {
           children: <Widget>[
             Padding( 
                 padding: EdgeInsets.only(right: ICON_PADDING),
-                child: Icon(FontAwesomeIcons.ribbon, size: 50,)
+                child: Icon(FontAwesomeIcons.percent, size: 50,)
             ),
             Text(_offer.getTitle(), style: Theme.of(context).primaryTextTheme.body1),
           ],
