@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 import 'package:app/models/Campaign.dart';
 
@@ -74,6 +75,25 @@ class SelectionComplete extends StatelessWidget {
                     DarkButton(
                       "Share with Friends",
                       onPressed: () {
+                        String campaingText = '';
+                        for (var i = 0; i < _selectedCamapings.length; i++) {
+                          campaingText = campaingText + _selectedCamapings[i].getTitle();
+                          if (i == _selectedCamapings.length - 2) {
+                            campaingText = campaingText + ' and '; 
+                          } 
+                          else if (i == _selectedCamapings.length - 1) {
+                            if (i == 0) {
+                              campaingText = campaingText + ' campaing';
+                            }
+                            else {
+                              campaingText = campaingText + ' campaings';
+                            }
+                          }
+                          else {
+                            campaingText = campaingText + ', '; 
+                          }
+                        }
+                        Share.share('I just started the ${campaingText} on now-U. Check them out at https://now-u.com');
                       },
                     ),
                 ),
