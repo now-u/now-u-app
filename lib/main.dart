@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:app/pages/home/Home.dart';
 import 'package:app/pages/profile/Profile.dart';
 import 'package:app/pages/campaign/Campaigns.dart';
-import 'package:flutter/services.dart';
+
 import 'package:app/assets/components/videoPlayerFlutterSimple.dart';
+
 import 'package:app/models/User.dart';
+import 'package:app/models/Campaign.dart';
   
 
 int _currentIndex = 1; 
@@ -29,11 +33,19 @@ void main() {
   runApp(App());
 }
 
+var campaigns = <Campaign> [
+  Campaign(1, "Refugees", "Help with the things", 270, "https://cdn.pixabay.com/photo/2013/04/16/14/23/eritrea-105081_960_720.jpg", false),
+  Campaign(2, "Other Thing", "Help with the things", 170, "https://cdn.pixabay.com/photo/2013/04/16/14/23/eritrea-105081_960_720.jpg", false),
+  Campaign(3, "Other2", "Help with the things", 320, "https://cdn.pixabay.com/photo/2013/04/16/14/23/eritrea-105081_960_720.jpg", false),
+
+];
+
+
 // This is a really annoying color thing --> Makes our fav color into material colour
 Map<int, Color> darkBlueMap ={50:Color.fromRGBO(36,35,52, .1),100:Color.fromRGBO(36,35,52, .2),200:Color.fromRGBO(36,35,52, .3),300:Color.fromRGBO(36,35,52, .4),400:Color.fromRGBO(36,35,52, .5),500:Color.fromRGBO(36,35,52, .6),600:Color.fromRGBO(36,35,52, .7),700:Color.fromRGBO(36,35,52, .8),800:Color.fromRGBO(36,35,52, .9),900:Color.fromRGBO(36,35,52, 1),};
 MaterialColor darkBlue = MaterialColor(0xFF242334, darkBlueMap);
 
-List<Widget> _pages = <Widget>[Campaigns(), Home(), Profile(_user)];
+List<Widget> _pages = <Widget>[Campaigns(campaigns), Home(), Profile(_user)];
 
 class App extends StatefulWidget {
   int _currentIndex;
