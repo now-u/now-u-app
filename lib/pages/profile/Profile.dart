@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:app/pages/profile/ProfileTile.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app/assets/components/pageTitle.dart';
+
 import 'package:app/models/User.dart';
+import 'package:app/models/ViewModel.dart';
+
+import 'package:app/pages/profile/ProfileTile.dart';
+
 import 'package:app/pages/profile/profilePages/DetailsPage.dart';
 import 'package:app/pages/profile/profilePages/ProgressPage.dart';
 import 'package:app/pages/profile/profilePages/NetworkPage.dart';
@@ -13,10 +18,10 @@ import 'package:app/pages/profile/profilePages/SupportPage.dart';
 
 User _user;
 
-
 class Profile extends StatefulWidget {
-  Profile(User user) {
-    _user = user; 
+  ViewModel model;
+  Profile(this.model) {
+    _user = model.user;
   }
   @override
   _ProfileState createState() => _ProfileState();

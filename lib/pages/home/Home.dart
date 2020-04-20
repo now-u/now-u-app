@@ -5,8 +5,12 @@ import 'package:app/pages/home/HomeTile.dart';
 import 'package:app/assets/components/pageTitle.dart';
 
 import 'package:app/models/Campaign.dart';
+import 'package:app/models/ViewModel.dart';
 
 class Home extends StatelessWidget {
+  ViewModel model;
+  Home(this.model);
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

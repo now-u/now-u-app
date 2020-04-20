@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 
 import 'package:app/models/Campaign.dart';
+import 'package:app/models/ViewModel.dart';
 
 import 'package:app/pages/campaign/CampaignTile.dart';
 import 'package:app/main.dart';
@@ -12,9 +13,17 @@ import 'package:app/assets/routes/customRoute.dart';
 
 class SelectionComplete extends StatelessWidget {
 
+  final ViewModel model;
   List<Campaign> _selectedCamapings;
-  SelectionComplete( selectedCampaings ) {
-    _selectedCamapings = selectedCampaings;   
+
+  SelectionComplete( this.model ) {
+    print("Lets get cracking");
+    _selectedCamapings = model.campaigns.map((Campaign c) => c).toList();
+    _selectedCamapings = _selectedCamapings.where((c) => c.isSelected()).toList();
+    print("Number of selected campaigns is");
+    print(_selectedCamapings.length);
+    print("Selected campaigns are");
+    print(_selectedCamapings);
   }
 
   @override
@@ -57,7 +66,8 @@ class SelectionComplete extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.all(20), 
                               child: CampaignTile(
-                                _selectedCamapings[index -2]
+                                _selectedCamapings[index -2],
+                                model,
                               ),
                            );
                         }

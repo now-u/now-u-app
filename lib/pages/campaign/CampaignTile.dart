@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+
 import 'package:app/models/Campaign.dart';
+import 'package:app/models/ViewModel.dart';
+
 import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
 import 'package:app/assets/routes/customRoute.dart';
 
 class CampaignTile extends StatefulWidget {
   
   bool _selectionMode;
-  Campaign _campaign;
+  ViewModel model;
+  var _campaign;
 
-  CampaignTile(campaign, { selectionMode }) {
-    _campaign = campaign;
+  CampaignTile(this._campaign, this.model, { selectionMode }) {
     _selectionMode = selectionMode != null ? selectionMode : false;
   }
   
@@ -46,8 +49,8 @@ class _CampaignTileState extends State<CampaignTile> {
                    child: Stack(
                       children: <Widget>[
                         // Image
-                        Hero(
-                            tag: "CampaignHeaderImage${widget._campaign.getId()}",
+                        Container(
+                            //tag: "CampaignHeaderImage${widget._campaign.getId()}",
                             child: 
                               Container(decoration: BoxDecoration(
                                 image: DecorationImage( 

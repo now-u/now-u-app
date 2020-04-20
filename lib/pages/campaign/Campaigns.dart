@@ -4,6 +4,7 @@ import 'package:app/pages/campaign/CampaignTile.dart';
 import 'package:app/pages/campaign/SelectionComplete.dart';
 
 import 'package:app/models/Campaign.dart';
+import 'package:app/models/ViewModel.dart';
 
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/components/darkButton.dart';
@@ -11,21 +12,27 @@ import 'package:app/assets/components/customBottomNavBar.dart';
 import 'package:app/assets/components/customFloatingActionButton.dart';
 import 'package:app/assets/components/pageTitle.dart';
 
-bool _selectionMode = false;
+import 'package:flutter_redux/flutter_redux.dart';
+
+import 'package:app/main.dart';
 
 class Campaigns extends StatefulWidget {
+  final ViewModel model;
+  bool _selectionMode;
   List<Campaign> _campaigns;
-  Campaigns(campaign) {
-    _campaigns = campaign;
+
+  Campaigns(this.model, this._selectionMode) {
+    _campaigns = model.campaigns.toList();
   }
+
   @override
   _CampaignsState createState() => _CampaignsState();
 }
 
 class _CampaignsState extends State<Campaigns> {
-
   @override
   Widget build(BuildContext context) {
+    //var _campaigns = widget.model.campaigns.map((Campaign c) => c).toList();
     return Scaffold(
         body: SafeArea(
                 child: Column(
@@ -34,15 +41,15 @@ class _CampaignsState extends State<Campaigns> {
                     Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
                         child: Text(
-                            _selectionMode ? "Tap to Select" : "Click to learn more...", 
+                            widget._selectionMode ? "Tap to Select" : "Click to learn more...", 
                             style: Theme.of(context).primaryTextTheme.subtitle),
                     ),
                     Expanded(
                       child: ListView(
                         children: <Widget> [
-                          CampaignTile(widget._campaigns[0], selectionMode: _selectionMode),
-                          CampaignTile(widget._campaigns[1], selectionMode: _selectionMode),
-                          CampaignTile(widget._campaigns[2], selectionMode: _selectionMode),
+                          CampaignTile(widget._campaigns[0], widget.model, selectionMode: widget._selectionMode),
+                          CampaignTile(widget._campaigns[1], widget.model, selectionMode: widget._selectionMode),
+                          CampaignTile(widget._campaigns[2], widget.model, selectionMode: widget._selectionMode),
                           Container(
                                 height: 100,
                               )
@@ -65,14 +72,14 @@ class _CampaignsState extends State<Campaigns> {
               ),
         //floatingActionButton: CustomFloatingActionButton(text: "Select Campaigns", ),
         floatingActionButton: 
-          !_selectionMode ?
+          !widget._selectionMode ?
           Padding (
               padding: EdgeInsets.all(14),
               child: DarkButton(
                 "Select Campaigns",
                 onPressed: () {
                   setState(() {
-                     _selectionMode = true;
+                     widget._selectionMode = true;
                    }); 
                 },
               )
@@ -90,7 +97,7 @@ class _CampaignsState extends State<Campaigns> {
                         "Cancel",
                         onPressed: () {
                           setState(() {
-                             _selectionMode = !_selectionMode;
+                             widget._selectionMode = false;
                            }); 
                         },
                       ),
@@ -101,13 +108,13 @@ class _CampaignsState extends State<Campaigns> {
                       DarkButton(
                         "Select",
                         onPressed: () {
+                          widget.model.onSelectCampaigns(widget._campaigns);
                           setState(() {
-                            _selectionMode = false;
+                            widget._selectionMode = false;
                           });
-                          var _selectedCamapings = widget._campaigns.where((c) => c.isSelected()).toList();
                           Navigator.push(
                             context, 
-                            CustomRoute(builder: (context) => SelectionComplete(_selectedCamapings))
+                            CustomRoute(builder: (context) => SelectionComplete(widget.model))
                           );
                         },
                       ),

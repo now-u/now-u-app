@@ -26,9 +26,9 @@ class CustomBottomNavBar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                  customIcon(Icon(Icons.home), Home(), context),
-                  customIcon(Icon(Icons.home), Home(), context),
-                  customIcon(Icon(Icons.perm_identity), Home(), context),
+                  //customIcon(Icon(Icons.home), Home(), context),
+                  //customIcon(Icon(Icons.home), Home(), context),
+                  //customIcon(Icon(Icons.perm_identity), Home(), context),
                 ],
                 ),
               )
