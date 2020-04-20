@@ -17,6 +17,14 @@ List<Campaign> campaignReducer(List<Campaign> campaigns, action) {
       return action.campaings;
      //return campaigns.map((cam) => cam.getId() == action.campaign.getId() ? cam.setSelected(!cam.isSelected()) : cam);
     } 
+
+    case LoadedCampaignsAction: {
+      print("Prinitng from loaded Camapings action");
+      print(action.campaigns);
+      print(action.campaigns[0].isSelected());
+      print("done");
+      return action.campaigns;
+    }
     
     default: {
       return campaigns;

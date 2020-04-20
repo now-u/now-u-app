@@ -13,6 +13,9 @@ import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:app/redux/reducers.dart';
 import 'package:app/redux/actions.dart';
+import 'package:app/redux/middleware.dart';
+import 'package:flutter_redux_dev_tools/flutter_redux_dev_tools.dart';
+import 'package:redux_dev_tools/redux_dev_tools.dart';
 
 int _currentIndex = 1; 
 User _user = User(
@@ -46,10 +49,12 @@ class App extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    final Store<AppState> store = Store<AppState>(
+    final DevToolsStore<AppState> store = DevToolsStore<AppState>(
         appStateReducer,
         initialState: AppState.initialState(),
+        middleware: [appStateMiddleware],
     );
+
     return StoreProvider<AppState>(
       store: store, 
       child: MaterialApp(
@@ -128,13 +133,31 @@ class App extends StatelessWidget {
           textSelectionColor: Colors.white, // Text used on top of 
 
         ),
-        home: StoreConnector<AppState, ViewModel>(
-                  converter: (Store<AppState> store) => ViewModel.create(store),
-                  builder: (BuildContext context, ViewModel viewModel) {
-                    return TabsPage(viewModel);
-                  },
-              ),
-        )
+        home: 
+          StoreBuilder<AppState>(
+            onInit: (store) => store.dispatch(GetCampaingsAction()),
+            builder: (BuildContext context, Store<AppState> _store) =>
+              MyHomePage(_store),
+          )  
+       )
     );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  final DevToolsStore<AppState> store;
+
+  MyHomePage(this.store);
+
+  @override 
+  Widget build(BuildContext context) {
+    return 
+      StoreConnector<AppState, ViewModel>(
+          converter: (Store<AppState> store) => ViewModel.create(store),
+          builder: (BuildContext context, ViewModel _viewModel) {
+            print(_viewModel.campaigns[0].isSelected());
+            return TabsPage(_viewModel);
+          },
+      );
   }
 }

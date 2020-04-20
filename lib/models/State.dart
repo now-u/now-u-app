@@ -50,4 +50,11 @@ class AppState {
         ),
       ]
     );
+
+  AppState.fromJson(Map json)
+    : campaigns = (json['campaigns'] as List).map((c) => Campaign.fromJson(c)).toList(),
+      //user = (User.fromJson(json['user']));
+    user = null;
+
+  Map toJson() => {'campaigns': campaigns, 'user': user};
 }

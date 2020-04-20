@@ -5,3 +5,11 @@ class SelectCampaignsAction {
 
   SelectCampaignsAction(this.campaigns);
 }
+
+class GetCampaingsAction {}
+
+class LoadedCampaignsAction {
+  final List<Campaign> campaigns;
+
+  LoadedCampaignsAction(this.campaigns);
+}
