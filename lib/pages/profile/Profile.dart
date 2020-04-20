@@ -19,7 +19,7 @@ import 'package:app/pages/profile/profilePages/SupportPage.dart';
 User _user;
 
 class Profile extends StatefulWidget {
-  ViewModel model;
+  final ViewModel model;
   Profile(this.model) {
     _user = model.user;
   }
@@ -36,15 +36,17 @@ class _ProfileState extends State<Profile> {
       _currentPage = 0;  
     });
   };
+
   var profileTiles = <Map> [
       {  'profileTile': ProfileTile("Details", FontAwesomeIcons.solidUser) , 'page': DetailsPage(_user, goBack ), },
-      {  'profileTile': ProfileTile("Progress", FontAwesomeIcons.spinner), 'page':ProgressPage(goBack)},
+      {  'profileTile': ProfileTile("Progress", FontAwesomeIcons.spinner), 'page':ProgressPage(goBack, widget.model)},
       {  'profileTile': ProfileTile("Network", FontAwesomeIcons.users) },
       {  'profileTile': ProfileTile("Rewards", FontAwesomeIcons.ribbon), 'page' : RewardsPage(goBack) },
       {  'profileTile': ProfileTile("Offers", FontAwesomeIcons.percent), 'page': OffersPage(goBack) },
       {  'profileTile': ProfileTile("Feedback", FontAwesomeIcons.solidComment) },
       {  'profileTile': ProfileTile("Support", FontAwesomeIcons.question), 'page':SupportPage(goBack) },
   ];
+
     return _currentPage == 0 ? 
         Column(
             children: <Widget>[

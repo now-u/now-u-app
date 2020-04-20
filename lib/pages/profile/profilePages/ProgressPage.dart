@@ -4,14 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:app/assets/components/pageTitle.dart';
 import 'package:app/assets/components/darkButton.dart';
 
-import 'package:app/main.dart';
+import 'package:app/pages/Tabs.dart';
+
+import 'package:app/models/ViewModel.dart';
 
 class ProgressPage extends StatelessWidget {
-  GestureTapCallback _goBack;
+  final GestureTapCallback _goBack;
+  final ViewModel model;
   
-  ProgressPage(goBack) {
-    _goBack = goBack;
-  }
+  
+  ProgressPage(this._goBack, this.model);
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView (
@@ -38,7 +41,7 @@ class ProgressPage extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                CustomRoute(builder: (context) => App(currentIndex: 0,))
+                CustomRoute(builder: (context) => TabsPage(model, currentIndex: 0,))
               );
             },
           ),
@@ -55,7 +58,7 @@ class ProgressPage extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                CustomRoute(builder: (context) => App(currentIndex: 0,))
+                CustomRoute(builder: (context) => TabsPage(model, currentIndex: 0,))
               );
             },
           ),

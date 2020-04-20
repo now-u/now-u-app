@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:app/pages/home/Home.dart';
-import 'package:app/pages/profile/Profile.dart';
-import 'package:app/pages/campaign/Campaigns.dart';
+import 'package:app/pages/Tabs.dart';
 
 import 'package:app/assets/components/videoPlayerFlutterSimple.dart';
 
 import 'package:app/models/User.dart';
-import 'package:app/models/Campaign.dart';
 
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/State.dart';
@@ -45,22 +42,7 @@ MaterialColor darkBlue = MaterialColor(0xFF242334, darkBlueMap);
 
 //List<Widget> _pages = <Widget>[Campaigns(campaigns), Home(), Profile(_user)];
 
-class App extends StatefulWidget {
-  int _currentIndex;
-  App({currentIndex}) {
-    _currentIndex = currentIndex != null ? currentIndex : 1;
-  }
-  @override
-  _AppState createState() => _AppState();
-}
-
-class _AppState extends State<App> {
-  // This widget is the root of your application.
-  @override
-  void initState() {
-    _currentIndex = widget._currentIndex;
-    super.initState();
-  }
+class App extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
@@ -146,46 +128,13 @@ class _AppState extends State<App> {
           textSelectionColor: Colors.white, // Text used on top of 
 
         ),
-        home: Scaffold(
-              body: StoreConnector<AppState, ViewModel>(
+        home: StoreConnector<AppState, ViewModel>(
                   converter: (Store<AppState> store) => ViewModel.create(store),
                   builder: (BuildContext context, ViewModel viewModel) {
-                    switch (_currentIndex) {
-                      case 0: {return Campaigns(viewModel, false);}
-                      case 1: {return Home(viewModel);}
-                      case 2: {return Profile(viewModel);}
-                      default: {return Campaigns(viewModel, false);}
-                    }
+                    return TabsPage(viewModel);
                   },
               ),
-              bottomNavigationBar: BottomNavigationBar(
-                currentIndex: _currentIndex, 
-                type: BottomNavigationBarType.fixed, 
-                iconSize: 35,
-                unselectedFontSize: 15,
-                selectedFontSize: 18,
-                items: [
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.check),
-                      title: Text("Campaings"),
-                  ),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.home),
-                      title: Text("Home"),
-                  ),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.menu),
-                      title: Text("Profile"),
-                  ),
-                ],
-                onTap: (index) {
-                  setState(() {
-                    _currentIndex = index; 
-                  }); 
-                },
-              ),
-            ),
-      ),
+        )
     );
   }
 }

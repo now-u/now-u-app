@@ -30,6 +30,13 @@ class Campaigns extends StatefulWidget {
 }
 
 class _CampaignsState extends State<Campaigns> {
+  List<Campaign> _campaigns;
+  @override
+  void initState() {
+    _campaigns = widget.model.campaigns.toList();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     //var _campaigns = widget.model.campaigns.map((Campaign c) => c).toList();
@@ -47,9 +54,9 @@ class _CampaignsState extends State<Campaigns> {
                     Expanded(
                       child: ListView(
                         children: <Widget> [
-                          CampaignTile(widget._campaigns[0], widget.model, selectionMode: widget._selectionMode),
-                          CampaignTile(widget._campaigns[1], widget.model, selectionMode: widget._selectionMode),
-                          CampaignTile(widget._campaigns[2], widget.model, selectionMode: widget._selectionMode),
+                          CampaignTile(_campaigns[0], widget.model, selectionMode: widget._selectionMode),
+                          CampaignTile(_campaigns[1], widget.model, selectionMode: widget._selectionMode),
+                          CampaignTile(_campaigns[2], widget.model, selectionMode: widget._selectionMode),
                           Container(
                                 height: 100,
                               )
@@ -108,10 +115,10 @@ class _CampaignsState extends State<Campaigns> {
                       DarkButton(
                         "Select",
                         onPressed: () {
-                          widget.model.onSelectCampaigns(widget._campaigns);
                           setState(() {
                             widget._selectionMode = false;
                           });
+                          widget.model.onSelectCampaigns(_campaigns);
                           Navigator.push(
                             context, 
                             CustomRoute(builder: (context) => SelectionComplete(widget.model))

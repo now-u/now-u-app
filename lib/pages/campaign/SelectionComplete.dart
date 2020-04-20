@@ -5,7 +5,7 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/models/ViewModel.dart';
 
 import 'package:app/pages/campaign/CampaignTile.dart';
-import 'package:app/main.dart';
+import 'package:app/pages/Tabs.dart';
 
 import 'package:app/assets/components/pageTitle.dart';
 import 'package:app/assets/components/darkButton.dart';
@@ -115,7 +115,8 @@ class SelectionComplete extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context, 
-                          CustomRoute(builder: (context) => App(currentIndex: 1,))
+                          //CustomRoute(builder: (context) => App(currentIndex: 1,))
+                          CustomRoute(builder: (context) => TabsPage(model, currentIndex: 1))
                         );
                       },
                     ),
