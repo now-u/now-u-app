@@ -1,26 +1,28 @@
-import 'package:app/models/User.dart';
+import 'package:flutter/foundation.dart';
+
+enum RewardType {
+  CompletedCampaignsNumber,
+  CompletedActionsNumber,
+  SelectInOneMonthCampaignsNumber,
+  //CompleteCampaignsNumber
+}
 
 class Reward {
-  int id;
-  String title;
+  final int id;
+  final String title;
   //String _description;
 
   // Number required to complete action
   int successNumber;
-  // Function to find out the current value
-  Function getCurrentProgress;
-  
-  // Whether the action has ever been completed 
-  bool completed;
+
+  final RewardType type;
 
   Reward({
-    this.id, 
-    this.title, 
-    this.successNumber,
-    this.getCurrentProgress,
-  }){
-    completed = getCurrentProgress() >= successNumber;
-  }
+    @required this.id, 
+    @required this.title, 
+    @required this.successNumber,
+    @required this.type,
+  });
 
   int getId() {
     return id;
@@ -28,24 +30,8 @@ class Reward {
   String getTitle() {
     return title;
   }
- 
-  // Returns fractional completedness
-  double getProgress() {
-    if (getCurrentProgress() >= successNumber) {
-      setComplete();
-      return 1; 
-    }
-    return getCurrentProgress() / successNumber; 
-  }
-  // Once Completed never uncompleted
-  bool getCompleted() {
-    if (completed) return completed;
-    completed = getCurrentProgress() >= successNumber;
-    return completed;
-  }
-
-  void setComplete() {
-    completed = true; 
-
+  RewardType getType() {
+    return type;
   }
 }
+

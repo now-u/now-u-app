@@ -30,7 +30,7 @@ class RewardsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
   var _rewards = <Reward>[
-    Reward(id: 1, title: "Select 3 Campaigns", successNumber: 3, getCurrentProgress: model.user.getSelectedCampaignsLength) 
+    Reward(id: 1, title: "Select 3 Campaigns", successNumber: 3, type: RewardType.SelectInOneMonthCampaignsNumber) 
   ];
     return Column(
         children: <Widget>[
@@ -48,7 +48,7 @@ class RewardsPage extends StatelessWidget {
                   GestureDetector(
                     // TODO Offer more info page
                     onTap: () {},
-                    child: RewardTile(_rewards[index]),
+                    child: RewardTile(_rewards[index], model),
                   ),
             ),
           ),
@@ -60,11 +60,10 @@ class RewardsPage extends StatelessWidget {
 }
 
 class RewardTile extends StatelessWidget {
-  Reward _reward;
+  Reward reward;
+  ViewModel model;
 
-  RewardTile(reward) {
-    _reward = reward;
-  }
+  RewardTile(this.reward, this.model);
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +78,8 @@ class RewardTile extends StatelessWidget {
                   padding: EdgeInsets.only(right: ICON_PADDING),
                   child: Icon(FontAwesomeIcons.ribbon, size: 50,)
               ),
-              Text(_reward.getTitle(), style: Theme.of(context).primaryTextTheme.body1),
-              Text(_reward.getProgress().toString(), style: Theme.of(context).primaryTextTheme.body1),
+              Text(reward.getTitle(), style: Theme.of(context).primaryTextTheme.body1),
+              Text(model.user.getRewardProgress(reward).toString(), style: Theme.of(context).primaryTextTheme.body1),
             ],
           ),
         )

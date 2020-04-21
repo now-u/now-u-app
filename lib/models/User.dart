@@ -1,3 +1,5 @@
+import 'package:app/models/Reward.dart';
+
 class User {
   int id;
   String fullName;
@@ -11,6 +13,9 @@ class User {
 
   // Progress
   List<int> selectedCampaings;
+  List<int> completedCampaigns = [];
+  List<int> completedRewards = [];
+  List<int> completedActions = [];
   
   User({id, fullName, username, age, location, monthlyDonationLimit, homeOwner}) {
     this.id = id; 
@@ -82,6 +87,22 @@ class User {
   int getSelectedCampaignsLength() {
     if (selectedCampaings == null) return 0;
     else return selectedCampaings.length;
+  }
+
+  // Return the reward progress
+  double getRewardProgress(Reward reward) {
+    if(this.completedRewards.contains(reward.getId())) return 1;
+    RewardType type = reward.type;
+    if (type == RewardType.CompletedActionsNumber) {
+      return this.completedActions.length / reward.successNumber;
+    }
+    if (type == RewardType.CompletedCampaignsNumber) {
+      return this.completedCampaigns.length / reward.successNumber;
+    }
+    if (type == RewardType.SelectInOneMonthCampaignsNumber) {
+      return this.selectedCampaings.length / reward.successNumber;
+    }
+    return 0;
   }
   
   void setName(String name) {
