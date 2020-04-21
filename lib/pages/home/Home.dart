@@ -1,3 +1,4 @@
+import 'package:app/assets/components/darkButton.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
@@ -6,6 +7,9 @@ import 'package:app/assets/components/pageTitle.dart';
 
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/ViewModel.dart';
+import 'package:app/models/Action.dart';
+
+const double BUTTON_PADDING = 10;
 
 class Home extends StatelessWidget {
   ViewModel model;
@@ -25,7 +29,7 @@ class Home extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
                                     sectionTitle("Actions", context),
-                                    
+                                    ActionTile(model.campaigns[0].getActions()),
                                   ],
                                   )
                             ),
@@ -34,7 +38,15 @@ class Home extends StatelessWidget {
                         Container(
                               child: Column(
                                   children: <Widget>[
-                                    sectionTitle("Actions", context),
+                                    sectionTitle("Congratulations", context),
+                                    SelectionItem("You Completed 10 Actions"),
+                                    sectionTitle("Other progress...", context),
+                                    SelectionItem("Make 1 more donation to complete 'Make 5' donations"),
+                                    Padding(
+                                      padding: EdgeInsets.all(BUTTON_PADDING),
+                                      child: DarkButton("See More Rewards", onPressed: () {},),
+                                    ),
+                                    // TODO Progress Slider thing
                                   ],
                                   )
                             ),
@@ -51,7 +63,9 @@ Text sectionTitle(String t, BuildContext context) {
   return Text(t, style: Theme.of(context).primaryTextTheme.headline, textAlign: TextAlign.start,);
 }
 
-class _ActionTile extends StatelessWidget {
+class ActionTile extends StatelessWidget {
+  List<CampaignAction> actions;
+  ActionTile(this.actions);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -60,26 +74,50 @@ class _ActionTile extends StatelessWidget {
       child: Padding(
           padding: EdgeInsets.fromLTRB(10, 0, 5, 10),
           child: 
-          Column(
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  ListView.builder(
-                      itemCount: 3,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Text("Testeroo");
-                      },
-                  ),
-                  Transform.rotate(
-                    angle: 180 * math.pi / 180,
-                    child: Icon(Icons.chevron_left, size: 25), 
-                  ),
-                ],
-                  
-              ),
-            ],   
-          ),
+            Column(
+              children: <Widget>[
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: 3,
+                  itemBuilder: 
+                    (BuildContext context, int index) => SelectionItem(actions[index].getTitle()),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(BUTTON_PADDING),
+                  child: DarkButton("See More Actions", onPressed: () {},),
+                ),
+                //ActionItem(user.getFollowUpAction()),
+                //TODO Work ou where follow up actions should be
+              ]
+          )
       )
+    );
+  }
+}
+
+class SelectionItem extends StatelessWidget {
+  String t;
+  SelectionItem(this.t);
+  @override
+  Widget build(BuildContext context) {
+    return 
+    GestureDetector(
+     child: 
+      Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(5),
+            child: Text(t, style: Theme.of(context).primaryTextTheme.body1,),
+          ),
+          Transform.rotate(
+            angle: 180 * math.pi / 180,
+            child: Icon(Icons.chevron_left, size: 25), 
+          ),
+        ],
+      ),   
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:app/models/Action.dart';
 
 class Campaign {
   int id;
@@ -7,6 +8,7 @@ class Campaign {
   int numberOfCampaingers;
   String headerImage;
   bool isCampaignSelected;
+  List<CampaignAction> actions;
   
   Campaign({
     @required int id,
@@ -14,12 +16,14 @@ class Campaign {
     @required String description,
     @required int numberOfCampaigners,
     @required String headerImage,
+    @required List<CampaignAction> actions,
   }) {
     this.id = id; 
     this.title = title;
     this.description = description;
     this.numberOfCampaingers = numberOfCampaigners;
     this.headerImage = headerImage;
+    this.actions = actions;
   }
 
   Campaign copyWith({
@@ -28,6 +32,7 @@ class Campaign {
     String description,
     int numberOfCampaingers,
     String headerImage,
+    List<CampaignAction> actions,
   }) {
     return Campaign(
       id: id ?? this.id,
@@ -35,6 +40,7 @@ class Campaign {
       description: description ?? this.description,
       numberOfCampaigners: numberOfCampaingers ?? this.numberOfCampaingers,
       headerImage: headerImage ?? this.headerImage,
+      actions: actions ?? this.actions,
     );
   }
 
@@ -46,6 +52,8 @@ class Campaign {
     description = json['description'];
     numberOfCampaingers = json['numberOfCampaingers'];
     headerImage = json['headerImage'];
+    // TODO this proabably wont work
+    actions = json['actions'];
     print("From json success");
   }
 
@@ -55,7 +63,8 @@ class Campaign {
     'description': description,
     'numberOfCampaingers': numberOfCampaingers,
     'headerImage': headerImage,
-    'isSelected': isCampaignSelected,
+    // TODO this proabably wont work
+    'actions': actions,
   };
 
   int getId() {
@@ -75,5 +84,8 @@ class Campaign {
   }
   bool isSelected(List<int> selectedCampaings) {
     return selectedCampaings.contains(id);
+  }
+  List<CampaignAction> getActions() {
+    return actions; 
   }
 }

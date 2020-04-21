@@ -79,6 +79,10 @@ class User {
   List<int> getSelectedCampaigns() {
     return selectedCampaings ?? [];
   }
+  int getSelectedCampaignsLength() {
+    if (selectedCampaings == null) return 0;
+    else return selectedCampaings.length;
+  }
   
   void setName(String name) {
     this.fullName = name; 

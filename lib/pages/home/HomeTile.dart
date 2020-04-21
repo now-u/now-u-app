@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-Container _child;
 
 class HomeTile extends StatelessWidget {
-  HomeTile (Container child) {
-    _child = child;
-  }
+  final Container child;
+  HomeTile (this.child);
+
   @override
   Widget build(BuildContext context) {
     return 
@@ -19,8 +18,7 @@ class HomeTile extends StatelessWidget {
                     child: 
                       SizedBox(
                         width: double.infinity,
-                        height: 100.0,
-                        child: _child,
+                        child: child,
                       )
                     , 
                   )

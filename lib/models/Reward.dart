@@ -1,26 +1,51 @@
-class Reward {
-  int _id;
-  String _title;
-  String _description;
-  bool _completed;
+import 'package:app/models/User.dart';
 
-  Reward({id, title, description, completed}) {
-    _id = id;
-    _title = title;
-    _description = description;
-    _completed = completed;
+class Reward {
+  int id;
+  String title;
+  //String _description;
+
+  // Number required to complete action
+  int successNumber;
+  // Function to find out the current value
+  Function getCurrentProgress;
+  
+  // Whether the action has ever been completed 
+  bool completed;
+
+  Reward({
+    this.id, 
+    this.title, 
+    this.successNumber,
+    this.getCurrentProgress,
+  }){
+    completed = getCurrentProgress() >= successNumber;
   }
 
   int getId() {
-    return _id;
+    return id;
   }
   String getTitle() {
-    return _title;
+    return title;
   }
-  String getDescription() {
-    return _description;
+ 
+  // Returns fractional completedness
+  double getProgress() {
+    if (getCurrentProgress() >= successNumber) {
+      setComplete();
+      return 1; 
+    }
+    return getCurrentProgress() / successNumber; 
   }
+  // Once Completed never uncompleted
   bool getCompleted() {
-    return _completed;
+    if (completed) return completed;
+    completed = getCurrentProgress() >= successNumber;
+    return completed;
+  }
+
+  void setComplete() {
+    completed = true; 
+
   }
 }
