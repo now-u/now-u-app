@@ -37,12 +37,14 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
   }
   if (action is GetCampaingsAction) {
     print("the middleware is happening for get Campaings");
-    await loadFromPrefs()
-        .then((state) { 
+    await loadFromPrefs().then((state) { 
           print("The state at the get Camapings middelware is");
           print(state.campaigns[0].isSelected());
           //TODO FIND OUT WHY THIS IS NEVER CALLED / DOESNT WORK
+          print("Gonna do the dispatch");
           store.dispatch(LoadedCampaignsAction(state.campaigns)); 
+          print("Thinks its done the loadedcampaignsaction");
+          // It thinks its done the dispatch
         });
   }
 }
