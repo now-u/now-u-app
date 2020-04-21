@@ -136,9 +136,8 @@ class App extends StatelessWidget {
         home: 
           StoreBuilder<AppState>(
             onInit: (store) { 
-              print("Initalising");
-              store.dispatch(GetCampaingsAction());
-              print("Got campaings");
+              //store.dispatch(GetCampaingsAction());
+              store.dispatch(GetUserDataAction());
             },
             builder: (BuildContext context, Store<AppState> store) =>
               MyHomePage(store),
@@ -159,7 +158,6 @@ class MyHomePage extends StatelessWidget {
       StoreConnector<AppState, ViewModel>(
           converter: (Store<AppState> store) => ViewModel.create(store),
           builder: (BuildContext context, ViewModel viewModel) {
-            print(viewModel.campaigns[0].isSelected());
             return TabsPage(viewModel);
           },
       );

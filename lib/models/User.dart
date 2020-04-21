@@ -8,6 +8,9 @@ class User {
   String location;
   double monthlyDonationLimit;
   bool homeOwner;
+
+  // Progress
+  List<int> selectedCampaings;
   
   User({id, fullName, username, age, location, monthlyDonationLimit, homeOwner}) {
     this.id = id; 
@@ -17,6 +20,7 @@ class User {
     this.location = location;
     this.monthlyDonationLimit = monthlyDonationLimit;
     this.homeOwner = homeOwner;
+    this.selectedCampaings = selectedCampaings ?? [];
   }
 
   User.fromJson(Map json)
@@ -26,7 +30,8 @@ class User {
       age = json['age'],
       location = json['location'],
       monthlyDonationLimit = json['monthlyDonationLimit'],
-      homeOwner = json['homeOwner'];
+      homeOwner = json['homeOwner'],
+      selectedCampaings = json['selectedCampaings'].cast<int>();
 
   Map toJson() => {
     'id': id, 
@@ -36,6 +41,7 @@ class User {
     'location': location, 
     'monthlyDonationLimit': monthlyDonationLimit, 
     'homeOwner': homeOwner, 
+    'selectedCampaings': selectedCampaings, 
   };
 
   int getId() {
@@ -70,6 +76,9 @@ class User {
       'homeOwner': homeOwner,
     };
   }
+  List<int> getSelectedCampaigns() {
+    return selectedCampaings ?? [];
+  }
   
   void setName(String name) {
     this.fullName = name; 
@@ -88,5 +97,15 @@ class User {
   }
   void setHomeOwner(bool homeOwner) {
     this.homeOwner = homeOwner;
+  }
+  void addSelectedCamaping(int id) {
+    if (this.selectedCampaings == null) {
+      this.selectedCampaings = [id];
+    } else {
+      this.selectedCampaings.add(id);
+    }
+  }
+  void removeSelectedCamaping(int id) {
+    this.selectedCampaings.remove(id);
   }
 }

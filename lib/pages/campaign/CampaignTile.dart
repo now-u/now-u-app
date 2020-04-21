@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:app/models/Campaign.dart';
+import 'package:app/models/User.dart';
 import 'package:app/models/ViewModel.dart';
 
 import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
@@ -8,22 +9,33 @@ import 'package:app/assets/routes/customRoute.dart';
 
 class CampaignTile extends StatefulWidget {
   
-  bool _selectionMode;
-  ViewModel model;
-  var _campaign;
+  final ViewModel model;
+  final Campaign _campaign;
+  final bool selectionMode;
 
-  CampaignTile(this._campaign, this.model, { selectionMode }) {
-    _selectionMode = selectionMode != null ? selectionMode : false;
-  }
+  CampaignTile(this._campaign, this.model, { this.selectionMode });
   
   @override
   _CampaignTileState createState() => _CampaignTileState();
 }
 
 class _CampaignTileState extends State<CampaignTile> {
+  bool _selectionMode;
+  User _user;
+ 
+  @override
+  void initState () {
+    print("Initialising state");
+    print(widget.selectionMode);
+    _selectionMode = widget.selectionMode ?? false;
+    _user = widget.model.user;
+    super.initState();
+  }
   
   @override
   Widget build(BuildContext context) {
+    _selectionMode = widget.selectionMode ?? false;
+    //_user = widget.model.user;
     
     GestureTapCallback _onTapMoreInfo =  () {
       Navigator.push(
@@ -34,18 +46,22 @@ class _CampaignTileState extends State<CampaignTile> {
 
     GestureTapCallback _onTapSelect =  () {
       setState(() {
-        widget._campaign.setSelected(!widget._campaign.isSelected());
+        if (widget._campaign.isSelected(_user.getSelectedCampaigns())) {
+          _user.removeSelectedCamaping(widget._campaign.getId());
+        } else {
+          _user.addSelectedCamaping(widget._campaign.getId());
+        }
       });
     };
 
     return Container(
        height: 300,
        child: GestureDetector(
-           onTap: widget._selectionMode ? _onTapSelect : _onTapMoreInfo,
+           onTap: _selectionMode ? _onTapSelect : _onTapMoreInfo,
            child: Stack(
               children: <Widget> [
                 Padding(
-                   padding: widget._campaign.isSelected() && widget._selectionMode ? EdgeInsets.fromLTRB(35, 30, 35, 30) : EdgeInsets.all(0), 
+                   padding: widget._campaign.isSelected(_user.getSelectedCampaigns()) && _selectionMode ? EdgeInsets.fromLTRB(35, 30, 35, 30) : EdgeInsets.all(0), 
                    child: Stack(
                       children: <Widget>[
                         // Image
@@ -98,13 +114,13 @@ class _CampaignTileState extends State<CampaignTile> {
                           elevation: 30.0,
                           child: 
                             Container(
-                              height: widget._campaign.isSelected() && widget._selectionMode 
+                              height: widget._campaign.isSelected(_user.getSelectedCampaigns()) && _selectionMode 
                                       ? 90 
                                       : 0,  
-                              width: widget._campaign.isSelected() && widget._selectionMode 
+                              width: widget._campaign.isSelected(_user.getSelectedCampaigns()) && _selectionMode 
                                      ? 90 
                                      : 0,  
-                              child: widget._campaign.isSelected() && widget._selectionMode 
+                              child: widget._campaign.isSelected(_user.getSelectedCampaigns()) && _selectionMode 
                                      ? Icon(Icons.check, size: 50,) 
                                      : null,
                             ),

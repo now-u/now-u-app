@@ -1,15 +1,15 @@
 import 'package:app/redux/actions.dart';
 import 'package:app/models/State.dart';
-import 'package:app/models/Campaign.dart';
+import 'package:app/models/User.dart';
 
 AppState appStateReducer(AppState state, action) {
   return AppState(
-    campaigns: campaignReducer(state.campaigns, action),
-    user: state.user,
+    campaigns: state.campaigns,
+    user: userReducer(state.user, action),
   );
 }
 
-List<Campaign> campaignReducer(List<Campaign> campaigns, action) {
+User userReducer(User user, action) {
   //switch (action) {
   //  case SelectCampaignsAction: {
   //    print("Its doing the slect campiangs action");
@@ -33,11 +33,11 @@ List<Campaign> campaignReducer(List<Campaign> campaigns, action) {
   //  }
   //}
   if (action is SelectCampaignsAction) {
-    return action.campaigns; 
+    return action.user; 
   }
-  if (action is LoadedCampaignsAction) {
-    return action.campaigns;
+  if (action is LoadedUserDataAction) {
+    return action.user;
   }
-  return campaigns;
+  return user;
 
 }

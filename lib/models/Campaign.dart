@@ -14,14 +14,12 @@ class Campaign {
     @required String description,
     @required int numberOfCampaigners,
     @required String headerImage,
-    @required bool isSelected,
   }) {
     this.id = id; 
     this.title = title;
     this.description = description;
     this.numberOfCampaingers = numberOfCampaigners;
     this.headerImage = headerImage;
-    this.isCampaignSelected = isSelected;
   }
 
   Campaign copyWith({
@@ -30,7 +28,6 @@ class Campaign {
     String description,
     int numberOfCampaingers,
     String headerImage,
-    bool isSelected,
   }) {
     return Campaign(
       id: id ?? this.id,
@@ -38,7 +35,6 @@ class Campaign {
       description: description ?? this.description,
       numberOfCampaigners: numberOfCampaingers ?? this.numberOfCampaingers,
       headerImage: headerImage ?? this.headerImage,
-      isSelected: isSelected ?? this.isCampaignSelected,
     );
   }
 
@@ -50,7 +46,6 @@ class Campaign {
     description = json['description'];
     numberOfCampaingers = json['numberOfCampaingers'];
     headerImage = json['headerImage'];
-    isCampaignSelected = json['isSelected'];
     print("From json success");
   }
 
@@ -78,10 +73,7 @@ class Campaign {
   String getHeaderImage() {
     return headerImage;
   }
-  bool isSelected() {
-    return isCampaignSelected;
-  }
-  void setSelected(bool isSelected) {
-    this.isCampaignSelected = isSelected;
+  bool isSelected(List<int> selectedCampaings) {
+    return selectedCampaings.contains(id);
   }
 }

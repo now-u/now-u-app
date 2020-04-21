@@ -17,12 +17,11 @@ class SelectionComplete extends StatelessWidget {
   List<Campaign> _selectedCamapings;
 
   SelectionComplete( this.model ) {
-    print("Lets get cracking");
     _selectedCamapings = model.campaigns.map((Campaign c) => c).toList();
-    _selectedCamapings = _selectedCamapings.where((c) => c.isSelected()).toList();
-    print("Number of selected campaigns is");
-    print(_selectedCamapings.length);
-    print("Selected campaigns are");
+    print("SelectedCampaings");
+    print(_selectedCamapings);
+    _selectedCamapings = _selectedCamapings.where((c) => c.isSelected(model.user.getSelectedCampaigns())).toList();
+    print("SelectedCampaings");
     print(_selectedCamapings);
   }
 

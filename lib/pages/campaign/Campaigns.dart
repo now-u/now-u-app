@@ -5,6 +5,7 @@ import 'package:app/pages/campaign/SelectionComplete.dart';
 
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/ViewModel.dart';
+import 'package:app/models/User.dart';
 
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/components/darkButton.dart';
@@ -18,12 +19,9 @@ import 'package:app/main.dart';
 
 class Campaigns extends StatefulWidget {
   final ViewModel model;
-  bool _selectionMode;
-  List<Campaign> _campaigns;
+  final bool _selectionMode;
 
-  Campaigns(this.model, this._selectionMode) {
-    _campaigns = model.campaigns.toList();
-  }
+  Campaigns(this.model, this._selectionMode);
 
   @override
   _CampaignsState createState() => _CampaignsState();
@@ -31,9 +29,13 @@ class Campaigns extends StatefulWidget {
 
 class _CampaignsState extends State<Campaigns> {
   List<Campaign> _campaigns;
+  User _user;
+  bool _selectionMode;
   @override
   void initState() {
     _campaigns = widget.model.campaigns.toList();
+    _user = widget.model.user;
+    _selectionMode = widget._selectionMode;
     super.initState();
   }
 
@@ -48,15 +50,15 @@ class _CampaignsState extends State<Campaigns> {
                     Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
                         child: Text(
-                            widget._selectionMode ? "Tap to Select" : "Click to learn more...", 
+                            _selectionMode ? "Tap to Select" : "Click to learn more...", 
                             style: Theme.of(context).primaryTextTheme.subtitle),
                     ),
                     Expanded(
                       child: ListView(
                         children: <Widget> [
-                          CampaignTile(_campaigns[0], widget.model, selectionMode: widget._selectionMode),
-                          CampaignTile(_campaigns[1], widget.model, selectionMode: widget._selectionMode),
-                          CampaignTile(_campaigns[2], widget.model, selectionMode: widget._selectionMode),
+                          CampaignTile(_campaigns[0], widget.model, selectionMode: _selectionMode),
+                          CampaignTile(_campaigns[1], widget.model, selectionMode: _selectionMode),
+                          CampaignTile(_campaigns[2], widget.model, selectionMode: _selectionMode),
                           Container(
                                 height: 100,
                               )
@@ -79,14 +81,14 @@ class _CampaignsState extends State<Campaigns> {
               ),
         //floatingActionButton: CustomFloatingActionButton(text: "Select Campaigns", ),
         floatingActionButton: 
-          !widget._selectionMode ?
+          !_selectionMode ?
           Padding (
               padding: EdgeInsets.all(14),
               child: DarkButton(
                 "Select Campaigns",
                 onPressed: () {
                   setState(() {
-                     widget._selectionMode = true;
+                     _selectionMode = true;
                    }); 
                 },
               )
@@ -104,7 +106,7 @@ class _CampaignsState extends State<Campaigns> {
                         "Cancel",
                         onPressed: () {
                           setState(() {
-                             widget._selectionMode = false;
+                             _selectionMode = false;
                            }); 
                         },
                       ),
@@ -116,9 +118,9 @@ class _CampaignsState extends State<Campaigns> {
                         "Select",
                         onPressed: () {
                           setState(() {
-                            widget._selectionMode = false;
+                            _selectionMode = false;
                           });
-                          widget.model.onSelectCampaigns(_campaigns);
+                          widget.model.onSelectCampaigns(_user);
                           Navigator.push(
                             context, 
                             CustomRoute(builder: (context) => SelectionComplete(widget.model))

@@ -32,7 +32,6 @@ class _TabsPageState extends State<TabsPage> {
 
   @override
   Widget build(BuildContext context) {
-  print(widget.model.campaigns[0].isSelected());
   List<Widget> _pages = <Widget>[Campaigns(widget.model, false), Home(widget.model), Profile(widget.model)];
     return  
           Scaffold(

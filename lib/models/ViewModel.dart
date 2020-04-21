@@ -8,7 +8,7 @@ import 'package:app/redux/actions.dart';
 class ViewModel {
   final List<Campaign> campaigns;
   final User user;
-  final Function(List<Campaign>) onSelectCampaigns;
+  final Function(User) onSelectCampaigns;
 
   ViewModel({
     this.campaigns,
@@ -17,8 +17,8 @@ class ViewModel {
   });
 
   factory ViewModel.create(Store<AppState> store) {
-    _onSelectCampaigns(List<Campaign> c) {
-      store.dispatch(SelectCampaignsAction(c));
+    _onSelectCampaigns(User u) {
+      store.dispatch(SelectCampaignsAction(u));
     }
 
     return ViewModel(
