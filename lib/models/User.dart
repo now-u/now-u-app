@@ -1,4 +1,5 @@
 import 'package:app/models/Reward.dart';
+import 'package:app/models/Action.dart';
 
 class User {
   int id;
@@ -16,8 +17,10 @@ class User {
   List<int> completedCampaigns = [];
   List<int> completedRewards = [];
   List<int> completedActions = [];
+
+  Map<CampaignActionType, int> completedActionsType;
   
-  User({id, fullName, username, age, location, monthlyDonationLimit, homeOwner}) {
+  User({id, fullName, username, age, location, monthlyDonationLimit, homeOwner, selectedCampaings, completedActions, completedRewards, completedActionsType}) {
     this.id = id; 
     this.fullName = fullName;
     this.username = username;
@@ -25,7 +28,13 @@ class User {
     this.location = location;
     this.monthlyDonationLimit = monthlyDonationLimit;
     this.homeOwner = homeOwner;
+    
     this.selectedCampaings = selectedCampaings ?? [];
+    this.completedActions = completedActions ?? [];
+    this.completedRewards = completedRewards ?? [];
+    
+    this.completedActionsType = 
+        completedActionsType ?? this.initCompletedAction();
   }
 
   User.fromJson(Map json)
@@ -89,22 +98,6 @@ class User {
     else return selectedCampaings.length;
   }
 
-  // Return the reward progress
-  double getRewardProgress(Reward reward) {
-    if(this.completedRewards.contains(reward.getId())) return 1;
-    RewardType type = reward.type;
-    if (type == RewardType.CompletedActionsNumber) {
-      return this.completedActions.length / reward.successNumber;
-    }
-    if (type == RewardType.CompletedCampaignsNumber) {
-      return this.completedCampaigns.length / reward.successNumber;
-    }
-    if (type == RewardType.SelectInOneMonthCampaignsNumber) {
-      return this.selectedCampaings.length / reward.successNumber;
-    }
-    return 0;
-  }
-  
   void setName(String name) {
     this.fullName = name; 
   }
@@ -133,4 +126,56 @@ class User {
   void removeSelectedCamaping(int id) {
     this.selectedCampaings.remove(id);
   }
+
+  // Progress
+  // Return the reward progress
+  double getRewardProgress(Reward reward, {CampaignActionType type}) {
+    if(this.completedRewards.contains(reward.getId())) return 1;
+    RewardType type = reward.type;
+    int count = 0;
+    if (type == RewardType.CompletedActionsNumber) {
+      count = this.completedActions.length;
+    }
+    else if (type == RewardType.CompletedCampaignsNumber) {
+      count = this.completedCampaigns.length;
+    } 
+    else if (type == RewardType.SelectInOneMonthCampaignsNumber) {
+      count = this.selectedCampaings.length;
+    }
+    else if (type == RewardType.CompletedTypedActionsNumber) {
+      if (CampaignActionType == null) {
+        print("A CompletedTypedActionsNumber reward requires a CampaignActionType");
+        return 0;
+      }
+      else {
+        count = this.completedActionsType[CampaignActionType];
+      }
+    }
+
+    // return 
+    if (count > reward.successNumber) {
+      completeReward(reward);
+      return 1;
+    } 
+    return count / reward.successNumber;
+  }
+  
+  void completeAction(CampaignAction a) {
+    completedActions.add(a.getId());
+    completedActionsType.update(a.getType(), (int x) => x + 1);
+  }
+
+  void completeReward(Reward r) {
+    completedRewards.add(r.getId());
+  }
+  
+  Map<CampaignActionType, int> initCompletedAction() {
+    Map<CampaignActionType, int> cas;
+    for (int i = 0; i < RewardType.values.length; i++) {
+      CampaignActionType t = CampaignActionType.values[i];
+      cas[t] = 0;
+    }
+    return cas;
+  }
+  
 }

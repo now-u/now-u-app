@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 
+// 
 enum RewardType {
   CompletedCampaignsNumber,
   CompletedActionsNumber,
+  CompletedTypedActionsNumber,
   SelectInOneMonthCampaignsNumber,
   //CompleteCampaignsNumber
 }

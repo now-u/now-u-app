@@ -1,21 +1,34 @@
 import 'package:flutter/foundation.dart';
 
+enum CampaignActionType {
+  Petition,
+  Email,
+  Donation,
+  Learn,
+  Socail,
+  Volunteer,
+  Other 
+}
+
 class CampaignAction {
   int id;
   String title;
   String description;
   String link;
+  CampaignActionType type;
 
   CampaignAction({
     @required int id, 
     @required String title, 
     @required String description, 
-    @required String link
+    @required String link,
+    @required CampaignActionType type,
   }) {
     this.id = id; 
     this.title = title;
     this.description = description;
     this.link = link;
+    this.type = type;
   }
 
   int getId() {
@@ -29,5 +42,8 @@ class CampaignAction {
   }
   String getLink() {
     return link; 
+  }
+  CampaignActionType getType() {
+    return type; 
   }
 }
