@@ -1,4 +1,5 @@
 import 'package:app/redux/actions.dart';
+import 'package:app/redux/middleware.dart';
 import 'package:app/models/State.dart';
 import 'package:app/models/User.dart';
 
@@ -14,11 +15,16 @@ User userReducer(User user, action) {
     return action.user; 
   }
   if (action is CompleteAction) {
-    User user = action.user;
-    user.completeAction(action.action);
-    return user;
+    User u = user.copyWith();
+    print("Completing action");
+    u.completeAction(action.action);
+    print("Action completed");
+    print(u.getCompletedActions());
+    return u;
   }
   if (action is LoadedUserDataAction) {
+    print("The user that has been loaded is");
+    print(action.user.getCompletedActions());
     return action.user;
   }
   return user;

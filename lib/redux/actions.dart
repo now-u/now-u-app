@@ -8,10 +8,9 @@ class SelectCampaignsAction {
 }
 
 class CompleteAction {
-  final User user;
   final CampaignAction action;
 
-  CompleteAction(this.action, this.user);
+  CompleteAction(this.action);
 }
 
 //class GetCampaingsAction {}

@@ -6,6 +6,7 @@ import 'package:app/assets/components/darkButton.dart';
 
 import 'package:app/models/Reward.dart';
 import 'package:app/models/ViewModel.dart';
+import 'package:app/models/Action.dart';
 
 const double ICON_PADDING = 40;
 const double ITEM_HORIZONTAL = 30;
@@ -30,7 +31,9 @@ class RewardsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
   var _rewards = <Reward>[
-    Reward(id: 1, title: "Select 3 Campaigns", successNumber: 3, type: RewardType.SelectInOneMonthCampaignsNumber) 
+    Reward(id: 1, title: "Select 3 Campaigns", successNumber: 3, type: RewardType.SelectInOneMonthCampaignsNumber),
+    Reward(id: 2, title: "Complete first action", successNumber: 1, type: RewardType.CompletedActionsNumber),
+    Reward(id: 3, title: "Sign 5 petitons", successNumber: 5, type: RewardType.CompletedTypedActionsNumber, actionType: CampaignActionType.Petition),
   ];
     return Column(
         children: <Widget>[

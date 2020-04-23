@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:app/models/Action.dart';
 
 // 
 enum RewardType {
@@ -15,15 +16,17 @@ class Reward {
   //String _description;
 
   // Number required to complete action
-  int successNumber;
+  final int successNumber;
 
   final RewardType type;
+  final CampaignActionType actionType;
 
   Reward({
     @required this.id, 
     @required this.title, 
     @required this.successNumber,
     @required this.type,
+    this.actionType, // This is required if type = CompletedTypedActionsNumber
   });
 
   int getId() {
@@ -34,6 +37,9 @@ class Reward {
   }
   RewardType getType() {
     return type;
+  }
+  CampaignActionType getActionType() {
+    return actionType;
   }
 }
 

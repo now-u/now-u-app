@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:app/models/Campaign.dart';
+import 'package:app/models/ViewModel.dart';
 
 import 'package:app/pages/other/ActionInfo.dart';
 
@@ -10,8 +11,9 @@ import 'package:app/assets/routes/customRoute.dart';
 
 class CampaignInfo extends StatelessWidget {
   Campaign _campaign;
+  ViewModel model;
 
-  CampaignInfo(campaign) {
+  CampaignInfo(campaign, this.model) {
     _campaign = campaign;
   }
 
@@ -78,26 +80,37 @@ class CampaignInfo extends StatelessWidget {
                 padding: EdgeInsets.all(25),
                 child: Text("Actions of the Week", style: Theme.of(context).primaryTextTheme.headline,),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: SelectionItem(
-                    _campaign.getActions()[0].getTitle(),
-                    onClick: () {
-                      Navigator.push(
-                        context, 
-                        CustomRoute(builder: (context) => ActionInfo(_campaign.getActions()[0], _campaign))
-                      );
-                    },   
-                  ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: SelectionItem(_campaign.getActions()[1].getTitle()),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: SelectionItem(_campaign.getActions()[2].getTitle()),
-              ),
+              //Padding(
+              //  padding: EdgeInsets.symmetric(horizontal: 20),
+              //  child: ActionSelectionItem(
+              //    campaign: _campaign,
+              //    action: _campaign.getActions()[0],
+              //    model: model,
+              //  ),
+              //),
+              //Padding(
+              //  padding: EdgeInsets.symmetric(horizontal: 20),
+              //  child: SelectionItem(_campaign.getActions()[1].getTitle()),
+              //),
+              //Padding(
+              //  padding: EdgeInsets.symmetric(horizontal: 20),
+              //  child: SelectionItem(_campaign.getActions()[2].getTitle()),
+              //),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 3,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: ActionSelectionItem(
+                      campaign: _campaign,
+                      action: _campaign.getActions()[index],
+                      model: model,
+                    ),
+                  );
+                },      
+              )
             ], 
           ),
           

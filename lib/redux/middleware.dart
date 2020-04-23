@@ -49,8 +49,14 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
   //
   if (action is GetUserDataAction) {
     await loadFromPrefs(store.state).then((state) { 
-          print(state.user);
+          print("The user being loaded is:");
+          print(state.user.getCompletedActions());
           store.dispatch(LoadedUserDataAction(state.user)); 
-        });
+    });
+  }
+  if (action is CompleteAction) {
+    print("In middleware of completed Action user is");
+    print(store.state.user.getCompletedActions());
+    saveToPrefs(store.state);
   }
 }

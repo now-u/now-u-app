@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:app/pages/campaign/CampaignTile.dart';
 import 'package:app/pages/campaign/SelectionComplete.dart';
-
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/User.dart';
@@ -31,11 +30,13 @@ class _CampaignsState extends State<Campaigns> {
   List<Campaign> _campaigns;
   User _user;
   bool _selectionMode;
+  ViewModel _model;
   @override
   void initState() {
     _campaigns = widget.model.campaigns.toList();
     _user = widget.model.user;
     _selectionMode = widget._selectionMode;
+    _model = widget.model;
     super.initState();
   }
 
@@ -107,6 +108,7 @@ class _CampaignsState extends State<Campaigns> {
                         onPressed: () {
                           setState(() {
                              _selectionMode = false;
+                             _model = widget.model;
                            }); 
                         },
                       ),

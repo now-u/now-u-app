@@ -1,5 +1,6 @@
 import 'package:app/models/Reward.dart';
 import 'package:app/models/Action.dart';
+import 'dart:convert';
 
 class User {
   int id;
@@ -13,14 +14,14 @@ class User {
   bool homeOwner;
 
   // Progress
-  List<int> selectedCampaings;
+  List<int> selectedCampaigns = [];
   List<int> completedCampaigns = [];
   List<int> completedRewards = [];
   List<int> completedActions = [];
 
   Map<CampaignActionType, int> completedActionsType;
   
-  User({id, fullName, username, age, location, monthlyDonationLimit, homeOwner, selectedCampaings, completedActions, completedRewards, completedActionsType}) {
+  User({id, fullName, username, age, location, monthlyDonationLimit, homeOwner, selectedCampaigns, completedCampaigns, completedActions, completedRewards, completedActionsType}) {
     this.id = id; 
     this.fullName = fullName;
     this.username = username;
@@ -29,7 +30,7 @@ class User {
     this.monthlyDonationLimit = monthlyDonationLimit;
     this.homeOwner = homeOwner;
     
-    this.selectedCampaings = selectedCampaings ?? [];
+    this.selectedCampaigns = selectedCampaigns ?? [];
     this.completedActions = completedActions ?? [];
     this.completedRewards = completedRewards ?? [];
     
@@ -37,15 +38,56 @@ class User {
         completedActionsType ?? this.initCompletedAction();
   }
 
-  User.fromJson(Map json)
-    : id = json['id'],
-      fullName = json['fullName'],
-      username = json['username'],
-      age = json['age'],
-      location = json['location'],
-      monthlyDonationLimit = json['monthlyDonationLimit'],
-      homeOwner = json['homeOwner'],
-      selectedCampaings = json['selectedCampaings'].cast<int>();
+  User copyWith({
+    int id,
+    String fullName,
+    String username,
+    int age,
+
+    // TODO make some attributes class that can take any attrribute so I dont need this
+    String location,
+    double monthlyDonationLimit,
+    bool homeOwner,
+
+    // Progress
+    List<int> selectedCampaigns,
+    List<int> completedCampaigns,
+    List<int> completedRewards,
+    List<int> completedActions,
+
+    Map<CampaignActionType, int> completedActionsType,
+  }) {
+    return User(
+      id: id ?? this.id,
+      fullName: fullName ?? this.fullName,
+      username: username ?? this.username,
+      age: age ?? this.age,
+      location: location ?? this.location,
+      monthlyDonationLimit: monthlyDonationLimit ?? this.monthlyDonationLimit,
+      homeOwner: homeOwner ?? this.homeOwner,
+      selectedCampaigns: selectedCampaigns ?? this.selectedCampaigns,
+      completedCampaigns: completedCampaigns ?? this.completedCampaigns,
+      completedRewards: completedRewards ?? this.completedRewards,
+      completedActions: completedActions ?? this.completedActions,
+      completedActionsType: completedActionsType ?? this.completedActionsType,
+    );
+  }
+
+  User.fromJson(Map json) {
+    id = json['id'];
+    fullName = json['fullName'];
+    username = json['username'];
+    age = json['age'];
+    location = json['location'];
+    monthlyDonationLimit = json['monthlyDonationLimit'];
+    homeOwner = json['homeOwner'];
+    // For cast not to throw null exception must be a default value of [] in User class
+    selectedCampaigns = json['selectedCampaigns'] == null ? <int>[] : json['selectedCampaigns'].cast<int>();
+    completedCampaigns = json['completedCampaigns'] == null ? <int>[] : json['completedCampaigns'].cast<int>();
+    completedActions = json['completedActions'] == null ? <int>[] : json['completedActions'].cast<int>();
+    completedRewards = json['completedRewards'] == null ? <int>[] : json['completedRewards'].cast<int>();
+    completedActionsType = json['completedActionsType'] == null ? this.initCompletedAction() : campaignActionTypesDecode(json['completedActionsType'].cast<int>());
+  }
 
   Map toJson() => {
     'id': id, 
@@ -55,7 +97,11 @@ class User {
     'location': location, 
     'monthlyDonationLimit': monthlyDonationLimit, 
     'homeOwner': homeOwner, 
-    'selectedCampaings': selectedCampaings, 
+    'selectedCampaigns': selectedCampaigns, 
+    'completedCampaigns': completedCampaigns, 
+    'completedActions': completedActions, 
+    'completedRewards': completedRewards, 
+    'completedActionsType': campaignActionTypesEncode(completedActionsType), 
   };
 
   int getId() {
@@ -91,11 +137,15 @@ class User {
     };
   }
   List<int> getSelectedCampaigns() {
-    return selectedCampaings ?? [];
+    return selectedCampaigns ?? [];
   }
   int getSelectedCampaignsLength() {
-    if (selectedCampaings == null) return 0;
-    else return selectedCampaings.length;
+    if (selectedCampaigns == null) return 0;
+    else return selectedCampaigns.length;
+  }
+
+  List<int> getCompletedActions() {
+    return completedActions; 
   }
 
   void setName(String name) {
@@ -117,19 +167,19 @@ class User {
     this.homeOwner = homeOwner;
   }
   void addSelectedCamaping(int id) {
-    if (this.selectedCampaings == null) {
-      this.selectedCampaings = [id];
+    if (this.selectedCampaigns == null) {
+      this.selectedCampaigns = [id];
     } else {
-      this.selectedCampaings.add(id);
+      this.selectedCampaigns.add(id);
     }
   }
   void removeSelectedCamaping(int id) {
-    this.selectedCampaings.remove(id);
+    this.selectedCampaigns.remove(id);
   }
 
   // Progress
   // Return the reward progress
-  double getRewardProgress(Reward reward, {CampaignActionType type}) {
+  double getRewardProgress(Reward reward) {
     if(this.completedRewards.contains(reward.getId())) return 1;
     RewardType type = reward.type;
     int count = 0;
@@ -140,15 +190,15 @@ class User {
       count = this.completedCampaigns.length;
     } 
     else if (type == RewardType.SelectInOneMonthCampaignsNumber) {
-      count = this.selectedCampaings.length;
+      count = this.selectedCampaigns.length;
     }
     else if (type == RewardType.CompletedTypedActionsNumber) {
-      if (CampaignActionType == null) {
+      if (reward.getActionType() == null) {
         print("A CompletedTypedActionsNumber reward requires a CampaignActionType");
         return 0;
       }
       else {
-        count = this.completedActionsType[CampaignActionType];
+        count = this.completedActionsType[reward.getActionType()];
       }
     }
 
@@ -168,6 +218,10 @@ class User {
   void completeReward(Reward r) {
     completedRewards.add(r.getId());
   }
+
+  bool isCompleted(CampaignAction a) {
+    return completedActions.contains(a.getId());
+  }
   
   Map<CampaignActionType, int> initCompletedAction() {
     Map<CampaignActionType, int> cas = {
@@ -183,4 +237,24 @@ class User {
     return cas;
   }
   
+}
+
+
+// TODO this feels very fragile. Find out what happens if I delete/add a CampaignActionType
+List<int> campaignActionTypesEncode ( Map<CampaignActionType, int> cats ) {
+  List<int> encodable = <int>[];
+  List<CampaignActionType> list = CampaignActionType.values;
+  for (int i = 0; i < list.length; i++) {
+    encodable.add(cats[list[i]]);
+  }
+  return encodable;
+}
+Map<CampaignActionType, int> campaignActionTypesDecode ( List<int> ints) {
+  Map<CampaignActionType, int> cats = { };
+  List<CampaignActionType> types = CampaignActionType.values;
+  for (int i = 0; i < ints.length; i++) {
+    CampaignActionType t = types[i];
+    cats[t] = ints[i];
+  }
+  return cats;
 }
