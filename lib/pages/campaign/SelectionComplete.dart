@@ -17,7 +17,7 @@ class SelectionComplete extends StatelessWidget {
   List<Campaign> _selectedCamapings;
 
   SelectionComplete( this.model ) {
-    _selectedCamapings = model.campaigns.map((Campaign c) => c).toList();
+    _selectedCamapings = model.campaigns.getCampaigns().map((Campaign c) => c).toList();
     print("SelectedCampaings");
     print(_selectedCamapings);
     _selectedCamapings = _selectedCamapings.where((c) => c.isSelected(model.user.getSelectedCampaigns())).toList();

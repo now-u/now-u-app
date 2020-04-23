@@ -1,3 +1,4 @@
+import 'package:app/models/Campaigns.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:app/models/Campaign.dart';
@@ -5,7 +6,7 @@ import 'package:app/models/User.dart';
 import 'package:app/models/Action.dart';
 
 class AppState {
-  final List<Campaign> campaigns;
+  final Campaigns campaigns;
   final User user;
 
   AppState({
@@ -23,7 +24,9 @@ class AppState {
           monthlyDonationLimit: 20.0,
           homeOwner: false,
         ),
-        campaigns = List.unmodifiable(
+        campaigns =
+          Campaigns(
+            List.unmodifiable(
       <Campaign> [
         Campaign(
             id: 0, 
@@ -115,7 +118,7 @@ class AppState {
               ),
             ]
         ),
-      ]
+      ])
     );
 
   AppState.fromJson(Map json, AppState state)

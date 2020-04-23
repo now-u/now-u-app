@@ -31,7 +31,7 @@ class Home extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
                                     sectionTitle("Actions", context),
-                                    ActionTile(model.campaigns[0].getActions()),
+                                    ActionTile(model.campaigns.getCampaigns()[0].getActions()),
                                   ],
                                   )
                             ),

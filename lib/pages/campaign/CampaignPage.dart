@@ -8,32 +8,30 @@ import 'package:app/models/User.dart';
 
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/components/darkButton.dart';
-import 'package:app/assets/components/customBottomNavBar.dart';
-import 'package:app/assets/components/customFloatingActionButton.dart';
 import 'package:app/assets/components/pageTitle.dart';
 
 import 'package:flutter_redux/flutter_redux.dart';
 
 import 'package:app/main.dart';
 
-class Campaigns extends StatefulWidget {
+class CampaignPage extends StatefulWidget {
   final ViewModel model;
   final bool _selectionMode;
 
-  Campaigns(this.model, this._selectionMode);
+  CampaignPage(this.model, this._selectionMode);
 
   @override
-  _CampaignsState createState() => _CampaignsState();
+  _CampaignPageState createState() => _CampaignPageState();
 }
 
-class _CampaignsState extends State<Campaigns> {
+class _CampaignPageState extends State<CampaignPage> {
   List<Campaign> _campaigns;
   User _user;
   bool _selectionMode;
   ViewModel _model;
   @override
   void initState() {
-    _campaigns = widget.model.campaigns.toList();
+    _campaigns = widget.model.campaigns.getCampaigns().toList();
     _user = widget.model.user;
     _selectionMode = widget._selectionMode;
     _model = widget.model;

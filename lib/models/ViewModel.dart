@@ -1,4 +1,4 @@
-import 'package:app/models/Campaign.dart';
+import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/User.dart';
 
@@ -7,7 +7,7 @@ import 'package:redux/redux.dart';
 import 'package:app/redux/actions.dart';
 
 class ViewModel {
-  final List<Campaign> campaigns;
+  final Campaigns campaigns;
   final User user;
   final Function(User) onSelectCampaigns;
   final Function(CampaignAction) onCompleteAction;

@@ -51,7 +51,7 @@ class ProgressPage extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.all(10),
-            child: Text("You have completed 6 campaigns"),
+            child: Text("You have taken part in ${ model.user } campaigns"),
           ),
           DarkButton(
             "Completed Campaigns", 

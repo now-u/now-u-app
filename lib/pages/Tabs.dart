@@ -4,7 +4,7 @@ import 'package:app/models/ViewModel.dart';
 
 import 'package:app/pages/home/Home.dart';
 import 'package:app/pages/profile/Profile.dart';
-import 'package:app/pages/campaign/Campaigns.dart';
+import 'package:app/pages/campaign/CampaignPage.dart';
 
 class TabsPage extends StatefulWidget {
 
@@ -32,7 +32,7 @@ class _TabsPageState extends State<TabsPage> {
 
   @override
   Widget build(BuildContext context) {
-  List<Widget> _pages = <Widget>[Campaigns(widget.model, false), Home(widget.model), Profile(widget.model)];
+  List<Widget> _pages = <Widget>[CampaignPage(widget.model, false), Home(widget.model), Profile(widget.model)];
     return  
           Scaffold(
               body: _pages[_currentIndex],
