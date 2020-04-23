@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+
 import 'package:app/models/Campaign.dart';
-import 'package:app/assets/components/videoPlayerFlutterSimple.dart';
+
+import 'package:app/pages/other/ActionInfo.dart';
+
+//import 'package:app/assets/components/videoPlayerFlutterSimple.dart';
+import 'package:app/assets/components/selectionItem.dart';
+import 'package:app/assets/routes/customRoute.dart';
 
 class CampaignInfo extends StatelessWidget {
   Campaign _campaign;
@@ -18,21 +24,18 @@ class CampaignInfo extends StatelessWidget {
             return <Widget> [
               // Header
               SliverAppBar(
-                  bottom: PreferredSize(
-                       preferredSize: Size.fromHeight(18),  
-                       child: Text(''),
-                      ), 
+
+              bottom: 
+                PreferredSize(
+                  preferredSize: Size.fromHeight(18),  
+                  child: Text(''),
+                ), 
               expandedHeight: 400.0,
               floating: false,
               pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
-                  title: SafeArea( 
-                      child: Padding(
-                          padding: EdgeInsets.all(8),
-                          child: Text(_campaign.getTitle(), style: Theme.of(context).primaryTextTheme.display1,)
-                          )
-                      ),
+                  title: Text(_campaign.getTitle(), style: Theme.of(context).primaryTextTheme.display1,),
                   background: Hero(
                     tag: "CampaignHeaderImage${_campaign.getId()}",
                     child: Container(
@@ -50,7 +53,7 @@ class CampaignInfo extends StatelessWidget {
          }, 
           // This is the body for the nested scroll view
          body: 
-          Column(
+          ListView(
             children: <Widget>[
               Padding(
                  padding: EdgeInsets.all(25),
@@ -72,10 +75,29 @@ class CampaignInfo extends StatelessWidget {
                     ]
               ),
               Padding(
-                  padding: EdgeInsets.all(25),
-                  child: Text("Actions of the Week", style: Theme.of(context).primaryTextTheme.headline,),
-                  
-                  )
+                padding: EdgeInsets.all(25),
+                child: Text("Actions of the Week", style: Theme.of(context).primaryTextTheme.headline,),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: SelectionItem(
+                    _campaign.getActions()[0].getTitle(),
+                    onClick: () {
+                      Navigator.push(
+                        context, 
+                        CustomRoute(builder: (context) => ActionInfo(_campaign.getActions()[0], _campaign))
+                      );
+                    },   
+                  ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: SelectionItem(_campaign.getActions()[1].getTitle()),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: SelectionItem(_campaign.getActions()[2].getTitle()),
+              ),
             ], 
           ),
           

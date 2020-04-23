@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 import 'package:app/pages/home/HomeTile.dart';
+
 import 'package:app/assets/components/pageTitle.dart';
+import 'package:app/assets/components/selectionItem.dart';
 
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/ViewModel.dart';
@@ -92,32 +94,6 @@ class ActionTile extends StatelessWidget {
               ]
           )
       )
-    );
-  }
-}
-
-class SelectionItem extends StatelessWidget {
-  String t;
-  SelectionItem(this.t);
-  @override
-  Widget build(BuildContext context) {
-    return 
-    GestureDetector(
-     child: 
-      Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(5),
-            child: Text(t, style: Theme.of(context).primaryTextTheme.body1,),
-          ),
-          Transform.rotate(
-            angle: 180 * math.pi / 180,
-            child: Icon(Icons.chevron_left, size: 25), 
-          ),
-        ],
-      ),   
     );
   }
 }

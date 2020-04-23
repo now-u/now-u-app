@@ -170,11 +170,16 @@ class User {
   }
   
   Map<CampaignActionType, int> initCompletedAction() {
-    Map<CampaignActionType, int> cas;
-    for (int i = 0; i < RewardType.values.length; i++) {
-      CampaignActionType t = CampaignActionType.values[i];
+    Map<CampaignActionType, int> cas = {
+    
+    };
+    List<CampaignActionType> types = CampaignActionType.values;
+    for (int i = 0; i < CampaignActionType.values.length; i++) {
+      print(i);
+      CampaignActionType t = types[i];
       cas[t] = 0;
     }
+    print("Init Complete");
     return cas;
   }
   

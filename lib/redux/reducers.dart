@@ -10,30 +10,13 @@ AppState appStateReducer(AppState state, action) {
 }
 
 User userReducer(User user, action) {
-  //switch (action) {
-  //  case SelectCampaignsAction: {
-  //    print("Its doing the slect campiangs action");
-  //    print(action.campaings[0]);
-  //    print(action.campaings[1]);
-  //    print(action.campaings[2]);
-  //    return action.campaings;
-  //   //return campaigns.map((cam) => cam.getId() == action.campaign.getId() ? cam.setSelected(!cam.isSelected()) : cam);
-  //  } 
-
-  //  case LoadedCampaignsAction: {
-  //    print("Prinitng from loaded Camapings action");
-  //    print(action.campaigns);
-  //    print(action.campaigns[0].isSelected());
-  //    print("done");
-  //    return action.campaigns;
-  //  }
-  //  
-  //  default: {
-  //    return campaigns;
-  //  }
-  //}
   if (action is SelectCampaignsAction) {
     return action.user; 
+  }
+  if (action is CompleteAction) {
+    User user = action.user;
+    user.completeAction(action.action);
+    return user;
   }
   if (action is LoadedUserDataAction) {
     return action.user;

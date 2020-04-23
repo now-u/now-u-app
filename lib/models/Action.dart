@@ -7,6 +7,7 @@ enum CampaignActionType {
   Learn,
   Socail,
   Volunteer,
+  Shop,
   Other 
 }
 
