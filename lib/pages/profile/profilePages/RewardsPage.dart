@@ -51,7 +51,7 @@ class RewardsPage extends StatelessWidget {
                   GestureDetector(
                     // TODO Offer more info page
                     onTap: () {},
-                    child: RewardTile(_rewards[index], model),
+                    child: model.user.getRewardProgress(_rewards[index]) == 1 ? RewardTile(_rewards[index], model) : Container(height: 0,),
                   ),
             ),
           ),

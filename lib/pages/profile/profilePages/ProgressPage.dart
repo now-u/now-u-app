@@ -27,13 +27,16 @@ class ProgressPage extends StatelessWidget {
               style: Theme.of(context).primaryTextTheme.display2,
               textAlign: TextAlign.center,
           ),
+          Text(
+              "${ model.user.getActiveCampaignsProgress(model.campaigns) }", 
+              style: Theme.of(context).primaryTextTheme.display2,
+              textAlign: TextAlign.center,
+          ),
           Padding(
             padding: EdgeInsets.all(10),     
-            child: Stack(
-              children: <Widget>[
-                Container(color: Colors.red, width: 300, height: 40,),
-                Container(color: Colors.blue, width: 200, height: 40,) 
-              ],
+            child: ProgressBar(
+              progress: model.user.getActiveCampaignsProgress(model.campaigns),     
+              width: MediaQuery.of(context).size.width * 0.9,
             ),
           ),
           DarkButton(
@@ -75,6 +78,28 @@ class ProgressPage extends StatelessWidget {
           Text("Highlight 2")
         ], 
       )
+    );
+  }
+}
+
+class ProgressBar extends StatelessWidget {
+  final double width;
+  final double progress;
+
+  ProgressBar({
+    @required this.progress,
+    @required this.width,
+  });
+  
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Stack(
+        children: <Widget>[
+          Container(color: Colors.red, width: width, height: 40,),
+          Container(color: Colors.blue, width: width*progress, height: 40,) 
+        ],
+      ),
     );
   }
 }

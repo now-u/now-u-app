@@ -1,6 +1,7 @@
 import 'package:app/models/Reward.dart';
 import 'package:app/models/Action.dart';
-import 'dart:convert';
+import 'package:app/models/Campaign.dart';
+import 'package:app/models/Campaigns.dart';
 
 class User {
   int id;
@@ -176,6 +177,32 @@ class User {
   void removeSelectedCamaping(int id) {
     this.selectedCampaigns.remove(id);
   }
+
+  double getCampaignProgress(Campaign campaign) {
+     return numberOfCompletedActionsForCampaign(campaign) / campaign.getActions().length;
+  }
+
+  int numberOfCompletedActionsForCampaign(Campaign campaign) {
+    int count = 0;
+    List<CampaignAction> actions = campaign.getActions();
+    for(int i = 0; i < actions.length; i++){
+      if( this.completedActions.contains(actions[i].getId()) ) {
+        count++;
+      }
+    } 
+    return count;
+  }
+  
+  double getActiveCampaignsProgress(Campaigns campaigns) {
+    double total = 0;
+    for (int i = 0; i < campaigns.activeLength(); i++) {
+      total += getCampaignProgress(campaigns.getActiveCampaigns()[i]);
+      print(total);
+    }
+    return total / campaigns.activeLength();
+  }
+
+
 
   // Progress
   // Return the reward progress

@@ -31,7 +31,7 @@ class _CampaignPageState extends State<CampaignPage> {
   ViewModel _model;
   @override
   void initState() {
-    _campaigns = widget.model.campaigns.getCampaigns().toList();
+    _campaigns = widget.model.campaigns.getActiveCampaigns().toList();
     _user = widget.model.user;
     _selectionMode = widget._selectionMode;
     _model = widget.model;
@@ -55,9 +55,9 @@ class _CampaignPageState extends State<CampaignPage> {
                     Expanded(
                       child: ListView(
                         children: <Widget> [
-                          CampaignTile(_campaigns[0], widget.model, selectionMode: _selectionMode),
-                          CampaignTile(_campaigns[1], widget.model, selectionMode: _selectionMode),
-                          CampaignTile(_campaigns[2], widget.model, selectionMode: _selectionMode),
+                          CampaignTile(_campaigns[0], _model, selectionMode: _selectionMode),
+                          CampaignTile(_campaigns[1], _model, selectionMode: _selectionMode),
+                          CampaignTile(_campaigns[2], _model, selectionMode: _selectionMode),
                           Container(
                                 height: 100,
                               )
@@ -119,11 +119,11 @@ class _CampaignPageState extends State<CampaignPage> {
                         onPressed: () {
                           setState(() {
                             _selectionMode = false;
+                            _model.onSelectCampaigns(_user);
                           });
-                          widget.model.onSelectCampaigns(_user);
                           Navigator.push(
                             context, 
-                            CustomRoute(builder: (context) => SelectionComplete(widget.model))
+                            CustomRoute(builder: (context) => SelectionComplete(_model))
                           );
                         },
                       ),
