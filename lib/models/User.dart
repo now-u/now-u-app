@@ -13,10 +13,10 @@ class User {
   double monthlyDonationLimit;
   bool homeOwner;
 
-  // Progress
-  List<int> selectedCampaigns = [];
-  List<int> completedCampaigns = [];
-  List<int> completedRewards = [];
+  // Progress (All data stored as ids)
+  List<int> selectedCampaigns = []; // Stores all campaings that have been selected (including old ones)
+  List<int> completedCampaigns = []; // Stores campaings where all actions have been completed (maybe we should do 80% of something)
+  List<int> completedRewards = []; 
   List<int> completedActions = [];
 
   Map<CampaignActionType, int> completedActionsType;
@@ -211,6 +211,10 @@ class User {
   }
   
   void completeAction(CampaignAction a) {
+    if (completedActions.contains(a.getId())) {
+      print("You can only complete an action once");
+      return;
+    }
     completedActions.add(a.getId());
     completedActionsType.update(a.getType(), (int x) => x + 1);
   }
