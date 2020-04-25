@@ -13,6 +13,12 @@ class CompleteAction {
   CompleteAction(this.action);
 }
 
+class UpdateUserDetails {
+  final User user;
+
+  UpdateUserDetails(this.user);
+}
+
 //class GetCampaingsAction {}
 
 //class LoadedCampaignsAction {

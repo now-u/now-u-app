@@ -54,7 +54,7 @@ class ProgressPage extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.all(10),
-            child: Text("You have taken part in ${ model.user.getCompletedActions().length } campaigns"),
+            child: Text("You have taken part in ${ model.user.getSelectedCampaigns().length } campaigns"),
           ),
           Padding(
             padding: EdgeInsets.all(10),

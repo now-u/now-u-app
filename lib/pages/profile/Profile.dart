@@ -16,18 +16,25 @@ import 'package:app/pages/profile/profilePages/OffersPage.dart';
 import 'package:app/pages/profile/profilePages/FeedbackPage.dart';
 import 'package:app/pages/profile/profilePages/SupportPage.dart';
 
-User _user;
 
 class Profile extends StatefulWidget {
   final ViewModel model;
-  Profile(this.model) {
-    _user = model.user;
-  }
+  Profile(this.model);
+
   @override
   _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
+  User user;
+  ViewModel model;
+  @override
+  void initState() {
+    model = widget.model;
+    user = widget.model.user;
+    super.initState();
+  }
+
   var _currentPage = 0;
   @override
   Widget build(BuildContext context) {
@@ -38,7 +45,7 @@ class _ProfileState extends State<Profile> {
   };
 
   var profileTiles = <Map> [
-      {  'profileTile': ProfileTile("Details", FontAwesomeIcons.solidUser) , 'page': DetailsPage(_user, goBack ), },
+      {  'profileTile': ProfileTile("Details", FontAwesomeIcons.solidUser) , 'page': DetailsPage(goBack: goBack, model: model, ), },
       {  'profileTile': ProfileTile("Progress", FontAwesomeIcons.spinner), 'page':ProgressPage(goBack, widget.model)},
       {  'profileTile': ProfileTile("Network", FontAwesomeIcons.users) },
       {  'profileTile': ProfileTile("Rewards", FontAwesomeIcons.ribbon), 'page' : RewardsPage(goBack, widget.model) },

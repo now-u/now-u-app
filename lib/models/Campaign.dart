@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:app/models/Action.dart';
+import 'dart:convert';
 
 class Campaign {
   int id;
@@ -45,16 +46,13 @@ class Campaign {
   }
 
   Campaign.fromJson(Map json) {
-    print("Decoding json");
-    print(json);
     id = json['id'];
     title = json['title'];
     description = json['description'];
     numberOfCampaingers = json['numberOfCampaingers'];
     headerImage = json['headerImage'];
     // TODO this proabably wont work
-    actions = json['actions'];
-    print("From json success");
+    actions = (json['actions']).map((e) => CampaignAction.fromJson(e)).toList().cast<CampaignAction>();
   }
 
   Map toJson() => {

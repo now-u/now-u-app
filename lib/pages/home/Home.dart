@@ -19,6 +19,7 @@ class Home extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    print(model.user.getName());
     return Scaffold(
       body: Container(
               color: Colors.white,

@@ -24,8 +24,19 @@ User userReducer(User user, action) {
   }
   if (action is LoadedUserDataAction) {
     print("The user that has been loaded is");
-    print(action.user.getCompletedActions());
+    print(action.user.getName());
     return action.user;
+  }
+  if (action is UpdateUserDetails) {
+    User u = user.copyWith(
+      fullName: action.user.getName(),
+      username: action.user.getUsername(),
+      age: action.user.getAge(),
+      location: action.user.getLocation(),
+    );
+    print("User in UpdateUserDetails is");
+    print("UserName is ${ u.getName() }");
+    return u; 
   }
   return user;
 

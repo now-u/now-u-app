@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:app/pages/Tabs.dart';
 
 import 'package:app/assets/components/videoPlayerFlutterSimple.dart';
+import 'package:app/assets/SplashScreen.dart';
 
 import 'package:app/models/User.dart';
 
@@ -18,15 +19,6 @@ import 'package:flutter_redux_dev_tools/flutter_redux_dev_tools.dart';
 import 'package:redux_dev_tools/redux_dev_tools.dart';
 
 int _currentIndex = 1; 
-User _user = User(
-      id: 0,
-      fullName: "Andrew",
-      username: "Andy123",
-      age: 21,
-      location: "Bristol",
-      monthlyDonationLimit: 20.0,
-      homeOwner: false,
-    );
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -140,6 +132,16 @@ class App extends StatelessWidget {
               store.dispatch(GetUserDataAction());
             },
             builder: (BuildContext context, Store<AppState> store) =>
+              store.state.campaigns == null 
+              || store.state.campaigns.getActiveCampaigns() == null
+              || store.state.campaigns.activeLength() < 3
+              ?
+              Container(
+                color: Colors.red,
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+              )
+              :
               MyHomePage(store),
           )  
        )
@@ -154,10 +156,12 @@ class MyHomePage extends StatelessWidget {
 
   @override 
   Widget build(BuildContext context) {
-    return 
+    return
       StoreConnector<AppState, ViewModel>(
           converter: (Store<AppState> store) => ViewModel.create(store),
           builder: (BuildContext context, ViewModel viewModel) {
+            print("Before splash screen user is");
+            print(viewModel.user.getName());
             return TabsPage(viewModel);
           },
       );

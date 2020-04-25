@@ -10,6 +10,7 @@ class ViewModel {
   final Campaigns campaigns;
   final User user;
   final Function(User) onSelectCampaigns;
+  final Function(User) onUpdateUserDetails;
   final Function(CampaignAction) onCompleteAction;
 
   ViewModel({
@@ -17,6 +18,7 @@ class ViewModel {
     this.user,
     this.onSelectCampaigns,
     this.onCompleteAction,
+    this.onUpdateUserDetails,
   });
 
   factory ViewModel.create(Store<AppState> store) {
@@ -28,11 +30,16 @@ class ViewModel {
       store.dispatch(CompleteAction(action));
     }
 
+    _onUpdateUserDetails(User user) {
+      store.dispatch(UpdateUserDetails(user));
+    }
+
     return ViewModel(
       campaigns: store.state.campaigns,
       user: store.state.user,
       onSelectCampaigns: _onSelectCampaigns,
       onCompleteAction: _onCompleteAction,
+      onUpdateUserDetails: _onUpdateUserDetails,
     );
   }
 }

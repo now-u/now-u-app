@@ -105,6 +105,24 @@ class User {
     'completedActionsType': campaignActionTypesEncode(completedActionsType), 
   };
 
+  Map getAttributes () {
+    return {
+      'id' : id, 
+      'fullName': fullName, 
+      'username': username,
+      'age': age,
+      'location': location,
+      'monthlyDonationLimit': monthlyDonationLimit,
+      'homeOwner': homeOwner,
+    };
+  }
+  //void setAttributes (String k, String v) {
+  //  m.forEach((k,v) {
+  //    if (getAttributes().containsKey(k))
+  //  
+  //  });
+  //}
+
   int getId() {
     return id; 
   }
@@ -125,17 +143,6 @@ class User {
   }
   bool getHomeOwner() {
     return homeOwner;
-  }
-  Map getAttributes () {
-    return {
-      'id' : id, 
-      'fullName': fullName, 
-      'username': username,
-      'age': age,
-      'location': location,
-      'monthlyDonationLimit': monthlyDonationLimit,
-      'homeOwner': homeOwner,
-    };
   }
   List<int> getSelectedCampaigns() {
     return selectedCampaigns ?? [];

@@ -69,9 +69,10 @@ class CampaignInfo extends StatelessWidget {
                     ) 
                   ),
               Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Padding(
-                        padding: EdgeInsets.all(25),
+                    Container(
+                        width: MediaQuery.of(context).size.width * 0.9,
                         child: Text(_campaign.getDescription(), style: Theme.of(context).primaryTextTheme.body1),
                       ),
                     ]
@@ -80,22 +81,6 @@ class CampaignInfo extends StatelessWidget {
                 padding: EdgeInsets.all(25),
                 child: Text("Actions of the Week", style: Theme.of(context).primaryTextTheme.headline,),
               ),
-              //Padding(
-              //  padding: EdgeInsets.symmetric(horizontal: 20),
-              //  child: ActionSelectionItem(
-              //    campaign: _campaign,
-              //    action: _campaign.getActions()[0],
-              //    model: model,
-              //  ),
-              //),
-              //Padding(
-              //  padding: EdgeInsets.symmetric(horizontal: 20),
-              //  child: SelectionItem(_campaign.getActions()[1].getTitle()),
-              //),
-              //Padding(
-              //  padding: EdgeInsets.symmetric(horizontal: 20),
-              //  child: SelectionItem(_campaign.getActions()[2].getTitle()),
-              //),
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),

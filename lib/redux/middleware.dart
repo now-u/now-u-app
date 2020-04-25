@@ -18,12 +18,13 @@ Future<AppState> loadFromPrefs(AppState state) async {
   print("Loading from shared prefs");
   final SharedPreferences preferences = await SharedPreferences.getInstance();
   var string = preferences.getString('userState');
+  print(string);
   
   if (string != null) {
-    print(string);
-    print("Decoding json from state");
+    //print(string);
+    //print("Decoding json from state");
     Map map = json.decode(string);
-    print("Decoded json");
+    //print("Decoded json");
     return AppState.fromJson(map, state);
   }
   return AppState.initialState();
@@ -33,6 +34,9 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
   next(action);
   
   if (action is SelectCampaignsAction) {
+    saveToPrefs(store.state);
+  }
+  if (action is UpdateUserDetails) {
     saveToPrefs(store.state);
   }
   //if (action is GetCampaingsAction) {
@@ -50,7 +54,7 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
   if (action is GetUserDataAction) {
     await loadFromPrefs(store.state).then((state) { 
           print("The user being loaded is:");
-          print(state.user.getCompletedActions());
+          print(state.user.getName());
           store.dispatch(LoadedUserDataAction(state.user)); 
     });
   }
