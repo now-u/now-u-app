@@ -34,7 +34,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   font_awesome_flutter: ^8.8.1
   url_launcher: ^5.4.2
-  
+  dropdown_formfield: ^0.1.2
 
 
 dev_dependencies:

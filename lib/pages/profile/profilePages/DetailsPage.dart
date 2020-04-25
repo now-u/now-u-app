@@ -6,6 +6,8 @@ import 'package:app/assets/components/darkButton.dart';
 import 'package:app/models/User.dart';
 import 'package:app/models/ViewModel.dart';
 
+import 'package:dropdown_formfield/dropdown_formfield.dart';
+
 
 
 class DetailsPage extends StatefulWidget {
@@ -36,6 +38,7 @@ class _DetailsPageState extends State<DetailsPage> {
   }
   @override
   Widget build(BuildContext context) {
+    List userData = user.getAttributes().entries.toList();
     print(user.getName());
     return Scaffold(
       body: 
@@ -44,20 +47,23 @@ class _DetailsPageState extends State<DetailsPage> {
             PageTitle("My Details", hasBackButton: true, onClickBackButton: widget._goBack,),
             Expanded(
               child: 
-                ListView(
-                  children: <Widget>[
-                    UserAttributeTile(
-                      label: "Your Name",
-                      initalText: user.getName(), 
-                      enabled: editingMode ? true : false, 
-                      onChanged: 
-                        (String s) {
-                          setState(() {
-                             user.setName(s);
-                           }); 
-                        },
-                    ) 
-                  ], 
+                ListView.builder(
+                  itemCount: userData.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return  
+                      UserAttributeTile(
+                        akey: userData[index].key.toString(),
+                        //initalText: userData[index].value.toString(), 
+                        enabled: editingMode ? true : false, 
+                        value: userData[index].value,
+                        onChanged: 
+                          (v) { 
+                            setState(() {
+                               user.setAttribute(userData[index].key, v);
+                             }); 
+                          }
+                      ); 
+                  },
                 ),
                 )
            ], 
@@ -118,29 +124,42 @@ class _DetailsPageState extends State<DetailsPage> {
 }
 
 class UserAttributeTile extends StatelessWidget {
-  String label;
-  String initalText;
+  String akey;
+  var value;
   bool enabled;
   Function onChanged;
 
   UserAttributeTile({
-    this.label,
-    this.initalText, 
+    this.akey,
+    this.value, 
     this.enabled,
     this.onChanged,
   });
   @override
   Widget build(BuildContext context) {
-    return Container(
-      //    Text("Label"),
-      child: TextFormField(
-            enabled: enabled,
-            initialValue: initalText,   
-            onChanged: onChanged,
-            decoration: InputDecoration(
-              labelText: "Name"
-            ),
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+      child: 
+        TextFormField(
+          keyboardType: 
+            (value is int) ? TextInputType.number: 
+            TextInputType.text,
+          enabled: enabled,
+          initialValue: value.toString(),   
+          onChanged: (String s) {
+            onChanged(s);
+          },
+          decoration: InputDecoration(
+            labelText: akey.toString()
           ),
+        )
+      //: 
+      //NumberPicker.integer(
+      //  initialValue: 30,
+      //  minValue: 0,
+      //  maxValue: 120,
+      //  onChanged: onChanged
+      //)
     );
   }
 }

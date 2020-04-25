@@ -89,8 +89,7 @@ class User {
     completedRewards = json['completedRewards'] == null ? <int>[] : json['completedRewards'].cast<int>();
     completedActionsType = json['completedActionsType'] == null ? this.initCompletedAction() : campaignActionTypesDecode(json['completedActionsType'].cast<int>());
   }
-
-  Map toJson() => {
+Map toJson() => {
     'id': id, 
     'fullName': fullName, 
     'username': username, 
@@ -107,7 +106,7 @@ class User {
 
   Map getAttributes () {
     return {
-      'id' : id, 
+      //'id' : id, 
       'fullName': fullName, 
       'username': username,
       'age': age,
@@ -116,12 +115,34 @@ class User {
       'homeOwner': homeOwner,
     };
   }
-  //void setAttributes (String k, String v) {
-  //  m.forEach((k,v) {
-  //    if (getAttributes().containsKey(k))
-  //  
-  //  });
-  //}
+  void setAttribute (String k, v) {
+    switch (k) {
+      case 'fullName': {
+        this.setName(v);
+        break;
+      }
+      case 'username': {
+        this.setUsername(v);
+        break;
+      }
+      case 'age': {
+        this.setAge(v);
+        break;
+      }
+      case 'location': {
+        this.setLocation(v);
+        break;
+      }
+      case 'monthlyDonationLimit': {
+        this.setMonthlyDonationLimit(v);
+        break;
+      }
+      case 'homeOwner': {
+        this.setHomeOwner(v);
+        break;
+      }
+    }     
+  }
 
   int getId() {
     return id; 
@@ -273,6 +294,32 @@ class User {
     }
     print("Init Complete");
     return cas;
+  }
+
+  List<int> rewardValues = [1, 5, 10, 25, 50, 100, 200];
+  int nextValue (int x, List<int> nums) {
+    for ( int i = 0; i < nums.length; i++ ) {
+      if(rewardValues[i] > x) return rewardValues[i];
+    }
+  }
+  
+  Reward getNextReward() {
+
+  }
+
+  List<Reward> getNextRewards({int x}) {
+    List<Reward> rewards;
+    completedActionsType.forEach((k, v) {
+      rewards.add(
+        Reward(
+          id: ,  // Need to generate id based on value --> same each time generated
+          successNumber: nextValue(v, rewardValues),
+          type: RewardType.CompletedTypedActionsNumber,
+          actionType: k,
+          title: nextValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ nextValue(v, rewardValues)} ${ k.toString() }",
+        )
+      );
+    });
   }
   
 }
