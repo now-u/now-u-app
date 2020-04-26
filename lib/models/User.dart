@@ -33,7 +33,7 @@ class User {
     
     this.selectedCampaigns = selectedCampaigns ?? [];
     this.completedActions = completedActions ?? [];
-    this.completedRewards = completedRewards ?? [];
+    //this.completedRewards = completedRewards ?? [];
     
     this.completedActionsType = 
         completedActionsType ?? this.initCompletedAction();
@@ -235,7 +235,7 @@ Map toJson() => {
   // Progress
   // Return the reward progress
   double getRewardProgress(Reward reward) {
-    if(this.completedRewards.contains(reward.getId())) return 1;
+    //if(this.completedRewards.contains(reward.getId())) return 1;
     RewardType type = reward.type;
     int count = 0;
     if (type == RewardType.CompletedActionsNumber) {
@@ -259,7 +259,7 @@ Map toJson() => {
 
     // return 
     if (count > reward.successNumber) {
-      completeReward(reward);
+      //completeReward(reward);
       return 1;
     } 
     return count / reward.successNumber;
@@ -272,20 +272,21 @@ Map toJson() => {
     }
     completedActions.add(a.getId());
     completedActionsType.update(a.getType(), (int x) => x + 1);
+    print(a.getType().toString());
+    print(completedActionsType[a.getType()]);
   }
 
-  void completeReward(Reward r) {
-    completedRewards.add(r.getId());
-  }
+  // Old reward system
+  //void completeReward(Reward r) {
+  //  completedRewards.add(r.getId());
+  //}
 
   bool isCompleted(CampaignAction a) {
     return completedActions.contains(a.getId());
   }
   
   Map<CampaignActionType, int> initCompletedAction() {
-    Map<CampaignActionType, int> cas = {
-    
-    };
+    Map<CampaignActionType, int> cas = {};
     List<CampaignActionType> types = CampaignActionType.values;
     for (int i = 0; i < CampaignActionType.values.length; i++) {
       print(i);
@@ -301,18 +302,27 @@ Map toJson() => {
     for ( int i = 0; i < nums.length; i++ ) {
       if(rewardValues[i] > x) return rewardValues[i];
     }
+    return ((x % 100) + 1) * 100; // Keep incrememnting rewardValues in 100s
   }
-  
-  Reward getNextReward() {
+  int prevValue (int x, List<int> nums) {
+    if (x <= 0) return 0; // In this case no reward completed
+    if (x >= 300) {
+      return ((x % 100)) * 100; // Keep incrememnting rewardValues in 100s
 
+    }
+    for ( int i = nums.length - 1; i >= 0; i-- ) {
+      if(rewardValues[i] <= x) return rewardValues[i];
+    }
+    return 0; // Probably bad news if we get here
   }
-
+ 
+  // Get rewards to be completed
   List<Reward> getNextRewards({int x}) {
-    List<Reward> rewards;
+    List<Reward> rewards = [];
+    // Get new CompletedTypedActionsNumber
     completedActionsType.forEach((k, v) {
       rewards.add(
         Reward(
-          id: ,  // Need to generate id based on value --> same each time generated
           successNumber: nextValue(v, rewardValues),
           type: RewardType.CompletedTypedActionsNumber,
           actionType: k,
@@ -320,6 +330,28 @@ Map toJson() => {
         )
       );
     });
+    // Add next completedActionsNumber
+    return rewards;
+  }
+  
+  // Get largest reward that have been completed
+  List<Reward> getPreviousRewards({int x}) {
+    List<Reward> rewards = [];
+    // Get pev (complted) CompletedTypedActionsNumber
+    completedActionsType.forEach((k, v) {
+      if (prevValue(v, rewardValues) != 0) {
+        rewards.add(
+          Reward(
+            //id: ,  // Need to generate id based on value --> same each time generated
+            successNumber: prevValue(v, rewardValues),
+            type: RewardType.CompletedTypedActionsNumber,
+            actionType: k,
+            title: prevValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ prevValue(v, rewardValues)} ${ k.toString() }",
+          )
+        );
+      }
+    });
+    return rewards;
   }
   
 }

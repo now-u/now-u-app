@@ -69,7 +69,7 @@ class CampaignAction {
     title = json['title'];
     description = json['description'];
     link = json['link'];
-    type = campaignActionTypeFromString(json['link']);
+    type = campaignActionTypeFromString(json['type']);
   }
 
   int getId() {

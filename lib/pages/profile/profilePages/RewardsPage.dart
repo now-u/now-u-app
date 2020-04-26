@@ -30,11 +30,14 @@ class RewardsPage extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-  var _rewards = <Reward>[
-    Reward(id: 1, title: "Select 3 Campaigns", successNumber: 3, type: RewardType.SelectInOneMonthCampaignsNumber),
-    Reward(id: 2, title: "Complete first action", successNumber: 1, type: RewardType.CompletedActionsNumber),
-    Reward(id: 3, title: "Sign 5 petitons", successNumber: 5, type: RewardType.CompletedTypedActionsNumber, actionType: CampaignActionType.Petition),
-  ];
+//  var _rewards = <Reward>[
+//    Reward(id: 1, title: "Select 3 Campaigns", successNumber: 3, type: RewardType.SelectInOneMonthCampaignsNumber),
+//    Reward(id: 2, title: "Complete first action", successNumber: 1, type: RewardType.CompletedActionsNumber),
+//    Reward(id: 3, title: "Sign 5 petitons", successNumber: 5, type: RewardType.CompletedTypedActionsNumber, actionType: CampaignActionType.Petition),
+//  ];
+    List<Reward> _completedRewards = model.user.getPreviousRewards();
+    List<Reward> _nextRewards = model.user.getNextRewards();
+    List<Reward> _rewards = _completedRewards..addAll(_nextRewards);
     return Column(
         children: <Widget>[
           PageTitle("Rewards", hasBackButton: true, onClickBackButton: goBack,),
@@ -51,7 +54,9 @@ class RewardsPage extends StatelessWidget {
                   GestureDetector(
                     // TODO Offer more info page
                     onTap: () {},
-                    child: model.user.getRewardProgress(_rewards[index]) == 1 ? RewardTile(_rewards[index], model) : Container(height: 0,),
+                    // To only show complted rewards
+                    //child: model.user.getRewardProgress(_rewards[index]) == 1 ? RewardTile(_rewards[index], model) : Container(height: 0,),
+                    child: RewardTile(_rewards[index], model), 
                   ),
             ),
           ),
