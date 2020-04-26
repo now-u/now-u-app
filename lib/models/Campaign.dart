@@ -49,8 +49,8 @@ class Campaign {
     id = json['id'];
     title = json['title'];
     description = json['description'];
-    numberOfCampaingers = json['numberOfCampaingers'];
-    headerImage = json['headerImage'];
+    numberOfCampaingers = json['number_of_campaigners'];
+    headerImage = json['header_image'];
     // TODO this proabably wont work
     actions = (json['actions']).map((e) => CampaignAction.fromJson(e)).toList().cast<CampaignAction>();
   }
@@ -59,8 +59,8 @@ class Campaign {
     'id': id,
     'title': title,
     'description': description,
-    'numberOfCampaingers': numberOfCampaingers,
-    'headerImage': headerImage,
+    'number_of_campaigners': numberOfCampaingers,
+    'header_image': headerImage,
     // TODO this proabably wont work
     'actions': actions,
   };

@@ -76,32 +76,32 @@ class User {
 
   User.fromJson(Map json) {
     id = json['id'];
-    fullName = json['fullName'];
+    fullName = json['full_name'];
     username = json['username'];
     age = json['age'];
     location = json['location'];
-    monthlyDonationLimit = json['monthlyDonationLimit'];
-    homeOwner = json['homeOwner'];
+    monthlyDonationLimit = json['monthly_donation_limit'];
+    homeOwner = json['home_owner'];
     // For cast not to throw null exception must be a default value of [] in User class
-    selectedCampaigns = json['selectedCampaigns'] == null ? <int>[] : json['selectedCampaigns'].cast<int>();
-    completedCampaigns = json['completedCampaigns'] == null ? <int>[] : json['completedCampaigns'].cast<int>();
-    completedActions = json['completedActions'] == null ? <int>[] : json['completedActions'].cast<int>();
-    completedRewards = json['completedRewards'] == null ? <int>[] : json['completedRewards'].cast<int>();
-    completedActionsType = json['completedActionsType'] == null ? this.initCompletedAction() : campaignActionTypesDecode(json['completedActionsType'].cast<int>());
+    selectedCampaigns = json['selected_campaigns'] == null ? <int>[] : json['selected_campaigns'].cast<int>();
+    completedCampaigns = json['completed_campaigns'] == null ? <int>[] : json['completed_campaigns'].cast<int>();
+    completedActions = json['completed_actions'] == null ? <int>[] : json['completed_actions'].cast<int>();
+    completedRewards = json['completed_rewards'] == null ? <int>[] : json['completed_rewards'].cast<int>();
+    completedActionsType = json['completed_actions_type'] == null ? this.initCompletedAction() : campaignActionTypesDecode(json['completed_actions_type'].cast<int>());
   }
 Map toJson() => {
     'id': id, 
-    'fullName': fullName, 
+    'full_name': fullName, 
     'username': username, 
     'age': age, 
     'location': location, 
-    'monthlyDonationLimit': monthlyDonationLimit, 
-    'homeOwner': homeOwner, 
-    'selectedCampaigns': selectedCampaigns, 
-    'completedCampaigns': completedCampaigns, 
-    'completedActions': completedActions, 
-    'completedRewards': completedRewards, 
-    'completedActionsType': campaignActionTypesEncode(completedActionsType), 
+    'monthly_donation_limit': monthlyDonationLimit, 
+    'home_owner': homeOwner, 
+    'selected_campaigns': selectedCampaigns, 
+    'completed_campaigns': completedCampaigns, 
+    'completed_actions': completedActions, 
+    'completed_rewards': completedRewards, 
+    'completed_actions_type': campaignActionTypesEncode(completedActionsType), 
   };
 
   Map getAttributes () {
