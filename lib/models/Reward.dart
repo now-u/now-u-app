@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:app/models/Action.dart';
+import 'package:tuple/tuple.dart';
 
 // Must be kept in this order
 enum RewardType {
@@ -12,7 +13,7 @@ enum RewardType {
 
 class Reward {
   //final int id;
-  final String title;
+  String title;
   //String _description;
 
   // Number required to complete action
@@ -23,15 +24,25 @@ class Reward {
 
   Reward({
     //@required this.id, 
-    @required this.title, 
+    String title, 
     @required this.successNumber,
     @required this.type,
     this.actionType, // This is required if type = CompletedTypedActionsNumber
-  });
+  }) {
+    this.title = title ?? generateTitle();
+  }
 
-  //int getId() {
-  //  return id;
-  //}
+  String generateTitle() {
+    if (type == RewardType.CompletedTypedActionsNumber) {
+      Tuple2<String,String> descPrePostFix= generateCampaingActionDesc(actionType);
+      String pre = descPrePostFix.item1;
+      String post = descPrePostFix.item2;
+      String endingPlural = successNumber > 1 ? "s" : "";
+      return (pre + " ${successNumber} " + post  + "${endingPlural}");
+    }
+    return "";
+  }
+
   String getTitle() {
     return title;
   }

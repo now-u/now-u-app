@@ -326,7 +326,7 @@ Map toJson() => {
           successNumber: nextValue(v, rewardValues),
           type: RewardType.CompletedTypedActionsNumber,
           actionType: k,
-          title: nextValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ nextValue(v, rewardValues)} ${ k.toString() }",
+          //title: nextValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ nextValue(v, rewardValues)} ${ k.toString() }",
         )
       );
     });
@@ -346,7 +346,7 @@ Map toJson() => {
             successNumber: prevValue(v, rewardValues),
             type: RewardType.CompletedTypedActionsNumber,
             actionType: k,
-            title: prevValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ prevValue(v, rewardValues)} ${ k.toString() }",
+            //title: prevValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ prevValue(v, rewardValues)} ${ k.toString() }",
           )
         );
       }

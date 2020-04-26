@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:tuple/tuple.dart';
 
 enum CampaignActionType {
   Petition,
@@ -37,6 +38,36 @@ CampaignActionType campaignActionTypeFromString (String s) {
     }
     default: {
       return CampaignActionType.Other; 
+    }
+  }
+  
+}
+
+Tuple2<String, String> generateCampaingActionDesc (CampaignActionType t) {
+  switch (t) {
+    case CampaignActionType.Petition: {
+      return Tuple2("Sign", "petition");
+    }
+    case CampaignActionType.Email: {
+      return Tuple2("Send", "email");
+    }
+    case CampaignActionType.Donation: {
+      return Tuple2("Make", "donation");
+    }
+    case CampaignActionType.Learn: {
+      return Tuple2("Complete", "learning action");
+    }
+    case CampaignActionType.Socail: {
+      return Tuple2("Share", "time");
+    }
+    case CampaignActionType.Volunteer: {
+      return Tuple2("Volunteer", "time");
+    }
+    case CampaignActionType.Socail: {
+      return Tuple2("Make", "purchase");
+    }
+    default: {
+      return Tuple2("Complte", "special action");
     }
   }
   

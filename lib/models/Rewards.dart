@@ -6,7 +6,7 @@ class Rewards {
 
   Rewards(this.rewards);
 
-  Rewards.init() {
-  }
+  //Rewards.init() {
+  //}
 }
 
