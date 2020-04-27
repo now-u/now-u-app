@@ -34,11 +34,22 @@ class Reward {
 
   String generateTitle() {
     if (type == RewardType.CompletedTypedActionsNumber) {
-      Tuple2<String,String> descPrePostFix= generateCampaingActionDesc(actionType);
+      Tuple3<String,String,String> descPrePostFix= generateCampaingActionDesc(actionType);
       String pre = descPrePostFix.item1;
-      String post = descPrePostFix.item2;
+      String post = descPrePostFix.item3;
       String endingPlural = successNumber > 1 ? "s" : "";
       return (pre + " ${successNumber} " + post  + "${endingPlural}");
+    }
+    return "";
+  }
+  
+  String generateCompletionText() {
+    if (type == RewardType.CompletedTypedActionsNumber) {
+      Tuple3<String,String,String> descPrePostFix= generateCampaingActionDesc(actionType);
+      String pre = descPrePostFix.item2;
+      String post = descPrePostFix.item3;
+      String endingPlural = successNumber > 1 ? "s" : "";
+      return ("You " + pre + " ${successNumber} " + post  + "${endingPlural}");
     }
     return "";
   }

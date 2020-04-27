@@ -55,9 +55,14 @@ class _CampaignPageState extends State<CampaignPage> {
                     Expanded(
                       child: ListView(
                         children: <Widget> [
-                          CampaignTile(_campaigns[0], _model, selectionMode: _selectionMode),
-                          CampaignTile(_campaigns[1], _model, selectionMode: _selectionMode),
-                          CampaignTile(_campaigns[2], _model, selectionMode: _selectionMode),
+                          ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: _campaigns.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return CampaignTile(_campaigns[index], _model, selectionMode: _selectionMode);
+                            },
+                          ),
                           Container(
                                 height: 100,
                               )

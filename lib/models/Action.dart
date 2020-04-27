@@ -43,31 +43,31 @@ CampaignActionType campaignActionTypeFromString (String s) {
   
 }
 
-Tuple2<String, String> generateCampaingActionDesc (CampaignActionType t) {
+Tuple3<String, String, String> generateCampaingActionDesc (CampaignActionType t) {
   switch (t) {
     case CampaignActionType.Petition: {
-      return Tuple2("Sign", "petition");
+      return Tuple3("Sign", "Signed", "petition");
     }
     case CampaignActionType.Email: {
-      return Tuple2("Send", "email");
+      return Tuple3("Send", "Sent", "email");
     }
     case CampaignActionType.Donation: {
-      return Tuple2("Make", "donation");
+      return Tuple3("Make", "Made", "donation");
     }
     case CampaignActionType.Learn: {
-      return Tuple2("Complete", "learning action");
+      return Tuple3("Complete", "Completed", "learning action");
     }
     case CampaignActionType.Socail: {
-      return Tuple2("Share", "time");
+      return Tuple3("Share", "Shared", "time");
     }
     case CampaignActionType.Volunteer: {
-      return Tuple2("Volunteer", "time");
+      return Tuple3("Volunteer", "Volunteered", "time");
     }
-    case CampaignActionType.Socail: {
-      return Tuple2("Make", "purchase");
+    case CampaignActionType.Shop: {
+      return Tuple3("Make", "Made", "purchase");
     }
     default: {
-      return Tuple2("Complte", "special action");
+      return Tuple3("Complete", "Completed", "special action");
     }
   }
   
