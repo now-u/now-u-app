@@ -6,6 +6,8 @@ import 'package:app/models/ViewModel.dart';
 import 'package:app/pages/other/ActionInfo.dart';
 
 //import 'package:app/assets/components/videoPlayerFlutterSimple.dart';
+//import 'package:youtube_player/youtube_player.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/routes/customRoute.dart';
 
@@ -19,6 +21,13 @@ class CampaignInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    YoutubePlayerController _controller = YoutubePlayerController(
+      initialVideoId: 'iLnmTe5Q2Qw',
+      flags: YoutubePlayerFlags(
+          autoPlay: true,
+          mute: true,
+      ),
+    );
     print(_campaign.getId());
     return Scaffold(
       body: NestedScrollView(
@@ -66,8 +75,12 @@ class CampaignInfo extends StatelessWidget {
                     //child: Material(
                       //child: VideoPlayer(),  
                     //), 
-                    ) 
-                  ),
+                    )
+              ),
+              YoutubePlayer(
+                controller: _controller,
+                showVideoProgressIndicator: true,
+              ),
               Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
