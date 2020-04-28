@@ -60,7 +60,14 @@ class _CampaignPageState extends State<CampaignPage> {
                             shrinkWrap: true,
                             itemCount: _campaigns.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return CampaignTile(_campaigns[index], _model, selectionMode: _selectionMode);
+                              return
+                              _model.user.getSelectedCampaignsLength() <= 0  || _selectionMode ?
+                              CampaignTile(_campaigns[index], _model, selectionMode: _selectionMode)
+                              : 
+                              _model.user.getSelectedCampaigns().contains(_campaigns[index].getId()) ?
+                              CampaignTile(_campaigns[index], _model, selectionMode: _selectionMode)
+                              : null;
+
                             },
                           ),
                           Container(
