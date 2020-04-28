@@ -22,7 +22,7 @@ class CampaignInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     YoutubePlayerController _controller = YoutubePlayerController(
-      initialVideoId: _campaign.getVideoId(),
+      initialVideoId: YoutubePlayer.convertUrlToId(_campaign.getVideoLink()),
       flags: YoutubePlayerFlags(
           autoPlay: true,
           mute: false,
