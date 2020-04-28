@@ -19,7 +19,13 @@ import 'package:app/pages/profile/profilePages/SupportPage.dart';
 
 class Profile extends StatefulWidget {
   final ViewModel model;
-  Profile(this.model);
+  final int currentPage;
+  Profile(
+   this.model,
+   {
+   this.currentPage,
+   }
+  );
 
   @override
   _ProfileState createState() => _ProfileState();
@@ -28,14 +34,16 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   User user;
   ViewModel model;
+  var _currentPage;
   @override
   void initState() {
     model = widget.model;
     user = widget.model.user;
+    print(widget.currentPage);
+    _currentPage = widget.currentPage ?? 0;
     super.initState();
   }
 
-  var _currentPage = 0;
   @override
   Widget build(BuildContext context) {
   GestureTapCallback goBack = () {

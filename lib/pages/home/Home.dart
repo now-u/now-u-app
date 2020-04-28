@@ -1,9 +1,12 @@
 import 'package:app/assets/components/darkButton.dart';
+import 'package:app/assets/routes/customRoute.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 import 'package:app/pages/home/HomeTile.dart';
 import 'package:app/pages/other/ArticlePage.dart';
+import 'package:app/pages/profile/profilePages/RewardsPage.dart';
+import 'package:app/pages/profile/Profile.dart';
 
 import 'package:app/assets/components/pageTitle.dart';
 import 'package:app/assets/components/selectionItem.dart';
@@ -11,6 +14,7 @@ import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/Action.dart';
+import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Article.dart';
 
 const double BUTTON_PADDING = 10;
@@ -40,7 +44,8 @@ Article newsArticle =
 
 class Home extends StatelessWidget {
   ViewModel model;
-  Home(this.model);
+  Function changePage;
+  Home(this.model, this.changePage);
   
   @override
   Widget build(BuildContext context) {
@@ -57,7 +62,7 @@ class Home extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
                                     sectionTitle("Actions", context),
-                                    ActionTile(model.campaigns.getActiveCampaigns()[0].getActions()),
+                                    ActionTile(model.campaigns, model, changePage),
                                   ],
                                   )
                             ),
@@ -72,7 +77,12 @@ class Home extends StatelessWidget {
                                     SelectionItem("Make 1 more donation to complete 'Make 5' donations"),
                                     Padding(
                                       padding: EdgeInsets.all(BUTTON_PADDING),
-                                      child: DarkButton("See More Rewards", onPressed: () {},),
+                                      child: DarkButton(
+                                          "See More Rewards", 
+                                          onPressed: () {
+                                            changePage(2, subIndex: 4);
+                                          },
+                                      ),
                                     ),
                                     // TODO Progress Slider thing
                                   ],
@@ -129,8 +139,10 @@ Widget sectionTitle(String t, BuildContext context) {
 }
 
 class ActionTile extends StatelessWidget {
-  List<CampaignAction> actions;
-  ActionTile(this.actions);
+  Campaigns campaigns;
+  ViewModel model;
+  Function changePage;
+  ActionTile(this.campaigns, this.model, this.changePage);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -146,11 +158,18 @@ class ActionTile extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: 3,
                   itemBuilder: 
-                    (BuildContext context, int index) => SelectionItem(actions[index].getTitle()),
+                    (BuildContext context, int index) => 
+                      ActionSelectionItem(
+                        action: campaigns.getActiveCampaigns()[index].getActions()[index],
+                        model: model,
+                        campaign: campaigns.getActiveCampaigns()[index],
+                    ),
                 ),
                 Padding(
                   padding: EdgeInsets.all(BUTTON_PADDING),
-                  child: DarkButton("See More Actions", onPressed: () {},),
+                  child: DarkButton("See More Actions", onPressed: () {
+                    changePage(0);
+                  },),
                 ),
                 //ActionItem(user.getFollowUpAction()),
                 //TODO Work ou where follow up actions should be

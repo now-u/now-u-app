@@ -23,16 +23,25 @@ class TabsPage extends StatefulWidget {
 class _TabsPageState extends State<TabsPage> {
 
   int _currentIndex;
+  int _subIndex;
 
   @override
   void initState() {
     _currentIndex = widget.currentIndex;
+    _subIndex = null;
     super.initState();
   }
+  void changePage(int index, {int subIndex}) {
+    setState(() {
+      _currentIndex = index;
+      _subIndex = subIndex;
+    }); 
+  }
+
 
   @override
   Widget build(BuildContext context) {
-  List<Widget> _pages = <Widget>[CampaignPage(widget.model, false), Home(widget.model), Profile(widget.model)];
+  List<Widget> _pages = <Widget>[CampaignPage(widget.model, false), Home(widget.model, changePage), Profile(widget.model, currentPage: _subIndex,)];
     return  
           Scaffold(
               body: _pages[_currentIndex],
