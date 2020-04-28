@@ -10,6 +10,7 @@ class Campaign {
   String headerImage;
   bool isCampaignSelected;
   List<CampaignAction> actions;
+  String videoId;
   
   Campaign({
     @required int id,
@@ -18,6 +19,7 @@ class Campaign {
     @required int numberOfCampaigners,
     @required String headerImage,
     @required List<CampaignAction> actions,
+    this.videoId,
   }) {
     this.id = id; 
     this.title = title;
@@ -25,6 +27,7 @@ class Campaign {
     this.numberOfCampaingers = numberOfCampaigners;
     this.headerImage = headerImage;
     this.actions = actions;
+    this.videoId = videoId;
   }
 
   Campaign copyWith({
@@ -34,6 +37,7 @@ class Campaign {
     int numberOfCampaingers,
     String headerImage,
     List<CampaignAction> actions,
+    String videoId,
   }) {
     return Campaign(
       id: id ?? this.id,
@@ -42,6 +46,7 @@ class Campaign {
       numberOfCampaigners: numberOfCampaingers ?? this.numberOfCampaingers,
       headerImage: headerImage ?? this.headerImage,
       actions: actions ?? this.actions,
+      videoId: videoId ?? this.videoId,
     );
   }
 
@@ -53,6 +58,7 @@ class Campaign {
     headerImage = json['header_image'];
     // TODO this proabably wont work
     actions = (json['actions']).map((e) => CampaignAction.fromJson(e)).toList().cast<CampaignAction>();
+    videoId = json['video_id'];
   }
 
   Map toJson() => {
@@ -63,6 +69,7 @@ class Campaign {
     'header_image': headerImage,
     // TODO this proabably wont work
     'actions': actions,
+    'video_id': videoId,
   };
 
   int getId() {
@@ -79,6 +86,9 @@ class Campaign {
   }
   String getHeaderImage() {
     return headerImage;
+  }
+  String getVideoId() {
+    return videoId;
   }
   bool isSelected(List<int> selectedCampaings) {
     return selectedCampaings.contains(id);

@@ -22,10 +22,10 @@ class CampaignInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     YoutubePlayerController _controller = YoutubePlayerController(
-      initialVideoId: 'iLnmTe5Q2Qw',
+      initialVideoId: _campaign.getVideoId(),
       flags: YoutubePlayerFlags(
           autoPlay: true,
-          mute: true,
+          mute: false,
       ),
     );
     print(_campaign.getId());
@@ -70,16 +70,15 @@ class CampaignInfo extends StatelessWidget {
                  padding: EdgeInsets.all(25),
                  child: 
                   Container(
-                    height: 300,
-                    color: Colors.red,
+                    child:
+                      YoutubePlayer(
+                        controller: _controller,
+                        showVideoProgressIndicator: true,
+                      ),
                     //child: Material(
                       //child: VideoPlayer(),  
                     //), 
                     )
-              ),
-              YoutubePlayer(
-                controller: _controller,
-                showVideoProgressIndicator: true,
               ),
               Row(
                   mainAxisAlignment: MainAxisAlignment.center,
