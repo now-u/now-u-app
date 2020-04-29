@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "938145287148",
+    "firebase_url": "https://now-u-d140a.firebaseio.com",
+    "project_id": "now-u-d140a",
+    "storage_bucket": "now-u-d140a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:938145287148:android:4dc007286ce4ae2ac68ec9",
+        "android_client_info": {
+          "package_name": "com.nowu.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "938145287148-e0o0qbr4kesau85aojs15nlsbtn5vbgn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLNGjYAvcbEOR8SH0pMPmbrZTRRitFJUA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "938145287148-e0o0qbr4kesau85aojs15nlsbtn5vbgn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "938145287148-3b96qect9a9drnhsio206ld9go22fk1h.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nowu.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

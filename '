@@ -40,10 +40,13 @@ MaterialColor darkBlue = MaterialColor(0xFF242334, darkBlueMap);
 //List<Widget> _pages = <Widget>[Campaigns(campaigns), Home(), Profile(_user)];
 
 // Dynamic Links setup
-Future <Uri> createDynamicLink(bool short) async {
+Future <void> createDynamicLink(bool short) async {
+  setState(() {
+    _isCreatingLink = true;
+  })
   final DynamicLinkParameters parameters = DynamicLinkParameters(
-    uriPrefix: "https://nowu.page.link",
-    link: Uri.parse("https://now-u."),
+    uriPrefix: "https://now-u.com",
+    link: Uri.parse("https://now-u.com/campaigns"),
     androidParameters: AndroidParameters(
       packageName: "com.nowu.app",
       minimumVersion: 0,
@@ -68,7 +71,6 @@ Future <Uri> createDynamicLink(bool short) async {
   else {
     url = await parameters.buildUrl();
   }
-  return url;
 }
 
 
