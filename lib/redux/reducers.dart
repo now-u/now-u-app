@@ -7,7 +7,15 @@ AppState appStateReducer(AppState state, action) {
   return AppState(
     campaigns: state.campaigns,
     user: userReducer(state.user, action),
+    loading: loadingReducer(action) ?? state.loading
   );
+}
+
+bool loadingReducer (action) {
+  if(action is LoadedUserDataAction) {
+    return false;
+  }
+  return null;
 }
 
 User userReducer(User user, action) {
@@ -41,3 +49,4 @@ User userReducer(User user, action) {
   return user;
 
 }
+

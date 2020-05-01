@@ -4,8 +4,11 @@ import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/ViewModel.dart';
 
+import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
+
 import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/components/darkButton.dart';
+import 'package:app/assets/routes/customRoute.dart';
 
 class ActionInfo extends StatefulWidget {
   final CampaignAction action;
@@ -70,6 +73,18 @@ class _ActionInfoState extends State<ActionInfo> {
          body: 
           ListView(
             children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: DarkButton(
+                  "Goto actions campaign",
+                  onPressed: () {
+                    Navigator.push(
+                     context,
+                     CustomRoute(builder: (context) => CampaignInfo(_campaign, _model))
+                    );
+                  },
+                )
+              ),
               _model.user.isCompleted(_action) ?
                 Padding(
                   padding: EdgeInsets.all(10),

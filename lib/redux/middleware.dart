@@ -51,6 +51,15 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
   //        // It thinks its done the dispatch
   //      });
   //
+  //if (action is FetchInitState) {
+  //  await loadFromPrefs(store.state).then((state) { 
+  //        print("The user being loaded is:");
+  //        print(state.user.getName());
+  //        store.dispatch(LoadedUserDataAction(state.user)); 
+  //  });
+
+  //}
+
   if (action is GetUserDataAction) {
     await loadFromPrefs(store.state).then((state) { 
           print("The user being loaded is:");

@@ -6,6 +6,8 @@ import 'package:app/pages/home/Home.dart';
 import 'package:app/pages/profile/Profile.dart';
 import 'package:app/pages/campaign/CampaignPage.dart';
 
+import 'package:app/assets/dynamicLinks.dart';
+
 class TabsPage extends StatefulWidget {
 
   ViewModel model;
@@ -27,7 +29,7 @@ class _TabsPageState extends State<TabsPage> {
 
   @override
   void initState() {
-    _currentIndex = widget.currentIndex;
+    _currentIndex = initDynamicLinks() ?? widget.currentIndex;
     _subIndex = null;
     super.initState();
   }

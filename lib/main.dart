@@ -5,22 +5,21 @@ import 'package:app/pages/Tabs.dart';
 
 import 'package:app/assets/components/videoPlayerFlutterSimple.dart';
 import 'package:app/assets/SplashScreen.dart';
+import 'package:app/assets/routes/customRoute.dart';
+import 'package:app/assets/dynamicLinks.dart';
 
 import 'package:app/models/User.dart';
 
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/State.dart';
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
+
 import 'package:app/redux/reducers.dart';
 import 'package:app/redux/actions.dart';
 import 'package:app/redux/middleware.dart';
+import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_dev_tools/flutter_redux_dev_tools.dart';
 import 'package:redux_dev_tools/redux_dev_tools.dart';
-
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-
-int _currentIndex = 1; 
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,44 +38,21 @@ MaterialColor darkBlue = MaterialColor(0xFF242334, darkBlueMap);
 
 //List<Widget> _pages = <Widget>[Campaigns(campaigns), Home(), Profile(_user)];
 
-// Dynamic Links setup
-Future <Uri> createDynamicLink(bool short) async {
-  final DynamicLinkParameters parameters = DynamicLinkParameters(
-    uriPrefix: "https://nowu.page.link",
-    link: Uri.parse("https://now-u."),
-    androidParameters: AndroidParameters(
-      packageName: "com.nowu.app",
-      minimumVersion: 0,
-    ),
-    //TODO IOS needs fixing
-    iosParameters: IosParameters(
-      bundleId: "com.google.FirebaseCppDynamicLinksTestApp.dev",
-      minimumVersion: '0',
-    ),
-    socialMetaTagParameters: SocialMetaTagParameters(
-      title: "now-u campaigns",
-      description: "Each month now-u offers 3 campaings to tackle relevant issues. These campaings provide easy actions for the user to complete in order to empower them to drive socail change.",
-      imageUrl: Uri.parse("https://images.unsplash.com/photo-1491382825904-a4c6dca98e8c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"),
-    )
-  );
-  Uri url;
-  if (short) {
-    final ShortDynamicLink shortLink = await parameters.buildShortLink();
-    print(shortLink.toString());
-    url = shortLink.shortUrl;
-  }
-  else {
-    url = await parameters.buildUrl();
-  }
-  return url;
+class App extends StatefulWidget {
+  @override
+  _AppState createState() => _AppState();
 }
 
+class _AppState extends State<App> {
+  int deepLinkPageIndex = 1;
+  Widget page;
+  @override
+  void initState() {
+    // TODO: implement initState
+    deepLinkPageIndex = initDynamicLinks();
+    super.initState();
+  }
 
-
-
-
-class App extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     final DevToolsStore<AppState> store = DevToolsStore<AppState>(
@@ -170,9 +146,10 @@ class App extends StatelessWidget {
               store.dispatch(GetUserDataAction());
             },
             builder: (BuildContext context, Store<AppState> store) =>
-              store.state.campaigns == null 
-              || store.state.campaigns.getActiveCampaigns() == null
-              || store.state.campaigns.activeLength() < 3
+              //store.state.campaigns == null 
+              //|| store.state.campaigns.getActiveCampaigns() == null
+              //|| store.state.campaigns.activeLength() < 3
+              store.state.loading
               ?
               Container(
                 color: Colors.red,
@@ -180,7 +157,7 @@ class App extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
               )
               :
-              MyHomePage(store),
+              MyHomePage(store, deepLinkPageIndex),
           )  
        )
     );
@@ -189,18 +166,21 @@ class App extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   final DevToolsStore<AppState> store;
+  final int currentIndex;
 
-  MyHomePage(this.store);
-
+  MyHomePage(this.store, this.currentIndex);
   @override 
   Widget build(BuildContext context) {
+  print("The currentIndex is");
+  print(currentIndex);
+
     return
       StoreConnector<AppState, ViewModel>(
           converter: (Store<AppState> store) => ViewModel.create(store),
           builder: (BuildContext context, ViewModel viewModel) {
             print("Before splash screen user is");
             print(viewModel.user.getName());
-            return TabsPage(viewModel);
+            return TabsPage(viewModel, currentIndex: currentIndex);
           },
       );
   }

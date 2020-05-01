@@ -27,6 +27,8 @@ class UpdateUserDetails {
 //  LoadedCampaignsAction(this.campaigns);
 //}
 
+//class FetchInitState {}
+
 class GetUserDataAction {}
 
 class LoadedUserDataAction {

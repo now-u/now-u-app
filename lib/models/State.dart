@@ -10,11 +10,13 @@ import 'package:app/models/Rewards.dart';
 class AppState {
   final Campaigns campaigns;
   final User user;
+  final bool loading;
   //final Rewards rewards;
 
   AppState({
     @required this.user,
     @required this.campaigns,
+    @required this.loading,
   });
 
   AppState.initialState() 
@@ -27,12 +29,14 @@ class AppState {
           monthlyDonationLimit: 20.0,
           homeOwner: false,
         ),
-        campaigns = Campaigns.init();
+        campaigns = Campaigns.init(),
+        loading = true;
 
   AppState.fromJson(Map json, AppState state)
     : //campaigns = (json['campaigns'] as List).map((c) => Campaign.fromJson(c)).toList(),
       //user = (User.fromJson(json['user']));
     campaigns = state.campaigns,
+    loading = state.loading,
     user = User.fromJson(json['user']);
 
   Map toJson() => {
