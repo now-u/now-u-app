@@ -72,4 +72,6 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
     print(store.state.user.getCompletedActions());
     saveToPrefs(store.state);
   }
+  if (action is GetDynamicLink) {
+  }
 }

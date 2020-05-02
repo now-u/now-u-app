@@ -14,7 +14,9 @@ class TabsPage extends StatefulWidget {
   int currentIndex;
 
   TabsPage(this.model, {currentIndex}){
-    this.currentIndex =  currentIndex == null ? 1 : currentIndex;
+    print("In constructor");
+    print(currentIndex);
+    this.currentIndex = currentIndex ?? 0;
   }
 
   @override
@@ -22,18 +24,42 @@ class TabsPage extends StatefulWidget {
 }
 
 
-class _TabsPageState extends State<TabsPage> {
+class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
 
   int _currentIndex;
   int _subIndex;
 
   @override
   void initState() {
-    _currentIndex = initDynamicLinks() ?? widget.currentIndex;
+    print("initing state");
+    _currentIndex = widget.currentIndex;
     _subIndex = null;
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    handleDynamicLinks(
+      changePage
+    );
   }
+  
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+  
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if(state == AppLifecycleState.resumed){
+      print("Tabs resumed");
+      handleDynamicLinks(
+        changePage
+      );
+    }
+  }
+
   void changePage(int index, {int subIndex}) {
+    print("Changing page");
+    print(index);
     setState(() {
       _currentIndex = index;
       _subIndex = subIndex;
@@ -43,6 +69,9 @@ class _TabsPageState extends State<TabsPage> {
 
   @override
   Widget build(BuildContext context) {
+  //_currentIndex = widget.currentIndex;
+  //print("When drawing tabs view the current index is");
+  //print(_currentIndex);
   List<Widget> _pages = <Widget>[CampaignPage(widget.model, false), Home(widget.model, changePage), Profile(widget.model, currentPage: _subIndex,)];
     return  
           Scaffold(

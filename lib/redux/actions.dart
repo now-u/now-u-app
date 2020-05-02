@@ -28,6 +28,7 @@ class UpdateUserDetails {
 //}
 
 //class FetchInitState {}
+class GetDynamicLink {}
 
 class GetUserDataAction {}
 

@@ -42,25 +42,34 @@ Future <Uri> createDynamicLink(bool short) async {
   return url;
 }
 
+Future handleDynamicLinks(Function onLink) async {
+  print("Handling link");
+  // 1. Get the initial dynamic link if the app is opened with a dynamic link
+  final PendingDynamicLinkData data =
+      await FirebaseDynamicLinks.instance.getInitialLink();
 
-int initDynamicLinks() {
-  print("INITING DYNAMIC LINKS");
-  FirebaseDynamicLinks.instance.getInitialLink().then(
-    (data) {
-      final Uri deepLink = data?.link;
-      if (deepLink!=null) {
-        print("DEEP LINK PATH");
-        print(deepLink.path);
-        switch (deepLink.path) {
-          case "campaigns": {
-            return 0;
-          } 
-          default: {
-            return 0;
-          }
-        }
-      }
-      return 1;
-    }
-  );
+  // 2. handle link that has been retrieved
+  _handleDeepLink(data, onLink);
+
+  // 3. Register a link callback to fire if the app is opened up from the background
+  // using a dynamic link.
+  FirebaseDynamicLinks.instance.onLink(
+      onSuccess: (PendingDynamicLinkData dynamicLink) async {
+    // 3a. handle link that has been retrieved
+    _handleDeepLink(dynamicLink, onLink);
+  }, onError: (OnLinkErrorException e) async {
+    print('Link Failed: ${e.message}');
+  });
+}
+
+void _handleDeepLink(PendingDynamicLinkData data, Function onLink) {
+  final Uri deepLink = data?.link;
+
+  if (deepLink != null) {
+    print('_handleDeepLink | deeplink: $deepLink');
+    onLink(0);
+  }
+  else {
+    print("Deep link was null");
+  }
 }

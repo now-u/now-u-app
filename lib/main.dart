@@ -49,7 +49,6 @@ class _AppState extends State<App> {
   @override
   void initState() {
     // TODO: implement initState
-    deepLinkPageIndex = initDynamicLinks();
     super.initState();
   }
 
@@ -164,22 +163,70 @@ class _AppState extends State<App> {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   final DevToolsStore<AppState> store;
   final int currentIndex;
 
   MyHomePage(this.store, this.currentIndex);
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
+
+  DevToolsStore<AppState> store;
+  int currentIndex;
+
+  @override
+  void initState() {
+    store = widget.store;
+    currentIndex = widget.currentIndex;
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    Function onClick = (int index) {
+      print("Setting current index");
+      setState(() {
+        currentIndex = index;
+      });
+    };
+    handleDynamicLinks(
+      onClick 
+    );
+  } 
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if(state == AppLifecycleState.resumed){
+      print("App resumed");
+      //Function onClick = (int index) {
+      //  print("Setting current index");
+      //  setState(() {
+      //    currentIndex = index;
+      //  });
+      //};
+      //handleDynamicLinks(
+      //  onClick 
+      //);
+    }
+  }
+
   @override 
   Widget build(BuildContext context) {
   print("The currentIndex is");
   print(currentIndex);
-
     return
       StoreConnector<AppState, ViewModel>(
           converter: (Store<AppState> store) => ViewModel.create(store),
           builder: (BuildContext context, ViewModel viewModel) {
             print("Before splash screen user is");
             print(viewModel.user.getName());
+            print(currentIndex);
             return TabsPage(viewModel, currentIndex: currentIndex);
           },
       );
