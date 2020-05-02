@@ -183,15 +183,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     currentIndex = widget.currentIndex;
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    Function onClick = (int index) {
-      print("Setting current index");
-      setState(() {
-        currentIndex = index;
-      });
-    };
-    handleDynamicLinks(
-      onClick 
-    );
   } 
 
   @override
