@@ -1,5 +1,24 @@
 import 'package:flutter/foundation.dart';
 
+enum ArticleType {
+  News,
+  Video, 
+  Highlight,
+}
+
+class Articles {
+
+  List<Article> articles;
+
+  List<Article> getArticles() {
+    return articles;
+  }
+
+  List<Article> getArticlesByType(ArticleType type) {
+    return articles.where((a) => a.getType() == type);
+  }
+}
+
 class Article {
   int id;
   String title;
@@ -9,6 +28,7 @@ class Article {
   int linkedCampaign;
   int linkedAction;
   String videoLink;
+  ArticleType type;
 
   Article({
     @required this.id, 
@@ -19,6 +39,7 @@ class Article {
     this.fullArticleLink, 
     this.linkedAction, 
     this.videoLink, 
+    this.type,
   });
 
   int getId() {
@@ -44,5 +65,8 @@ class Article {
   }
   String getVideoLink() {
     return videoLink; 
+  }
+  ArticleType getType() {
+    return type;
   }
 }
