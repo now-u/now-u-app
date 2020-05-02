@@ -30,6 +30,10 @@ Future<AppState> loadFromPrefs(AppState state) async {
   return AppState.initialState();
 }
 
+Future<AppState> loadFromAPI(AppState state) async {
+
+}
+
 void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) async {
   next(action);
   

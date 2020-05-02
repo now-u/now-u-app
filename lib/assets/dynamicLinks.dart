@@ -43,6 +43,7 @@ Future <Uri> createDynamicLink(bool short) async {
 }
 
 Future handleDynamicLinks(Function onLink) async {
+  // The holy grail link https://nowu.page.link/?link=https://now-u.com/campaigns?id=1&apn=com.nowu.app
   print("Handling link");
   // 1. Get the initial dynamic link if the app is opened with a dynamic link
   final PendingDynamicLinkData data =
@@ -67,7 +68,15 @@ void _handleDeepLink(PendingDynamicLinkData data, Function onLink) {
 
   if (deepLink != null) {
     print('_handleDeepLink | deeplink: $deepLink');
-    onLink(0);
+    print(deepLink.path);
+    print(deepLink.path == "/campaigns");
+
+    if (deepLink.path == "/campaigns") {
+     String campaignId = deepLink.queryParameters['id'];
+     onLink(0);
+     print("Campaign id is");
+     print(campaignId);
+    }
   }
   else {
     print("Deep link was null");

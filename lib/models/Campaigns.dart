@@ -36,6 +36,9 @@ class Campaigns {
  
   Campaigns.init() {
     List<Campaign> camps; 
+
+    
+
     readCampaingsFromAssets().then((String s) {
       camps = (jsonDecode(s) as List).map((e) => Campaign.fromJson(e)).toList().cast<Campaign>();
       activeCampaigns = camps ?? <Campaign>[];
