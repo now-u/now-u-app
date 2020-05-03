@@ -15,15 +15,21 @@ class CampaignInfo extends StatelessWidget {
   Campaign campaign;
   int campaignId;
   ViewModel model;
+  //Future<Campaign> campaign;
 
   CampaignInfo({
     @required this.model, 
     this.campaign, 
-    campaignId
+    int campaignId
   }){ 
-    this.campaign = campaignId;
-
-
+    if (campaign != null) {
+      this.campaign = campaign;
+    } else {
+      var c = model.campaigns.getActiveCampaigns().firstWhere((camp) => camp.getId() == campaignId);
+      if ( c != null ) {
+        this.campaign = c;
+      }
+    }
     assert (campaign != null || campaignId != null);
   }
 
