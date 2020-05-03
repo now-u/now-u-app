@@ -11,19 +11,21 @@ class HttpApi implements Api {
   final String domainPrefix = "https://now-u-api.herokuapp.com/api/v1/";
 
   @override
-  Future<Campaign> getCampaign(int id) {
+  Future<Campaign> getCampaign(int id) async {
     print("Getting campaigns");
     print("ITS HAPPENING");
-    http.get(domainPrefix + "campaigns/1").then(
-      (response) {
-        if (response.statusCode == 200) {
-          return Campaign.fromJson(json.decode(response.body));
-        }
-        else {
-          return null;
-        }
-      }
-    );
+    var response = await http.get(domainPrefix + "campaigns/1");
+    if (response.statusCode == 200) {
+      print("We got a 200!");
+      Campaign c = Campaign.fromJson(json.decode(response.body)['data']);
+      print("Here is the campaign");
+      print(c);
+      return c;
+    }
+    else {
+      print("We got an error whilst doing the http request");
+      return Future.error("Uhoh", StackTrace.fromString("The stack trace is"));
+    }
   }
   
   @override

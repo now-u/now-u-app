@@ -38,22 +38,22 @@ class _CampaignPageState extends State<CampaignPage> {
     _user = widget.model.user;
     _selectionMode = widget._selectionMode;
     _model = widget.model;
-
-    // If given specific campaign, redirect to that page
-    // Needs to be in future so happens after render of this page or something like that
+    if (widget.campaignId != null) {
       Future (() {
-        if (widget.campaignId != null) {
           Navigator.push(
             context, 
             CustomRoute(builder: (context) => CampaignInfo(campaignId: widget.campaignId, model: widget.model))
           );
-         }
       });
-    super.initState();
+    } else {
+      super.initState();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    // If given specific campaign, redirect to that page
+    // Needs to be in future so happens after render of this page or something like that
     //var _campaigns = widget.model.campaigns.map((Campaign c) => c).toList();
     return Scaffold(
         body: SafeArea(

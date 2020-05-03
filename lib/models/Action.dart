@@ -95,7 +95,7 @@ class CampaignAction {
   }
 
   CampaignAction.fromJson(Map json) {
-    print(json);
+    //print(json);
     id = json['id'];
     title = json['title'];
     description = json['description'];

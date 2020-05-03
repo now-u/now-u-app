@@ -14,58 +14,93 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/routes/customRoute.dart';
 
-class CampaignInfo extends StatelessWidget {
-  Campaign campaign;
-  int campaignId;
-  ViewModel model;
-  Future<Campaign> futureCampaign;
-  Api api = locator<Api>();
-
+class CampaignInfo extends StatefulWidget {
+  final Campaign campaign;
+  final int campaignId;
+  final ViewModel model;
+  
   CampaignInfo({
     @required this.model, 
     this.campaign, 
-    int campaignId
-  }){ 
+    this.campaignId
+  }):assert(campaign != null || campaignId != null);
+
+  @override
+  _CampaignInfoState createState() => _CampaignInfoState();
+}
+
+class _CampaignInfoState extends State<CampaignInfo> {
+  Api api = locator<Api>();
+  Future<Campaign> futureCampaign;
+  Campaign campaign;
+
+  void initState() {
     // if give campaing use that
-    if (campaign != null) {
-      this.campaign = campaign;
+    if (widget.campaign != null) {
+      print("Campaign does not equal null");
+      this.campaign = widget.campaign;
     } 
     // check if we already have the campaign id they want
     else {
-      var c = model.campaigns.getActiveCampaigns().firstWhere((camp) => camp.getId() == campaignId);
+      Campaign c = widget.model.campaigns.getActiveCampaigns().firstWhere((camp) => camp.getId() == widget.campaignId, orElse: () => null);
       // if so use that
       if ( c != null ) {
+        print("We have the campaign");
         this.campaign = c;
       }
       // otherwise have a look online
       else {
-        futureCampaign = api.getCampaign(campaignId);
-        // If that doesnt work then show the campaign not found page
-        if (futureCampaign == null) {
-          // TODO implement campaign not found page
-        }
+        print("Were gonna go have a look online");
+        //this.futureCampaign = api.getCampaign(widget.campaignId);
+        //// If that doesnt work then show the campaign not found page
+        //if (this.futureCampaign == null) {
+        //  // TODO implement campaign not found page
+        //}
       }
     }
-    assert (campaign != null || campaignId != null);
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    print("Building Info Page");
+    print(this.campaign);
     return
-    campaign != null ?
-    CampaignInfoContent(campaign: campaign, model: model,)
+    this.campaign != null ?
+    CampaignInfoContent(campaign: this.campaign, model: widget.model,)
     :
     FutureBuilder<Campaign>(
-      future: futureCampaign,
+      //future: this.futureCampaign,
+      future: api.getCampaign(widget.campaignId),
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return CampaignInfoContent(campaign: campaign, model: model);
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            print("has data!");
+            return CampaignInfoContent(campaign: snapshot.data, model: widget.model);
+          }
+          else if (snapshot.hasError) {
+            // TODO implement campaign not found page
+            print("There was an error with get campaign request");
+            return null;
+          }
         }
-        else if (snapshot.hasError) {
-          // TODO implement campaign not found page
-          return null;
+        else if (snapshot.connectionState == ConnectionState.none && snapshot.data == null) {
+          print("ConnectionState is super none");
         }
-        return CircularProgressIndicator();
+        else if (snapshot.connectionState == ConnectionState.none) {
+          print("ConnectionState is none");
+        }
+        else if (snapshot.connectionState == ConnectionState.waiting) {
+          print("ConnectionState is wiaitng");
+        }
+        return 
+          Scaffold(
+            body:
+              Center(
+                child: CircularProgressIndicator()
+              )
+            ,
+          );
       }
     );
   }
@@ -83,9 +118,6 @@ class CampaignInfoContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     YoutubePlayerController _controller = 
-      campaign == null ?
-      null
-      :
       YoutubePlayerController(
         initialVideoId: YoutubePlayer.convertUrlToId(campaign.getVideoLink()),
         flags: YoutubePlayerFlags(
