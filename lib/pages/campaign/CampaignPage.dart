@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:app/pages/campaign/CampaignTile.dart';
+import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
 import 'package:app/pages/campaign/SelectionComplete.dart';
+
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/User.dart';
@@ -17,8 +19,9 @@ import 'package:app/main.dart';
 class CampaignPage extends StatefulWidget {
   final ViewModel model;
   final bool _selectionMode;
+  final int campaignId;
 
-  CampaignPage(this.model, this._selectionMode);
+  CampaignPage(this.model, this._selectionMode, {this.campaignId});
 
   @override
   _CampaignPageState createState() => _CampaignPageState();
@@ -35,6 +38,17 @@ class _CampaignPageState extends State<CampaignPage> {
     _user = widget.model.user;
     _selectionMode = widget._selectionMode;
     _model = widget.model;
+
+    // If given specific campaign, redirect to that page
+    // Needs to be in future so happens after render of this page or something like that
+      Future (() {
+        if (widget.campaignId != null) {
+          Navigator.push(
+            context, 
+            CustomRoute(builder: (context) => CampaignInfo(campaignId: widget.campaignId, model: widget.model))
+          );
+         }
+      });
     super.initState();
   }
 

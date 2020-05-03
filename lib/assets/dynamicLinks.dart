@@ -72,10 +72,12 @@ void _handleDeepLink(PendingDynamicLinkData data, Function onLink) {
     print(deepLink.path == "/campaigns");
 
     if (deepLink.path == "/campaigns") {
-     String campaignId = deepLink.queryParameters['id'];
-     onLink(0);
-     print("Campaign id is");
-     print(campaignId);
+      String campaignId = deepLink.queryParameters['id'];
+      print("Campaign id is");
+      print(campaignId);
+      if (campaignId != null) {
+        onLink(0, subIndex: int.parse(campaignId));
+      }
     }
   }
   else {

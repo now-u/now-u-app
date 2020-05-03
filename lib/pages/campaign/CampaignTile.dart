@@ -40,7 +40,7 @@ class _CampaignTileState extends State<CampaignTile> {
     GestureTapCallback _onTapMoreInfo =  () {
       Navigator.push(
         context, 
-        CustomRoute(builder: (context) => CampaignInfo(widget._campaign, widget.model))
+        CustomRoute(builder: (context) => CampaignInfo(campaign: widget._campaign, model: widget.model))
       );
     };
 

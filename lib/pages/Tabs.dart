@@ -60,6 +60,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
   void changePage(int index, {int subIndex}) {
     print("Changing page");
     print(index);
+    print(subIndex);
     setState(() {
       _currentIndex = index;
       _subIndex = subIndex;
@@ -72,7 +73,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
   //_currentIndex = widget.currentIndex;
   //print("When drawing tabs view the current index is");
   //print(_currentIndex);
-  List<Widget> _pages = <Widget>[CampaignPage(widget.model, false), Home(widget.model, changePage), Profile(widget.model, currentPage: _subIndex,)];
+  List<Widget> _pages = <Widget>[CampaignPage(widget.model, false, campaignId: _subIndex), Home(widget.model, changePage), Profile(widget.model, currentPage: _subIndex,)];
     return  
           Scaffold(
               body: _pages[_currentIndex],
@@ -99,6 +100,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
                 onTap: (index) {
                   setState(() {
                     _currentIndex = index; 
+                    _subIndex = null;
                   }); 
                 },
               ),

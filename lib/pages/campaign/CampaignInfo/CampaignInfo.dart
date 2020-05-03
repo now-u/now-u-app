@@ -12,25 +12,43 @@ import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/routes/customRoute.dart';
 
 class CampaignInfo extends StatelessWidget {
-  Campaign _campaign;
+  Campaign campaign;
+  int campaignId;
   ViewModel model;
 
-  CampaignInfo(campaign, this.model) {
-    _campaign = campaign;
+  CampaignInfo({
+    @required this.model, 
+    this.campaign, 
+    campaignId
+  }){ 
+    this.campaign = campaignId;
+
+
+    assert (campaign != null || campaignId != null);
   }
 
   @override
   Widget build(BuildContext context) {
-    YoutubePlayerController _controller = YoutubePlayerController(
-      initialVideoId: YoutubePlayer.convertUrlToId(_campaign.getVideoLink()),
-      flags: YoutubePlayerFlags(
-          autoPlay: true,
-          mute: false,
-      ),
-    );
-    print(_campaign.getId());
+    print("In widget");
+    print(campaignId);
+    YoutubePlayerController _controller = 
+      campaign == null ?
+      null
+      :
+      YoutubePlayerController(
+        initialVideoId: YoutubePlayer.convertUrlToId(campaign.getVideoLink()),
+        flags: YoutubePlayerFlags(
+            autoPlay: true,
+            mute: false,
+        ),
+      );
+    //print(campaign.getId());
     return Scaffold(
-      body: NestedScrollView(
+      body: 
+        campaign == null ?
+        Center(child: Text("The campaign is ${campaignId}"))
+        :
+        NestedScrollView(
          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget> [
               // Header
@@ -46,13 +64,13 @@ class CampaignInfo extends StatelessWidget {
               pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
-                  title: Text(_campaign.getTitle(), style: Theme.of(context).primaryTextTheme.display1,),
+                  title: Text(campaign.getTitle(), style: Theme.of(context).primaryTextTheme.display1,),
                   background: Hero(
-                    tag: "CampaignHeaderImage${_campaign.getId()}",
+                    tag: "CampaignHeaderImage${campaign.getId()}",
                     child: Container(
                       decoration: BoxDecoration(
                         image: new DecorationImage(
-                          image: new NetworkImage(_campaign.getHeaderImage()),
+                          image: new NetworkImage(campaign.getHeaderImage()),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -85,7 +103,7 @@ class CampaignInfo extends StatelessWidget {
                   children: <Widget>[
                     Container(
                         width: MediaQuery.of(context).size.width * 0.9,
-                        child: Text(_campaign.getDescription(), style: Theme.of(context).primaryTextTheme.body1),
+                        child: Text(campaign.getDescription(), style: Theme.of(context).primaryTextTheme.body1),
                       ),
                     ]
               ),
@@ -101,8 +119,8 @@ class CampaignInfo extends StatelessWidget {
                   return Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: ActionSelectionItem(
-                      campaign: _campaign,
-                      action: _campaign.getActions()[index],
+                      campaign: campaign,
+                      action: campaign.getActions()[index],
                       model: model,
                     ),
                   );

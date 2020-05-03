@@ -80,7 +80,7 @@ class _ActionInfoState extends State<ActionInfo> {
                   onPressed: () {
                     Navigator.push(
                      context,
-                     CustomRoute(builder: (context) => CampaignInfo(_campaign, _model))
+                     CustomRoute(builder: (context) => CampaignInfo(campaign: _campaign, model: _model))
                     );
                   },
                 )
