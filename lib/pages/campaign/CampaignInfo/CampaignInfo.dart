@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/ViewModel.dart';
 
+import 'package:app/services/api.dart';
+import 'package:app/locator.dart';
+
 import 'package:app/pages/other/ActionInfo.dart';
 
 //import 'package:app/assets/components/videoPlayerFlutterSimple.dart';
@@ -15,19 +18,32 @@ class CampaignInfo extends StatelessWidget {
   Campaign campaign;
   int campaignId;
   ViewModel model;
-  //Future<Campaign> campaign;
+  Future<Campaign> futureCampaign;
+  Api api = locator<Api>();
 
   CampaignInfo({
     @required this.model, 
     this.campaign, 
     int campaignId
   }){ 
+    // if give campaing use that
     if (campaign != null) {
       this.campaign = campaign;
-    } else {
+    } 
+    // check if we already have the campaign id they want
+    else {
       var c = model.campaigns.getActiveCampaigns().firstWhere((camp) => camp.getId() == campaignId);
+      // if so use that
       if ( c != null ) {
         this.campaign = c;
+      }
+      // otherwise have a look online
+      else {
+        futureCampaign = api.getCampaign(campaignId);
+        // If that doesnt work then show the campaign not found page
+        if (futureCampaign == null) {
+          // TODO implement campaign not found page
+        }
       }
     }
     assert (campaign != null || campaignId != null);
@@ -35,8 +51,37 @@ class CampaignInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("In widget");
-    print(campaignId);
+    return
+    campaign != null ?
+    CampaignInfoContent(campaign: campaign, model: model,)
+    :
+    FutureBuilder<Campaign>(
+      future: futureCampaign,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return CampaignInfoContent(campaign: campaign, model: model);
+        }
+        else if (snapshot.hasError) {
+          // TODO implement campaign not found page
+          return null;
+        }
+        return CircularProgressIndicator();
+      }
+    );
+  }
+}
+
+class CampaignInfoContent extends StatelessWidget {
+  final Campaign campaign;
+  final ViewModel model;
+
+  CampaignInfoContent({
+    @required this.campaign, 
+    @required this.model, 
+  }); 
+
+  @override
+  Widget build(BuildContext context) {
     YoutubePlayerController _controller = 
       campaign == null ?
       null
@@ -51,9 +96,6 @@ class CampaignInfo extends StatelessWidget {
     //print(campaign.getId());
     return Scaffold(
       body: 
-        campaign == null ?
-        Center(child: Text("The campaign is ${campaignId}"))
-        :
         NestedScrollView(
          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget> [

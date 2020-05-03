@@ -8,6 +8,8 @@ import 'package:app/assets/SplashScreen.dart';
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/dynamicLinks.dart';
 
+import 'package:app/locator.dart';
+
 import 'package:app/models/User.dart';
 
 import 'package:app/models/ViewModel.dart';
@@ -49,6 +51,7 @@ class _AppState extends State<App> {
   @override
   void initState() {
     // TODO: implement initState
+    setupLocator();
     super.initState();
   }
 
