@@ -24,12 +24,22 @@ class HttpApi implements Api {
     }
     else {
       print("We got an error whilst doing the http request");
-      return Future.error("Uhoh", StackTrace.fromString("The stack trace is"));
+      return Future.error("Error getting campaign in http api", StackTrace.fromString("The stack trace is"));
     }
   }
   
   @override
-  Future<Campaigns> getCampaigns() {
-
+  Future<Campaigns> getCampaigns() async {
+    var response = await http.get(domainPrefix + "campaigns");
+    if (response.statusCode == 200) {
+      Campaigns cs = Campaigns.fromJson(json.decode(response.body)['data']);
+      print("We got some camps");
+      return cs;
+    }
+    else {
+      // TODO different error different reults
+      print("We got an error whilst doing the http request");
+      return Future.error("Error getting campaigns in http api", StackTrace.fromString("The stack trace is"));
+    }
   }
 } 
