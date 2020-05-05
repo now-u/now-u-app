@@ -2,6 +2,8 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/User.dart';
 
+import 'package:app/services/api.dart';
+import 'package:app/locator.dart';
 
 import 'package:path_provider/path_provider.dart';
 import 'dart:async';
@@ -31,18 +33,25 @@ class Campaigns {
     return activeCampaigns.length;
   }
   
-  Campaigns fromJson(Map json) {
+  Campaigns.fromJson(Map json) {
+    activeCampaigns = (json as List).map((e) => Campaign.fromJson(e)).toList().cast<Campaign>();
   }
  
   Campaigns.init() {
+    Api api = locator<Api>();
     List<Campaign> camps; 
-
-    
-
-    readCampaingsFromAssets().then((String s) {
-      camps = (jsonDecode(s) as List).map((e) => Campaign.fromJson(e)).toList().cast<Campaign>();
-      activeCampaigns = camps ?? <Campaign>[];
-    });
+    api.getCampaigns().then(
+      (Campaigns cs) {
+        activeCampaigns = cs.getActiveCampaigns();
+      },
+      onError: (error) {
+        print("There was an error when getting campaigns");
+        readCampaingsFromAssets().then((String s) {
+          camps = (jsonDecode(s) as List).map((e) => Campaign.fromJson(e)).toList().cast<Campaign>();
+          activeCampaigns = camps ?? <Campaign>[];
+        });
+      }
+    );
   }
 
   Future<String> readCampaingsFromAssets() async {

@@ -11,6 +11,7 @@ class AppState {
   Campaigns campaigns;
   User user;
   bool loading;
+  
   //final Rewards rewards;
 
   AppState({
