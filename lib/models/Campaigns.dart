@@ -38,11 +38,14 @@ class Campaigns {
   }
  
   Campaigns.init() {
+    print("Initalizing campaigns");
     Api api = locator<Api>();
     List<Campaign> camps; 
     api.getCampaigns().then(
       (Campaigns cs) {
         activeCampaigns = cs.getActiveCampaigns();
+        print("got campaigns");
+        print(activeCampaigns);
       },
       onError: (error) {
         print("There was an error when getting campaigns");
