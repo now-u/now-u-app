@@ -14,11 +14,14 @@ AppState appStateReducer(AppState state, action) {
 }
 
 bool loadingReducer (action) {
-  if(action is LoadedUserDataAction) {
-    return false;
-  }
+  //if(action is LoadedUserDataAction) {
+  //  return false;
+  //}
   if(action is LoadedCampaignsAction) {
     return false;
+  }
+  if (action is InitalisedState) {
+    return false; 
   }
   return null;
 }

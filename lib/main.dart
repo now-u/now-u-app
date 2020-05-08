@@ -146,6 +146,7 @@ class _AppState extends State<App> {
             onInit: (store) { 
               store.dispatch(GetCampaignsAction());
               store.dispatch(GetUserDataAction());
+              //store.dispatch(InitaliseState);
             },
             builder: (BuildContext context, Store<AppState> store) =>
               //store.state.campaigns == null 

@@ -41,6 +41,17 @@ Future<User> loadUserFromPrefs(User u) async {
 
 void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) async {
   next(action);
+
+  if (action is InitaliseState) {
+    print("Doing the first thing");
+     store.dispatch(GetCampaignsAction).then(() {
+        print("Doing the second thing");
+        store.dispatch(GetUserDataAction).then(
+          store.dispatch(InitalisedState())
+        );
+      }
+     );
+  }
   
   if (action is SelectCampaignsAction) {
     saveUserToPrefs(store.state.user);

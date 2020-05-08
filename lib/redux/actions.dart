@@ -2,6 +2,12 @@ import 'package:app/models/User.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaigns.dart';
 
+class InitaliseState {}
+
+class InitalisedState {
+  InitalisedState();
+}
+
 class SelectCampaignsAction {
   final User user;
 
