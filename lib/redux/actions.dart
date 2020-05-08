@@ -20,7 +20,7 @@ class UpdateUserDetails {
   UpdateUserDetails(this.user);
 }
 
-class GetCampaingsAction {}
+class GetCampaignsAction {}
 
 class LoadedCampaignsAction {
   final Campaigns campaigns;

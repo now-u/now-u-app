@@ -33,8 +33,12 @@ class Campaigns {
     return activeCampaigns.length;
   }
   
-  Campaigns.fromJson(Map json) {
-    activeCampaigns = (json as List).map((e) => Campaign.fromJson(e)).toList().cast<Campaign>();
+  Campaigns.fromJson(List json) {
+    activeCampaigns = json.map((e) => Campaign.fromJson(e)).toList().cast<Campaign>();
+  }
+
+  String toJson() {
+    return json.encode(this.activeCampaigns);
   }
  
   Campaigns.init() {
@@ -62,11 +66,6 @@ class Campaigns {
     return data;
   }
   
-  Future<Campaigns> readCampaignsFromHttpApi() async {
-    Api api = locator<Api>();
-    return api.getCampaigns();
-  }
-
   Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();
     print("Directory path is");

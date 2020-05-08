@@ -5,19 +5,28 @@ import 'package:redux/redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:app/models/State.dart';
+import 'package:app/models/User.dart';
+import 'package:app/models/Campaigns.dart';
 import 'package:app/redux/actions.dart';
 
-void saveToPrefs(AppState state) async {
+void saveUserToPrefs(User u) async {
   print("Saving json to shared prefs");
   SharedPreferences preferences = await SharedPreferences.getInstance();
-  var string = json.encode(state.toJson());
-  await preferences.setString('userState', string);
+  var string = json.encode(u.toJson());
+  await preferences.setString('user', string);
 }
 
-Future<AppState> loadFromPrefs(AppState state) async {
-  print("Loading from shared prefs");
+void saveCampaignsToPrefs(Campaigns cs) async {
+  print("Saving Campaigns json to shared prefs");
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  var string = json.encode(cs.toJson());
+  await preferences.setString('user', string);
+}
+
+Future<User> loadUserFromPrefs(User u) async {
+  print("Loading User from shared prefs");
   final SharedPreferences preferences = await SharedPreferences.getInstance();
-  var string = preferences.getString('userState');
+  var string = preferences.getString('user');
   print(string);
   
   if (string != null) {
@@ -25,23 +34,19 @@ Future<AppState> loadFromPrefs(AppState state) async {
     //print("Decoding json from state");
     Map map = json.decode(string);
     //print("Decoded json");
-    return AppState.fromJson(map, state);
+    return User.fromJson(map);
   }
-  return AppState.initialState();
-}
-
-Future<AppState> loadFromAPI(AppState state) async {
-
+  return User.empty();
 }
 
 void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) async {
   next(action);
   
   if (action is SelectCampaignsAction) {
-    saveToPrefs(store.state);
+    saveUserToPrefs(store.state.user);
   }
   if (action is UpdateUserDetails) {
-    saveToPrefs(store.state);
+    saveUserToPrefs(store.state.user);
   }
   //if (action is GetCampaingsAction) {
   //  print("the middleware is happening for get Campaings");
@@ -64,21 +69,32 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
 
   //}
 
+  
   if (action is GetCampaignsAction) {
-    
+    await store.state.api.getCampaigns().then(
+      (Campaigns cs) {
+        print("Campaigns loaded in middleware");
+        print(cs.getActiveCampaigns());
+        store.dispatch(LoadedCampaignsAction(cs));
+      }, onError: (e, st) {
+        print(e);
+        return store.state.campaigns;
+        //loadCampaignsFromPrefs()
+      } 
+    );
   }
 
   if (action is GetUserDataAction) {
-    await loadFromPrefs(store.state).then((state) { 
+    await loadUserFromPrefs(store.state.user).then((user) { 
           print("The user being loaded is:");
-          print(state.user.getName());
-          store.dispatch(LoadedUserDataAction(state.user)); 
+          print(user.getName());
+          store.dispatch(LoadedUserDataAction(user)); 
     });
   }
   if (action is CompleteAction) {
     print("In middleware of completed Action user is");
     print(store.state.user.getCompletedActions());
-    saveToPrefs(store.state);
+    saveUserToPrefs(store.state.user);
   }
   if (action is GetDynamicLink) {
   }

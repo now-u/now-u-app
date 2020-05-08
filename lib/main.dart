@@ -144,7 +144,7 @@ class _AppState extends State<App> {
         home: 
           StoreBuilder<AppState>(
             onInit: (store) { 
-              //store.dispatch(GetCampaingsAction());
+              store.dispatch(GetCampaignsAction());
               store.dispatch(GetUserDataAction());
             },
             builder: (BuildContext context, Store<AppState> store) =>

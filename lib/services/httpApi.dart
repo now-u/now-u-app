@@ -32,6 +32,7 @@ class HttpApi implements Api {
     print("ITS HAPPENING");
     var response = await http.get(domainPrefix + "campaigns");
     if (response.statusCode == 200) {
+      print("200");
       Campaigns cs = Campaigns.fromJson(json.decode(response.body)['data']);
       print("We got some camps");
       return cs;

@@ -2,12 +2,14 @@ import 'package:app/redux/actions.dart';
 import 'package:app/redux/middleware.dart';
 import 'package:app/models/State.dart';
 import 'package:app/models/User.dart';
+import 'package:app/models/Campaigns.dart';
 
 AppState appStateReducer(AppState state, action) {
   return AppState(
     campaigns: state.campaigns,
     user: userReducer(state.user, action),
-    loading: loadingReducer(action) ?? state.loading
+    loading: loadingReducer(action) ?? state.loading,
+    api: state.api,
   );
 }
 
@@ -15,7 +17,19 @@ bool loadingReducer (action) {
   if(action is LoadedUserDataAction) {
     return false;
   }
+  if(action is LoadedCampaignsAction) {
+    return false;
+  }
   return null;
+}
+
+Campaigns campaignsReducer(Campaigns campaigns, action) {
+  if (action is LoadedCampaignsAction) {
+    print("The user that has been loaded is");
+    print(action.campaigns.getActiveCampaigns().length);
+    return action.campaigns;
+  }
+  return campaigns;
 }
 
 User userReducer(User user, action) {

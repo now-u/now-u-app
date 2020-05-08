@@ -39,6 +39,16 @@ class User {
         completedActionsType ?? this.initCompletedAction();
   }
 
+  User.empty(){
+    id= 0;
+    fullName= "Andrew";
+    username= "Andy123";
+    age= 21;
+    location= "Bristol";
+    monthlyDonationLimit= 20.0;
+    homeOwner= false;
+  }
+
   User copyWith({
     int id,
     String fullName,
