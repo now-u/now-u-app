@@ -1,5 +1,6 @@
 import 'package:app/models/User.dart';
 import 'package:app/models/Action.dart';
+import 'package:app/models/Campaigns.dart';
 
 class SelectCampaignsAction {
   final User user;
@@ -19,13 +20,13 @@ class UpdateUserDetails {
   UpdateUserDetails(this.user);
 }
 
-//class GetCampaingsAction {}
+class GetCampaingsAction {}
 
-//class LoadedCampaignsAction {
-//  final List<Campaign> campaigns;
-//
-//  LoadedCampaignsAction(this.campaigns);
-//}
+class LoadedCampaignsAction {
+  final Campaigns campaigns;
+
+  LoadedCampaignsAction(this.campaigns);
+}
 
 //class FetchInitState {}
 class GetDynamicLink {}

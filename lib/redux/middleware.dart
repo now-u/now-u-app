@@ -64,6 +64,10 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
 
   //}
 
+  if (action is GetCampaignsAction) {
+    
+  }
+
   if (action is GetUserDataAction) {
     await loadFromPrefs(store.state).then((state) { 
           print("The user being loaded is:");

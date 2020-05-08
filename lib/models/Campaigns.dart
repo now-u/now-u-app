@@ -61,6 +61,11 @@ class Campaigns {
     String data = await rootBundle.loadString('assets/json/campaigns.json');
     return data;
   }
+  
+  Future<Campaigns> readCampaignsFromHttpApi() async {
+    Api api = locator<Api>();
+    return api.getCampaigns();
+  }
 
   Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();

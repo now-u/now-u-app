@@ -12,8 +12,6 @@ class HttpApi implements Api {
 
   @override
   Future<Campaign> getCampaign(int id) async {
-    print("Getting campaigns");
-    print("ITS HAPPENING");
     var response = await http.get(domainPrefix + "campaigns/1");
     if (response.statusCode == 200) {
       print("We got a 200!");
@@ -30,6 +28,8 @@ class HttpApi implements Api {
   
   @override
   Future<Campaigns> getCampaigns() async {
+    print("Getting campaigns");
+    print("ITS HAPPENING");
     var response = await http.get(domainPrefix + "campaigns");
     if (response.statusCode == 200) {
       Campaigns cs = Campaigns.fromJson(json.decode(response.body)['data']);
