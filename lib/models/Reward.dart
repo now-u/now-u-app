@@ -33,13 +33,21 @@ class Reward {
   }
 
   String generateTitle() {
+    String endingPlural = successNumber > 1 ? "s" : "";
     if (type == RewardType.CompletedTypedActionsNumber) {
       Tuple3<String,String,String> descPrePostFix= generateCampaingActionDesc(actionType);
       String pre = descPrePostFix.item1;
       String post = descPrePostFix.item3;
-      String endingPlural = successNumber > 1 ? "s" : "";
       return (pre + " ${successNumber} " + post  + "${endingPlural}");
     }
+    if (type == RewardType.CompletedActionsNumber) {
+      return "Complete ${successNumber} action${endingPlural}";
+    }
+
+    if (type == RewardType.CompletedCampaignsNumber) {
+      return "Complete ${successNumber} campaign${endingPlural}";
+    }
+
     return "";
   }
   

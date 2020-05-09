@@ -22,12 +22,19 @@ const double ITEM_VERTICAL = 30;
 //  Reward(id: 1, title: "24% of VegWare", description: "Vegi Cup is a company that make compsotable single use cutlery etc.", completed:false ),
 //];
 
-class RewardsPage extends StatelessWidget {
-  GestureTapCallback goBack;
-  ViewModel model;
+class RewardsPage extends StatefulWidget {
+ 
+  // TODO remove go back
+  final GestureTapCallback goBack;
+  final ViewModel model;
 
-  RewardsPage(this.goBack, this.model) {
-  }
+  RewardsPage(this.goBack, this.model);
+
+  @override
+  _RewardsPageState createState() => _RewardsPageState();
+}
+
+class _RewardsPageState extends State<RewardsPage> {
   @override
   Widget build(BuildContext context) {
 //  var _rewards = <Reward>[
@@ -35,12 +42,12 @@ class RewardsPage extends StatelessWidget {
 //    Reward(id: 2, title: "Complete first action", successNumber: 1, type: RewardType.CompletedActionsNumber),
 //    Reward(id: 3, title: "Sign 5 petitons", successNumber: 5, type: RewardType.CompletedTypedActionsNumber, actionType: CampaignActionType.Petition),
 //  ];
-    List<Reward> _completedRewards = model.user.getPreviousRewards();
-    List<Reward> _nextRewards = model.user.getNextRewards();
+    List<Reward> _completedRewards = widget.model.user.getPreviousRewards();
+    List<Reward> _nextRewards = widget.model.user.getNextRewards();
     List<Reward> _rewards = _completedRewards..addAll(_nextRewards);
     return Column(
         children: <Widget>[
-          PageTitle("Rewards", hasBackButton: true, onClickBackButton: goBack,),
+          PageTitle("Rewards", hasBackButton: true, onClickBackButton: widget.goBack),
           Text("You have completed x campaigns",
             style: Theme.of(context).primaryTextTheme.body1),
           Text("Thankyou",
@@ -56,7 +63,7 @@ class RewardsPage extends StatelessWidget {
                     onTap: () {},
                     // To only show complted rewards
                     //child: model.user.getRewardProgress(_rewards[index]) == 1 ? RewardTile(_rewards[index], model) : Container(height: 0,),
-                    child: RewardTile(_rewards[index], model), 
+                    child: RewardTile(_rewards[index], widget.model), 
                   ),
             ),
           ),

@@ -341,6 +341,20 @@ Map toJson() => {
       );
     });
     // Add next completedActionsNumber
+    rewards.add(
+      Reward(
+        successNumber: nextValue(completedCampaigns.length, rewardValues),
+        type: RewardType.CompletedCampaignsNumber,
+      )
+    );
+    
+    // Add total completed actions 
+    rewards.add(
+      Reward(
+        successNumber: nextValue(completedActions.length, rewardValues),
+        type: RewardType.CompletedActionsNumber,
+      )
+    );
     return rewards;
   }
   
@@ -361,6 +375,26 @@ Map toJson() => {
         );
       }
     });
+    
+    // Add total completed campaigns 
+    if (completedCampaigns.length > 0) {
+      rewards.add(
+        Reward(
+          successNumber: prevValue(completedCampaigns.length, rewardValues),
+          type: RewardType.CompletedCampaignsNumber,
+        )
+      );
+    }
+    
+    // Add total completed actions 
+    if (completedActions.length > 0) {
+      rewards.add(
+        Reward(
+          successNumber: prevValue(completedActions.length, rewardValues),
+          type: RewardType.CompletedActionsNumber,
+        )
+      );
+    }
     return rewards;
   }
   
