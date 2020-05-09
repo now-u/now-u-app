@@ -109,6 +109,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           setState(() {
                             //_selectionMode = false;
                             model.onUpdateUserDetails(user);
+                            editingMode = false;
                           });
                         },
                       ),

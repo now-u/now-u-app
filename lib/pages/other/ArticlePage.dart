@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
 import 'package:app/models/Article.dart';
 //import 'package:app/models/ViewModel.dart';
 
@@ -16,6 +18,14 @@ class ArticlePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    YoutubePlayerController ytcontroller = 
+      YoutubePlayerController(
+        initialVideoId: YoutubePlayer.convertUrlToId(article.getVideoLink()),
+        flags: YoutubePlayerFlags(
+            autoPlay: true,
+            mute: false,
+      ),
+    );
     return Scaffold(
       body: NestedScrollView(
          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -68,11 +78,11 @@ class ArticlePage extends StatelessWidget {
                   null 
                   :
                   Container(
-                    height: 300,
-                    color: Colors.red,
-                    //child: Material(
-                      //child: VideoPlayer(),  
-                    //), 
+                    child:
+                      YoutubePlayer(
+                        controller: ytcontroller,
+                        showVideoProgressIndicator: true,
+                      ),
                     ) 
                   ),
               Row(

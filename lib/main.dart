@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:app/pages/Tabs.dart';
+import 'package:app/pages/other/SplashScreen.dart';
 
 import 'package:app/assets/components/videoPlayerFlutterSimple.dart';
-import 'package:app/assets/SplashScreen.dart';
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/dynamicLinks.dart';
 
@@ -154,11 +154,12 @@ class _AppState extends State<App> {
               //|| store.state.campaigns.activeLength() < 3
               store.state.loading
               ?
-              Container(
-                color: Colors.red,
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-              )
+              SplashScreen()
+              //Container(
+              //  color: Colors.red,
+              //  height: MediaQuery.of(context).size.height,
+              //  width: MediaQuery.of(context).size.width,
+              //)
               :
               MyHomePage(store, deepLinkPageIndex),
           )  

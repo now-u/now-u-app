@@ -53,7 +53,7 @@ class _ActionInfoState extends State<ActionInfo> {
               pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
-                  title: Text(_action.getTitle(), style: Theme.of(context).primaryTextTheme.display1,),
+                  title: Text("Action", style: Theme.of(context).primaryTextTheme.display1,),
                   background: Hero(
                     tag: "CampaignHeaderImage${_campaign.getId()}",
                     child: Container(
@@ -73,17 +73,28 @@ class _ActionInfoState extends State<ActionInfo> {
          body: 
           ListView(
             children: <Widget>[
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    bottom: 20,
+                  ),
+                  child: DarkButton(
+                    "View full campaign",
+                    onPressed: () {
+                      Navigator.push(
+                       context,
+                       CustomRoute(builder: (context) => CampaignInfo(campaign: _campaign, model: _model))
+                      );
+                    },
+                  )
+                ),
+              ),
               Padding(
-                padding: EdgeInsets.all(10),
-                child: DarkButton(
-                  "Goto actions campaign",
-                  onPressed: () {
-                    Navigator.push(
-                     context,
-                     CustomRoute(builder: (context) => CampaignInfo(campaign: _campaign, model: _model))
-                    );
-                  },
-                )
+                padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
+                child: Text(
+                  _action.getTitle(),
+                  style: Theme.of(context).primaryTextTheme.headline,
+                ),
               ),
               _model.user.isCompleted(_action) ?
                 Padding(
