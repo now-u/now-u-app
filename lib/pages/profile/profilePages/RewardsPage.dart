@@ -35,6 +35,23 @@ class RewardsPage extends StatefulWidget {
 }
 
 class _RewardsPageState extends State<RewardsPage> {
+  String dropdownValue; // current, completed, both
+  List<Reward> completedRewards;
+  List<Reward> nextRewards;
+  List<Reward> allrewards;
+  List<Reward> rewards;
+
+
+
+    @override
+  void initState() {
+    //completedRewards = widget.model.user.getPreviousRewards();
+    //nextRewards = widget.model.user.getNextRewards();
+    //allrewards = completedRewards..addAll(nextRewards);
+    rewards = widget.model.user.getAllRewards();
+    dropdownValue = 'all';
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
 //  var _rewards = <Reward>[
@@ -42,9 +59,6 @@ class _RewardsPageState extends State<RewardsPage> {
 //    Reward(id: 2, title: "Complete first action", successNumber: 1, type: RewardType.CompletedActionsNumber),
 //    Reward(id: 3, title: "Sign 5 petitons", successNumber: 5, type: RewardType.CompletedTypedActionsNumber, actionType: CampaignActionType.Petition),
 //  ];
-    List<Reward> _completedRewards = widget.model.user.getPreviousRewards();
-    List<Reward> _nextRewards = widget.model.user.getNextRewards();
-    List<Reward> _rewards = _completedRewards..addAll(_nextRewards);
     return Column(
         children: <Widget>[
           PageTitle("Rewards", hasBackButton: true, onClickBackButton: widget.goBack),
@@ -52,18 +66,63 @@ class _RewardsPageState extends State<RewardsPage> {
             style: Theme.of(context).primaryTextTheme.body1),
           Text("Thankyou",
             style: Theme.of(context).primaryTextTheme.body1),
+          Padding(
+            padding: EdgeInsets.only(top: 20),
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: DropdownButton<String>(
+                value: dropdownValue,
+                icon: Container(
+                  child: Icon(Icons.arrow_downward),
+                ),
+                iconSize: 24,
+                elevation: 16,
+                style: TextStyle(
+                  color: Theme.of(context).primaryColorDark
+                ),
+                underline: Container(
+                  height: 2,   
+                  color: Theme.of(context).primaryColorDark
+                ),
+                onChanged: (String value) {
+                  setState(() {
+                    dropdownValue = value;
+                    if (value == 'all')  {
+                      rewards = widget.model.user.getAllRewards();
+                    }
+                    if (value == 'current')  {
+                      rewards = widget.model.user.getNextRewards();
+                    }
+                    if (value == 'completed')  {
+                      print("Value = completed");
+                      rewards = widget.model.user.getPreviousRewards();
+                      print(rewards.length);
+                    }
+                  });
+                },
+                items: <String>['current', 'completed', 'all'].map<DropdownMenuItem<String>>(
+                  (String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value, style: Theme.of(context).primaryTextTheme.body1,),
+                    );
+                  }
+                ).toList(),
+              ),
+            ),
+          ),
           Expanded(
             child:
             ListView.separated(
               separatorBuilder: (context, index) => Divider(),
-              itemCount: _rewards.length,
+              itemCount: rewards.length,
               itemBuilder: (context, index) =>
                   GestureDetector(
                     // TODO Offer more info page
                     onTap: () {},
                     // To only show complted rewards
                     //child: model.user.getRewardProgress(_rewards[index]) == 1 ? RewardTile(_rewards[index], model) : Container(height: 0,),
-                    child: RewardTile(_rewards[index], widget.model), 
+                    child: RewardTile(rewards[index], widget.model), 
                   ),
             ),
           ),

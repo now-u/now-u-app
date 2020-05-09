@@ -395,10 +395,21 @@ Map toJson() => {
         )
       );
     }
+
+    print("previous rewards");
+    print(rewards.length);
     return rewards;
   }
+
+  List<Reward> getAllRewards({int x}) {
+    List<Reward> completedRewards = getPreviousRewards();
+    List<Reward> nextRewards = getNextRewards();
+    return completedRewards..addAll(nextRewards);
+  }
+
   
 }
+
 
 
 // TODO this feels very fragile. Find out what happens if I delete/add a CampaignActionType
