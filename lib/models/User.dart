@@ -275,7 +275,7 @@ Map toJson() => {
     return count / reward.successNumber;
   }
   
-  void completeAction(CampaignAction a) {
+  void completeAction(CampaignAction a, {Function onCompleteReward}) {
     if (completedActions.contains(a.getId())) {
       print("You can only complete an action once");
       return;

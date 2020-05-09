@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/ViewModel.dart';
+import 'package:app/models/Reward.dart';
 
 import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
+import 'package:app/pages/other/RewardComplete.dart';
 
 import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/components/darkButton.dart';
@@ -134,7 +136,8 @@ class _ActionInfoState extends State<ActionInfo> {
                 "Complete Action",
                 onPressed: () {
                   setState(() {
-                    _model.onCompleteAction(_action);
+                    // TODO Somehow somewhere navigate to completed reward page if reward completed
+                    _model.onCompleteAction(_action, );
                   });
                 },
               )
