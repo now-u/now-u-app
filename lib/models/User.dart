@@ -2,6 +2,9 @@ import 'package:app/models/Reward.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
+import 'package:app/models/Action.dart';
+  
+List<int> rewardValues = [1, 5, 10, 25, 50, 100, 200];
 
 class User {
   int id;
@@ -286,6 +289,20 @@ Map toJson() => {
     print(completedActionsType[a.getType()]);
   }
 
+  List<Reward> newlyCompletedRewards(CampaignAction completedAction) {
+    List<Reward> newRewards = [];
+    if (rewardValues.contains(completedActions.length+1)) {
+      newRewards.add(
+        Reward(
+          successNumber: completedActions.length+1,
+          type: RewardType.CompletedActionsNumber,
+          //title: nextValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ nextValue(v, rewardValues)} ${ k.toString() }",
+        )
+      );
+    }
+    return newRewards;
+  }
+
   // Old reward system
   //void completeReward(Reward r) {
   //  completedRewards.add(r.getId());
@@ -307,7 +324,6 @@ Map toJson() => {
     return cas;
   }
 
-  List<int> rewardValues = [1, 5, 10, 25, 50, 100, 200];
   int nextValue (int x, List<int> nums) {
     for ( int i = 0; i < nums.length; i++ ) {
       if(rewardValues[i] > x) return rewardValues[i];
