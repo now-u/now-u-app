@@ -137,7 +137,14 @@ class _ActionInfoState extends State<ActionInfo> {
                 onPressed: () {
                   setState(() {
                     // TODO Somehow somewhere navigate to completed reward page if reward completed
+                    List<Reward> newlyCompletedRewards = widget.model.user.newlyCompletedRewards(_action);
                     _model.onCompleteAction(_action, );
+                    if (newlyCompletedRewards.length > 0) {
+                      Navigator.push(
+                        context, 
+                        CustomRoute(builder: (context) => RewardCompletePage(widget.model, newlyCompletedRewards))
+                      );
+                    }
                   });
                 },
               )

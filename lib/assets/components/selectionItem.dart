@@ -40,11 +40,13 @@ class ActionSelectionItem extends StatelessWidget {
   final CampaignAction action;
   final Campaign campaign;
   final ViewModel model;
+  final Function extraOnTap;
 
   ActionSelectionItem({
     this.action, 
     this.campaign,
     this.model,
+    this.extraOnTap,
   });
 
   @override
@@ -63,6 +65,9 @@ class ActionSelectionItem extends StatelessWidget {
           child: SelectionItem(
              action.getTitle(),
              onClick: () {
+               if (extraOnTap != null) {
+                extraOnTap();
+               }
                Navigator.push(
                  context, 
                  CustomRoute(builder: (context) => ActionInfo(action, campaign, model))

@@ -29,10 +29,16 @@ class CampaignInfo extends StatefulWidget {
   _CampaignInfoState createState() => _CampaignInfoState();
 }
 
-class _CampaignInfoState extends State<CampaignInfo> {
+class _CampaignInfoState extends State<CampaignInfo> with WidgetsBindingObserver {
   Api api = locator<Api>();
   Future<Campaign> futureCampaign;
   Campaign campaign;
+
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    //setState(() { _notification = state });
+    print("The state is");
+    print(state);
+  }
 
   void initState() {
     // if give campaing use that
@@ -202,6 +208,9 @@ class CampaignInfoContent extends StatelessWidget {
                       campaign: campaign,
                       action: campaign.getActions()[index],
                       model: model,
+                      extraOnTap: (){
+                        _controller.pause();
+                      }
                     ),
                   );
                 },      
