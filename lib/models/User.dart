@@ -289,9 +289,18 @@ Map toJson() => {
     print(completedActionsType[a.getType()]);
   }
 
+  bool isMilestone(int x) {
+    if ( x < 300 ) {
+      return rewardValues.contains(x);
+    }
+    else 
+      return x % 50 == 0;
+  }
+
+  // Returns the news rewards completed when this action is completed
   List<Reward> newlyCompletedRewards(CampaignAction completedAction) {
     List<Reward> newRewards = [];
-    if (rewardValues.contains(completedActions.length+1)) {
+    if (isMilestone(completedActions.length+1)) {
       newRewards.add(
         Reward(
           successNumber: completedActions.length+1,
@@ -300,6 +309,16 @@ Map toJson() => {
         )
       );
     }
+    if (isMilestone(completedActionsType[completedAction.getType()]+1)) {
+      newRewards.add(
+        Reward(
+          successNumber: completedActionsType[completedAction.getType()] + 1,
+          type: RewardType.CompletedTypedActionsNumber,
+          actionType: completedAction.getType(),
+        ) 
+      );
+    }
+
     return newRewards;
   }
 
