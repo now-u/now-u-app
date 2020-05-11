@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:app/assets/components/pageTitle.dart';
+import 'package:app/assets/routes/customRoute.dart';
 
 import 'package:app/models/User.dart';
 import 'package:app/models/ViewModel.dart';
@@ -15,6 +17,9 @@ import 'package:app/pages/profile/profilePages/RewardsPage.dart';
 import 'package:app/pages/profile/profilePages/OffersPage.dart';
 import 'package:app/pages/profile/profilePages/FeedbackPage.dart';
 import 'package:app/pages/profile/profilePages/SupportPage.dart';
+
+import 'package:app/pages/other/quiz/quizStart.dart';
+
 
 
 class Profile extends StatefulWidget {
@@ -80,7 +85,16 @@ class _ProfileState extends State<Profile> {
                       ),
                   ),
               ),
-            ]
+              GestureDetector(
+                child: ProfileTile("Dev Tools", FontAwesomeIcons.code),
+                onTap: () {
+                  Navigator.push(
+                   context,
+                   CustomRoute(builder: (context) => QuizStartPage(0))
+                  );
+                },
+              ),
+            ],
           )
         : profileTiles[_currentPage - 1]["page"]
         ;
