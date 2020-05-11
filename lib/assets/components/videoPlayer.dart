@@ -35,7 +35,7 @@ final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
         disableDragSeek: false,
         loop: false,
         isLive: false,
-        forceHideAnnotation: true,
+        hideControls: true,
         forceHD: false,
         enableCaption: false,
       ),

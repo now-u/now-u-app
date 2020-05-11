@@ -45,7 +45,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
         disableDragSeek: false,
         loop: false,
         isLive: false,
-        forceHideAnnotation: true,
+        hideControls: true,
         forceHD: false,
         enableCaption: true,
       ),

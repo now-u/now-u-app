@@ -58,7 +58,7 @@ class _ProfileState extends State<Profile> {
       {  'profileTile': ProfileTile("Network", FontAwesomeIcons.users) },
       {  'profileTile': ProfileTile("Rewards", FontAwesomeIcons.ribbon), 'page' : RewardsPage(goBack, widget.model) },
       {  'profileTile': ProfileTile("Offers", FontAwesomeIcons.percent), 'page': OffersPage(goBack) },
-      {  'profileTile': ProfileTile("Feedback", FontAwesomeIcons.solidComment) },
+      {  'profileTile': ProfileTile("Feedback", FontAwesomeIcons.solidComment), 'page': FeedbackPage(goBack) },
       {  'profileTile': ProfileTile("Support", FontAwesomeIcons.question), 'page':SupportPage(goBack) },
   ];
 

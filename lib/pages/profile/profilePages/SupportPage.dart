@@ -53,8 +53,8 @@ class SupportPage extends StatelessWidget {
                         padding: EdgeInsets.fromLTRB(ICON_HPADDING, ICON_TPADDING, ICON_HPADDING, ICON_BPADDING),
                         child: IconButton(icon: Icon(FontAwesomeIcons.facebookMessenger, size: ICON_SIZE,), onPressed: () {launch("http://m.me/nowufb");})
                       ),
-                      Padding( 
-                        padding: EdgeInsets.fromLTRB(ICON_HPADDING, ICON_TPADDING, ICON_HPADDING, ICON_BPADDING),
+                      Padding(
+                          padding: EdgeInsets.fromLTRB(ICON_HPADDING, ICON_TPADDING, ICON_HPADDING, ICON_BPADDING),
                         child: IconButton(icon: Icon(FontAwesomeIcons.envelopeOpen, size: ICON_SIZE,), onPressed: () {launch("mailto:lizzie@now-u.com?subject=Hi there");})
                       ),
                       Padding( 
