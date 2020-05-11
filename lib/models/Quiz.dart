@@ -31,6 +31,10 @@ class Quiz {
     return title;
   }
 
+  List<Question> getQuestions() {
+    return questions;
+  }
+
 }
 
 Future<Quiz> readQuizFromAssets(int id) async {
@@ -89,6 +93,10 @@ class Answer {
 
   String getAnswer() {
     return answer;
+  }
+
+  bool getIsCorrect() {
+    return isCorrect;
   }
 }
 
