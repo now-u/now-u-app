@@ -4,8 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:app/pages/Tabs.dart';
 import 'package:app/pages/other/SplashScreen.dart';
 
-import 'package:app/assets/components/videoPlayerFlutterSimple.dart';
-import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/dynamicLinks.dart';
 
 import 'package:app/locator.dart';
