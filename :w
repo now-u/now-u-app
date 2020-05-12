@@ -30,53 +30,6 @@ class DarkButton extends StatelessWidget {
   }
 }
 
-class SecondaryButton extends StatelessWidget {
-
-  VoidCallback onPressed;
-  String text;
-
-  SecondaryButton( 
-   String text, 
-   {
-   @required VoidCallback onPressed,
-   bool inverted,
-   } 
-  ) 
-  {
-    this.onPressed = onPressed;
-    this.text = text;
-  }
-  
-  @override
-  Widget build(BuildContext context) {
-    return RaisedButton(
-      elevation: 0,
-      color: Colors.white,
-      onPressed: onPressed,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(borderRadius),
-        side: BorderSide(
-          color: Theme.of(context).buttonColor,
-          width: 3.0
-        ),
-      ),
-      child: Padding(
-            padding: EdgeInsets.all(padding),
-            child: Text(
-              text,
-              style: TextStyle(
-                fontWeight: Theme.of(context).primaryTextTheme.button.fontWeight,
-                fontSize: Theme.of(context).primaryTextTheme.button.fontSize,
-                fontFamily: Theme.of(context).primaryTextTheme.button.fontFamily,
-                color: Theme.of(context).buttonColor,
-              ),
-            ),
-          ),
-
-    );
-  }
-}
-
 class PrimaryButton extends StatelessWidget {
 
   VoidCallback onPressed;
@@ -101,6 +54,50 @@ class PrimaryButton extends StatelessWidget {
       onPressed: onPressed,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(borderRadius),
+      ),
+      child: Padding(
+            padding: EdgeInsets.all(padding),
+            child: Text(
+              text,
+              style: TextStyle(
+                fontWeight: Theme.of(context).primaryTextTheme.button.fontWeight,
+                fontSize: Theme.of(context).primaryTextTheme.button.fontSize,
+                fontFamily: Theme.of(context).primaryTextTheme.button.fontFamily,
+              ),
+            ),
+          ),
+
+    );
+  }
+}
+
+class SecondaryButton extends StatelessWidget {
+
+  VoidCallback onPressed;
+  String text;
+
+  SecondaryButton( 
+   String text, 
+   {
+   @required VoidCallback onPressed,
+   bool inverted,
+   } 
+  ) 
+  {
+    this.onPressed = onPressed;
+    this.text = text;
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+    return RaisedButton(
+
+      onPressed: onPressed,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(borderRadius),
+        side: BorderSide(
+          color: Theme.of(context).buttonColor,
+        ),
       ),
       child: Padding(
             padding: EdgeInsets.all(padding),

@@ -1,4 +1,3 @@
-import 'package:app/assets/components/textButton.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/models/Action.dart';
@@ -12,7 +11,10 @@ import 'package:app/pages/other/RewardComplete.dart';
 import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/components/detailScaffold.dart';
 import 'package:app/assets/components/darkButton.dart';
+import 'package:app/assets/components/textButton.dart';
+import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/routes/customRoute.dart';
+import 'package:app/assets/components/textButton.dart';
 
 class ActionInfo extends StatefulWidget {
   final CampaignAction action;
@@ -43,9 +45,10 @@ class _ActionInfoState extends State<ActionInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: Text(_action.getTitle()),
+        appBar: CustomAppBar(
+          text: "Action",
+          backButtonText: "Home",
+          context: context,
         ),
           // This is the body for the nested scroll view
          body: DetailScaffold(
@@ -56,7 +59,12 @@ class _ActionInfoState extends State<ActionInfo> {
                 expandedHeight: expandedHeight,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Container(
-                    color: Colors.purple
+                    decoration: BoxDecoration(
+                        image: new DecorationImage(
+                          image: new NetworkImage(_campaign.getHeaderImage()),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                   ),
                 ),
               ),
@@ -66,23 +74,6 @@ class _ActionInfoState extends State<ActionInfo> {
                   SliverList(
                     delegate: SliverChildListDelegate(
                       [
-                        // Button to campaign
-                        //Center(
-                        //  child: Padding(
-                        //    padding: EdgeInsets.only(
-                        //      bottom: 20,
-                        //    ),
-                        //    child: DarkButton(
-                        //      "View full campaign",
-                        //      onPressed: () {
-                        //        Navigator.push(
-                        //         context,
-                        //         CustomRoute(builder: (context) => CampaignInfo(campaign: _campaign, model: _model))
-                        //        );
-                        //      },
-                        //    )
-                        //  ),
-                        //),
                         Padding(
                           padding: EdgeInsets.only(top: 10),
                           child: Text(
@@ -125,11 +116,37 @@ class _ActionInfoState extends State<ActionInfo> {
                             children: <Widget>[
                                   Expanded(
                                     child: RichText(
-                                        text: TextSpan(text: _action.getDescription(), style: Theme.of(context).primaryTextTheme.body1),
+                                        text: TextSpan(text: _action.getDescription(), style: Theme.of(context).primaryTextTheme.bodyText1),
                                         ),
                                   )
                               ]
                         ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 20, bottom: 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              DarkButton(
+                                "Mark as done",
+                                inverted: true,
+                                onPressed: () {
+                                  setState(() {
+                                    // TODO Somehow somewhere navigate to completed reward page if reward completed
+                                    List<Reward> newlyCompletedRewards = widget.model.user.newlyCompletedRewards(_action);
+                                    _model.onCompleteAction(_action, );
+                                    if (newlyCompletedRewards.length > 0) {
+                                      Navigator.push(
+                                        context, 
+                                        CustomRoute(builder: (context) => RewardCompletePage(widget.model, newlyCompletedRewards))
+                                      );
+                                    }
+                                  });
+                                },
+                              ),
+                            ],
+
+                          )
+                        )
                       ],
                     )
                   )
@@ -138,27 +155,6 @@ class _ActionInfoState extends State<ActionInfo> {
 
             ],
           ),
-          //floatingActionButton:
-          //Padding (
-          //    padding: EdgeInsets.all(14),
-          //    child: DarkButton(
-          //      "Complete Action",
-          //      onPressed: () {
-          //        setState(() {
-          //          // TODO Somehow somewhere navigate to completed reward page if reward completed
-          //          List<Reward> newlyCompletedRewards = widget.model.user.newlyCompletedRewards(_action);
-          //          _model.onCompleteAction(_action, );
-          //          if (newlyCompletedRewards.length > 0) {
-          //            Navigator.push(
-          //              context, 
-          //              CustomRoute(builder: (context) => RewardCompletePage(widget.model, newlyCompletedRewards))
-          //            );
-          //          }
-          //        });
-          //      },
-          //    )
-          //)
-          //floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

@@ -188,7 +188,6 @@ class _AppState extends State<App> {
                   color: black,
                   fontSize: 17,
                   fontWeight: FontWeight.w400 // Regular
-                  
                 ),
 
                 bodyText1: TextStyle(
@@ -213,9 +212,11 @@ class _AppState extends State<App> {
                 button: TextStyle(
                   fontFamily: 'Poppins',
                   fontWeight: FontWeight.w500, // SemiBold
+                  fontStyle: FontStyle.normal,
                 ),
                 
               ),
+          primaryColor: orange,
           primarySwatch: darkBlue,
           primaryColorDark: blue,
           buttonColor: orange,

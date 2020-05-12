@@ -19,14 +19,23 @@ class TextButton extends StatelessWidget {
     return Container(
       child: GestureDetector(
         onTap: onClick,
-        child: Text(
-          text,
-          style: TextStyle(
-            color: Theme.of(context).buttonColor,
-            fontFamily: Theme.of(context).primaryTextTheme.button.fontFamily,
-            fontWeight: Theme.of(context).primaryTextTheme.button.fontWeight,
-            fontSize: 16,
-          ),
+        child: Row(
+          children: <Widget>[
+            this.icon != null ? 
+              Icon(Icons.chevron_left, size: 25, color: Theme.of(context).primaryColor,)
+            : Container(),
+            Text(
+              text,
+              style: TextStyle(
+                color: Theme.of(context).buttonColor,
+                fontFamily: Theme.of(context).primaryTextTheme.button.fontFamily,
+                fontWeight: Theme.of(context).primaryTextTheme.button.fontWeight,
+                fontStyle: Theme.of(context).primaryTextTheme.button.fontStyle,
+                fontSize: 16,
+              ),
+            ),
+
+          ],
         ),
       )
     );
