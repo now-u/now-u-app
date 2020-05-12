@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:app/pages/Tabs.dart';
 import 'package:app/pages/other/SplashScreen.dart';
+import 'package:app/pages/intro/IntroPage.dart';
 
 import 'package:app/assets/dynamicLinks.dart';
 
@@ -36,6 +37,12 @@ void main() {
 Map<int, Color> darkBlueMap ={50:Color.fromRGBO(36,35,52, .1),100:Color.fromRGBO(36,35,52, .2),200:Color.fromRGBO(36,35,52, .3),300:Color.fromRGBO(36,35,52, .4),400:Color.fromRGBO(36,35,52, .5),500:Color.fromRGBO(36,35,52, .6),600:Color.fromRGBO(36,35,52, .7),700:Color.fromRGBO(36,35,52, .8),800:Color.fromRGBO(36,35,52, .9),900:Color.fromRGBO(36,35,52, 1),};
 MaterialColor darkBlue = MaterialColor(0xFF242334, darkBlueMap);
 
+Color white = Colors.white;
+Color orange = Color.fromRGBO(255, 136, 0, 1);
+Color blue = Color.fromRGBO(1, 26, 67, 1);
+Color black = Colors.black;
+Color lightGrey = Color.fromRGBO(119, 119, 119, 1);
+
 //List<Widget> _pages = <Widget>[Campaigns(campaigns), Home(), Profile(_user)];
 
 class App extends StatefulWidget {
@@ -65,82 +72,9 @@ class _AppState extends State<App> {
       store: store, 
       child: MaterialApp(
         title: 'Flutter Demo',
-        theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
-          // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
-          fontFamily: 'Raleway',
-          primaryTextTheme: TextTheme(
-                // Page Header
-                title: TextStyle(
-                      fontSize: 46, 
-                      color: Color.fromRGBO(36, 35, 52, 1),
-                      fontWeight: FontWeight.w300,
-                    ),  
-                subtitle: TextStyle(
-                      fontSize: 30, 
-                      color: Color.fromRGBO(36, 35, 52, 1),
-                      fontWeight: FontWeight.w300,
-                    ),  
-                
-                headline : TextStyle(
-                      fontSize: 31,
-                      color: Color.fromRGBO(36, 35, 52, 1),
-                      fontWeight: FontWeight.w300,
-                    ),
-                body1: TextStyle(
-                      fontSize: 18,
-                      color: Color.fromRGBO(36, 35, 52, 1),
-                      fontWeight: FontWeight.w300,
-                    ),
-                body2: TextStyle(
-                      fontSize: 22, 
-                      color: Colors.white,
-                      fontWeight: FontWeight.w300,
-                    ),
-                button : TextStyle(
-                      fontSize: 28,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w300
-                    ),
-                display1: TextStyle(
-                      fontSize: 32,
-                      color: Colors.white,
-                      fontFamily: 'PeaceSans',
-                    ),
-                display2: TextStyle(
-                      fontSize: 26,
-                      color: Color.fromRGBO(36, 35, 52, 1),
-                      fontWeight: FontWeight.w300,
-                    ),
-                display3: TextStyle(
-                      fontSize: 20,
-                      color: Color.fromRGBO(36, 35, 52, 1),
-                      fontWeight: FontWeight.w300,
-                    ),
-                
-              ),
-          primarySwatch: darkBlue,
-          buttonTheme: ButtonThemeData(
-              colorScheme: ColorScheme.fromSwatch(
-                  backgroundColor: Color.fromRGBO(36, 35, 52, 1),
-                  ),
-                buttonColor: Color.fromRGBO(36, 35, 52, 1), 
-                textTheme: ButtonTextTheme.primary
-              ),
-          primaryColorDark: Color.fromRGBO(36, 35, 52, 1),
-          buttonColor: Color.fromRGBO(36, 35, 52, 1),
-          textSelectionColor: Colors.white, // Text used on top of 
-
-        ),
-        home: 
-          StoreBuilder<AppState>(
+        initialRoute: 'intro',
+        routes: {
+          '/': (BuildContext context) => StoreBuilder<AppState>(
             onInit: (store) { 
               store.dispatch(GetCampaignsAction());
               store.dispatch(GetUserDataAction());
@@ -160,7 +94,156 @@ class _AppState extends State<App> {
               //)
               :
               MyHomePage(store, deepLinkPageIndex),
-          )  
+          ),
+          'intro': (context) => IntroPage(),
+          //TODO add login point
+          //'logoin': 
+          //TODO splash screen should be a route
+          //'splashscreen': (context) =>
+        },
+
+        theme: ThemeData(
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          fontFamily: 'Nunito',
+          primaryTextTheme: TextTheme(
+                // Page Header
+                //title: TextStyle(
+                //      fontSize: 46, 
+                //      color: Color.fromRGBO(36, 35, 52, 1),
+                //      fontWeight: FontWeight.w300,
+                //    ),  
+                //subtitle: TextStyle(
+                //      fontSize: 30, 
+                //      color: Color.fromRGBO(36, 35, 52, 1),
+                //      fontWeight: FontWeight.w300,
+                //    ),  
+                //
+                //headline : TextStyle(
+                //      fontSize: 31,
+                //      color: Color.fromRGBO(36, 35, 52, 1),
+                //      fontWeight: FontWeight.w300,
+                //    ),
+                //body1: TextStyle(
+                //      fontSize: 18,
+                //      color: Color.fromRGBO(36, 35, 52, 1),
+                //      fontWeight: FontWeight.w300,
+                //    ),
+                //body2: TextStyle(
+                //      fontSize: 22, 
+                //      color: Colors.white,
+                //      fontWeight: FontWeight.w300,
+                //    ),
+                //button : TextStyle(
+                //      fontSize: 28,
+                //      color: Colors.white,
+                //      fontWeight: FontWeight.w300
+                //    ),
+                //display1: TextStyle(
+                //      fontSize: 32,
+                //      color: Colors.white,
+                //      fontFamily: 'PeaceSans',
+                //    ),
+                //display2: TextStyle(
+                //      fontSize: 26,
+                //      color: Color.fromRGBO(36, 35, 52, 1),
+                //      fontWeight: FontWeight.w300,
+                //    ),
+                //display3: TextStyle(
+                //      fontSize: 20,
+                //      color: Color.fromRGBO(36, 35, 52, 1),
+                //      fontWeight: FontWeight.w300,
+                //    ),
+
+
+                headline1: TextStyle(
+                  color: black,
+                  fontSize: 36,
+                  fontWeight: FontWeight.w600 // Bold
+                ),
+                headline2: TextStyle(
+                  color: black,
+                  fontSize: 30,
+                  fontWeight: FontWeight.w600 // Bold
+                ),
+                headline3: TextStyle(
+                  color: black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400 // Regular
+                ),
+                headline4: TextStyle(
+                  color: black,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w400 // Regular
+                ),
+                // Capitalize
+                headline5: TextStyle(
+                  color: black,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w400 // Regular
+                  
+                ),
+
+                bodyText1: TextStyle(
+                  color: lightGrey,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400, // Regular
+                ),
+                // Italic
+                bodyText2: TextStyle(
+                  color: lightGrey,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400, // Regular
+                  fontStyle: FontStyle.italic
+                ),
+
+                // Used on Dark Blue background
+                headline6: TextStyle(
+                  color: white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400, // Regular
+                ),
+                button: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w500, // SemiBold
+                ),
+                
+              ),
+          primarySwatch: darkBlue,
+          primaryColorDark: blue,
+          buttonColor: orange,
+          textSelectionColor: white, // Text used on top of 
+
+        ),
+        //home: 
+        //  StoreBuilder<AppState>(
+        //    onInit: (store) { 
+        //      store.dispatch(GetCampaignsAction());
+        //      store.dispatch(GetUserDataAction());
+        //      //store.dispatch(InitaliseState);
+        //    },
+        //    builder: (BuildContext context, Store<AppState> store) =>
+        //      //store.state.campaigns == null 
+        //      //|| store.state.campaigns.getActiveCampaigns() == null
+        //      //|| store.state.campaigns.activeLength() < 3
+        //      store.state.loading
+        //      ?
+        //      SplashScreen()
+        //      //Container(
+        //      //  color: Colors.red,
+        //      //  height: MediaQuery.of(context).size.height,
+        //      //  width: MediaQuery.of(context).size.width,
+        //      //)
+        //      :
+        //      MyHomePage(store, deepLinkPageIndex),
+        //  )  
        )
     );
   }

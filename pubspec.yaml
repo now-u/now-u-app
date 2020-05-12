@@ -32,6 +32,7 @@ dependencies:
   url_launcher: ^5.4.2
   dropdown_formfield: ^0.1.2
   tuple: ^1.0.3
+  smooth_page_indicator: ^0.1.5
 
   get_it: ^4.0.2
 
@@ -72,6 +73,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    - assets/imgs/
+   - assets/imgs/intro/
    - assets/json/
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -101,6 +103,21 @@ flutter:
     - family: PeaceSans
       fonts:
         - asset: assets/fonts/peace_sans.otf
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito/Nunito-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Nunito/Nunito-Bold.ttf
+          weight: 600
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins/Poppins-SemiBold.ttf
+          weight: 500
+    - family: SourceSans
+      fonts:
+        - asset: assets/fonts/SourceSansPro/SourceSansPro-Italic.ttf
+          weight: 400
+          style: italic
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

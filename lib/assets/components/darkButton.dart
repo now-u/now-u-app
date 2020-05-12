@@ -19,7 +19,7 @@ class DarkButton extends StatelessWidget {
     return RaisedButton(
       onPressed: _onPressed,
       shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(36.0),
+            borderRadius: BorderRadius.circular(8.0),
           ),
       child: Padding(
             padding: EdgeInsets.all(14),
