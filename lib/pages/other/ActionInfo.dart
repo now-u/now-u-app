@@ -137,23 +137,51 @@ class _ActionInfoState extends State<ActionInfo> {
                                   scaffoldKey.currentState.showBottomSheet(
                                     (context) =>
                                       Container(
-                                          color: Color.fromRGBO(243, 183, 0, 1),
+                                          decoration: BoxDecoration(
+                                            color: Color.fromRGBO(243, 183, 0, 1),
+                                            borderRadius: BorderRadius.vertical(top: Radius.circular(10))
+                                          ),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.min,
                                             children: <Widget>[
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: <Widget>[
-                                                  Icon(Icons.check_circle),
-                                                  Text(
-                                                    "Nice Job",
-                                                    style: textStyleFrom(
-                                                      style: Theme.of(context).primaryTextTheme.headline2,
-                                                      color: Colors.white,
-                                                    )
-                                                  ),
-                                                ],
+                                              Padding(
+                                                padding: EdgeInsets.only(top: 20),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    Padding(
+                                                      padding: EdgeInsets.only(right: 10.0),
+                                                      child: Icon(
+                                                        Icons.check_circle,
+                                                        color: Colors.white,
+                                                        size: 36.0,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      "Nice Job",
+                                                      style: textStyleFrom(
+                                                        Theme.of(context).primaryTextTheme.headline2,
+                                                        color: Colors.white,
+                                                      )
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
+                                              Padding(
+                                                padding: EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 25),
+                                                child: Container(
+                                                  child: Text(
+                                                    "Congratulations for completing this action! For that we are really proud of you!",
+                                                    textAlign: TextAlign.center,
+                                                    style: textStyleFrom(
+                                                      Theme.of(context).primaryTextTheme.headline4,
+                                                      color: Colors.white
+                                                    ),
+
+                                                  ),
+                                                )
+                                              ),
+
                                             ],
                                           )
                                         )
