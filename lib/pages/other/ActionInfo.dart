@@ -8,6 +8,7 @@ import 'package:app/models/Reward.dart';
 import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
 import 'package:app/pages/other/RewardComplete.dart';
 
+import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/components/detailScaffold.dart';
 import 'package:app/assets/components/darkButton.dart';
@@ -41,6 +42,8 @@ class _ActionInfoState extends State<ActionInfo> {
     _action = widget.action;
     super.initState();
   }
+
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   
   @override
   Widget build(BuildContext context) {
@@ -50,6 +53,7 @@ class _ActionInfoState extends State<ActionInfo> {
           backButtonText: "Home",
           context: context,
         ),
+        key: scaffoldKey,
           // This is the body for the nested scroll view
          body: DetailScaffold(
             expandedHeight: expandedHeight,
@@ -102,7 +106,7 @@ class _ActionInfoState extends State<ActionInfo> {
                               children: <Widget>[
                                 Container(
                                   height: MediaQuery.of(context).size.width * 0.1 ,
-                                  child: Image(image: AssetImage('assets/imgs/partypopperemoji.png'),),
+                                  //child: Image(image: AssetImage('assets/imgs/partypopperemoji.png'),),
                                 ),
                                 Text("You have completed this action!")
                                  
@@ -130,6 +134,30 @@ class _ActionInfoState extends State<ActionInfo> {
                                 "Mark as done",
                                 inverted: true,
                                 onPressed: () {
+                                  scaffoldKey.currentState.showBottomSheet(
+                                    (context) =>
+                                      Container(
+                                          color: Color.fromRGBO(243, 183, 0, 1),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  Icon(Icons.check_circle),
+                                                  Text(
+                                                    "Nice Job",
+                                                    style: textStyleFrom(
+                                                      style: Theme.of(context).primaryTextTheme.headline2,
+                                                      color: Colors.white,
+                                                    )
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          )
+                                        )
+                                  );
                                   setState(() {
                                     // TODO Somehow somewhere navigate to completed reward page if reward completed
                                     List<Reward> newlyCompletedRewards = widget.model.user.newlyCompletedRewards(_action);
