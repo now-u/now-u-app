@@ -1,32 +1,39 @@
+import 'package:app/assets/StyleFrom.dart';
 import 'package:flutter/material.dart';
 
-final double borderRadius = 8.0;
-final double padding = 14.0;
+final double defaultBorderRadius = 8.0;
+final double defaultPadding = 14.0;
 
 class DarkButton extends StatelessWidget {
 
   VoidCallback onPressed;
   String text;
   bool inverted;
+  double borderRadius;
+  double padding;
+
 
   DarkButton( 
     String text, 
    {
     @required VoidCallback onPressed,
     bool inverted,
+    double padding,
+    double borderRadius,
    } ) {
     this.onPressed = onPressed;
     this.text = text;
     this.inverted = inverted ?? false;
+    this.padding = padding ?? defaultPadding;
+    this.borderRadius = borderRadius ?? defaultBorderRadius;
   }
 
-  @override
   @override
   Widget build(BuildContext context) {
     return 
         !inverted ? 
-          PrimaryButton(text, onPressed: onPressed) 
-        : SecondaryButton(text, onPressed: onPressed);
+          PrimaryButton(text, onPressed: onPressed, padding: padding, borderRadius: borderRadius) 
+        : SecondaryButton(text, onPressed: onPressed, padding:padding, borderRadius: borderRadius);
   }
 }
 
@@ -34,18 +41,17 @@ class SecondaryButton extends StatelessWidget {
 
   VoidCallback onPressed;
   String text;
+  double borderRadius;
+  double padding;
 
   SecondaryButton( 
-   String text, 
+   this.text, 
    {
-   @required VoidCallback onPressed,
-   bool inverted,
+   @required this.onPressed,
+   @required this.borderRadius,
+   @required this.padding,
    } 
-  ) 
-  {
-    this.onPressed = onPressed;
-    this.text = text;
-  }
+  );
   
   @override
   Widget build(BuildContext context) {
@@ -64,10 +70,8 @@ class SecondaryButton extends StatelessWidget {
             padding: EdgeInsets.all(padding),
             child: Text(
               text,
-              style: TextStyle(
-                fontWeight: Theme.of(context).primaryTextTheme.button.fontWeight,
-                fontSize: Theme.of(context).primaryTextTheme.button.fontSize,
-                fontFamily: Theme.of(context).primaryTextTheme.button.fontFamily,
+              style: textStyleFrom(
+                Theme.of(context).primaryTextTheme.button,
                 color: Theme.of(context).buttonColor,
               ),
             ),
@@ -81,18 +85,17 @@ class PrimaryButton extends StatelessWidget {
 
   VoidCallback onPressed;
   String text;
+  double borderRadius;
+  double padding;
 
   PrimaryButton( 
-   String text, 
+   this.text, 
    {
-   @required VoidCallback onPressed,
-   bool inverted,
+   @required this.onPressed,
+   @required this.borderRadius,
+   @required this.padding,
    } 
-  ) 
-  {
-    this.onPressed = onPressed;
-    this.text = text;
-  }
+  );
   
   @override
   Widget build(BuildContext context) {
@@ -106,7 +109,10 @@ class PrimaryButton extends StatelessWidget {
             padding: EdgeInsets.all(padding),
             child: Text(
               text,
-              style: Theme.of(context).primaryTextTheme.button,
+              style: textStyleFrom(
+                Theme.of(context).primaryTextTheme.button,
+                color: Colors.white,
+              ),
             ),
           ),
 

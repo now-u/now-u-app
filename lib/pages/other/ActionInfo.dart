@@ -61,6 +61,7 @@ class _ActionInfoState extends State<ActionInfo> {
               SliverAppBar(
                 automaticallyImplyLeading: false,
                 expandedHeight: expandedHeight,
+                elevation: 0,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Container(
                     decoration: BoxDecoration(

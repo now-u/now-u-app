@@ -66,7 +66,7 @@ class Campaign {
     headerImage = json['header_image'];
     // TODO this proabably wont work
     actions = (json['actions']).map((e) => CampaignAction.fromJson(e)).toList().cast<CampaignAction>();
-    organisations = (json['organisations']).map((e) => Organisation.fromJson(e)).toList().cast<Organisation>();
+    organisations = json.containsKey('campaigns') ? (json['organisations']).map((e) => Organisation.fromJson(e)).toList().cast<Organisation>() : [];
     videoLink = json['video_link'];
   }
 

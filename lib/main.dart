@@ -37,6 +37,22 @@ void main() {
 Map<int, Color> darkBlueMap ={50:Color.fromRGBO(36,35,52, .1),100:Color.fromRGBO(36,35,52, .2),200:Color.fromRGBO(36,35,52, .3),300:Color.fromRGBO(36,35,52, .4),400:Color.fromRGBO(36,35,52, .5),500:Color.fromRGBO(36,35,52, .6),600:Color.fromRGBO(36,35,52, .7),700:Color.fromRGBO(36,35,52, .8),800:Color.fromRGBO(36,35,52, .9),900:Color.fromRGBO(36,35,52, 1),};
 MaterialColor darkBlue = MaterialColor(0xFF242334, darkBlueMap);
 
+const MaterialColor whiteMaterial = const MaterialColor(
+  0xFFFFFFFF,
+  const <int, Color>{
+    50: const Color(0xFFFFFFFF),
+    100: const Color(0xFFFFFFFF),
+    200: const Color(0xFFFFFFFF),
+    300: const Color(0xFFFFFFFF),
+    400: const Color(0xFFFFFFFF),
+    500: const Color(0xFFFFFFFF),
+    600: const Color(0xFFFFFFFF),
+    700: const Color(0xFFFFFFFF),
+    800: const Color(0xFFFFFFFF),
+    900: const Color(0xFFFFFFFF),
+  },
+);
+
 Color white = Colors.white;
 Color orange = Color.fromRGBO(255, 136, 0, 1);
 Color blue = Color.fromRGBO(1, 26, 67, 1);
@@ -67,6 +83,10 @@ class _AppState extends State<App> {
         initialState: AppState.initialState(),
         middleware: [appStateMiddleware],
     );
+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.white, //or set color with: Color(0xFF0000FF)
+    ));
 
     return StoreProvider<AppState>(
       store: store, 
@@ -218,7 +238,7 @@ class _AppState extends State<App> {
                 
               ),
           primaryColor: orange,
-          primarySwatch: darkBlue,
+          //primarySwatch: whiteMaterial,
           primaryColorDark: blue,
           buttonColor: orange,
           textSelectionColor: white, // Text used on top of 

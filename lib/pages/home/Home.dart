@@ -1,6 +1,5 @@
-import 'package:app/assets/components/darkButton.dart';
-import 'package:app/assets/routes/customRoute.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:math' as math;
 
 import 'package:app/pages/home/HomeTile.dart';
@@ -10,6 +9,11 @@ import 'package:app/pages/profile/Profile.dart';
 
 import 'package:app/assets/components/pageTitle.dart';
 import 'package:app/assets/components/selectionItem.dart';
+import 'package:app/assets/StyleFrom.dart';
+import 'package:app/assets/components/customAppBar.dart';
+import 'package:app/assets/components/darkButton.dart';
+import 'package:app/assets/components/progress.dart';
+import 'package:app/assets/routes/customRoute.dart';
 
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/ViewModel.dart';
@@ -51,11 +55,18 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     print(model.user.getName());
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Home", style: Theme.of(context).primaryTextTheme.headline3),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
+      ),
       body: Container(
               color: Colors.white,
               child: ListView(
                   children: <Widget>[
-                    PageTitle("Home"),
+                    ActionProgressTile(model.user.getCompletedActions().length, model.campaigns.getActions().length),
+                    HomeDividor(),
                     HomeTile(
                         Container(
                               child: Column(
@@ -167,15 +178,112 @@ class ActionTile extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.all(BUTTON_PADDING),
-                  child: DarkButton("See More Actions", onPressed: () {
-                    changePage(0);
-                  },),
+                  child: DarkButton(
+                    "See More Actions", 
+                    padding: 7,
+                    onPressed: () {
+                      changePage(0);
+                    },
+                  ),
                 ),
                 //ActionItem(user.getFollowUpAction()),
                 //TODO Work ou where follow up actions should be
               ]
           )
       )
+    );
+  }
+}
+
+class ActionProgressTile extends StatelessWidget {
+
+  final double actionsHomeTileTextWidth = 0.6;
+  final double actionsHomeTileHeight = 170;
+  final double actionsHomeTilePadding = 15;
+  
+  final int numberOfCompletedAction;
+  final int numberOfSelectedActions;
+
+  ActionProgressTile(this.numberOfCompletedAction, this.numberOfSelectedActions, );
+  
+  @override
+  Widget build(BuildContext context) {
+    return 
+      Container(
+        child: Stack(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(actionsHomeTilePadding),
+              child: Container(
+                width: double.infinity,
+                height: actionsHomeTileHeight,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
+                child: 
+                  Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          (numberOfSelectedActions - numberOfCompletedAction).toString()
+                          + " actions left",
+                          style: textStyleFrom(
+                            Theme.of(context).primaryTextTheme.headline3,
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                        ProgressBar(
+                          progress: 0.6,
+                          width: MediaQuery.of(context).size.width * (actionsHomeTileTextWidth - 0.1),
+                          height: 17,
+                        ),
+                        // TODO need to get user active campiangs not all active campaigns
+                        Container(
+                          width: MediaQuery.of(context).size.width * actionsHomeTileTextWidth,
+                          child: Text(
+                            "You have completed " + numberOfCompletedAction.toString() + " of " + numberOfSelectedActions.toString() + " total actions from your active campaigns. Way to go!",
+                            textAlign: TextAlign.left,
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.bodyText1,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+              ),
+            ),
+            Positioned(
+              left: MediaQuery.of(context).size.width * (actionsHomeTileTextWidth),
+              top: actionsHomeTilePadding,
+              child: Container(
+                height: actionsHomeTileHeight,
+                width: MediaQuery.of(context).size.width * (1-actionsHomeTileTextWidth),
+                child: Image(
+                  image: AssetImage('assets/imgs/intro/il-reward@4x.png'),
+                )
+              )
+            ),
+          ],
+        )
+      );
+    }
+}
+
+class HomeDividor extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity, 
+      height: 2,
+      color: Colors.grey
     );
   }
 }
