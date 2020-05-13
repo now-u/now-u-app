@@ -93,7 +93,7 @@ class _DetailScaffoldState extends State<DetailScaffold> {
     }
 
     return Positioned(
-      top: top,
+      top: top + 2,
       left: 0,
       right: 0,
       child: Container(
