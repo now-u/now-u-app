@@ -73,30 +73,70 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
   //_currentIndex = widget.currentIndex;
   //print("When drawing tabs view the current index is");
   //print(_currentIndex);
-  List<Widget> _pages = <Widget>[CampaignPage(widget.model, false, campaignId: _subIndex), Home(widget.model, changePage), Profile(widget.model, currentPage: _subIndex,)];
+  List<Map> _pages = <Map>[
+    {
+      'page': CampaignPage(widget.model, false, campaignId: _subIndex), 
+      'icon': Icon(Icons.check),
+      'title': Text("Campaigns"),
+    },
+    {
+      'page': CampaignPage(widget.model, false, campaignId: _subIndex), 
+      'icon': Icon(Icons.check),
+      'title': Text("Actions"),
+    },
+    {
+      'page': Home(widget.model, changePage), 
+      'icon': Icon(Icons.home),
+      'title': Text("Home"),
+    },
+    {
+      'page': Profile(widget.model, currentPage: _subIndex,),
+      'icon': Icon(Icons.menu),
+      'title': Text("News"),
+    },
+    {
+      'page': Profile(widget.model, currentPage: _subIndex,),
+      'icon': Icon(Icons.menu),
+      'title': Text("Profile"),
+    },
+  ];
+  List <BottomNavigationBarItem> generateBottomNavBarItems() {
+    List<BottomNavigationBarItem> items = [];
+    for (int i = 0; i < _pages.length; i++) {
+     print("Doing thing" + i.toString());
+     items.add(
+      new BottomNavigationBarItem(
+        icon: _pages[i]['icon'],
+        title: _pages[i]['title'],
+      )
+     );
+    }
+    return items;
+  }
     return  
           Scaffold(
-              body: _pages[_currentIndex],
+              body: _pages[_currentIndex]['page'],
               bottomNavigationBar: BottomNavigationBar(
                 currentIndex: _currentIndex, 
                 type: BottomNavigationBarType.fixed, 
-                iconSize: 35,
-                unselectedFontSize: 15,
-                selectedFontSize: 18,
-                items: [
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.check),
-                      title: Text("Campaings"),
-                  ),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.home),
-                      title: Text("Home"),
-                  ),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.menu),
-                      title: Text("Profile"),
-                  ),
-                ],
+                iconSize: 25,
+                unselectedFontSize: 13,
+                selectedFontSize: 15,
+                items: generateBottomNavBarItems(),
+                //[
+                //  BottomNavigationBarItem(
+                //      icon: Icon(Icons.check),
+                //      title: Text("Campaings"),
+                //  ),
+                //  BottomNavigationBarItem(
+                //      icon: Icon(Icons.home),
+                //      title: Text("Home"),
+                //  ),
+                //  BottomNavigationBarItem(
+                //      icon: Icon(Icons.menu),
+                //      title: Text("Profile"),
+                //  ),
+                //],
                 onTap: (index) {
                   setState(() {
                     _currentIndex = index; 
