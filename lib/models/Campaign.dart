@@ -13,6 +13,7 @@ class Campaign {
   String headerImage;
   bool isCampaignSelected;
   List<CampaignAction> actions;
+  List<Organisation> organisations;
   String videoLink;
   
   Campaign({
@@ -32,6 +33,7 @@ class Campaign {
     this.headerImage = headerImage;
     this.actions = actions;
     this.videoLink = videoLink;
+    this.organisations = organisations;
   }
 
   Campaign copyWith({
@@ -41,6 +43,7 @@ class Campaign {
     int numberOfCampaingers,
     String headerImage,
     List<CampaignAction> actions,
+    List<Organisation> organisations,
     String videoLink,
   }) {
     return Campaign(
@@ -50,6 +53,7 @@ class Campaign {
       numberOfCampaigners: numberOfCampaingers ?? this.numberOfCampaingers,
       headerImage: headerImage ?? this.headerImage,
       actions: actions ?? this.actions,
+      organisations: organisations ?? this.organisations,
       videoLink: videoLink ?? this.videoLink,
     );
   }
@@ -62,6 +66,7 @@ class Campaign {
     headerImage = json['header_image'];
     // TODO this proabably wont work
     actions = (json['actions']).map((e) => CampaignAction.fromJson(e)).toList().cast<CampaignAction>();
+    organisations = (json['organisations']).map((e) => Organisation.fromJson(e)).toList().cast<Organisation>();
     videoLink = json['video_link'];
   }
 
@@ -73,6 +78,7 @@ class Campaign {
     'header_image': headerImage,
     // TODO this proabably wont work
     'actions': actions,
+    'organisations': organisations,
     'video_link': videoLink,
   };
 
@@ -99,5 +105,8 @@ class Campaign {
   }
   List<CampaignAction> getActions() {
     return actions; 
+  }
+  List<Organisation> getOrgnaisations() {
+    return organisations; 
   }
 }
