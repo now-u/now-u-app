@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 class TextButton extends StatelessWidget {
   final String text;
   final Function onClick;
-  final IconData icon;
+  final bool iconRight;
+  final bool iconLeft;
 
   TextButton(
     this.text, 
     {
     @required this.onClick,
-    this.icon,
+    this.iconRight,
+    this.iconLeft,
     }
 
   );
@@ -21,7 +23,7 @@ class TextButton extends StatelessWidget {
         onTap: onClick,
         child: Row(
           children: <Widget>[
-            this.icon != null ? 
+            this.iconLeft != null ? 
               Icon(Icons.chevron_left, size: 25, color: Theme.of(context).primaryColor,)
             : Container(),
             Text(
@@ -34,6 +36,9 @@ class TextButton extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
+            this.iconRight != null ? 
+              Icon(Icons.chevron_right, size: 25, color: Theme.of(context).primaryColor,)
+            : Container(),
 
           ],
         ),

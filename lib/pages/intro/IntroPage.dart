@@ -9,17 +9,17 @@ List<Widget> pages = <Widget>[
                   IntroPageSection(
                     "Join Campaigns",
                     "Every month, now-u adds 3 new campiangs that enable you to make a difference! You can choose to join one or a few, or all of them.",
-                    AssetImage('assets/imgs/logo.png'),
+                    AssetImage('assets/imgs/intro/il-joincamp@4x.png'),
                   ),
                   IntroPageSection(
                     "Join Campaigns",
                     "Every month, now-u adds 3 new campiangs that enable you to make a difference! You can choose to join one or a few, or all of them.",
-                    AssetImage('assets/imgs/logo.png'),
+                    AssetImage('assets/imgs/intro/il-actions@4x.png'),
                   ),
                   IntroPageSection(
                     "Join Campaigns",
                     "Every month, now-u adds 3 new campiangs that enable you to make a difference! You can choose to join one or a few, or all of them.",
-                    AssetImage('assets/imgs/intro/mailbox.png'),
+                    AssetImage('assets/imgs/intro/il-achievem@4x.png'),
                   ),
 ];
 
@@ -120,6 +120,7 @@ class _IntroPageState extends State<IntroPage> {
                 padding: EdgeInsets.only(bottom: 20, left: 20),
                 child: TextButton(
                   "Back",
+                  iconLeft: true,
                   onClick: () {
                     controller.previousPage(
                       curve: curve,

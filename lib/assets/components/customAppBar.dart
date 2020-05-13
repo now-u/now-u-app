@@ -23,7 +23,7 @@ AppBar CustomAppBar(
           flex: 1,
           child: TextButton(
             backButtonText ?? "Back",
-            icon: Icons.arrow_left,
+            iconLeft: true,
             onClick: (){
               Navigator.pop(context);
             },
