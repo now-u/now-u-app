@@ -1,3 +1,6 @@
+import 'package:app/assets/StyleFrom.dart';
+import 'package:app/assets/components/customAppBar.dart';
+import 'package:app/assets/components/detailScaffold.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/models/Campaign.dart';
@@ -112,113 +115,197 @@ class _CampaignInfoState extends State<CampaignInfo> with WidgetsBindingObserver
   }
 }
 
-class CampaignInfoContent extends StatelessWidget {
+class CampaignInfoContent extends StatefulWidget {
   final Campaign campaign;
   final ViewModel model;
-
   CampaignInfoContent({
     @required this.campaign, 
     @required this.model, 
   }); 
+  
+  @override
+  _CampaignInfoContentState createState() => _CampaignInfoContentState();
+}
+
+class _CampaignInfoContentState extends State<CampaignInfoContent> {
+
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final double expandedHeight = 0.4;
+
+  Campaign campaign;
+  ViewModel model;
+  double top;
+  double currentExtent;
+  double expandedSize;
+
+  bool _isPlayerReady = false;
+  YoutubePlayerController _controller;
 
   @override
-  Widget build(BuildContext context) {
-    YoutubePlayerController _controller = 
+  initState() {
+    model = widget.model;
+    campaign = widget.campaign;
+    top = 0.0;
+    expandedSize = 1-expandedHeight;
+    currentExtent = expandedSize;
+    _controller = 
       YoutubePlayerController(
         initialVideoId: YoutubePlayer.convertUrlToId(campaign.getVideoLink()),
         flags: YoutubePlayerFlags(
-            autoPlay: true,
+            autoPlay: false,
             mute: false,
         ),
       );
+    super.initState();
+  }
+
+  //void listener() {
+  //  if (_isPlayerReady && mounted && !_controller.value.isFullScreen) {
+  //    setState(() {
+  //      _playerState = _controller.value.playerState;
+  //      _videoMetaData = _controller.metadata;
+  //    });
+  //  }
+  //}
+
+  @override
+  Widget build(BuildContext context) {
+    //TODO add ios support https://pub.dev/packages/youtube_player_flutter
     //print(campaign.getId());
     return Scaffold(
-      body: 
-        NestedScrollView(
-         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget> [
-              // Header
-              SliverAppBar(
-
-              bottom: 
-                PreferredSize(
-                  preferredSize: Size.fromHeight(18),  
-                  child: Text(''),
-                ), 
-              expandedHeight: 400.0,
-              floating: false,
-              pinned: true,
-                flexibleSpace: FlexibleSpaceBar(
-                  centerTitle: true,
-                  title: Text(campaign.getTitle(), style: Theme.of(context).primaryTextTheme.display1,),
-                  background: Hero(
-                    tag: "CampaignHeaderImage${campaign.getId()}",
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: new DecorationImage(
-                          image: new NetworkImage(campaign.getHeaderImage()),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ),
+      appBar: CustomAppBar(
+        text: "Campaign",
+        context: context,
+      ),
+      body: Stack(
+        children: <Widget>[
+          Positioned(
+            top: top,
+            child: Container(
+              height: (MediaQuery.of(context).size.height + 200) * expandedHeight,
+              child: Container(
+                child: Image.network( 
+                  campaign.getHeaderImage(),
+                  fit: BoxFit.cover,
                 ),
               )
-            ];
-         }, 
-          // This is the body for the nested scroll view
-         body: 
-          ListView(
-            children: <Widget>[
-              Padding(
-                 padding: EdgeInsets.all(25),
-                 child: 
-                  Container(
-                    child:
-                      YoutubePlayer(
-                        controller: _controller,
-                        showVideoProgressIndicator: true,
-                      ),
-                    //child: Material(
-                      //child: VideoPlayer(),  
-                    //), 
-                    )
-              ),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        child: Text(campaign.getDescription(), style: Theme.of(context).primaryTextTheme.body1),
-                      ),
-                    ]
-              ),
-              Padding(
-                padding: EdgeInsets.all(25),
-                child: Text("Actions of the Week", style: Theme.of(context).primaryTextTheme.headline,),
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: 3,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: ActionSelectionItem(
-                      campaign: campaign,
-                      action: campaign.getActions()[index],
-                      model: model,
-                      extraOnTap: (){
-                        _controller.pause();
-                      }
-                    ),
-                  );
-                },      
-              )
-            ], 
+            ),
           ),
-          
+          NotificationListener( 
+            onNotification: (v) {
+              if (v is DraggableScrollableNotification) {
+                print(v);
+                print("Current extend");
+                print(v.extent);
+                print("Old");
+                print(currentExtent);
+                setState(() {
+                  double scroll = v.extent - currentExtent;
+                  top -= scroll * MediaQuery.of(context).size.height * expandedSize / 2;
+                  currentExtent = v.extent;
+                  print(top);
+                });
+              }
+              return true;
+            },
+            child:
+            DraggableScrollableSheet(
+              initialChildSize: expandedSize,
+              minChildSize: expandedSize,
+              maxChildSize: 1.0,
+              builder: (context, controller) =>
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(32),
+                      topRight: Radius.circular(32)
+                    )
+                  ),
+                  child:
+                    Padding(
+                      padding: EdgeInsets.all(20),
+                      child: ListView( 
+                        controller: controller,
+                        children: [
+                          Container(
+                            child: Text(
+                              campaign.getTitle(),
+                              style: Theme.of(context).primaryTextTheme.headline2,
+                            ),
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.people,
+                                color: Color.fromRGBO(69,69,69,1),
+                              ),
+                              Text(
+                                campaign.getNumberOfCampaigners().toString() + " people have joined",
+                                style: textStyleFrom(
+                                  Theme.of(context).primaryTextTheme.headline4,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromRGBO(69,69,69,1),
+                                )
+                              )
+                            ],
+                          ),
+                          // TODO fix upades to youtube player not showing until scroll (some kind of setstate issue)
+                          Padding(
+                             padding: EdgeInsets.all(10),
+                             child: 
+                              Container(
+                                child:
+                                  YoutubePlayer(
+                                    controller: _controller,
+                                    showVideoProgressIndicator: true,
+                                  ),
+                                //child: Material(
+                                  //child: VideoPlayer(),  
+                                //), 
+                                )
+                          ),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Expanded(
+                                  child: Text(
+                                    campaign.getDescription(), 
+                                    style: Theme.of(context).primaryTextTheme.bodyText1,
+                                  ),
+                                ),
+                              ]
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(25),
+                            child: Text("Actions of the Week", style: Theme.of(context).primaryTextTheme.headline,),
+                          ),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: 3,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                child: ActionSelectionItem(
+                                  campaign: campaign,
+                                  action: campaign.getActions()[index],
+                                  model: model,
+                                  extraOnTap: (){
+                                    _controller.pause();
+                                  }
+                                ),
+                              );
+                            },      
+                          )
+                        ], 
+                      )
+                    )
+              )
+            ),
         )
-    );
+        ],
+      )
+        );
   }
 }

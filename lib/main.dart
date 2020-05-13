@@ -191,16 +191,17 @@ class _AppState extends State<App> {
                 ),
 
                 bodyText1: TextStyle(
-                  color: lightGrey,
+                  color: black,
                   fontSize: 14,
                   fontWeight: FontWeight.w400, // Regular
+                  fontStyle: FontStyle.normal,
                 ),
                 // Italic
                 bodyText2: TextStyle(
                   color: lightGrey,
                   fontSize: 14,
                   fontWeight: FontWeight.w400, // Regular
-                  fontStyle: FontStyle.italic
+                  fontStyle: FontStyle.italic,
                 ),
 
                 // Used on Dark Blue background

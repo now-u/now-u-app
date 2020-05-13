@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
+
 import 'package:app/models/Action.dart';
+import 'package:app/models/Organisation.dart';
+
 import 'dart:convert';
 
 class Campaign {
@@ -19,6 +22,7 @@ class Campaign {
     @required int numberOfCampaigners,
     @required String headerImage,
     @required List<CampaignAction> actions,
+    @required List<Organisation> organisations,
     this.videoLink,
   }) {
     this.id = id; 
