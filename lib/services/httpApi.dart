@@ -2,6 +2,7 @@ import 'package:app/services/api.dart';
 
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
+import 'package:app/models/Article.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -41,6 +42,22 @@ class HttpApi implements Api {
       // TODO different error different reults
       print("We got an error whilst doing the http request");
       return Future.error("Error getting campaigns in http api", StackTrace.fromString("The stack trace is"));
+    }
+  }
+
+  @override
+  Future<Article> getArticles() async {
+    var response = await http.get(domainPrefix + "articles");
+    if (response.statusCode == 200) {
+      print("We got a 200 when getting articles!");
+      List<Article> c = json.decode(response.body)['data'].map((e) => Article.fromJson(e)).toList().cast<Article>();
+      print("Here is the aricles");
+      print(c);
+      return c;
+    }
+    else {
+      print("We got an error whilst doing the http request");
+      return Future.error("Error getting campaign in http api", StackTrace.fromString("The stack trace is"));
     }
   }
 } 

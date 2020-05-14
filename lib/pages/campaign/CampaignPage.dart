@@ -12,10 +12,6 @@ import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/pageTitle.dart';
 
-import 'package:flutter_redux/flutter_redux.dart';
-
-import 'package:app/main.dart';
-
 class CampaignPage extends StatefulWidget {
   final ViewModel model;
   final bool _selectionMode;
@@ -106,59 +102,61 @@ class _CampaignPageState extends State<CampaignPage> {
               ),
         //floatingActionButton: CustomFloatingActionButton(text: "Select Campaigns", ),
         floatingActionButton: 
-          !_selectionMode ?
-          Padding (
-              padding: EdgeInsets.all(14),
-              child: DarkButton(
-                "Select Campaigns",
-                onPressed: () {
-                  setState(() {
-                     _selectionMode = true;
-                   }); 
-                },
+          Container(
+            child:
+              !_selectionMode ?
+              Padding (
+                  padding: EdgeInsets.all(14),
+                  child: DarkButton(
+                    "Select Campaigns",
+                    onPressed: () {
+                      setState(() {
+                         _selectionMode = true;
+                       }); 
+                    },
+                  )
               )
-          )
-          :
-          Padding (
-              padding: EdgeInsets.all(14),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                     padding: EdgeInsets.only(right: 10),
-                     child: 
-                      DarkButton(
-                        "Cancel",
-                        onPressed: () {
-                          setState(() {
-                             _selectionMode = false;
-                             _model = widget.model;
-                           }); 
-                        },
+              :
+              Padding (
+                  padding: EdgeInsets.all(14),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                         padding: EdgeInsets.only(right: 10),
+                         child: 
+                          DarkButton(
+                            "Cancel",
+                            onPressed: () {
+                              setState(() {
+                                 _selectionMode = false;
+                                 _model = widget.model;
+                               }); 
+                            },
+                          ),
                       ),
-                  ),
-                  Padding(
-                     padding: EdgeInsets.only(left: 10),
-                     child: 
-                      DarkButton(
-                        "Select",
-                        onPressed: () {
-                          setState(() {
-                            _selectionMode = false;
-                            _model.onSelectCampaigns(_user);
-                          });
-                          Navigator.push(
-                            context, 
-                            CustomRoute(builder: (context) => SelectionComplete(_model))
-                          );
-                        },
+                      Padding(
+                         padding: EdgeInsets.only(left: 10),
+                         child: 
+                          DarkButton(
+                            "Select",
+                            onPressed: () {
+                              setState(() {
+                                _selectionMode = false;
+                                _model.onSelectCampaigns(_user);
+                              });
+                              Navigator.push(
+                                context, 
+                                CustomRoute(builder: (context) => SelectionComplete(_model))
+                              );
+                            },
+                          ),
                       ),
+                    
+                    ],   
                   ),
-                
-                ],   
-              ),
-          )
-          ,
+              )
+            ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       );
     }

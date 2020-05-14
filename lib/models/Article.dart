@@ -42,6 +42,30 @@ class Article {
     this.type,
   });
 
+  Article.fromJson(Map json) {
+    id              = json['id'];
+    title           = json['tite'];
+    body            = json['body'];
+    headerImage     = json['header_image'];
+    linkedCampaign  = json['linked_campaign'];
+    linkedAction    = json['linked_action'];
+    fullArticleLink = json['full_article_link'];
+    videoLink       = json['video_link'];
+    type            = json['type'];
+  }
+  
+  Map toJson() => {
+    'id': id,
+    'title': title,
+    'body': body,
+    'header_image': headerImage,
+    'linked_campaign': linkedCampaign,
+    'linked_action': linkedAction,
+    'full_article_link': fullArticleLink,
+    'video_link': videoLink,
+    'type': type,
+  };
+
   int getId() {
     return id; 
   }
