@@ -11,7 +11,16 @@ import 'package:app/assets/routes/customRoute.dart';
 class SelectionItem extends StatelessWidget {
   final String t;
   final GestureTapCallback onClick;
-  SelectionItem(this.t, {this.onClick});
+  final IconData icon;
+  final Color arrowColor;
+  
+  SelectionItem(
+    this.t, 
+    {
+      this.onClick,
+      this.icon,
+      this.arrowColor,
+    });
   @override
   Widget build(BuildContext context) {
     return 
@@ -22,13 +31,22 @@ class SelectionItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(5),
-            child: Text(t, style: Theme.of(context).primaryTextTheme.body1,),
+          Row(
+            children: <Widget>[
+              icon == null ? Container() :
+              Icon(icon),
+              Padding(
+                padding: EdgeInsets.all(5),
+                child: Text(t, style: Theme.of(context).primaryTextTheme.bodyText1,),
+              ),
+            ],
           ),
           Transform.rotate(
             angle: 180 * math.pi / 180,
-            child: Icon(Icons.chevron_left, size: 25), 
+            child: Icon(
+              Icons.chevron_left, size: 25,
+              color: arrowColor == null ? Theme.of(context).primaryColor : arrowColor,
+            ), 
           ),
         ],
       ),   
@@ -62,18 +80,40 @@ class ActionSelectionItem extends StatelessWidget {
       child:
         Padding(
           padding: EdgeInsets.all(5),
-          child: SelectionItem(
-             action.getTitle(),
-             onClick: () {
-               if (extraOnTap != null) {
-                extraOnTap();
-               }
-               Navigator.push(
-                 context, 
-                 CustomRoute(builder: (context) => ActionInfo(action, campaign, model))
-               );
-             },   
-          )
+          child: Row(
+            children: <Widget>[
+              Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  color: action.getActionIconMap()['iconBackgroundColor']
+                ), 
+                child: 
+                  Center(
+                    child: Icon(
+                      action.getActionIconMap()['icon'],
+                      color: action.getActionIconMap()['iconColor'],
+                      size: 30,
+                    ),
+                  ),
+              ),
+              SizedBox(width: 10),
+              Expanded( child: SelectionItem(
+                 action.getTitle(),
+                 onClick: () {
+                   if (extraOnTap != null) {
+                    extraOnTap();
+                   }
+                   Navigator.push(
+                     context, 
+                     CustomRoute(builder: (context) => ActionInfo(action, campaign, model))
+                   );
+                 },   
+                )
+              )
+              ],
+            )
         )
     );
 

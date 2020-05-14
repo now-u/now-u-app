@@ -34,7 +34,7 @@ Article newsArticle =
     fullArticleLink: "https://www.bbc.co.uk/news/uk-52439348",
   );
 
-  Article articleWithVideo = 
+Article articleWithVideo = 
   Article(
     id: 2,
     title: "After 13 years in development, we have finally completed this very important thing!",
@@ -67,17 +67,15 @@ class Home extends StatelessWidget {
                   children: <Widget>[
                     ActionProgressTile(model.user.getCompletedActions().length, model.campaigns.getActions().length),
                     HomeDividor(),
-                    HomeTile(
-                        Container(
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    sectionTitle("Actions", context),
-                                    ActionTile(model.campaigns, model, changePage),
-                                  ],
-                                  )
-                            ),
-                    ), 
+                    Container(
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            sectionTitle("Actions", context),
+                            ActionTile(model.campaigns, model, changePage),
+                          ],
+                          )
+                    ),
                     HomeTile(
                         Container(
                               child: Column(
@@ -145,7 +143,10 @@ Widget sectionTitle(String t, BuildContext context) {
       Padding(
         padding: EdgeInsets.all(10),
         child:
-          Text(t, style: Theme.of(context).primaryTextTheme.headline, textAlign: TextAlign.start,),
+          Text(t, style: 
+            Theme.of(context).primaryTextTheme.headline3,
+            textAlign: TextAlign.start,
+          ),
       );
 }
 
@@ -178,12 +179,19 @@ class ActionTile extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.all(BUTTON_PADDING),
-                  child: DarkButton(
-                    "See More Actions", 
-                    padding: 7,
-                    onPressed: () {
-                      changePage(0);
-                    },
+                  child: 
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget> [
+                      DarkButton(
+                        "All Actions", 
+                        rightArrow: true,
+                        onPressed: () {
+                          changePage(0);
+                        },
+                        style: DarkButtonStyles.Small,
+                      ),
+                    ],
                   ),
                 ),
                 //ActionItem(user.getFollowUpAction()),
@@ -240,8 +248,8 @@ class ActionProgressTile extends StatelessWidget {
                         ),
                         ProgressBar(
                           progress: 0.6,
-                          width: MediaQuery.of(context).size.width * (actionsHomeTileTextWidth - 0.1),
-                          height: 17,
+                          width: MediaQuery.of(context).size.width * (actionsHomeTileTextWidth - 0.12),
+                          height: 15,
                         ),
                         // TODO need to get user active campiangs not all active campaigns
                         Container(
@@ -283,7 +291,7 @@ class HomeDividor extends StatelessWidget {
     return Container(
       width: double.infinity, 
       height: 2,
-      color: Colors.grey
+      color: Color.fromRGBO(200,200,200, 1),
     );
   }
 }
