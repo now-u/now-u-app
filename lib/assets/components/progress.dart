@@ -26,7 +26,7 @@ class ProgressBar extends StatelessWidget {
             width: width ?? double.infinity,
             height: height ?? 20,
             decoration: BoxDecoration(
-              color: toDoColor ?? Colors.yellow,
+              color: toDoColor ?? Color.fromRGBO(255, 255, 255, 0.2),
               borderRadius: _borderRadius,
             ),
           ),
@@ -34,7 +34,7 @@ class ProgressBar extends StatelessWidget {
             width: (width ?? double.infinity) * progress,
             height: height ?? 20,
             decoration: BoxDecoration(
-              color: doneColor ?? Colors.red,
+              color: doneColor ?? Theme.of(context).accentColor,
               borderRadius: _borderRadius,
             ),
           ),

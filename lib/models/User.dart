@@ -9,7 +9,7 @@ List<int> rewardValues = [1, 5, 10, 25, 50, 100, 200];
 class User {
   int id;
   String fullName;
-  String username;
+  String email;
   int age;
 
   // TODO make some attributes class that can take any attrribute so I dont need this
@@ -25,10 +25,10 @@ class User {
 
   Map<CampaignActionType, int> completedActionsType;
   
-  User({id, fullName, username, age, location, monthlyDonationLimit, homeOwner, selectedCampaigns, completedCampaigns, completedActions, completedRewards, completedActionsType}) {
+  User({id, fullName, email, age, location, monthlyDonationLimit, homeOwner, selectedCampaigns, completedCampaigns, completedActions, completedRewards, completedActionsType}) {
     this.id = id; 
     this.fullName = fullName;
-    this.username = username;
+    this.email = email;
     this.age = age;
     this.location = location;
     this.monthlyDonationLimit = monthlyDonationLimit;
@@ -45,7 +45,7 @@ class User {
   User.empty(){
     id= 0;
     fullName= "Andrew";
-    username= "Andy123";
+    email = "Andy123";
     age= 21;
     location= "Bristol";
     monthlyDonationLimit= 20.0;
@@ -55,7 +55,7 @@ class User {
   User copyWith({
     int id,
     String fullName,
-    String username,
+    String email,
     int age,
 
     // TODO make some attributes class that can take any attrribute so I dont need this
@@ -74,7 +74,7 @@ class User {
     return User(
       id: id ?? this.id,
       fullName: fullName ?? this.fullName,
-      username: username ?? this.username,
+      email: email ?? this.email,
       age: age ?? this.age,
       location: location ?? this.location,
       monthlyDonationLimit: monthlyDonationLimit ?? this.monthlyDonationLimit,
@@ -90,7 +90,7 @@ class User {
   User.fromJson(Map json) {
     id = json['id'];
     fullName = json['full_name'];
-    username = json['username'];
+    email = json['email'];
     age = json['age'];
     location = json['location'];
     monthlyDonationLimit = json['monthly_donation_limit'];
@@ -105,7 +105,7 @@ class User {
 Map toJson() => {
     'id': id, 
     'full_name': fullName, 
-    'username': username, 
+    'email': email, 
     'age': age, 
     'location': location, 
     'monthly_donation_limit': monthlyDonationLimit, 
@@ -121,7 +121,7 @@ Map toJson() => {
     return {
       //'id' : id, 
       'fullName': fullName, 
-      'username': username,
+      'email': email,
       'age': age,
       'location': location,
       'monthlyDonationLimit': monthlyDonationLimit,
@@ -134,8 +134,8 @@ Map toJson() => {
         this.setName(v);
         break;
       }
-      case 'username': {
-        this.setUsername(v);
+      case 'email': {
+        this.setEmail(v);
         break;
       }
       case 'age': {
@@ -163,8 +163,8 @@ Map toJson() => {
   String getName() {
     return fullName; 
   }
-  String getUsername() {
-    return username; 
+  String getEmail() {
+    return email; 
   }
   int getAge() {
     return age; 
@@ -193,8 +193,8 @@ Map toJson() => {
   void setName(String name) {
     this.fullName = name; 
   }
-  void setUsername(String username) {
-    this.username = username; 
+  void setEmail(String email) {
+    this.email = email; 
   }
   void setAge(int age) {
     this.age = age; 

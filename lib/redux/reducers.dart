@@ -55,7 +55,7 @@ User userReducer(User user, action) {
   if (action is UpdateUserDetails) {
     User u = user.copyWith(
       fullName: action.user.getName(),
-      username: action.user.getUsername(),
+      email: action.user.getEmail(),
       age: action.user.getAge(),
       location: action.user.getLocation(),
     );

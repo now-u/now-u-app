@@ -9,6 +9,7 @@ TextStyle textStyleFrom(
     double fontSize,
     Color color,
     double letterSpacing,
+    double height,
   }
 ) {
   return TextStyle(
@@ -18,5 +19,17 @@ TextStyle textStyleFrom(
     color: color ?? style.color,
     fontSize: fontSize ?? style.fontSize,
     letterSpacing: letterSpacing ?? style.letterSpacing,
+    height: height ?? style.height,
+  );
+}
+
+Color colorFrom(
+  Color color,
+  {
+    double opacity,
+  }
+) {
+  return Color.fromRGBO(
+    color.red, color.green, color.blue, opacity ?? color.opacity
   );
 }

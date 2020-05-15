@@ -59,6 +59,8 @@ Color blue = Color.fromRGBO(1, 26, 67, 1);
 Color black = Colors.black;
 Color lightGrey = Color.fromRGBO(119, 119, 119, 1);
 
+// Accent Colours
+
 //List<Widget> _pages = <Widget>[Campaigns(campaigns), Home(), Profile(_user)];
 
 class App extends StatefulWidget {
@@ -134,55 +136,6 @@ class _AppState extends State<App> {
           // is not restarted.
           fontFamily: 'Nunito',
           primaryTextTheme: TextTheme(
-                // Page Header
-                //title: TextStyle(
-                //      fontSize: 46, 
-                //      color: Color.fromRGBO(36, 35, 52, 1),
-                //      fontWeight: FontWeight.w300,
-                //    ),  
-                //subtitle: TextStyle(
-                //      fontSize: 30, 
-                //      color: Color.fromRGBO(36, 35, 52, 1),
-                //      fontWeight: FontWeight.w300,
-                //    ),  
-                //
-                //headline : TextStyle(
-                //      fontSize: 31,
-                //      color: Color.fromRGBO(36, 35, 52, 1),
-                //      fontWeight: FontWeight.w300,
-                //    ),
-                //body1: TextStyle(
-                //      fontSize: 18,
-                //      color: Color.fromRGBO(36, 35, 52, 1),
-                //      fontWeight: FontWeight.w300,
-                //    ),
-                //body2: TextStyle(
-                //      fontSize: 22, 
-                //      color: Colors.white,
-                //      fontWeight: FontWeight.w300,
-                //    ),
-                //button : TextStyle(
-                //      fontSize: 28,
-                //      color: Colors.white,
-                //      fontWeight: FontWeight.w300
-                //    ),
-                //display1: TextStyle(
-                //      fontSize: 32,
-                //      color: Colors.white,
-                //      fontFamily: 'PeaceSans',
-                //    ),
-                //display2: TextStyle(
-                //      fontSize: 26,
-                //      color: Color.fromRGBO(36, 35, 52, 1),
-                //      fontWeight: FontWeight.w300,
-                //    ),
-                //display3: TextStyle(
-                //      fontSize: 20,
-                //      color: Color.fromRGBO(36, 35, 52, 1),
-                //      fontWeight: FontWeight.w300,
-                //    ),
-
-
                 headline1: TextStyle(
                   color: black,
                   fontSize: 36,
@@ -237,11 +190,20 @@ class _AppState extends State<App> {
                 ),
                 
               ),
+
+          // Brand Colour
           primaryColor: orange,
-          //primarySwatch: whiteMaterial,
-          primaryColorDark: blue,
+          // Accent Colours
+            // Sunflower
+            accentColor: Color.fromRGBO(243, 183, 0, 1),
+            // Venetian Red --> Accent
+            errorColor: Color.fromRGBO(211, 0, 1, 1),
+            // Salomie
+            primaryColorLight: Color.fromRGBO(255, 220, 121, 1),
+            // Oxford Blue
+            primaryColorDark: blue,
           buttonColor: orange,
-          textSelectionColor: white, // Text used on top of 
+          //textSelectionColor: white, // Text used on top of 
 
         ),
         //home: 

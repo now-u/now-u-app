@@ -50,6 +50,7 @@ class Home extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
+        elevation: 3.0,
       ),
       body: Container(
               color: Colors.white,
@@ -66,6 +67,8 @@ class Home extends StatelessWidget {
                           ],
                           )
                     ),
+                    HomeDividor(),
+                    
                     HomeTile(
                         Container(
                               child: Column(
@@ -242,15 +245,18 @@ class ActionProgressTile extends StatelessWidget {
                           width: MediaQuery.of(context).size.width * (actionsHomeTileTextWidth - 0.12),
                           height: 15,
                         ),
+                        SizedBox(height: 15,),
                         // TODO need to get user active campiangs not all active campaigns
                         Container(
-                          width: MediaQuery.of(context).size.width * actionsHomeTileTextWidth,
+                          width: MediaQuery.of(context).size.width * actionsHomeTileTextWidth - 5,
                           child: Text(
                             "You have completed " + numberOfCompletedAction.toString() + " of " + numberOfSelectedActions.toString() + " total actions from your active campaigns. Way to go!",
                             textAlign: TextAlign.left,
                             style: textStyleFrom(
                               Theme.of(context).primaryTextTheme.bodyText1,
                               color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              height: 1.0
                             ),
                           ),
                         ),
@@ -282,7 +288,7 @@ class HomeDividor extends StatelessWidget {
     return Container(
       width: double.infinity, 
       height: 2,
-      color: Color.fromRGBO(200,200,200, 1),
+      color: Color.fromRGBO(238,238,238, 1),
     );
   }
 }

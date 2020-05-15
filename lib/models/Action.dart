@@ -16,7 +16,6 @@ enum CampaignActionType {
 
 Map defaultCampaignActionTypeData = 
   {
-    'type': CampaignActionType.Other,        
     'name': "other",          
     'verb': "Complete", 
     'pastVerb': "Completed", 
@@ -26,9 +25,8 @@ Map defaultCampaignActionTypeData =
     'iconBackgroundColor': Colors.redAccent
   };
 
-List<Map> campaignActionTypeData = [
-  {
-    'type': CampaignActionType.Petition,
+Map campaignActionTypeData = {
+  CampaignActionType.Petition: {
     'name': "petition", 
     'verb': "Sign", 
     'pastVerb': "Signed", 
@@ -37,28 +35,25 @@ List<Map> campaignActionTypeData = [
     'iconColor': Colors.red,
     'iconBackgroundColor': Colors.redAccent
   },
-  {
-    'type': CampaignActionType.Email,        
+  CampaignActionType.Email: {
     'name': "email", 
     'verb': "Send", 
     'pastVerb': "Sent", 
     'displayName': "email", 
     'icon': FontAwesomeIcons.envelope, 
-    'iconColor': Colors.red,
-    'iconBackgroundColor': Colors.redAccent
+    'iconColor': Color.fromRGBO(255, 136,0, 1),
+    'iconBackgroundColor': Color.fromRGBO(255, 136, 0, 0.15)
   },
-  {
-    'type': CampaignActionType.Donation,     
+  CampaignActionType.Donation: {
     'name': "donation", 
     'verb': "Make", 
     'pastVerb': "Made", 
     'displayName': "donation", 
-    'icon': FontAwesomeIcons.envelope, 
-    'iconColor': Colors.red,
-    'iconBackgroundColor': Colors.redAccent
+    'icon': FontAwesomeIcons.handHoldingHeart, 
+    'iconColor': Color.fromRGBO(211, 0, 1, 1),
+    'iconBackgroundColor': Color.fromRGBO(211, 0, 1, 0.15)
   },
-  {
-    'type': CampaignActionType.Learn,        
+  CampaignActionType.Learn: {
     'name': "learn", 
     'verb': "Complete", 
     'pastVerb': "Completed", 
@@ -67,7 +62,7 @@ List<Map> campaignActionTypeData = [
     'iconColor': Colors.red,
     'iconBackgroundColor': Colors.redAccent
   },
-  {
+  CampaignActionType.Socail: {
     'type': CampaignActionType.Socail,       
     'name': "social", 
     'verb': "Share", 
@@ -77,8 +72,7 @@ List<Map> campaignActionTypeData = [
     'iconColor': Colors.red,
     'iconBackgroundColor': Colors.redAccent
   },
-  {
-    'type': CampaignActionType.Volunteer,    
+  CampaignActionType.Volunteer: {
     'name': "volunteer", 
     'verb': "Volunteer", 
     'pastVerb': "Volunteered", 
@@ -87,33 +81,39 @@ List<Map> campaignActionTypeData = [
     'iconColor': Colors.red,
     'iconBackgroundColor': Colors.redAccent
   },
-  {
-    'type': CampaignActionType.Shop,         
+  CampaignActionType.Shop: {
     'name': "shop", 
     'verb': "Make", 
     'pastVerb': "Made", 
     'displayName': "purchase", 
     'icon': FontAwesomeIcons.coins, 
-    'iconColor': Colors.red,
-    'iconBackgroundColor': Colors.redAccent
+    'iconColor': Color.fromRGBO(243, 183,0, 1),
+    'iconBackgroundColor': Color.fromRGBO(243, 183, 0, 0.15)
   },
-  defaultCampaignActionTypeData,
-];
+  CampaignActionType.Other: defaultCampaignActionTypeData
+};
 
 CampaignActionType campaignActionTypeFromString (String s) {
-  for (int i =0; i < campaignActionTypeData.length; i++) {
-    if (campaignActionTypeData[i]['name'] == s) {
-      return campaignActionTypeData[i]['type'];
+  // Apparently if we return early it just doesnt do the return? Not sure why that would be but this seems to fix it
+  CampaignActionType t = CampaignActionType.Other;
+  campaignActionTypeData.forEach((key, value) {
+    print("Checking if " + value['name'] + " == " + s);
+    if (value['name'] == s) {
+      print("MATCH");
+      t = key;
     }
-  }
-  return CampaignActionType.Other;
+  });
+  return t;
 }
 
 Tuple3<String, String, String> generateCampaingActionDesc (CampaignActionType t) {
-  for (int i =0; i < campaignActionTypeData.length; i++) {
-    if (campaignActionTypeData[i]['type'] == t) {
-      return Tuple3(campaignActionTypeData[i]['verb'], campaignActionTypeData[i]['pastVerb'], campaignActionTypeData[i]['displayName']);
-    }
+  print("Getting campaing aciton desc");
+  if (campaignActionTypeData.containsKey(t)) {
+    print("Found key");
+    print(campaignActionTypeData[t]['name']);
+    print("Looking for the thing");
+    return Tuple3(campaignActionTypeData[t]['verb'], campaignActionTypeData[t]['pastVerb'], campaignActionTypeData[t]['displayName']);
+
   }
   return Tuple3("Complete", "Completed", "special action");
 }
@@ -164,14 +164,14 @@ class CampaignAction {
     return type; 
   }
   Map getActionIconMap () {
-    for (int i =0; i < campaignActionTypeData.length; i++) {
-      if (campaignActionTypeData[i]['type'] == type) {
-        return {
-          'icon': campaignActionTypeData[i]['icon'],
-          'iconColor': campaignActionTypeData[i]['iconColor'],
-          'iconBackgroundColor': campaignActionTypeData[i]['iconBackgroundColor']
-        };
-      }
+    print("Getting the actionicon map for");
+    print(type.toString());
+    if (campaignActionTypeData.containsKey(type)) {
+      return {
+        'icon': campaignActionTypeData[type]['icon'],
+        'iconColor': campaignActionTypeData[type]['iconColor'],
+        'iconBackgroundColor': campaignActionTypeData[type]['iconBackgroundColor']
+      };
     }
     return defaultCampaignActionTypeData;
   }

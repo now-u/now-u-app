@@ -8,6 +8,12 @@ import 'package:app/models/ViewModel.dart';
 
 import 'package:dropdown_formfield/dropdown_formfield.dart';
 
+import 'package:app/models/ViewModel.dart';
+import 'package:app/models/State.dart';
+
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
+
 
 
 class DetailsPage extends StatefulWidget {
@@ -28,98 +34,110 @@ class DetailsPage extends StatefulWidget {
 class _DetailsPageState extends State<DetailsPage> {
   User user;
   bool editingMode;
-  ViewModel model;
   @override
   void initState() {
     editingMode = false;
-    model = widget._model;
-    user = model.user;
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    List userData = user.getAttributes().entries.toList();
-    print(user.getName());
-    return Scaffold(
-      body: 
-        Column(
-           children: <Widget>[
-            PageTitle("My Details", hasBackButton: true, onClickBackButton: widget._goBack,),
-            Expanded(
-              child: 
-                ListView.builder(
-                  itemCount: userData.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return  
-                      UserAttributeTile(
-                        akey: userData[index].key.toString(),
-                        //initalText: userData[index].value.toString(), 
-                        enabled: editingMode ? true : false, 
-                        value: userData[index].value,
-                        onChanged: 
-                          (v) { 
-                            setState(() {
-                               user.setAttribute(userData[index].key, v);
-                             }); 
-                          }
-                      ); 
-                  },
-                ),
-                )
-           ], 
-        ),
-        floatingActionButton: 
-          !editingMode ?
-          Padding (
-              padding: EdgeInsets.all(14),
-              child: DarkButton(
-                "Edit",
-                onPressed: () {
-                  setState(() {
-                     editingMode= true;
-                   }); 
-                },
-              )
-          )
-          :
-          Padding (
-              padding: EdgeInsets.all(14),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                     padding: EdgeInsets.only(right: 10),
-                     child: 
-                      DarkButton(
-                        "Cancel",
+    return 
+      StoreConnector<AppState, ViewModel>(
+        converter: (Store<AppState> store) => ViewModel.create(store),
+        builder: (BuildContext context, ViewModel model) {
+          user = model.user;
+          List userData = user.getAttributes().entries.toList();
+          return Scaffold(
+            body: 
+              Column(
+                 children: <Widget>[
+                  PageTitle("My Details", hasBackButton: true, onClickBackButton: widget._goBack,),
+                  Expanded(
+                    child: 
+                      ListView.builder(
+                        itemCount: userData.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return  
+                            UserAttributeTile(
+                              akey: userData[index].key.toString(),
+                              //initalText: userData[index].value.toString(), 
+                              enabled: editingMode ? true : false, 
+                              value: userData[index].value,
+                              onChanged: 
+                                (v) { 
+                                  setState(() {
+                                     user.setAttribute(userData[index].key, v);
+                                   }); 
+                                }
+                            ); 
+                        },
+                      ),
+                      )
+                 ], 
+              ),
+              floatingActionButton: 
+                !editingMode ?
+                Padding (
+                    padding: EdgeInsets.all(14),
+                    child: Container(
+                      height: 40,
+                      child: DarkButton(
+                        "Edit",
                         onPressed: () {
                           setState(() {
-                             editingMode = false;
-                             //_model = widget.model;
+                             editingMode= true;
                            }); 
                         },
-                      ),
-                  ),
-                  Padding(
-                     padding: EdgeInsets.only(left: 10),
-                     child: 
-                      DarkButton(
-                        "Update",
-                        onPressed: () {
-                          setState(() {
-                            //_selectionMode = false;
-                            model.onUpdateUserDetails(user);
-                            editingMode = false;
-                          });
-                        },
-                      ),
-                  ),
-                
-                ],   
-              ),
-          )
-          ,
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+                      )
+                    )
+                )
+                :
+                Padding (
+                    padding: EdgeInsets.all(14),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                           padding: EdgeInsets.only(right: 10),
+                           child:
+                            Container(
+                              height: 40,
+                              child: DarkButton(
+                                "Cancel",
+                                onPressed: () {
+                                  setState(() {
+                                     editingMode = false;
+                                     //_model = widget.model;
+                                   }); 
+                                },
+                              ),
+                            ),
+                        ),
+                        Padding(
+                           padding: EdgeInsets.only(left: 10),
+                           child: 
+                            Container(
+                              height: 40, 
+                              child: DarkButton(
+                                "Update",
+                                onPressed: () {
+                                  setState(() {
+                                    //_selectionMode = false;
+                                    model.onUpdateUserDetails(user);
+                                    editingMode = false;
+                                  });
+                                },
+                              ),
+                            )
+                        ),
+                      
+                      ],   
+                    ),
+                )
+                ,
+              floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          );
+        }
     );
   }
 }

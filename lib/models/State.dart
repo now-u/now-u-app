@@ -28,7 +28,7 @@ class AppState {
       user = User(
           id: 0,
           fullName: "Andrew",
-          username: "Andy123",
+          email: "andy@gmail.com",
           age: 21,
           location: "Bristol",
           monthlyDonationLimit: 20.0,
