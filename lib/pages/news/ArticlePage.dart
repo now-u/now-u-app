@@ -1,22 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:app/models/Action.dart';
-import 'package:app/models/Campaign.dart';
-import 'package:app/models/ViewModel.dart';
-import 'package:app/models/Reward.dart';
 import 'package:app/models/Article.dart';
 
-import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
-import 'package:app/pages/other/RewardComplete.dart';
-
-import 'package:app/assets/StyleFrom.dart';
-import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/components/detailScaffold.dart';
-import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/customAppBar.dart';
-import 'package:app/assets/routes/customRoute.dart';
-import 'package:app/assets/components/textButton.dart';
 
 class ArticlePage extends StatelessWidget {
   
@@ -32,7 +20,7 @@ class ArticlePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(
-          text: "Action",
+          text: "Article",
           backButtonText: "Home",
           context: context,
         ),
@@ -66,7 +54,7 @@ class ArticlePage extends StatelessWidget {
                           padding: EdgeInsets.only(top: 10),
                           child: Text(
                             article.getTitle(),
-                            style: Theme.of(context).primaryTextTheme.headline1,
+                            style: Theme.of(context).primaryTextTheme.headline2,
                             textAlign: TextAlign.left
                           ),
                         ),
@@ -94,6 +82,7 @@ class ArticlePage extends StatelessWidget {
                                   )
                               ]
                         ),
+                        SizedBox(height: 25,)
                       ],
                     )
                   )

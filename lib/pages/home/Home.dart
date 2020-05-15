@@ -1,23 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'dart:math' as math;
 
 import 'package:app/pages/home/HomeTile.dart';
-import 'package:app/pages/other/ArticlePage.dart';
-import 'package:app/pages/profile/profilePages/RewardsPage.dart';
-import 'package:app/pages/profile/Profile.dart';
 
-import 'package:app/assets/components/pageTitle.dart';
 import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/StyleFrom.dart';
-import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/progress.dart';
-import 'package:app/assets/routes/customRoute.dart';
 
-import 'package:app/models/Campaign.dart';
 import 'package:app/models/ViewModel.dart';
-import 'package:app/models/Action.dart';
 import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Article.dart';
 
@@ -109,7 +99,7 @@ class Home extends StatelessWidget {
                               child: Text(newsArticle.getTitle(), 
                                  style: Theme.of(context).primaryTextTheme.body1,),
                             ),
-                            ArticleTile( newsArticle),
+                            //ArticleTile( newsArticle),
                           ],
                         ),
                       )
@@ -125,7 +115,8 @@ class Home extends StatelessWidget {
                               child: Text(articleWithVideo.getTitle(), 
                                  style: Theme.of(context).primaryTextTheme.body1,),
                             ),
-                            ArticleTile( articleWithVideo),
+                            //Container
+                            //ArticleTile( articleWithVideo),
                           ],
                         ),
                       )

@@ -12,8 +12,6 @@ import 'package:app/models/State.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-final double PAGE_PADDING = 10;
-
 class NewsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -34,30 +32,22 @@ class NewsPage extends StatelessWidget {
                         NewsDividor(),
                         Text("Recent News"),
                         // Featured news articles
-                        Padding(
-                          padding: EdgeInsets.all(PAGE_PADDING),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Expanded(
-                                child: Padding(
-                                    padding: EdgeInsets.only(right: PAGE_PADDING/2),
-                                    child: NewsImageTile(
-                                      article: snapshot.data[0],
-                                    ),
-                                  )
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: NewsImageTile(
+                                article: snapshot.data[0],
+                                height: 0.2,
                               ),
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsets.only(left: PAGE_PADDING/2),
-                                  child: NewsImageTile(
-                                    article: snapshot.data[1],
-                                  ),
-                                )
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: NewsImageTile(
+                                article: snapshot.data[1],
+                                height: 0.2,
                               ),
-                            ],
-                          ),
+                            )
+                          ],
                         ),
                         // List of other news articles 
                         ListView.builder(
@@ -99,26 +89,22 @@ class NewsImageTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
         //mainAxisSize: MainAxisSize.min,
         children: <Widget> [
           Container(
             width: double.infinity,
+            height: 200,
             child: NewsGraphic(
               article.getHeaderImage(),
-              140,
+              height: 140
             ),
           ),
           // TODO This should probably link to the catergory as well (ie search for the category)
           Text(
-            article.getCategory(),
-            textAlign: TextAlign.left,
+            article.getCategory()
           ),
           Text(
-            article.getTitle(),
-            textAlign: TextAlign.left,
-            maxLines: 3,
+            article.getTitle()
           ),
           SizedBox(height: 10),
         ],
