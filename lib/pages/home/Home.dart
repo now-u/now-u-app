@@ -238,7 +238,7 @@ class ActionProgressTile extends StatelessWidget {
                           textAlign: TextAlign.left,
                         ),
                         ProgressBar(
-                          progress: 0.6,
+                          progress: numberOfCompletedAction/numberOfSelectedActions,
                           width: MediaQuery.of(context).size.width * (actionsHomeTileTextWidth - 0.12),
                           height: 15,
                         ),

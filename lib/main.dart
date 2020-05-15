@@ -92,7 +92,7 @@ class _AppState extends State<App> {
       store: store, 
       child: MaterialApp(
         title: 'Flutter Demo',
-        initialRoute: 'intro',
+        initialRoute: '/',
         routes: {
           '/': (BuildContext context) => StoreBuilder<AppState>(
             onInit: (store) { 

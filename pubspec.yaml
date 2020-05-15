@@ -33,6 +33,7 @@ dependencies:
   dropdown_formfield: ^0.1.2
   tuple: ^1.0.3
   smooth_page_indicator: ^0.1.5
+  rect_getter: ^0.1.0
 
   get_it: ^4.0.2
 

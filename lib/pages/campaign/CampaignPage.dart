@@ -103,6 +103,7 @@ class _CampaignPageState extends State<CampaignPage> {
         //floatingActionButton: CustomFloatingActionButton(text: "Select Campaigns", ),
         floatingActionButton: 
           Container(
+            height: 80,
             child:
               !_selectionMode ?
               Padding (

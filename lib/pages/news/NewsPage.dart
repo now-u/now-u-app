@@ -1,3 +1,4 @@
+import 'package:app/assets/StyleFrom.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/assets/routes/customRoute.dart';
@@ -12,7 +13,7 @@ import 'package:app/models/State.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-final double PAGE_PADDING = 10;
+final double PAGE_PADDING = 15;
 
 class NewsPage extends StatelessWidget {
   @override
@@ -65,8 +66,15 @@ class NewsPage extends StatelessWidget {
                           physics: ClampingScrollPhysics(),
                           itemCount: snapshot.data.length <= 2 ? 0 : snapshot.data.length - 2,
                           itemBuilder: (BuildContext context, int index) {
-                            return NewsTextTile(
-                              article: snapshot.data[index + 2],
+                            return 
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: PAGE_PADDING, right: PAGE_PADDING,
+                                bottom: PAGE_PADDING/2,
+                              ),
+                              child: NewsTextTile(
+                                article: snapshot.data[index + 2],
+                              )
                             );
                           },
                         )
@@ -107,18 +115,30 @@ class NewsImageTile extends StatelessWidget {
             width: double.infinity,
             child: NewsGraphic(
               article.getHeaderImage(),
-              140,
+              120,
             ),
           ),
           // TODO This should probably link to the catergory as well (ie search for the category)
+          SizedBox(height: 5),
           Text(
             article.getCategory(),
             textAlign: TextAlign.left,
+            style: textStyleFrom(
+              Theme.of(context).primaryTextTheme.headline5,
+              fontWeight: FontWeight.w600,
+              fontSize: 11,
+            ),
           ),
+          SizedBox(height: 2),
           Text(
             article.getTitle(),
             textAlign: TextAlign.left,
-            maxLines: 3,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: textStyleFrom(
+              Theme.of(context).primaryTextTheme.headline5,
+              fontWeight: FontWeight.w600,
+            ),
           ),
           SizedBox(height: 10),
         ],
@@ -155,16 +175,28 @@ class NewsTextTile extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Flexible(
-              flex: 5,
+              flex: 2,
               child: Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget> [
-                    Text("Category"),
+                    Text(
+                      article.getCategory(),
+                      style: textStyleFrom(
+                        Theme.of(context).primaryTextTheme.headline5,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 11,
+                      ),
+                    ),
+                    SizedBox(height: 6),
                     Text(
                       article.getTitle(),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
+                      style: textStyleFrom(
+                        Theme.of(context).primaryTextTheme.headline5,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ]
                 )
@@ -172,7 +204,7 @@ class NewsTextTile extends StatelessWidget {
             ),
             SizedBox(width: 10,),
             Flexible(
-              flex: 2,
+              flex: 1,
               child: NewsGraphic(article.getHeaderImage(), height)
             )
           ],
@@ -205,7 +237,7 @@ class NewsGraphic extends StatelessWidget {
   Widget build(BuildContext context) {
     return 
     Padding(
-      padding: EdgeInsets.symmetric(vertical: 5),
+      padding: EdgeInsets.symmetric(),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.red,
