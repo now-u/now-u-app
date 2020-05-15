@@ -29,6 +29,7 @@ class Article {
   int linkedAction;
   String videoLink;
   ArticleType type;
+  String category;
 
   Article({
     @required this.id, 
@@ -40,11 +41,13 @@ class Article {
     this.linkedAction, 
     this.videoLink, 
     this.type,
+    this.category
   });
 
   Article.fromJson(Map json) {
+    print(json);
     id              = json['id'];
-    title           = json['tite'];
+    title           = json['title'];
     body            = json['body'];
     headerImage     = json['header_image'];
     linkedCampaign  = json['linked_campaign'];
@@ -52,6 +55,7 @@ class Article {
     fullArticleLink = json['full_article_link'];
     videoLink       = json['video_link'];
     type            = json['type'];
+    category        = json['category'];
   }
   
   Map toJson() => {
@@ -64,6 +68,7 @@ class Article {
     'full_article_link': fullArticleLink,
     'video_link': videoLink,
     'type': type,
+    'category': category,
   };
 
   int getId() {
@@ -92,5 +97,8 @@ class Article {
   }
   ArticleType getType() {
     return type;
+  }
+  String getCategory() {
+    return category;
   }
 }

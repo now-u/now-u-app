@@ -36,6 +36,9 @@ class HttpApi implements Api {
       print("200");
       Campaigns cs = Campaigns.fromJson(json.decode(response.body)['data']);
       print("We got some camps");
+      print(cs.getActiveCampaigns()[0].getTitle());
+      print(cs.getActiveCampaigns()[1].getTitle());
+      print(cs.getActiveCampaigns()[2].getTitle());
       return cs;
     }
     else {
@@ -46,7 +49,7 @@ class HttpApi implements Api {
   }
 
   @override
-  Future<Article> getArticles() async {
+  Future<List<Article>> getArticles() async {
     var response = await http.get(domainPrefix + "articles");
     if (response.statusCode == 200) {
       print("We got a 200 when getting articles!");

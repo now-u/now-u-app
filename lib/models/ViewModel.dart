@@ -1,6 +1,7 @@
 import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/User.dart';
+import 'package:app/services/api.dart';
 
 import 'package:app/models/State.dart';
 import 'package:redux/redux.dart';
@@ -9,6 +10,7 @@ import 'package:app/redux/actions.dart';
 class ViewModel {
   final Campaigns campaigns;
   final User user;
+  final Api api;
   final Function(User) onSelectCampaigns;
   final Function(User) onUpdateUserDetails;
   final Function(CampaignAction) onCompleteAction;
@@ -16,6 +18,7 @@ class ViewModel {
   ViewModel({
     this.campaigns,
     this.user,
+    this.api,
     this.onSelectCampaigns,
     this.onCompleteAction,
     this.onUpdateUserDetails,
@@ -37,6 +40,7 @@ class ViewModel {
     return ViewModel(
       campaigns: store.state.campaigns,
       user: store.state.user,
+      api: store.state.api,
       onSelectCampaigns: _onSelectCampaigns,
       onCompleteAction: _onCompleteAction,
       onUpdateUserDetails: _onUpdateUserDetails,

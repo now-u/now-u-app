@@ -7,5 +7,5 @@ abstract class Api {
   Future<Campaign> getCampaign(int id);
   Future<Campaigns> getCampaigns();
 
-  Future<Article> getArticles();
+  Future<List<Article>> getArticles();
 }
