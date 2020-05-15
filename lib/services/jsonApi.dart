@@ -47,4 +47,10 @@ class JsonApi implements Api {
     List<Article> c = json.decode(data).map((e) => Article.fromJson(e)).toList().cast<Article>();
     return c;
   }
+
+  Future<Article> getVideoOfTheDay() async {
+    String data = await rootBundle.loadString('assets/json/articles.json');
+    Article a = Article.fromJson((json.decode(data) as List)[0]);
+    return a; 
+  }
 } 

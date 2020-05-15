@@ -58,7 +58,7 @@ class _ProfileState extends State<Profile> {
   };
 
   var profileTiles = <Map> [
-      {  'profileTile': ProfileTile("Details", FontAwesomeIcons.solidUser) , 'page': DetailsPage(goBack: goBack, model: model, ), },
+      {  'profileTile': ProfileTile("Details", FontAwesomeIcons.solidUser) , 'page': DetailsPage(goBack: goBack, ), },
       {  'profileTile': ProfileTile("Progress", FontAwesomeIcons.spinner), 'page':ProgressPage(goBack, widget.model)},
       {  'profileTile': ProfileTile("Network", FontAwesomeIcons.users) },
       {  'profileTile': ProfileTile("Rewards", FontAwesomeIcons.ribbon), 'page' : RewardsPage(goBack, widget.model) },

@@ -10,6 +10,14 @@ import 'package:app/pages/news/NewsPage.dart';
 
 import 'package:app/assets/dynamicLinks.dart';
 
+enum TabPage {
+  Campaigns,
+  Actions,
+  Home,
+  News,
+  Menu
+}
+
 class TabsPage extends StatefulWidget {
 
   ViewModel model;
@@ -59,12 +67,12 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
     }
   }
 
-  void changePage(int index, {int subIndex}) {
+  void changePage(TabPage page, {int subIndex}) {
     print("Changing page");
-    print(index);
+    print(page);
     print(subIndex);
     setState(() {
-      _currentIndex = index;
+      _currentIndex = page.index;
       _subIndex = subIndex;
     }); 
   }

@@ -63,4 +63,10 @@ class HttpApi implements Api {
       return Future.error("Error getting campaign in http api", StackTrace.fromString("The stack trace is"));
     }
   }
+
+  // TODO implement
+  @override
+  Future<Article> getVideoOfTheDay() async {
+    return null;
+  }
 } 

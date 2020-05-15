@@ -18,14 +18,11 @@ import 'package:redux/redux.dart';
 
 class DetailsPage extends StatefulWidget {
   GestureTapCallback _goBack;
-  ViewModel _model;
   
   DetailsPage({
     @required goBack, 
-    @required ViewModel model
   }) {
     _goBack = goBack;
-    _model = model;
   }
   @override
   _DetailsPageState createState() => _DetailsPageState();

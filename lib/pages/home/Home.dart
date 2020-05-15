@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:app/pages/home/HomeTile.dart';
+import 'package:app/pages/news/NewsPage.dart';
+import 'package:app/pages/Tabs.dart';
 
 import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/StyleFrom.dart';
@@ -57,73 +59,26 @@ class Home extends StatelessWidget {
               child: ListView(
                   children: <Widget>[
                     ActionProgressTile(model.user.getCompletedActions().length, model.campaigns.getActions().length),
+
                     HomeDividor(),
-                    Container(
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            sectionTitle("Actions", context),
-                            ActionTile(model.campaigns, model, changePage),
-                          ],
-                          )
-                    ),
+                    sectionTitle("Actions", context),
+                    ActionTile(model.campaigns, model, changePage),
+
                     HomeDividor(),
-                    
-                    HomeTile(
-                        Container(
-                              child: Column(
-                                  children: <Widget>[
-                                    sectionTitle("Congratulations", context),
-                                    SelectionItem("You Completed 10 Actions"),
-                                    sectionTitle("Other progress...", context),
-                                    SelectionItem("Make 1 more donation to complete 'Make 5' donations"),
-                                    Padding(
-                                      padding: EdgeInsets.all(BUTTON_PADDING),
-                                      child: DarkButton(
-                                          "See More Rewards", 
-                                          onPressed: () {
-                                            changePage(2, subIndex: 4);
-                                          },
-                                      ),
-                                    ),
-                                    // TODO Progress Slider thing
-                                  ],
-                                  )
-                            ),
-                    ), 
-                    // News
-                    HomeTile(
-                      Container(
-                        child: Column(
-                          children: <Widget>[
-                            sectionTitle("News", context),
-                            Padding(
-                              padding: EdgeInsets.all(20),
-                              child: Text(newsArticle.getTitle(), 
-                                 style: Theme.of(context).primaryTextTheme.body1,),
-                            ),
-                            //ArticleTile( newsArticle),
-                          ],
-                        ),
-                      )
+                    sectionTitle("Highlights", context),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Container(
+                        child: VideoOTDTile(),
+                      ),
                     ),
-                    // Video of the day
-                    HomeTile(
-                      Container(
-                        child: Column(
-                          children: <Widget>[
-                            sectionTitle("Clip of the day", context),
-                            Padding(
-                              padding: EdgeInsets.all(20),
-                              child: Text(articleWithVideo.getTitle(), 
-                                 style: Theme.of(context).primaryTextTheme.body1,),
-                            ),
-                            //Container
-                            //ArticleTile( articleWithVideo),
-                          ],
-                        ),
-                      )
+                    HomeButton(
+                      text: "All news",
+                      changePage: changePage,
+                      page: TabPage.News
+
                     )
+                    
                   ],
                   
                   )
@@ -134,14 +89,16 @@ class Home extends StatelessWidget {
  
 Widget sectionTitle(String t, BuildContext context) {
   return 
-      Padding(
+    Center(
+      child: Padding(
         padding: EdgeInsets.all(10),
         child:
           Text(t, style: 
             Theme.of(context).primaryTextTheme.headline3,
             textAlign: TextAlign.start,
           ),
-      );
+      )
+    );
 }
 
 class ActionTile extends StatelessWidget {
@@ -171,23 +128,11 @@ class ActionTile extends StatelessWidget {
                         campaign: campaigns.getActiveCampaigns()[index],
                     ),
                 ),
-                Padding(
-                  padding: EdgeInsets.all(BUTTON_PADDING),
-                  child: 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget> [
-                      DarkButton(
-                        "All Actions", 
-                        rightArrow: true,
-                        onPressed: () {
-                          changePage(0);
-                        },
-                        style: DarkButtonStyles.Small,
-                      ),
-                    ],
-                  ),
-                ),
+                HomeButton(
+                  text: "All actions",
+                  changePage: changePage,
+                  page: TabPage.Actions,
+                )
                 //ActionItem(user.getFollowUpAction()),
                 //TODO Work ou where follow up actions should be
               ]
@@ -282,6 +227,43 @@ class ActionProgressTile extends StatelessWidget {
     }
 }
 
+class HomeButton extends StatelessWidget {
+  final String text;
+  final Function changePage;
+  final TabPage page;
+
+  HomeButton({
+    @required this.text,
+    @required this.changePage,
+    this.page,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Padding(
+        padding: EdgeInsets.all(BUTTON_PADDING),
+        child: 
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget> [
+            DarkButton(
+              text, 
+              rightArrow: true,
+              onPressed: () {
+                changePage(
+                  page ?? TabPage.Home
+                );
+              },
+              style: DarkButtonStyles.Small,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class HomeDividor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -292,3 +274,4 @@ class HomeDividor extends StatelessWidget {
     );
   }
 }
+

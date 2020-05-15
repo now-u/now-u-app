@@ -8,4 +8,5 @@ abstract class Api {
   Future<Campaigns> getCampaigns();
 
   Future<List<Article>> getArticles();
+  Future<Article> getVideoOfTheDay();
 }

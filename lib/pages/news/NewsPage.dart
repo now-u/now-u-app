@@ -12,6 +12,7 @@ import 'package:app/models/State.dart';
 
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 final double PAGE_PADDING = 15;
 
@@ -32,8 +33,27 @@ class NewsPage extends StatelessWidget {
                   return 
                   ListView(
                     children: <Widget>[
+                        // Video of the day
+                        Padding(
+                          padding: EdgeInsets.all(PAGE_PADDING),
+                          child: Container(
+                            child: VideoOTDTile(
+                              // TODO need to do actual request for video of the day
+                            )
+                          ),
+                        ),
                         NewsDividor(),
-                        Text("Recent News"),
+                        SizedBox(height: PAGE_PADDING,),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: PAGE_PADDING),
+                          child: Text(
+                            "Recent News",
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.headline4,
+                              fontWeight: FontWeight.w600,
+                            )
+                          ),
+                        ),
                         // Featured news articles
                         Padding(
                           padding: EdgeInsets.all(PAGE_PADDING),
@@ -96,6 +116,67 @@ class NewsPage extends StatelessWidget {
 }
 
 
+// Video of the day
+class VideoOTDTile extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: StoreConnector<AppState, ViewModel>(
+        converter: (Store<AppState> store) => ViewModel.create(store),
+        builder: (BuildContext context, ViewModel model) {
+          return FutureBuilder(
+            future: model.api.getVideoOfTheDay(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  //mainAxisSize: MainAxisSize.min,
+                  children: <Widget> [
+                    Container(
+                      width: double.infinity,
+                      child: NewsGraphic(
+                        video: snapshot.data.getVideoLink(),
+                        height: 185,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      "Clip of the day",
+                      textAlign: TextAlign.left,
+                      style: textStyleFrom(
+                        Theme.of(context).primaryTextTheme.headline5,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 11,
+                        color: Theme.of(context).primaryColor
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      snapshot.data.getTitle(),
+                      textAlign: TextAlign.left,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: textStyleFrom(
+                        Theme.of(context).primaryTextTheme.headline5,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                );
+              }
+              else{
+                return CircularProgressIndicator();
+              }
+            }
+          );
+        }
+      )
+    );
+  }
+}
+
 class NewsImageTile extends StatelessWidget {
   final Article article;
 
@@ -114,8 +195,8 @@ class NewsImageTile extends StatelessWidget {
           Container(
             width: double.infinity,
             child: NewsGraphic(
-              article.getHeaderImage(),
-              120,
+              image: article.getHeaderImage(),
+              height: 100,
             ),
           ),
           // TODO This should probably link to the catergory as well (ie search for the category)
@@ -205,7 +286,10 @@ class NewsTextTile extends StatelessWidget {
             SizedBox(width: 10,),
             Flexible(
               flex: 1,
-              child: NewsGraphic(article.getHeaderImage(), height)
+              child: NewsGraphic(
+                image: article.getHeaderImage(), 
+                height: height
+              )
             )
           ],
         ),
@@ -214,27 +298,32 @@ class NewsTextTile extends StatelessWidget {
   }
 }
 
-class NewsDividor extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity, 
-      height: 1.5,
-      color: Colors.grey,
-    );
-  }
-}
-
 class NewsGraphic extends StatelessWidget {
-
   final String image;
+  final String video;
   final double height;
   final double borderRadius = 10;
+  
+  YoutubePlayerController controller;
 
-  NewsGraphic(this.image, this.height);
+  NewsGraphic({
+    this.image, 
+    this.video, 
+    this.height
+  }):assert(image != null || video != null);
 
   @override
   Widget build(BuildContext context) {
+    if (video != null) {
+      controller = YoutubePlayerController(
+        initialVideoId: YoutubePlayer.convertUrlToId(video),
+        flags: YoutubePlayerFlags(
+            autoPlay: false,
+            mute: false,
+        ),
+      );
+    }
+
     return 
     Padding(
       padding: EdgeInsets.symmetric(),
@@ -250,15 +339,38 @@ class NewsGraphic extends StatelessWidget {
             )
           ]
         ),
-        height: height,
+        height: height ?? 150,
         child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
-          child: Image.network(
+          child: 
+          image != null ?
+          Image.network(
             image,
             fit: BoxFit.cover,
           )
+          :
+          YoutubePlayer(
+            controller: controller,
+            showVideoProgressIndicator: true,
+          ),
         )
       )
     );
   }
 }
+
+class NewsDividor extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return 
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: PAGE_PADDING),
+        child: Container(
+          width: double.infinity, 
+          height: 1,
+          color: Color.fromRGBO(221, 221, 221, 1),
+        )
+      );
+  }
+}
+
