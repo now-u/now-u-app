@@ -6,6 +6,11 @@ enum ArticleType {
   Highlight,
 }
 
+enum ArticleCategory {
+  Test1,
+  Test2
+}
+
 class Articles {
 
   List<Article> articles;

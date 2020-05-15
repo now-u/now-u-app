@@ -1,7 +1,8 @@
-import 'package:app/assets/StyleFrom.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/assets/routes/customRoute.dart';
+import 'package:app/assets/StyleFrom.dart';
+import 'package:app/assets/components/searchBar.dart';
 
 import 'package:app/pages/news/ArticlePage.dart';
 
@@ -30,76 +31,7 @@ class NewsPage extends StatelessWidget {
               future: model.api.getArticles(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
-                  return 
-                  ListView(
-                    children: <Widget>[
-                        // Video of the day
-                        Padding(
-                          padding: EdgeInsets.all(PAGE_PADDING),
-                          child: Container(
-                            child: VideoOTDTile(
-                              // TODO need to do actual request for video of the day
-                            )
-                          ),
-                        ),
-                        NewsDividor(),
-                        SizedBox(height: PAGE_PADDING,),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: PAGE_PADDING),
-                          child: Text(
-                            "Recent News",
-                            style: textStyleFrom(
-                              Theme.of(context).primaryTextTheme.headline4,
-                              fontWeight: FontWeight.w600,
-                            )
-                          ),
-                        ),
-                        // Featured news articles
-                        Padding(
-                          padding: EdgeInsets.all(PAGE_PADDING),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Expanded(
-                                child: Padding(
-                                    padding: EdgeInsets.only(right: PAGE_PADDING/2),
-                                    child: NewsImageTile(
-                                      article: snapshot.data[0],
-                                    ),
-                                  )
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsets.only(left: PAGE_PADDING/2),
-                                  child: NewsImageTile(
-                                    article: snapshot.data[1],
-                                  ),
-                                )
-                              ),
-                            ],
-                          ),
-                        ),
-                        // List of other news articles 
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: ClampingScrollPhysics(),
-                          itemCount: snapshot.data.length <= 2 ? 0 : snapshot.data.length - 2,
-                          itemBuilder: (BuildContext context, int index) {
-                            return 
-                            Padding(
-                              padding: EdgeInsets.only(
-                                left: PAGE_PADDING, right: PAGE_PADDING,
-                                bottom: PAGE_PADDING/2,
-                              ),
-                              child: NewsTextTile(
-                                article: snapshot.data[index + 2],
-                              )
-                            );
-                          },
-                        )
-                    ],
-                  );
+                  return NewsList(snapshot.data);
                 }
                 else {
                   return Center(
@@ -115,6 +47,151 @@ class NewsPage extends StatelessWidget {
   }
 }
 
+class NewsList extends StatefulWidget {
+  final List<Article> articles;
+  NewsList(this.articles);
+
+  @override
+  _NewsListState createState() => _NewsListState();
+}
+
+class _NewsListState extends State<NewsList> {
+  TextEditingController editingController = TextEditingController();
+
+  bool searching;
+  List<Article> articles;
+  ArticleCategory category;
+  
+  @override
+  initState() {
+    searching = false;
+    category = null;
+    articles = List<Article>();
+    articles.addAll(widget.articles);
+    super.initState();
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+          SizedBox(height: PAGE_PADDING),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: PAGE_PADDING),
+            child: SearchBar(
+              (value){
+                filterArticlesList(value);
+              },
+              editingController,
+            ),
+          ),
+
+          // Video of the day
+          searching ? Container() :
+          Padding(
+            padding: EdgeInsets.all(PAGE_PADDING),
+            child: Container(
+              child: VideoOTDTile(
+                // TODO need to do actual request for video of the day
+              )
+            ),
+          ),
+          searching ?  Container() :
+          NewsDividor(),
+          SizedBox(height: PAGE_PADDING,),
+          searching ? Container() :
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: PAGE_PADDING),
+            child: Text(
+              "Recent News",
+              style: textStyleFrom(
+                Theme.of(context).primaryTextTheme.headline4,
+                fontWeight: FontWeight.w600,
+              )
+            ),
+          ),
+          // Featured news articles
+          articles.length >= 2 && !searching ?
+          Padding(
+            padding: EdgeInsets.all(PAGE_PADDING),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.only(right: PAGE_PADDING/2),
+                      child: NewsImageTile(
+                        article: articles[0],
+                      ),
+                    )
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: PAGE_PADDING/2),
+                    child: NewsImageTile(
+                      article: articles[1],
+                    ),
+                  )
+                ),
+              ],
+            ),
+          )
+          : Container(),
+          // List of other news articles 
+          ListView.builder(
+            shrinkWrap: true,
+            physics: ClampingScrollPhysics(),
+            itemCount: articles.length < 2 ? articles.length : articles.length - 2,
+            itemBuilder: (BuildContext context, int index) {
+              return 
+              Padding(
+                padding: EdgeInsets.only(
+                  left: PAGE_PADDING, right: PAGE_PADDING,
+                  bottom: PAGE_PADDING/2,
+                ),
+                child: NewsTextTile(
+                  article: 
+                    articles.length < 2 ? articles[index] : articles[index + 2],
+                )
+              );
+            },
+          )
+      ],
+    );
+  }
+
+  void filterArticlesList(String query) {
+    if(query.isNotEmpty) {
+      List<Article> tempList = List<Article>();
+      widget.articles.forEach((article) {
+        if (article.getTitle().toLowerCase().contains(query.toLowerCase())) {
+          print ("adding " + article.getTitle() + " to list");
+          tempList.add(article);
+        }
+      });
+      setState(() {
+        print("Set searching to true");
+        searching = true;
+        articles.clear();
+        articles.addAll(tempList);
+      });
+    }
+    else {
+      print("query is empty");
+      setState(() {
+        searching = false;
+        articles.clear(); 
+        print("Adding articles to articles list");
+        print(widget.articles.length);
+        articles.addAll(widget.articles);
+        // SO articles.addAll(widget.articles) does not add all the articles from widget.articles to articles
+        // TODO find out why articles becomes an empty list
+        print(articles.length);
+      }); 
+    }
+  }
+}
 
 // Video of the day
 class VideoOTDTile extends StatelessWidget {

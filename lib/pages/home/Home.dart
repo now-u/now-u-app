@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:app/pages/home/HomeTile.dart';
 import 'package:app/pages/news/NewsPage.dart';
 import 'package:app/pages/Tabs.dart';
 
