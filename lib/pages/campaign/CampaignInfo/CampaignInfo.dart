@@ -1,7 +1,6 @@
-import 'package:app/assets/StyleFrom.dart';
-import 'package:app/assets/components/customAppBar.dart';
-import 'package:app/assets/components/detailScaffold.dart';
 import 'package:flutter/material.dart';
+
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/ViewModel.dart';
@@ -9,13 +8,15 @@ import 'package:app/models/ViewModel.dart';
 import 'package:app/services/api.dart';
 import 'package:app/locator.dart';
 
-import 'package:app/pages/other/ActionInfo.dart';
-
 //import 'package:app/assets/components/videoPlayerFlutterSimple.dart';
 //import 'package:youtube_player/youtube_player.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:app/assets/components/selectionItem.dart';
+import 'package:app/assets/components/organisationTile.dart';
 import 'package:app/assets/routes/customRoute.dart';
+import 'package:app/assets/StyleFrom.dart';
+import 'package:app/assets/components/customAppBar.dart';
+import 'package:app/assets/components/darkButton.dart';
+import 'package:app/assets/components/detailScaffold.dart';
 
 class CampaignInfo extends StatefulWidget {
   final Campaign campaign;
@@ -130,13 +131,11 @@ class CampaignInfoContent extends StatefulWidget {
 class _CampaignInfoContentState extends State<CampaignInfoContent> {
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  final double expandedHeight = 0.4;
 
   Campaign campaign;
   ViewModel model;
   double top;
   double currentExtent;
-  double expandedSize;
 
   bool _isPlayerReady = false;
   YoutubePlayerController _controller;
@@ -146,8 +145,6 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
     model = widget.model;
     campaign = widget.campaign;
     top = 0.0;
-    expandedSize = 1-expandedHeight;
-    currentExtent = expandedSize;
     _controller = 
       YoutubePlayerController(
         initialVideoId: YoutubePlayer.convertUrlToId(campaign.getVideoLink()),
@@ -177,135 +174,222 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
         text: "Campaign",
         context: context,
       ),
-      body: Stack(
-        children: <Widget>[
-          Positioned(
-            top: top,
-            child: Container(
-              height: (MediaQuery.of(context).size.height + 200) * expandedHeight,
-              child: Container(
-                child: Image.network( 
-                  campaign.getHeaderImage(),
-                  fit: BoxFit.cover,
-                ),
-              )
-            ),
-          ),
-          NotificationListener( 
-            onNotification: (v) {
-              if (v is DraggableScrollableNotification) {
-                print(v);
-                print("Current extend");
-                print(v.extent);
-                print("Old");
-                print(currentExtent);
-                setState(() {
-                  double scroll = v.extent - currentExtent;
-                  top -= scroll * MediaQuery.of(context).size.height * expandedSize / 2;
-                  currentExtent = v.extent;
-                  print(top);
-                });
-              }
-              return true;
-            },
-            child:
-            DraggableScrollableSheet(
-              initialChildSize: expandedSize,
-              minChildSize: expandedSize,
-              maxChildSize: 1.0,
-              builder: (context, controller) =>
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(32),
-                      topRight: Radius.circular(32)
-                    )
-                  ),
-                  child:
-                    Padding(
-                      padding: EdgeInsets.all(20),
-                      child: ListView( 
-                        controller: controller,
-                        children: [
-                          Container(
-                            child: Text(
-                              campaign.getTitle(),
-                              style: Theme.of(context).primaryTextTheme.headline2,
-                            ),
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Icon(
-                                Icons.people,
-                                color: Color.fromRGBO(69,69,69,1),
-                              ),
-                              Text(
-                                campaign.getNumberOfCampaigners().toString() + " people have joined",
-                                style: textStyleFrom(
-                                  Theme.of(context).primaryTextTheme.headline4,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color.fromRGBO(69,69,69,1),
-                                )
-                              )
-                            ],
-                          ),
-                          // TODO fix upades to youtube player not showing until scroll (some kind of setstate issue)
-                          Padding(
-                             padding: EdgeInsets.all(10),
-                             child: 
-                              Container(
-                                child:
-                                  YoutubePlayer(
-                                    controller: _controller,
-                                    showVideoProgressIndicator: true,
-                                  ),
-                                //child: Material(
-                                  //child: VideoPlayer(),  
-                                //), 
-                                )
-                          ),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Expanded(
-                                  child: Text(
-                                    campaign.getDescription(), 
-                                    style: Theme.of(context).primaryTextTheme.bodyText1,
-                                  ),
-                                ),
-                              ]
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(25),
-                            child: Text("Actions of the Week", style: Theme.of(context).primaryTextTheme.headline,),
-                          ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: 3,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20),
-                                child: ActionSelectionItem(
-                                  campaign: campaign,
-                                  action: campaign.getActions()[index],
-                                  model: model,
-                                  extraOnTap: (){
-                                    _controller.pause();
-                                  }
-                                ),
-                              );
-                            },      
-                          )
-                        ], 
+      body: Container(
+        child: ListView( 
+          children: [
+
+            // Image header
+            Container(
+              height: 200,
+              child: 
+                Stack(
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(campaign.getHeaderImage()),
+                          fit: BoxFit.cover,
+                        )
+                      ),
+                    ),
+                    Container(
+                      color: colorFrom(
+                        Theme.of(context).primaryColorDark,
+                        opacity: 0.5,
                       )
+                    ),
+                    Align( 
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: DarkButton(
+                          "Join Now",
+                          style: DarkButtonStyles.Small,
+                          inverted: true,
+                          onPressed: () {
+                            if (!model.user.getSelectedCampaigns().contains(campaign.getId())) {
+                              setState(() {
+                                model.user.addSelectedCamaping(campaign.getId());
+                                model.onSelectCampaigns(model.user);
+                              });
+                            }
+                          }
+                        ),
+                      ),
                     )
+                  ],
+                ),
+            ),
+
+            // Title section
+            Container(
+              color: Color.fromRGBO(238,238,238,1),
+              child: Padding(
+                padding: EdgeInsets.all(15),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        campaign.getTitle(),
+                        style: Theme.of(context).primaryTextTheme.headline3,
+                      ),
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.people,
+                          color: Color.fromRGBO(69,69,69,1),
+                          size: 16,
+                        ),
+                        SizedBox(width: 2),
+                        Text(
+                          campaign.getNumberOfCampaigners().toString() + " people have joined",
+                          style: textStyleFrom(
+                            Theme.of(context).primaryTextTheme.headline5,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromRGBO(69,69,69,1),
+                          )
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Youtube player
+            Padding(
+               padding: EdgeInsets.all(10),
+               child: 
+                Container(
+                  child:
+                    YoutubePlayer(
+                      controller: _controller,
+                      showVideoProgressIndicator: true,
+                    ),
+                  //child: Material(
+                    //child: VideoPlayer(),  
+                  //), 
+                  )
+            ),
+
+            // Description
+            Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      campaign.getDescription(), 
+                      style: Theme.of(context).primaryTextTheme.bodyText1,
+                    ),
+                  ),
+                ]
+            ),
+
+            // Actions
+            SectionTitle("Actions of the week"),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: 3,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: ActionSelectionItem(
+                    campaign: campaign,
+                    action: campaign.getActions()[index],
+                    model: model,
+                    extraOnTap: (){
+                      _controller.pause();
+                    }
+                  ),
+                );
+              },      
+            ),
+
+            // Organisation
+            SectionTitle("Organisation"),
+            Container(
+              height: 140,
+              //child: Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: campaign.getOrgnaisations().length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return 
+                    Expanded(
+
+                    child: Container(
+                      width: 100,
+                      //height: 60,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromRGBO(0,0,0,0.16),
+                            offset: Offset(0,3),
+                            blurRadius: 6
+                          )
+                        ]
+                      ),
+                      child: 
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Container(
+                              //height: 80, width: 100,
+                                //width: 20,
+                                height: 60,
+                                child: Image.network(
+                                  campaign.getOrgnaisations()[index].getLogoLink(),
+                                  fit: BoxFit.contain,
+                              )
+                            ),
+                            SizedBox(height: 10,),
+                            Text(
+                              campaign.getOrgnaisations()[index].getName(),
+                              style: Theme.of(context).primaryTextTheme.bodyText1,
+                              maxLines: 2,
+                              textAlign: TextAlign.center
+                            )
+                          ],
+                        )
+                      ),
+                      )
+                    );
+                  },      
+               // )
               )
             ),
+
+            // Buttons
+            //Padding(
+            //  padding: EdgeInsets.all(10),
+            //  child: Row(
+            //    mainAxisAlignment: MainAxisAlignment.end,
+            //    children: <Widget>[
+            //    ],
+            //  ),
+            //),
+          ], 
         )
-        ],
       )
-        );
+    );
+  }
+}
+
+class SectionTitle extends StatelessWidget {
+  final String text;
+  SectionTitle(this.text);
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(25),
+      child: Text(text, style: Theme.of(context).primaryTextTheme.headline,),
+    );
   }
 }

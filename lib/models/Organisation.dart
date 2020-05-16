@@ -8,14 +8,14 @@ class Organisation {
     id = json['id'];
     name = json['name'];
     description = json['description'];
-    logoLink = json['logoLink'];
+    logoLink = json['logo_link'];
   }
 
   Map toJson() => {
     'id': id,
     'name': name,
     'description': description,
-    'logoLink': logoLink,
+    'logo_link': logoLink,
   };
 
   String getName() {

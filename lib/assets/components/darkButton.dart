@@ -16,7 +16,7 @@ Map darkButtonStyleStyles = {
           'height': 32.0,
     'borderRadius': 8.0,
         'fontSize': 14.0,
-        'hPadding': 16.0,
+        'hPadding': 10.0,
         'vPadding': 8.0,
   },
   DarkButtonStyles.Medium: {
@@ -90,7 +90,6 @@ class SecondaryButton extends StatelessWidget {
     return MaterialButton(
       height: darkButtonStyleStyles[style]['height'],
       elevation: 0,
-      color: Colors.white,
       onPressed: onPressed,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(darkButtonStyleStyles[style]['borderRadius']),

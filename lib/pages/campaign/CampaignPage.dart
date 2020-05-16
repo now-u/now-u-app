@@ -124,85 +124,15 @@ class _CampaignPageBodyState extends State<CampaignPageBody> {
 
                             },
                           ),
-                          Container(
-                            height: 100,
+                          SizedBox(
+                            height: 10,
                           )
                         ]
                       ),     
                     ),
-                    //Padding (
-                    //    padding: EdgeInsets.all(14),
-                    //    child: DarkButton(
-                    //      "Select Campaigns",
-                    //      onPressed: () {
-                    //        setState(() {
-                    //           _selectionMode = !_selectionMode;
-                    //         }); 
-                    //      },
-                    //    )
-                    //),
                   ], 
                 ),
               ),
-        //floatingActionButton: CustomFloatingActionButton(text: "Select Campaigns", ),
-        //floatingActionButton: 
-        //  Container(
-        //    height: 80,
-        //    child:
-        //      !selectionMode ?
-        //      Padding (
-        //          padding: EdgeInsets.all(14),
-        //          child: DarkButton(
-        //            "Select Campaigns",
-        //            onPressed: () {
-        //              setState(() {
-        //                 selectionMode = true;
-        //               }); 
-        //            },
-        //          )
-        //      )
-        //      :
-        //      Padding (
-        //          padding: EdgeInsets.all(14),
-        //          child: Row(
-        //            mainAxisAlignment: MainAxisAlignment.center,
-        //            children: <Widget>[
-        //              Padding(
-        //                 padding: EdgeInsets.only(right: 10),
-        //                 child: 
-        //                  DarkButton(
-        //                    "Cancel",
-        //                    onPressed: () {
-        //                      setState(() {
-        //                         selectionMode = false;
-        //                         model = widget.model;
-        //                       }); 
-        //                    },
-        //                  ),
-        //              ),
-        //              Padding(
-        //                 padding: EdgeInsets.only(left: 10),
-        //                 child: 
-        //                  DarkButton(
-        //                    "Select",
-        //                    onPressed: () {
-        //                      setState(() {
-        //                        selectionMode = false;
-        //                        model.onSelectCampaigns(user);
-        //                      });
-        //                      Navigator.push(
-        //                        context, 
-        //                        CustomRoute(builder: (context) => SelectionComplete(model))
-        //                      );
-        //                    },
-        //                  ),
-        //              ),
-        //            
-        //            ],   
-        //          ),
-        //      )
-        //    ),
-        //floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       );
     }
 }

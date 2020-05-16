@@ -149,7 +149,7 @@ class _AppState extends State<App> {
                 headline3: TextStyle(
                   color: black,
                   fontSize: 20,
-                  fontWeight: FontWeight.w500 // Regular
+                  fontWeight: FontWeight.w500 // SemiBold
                 ),
                 headline4: TextStyle(
                   color: black,
