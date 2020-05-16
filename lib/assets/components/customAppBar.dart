@@ -6,10 +6,11 @@ AppBar CustomAppBar(
     {
       @required text,
       @required context,
-      String backButtonText  
+      String backButtonText,
+      bool hasBackButton
     }
     ) {
-
+  hasBackButton = hasBackButton == null ? true : hasBackButton;
   return AppBar(
    backgroundColor: Colors.white,
    automaticallyImplyLeading: false,
@@ -21,7 +22,9 @@ AppBar CustomAppBar(
       children: <Widget>[
         Flexible(
           flex: 1,
-          child: TextButton(
+          child: 
+          !hasBackButton ? Container() :
+          TextButton(
             backButtonText ?? "Back",
             iconLeft: true,
             onClick: (){

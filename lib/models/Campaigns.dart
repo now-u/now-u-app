@@ -61,6 +61,16 @@ class Campaigns {
     );
   }
 
+  Campaigns getCampaignsFromIds(List<int> ids) {
+    List<Campaign> campaigns;
+    for (int i = 0; i < activeCampaigns.length; i++){
+      if (ids.contains(activeCampaigns[i].getId())) {
+        campaigns.add(activeCampaigns[i]);
+      }
+    }
+    return Campaigns(campaigns);
+  }
+
   Future<String> readCampaingsFromAssets() async {
     String data = await rootBundle.loadString('assets/json/campaigns.json');
     return data;

@@ -5,35 +5,60 @@ import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
 import 'package:app/pages/campaign/SelectionComplete.dart';
 
 import 'package:app/models/Campaign.dart';
+import 'package:app/models/Campaigns.dart';
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/User.dart';
+import 'package:app/models/State.dart';
 
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/components/darkButton.dart';
-import 'package:app/assets/components/pageTitle.dart';
+import 'package:app/assets/components/customAppBar.dart';
 
-class CampaignPage extends StatefulWidget {
-  final ViewModel model;
-  final bool _selectionMode;
+import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+
+class CampaignPage extends StatelessWidget {
+  final bool selectionMode;
   final int campaignId;
 
-  CampaignPage(this.model, this._selectionMode, {this.campaignId});
-
+  CampaignPage(this.selectionMode, {this.campaignId});
   @override
-  _CampaignPageState createState() => _CampaignPageState();
+  Widget build(BuildContext context) {
+    return StoreConnector<AppState, ViewModel>(
+        converter: (Store<AppState> store) => ViewModel.create(store),
+        builder: (BuildContext context, ViewModel viewModel) {
+          print("Before splash screen user is");
+          print(viewModel.user.getName());
+          return CampaignPageBody(viewModel ,selectionMode, campaignId: campaignId);
+        },
+    );
+  }
 }
 
-class _CampaignPageState extends State<CampaignPage> {
-  List<Campaign> _campaigns;
-  User _user;
-  bool _selectionMode;
-  ViewModel _model;
+class CampaignPageBody extends StatefulWidget {
+  final bool selectionMode;
+  final int campaignId;
+  final ViewModel model;
+
+  CampaignPageBody(this.model, this.selectionMode, {this.campaignId});
+
+  @override
+  _CampaignPageBodyState createState() => _CampaignPageBodyState();
+}
+
+class _CampaignPageBodyState extends State<CampaignPageBody> {
+  List<Campaign> campaigns;
+  Campaigns selectedCampaigns;
+  User user;
+  ViewModel model;
+  bool onlyJoined;
+
   @override
   void initState() {
-    _campaigns = widget.model.campaigns.getActiveCampaigns().toList();
-    _user = widget.model.user;
-    _selectionMode = widget._selectionMode;
-    _model = widget.model;
+    campaigns = widget.model.campaigns.getActiveCampaigns().toList();
+    user = widget.model.user;
+    model = widget.model;
+    onlyJoined = false;
     if (widget.campaignId != null) {
       Future (() {
           Navigator.push(
@@ -51,38 +76,57 @@ class _CampaignPageState extends State<CampaignPage> {
     // If given specific campaign, redirect to that page
     // Needs to be in future so happens after render of this page or something like that
     //var _campaigns = widget.model.campaigns.map((Campaign c) => c).toList();
-    return Scaffold(
+    return 
+      Scaffold(
+        appBar: CustomAppBar(
+          text: "Active Campaigns",
+          context: context,
+          hasBackButton: false,
+        ), 
         body: SafeArea(
-                child: Column(
+                child: ListView(
                   children: <Widget>[
-                    PageTitle("Campaigns"),
-                    Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
-                        child: Text(
-                            _selectionMode ? "Tap to Select" : "Click to learn more...", 
-                            style: Theme.of(context).primaryTextTheme.subtitle),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Switch(
+                          value: onlyJoined,
+                          onChanged: (value) {
+                            setState(() {
+                              onlyJoined = value;                              
+                            });
+                          },
+                          materialTapTargetSize: MaterialTapTargetSize.padded,
+                        )
+                      ],
                     ),
+                    model.user.getSelectedCampaigns().length == 0 && onlyJoined ?
+                    Text("You havent selecetd any campaigns yet")
+                    :
+                    Container(),
                     Expanded(
                       child: ListView(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
                         children: <Widget> [
                           ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: _campaigns.length,
+                            itemCount: campaigns.length,
                             itemBuilder: (BuildContext context, int index) {
                               return
-                              _model.user.getSelectedCampaignsLength() <= 0  || _selectionMode ?
-                              CampaignTile(_campaigns[index], _model, selectionMode: _selectionMode)
-                              : 
-                              _model.user.getSelectedCampaigns().contains(_campaigns[index].getId()) ?
-                              CampaignTile(_campaigns[index], _model, selectionMode: _selectionMode)
+                              !onlyJoined ? // Then return everything
+                              CampaignTile(campaigns[index], model)
+                              :  // Otherwise only return selected campaigns
+                              model.user.getSelectedCampaigns().contains(campaigns[index].getId()) ? 
+                              CampaignTile(campaigns[index], model)
                               : null;
 
                             },
                           ),
                           Container(
-                                height: 100,
-                              )
+                            height: 100,
+                          )
                         ]
                       ),     
                     ),
@@ -101,64 +145,64 @@ class _CampaignPageState extends State<CampaignPage> {
                 ),
               ),
         //floatingActionButton: CustomFloatingActionButton(text: "Select Campaigns", ),
-        floatingActionButton: 
-          Container(
-            height: 80,
-            child:
-              !_selectionMode ?
-              Padding (
-                  padding: EdgeInsets.all(14),
-                  child: DarkButton(
-                    "Select Campaigns",
-                    onPressed: () {
-                      setState(() {
-                         _selectionMode = true;
-                       }); 
-                    },
-                  )
-              )
-              :
-              Padding (
-                  padding: EdgeInsets.all(14),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Padding(
-                         padding: EdgeInsets.only(right: 10),
-                         child: 
-                          DarkButton(
-                            "Cancel",
-                            onPressed: () {
-                              setState(() {
-                                 _selectionMode = false;
-                                 _model = widget.model;
-                               }); 
-                            },
-                          ),
-                      ),
-                      Padding(
-                         padding: EdgeInsets.only(left: 10),
-                         child: 
-                          DarkButton(
-                            "Select",
-                            onPressed: () {
-                              setState(() {
-                                _selectionMode = false;
-                                _model.onSelectCampaigns(_user);
-                              });
-                              Navigator.push(
-                                context, 
-                                CustomRoute(builder: (context) => SelectionComplete(_model))
-                              );
-                            },
-                          ),
-                      ),
-                    
-                    ],   
-                  ),
-              )
-            ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        //floatingActionButton: 
+        //  Container(
+        //    height: 80,
+        //    child:
+        //      !selectionMode ?
+        //      Padding (
+        //          padding: EdgeInsets.all(14),
+        //          child: DarkButton(
+        //            "Select Campaigns",
+        //            onPressed: () {
+        //              setState(() {
+        //                 selectionMode = true;
+        //               }); 
+        //            },
+        //          )
+        //      )
+        //      :
+        //      Padding (
+        //          padding: EdgeInsets.all(14),
+        //          child: Row(
+        //            mainAxisAlignment: MainAxisAlignment.center,
+        //            children: <Widget>[
+        //              Padding(
+        //                 padding: EdgeInsets.only(right: 10),
+        //                 child: 
+        //                  DarkButton(
+        //                    "Cancel",
+        //                    onPressed: () {
+        //                      setState(() {
+        //                         selectionMode = false;
+        //                         model = widget.model;
+        //                       }); 
+        //                    },
+        //                  ),
+        //              ),
+        //              Padding(
+        //                 padding: EdgeInsets.only(left: 10),
+        //                 child: 
+        //                  DarkButton(
+        //                    "Select",
+        //                    onPressed: () {
+        //                      setState(() {
+        //                        selectionMode = false;
+        //                        model.onSelectCampaigns(user);
+        //                      });
+        //                      Navigator.push(
+        //                        context, 
+        //                        CustomRoute(builder: (context) => SelectionComplete(model))
+        //                      );
+        //                    },
+        //                  ),
+        //              ),
+        //            
+        //            ],   
+        //          ),
+        //      )
+        //    ),
+        //floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       );
     }
 }

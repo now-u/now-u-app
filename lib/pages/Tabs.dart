@@ -86,7 +86,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
   // TODO add an enum so pages numbers can change
   List<Map> _pages = <Map>[
     {
-      'page': CampaignPage(widget.model, false, campaignId: _subIndex), 
+      'page': CampaignPage(false, campaignId: _subIndex), 
       'icon': Icon(Icons.check),
       'title': Text("Campaigns"),
     },

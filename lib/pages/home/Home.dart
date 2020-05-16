@@ -58,6 +58,7 @@ class Home extends StatelessWidget {
               child: ListView(
                   children: <Widget>[
                     ActionProgressTile(model.user.getCompletedActions().length, model.campaigns.getActions().length),
+                    //ActionProgressTile(model.user.getCompletedActions().length, model.campaigns.getCampaignsFromIds(model.user.getSelectedCampaigns()).getActions().length),
 
                     HomeDividor(),
                     sectionTitle("Actions", context),
