@@ -294,7 +294,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
               itemCount: 3,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 0),
                   child: ActionSelectionItem(
                     campaign: campaign,
                     action: campaign.getActions()[index],
@@ -317,64 +317,75 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                   scrollDirection: Axis.horizontal,
                   itemCount: campaign.getOrgnaisations().length,
                   itemBuilder: (BuildContext context, int index) {
-                    return 
-                    Expanded(
-
-                    child: Container(
-                      width: 100,
-                      //height: 60,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color.fromRGBO(0,0,0,0.16),
-                            offset: Offset(0,3),
-                            blurRadius: 6
-                          )
-                        ]
-                      ),
-                      child: 
-                      Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Container(
-                              //height: 80, width: 100,
-                                //width: 20,
-                                height: 60,
-                                child: Image.network(
-                                  campaign.getOrgnaisations()[index].getLogoLink(),
-                                  fit: BoxFit.contain,
+                    return Padding(
+                      padding: EdgeInsets.all(8),
+                        child: Container(
+                          width: 100,
+                          //height: 60,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromRGBO(0,0,0,0.16),
+                                offset: Offset(0,3),
+                                blurRadius: 6
                               )
-                            ),
-                            SizedBox(height: 10,),
-                            Text(
-                              campaign.getOrgnaisations()[index].getName(),
-                              style: Theme.of(context).primaryTextTheme.bodyText1,
-                              maxLines: 2,
-                              textAlign: TextAlign.center
+                            ]
+                          ),
+                          child: 
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Container(
+                                  //height: 80, width: 100,
+                                    //width: 20,
+                                    height: 55,
+                                    child: Image.network(
+                                      campaign.getOrgnaisations()[index].getLogoLink(),
+                                      fit: BoxFit.contain,
+                                  )
+                                ),
+                                SizedBox(height: 10,),
+                                Text(
+                                  campaign.getOrgnaisations()[index].getName(),
+                                  style: Theme.of(context).primaryTextTheme.bodyText1,
+                                  maxLines: 2,
+                                  textAlign: TextAlign.center
+                                )
+                              ],
                             )
-                          ],
+                          ),
                         )
-                      ),
-                      )
-                    );
+                      );
                   },      
                // )
               )
             ),
 
             // Buttons
-            //Padding(
-            //  padding: EdgeInsets.all(10),
-            //  child: Row(
-            //    mainAxisAlignment: MainAxisAlignment.end,
-            //    children: <Widget>[
-            //    ],
-            //  ),
-            //),
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  DarkButton(
+                    "Learn more",
+                    onPressed: () {},
+                    inverted: true,
+                    fontSize: 14,
+                  ),
+                  SizedBox(width: 10,),
+                  DarkButton(
+                    "Count me in!",
+                    onPressed: () {},
+                    fontSize: 14,
+                  ),
+                ],
+              ),
+            ),
           ], 
         )
       )

@@ -44,6 +44,7 @@ class DarkButton extends StatelessWidget {
   bool inverted;
   bool rightArrow;
   DarkButtonStyles style;
+  double fontSize;
 
   DarkButton( 
     String text, 
@@ -52,20 +53,22 @@ class DarkButton extends StatelessWidget {
     @required VoidCallback onPressed,
     bool inverted,
     bool rightArrow,
+    double fontSize
    } ) {
     this.onPressed = onPressed;
     this.text = text;
     this.inverted = inverted ?? false;
     this.rightArrow = rightArrow ?? false;
     this.style = style ?? DarkButtonStyles.Large;
+    this.fontSize = fontSize;
   }
 
   @override
   Widget build(BuildContext context) {
     return 
         !inverted ? 
-          PrimaryButton(text, onPressed: onPressed, rightArrow: rightArrow, style: style) 
-        : SecondaryButton(text, onPressed: onPressed, rightArrow: rightArrow, style: style);
+          PrimaryButton(text, onPressed: onPressed, rightArrow: rightArrow, style: style, fontSize: fontSize) 
+        : SecondaryButton(text, onPressed: onPressed, rightArrow: rightArrow, style: style, fontSize: fontSize);
   }
 }
 
@@ -75,6 +78,7 @@ class SecondaryButton extends StatelessWidget {
   String text;
   bool rightArrow;
   DarkButtonStyles style;
+  double fontSize;
 
   SecondaryButton( 
    this.text, 
@@ -82,6 +86,7 @@ class SecondaryButton extends StatelessWidget {
    @required this.onPressed,
    @required this.rightArrow,
    @required this.style,
+   @required this.fontSize,
    } 
   );
   
@@ -108,7 +113,7 @@ class SecondaryButton extends StatelessWidget {
               style: textStyleFrom(
                 Theme.of(context).primaryTextTheme.button,
                 color: Theme.of(context).buttonColor,
-                fontSize: darkButtonStyleStyles[style]['fontSize'],
+                fontSize: fontSize ?? darkButtonStyleStyles[style]['fontSize'],
               ),
             ),
           ),
@@ -123,6 +128,7 @@ class PrimaryButton extends StatelessWidget {
   String text;
   bool rightArrow;
   DarkButtonStyles style;
+  double fontSize;
 
   PrimaryButton( 
    this.text, 
@@ -130,6 +136,7 @@ class PrimaryButton extends StatelessWidget {
    @required this.onPressed,
    @required this.rightArrow,
    @required this.style,
+   @required this.fontSize,
    } 
   );
   
@@ -160,7 +167,7 @@ class PrimaryButton extends StatelessWidget {
               style: textStyleFrom(
                 Theme.of(context).primaryTextTheme.button,
                 color: Colors.white,
-                fontSize: darkButtonStyleStyles[style]['fontSize'],
+                fontSize: fontSize ?? darkButtonStyleStyles[style]['fontSize'],
               ),
             ),
           ),
