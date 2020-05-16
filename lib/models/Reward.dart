@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:app/models/Action.dart';
 import 'package:tuple/tuple.dart';
+import 'dart:math';
 
 // Must be kept in this order
 enum RewardType {
@@ -11,7 +12,14 @@ enum RewardType {
   //CompleteCampaignsNumber
 }
 
+List motivationalPostfix = [
+  "Great work",
+  "Keep it up",
+  "You're amazing",
+];
+
 class Reward {
+  final random = new Random();
   //final int id;
   String title;
   //String _description;
@@ -57,7 +65,7 @@ class Reward {
       String pre = descPrePostFix.item2;
       String post = descPrePostFix.item3;
       String endingPlural = successNumber > 1 ? "s" : "";
-      return ("You " + pre + " ${successNumber} " + post  + "${endingPlural}");
+      return ("You " + pre + " ${successNumber} " + post  + "${endingPlural}. " + motivationalPostfix[random.nextInt(motivationalPostfix.length)] + ".");
     }
     return "";
   }

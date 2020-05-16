@@ -1,18 +1,32 @@
+import 'package:app/assets/StyleFrom.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 enum CampaignActionType {
-  Petition,
-  Email,
-  Donation,
-  Learn,
-  Socail,
   Volunteer,
-  Shop,
+  Donation,
+  Fundraise,
+  Awareness,
+  Petition,
+  Behaviour,
+  Contact,
+  Protest,
+  Connect,
+  Learn,
+  Quiz,
   Other 
 }
+
+Color red = Color.fromRGBO(211, 0, 1, 1);
+Color redO = colorFrom(red, opacity: 0.15);
+Color orange = Color.fromRGBO(255, 136, 0, 1);
+Color orangeO = colorFrom(orange, opacity: 0.15);
+Color yellow = Color.fromRGBO(243, 183,0, 1);
+Color yellowO = colorFrom(yellow, opacity: 0.15);
+Color blue = Color.fromRGBO(1, 26, 67, 1);
+Color blueO = colorFrom(blue, opacity: 0.15);
 
 Map defaultCampaignActionTypeData = 
   {
@@ -26,23 +40,14 @@ Map defaultCampaignActionTypeData =
   };
 
 Map campaignActionTypeData = {
-  CampaignActionType.Petition: {
-    'name': "petition", 
-    'verb': "Sign", 
-    'pastVerb': "Signed", 
-    'displayName': "petiton", 
-    'icon': FontAwesomeIcons.signature, 
-    'iconColor': Colors.red,
-    'iconBackgroundColor': Colors.redAccent
-  },
-  CampaignActionType.Email: {
-    'name': "email", 
-    'verb': "Send", 
-    'pastVerb': "Sent", 
-    'displayName': "email", 
-    'icon': FontAwesomeIcons.envelope, 
-    'iconColor': Color.fromRGBO(255, 136,0, 1),
-    'iconBackgroundColor': Color.fromRGBO(255, 136, 0, 0.15)
+  CampaignActionType.Volunteer: {
+    'name': "volunteer", 
+    'verb': "Volunteer", 
+    'pastVerb': "Volunteered", 
+    'displayName': "volunteer", 
+    'icon': FontAwesomeIcons.handsHelping, 
+    'iconColor': red,
+    'iconBackgroundColor': redO,
   },
   CampaignActionType.Donation: {
     'name': "donation", 
@@ -50,45 +55,89 @@ Map campaignActionTypeData = {
     'pastVerb': "Made", 
     'displayName': "donation", 
     'icon': FontAwesomeIcons.handHoldingHeart, 
-    'iconColor': Color.fromRGBO(211, 0, 1, 1),
-    'iconBackgroundColor': Color.fromRGBO(211, 0, 1, 0.15)
+    'iconColor': yellow,
+    'iconBackgroundColor': yellowO,
+  },
+  CampaignActionType.Fundraise: {
+    'name': "fundraise", 
+    'verb': "Take part in", 
+    'pastVerb': "Took part in", 
+    'displayName': "fundraiser", 
+    'icon': FontAwesomeIcons.moneyBillWaveAlt, 
+    'iconColor': yellow,
+    'iconBackgroundColor': yellowO,
+  },
+  CampaignActionType.Awareness: {
+    'name': "awareness", 
+    'verb': "Raise awareness", 
+    'pastVerb': "Raised awareness", 
+    'displayName': "time", 
+    'icon': FontAwesomeIcons.share, 
+    'iconColor': orange,
+    'iconBackgroundColor': orangeO,
+  },
+  CampaignActionType.Petition: {
+    'name': "petition", 
+    'verb': "Sign", 
+    'pastVerb': "Signed", 
+    'displayName': "petiton", 
+    'icon': FontAwesomeIcons.signature, 
+    'iconColor': orange,
+    'iconBackgroundColor': orangeO,
+  },
+  CampaignActionType.Behaviour: {
+    'name': "behaviour", 
+    'verb': "Complete", 
+    'pastVerb': "Completed", 
+    'displayName': "behaviour change action", 
+    'icon': FontAwesomeIcons.streetView, 
+    'iconColor': red,
+    'iconBackgroundColor': redO,
+  },
+  CampaignActionType.Contact: {
+    'name': "contact", 
+    'verb': "Complete", 
+    'pastVerb': "Completed", 
+    'displayName': "contact change action", 
+    'icon': FontAwesomeIcons.phone, 
+    'iconColor': orange,
+    'iconBackgroundColor': orangeO,
+  },
+  CampaignActionType.Protest: {
+    'name': "protest", 
+    'verb': "Take part in", 
+    'pastVerb': "Took part in", 
+    'displayName': "protest", 
+    'icon': FontAwesomeIcons.sign, 
+    'iconColor': red,
+    'iconBackgroundColor': redO,
+  },
+  CampaignActionType.Connect: {
+    'name': "connect", 
+    'verb': "Connect", 
+    'pastVerb': "Connted", 
+    'displayName': "times", 
+    'icon': FontAwesomeIcons.link, 
+    'iconColor': red,
+    'iconBackgroundColor': redO,
   },
   CampaignActionType.Learn: {
     'name': "learn", 
     'verb': "Complete", 
     'pastVerb': "Completed", 
     'displayName': "learning action", 
-    'icon': FontAwesomeIcons.book, 
-    'iconColor': Colors.red,
-    'iconBackgroundColor': Colors.redAccent
+    'icon': FontAwesomeIcons.userGraduate, 
+    'iconColor': blue,
+    'iconBackgroundColor': blueO,
   },
-  CampaignActionType.Socail: {
-    'type': CampaignActionType.Socail,       
-    'name': "social", 
-    'verb': "Share", 
-    'pastVerb': "Shared", 
-    'displayName': "time", 
-    'icon': FontAwesomeIcons.share, 
-    'iconColor': Colors.red,
-    'iconBackgroundColor': Colors.redAccent
-  },
-  CampaignActionType.Volunteer: {
-    'name': "volunteer", 
-    'verb': "Volunteer", 
-    'pastVerb': "Volunteered", 
-    'displayName': "time", 
-    'icon': FontAwesomeIcons.personBooth, 
-    'iconColor': Colors.red,
-    'iconBackgroundColor': Colors.redAccent
-  },
-  CampaignActionType.Shop: {
-    'name': "shop", 
-    'verb': "Make", 
-    'pastVerb': "Made", 
-    'displayName': "purchase", 
-    'icon': FontAwesomeIcons.coins, 
-    'iconColor': Color.fromRGBO(243, 183,0, 1),
-    'iconBackgroundColor': Color.fromRGBO(243, 183, 0, 0.15)
+  CampaignActionType.Quiz: {
+    'name': "quiz", 
+    'verb': "Complete", 
+    'pastVerb': "Completed", 
+    'displayName': "quiz", 
+    'icon': FontAwesomeIcons.question, 
+    'iconColor': blue,
+    'iconBackgroundColor': blueO,
   },
   CampaignActionType.Other: defaultCampaignActionTypeData
 };
