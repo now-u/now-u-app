@@ -34,7 +34,7 @@ class CustomFloatingActionButton extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(20, TB_PADDING, 0, TB_PADDING),
                   child: _icon,
                   ),
-              backgroundColor: Theme.of(context).primaryColorDark,
+              backgroundColor: Theme.of(context).primaryColorDark, onPressed: null,
             )
           ,
         );
