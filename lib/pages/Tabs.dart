@@ -7,6 +7,7 @@ import 'package:app/pages/home/Home.dart';
 import 'package:app/pages/profile/Profile.dart';
 import 'package:app/pages/campaign/CampaignPage.dart';
 import 'package:app/pages/news/NewsPage.dart';
+import 'package:app/pages/action/ActionPage.dart';
 
 import 'package:app/assets/dynamicLinks.dart';
 
@@ -91,7 +92,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
       'title': Text("Campaigns"),
     },
     {
-      'page': NewsPage(), 
+      'page': ActionPage(), 
       'icon': Icon(Icons.check),
       'title': Text("Actions"),
     },
