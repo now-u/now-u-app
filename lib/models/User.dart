@@ -39,17 +39,24 @@ class User {
     //this.completedRewards = completedRewards ?? [];
     
     this.completedActionsType = 
-        completedActionsType ?? this.initCompletedAction();
+        completedActionsType ?? initCompletedAction();
+    print("User object created with the completedActionsType");
+    print(this.completedActionsType);
   }
 
   User.empty(){
-    id= 0;
-    fullName= "Andrew";
-    email = "Andy123";
-    age= 21;
-    location= "Bristol";
-    monthlyDonationLimit= 20.0;
+    id= -1;
+    fullName= "unknown";
+    email = "unknown";
+    age= -1;
+    location= "uknown";
+    monthlyDonationLimit= -1;
     homeOwner= false;
+    selectedCampaigns = [];
+    completedCampaigns = [];
+    completedRewards = [];
+    completedActions = [];
+    completedActionsType = initCompletedAction();
   }
 
   User copyWith({
@@ -238,7 +245,6 @@ Map toJson() => {
     double total = 0;
     for (int i = 0; i < campaigns.activeLength(); i++) {
       total += getCampaignProgress(campaigns.getActiveCampaigns()[i]);
-      print(total);
     }
     return total / campaigns.activeLength();
   }
@@ -309,6 +315,8 @@ Map toJson() => {
         )
       );
     }
+    print(completedAction.getType());
+    print(this.completedActionsType);
     if (isMilestone(completedActionsType[completedAction.getType()]+1)) {
       newRewards.add(
         Reward(
@@ -318,7 +326,6 @@ Map toJson() => {
         ) 
       );
     }
-
     return newRewards;
   }
 
@@ -339,7 +346,7 @@ Map toJson() => {
       CampaignActionType t = types[i];
       cas[t] = 0;
     }
-    print("Init Complete");
+    print(cas);
     return cas;
   }
 

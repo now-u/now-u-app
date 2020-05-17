@@ -3,32 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/User.dart';
 import 'package:app/models/ViewModel.dart';
+import 'package:app/models/State.dart';
 
 import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/StyleFrom.dart';
 
+import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+
 class CampaignTile extends StatefulWidget {
   
-  final ViewModel model;
   final Campaign campaign;
 
-  CampaignTile(this.campaign, this.model);
+  CampaignTile(this.campaign);
   
   @override
   _CampaignTileState createState() => _CampaignTileState();
 }
 
 class _CampaignTileState extends State<CampaignTile> {
-  User _user;
-  bool selected;
  
   @override
   void initState () {
     print("Initialising state");
-    _user = widget.model.user;
-    selected = widget.model.campaigns.getActiveCampaigns().contains(widget.campaign.getId());
     super.initState();
   }
   
@@ -39,19 +38,10 @@ class _CampaignTileState extends State<CampaignTile> {
     GestureTapCallback _onTapMoreInfo =  () {
       Navigator.push(
         context, 
-        CustomRoute(builder: (context) => CampaignInfo(campaign: widget.campaign, model: widget.model))
+        CustomRoute(builder: (context) => CampaignInfo(campaign: widget.campaign))
       );
     };
 
-    GestureTapCallback _onTapSelect =  () {
-      setState(() {
-        if (widget.campaign.isSelected(_user.getSelectedCampaigns())) {
-          _user.removeSelectedCamaping(widget.campaign.getId());
-        } else {
-          _user.addSelectedCamaping(widget.campaign.getId());
-        }
-      });
-    };
     var borderRadius = 20.0;
     var hPadding = 15.0;
     return 
@@ -134,42 +124,51 @@ class _CampaignTileState extends State<CampaignTile> {
                       ],
                     ),
                   ),
-                  Container(
-                    height: 45,
-                    width: double.infinity,
-                    color: selected ? Theme.of(context).primaryColor : Color.fromRGBO(187,187,187,1),
-                    child: Center(
-                      child: 
-                      !selected ? 
-                      Text(
-                        "Not joined",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white
-                        ),
-                      ) 
-                      :
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Icon(
-                            Icons.check_circle,
-                            size: 15,
-                            color: Colors.white,
-                          ),
-                          SizedBox(width: 5),
-                          Text(
-                            "Joined",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white
-                            ),
-                          )
-                        ],
-                      )
-                    )
+                  StoreConnector<AppState, ViewModel>(
+                      converter: (Store<AppState> store) => ViewModel.create(store),
+                      builder: (BuildContext context, ViewModel viewModel) {
+                        print("Before splash screen user is");
+                        print(viewModel.user.getSelectedCampaigns());
+                        bool selected = viewModel.user.getSelectedCampaigns().contains(widget.campaign.getId());
+                        return 
+                          Container(
+                            height: 45,
+                            width: double.infinity,
+                            color: selected ? Theme.of(context).primaryColor : Color.fromRGBO(187,187,187,1),
+                            child: Center(
+                              child: 
+                              !selected ?
+                              Text(
+                                "Not joined",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white
+                                ),
+                              ) 
+                              :
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.check_circle,
+                                    size: 15,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    "Joined",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white
+                                    ),
+                                  )
+                                ],
+                              )
+                            )
+                          );
+                      },
                   )
                 ],
               ),

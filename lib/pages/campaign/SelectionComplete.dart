@@ -66,7 +66,6 @@ class SelectionComplete extends StatelessWidget {
                               padding: EdgeInsets.all(20), 
                               child: CampaignTile(
                                 _selectedCamapings[index -2],
-                                model,
                               ),
                            );
                         }

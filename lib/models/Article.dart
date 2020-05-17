@@ -50,7 +50,6 @@ class Article {
   });
 
   Article.fromJson(Map json) {
-    print(json);
     id              = json['id'];
     title           = json['title'];
     body            = json['body'];

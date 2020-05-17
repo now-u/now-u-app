@@ -63,7 +63,7 @@ class _CampaignPageBodyState extends State<CampaignPageBody> {
       Future (() {
           Navigator.push(
             context, 
-            CustomRoute(builder: (context) => CampaignInfo(campaignId: widget.campaignId, model: widget.model))
+            CustomRoute(builder: (context) => CampaignInfo(campaignId: widget.campaignId))
           );
       });
     } else {
@@ -116,10 +116,10 @@ class _CampaignPageBodyState extends State<CampaignPageBody> {
                             itemBuilder: (BuildContext context, int index) {
                               return
                               !onlyJoined ? // Then return everything
-                              CampaignTile(campaigns[index], model)
+                              CampaignTile(campaigns[index])
                               :  // Otherwise only return selected campaigns
                               model.user.getSelectedCampaigns().contains(campaigns[index].getId()) ? 
-                              CampaignTile(campaigns[index], model)
+                              CampaignTile(campaigns[index])
                               : null;
 
                             },

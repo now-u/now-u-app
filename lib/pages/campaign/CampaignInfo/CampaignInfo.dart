@@ -4,6 +4,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/ViewModel.dart';
+import 'package:app/models/State.dart';
 
 import 'package:app/services/api.dart';
 import 'package:app/locator.dart';
@@ -18,22 +19,45 @@ import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/detailScaffold.dart';
 
-class CampaignInfo extends StatefulWidget {
+import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+
+class CampaignInfo extends StatelessWidget {
+  final Campaign campaign;
+  final int campaignId;
+  
+  CampaignInfo({
+    this.campaign, 
+    this.campaignId
+  }):assert(campaign != null || campaignId != null);
+
+  @override
+  Widget build(BuildContext context) {
+    return StoreConnector<AppState, ViewModel>(
+        converter: (Store<AppState> store) => ViewModel.create(store),
+        builder: (BuildContext context, ViewModel viewModel) {
+          return CampaignModelInfo(campaign: campaign, campaignId: campaignId, model: viewModel);
+        }
+    );
+  }
+}
+
+class CampaignModelInfo extends StatefulWidget {
   final Campaign campaign;
   final int campaignId;
   final ViewModel model;
   
-  CampaignInfo({
+  CampaignModelInfo({
     @required this.model, 
     this.campaign, 
     this.campaignId
   }):assert(campaign != null || campaignId != null);
 
   @override
-  _CampaignInfoState createState() => _CampaignInfoState();
+  _CampaignInfoModelState createState() => _CampaignInfoModelState();
 }
 
-class _CampaignInfoState extends State<CampaignInfo> with WidgetsBindingObserver {
+class _CampaignInfoModelState extends State<CampaignModelInfo> with WidgetsBindingObserver {
   Api api = locator<Api>();
   Future<Campaign> futureCampaign;
   Campaign campaign;
@@ -207,7 +231,10 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                           style: DarkButtonStyles.Small,
                           inverted: true,
                           onPressed: () {
+                            print("Button pressed");
+                            print(model.user.getSelectedCampaigns());
                             if (!model.user.getSelectedCampaigns().contains(campaign.getId())) {
+                              print("Campaign is not already selected");
                               setState(() {
                                 model.user.addSelectedCamaping(campaign.getId());
                                 model.onSelectCampaigns(model.user);

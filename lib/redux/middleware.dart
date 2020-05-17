@@ -34,8 +34,13 @@ Future<User> loadUserFromPrefs(User u) async {
     //print("Decoding json from state");
     Map map = json.decode(string);
     //print("Decoded json");
-    return User.fromJson(map);
+    User u = User.fromJson(map);
+    print("Loaded user from shared pref is");
+    print(u.getName());
+    print(u.completedActionsType);
+    return u;
   }
+  print("User.empty is being returned");
   return User.empty();
 }
 
@@ -43,9 +48,7 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
   next(action);
 
   if (action is InitaliseState) {
-    print("Doing the first thing");
      store.dispatch(GetCampaignsAction).then(() {
-        print("Doing the second thing");
         store.dispatch(GetUserDataAction).then(
           store.dispatch(InitalisedState())
         );
@@ -84,7 +87,6 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
   if (action is GetCampaignsAction) {
     await store.state.api.getCampaigns().then(
       (Campaigns cs) {
-        print("Campaigns loaded in middleware");
         print(cs.getActiveCampaigns());
         store.dispatch(LoadedCampaignsAction(cs));
       }, onError: (e, st) {
