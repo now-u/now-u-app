@@ -52,6 +52,7 @@ dev_dependencies:
     sdk: flutter
   flutter_launcher_icons: "^0.7.0"
   flutter_redux_dev_tools: ^0.4.0
+  pedantic: ^1.8.0
 
 flutter_icons:
   ios: true
