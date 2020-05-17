@@ -23,10 +23,7 @@ class PageTitle extends StatelessWidget {
           padding: EdgeInsets.only(top: TOP_PADDING,),
           child: GestureDetector(
             onTap: 
-            onClickBackButton != null ?
-            onClickBackButton
-            :
-            () {
+            onClickBackButton ?? () {
               Navigator.pop(context);
             },
             child:Icon(Icons.chevron_left, size: hasBackButton ? ICON_SIZE : 0,), 

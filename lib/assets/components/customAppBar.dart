@@ -10,7 +10,7 @@ AppBar CustomAppBar(
       bool hasBackButton
     }
     ) {
-  hasBackButton = hasBackButton == null ? true : hasBackButton;
+  hasBackButton = hasBackButton ?? true;
   return AppBar(
    backgroundColor: Colors.white,
    automaticallyImplyLeading: false,
