@@ -12,12 +12,9 @@ import 'package:app/locator.dart';
 //import 'package:app/assets/components/videoPlayerFlutterSimple.dart';
 //import 'package:youtube_player/youtube_player.dart';
 import 'package:app/assets/components/selectionItem.dart';
-import 'package:app/assets/components/organisationTile.dart';
-import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/darkButton.dart';
-import 'package:app/assets/components/detailScaffold.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';

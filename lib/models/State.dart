@@ -1,7 +1,6 @@
 import 'package:app/models/Campaigns.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:app/models/Campaign.dart';
 import 'package:app/models/User.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Reward.dart';

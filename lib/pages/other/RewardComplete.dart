@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 
-import 'package:app/models/Campaign.dart';
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/Reward.dart';
 
-import 'package:app/pages/campaign/CampaignTile.dart';
 import 'package:app/pages/Tabs.dart';
 
 import 'package:app/assets/components/pageTitle.dart';

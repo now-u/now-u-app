@@ -2,13 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/assets/components/pageTitle.dart';
-import 'package:app/assets/components/darkButton.dart';
-
-import 'package:app/models/ViewModel.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'dart:math' as math;
 
 const double ICON_SIZE = 50;
 

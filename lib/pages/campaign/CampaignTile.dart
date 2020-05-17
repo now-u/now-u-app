@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:app/models/Campaign.dart';
-import 'package:app/models/User.dart';
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/State.dart';
 

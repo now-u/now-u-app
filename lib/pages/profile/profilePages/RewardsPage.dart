@@ -6,7 +6,6 @@ import 'package:app/assets/components/darkButton.dart';
 
 import 'package:app/models/Reward.dart';
 import 'package:app/models/ViewModel.dart';
-import 'package:app/models/Action.dart';
 
 const double ICON_PADDING = 40;
 const double ITEM_HORIZONTAL = 30;

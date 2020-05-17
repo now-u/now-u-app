@@ -5,8 +5,6 @@ import 'package:app/models/Quiz.dart';
 
 import 'package:app/pages/other/quiz/quizCompletePage.dart';
 
-import 'package:app/assets/routes/customRoute.dart';
-
 class QuizPage extends StatefulWidget {
 
   final Quiz quiz;  

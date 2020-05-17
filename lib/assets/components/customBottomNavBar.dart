@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 //import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:app/assets/routes/customRoute.dart';
 //import 'package:secta/event/event.dart';
-import 'package:app/pages/home/Home.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   @override

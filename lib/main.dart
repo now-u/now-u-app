@@ -5,12 +5,7 @@ import 'package:app/pages/Tabs.dart';
 import 'package:app/pages/other/SplashScreen.dart';
 import 'package:app/pages/intro/IntroPage.dart';
 import 'package:app/pages/login/login.dart';
-
-//import 'package:app/assets/dynamicLinks.dart';
-
 import 'package:app/locator.dart';
-
-import 'package:app/models/User.dart';
 
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/State.dart';
@@ -20,7 +15,6 @@ import 'package:app/redux/actions.dart';
 import 'package:app/redux/middleware.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_redux_dev_tools/flutter_redux_dev_tools.dart';
 import 'package:redux_dev_tools/redux_dev_tools.dart';
 
 void main() {

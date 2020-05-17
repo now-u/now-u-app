@@ -1,6 +1,5 @@
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Action.dart';
-import 'package:app/models/User.dart';
 
 import 'package:app/services/api.dart';
 import 'package:app/locator.dart';

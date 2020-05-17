@@ -6,9 +6,6 @@ import 'package:app/assets/components/darkButton.dart';
 import 'package:app/models/User.dart';
 import 'package:app/models/ViewModel.dart';
 
-import 'package:dropdown_formfield/dropdown_formfield.dart';
-
-import 'package:app/models/ViewModel.dart';
 import 'package:app/models/State.dart';
 
 import 'package:flutter_redux/flutter_redux.dart';

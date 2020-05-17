@@ -10,13 +10,11 @@ import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
 import 'package:app/pages/other/RewardComplete.dart';
 
 import 'package:app/assets/StyleFrom.dart';
-import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/components/detailScaffold.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/routes/customRoute.dart';
-import 'package:app/assets/components/textButton.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:app/pages/campaign/CampaignTile.dart';
 import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
-import 'package:app/pages/campaign/SelectionComplete.dart';
 
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
@@ -11,7 +10,6 @@ import 'package:app/models/User.dart';
 import 'package:app/models/State.dart';
 
 import 'package:app/assets/routes/customRoute.dart';
-import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/customAppBar.dart';
 
 import 'package:redux/redux.dart';

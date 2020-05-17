@@ -1,5 +1,4 @@
 import 'package:app/redux/actions.dart';
-import 'package:app/redux/middleware.dart';
 import 'package:app/models/State.dart';
 import 'package:app/models/User.dart';
 import 'package:app/models/Campaigns.dart';

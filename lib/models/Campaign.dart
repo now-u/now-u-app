@@ -3,8 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Organisation.dart';
 
-import 'dart:convert';
-
 class Campaign {
   int id;
   String title;
