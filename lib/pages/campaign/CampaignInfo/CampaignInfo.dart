@@ -64,14 +64,14 @@ class _CampaignInfoModelState extends State<CampaignModelInfo> with WidgetsBindi
 
   void didChangeAppLifecycleState(AppLifecycleState state) {
     //setState(() { _notification = state });
-    print("The state is");
+    print('The state is');
     print(state);
   }
 
   void initState() {
     // if give campaing use that
     if (widget.campaign != null) {
-      print("Campaign does not equal null");
+      print('Campaign does not equal null');
       this.campaign = widget.campaign;
     } 
     // check if we already have the campaign id they want
@@ -79,12 +79,12 @@ class _CampaignInfoModelState extends State<CampaignModelInfo> with WidgetsBindi
       Campaign c = widget.model.campaigns.getActiveCampaigns().firstWhere((camp) => camp.getId() == widget.campaignId, orElse: () => null);
       // if so use that
       if ( c != null ) {
-        print("We have the campaign");
+        print('We have the campaign');
         this.campaign = c;
       }
       // otherwise have a look online
       else {
-        print("Were gonna go have a look online");
+        print('Were gonna go have a look online');
         //this.futureCampaign = api.getCampaign(widget.campaignId);
         //// If that doesnt work then show the campaign not found page
         //if (this.futureCampaign == null) {
@@ -97,7 +97,7 @@ class _CampaignInfoModelState extends State<CampaignModelInfo> with WidgetsBindi
 
   @override
   Widget build(BuildContext context) {
-    print("Building Info Page");
+    print('Building Info Page');
     print(this.campaign);
     return
     this.campaign != null ?
@@ -109,23 +109,23 @@ class _CampaignInfoModelState extends State<CampaignModelInfo> with WidgetsBindi
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData) {
-            print("has data!");
+            print('has data!');
             return CampaignInfoContent(campaign: snapshot.data, model: widget.model);
           }
           else if (snapshot.hasError) {
             // TODO implement campaign not found page
-            print("There was an error with get campaign request");
+            print('There was an error with get campaign request');
             return null;
           }
         }
         else if (snapshot.connectionState == ConnectionState.none && snapshot.data == null) {
-          print("ConnectionState is super none");
+          print('ConnectionState is super none');
         }
         else if (snapshot.connectionState == ConnectionState.none) {
-          print("ConnectionState is none");
+          print('ConnectionState is none');
         }
         else if (snapshot.connectionState == ConnectionState.waiting) {
-          print("ConnectionState is wiaitng");
+          print('ConnectionState is wiaitng');
         }
         return 
           Scaffold(
@@ -195,7 +195,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
     //print(campaign.getId());
     return Scaffold(
       appBar: CustomAppBar(
-        text: "Campaign",
+        text: 'Campaign',
         context: context,
       ),
       body: Container(
@@ -227,14 +227,14 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                       child: Padding(
                         padding: EdgeInsets.all(15),
                         child: DarkButton(
-                          "Join Now",
+                          'Join Now',
                           style: DarkButtonStyles.Small,
                           inverted: true,
                           onPressed: () {
-                            print("Button pressed");
+                            print('Button pressed');
                             print(model.user.getSelectedCampaigns());
                             if (!model.user.getSelectedCampaigns().contains(campaign.getId())) {
-                              print("Campaign is not already selected");
+                              print('Campaign is not already selected');
                               setState(() {
                                 model.user.addSelectedCamaping(campaign.getId());
                                 model.onSelectCampaigns(model.user);
@@ -270,7 +270,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                         ),
                         SizedBox(width: 2),
                         Text(
-                          campaign.getNumberOfCampaigners().toString() + " people have joined",
+                          campaign.getNumberOfCampaigners().toString() + ' people have joined',
                           style: textStyleFrom(
                             Theme.of(context).primaryTextTheme.headline5,
                             fontWeight: FontWeight.w600,
@@ -314,7 +314,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
             ),
 
             // Actions
-            SectionTitle("Actions of the week"),
+            SectionTitle('Actions of the week'),
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -334,7 +334,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
             ),
 
             // Organisation
-            SectionTitle("Organisation"),
+            SectionTitle('Organisation'),
             Container(
               height: 140,
               //child: Expanded(
@@ -398,14 +398,14 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   DarkButton(
-                    "Learn more",
+                    'Learn more',
                     onPressed: () {},
                     inverted: true,
                     fontSize: 14,
                   ),
                   SizedBox(width: 10,),
                   DarkButton(
-                    "Count me in!",
+                    'Count me in!',
                     onPressed: () {},
                     fontSize: 14,
                   ),

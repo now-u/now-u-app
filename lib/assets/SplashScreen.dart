@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-  print("In the splash screen");
+  print('In the splash screen');
   print(model.user.getName());
   return new Scaffold(
     body: new Container(

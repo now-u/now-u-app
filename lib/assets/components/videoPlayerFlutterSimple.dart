@@ -212,7 +212,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
                 Row(
                   children: <Widget>[
                     Text(
-                      "Volume",
+                      'Volume',
                       style: TextStyle(fontWeight: FontWeight.w300),
                     ),
                     Expanded(

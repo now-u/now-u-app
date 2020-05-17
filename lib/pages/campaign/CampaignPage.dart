@@ -27,7 +27,7 @@ class CampaignPage extends StatelessWidget {
     return StoreConnector<AppState, ViewModel>(
         converter: (Store<AppState> store) => ViewModel.create(store),
         builder: (BuildContext context, ViewModel viewModel) {
-          print("Before splash screen user is");
+          print('Before splash screen user is');
           print(viewModel.user.getName());
           return CampaignPageBody(viewModel ,selectionMode, campaignId: campaignId);
         },
@@ -79,7 +79,7 @@ class _CampaignPageBodyState extends State<CampaignPageBody> {
     return 
       Scaffold(
         appBar: CustomAppBar(
-          text: "Active Campaigns",
+          text: 'Active Campaigns',
           context: context,
           hasBackButton: false,
         ), 
@@ -101,7 +101,7 @@ class _CampaignPageBodyState extends State<CampaignPageBody> {
                       ],
                     ),
                     model.user.getSelectedCampaigns().length == 0 && onlyJoined ?
-                    Text("You havent selecetd any campaigns yet")
+                    Text('You havent selecetd any campaigns yet')
                     :
                     Container(),
                     Expanded(

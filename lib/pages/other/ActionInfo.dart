@@ -50,8 +50,8 @@ class _ActionInfoState extends State<ActionInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(
-          text: "Action",
-          backButtonText: "Home",
+          text: 'Action',
+          backButtonText: 'Home',
           context: context,
         ),
         key: scaffoldKey,

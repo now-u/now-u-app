@@ -20,8 +20,8 @@ class ArticlePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(
-          text: "Article",
-          backButtonText: "Home",
+          text: 'Article',
+          backButtonText: 'Home',
           context: context,
         ),
         key: scaffoldKey,

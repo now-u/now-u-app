@@ -21,24 +21,24 @@ const double BUTTON_PADDING = 10;
 Article newsArticle = 
   Article(
     id: 1,
-    title: "After 13 years in development, we have finally completed this very important thing!",
-    body: "Magna ac nibh ultrices vehicula. Maecenas commodo facilisis lectus.  Praesent sed mi. Phasellus ipsum. Donec quis tellus id lectus faucibus molestie. Praesent vel ligula. Nam venenatis neque quis mauris. Proin felis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur.",
-    headerImage: "https://images.unsplash.com/photo-1526951521990-620dc14c214b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80",
+    title: 'After 13 years in development, we have finally completed this very important thing!',
+    body: 'Magna ac nibh ultrices vehicula. Maecenas commodo facilisis lectus.  Praesent sed mi. Phasellus ipsum. Donec quis tellus id lectus faucibus molestie. Praesent vel ligula. Nam venenatis neque quis mauris. Proin felis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur.',
+    headerImage: 'https://images.unsplash.com/photo-1526951521990-620dc14c214b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80',
     linkedAction: 1,
     linkedCampaign: 1,
-    fullArticleLink: "https://www.bbc.co.uk/news/uk-52439348",
+    fullArticleLink: 'https://www.bbc.co.uk/news/uk-52439348',
   );
 
 Article articleWithVideo = 
   Article(
     id: 2,
-    title: "After 13 years in development, we have finally completed this very important thing!",
-    body: "Magna ac nibh ultrices vehicula. Maecenas commodo facilisis lectus.  Praesent sed mi. Phasellus ipsum. Donec quis tellus id lectus faucibus molestie. Praesent vel ligula. Nam venenatis neque quis mauris. Proin felis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur.",
-    headerImage: "https://images.unsplash.com/photo-1526951521990-620dc14c214b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80",
+    title: 'After 13 years in development, we have finally completed this very important thing!',
+    body: 'Magna ac nibh ultrices vehicula. Maecenas commodo facilisis lectus.  Praesent sed mi. Phasellus ipsum. Donec quis tellus id lectus faucibus molestie. Praesent vel ligula. Nam venenatis neque quis mauris. Proin felis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur.',
+    headerImage: 'https://images.unsplash.com/photo-1526951521990-620dc14c214b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80',
     linkedAction: 1,
     linkedCampaign: 1,
-    fullArticleLink: "https://www.bbc.co.uk/news/uk-52439348",
-    videoLink: "https://www.youtube.com/watch?v=ybn_SO990go",
+    fullArticleLink: 'https://www.bbc.co.uk/news/uk-52439348',
+    videoLink: 'https://www.youtube.com/watch?v=ybn_SO990go',
   );
 
 class Home extends StatelessWidget {
@@ -49,7 +49,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home", style: Theme.of(context).primaryTextTheme.headline3),
+        title: Text('Home', style: Theme.of(context).primaryTextTheme.headline3),
         centerTitle: true,
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
@@ -67,7 +67,7 @@ class Home extends StatelessWidget {
                     HomeActionTile(changePage),
 
                     HomeDividor(),
-                    sectionTitle("Highlights", context),
+                    sectionTitle('Highlights', context),
                     Padding(
                       padding: EdgeInsets.all(10),
                       child: Container(
@@ -75,7 +75,7 @@ class Home extends StatelessWidget {
                       ),
                     ),
                     HomeButton(
-                      text: "All news",
+                      text: 'All news',
                       changePage: changePage,
                       page: TabPage.News
 

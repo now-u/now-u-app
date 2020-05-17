@@ -18,10 +18,10 @@ class SelectionComplete extends StatelessWidget {
 
   SelectionComplete( this.model ) {
     _selectedCamapings = model.campaigns.getActiveCampaigns().map((Campaign c) => c).toList();
-    print("SelectedCampaings");
+    print('SelectedCampaings');
     print(_selectedCamapings);
     _selectedCamapings = _selectedCamapings.where((c) => c.isSelected(model.user.getSelectedCampaigns())).toList();
-    print("SelectedCampaings");
+    print('SelectedCampaings');
     print(_selectedCamapings);
   }
 
@@ -31,7 +31,7 @@ class SelectionComplete extends StatelessWidget {
           body:  Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-                PageTitle("Congratulation"),
+                PageTitle('Congratulation'),
                 //Padding(
                 //  padding: EdgeInsets.all(40),
                 //  child:
@@ -39,7 +39,7 @@ class SelectionComplete extends StatelessWidget {
                 //),
                 //Padding(
                 //  padding: EdgeInsets.all(30),
-                //  child: Text("You have slected the following campaigns", style: Theme.of(context).primaryTextTheme.headline, textAlign: TextAlign.center,),
+                //  child: Text('You have slected the following campaigns', style: Theme.of(context).primaryTextTheme.headline, textAlign: TextAlign.center,),
                 //), 
                 Expanded(
                   child: ListView.builder(
@@ -54,7 +54,7 @@ class SelectionComplete extends StatelessWidget {
                         if (index == 1) {
                           return Padding(
                             padding: EdgeInsets.all(30),
-                            child: Text("You have slected the following campaigns", style: Theme.of(context).primaryTextTheme.headline, textAlign: TextAlign.center,),
+                            child: Text('You have slected the following campaigns', style: Theme.of(context).primaryTextTheme.headline, textAlign: TextAlign.center,),
                           ); 
                         }
                         if (index == _selectedCamapings.length + 2) {
@@ -81,7 +81,7 @@ class SelectionComplete extends StatelessWidget {
                    padding: EdgeInsets.only(bottom: 10),
                    child: 
                     DarkButton(
-                      "Share with Friends",
+                      'Share with Friends',
                       onPressed: () {
                         String campaingText = '';
                         for (var i = 0; i < _selectedCamapings.length; i++) {
@@ -109,7 +109,7 @@ class SelectionComplete extends StatelessWidget {
                    padding: EdgeInsets.only(bottom: 20),
                    child: 
                     DarkButton(
-                      "Get Started!",
+                      'Get Started!',
                       onPressed: () {
                         Navigator.push(
                           context, 

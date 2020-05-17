@@ -40,16 +40,16 @@ class User {
     
     this.completedActionsType = 
         completedActionsType ?? initCompletedAction();
-    print("User object created with the completedActionsType");
+    print('User object created with the completedActionsType');
     print(this.completedActionsType);
   }
 
   User.empty(){
     id= -1;
-    fullName= "unknown";
-    email = "unknown";
+    fullName= 'unknown';
+    email = 'unknown';
     age= -1;
-    location= "uknown";
+    location= 'uknown';
     monthlyDonationLimit= -1;
     homeOwner= false;
     selectedCampaigns = [];
@@ -268,7 +268,7 @@ Map toJson() => {
     }
     else if (type == RewardType.CompletedTypedActionsNumber) {
       if (reward.getActionType() == null) {
-        print("A CompletedTypedActionsNumber reward requires a CampaignActionType");
+        print('A CompletedTypedActionsNumber reward requires a CampaignActionType');
         return 0;
       }
       else {
@@ -286,7 +286,7 @@ Map toJson() => {
   
   void completeAction(CampaignAction a, {Function onCompleteReward}) {
     if (completedActions.contains(a.getId())) {
-      print("You can only complete an action once");
+      print('You can only complete an action once');
       return;
     }
     completedActions.add(a.getId());
@@ -311,7 +311,7 @@ Map toJson() => {
         Reward(
           successNumber: completedActions.length+1,
           type: RewardType.CompletedActionsNumber,
-          //title: nextValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ nextValue(v, rewardValues)} ${ k.toString() }",
+          //title: nextValue(v, rewardValues) == 1 ? 'Complete your first ${ k.toString() } ' : 'Complete ${ nextValue(v, rewardValues)} ${ k.toString() }',
         )
       );
     }
@@ -378,7 +378,7 @@ Map toJson() => {
           successNumber: nextValue(v, rewardValues),
           type: RewardType.CompletedTypedActionsNumber,
           actionType: k,
-          //title: nextValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ nextValue(v, rewardValues)} ${ k.toString() }",
+          //title: nextValue(v, rewardValues) == 1 ? 'Complete your first ${ k.toString() } ' : 'Complete ${ nextValue(v, rewardValues)} ${ k.toString() }',
         )
       );
     });
@@ -412,7 +412,7 @@ Map toJson() => {
             successNumber: prevValue(v, rewardValues),
             type: RewardType.CompletedTypedActionsNumber,
             actionType: k,
-            //title: prevValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ prevValue(v, rewardValues)} ${ k.toString() }",
+            //title: prevValue(v, rewardValues) == 1 ? 'Complete your first ${ k.toString() } ' : 'Complete ${ prevValue(v, rewardValues)} ${ k.toString() }',
           )
         );
       }
@@ -438,7 +438,7 @@ Map toJson() => {
       );
     }
 
-    print("previous rewards");
+    print('previous rewards');
     print(rewards.length);
     return rewards;
   }

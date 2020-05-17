@@ -8,13 +8,13 @@ const double ITEM_HORIZONTAL = 30;
 const double ITEM_VERTICAL = 30;
 
 var _offers = <Offer>[ 
-  Offer(id: 1, title: "20% of VegWare", description: "Vegi Cup is a company that make compsotable single use cutlery etc.", link: "https://www.vegware.com/uk/" ),
-  Offer(id: 1, title: "20% of VegWare", description: "Vegi Cup is a company that make compsotable single use cutlery etc.", link: "https://www.vegware.com/uk/" ),
-  Offer(id: 1, title: "20% of VegWare", description: "Vegi Cup is a company that make compsotable single use cutlery etc.", link: "https://www.vegware.com/uk/" ),
-  Offer(id: 1, title: "22% of VegWare", description: "Vegi Cup is a company that make compsotable single use cutlery etc.", link: "https://www.vegware.com/uk/" ),
-  Offer(id: 1, title: "22% of VegWare", description: "Vegi Cup is a company that make compsotable single use cutlery etc.", link: "https://www.vegware.com/uk/" ),
-  Offer(id: 1, title: "22% of VegWare", description: "Vegi Cup is a company that make compsotable single use cutlery etc.", link: "https://www.vegware.com/uk/" ),
-  Offer(id: 1, title: "24% of VegWare", description: "Vegi Cup is a company that make compsotable single use cutlery etc.", link: "https://www.vegware.com/uk/" ),
+  Offer(id: 1, title: '20% of VegWare', description: 'Vegi Cup is a company that make compsotable single use cutlery etc.', link: 'https://www.vegware.com/uk/' ),
+  Offer(id: 1, title: '20% of VegWare', description: 'Vegi Cup is a company that make compsotable single use cutlery etc.', link: 'https://www.vegware.com/uk/' ),
+  Offer(id: 1, title: '20% of VegWare', description: 'Vegi Cup is a company that make compsotable single use cutlery etc.', link: 'https://www.vegware.com/uk/' ),
+  Offer(id: 1, title: '22% of VegWare', description: 'Vegi Cup is a company that make compsotable single use cutlery etc.', link: 'https://www.vegware.com/uk/' ),
+  Offer(id: 1, title: '22% of VegWare', description: 'Vegi Cup is a company that make compsotable single use cutlery etc.', link: 'https://www.vegware.com/uk/' ),
+  Offer(id: 1, title: '22% of VegWare', description: 'Vegi Cup is a company that make compsotable single use cutlery etc.', link: 'https://www.vegware.com/uk/' ),
+  Offer(id: 1, title: '24% of VegWare', description: 'Vegi Cup is a company that make compsotable single use cutlery etc.', link: 'https://www.vegware.com/uk/' ),
 ];
 
 class OffersPage extends StatelessWidget {
@@ -27,7 +27,7 @@ class OffersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
             children: <Widget>[
-              PageTitle("Offers", hasBackButton: true, onClickBackButton: _goBack,),
+              PageTitle('Offers', hasBackButton: true, onClickBackButton: _goBack,),
               Expanded(
                 child:
                   ListView.separated(

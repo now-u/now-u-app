@@ -143,11 +143,11 @@ class _AppState extends State<App> {
         theme: ThemeData(
           // This is the theme of your application.
           //
-          // Try running your application with "flutter run". You'll see the
+          // Try running your application with 'flutter run'. You'll see the
           // application has a blue toolbar. Then, without quitting the app, try
           // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // 'hot reload' (press 'r' in the console where you ran 'flutter run',
+          // or simply save your changes to 'hot reload' in a Flutter IDE).
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
           fontFamily: 'Nunito',
@@ -278,9 +278,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if(state == AppLifecycleState.resumed){
-      print("App resumed");
+      print('App resumed');
       //Function onClick = (int index) {
-      //  print("Setting current index");
+      //  print('Setting current index');
       //  setState(() {
       //    currentIndex = index;
       //  });
@@ -293,13 +293,13 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   @override 
   Widget build(BuildContext context) {
-  print("The currentIndex is");
+  print('The currentIndex is');
   print(currentIndex);
     return
       StoreConnector<AppState, ViewModel>(
           converter: (Store<AppState> store) => ViewModel.create(store),
           builder: (BuildContext context, ViewModel viewModel) {
-            print("Before splash screen user is");
+            print('Before splash screen user is');
             print(viewModel.user.getName());
             print(currentIndex);
             return TabsPage(currentPage: TabPage.Home);

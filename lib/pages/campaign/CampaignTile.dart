@@ -27,7 +27,7 @@ class _CampaignTileState extends State<CampaignTile> {
  
   @override
   void initState () {
-    print("Initialising state");
+    print('Initialising state');
     super.initState();
   }
   
@@ -107,7 +107,7 @@ class _CampaignTileState extends State<CampaignTile> {
                             ),
                             SizedBox(width: 2),
                             Text(
-                              widget.campaign.getNumberOfCampaigners().toString() + " campaigners", 
+                              widget.campaign.getNumberOfCampaigners().toString() + ' campaigners', 
                               style: textStyleFrom(
                                 Theme.of(context).primaryTextTheme.headline5,
                                 fontWeight: FontWeight.w500,
@@ -117,7 +117,7 @@ class _CampaignTileState extends State<CampaignTile> {
                           ],
                         ),
                         TextButton(
-                          "See more",
+                          'See more',
                           iconRight: true,
                           onClick: null,
                         ),
@@ -127,7 +127,7 @@ class _CampaignTileState extends State<CampaignTile> {
                   StoreConnector<AppState, ViewModel>(
                       converter: (Store<AppState> store) => ViewModel.create(store),
                       builder: (BuildContext context, ViewModel viewModel) {
-                        print("Before splash screen user is");
+                        print('Before splash screen user is');
                         print(viewModel.user.getSelectedCampaigns());
                         bool selected = viewModel.user.getSelectedCampaigns().contains(widget.campaign.getId());
                         return 
@@ -139,7 +139,7 @@ class _CampaignTileState extends State<CampaignTile> {
                               child: 
                               !selected ?
                               Text(
-                                "Not joined",
+                                'Not joined',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
@@ -157,7 +157,7 @@ class _CampaignTileState extends State<CampaignTile> {
                                   ),
                                   SizedBox(width: 5),
                                   Text(
-                                    "Joined",
+                                    'Joined',
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,

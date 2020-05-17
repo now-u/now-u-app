@@ -9,18 +9,18 @@ import 'package:app/assets/components/textButton.dart';
 
 List<Widget> pages = <Widget>[
                   IntroPageSection(
-                    "Join Campaigns",
-                    "Every month, now-u adds 3 new campiangs that enable you to make a difference! You can choose to join one or a few, or all of them.",
+                    'Join Campaigns',
+                    'Every month, now-u adds 3 new campiangs that enable you to make a difference! You can choose to join one or a few, or all of them.',
                     AssetImage('assets/imgs/intro/il-joincamp@4x.png'),
                   ),
                   IntroPageSection(
-                    "Join Campaigns",
-                    "Every month, now-u adds 3 new campiangs that enable you to make a difference! You can choose to join one or a few, or all of them.",
+                    'Join Campaigns',
+                    'Every month, now-u adds 3 new campiangs that enable you to make a difference! You can choose to join one or a few, or all of them.',
                     AssetImage('assets/imgs/intro/il-actions@4x.png'),
                   ),
                   IntroPageSection(
-                    "Join Campaigns",
-                    "Every month, now-u adds 3 new campiangs that enable you to make a difference! You can choose to join one or a few, or all of them.",
+                    'Join Campaigns',
+                    'Every month, now-u adds 3 new campiangs that enable you to make a difference! You can choose to join one or a few, or all of them.',
                     AssetImage('assets/imgs/intro/il-achievem@4x.png'),
                   ),
 ];
@@ -94,14 +94,14 @@ class _IntroPageState extends State<IntroPage> {
                         Container(
                           width: 70
                         ),
-                        Text("Let's get started", style: Theme.of(context).primaryTextTheme.headline6,),
+                        Text('Let\'s get started', style: Theme.of(context).primaryTextTheme.headline6,),
                         Container(
                           width: 70,
                           child: 
                           RectGetter(
                             key: rectGetterSkipKey,
                             child: TextButton(
-                              "Skip",
+                              'Skip',
                               onClick: () {
                                 //Navigator.pushNamed(context, '/');
                                 _onTapSkip();
@@ -140,7 +140,7 @@ class _IntroPageState extends State<IntroPage> {
                     width: double.infinity,
                     child: index != pages.length - 1 ? 
                     DarkButton(
-                      "Next",
+                      'Next',
                       onPressed: () {
                         controller.nextPage(
                           curve: curve,
@@ -152,7 +152,7 @@ class _IntroPageState extends State<IntroPage> {
                     RectGetter(
                       key: rectGetterGetStartedKey,
                       child: DarkButton(
-                        "Get Started!",
+                        'Get Started!',
                         onPressed: _onTapGetStarted,
                         //() {
                         //  //Navigator.pushNamed(context, '/');
@@ -167,7 +167,7 @@ class _IntroPageState extends State<IntroPage> {
                   child: Padding(
                     padding: EdgeInsets.only(bottom: 20, left: 20),
                     child: TextButton(
-                      "Back",
+                      'Back',
                       iconLeft: true,
                       onClick: () {
                         controller.previousPage(

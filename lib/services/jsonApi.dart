@@ -12,30 +12,30 @@ import 'dart:convert';
 
 class JsonApi implements Api {
 
-  final String domainPrefix = "https://now-u-api.herokuapp.com/api/v1/";
+  final String domainPrefix = 'https://now-u-api.herokuapp.com/api/v1/';
 
   @override
   Future<Campaign> getCampaign(int id) async {
-    var response = await http.get(domainPrefix + "campaigns/1");
+    var response = await http.get(domainPrefix + 'campaigns/1');
     if (response.statusCode == 200) {
-      print("We got a 200!");
+      print('We got a 200!');
       Campaign c = Campaign.fromJson(json.decode(response.body)['data']);
-      print("Here is the campaign");
+      print('Here is the campaign');
       print(c);
       return c;
     }
     else {
-      print("We got an error whilst doing the http request");
-      return Future.error("Error getting campaign in http api", StackTrace.fromString("The stack trace is"));
+      print('We got an error whilst doing the http request');
+      return Future.error('Error getting campaign in http api', StackTrace.fromString('The stack trace is'));
     }
   }
   
   @override
   Future<Campaigns> getCampaigns() async {
     String data = await rootBundle.loadString('assets/json/campaigns.json');
-    print("got campaigns data");
+    print('got campaigns data');
     Campaigns cs = Campaigns.fromJson(json.decode(data));
-    print("We got some camps");
+    print('We got some camps');
     print(cs.getActiveCampaigns()[0].getTitle());
     print(cs.getActiveCampaigns()[1].getTitle());
     print(cs.getActiveCampaigns()[2].getTitle());

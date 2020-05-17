@@ -13,9 +13,9 @@ enum RewardType {
 }
 
 List motivationalPostfix = [
-  "Great work",
-  "Keep it up",
-  "You're amazing",
+  'Great work',
+  'Keep it up',
+  'You\'re amazing',
 ];
 
 class Reward {
@@ -41,22 +41,22 @@ class Reward {
   }
 
   String generateTitle() {
-    String endingPlural = successNumber > 1 ? "s" : "";
+    String endingPlural = successNumber > 1 ? 's' : '';
     if (type == RewardType.CompletedTypedActionsNumber) {
       Tuple3<String,String,String> descPrePostFix= generateCampaingActionDesc(actionType);
       String pre = descPrePostFix.item1;
       String post = descPrePostFix.item3;
-      return (pre + " ${successNumber} " + post  + "${endingPlural}");
+      return (pre + ' ${successNumber} ' + post  + '${endingPlural}');
     }
     if (type == RewardType.CompletedActionsNumber) {
-      return "Complete ${successNumber} action${endingPlural}";
+      return 'Complete ${successNumber} action${endingPlural}';
     }
 
     if (type == RewardType.CompletedCampaignsNumber) {
-      return "Complete ${successNumber} campaign${endingPlural}";
+      return 'Complete ${successNumber} campaign${endingPlural}';
     }
 
-    return "";
+    return '';
   }
   
   String generateCompletionText() {
@@ -64,10 +64,10 @@ class Reward {
       Tuple3<String,String,String> descPrePostFix= generateCampaingActionDesc(actionType);
       String pre = descPrePostFix.item2;
       String post = descPrePostFix.item3;
-      String endingPlural = successNumber > 1 ? "s" : "";
-      return ("You " + pre + " ${successNumber} " + post  + "${endingPlural}. " + motivationalPostfix[random.nextInt(motivationalPostfix.length)] + ".");
+      String endingPlural = successNumber > 1 ? 's' : '';
+      return ('You ' + pre + ' ${successNumber} ' + post  + '${endingPlural}. ' + motivationalPostfix[random.nextInt(motivationalPostfix.length)] + '.');
     }
-    return "";
+    return '';
   }
 
   String getTitle() {

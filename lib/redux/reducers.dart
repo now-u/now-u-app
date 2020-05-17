@@ -28,7 +28,7 @@ bool loadingReducer (action) {
 
 Campaigns campaignsReducer(Campaigns campaigns, action) {
   if (action is LoadedCampaignsAction) {
-    print("The user that has been loaded is");
+    print('The user that has been loaded is');
     print(action.campaigns.getActiveCampaigns().length);
     return action.campaigns;
   }
@@ -51,14 +51,14 @@ User userReducer(User user, action) {
   }
   if (action is CompleteAction) {
     User u = user.copyWith();
-    print("Completing action");
+    print('Completing action');
     u.completeAction(action.action);
-    print("Action completed");
+    print('Action completed');
     print(u.getCompletedActions());
     return u;
   }
   if (action is LoadedUserDataAction) {
-    print("The user that has been loaded is");
+    print('The user that has been loaded is');
     print(action.user.getName());
     return action.user;
   }
@@ -69,8 +69,8 @@ User userReducer(User user, action) {
       age: action.user.getAge(),
       location: action.user.getLocation(),
     );
-    print("User in UpdateUserDetails is");
-    print("UserName is ${ u.getName() }");
+    print('User in UpdateUserDetails is');
+    print('UserName is ${ u.getName() }');
     return u; 
   }
   return user;

@@ -72,7 +72,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     child: Container(
                       height: 40,
                       child: DarkButton(
-                        "Edit",
+                        'Edit',
                         onPressed: () {
                           setState(() {
                              editingMode= true;
@@ -93,7 +93,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             Container(
                               height: 40,
                               child: DarkButton(
-                                "Cancel",
+                                'Cancel',
                                 onPressed: () {
                                   setState(() {
                                      editingMode = false;
@@ -109,7 +109,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             Container(
                               height: 40, 
                               child: DarkButton(
-                                "Update",
+                                'Update',
                                 onPressed: () {
                                   setState(() {
                                     //_selectionMode = false;

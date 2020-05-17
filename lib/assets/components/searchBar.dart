@@ -29,7 +29,7 @@ class SearchBar extends StatelessWidget {
             onChanged: onChanged,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.only(left: 15),
-              hintText: "Search for something",
+              hintText: 'Search for something',
               hintStyle: textStyleFrom(
                 Theme.of(context).primaryTextTheme.headline5,
                 fontWeight: FontWeight.w600,

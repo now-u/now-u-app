@@ -103,7 +103,7 @@ class _NewsListState extends State<NewsList> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: PAGE_PADDING),
             child: Text(
-              "Recent News",
+              'Recent News',
               style: textStyleFrom(
                 Theme.of(context).primaryTextTheme.headline4,
                 fontWeight: FontWeight.w600,
@@ -166,23 +166,23 @@ class _NewsListState extends State<NewsList> {
       List<Article> tempList = List<Article>();
       widget.articles.forEach((article) {
         if (article.getTitle().toLowerCase().contains(query.toLowerCase())) {
-          print ("adding " + article.getTitle() + " to list");
+          print ('adding ' + article.getTitle() + ' to list');
           tempList.add(article);
         }
       });
       setState(() {
-        print("Set searching to true");
+        print('Set searching to true');
         searching = true;
         articles.clear();
         articles.addAll(tempList);
       });
     }
     else {
-      print("query is empty");
+      print('query is empty');
       setState(() {
         searching = false;
         articles.clear(); 
-        print("Adding articles to articles list");
+        print('Adding articles to articles list');
         print(widget.articles.length);
         articles.addAll(widget.articles);
         // SO articles.addAll(widget.articles) does not add all the articles from widget.articles to articles
@@ -220,7 +220,7 @@ class VideoOTDTile extends StatelessWidget {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      "Clip of the day",
+                      'Clip of the day',
                       textAlign: TextAlign.left,
                       style: textStyleFrom(
                         Theme.of(context).primaryTextTheme.headline5,

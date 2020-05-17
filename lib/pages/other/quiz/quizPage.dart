@@ -38,7 +38,7 @@ class _QuizPageState extends State<QuizPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Question ${currentQuestion}"),
+        title: Text('Question ${currentQuestion}'),
       ),
       body: 
       isCompleted ? 
@@ -68,11 +68,11 @@ class _QuizPageState extends State<QuizPage> {
                       currentQuestion.getAnswers()[index], 
                       color: c,
                       onClick: (answer) {
-                        print("Selected answer = " + (index).toString());
+                        print('Selected answer = ' + (index).toString());
                         setState(() {
                           selectAnswerIndex = index;                          
                           if(currentQuestion.getAnswers()[index].getIsCorrect()) {
-                            print("Increasing score");
+                            print('Increasing score');
                             score += 1;
                           }
                         });

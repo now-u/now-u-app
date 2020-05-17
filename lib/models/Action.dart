@@ -30,10 +30,10 @@ Color blueO = colorFrom(blue, opacity: 0.15);
 
 Map defaultCampaignActionTypeData = 
   {
-    'name': "other",          
-    'verb': "Complete", 
-    'pastVerb': "Completed", 
-    'displayName': "special action", 
+    'name': 'other',          
+    'verb': 'Complete', 
+    'pastVerb': 'Completed', 
+    'displayName': 'special action', 
     'icon': FontAwesomeIcons.check, 
     'iconColor': Colors.red,
     'iconBackgroundColor': Colors.redAccent
@@ -41,100 +41,100 @@ Map defaultCampaignActionTypeData =
 
 Map campaignActionTypeData = {
   CampaignActionType.Volunteer: {
-    'name': "volunteer", 
-    'verb': "Volunteer", 
-    'pastVerb': "Volunteered", 
-    'displayName': "volunteer", 
+    'name': 'volunteer', 
+    'verb': 'Volunteer', 
+    'pastVerb': 'Volunteered', 
+    'displayName': 'volunteer', 
     'icon': FontAwesomeIcons.handsHelping, 
     'iconColor': red,
     'iconBackgroundColor': redO,
   },
   CampaignActionType.Donation: {
-    'name': "donation", 
-    'verb': "Make", 
-    'pastVerb': "Made", 
-    'displayName': "donation", 
+    'name': 'donation', 
+    'verb': 'Make', 
+    'pastVerb': 'Made', 
+    'displayName': 'donation', 
     'icon': FontAwesomeIcons.handHoldingHeart, 
     'iconColor': yellow,
     'iconBackgroundColor': yellowO,
   },
   CampaignActionType.Fundraise: {
-    'name': "fundraise", 
-    'verb': "Take part in", 
-    'pastVerb': "Took part in", 
-    'displayName': "fundraiser", 
+    'name': 'fundraise', 
+    'verb': 'Take part in', 
+    'pastVerb': 'Took part in', 
+    'displayName': 'fundraiser', 
     'icon': FontAwesomeIcons.moneyBillWaveAlt, 
     'iconColor': yellow,
     'iconBackgroundColor': yellowO,
   },
   CampaignActionType.Awareness: {
-    'name': "awareness", 
-    'verb': "Raise awareness", 
-    'pastVerb': "Raised awareness", 
-    'displayName': "time", 
+    'name': 'awareness', 
+    'verb': 'Raise awareness', 
+    'pastVerb': 'Raised awareness', 
+    'displayName': 'time', 
     'icon': FontAwesomeIcons.share, 
     'iconColor': orange,
     'iconBackgroundColor': orangeO,
   },
   CampaignActionType.Petition: {
-    'name': "petition", 
-    'verb': "Sign", 
-    'pastVerb': "Signed", 
-    'displayName': "petiton", 
+    'name': 'petition', 
+    'verb': 'Sign', 
+    'pastVerb': 'Signed', 
+    'displayName': 'petiton', 
     'icon': FontAwesomeIcons.signature, 
     'iconColor': orange,
     'iconBackgroundColor': orangeO,
   },
   CampaignActionType.Behaviour: {
-    'name': "behaviour", 
-    'verb': "Complete", 
-    'pastVerb': "Completed", 
-    'displayName': "behaviour change action", 
+    'name': 'behaviour', 
+    'verb': 'Complete', 
+    'pastVerb': 'Completed', 
+    'displayName': 'behaviour change action', 
     'icon': FontAwesomeIcons.streetView, 
     'iconColor': red,
     'iconBackgroundColor': redO,
   },
   CampaignActionType.Contact: {
-    'name': "contact", 
-    'verb': "Complete", 
-    'pastVerb': "Completed", 
-    'displayName': "contact change action", 
+    'name': 'contact', 
+    'verb': 'Complete', 
+    'pastVerb': 'Completed', 
+    'displayName': 'contact change action', 
     'icon': FontAwesomeIcons.phone, 
     'iconColor': orange,
     'iconBackgroundColor': orangeO,
   },
   CampaignActionType.Protest: {
-    'name': "protest", 
-    'verb': "Take part in", 
-    'pastVerb': "Took part in", 
-    'displayName': "protest", 
+    'name': 'protest', 
+    'verb': 'Take part in', 
+    'pastVerb': 'Took part in', 
+    'displayName': 'protest', 
     'icon': FontAwesomeIcons.sign, 
     'iconColor': red,
     'iconBackgroundColor': redO,
   },
   CampaignActionType.Connect: {
-    'name': "connect", 
-    'verb': "Connect", 
-    'pastVerb': "Connted", 
-    'displayName': "times", 
+    'name': 'connect', 
+    'verb': 'Connect', 
+    'pastVerb': 'Connted', 
+    'displayName': 'times', 
     'icon': FontAwesomeIcons.link, 
     'iconColor': red,
     'iconBackgroundColor': redO,
   },
   CampaignActionType.Learn: {
-    'name': "learn", 
-    'verb': "Complete", 
-    'pastVerb': "Completed", 
-    'displayName': "learning action", 
+    'name': 'learn', 
+    'verb': 'Complete', 
+    'pastVerb': 'Completed', 
+    'displayName': 'learning action', 
     'icon': FontAwesomeIcons.userGraduate, 
     'iconColor': blue,
     'iconBackgroundColor': blueO,
   },
   CampaignActionType.Quiz: {
-    'name': "quiz", 
-    'verb': "Complete", 
-    'pastVerb': "Completed", 
-    'displayName': "quiz", 
+    'name': 'quiz', 
+    'verb': 'Complete', 
+    'pastVerb': 'Completed', 
+    'displayName': 'quiz', 
     'icon': FontAwesomeIcons.question, 
     'iconColor': blue,
     'iconBackgroundColor': blueO,
@@ -154,15 +154,15 @@ CampaignActionType campaignActionTypeFromString (String s) {
 }
 
 Tuple3<String, String, String> generateCampaingActionDesc (CampaignActionType t) {
-  print("Getting campaing aciton desc");
+  print('Getting campaing aciton desc');
   if (campaignActionTypeData.containsKey(t)) {
-    print("Found key");
+    print('Found key');
     print(campaignActionTypeData[t]['name']);
-    print("Looking for the thing");
+    print('Looking for the thing');
     return Tuple3(campaignActionTypeData[t]['verb'], campaignActionTypeData[t]['pastVerb'], campaignActionTypeData[t]['displayName']);
 
   }
-  return Tuple3("Complete", "Completed", "special action");
+  return Tuple3('Complete', 'Completed', 'special action');
 }
 
 class CampaignAction {
@@ -211,7 +211,7 @@ class CampaignAction {
     return type; 
   }
   Map getActionIconMap () {
-    print("Getting the actionicon map for");
+    print('Getting the actionicon map for');
     print(type.toString());
     if (campaignActionTypeData.containsKey(type)) {
       return {

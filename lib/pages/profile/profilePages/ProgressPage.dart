@@ -21,14 +21,14 @@ class ProgressPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          PageTitle("Progress", hasBackButton: true, onClickBackButton: _goBack,),
+          PageTitle('Progress', hasBackButton: true, onClickBackButton: _goBack,),
           Text(
-              "Current Campaigns Progress", 
+              'Current Campaigns Progress', 
               style: Theme.of(context).primaryTextTheme.display2,
               textAlign: TextAlign.center,
           ),
           Text(
-              "${ model.user.getActiveCampaignsProgress(model.campaigns) }", 
+              '${ model.user.getActiveCampaignsProgress(model.campaigns) }', 
               style: Theme.of(context).primaryTextTheme.display2,
               textAlign: TextAlign.center,
           ),
@@ -40,7 +40,7 @@ class ProgressPage extends StatelessWidget {
             ),
           ),
           DarkButton(
-            "View Campaigns", 
+            'View Campaigns', 
             onPressed: () {
               Navigator.push(
                 context,
@@ -54,14 +54,14 @@ class ProgressPage extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.all(10),
-            child: Text("You have taken part in ${ model.user.getSelectedCampaigns().length } campaigns"),
+            child: Text('You have taken part in ${ model.user.getSelectedCampaigns().length } campaigns'),
           ),
           Padding(
             padding: EdgeInsets.all(10),
-            child: Text("You have completed ${ model.user.getCompletedActions().length } actions"),
+            child: Text('You have completed ${ model.user.getCompletedActions().length } actions'),
           ),
           DarkButton(
-            "Completed Campaigns", 
+            'Completed Campaigns', 
             onPressed: () {
               Navigator.push(
                 context,
@@ -71,11 +71,11 @@ class ProgressPage extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.all(10),
-            child: Text("Highlights from you Campaigns"),
+            child: Text('Highlights from you Campaigns'),
           ),
           // Highlights
-          Text("Highlight 1"),
-          Text("Highlight 2")
+          Text('Highlight 1'),
+          Text('Highlight 2')
         ], 
       )
     );

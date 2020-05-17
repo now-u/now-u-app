@@ -13,13 +13,13 @@ const double ITEM_HORIZONTAL = 30;
 const double ITEM_VERTICAL = 30;
 
 //var _rewards = <Reward>[
-//  Reward(id: 1, title: "Shower Rail", description: "Vegi Cup is a company that make compsotable single use cutlery etc.", completed:false ),
-//  Reward(id: 1, title: "One way tickets to Mozambique", description: "Vegi Cup is a company that make compsotable single use cutlery etc.", completed:false ),
-//  Reward(id: 1, title: "James Elgar", description: "Vegi Cup is a company that make compsotable single use cutlery etc.", completed:false),
-//  Reward(id: 1, title: "22% of VegWare", description: "Vegi Cup is a company that make compsotable single use cutlery etc.", completed:false ),
-//  Reward(id: 1, title: "£5 amazon voucher", description: "Vegi Cup is a company that make compsotable single use cutlery etc.", completed:false ),
-//  Reward(id: 1, title: "A car", description: "Vegi Cup is a company that make compsotable single use cutlery etc.", completed:false ),
-//  Reward(id: 1, title: "24% of VegWare", description: "Vegi Cup is a company that make compsotable single use cutlery etc.", completed:false ),
+//  Reward(id: 1, title: 'Shower Rail', description: 'Vegi Cup is a company that make compsotable single use cutlery etc.', completed:false ),
+//  Reward(id: 1, title: 'One way tickets to Mozambique', description: 'Vegi Cup is a company that make compsotable single use cutlery etc.', completed:false ),
+//  Reward(id: 1, title: 'James Elgar', description: 'Vegi Cup is a company that make compsotable single use cutlery etc.', completed:false),
+//  Reward(id: 1, title: '22% of VegWare', description: 'Vegi Cup is a company that make compsotable single use cutlery etc.', completed:false ),
+//  Reward(id: 1, title: '£5 amazon voucher', description: 'Vegi Cup is a company that make compsotable single use cutlery etc.', completed:false ),
+//  Reward(id: 1, title: 'A car', description: 'Vegi Cup is a company that make compsotable single use cutlery etc.', completed:false ),
+//  Reward(id: 1, title: '24% of VegWare', description: 'Vegi Cup is a company that make compsotable single use cutlery etc.', completed:false ),
 //];
 
 class RewardsPage extends StatefulWidget {
@@ -55,16 +55,16 @@ class _RewardsPageState extends State<RewardsPage> {
   @override
   Widget build(BuildContext context) {
 //  var _rewards = <Reward>[
-//    Reward(id: 1, title: "Select 3 Campaigns", successNumber: 3, type: RewardType.SelectInOneMonthCampaignsNumber),
-//    Reward(id: 2, title: "Complete first action", successNumber: 1, type: RewardType.CompletedActionsNumber),
-//    Reward(id: 3, title: "Sign 5 petitons", successNumber: 5, type: RewardType.CompletedTypedActionsNumber, actionType: CampaignActionType.Petition),
+//    Reward(id: 1, title: 'Select 3 Campaigns', successNumber: 3, type: RewardType.SelectInOneMonthCampaignsNumber),
+//    Reward(id: 2, title: 'Complete first action', successNumber: 1, type: RewardType.CompletedActionsNumber),
+//    Reward(id: 3, title: 'Sign 5 petitons', successNumber: 5, type: RewardType.CompletedTypedActionsNumber, actionType: CampaignActionType.Petition),
 //  ];
     return Column(
         children: <Widget>[
-          PageTitle("Rewards", hasBackButton: true, onClickBackButton: widget.goBack),
-          Text("You have completed x campaigns",
+          PageTitle('Rewards', hasBackButton: true, onClickBackButton: widget.goBack),
+          Text('You have completed x campaigns',
             style: Theme.of(context).primaryTextTheme.body1),
-          Text("Thankyou",
+          Text('Thankyou',
             style: Theme.of(context).primaryTextTheme.body1),
           Padding(
             padding: EdgeInsets.only(top: 20),
@@ -94,7 +94,7 @@ class _RewardsPageState extends State<RewardsPage> {
                       rewards = widget.model.user.getNextRewards();
                     }
                     if (value == 'completed')  {
-                      print("Value = completed");
+                      print('Value = completed');
                       rewards = widget.model.user.getPreviousRewards();
                       print(rewards.length);
                     }
@@ -126,7 +126,7 @@ class _RewardsPageState extends State<RewardsPage> {
                   ),
             ),
           ),
-          DarkButton("See Highlights",
+          DarkButton('See Highlights',
             onPressed: (){})
         ]
     );

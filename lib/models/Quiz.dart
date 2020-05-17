@@ -10,15 +10,15 @@ class Quiz {
   List<Question> questions;
   
   Quiz.fromJson(Map json) {
-    print("Id is");
+    print('Id is');
     print(json['id']);
-    print("Title");
+    print('Title');
     print(json['title']);
 
     id = json['id'];
     title = json['title'];
     description = json['description'];
-    print("questions");
+    print('questions');
     print(json['questions']);
     questions = (json['questions']).map((e) => Question.fromJson(e)).toList().cast<Question>();
   }
@@ -38,23 +38,23 @@ class Quiz {
 }
 
 Future<Quiz> readQuizFromAssets(int id) async {
-  print("Getting quiz");
+  print('Getting quiz');
   var data = await rootBundle.loadString('assets/json/quiz.json');
-  print("Got string");
+  print('Got string');
   print(data);
   List<Quiz> quizes = (jsonDecode(data) as List).map((q) {
-    print("The quiz");
+    print('The quiz');
     print(q);
     return Quiz.fromJson(q);
   }).toList().cast<Quiz>();
-  print("Got quizes");
+  print('Got quizes');
   Quiz quiz = quizes.where((q) => q.getId() == id).first;
   print(quiz);
   return quiz;
   //rootBundle.loadString('assets/json/quiz.json').then(
   //  (data) {
-  //    print("The json string is " + data);
-  //    print("Decoding");
+  //    print('The json string is ' + data);
+  //    print('Decoding');
   //    List<Quiz> quizes = (jsonDecode(data) as List).map((q) => Quiz.fromJson(q)).toList().cast<Quiz>();
   //    // TODO what happens when 0
   //    Quiz quiz = quizes.where((q) => q.getId() == id).first;

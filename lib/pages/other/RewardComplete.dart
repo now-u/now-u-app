@@ -26,7 +26,7 @@ class RewardCompletePage extends StatelessWidget {
           body:  Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-                PageTitle("Congratulation"),
+                PageTitle('Congratulation'),
                 //Padding(
                 //  padding: EdgeInsets.all(40),
                 //  child:
@@ -34,7 +34,7 @@ class RewardCompletePage extends StatelessWidget {
                 //),
                 //Padding(
                 //  padding: EdgeInsets.all(30),
-                //  child: Text("You have slected the following campaigns", style: Theme.of(context).primaryTextTheme.headline, textAlign: TextAlign.center,),
+                //  child: Text('You have slected the following campaigns', style: Theme.of(context).primaryTextTheme.headline, textAlign: TextAlign.center,),
                 //), 
                 Expanded(
                   child: ListView.builder(
@@ -50,7 +50,7 @@ class RewardCompletePage extends StatelessWidget {
                           return Padding(
                             padding: EdgeInsets.all(30),
                             child: Text(
-                                length != 1 ? "You just completed ${length} achievements!" : "You completed an achievement", 
+                                length != 1 ? 'You just completed ${length} achievements!' : 'You completed an achievement', 
                                 style: Theme.of(context).primaryTextTheme.headline, textAlign: TextAlign.center,),
                           ); 
                         }
@@ -78,7 +78,7 @@ class RewardCompletePage extends StatelessWidget {
                    padding: EdgeInsets.only(bottom: 10),
                    child: 
                     DarkButton(
-                      "Share with Friends",
+                      'Share with Friends',
                       onPressed: () {
                         String campaingText = '';
                         for (var i = 0; i < completedRewards.length; i++) {
@@ -106,7 +106,7 @@ class RewardCompletePage extends StatelessWidget {
                    padding: EdgeInsets.only(bottom: 20),
                    child: 
                     DarkButton(
-                      "Get Started!",
+                      'Get Started!',
                       onPressed: () {
                         Navigator.push(
                           context, 

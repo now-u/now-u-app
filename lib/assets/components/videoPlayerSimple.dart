@@ -6,7 +6,7 @@ class VideoPlayer extends StatelessWidget {
   Widget build(BuildContext context) {
     return YoutubePlayer(
       context: context,
-      source: "y3B8YqeLCpY",
+      source: 'y3B8YqeLCpY',
       quality: YoutubeQuality.HIGH,
       // callbackController is (optional). 
       // use it to control player on your own.

@@ -12,11 +12,11 @@ const double ICON_HPADDING = 30;
 
 
 var _faqs = <FAQ> [
-  FAQ(id: 0, question: "What is your favorite colour", answer: "My favorite colour is the best coloour ever its the color that looks like the color blue but is actually the color red"),
-  FAQ(id: 0, question: "What is your favorite colour", answer: "My favorite colour is the best coloour ever its the color that looks like the color blue but is actually the color red"),
-  FAQ(id: 0, question: "What is your favorite colour", answer: "My favorite colour is the best coloour ever its the color that looks like the color blue but is actually the color red"),
-  FAQ(id: 0, question: "What is your favorite colour", answer: "My favorite colour is the best coloour ever its the color that looks like the color blue but is actually the color red"),
-  FAQ(id: 0, question: "Whats my your favorite colour", answer: "My favorite colour is the best coloour ever its the color that looks like the color blue but is actually the color red"),
+  FAQ(id: 0, question: 'What is your favorite colour', answer: 'My favorite colour is the best coloour ever its the color that looks like the color blue but is actually the color red'),
+  FAQ(id: 0, question: 'What is your favorite colour', answer: 'My favorite colour is the best coloour ever its the color that looks like the color blue but is actually the color red'),
+  FAQ(id: 0, question: 'What is your favorite colour', answer: 'My favorite colour is the best coloour ever its the color that looks like the color blue but is actually the color red'),
+  FAQ(id: 0, question: 'What is your favorite colour', answer: 'My favorite colour is the best coloour ever its the color that looks like the color blue but is actually the color red'),
+  FAQ(id: 0, question: 'Whats my your favorite colour', answer: 'My favorite colour is the best coloour ever its the color that looks like the color blue but is actually the color red'),
 ];
 
 class SupportPage extends StatelessWidget {
@@ -28,7 +28,7 @@ class SupportPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
             children: <Widget>[
-              PageTitle("Support", hasBackButton: true, onClickBackButton: _goBack,),
+              PageTitle('Support', hasBackButton: true, onClickBackButton: _goBack,),
               Expanded(
                 child:
                   ListView.separated(
@@ -42,7 +42,7 @@ class SupportPage extends StatelessWidget {
                       ),
                   ),
               ),
-              Text("Contact Us", style: Theme.of(context).primaryTextTheme.headline,),
+              Text('Contact Us', style: Theme.of(context).primaryTextTheme.headline,),
               Padding(
                 padding: EdgeInsets.all(15),
                 child:
@@ -51,15 +51,15 @@ class SupportPage extends StatelessWidget {
                      children: <Widget>[
                       Padding( 
                         padding: EdgeInsets.fromLTRB(ICON_HPADDING, ICON_TPADDING, ICON_HPADDING, ICON_BPADDING),
-                        child: IconButton(icon: Icon(FontAwesomeIcons.facebookMessenger, size: ICON_SIZE,), onPressed: () {launch("http://m.me/nowufb");})
+                        child: IconButton(icon: Icon(FontAwesomeIcons.facebookMessenger, size: ICON_SIZE,), onPressed: () {launch('http://m.me/nowufb');})
                       ),
                       Padding(
                           padding: EdgeInsets.fromLTRB(ICON_HPADDING, ICON_TPADDING, ICON_HPADDING, ICON_BPADDING),
-                        child: IconButton(icon: Icon(FontAwesomeIcons.envelopeOpen, size: ICON_SIZE,), onPressed: () {launch("mailto:lizzie@now-u.com?subject=Hi there");})
+                        child: IconButton(icon: Icon(FontAwesomeIcons.envelopeOpen, size: ICON_SIZE,), onPressed: () {launch('mailto:lizzie@now-u.com?subject=Hi there');})
                       ),
                       Padding( 
                         padding: EdgeInsets.fromLTRB(ICON_HPADDING, ICON_TPADDING, ICON_HPADDING, ICON_BPADDING),
-                        child: IconButton(icon: Icon(FontAwesomeIcons.pollH, size: ICON_SIZE,), onPressed: () {launch("");})
+                        child: IconButton(icon: Icon(FontAwesomeIcons.pollH, size: ICON_SIZE,), onPressed: () {launch('');})
                       ),
                      ], 
                   ),

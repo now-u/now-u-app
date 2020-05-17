@@ -42,17 +42,17 @@ class Campaigns {
   }
  
   Campaigns.init() {
-    print("Initalizing campaigns");
+    print('Initalizing campaigns');
     Api api = locator<Api>();
     List<Campaign> camps; 
     api.getCampaigns().then(
       (Campaigns cs) {
         activeCampaigns = cs.getActiveCampaigns();
-        print("got campaigns");
+        print('got campaigns');
         print(activeCampaigns);
       },
       onError: (error) {
-        print("There was an error when getting campaigns");
+        print('There was an error when getting campaigns');
         readCampaingsFromAssets().then((String s) {
           camps = (jsonDecode(s) as List).map((e) => Campaign.fromJson(e)).toList().cast<Campaign>();
           activeCampaigns = camps ?? <Campaign>[];
@@ -78,7 +78,7 @@ class Campaigns {
   
   Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();
-    print("Directory path is");
+    print('Directory path is');
     print(directory.path);
     return directory.path;
   }

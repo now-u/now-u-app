@@ -56,7 +56,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if(state == AppLifecycleState.resumed){
-      print("Tabs resumed");
+      print('Tabs resumed');
       //handleDynamicLinks(
       //  changePage
       //);
@@ -64,7 +64,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
   }
 
   void changePage(TabPage page, {int subIndex}) {
-    print("Changing page");
+    print('Changing page');
     print(page);
     print(subIndex);
     setState(() {
@@ -77,29 +77,29 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
   //_currentIndex = widget.currentIndex;
-  //print("When drawing tabs view the current index is");
+  //print('When drawing tabs view the current index is');
   //print(_currentIndex);
   // TODO add an enum so pages numbers can change
   List<Map> _pages = <Map>[
     {
       'page': CampaignPage(false, campaignId: _subIndex), 
       'icon': Icon(Icons.check),
-      'title': Text("Campaigns"),
+      'title': Text('Campaigns'),
     },
     {
       'page': ActionPage(), 
       'icon': Icon(Icons.check),
-      'title': Text("Actions"),
+      'title': Text('Actions'),
     },
     {
       'page': Home(changePage), 
       'icon': Icon(Icons.home),
-      'title': Text("Home"),
+      'title': Text('Home'),
     },
     {
       'page': NewsPage(), 
       'icon': Icon(FontAwesomeIcons.newspaper),
-      'title': Text("News"),
+      'title': Text('News'),
     },
     {
       'page': Profile(currentPage: _subIndex, changeTabPage: changePage),
@@ -110,7 +110,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
   List <BottomNavigationBarItem> generateBottomNavBarItems() {
     List<BottomNavigationBarItem> items = [];
     for (int i = 0; i < _pages.length; i++) {
-     print("Doing thing" + i.toString());
+     print('Doing thing' + i.toString());
      items.add(
       new BottomNavigationBarItem(
         icon: _pages[i]['icon'],

@@ -17,7 +17,7 @@ class QuizStartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Quiz"),
+        title: Text('Quiz'),
       ),
       body: 
         Column(
@@ -29,7 +29,7 @@ class QuizStartPage extends StatelessWidget {
                 builder: (BuildContext context, AsyncSnapshot<Quiz> snapshot) {
                  if (snapshot.hasData) {
                    return DarkButton(
-                     "Start Quiz",
+                     'Start Quiz',
                      onPressed: (){
                         Navigator.push(
                          context,

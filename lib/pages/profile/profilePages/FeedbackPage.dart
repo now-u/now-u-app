@@ -24,17 +24,17 @@ FeedbackPage(goBack) {
       body:
       Column(
         children: <Widget>[
-          PageTitle("Feedback", hasBackButton: true, onClickBackButton: _goBack,),
+          PageTitle('Feedback', hasBackButton: true, onClickBackButton: _goBack,),
 
           Center(
             heightFactor: 10,
 
             child: Container(
               height: 15.0,
-              child: IconButton(icon: Icon(FontAwesomeIcons.envelopeOpen, size: ICON_SIZE), onPressed: () {launch("mailto:lizzie@now-u.com?subject=Hi there");})
+              child: IconButton(icon: Icon(FontAwesomeIcons.envelopeOpen, size: ICON_SIZE), onPressed: () {launch('mailto:lizzie@now-u.com?subject=Hi there');})
             ),
           ),
-          Text ("Please Leave Us Some Feedback", style: TextStyle(fontSize: 18)),
+          Text ('Please Leave Us Some Feedback', style: TextStyle(fontSize: 18)),
           ],
         ),
       );

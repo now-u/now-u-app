@@ -25,7 +25,7 @@ AppBar CustomAppBar(
           child: 
           !hasBackButton ? Container() :
           TextButton(
-            backButtonText ?? "Back",
+            backButtonText ?? 'Back',
             iconLeft: true,
             onClick: (){
               Navigator.pop(context);
