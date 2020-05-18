@@ -325,7 +325,6 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                   child: ActionSelectionItem(
                     campaign: campaign,
                     action: campaign.getActions()[index],
-                    model: model,
                     extraOnTap: (){
                       _controller.pause();
                     }

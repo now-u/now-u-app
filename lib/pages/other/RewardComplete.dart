@@ -111,7 +111,7 @@ class RewardCompletePage extends StatelessWidget {
                         Navigator.push(
                           context, 
                           //CustomRoute(builder: (context) => App(currentIndex: 1,))
-                          CustomRoute(builder: (context) => TabsPage(model, currentIndex: 1))
+                          CustomRoute(builder: (context) => TabsPage(currentPage: TabPage.Home))
                         );
                       },
                     ),

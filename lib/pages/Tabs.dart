@@ -21,14 +21,9 @@ enum TabPage {
 
 class TabsPage extends StatefulWidget {
 
-  ViewModel model;
-  int currentIndex;
+  final TabPage currentPage;
 
-  TabsPage(this.model, {currentIndex}){
-    print("In constructor");
-    print(currentIndex);
-    this.currentIndex = currentIndex ?? 0;
-  }
+  TabsPage({this.currentPage});
 
   @override
   _TabsPageState createState() => _TabsPageState();
@@ -37,13 +32,13 @@ class TabsPage extends StatefulWidget {
 
 class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
 
-  int _currentIndex;
+  TabPage currentPage;
   int _subIndex;
 
   @override
   void initState() {
     print("initing state");
-    _currentIndex = widget.currentIndex;
+    currentPage = widget.currentPage;
     _subIndex = null;
     super.initState();
     WidgetsBinding.instance.addObserver(this);
@@ -73,7 +68,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
     print(page);
     print(subIndex);
     setState(() {
-      _currentIndex = page.index;
+      currentPage = page;
       _subIndex = subIndex;
     }); 
   }
@@ -97,7 +92,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
       'title': Text("Actions"),
     },
     {
-      'page': Home(widget.model, changePage), 
+      'page': Home(changePage), 
       'icon': Icon(Icons.home),
       'title': Text("Home"),
     },
@@ -107,7 +102,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
       'title': Text("News"),
     },
     {
-      'page': Profile(widget.model, currentPage: _subIndex,),
+      'page': Profile(currentPage: _subIndex,),
       'icon': Icon(Icons.menu),
       'title': Text("Profile"),
     },
@@ -127,9 +122,9 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
   }
     return  
           Scaffold(
-              body: _pages[_currentIndex]['page'],
+              body: _pages[currentPage.index]['page'],
               bottomNavigationBar: BottomNavigationBar(
-                currentIndex: _currentIndex, 
+                currentIndex: currentPage.index, 
                 type: BottomNavigationBarType.fixed, 
                 iconSize: 25,
                 unselectedFontSize: 13,
@@ -151,7 +146,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
                 //],
                 onTap: (index) {
                   setState(() {
-                    _currentIndex = index; 
+                    currentPage = TabPage.values[index]; 
                     _subIndex = null;
                   }); 
                 },

@@ -3,7 +3,6 @@ import 'dart:math' as math;
 
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
-import 'package:app/models/ViewModel.dart';
 
 import 'package:app/pages/other/ActionInfo.dart';
 
@@ -59,13 +58,11 @@ class SelectionItem extends StatelessWidget {
 class ActionSelectionItem extends StatelessWidget {
   final CampaignAction action;
   final Campaign campaign;
-  final ViewModel model;
   final Function extraOnTap;
 
   ActionSelectionItem({
     this.action, 
     this.campaign,
-    this.model,
     this.extraOnTap,
   });
 
@@ -76,7 +73,7 @@ class ActionSelectionItem extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context, 
-          CustomRoute(builder: (context) => ActionInfo(action, campaign, model))
+          CustomRoute(builder: (context) => ActionInfo(action, campaign))
         );
       },   
       child:
@@ -119,7 +116,7 @@ class ActionSelectionItem extends StatelessWidget {
                        }
                        Navigator.push(
                          context, 
-                         CustomRoute(builder: (context) => ActionInfo(action, campaign, model))
+                         CustomRoute(builder: (context) => ActionInfo(action, campaign))
                        );
                      },   
                     )

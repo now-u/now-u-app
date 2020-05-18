@@ -288,7 +288,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             print("Before splash screen user is");
             print(viewModel.user.getName());
             print(currentIndex);
-            return TabsPage(viewModel, currentIndex: currentIndex);
+            return TabsPage(currentPage: TabPage.Home);
           },
       );
   }

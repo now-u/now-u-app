@@ -1,3 +1,4 @@
+import 'package:app/pages/Tabs.dart';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,26 +9,26 @@ import 'package:app/assets/routes/customRoute.dart';
 
 import 'package:app/models/User.dart';
 import 'package:app/models/ViewModel.dart';
+import 'package:app/models/State.dart';
 
 import 'package:app/pages/profile/ProfileTile.dart';
 
 import 'package:app/pages/profile/profilePages/DetailsPage.dart';
 import 'package:app/pages/profile/profilePages/ProgressPage.dart';
-import 'package:app/pages/profile/profilePages/NetworkPage.dart';
 import 'package:app/pages/profile/profilePages/RewardsPage.dart';
 import 'package:app/pages/profile/profilePages/OffersPage.dart';
 import 'package:app/pages/profile/profilePages/FeedbackPage.dart';
 import 'package:app/pages/profile/profilePages/SupportPage.dart';
-
 import 'package:app/pages/other/quiz/quizStart.dart';
+
+import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 
 
 class Profile extends StatefulWidget {
-  final ViewModel model;
   final int currentPage;
   Profile(
-   this.model,
    {
    this.currentPage,
    }
@@ -39,12 +40,9 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   User user;
-  ViewModel model;
   var _currentPage;
   @override
   void initState() {
-    model = widget.model;
-    user = widget.model.user;
     print(widget.currentPage);
     _currentPage = widget.currentPage ?? 0;
     super.initState();
@@ -58,52 +56,71 @@ class _ProfileState extends State<Profile> {
     });
   };
 
-  var profileTiles = <Map> [
-      {  'profileTile': ProfileTile("Details", FontAwesomeIcons.solidUser) , 'page': DetailsPage(goBack: goBack, ), },
-      {  'profileTile': ProfileTile("Progress", FontAwesomeIcons.spinner), 'page':ProgressPage(goBack, widget.model)},
-      {  'profileTile': ProfileTile("Network", FontAwesomeIcons.users) },
-      {  'profileTile': ProfileTile("Rewards", FontAwesomeIcons.ribbon), 'page' : RewardsPage(goBack, widget.model) },
-      {  'profileTile': ProfileTile("Offers", FontAwesomeIcons.percent), 'page': OffersPage(goBack) },
-      {  'profileTile': ProfileTile("Feedback", FontAwesomeIcons.solidComment), 'page': FeedbackPage(goBack) },
-      {  'profileTile': ProfileTile("Support", FontAwesomeIcons.question), 'page':SupportPage(goBack) },
-  ];
-
-    return Scaffold(
-        appBar: CustomAppBar(
-          text: "Menu",
-          hasBackButton: false,
-          context: context,
-        ),
-        body: _currentPage == 0 ? 
-        Column(
-            children: <Widget>[
-              Expanded(
-                child:
-                  ListView.separated(
-                    separatorBuilder: (context, index) => ProfileDividor(),
-                    itemCount: profileTiles.length,
-                    itemBuilder: (context, index) => 
-                      GestureDetector(
-                        onTap: () => setState(() {
-                          _currentPage = index + 1;
-                        }),
-                        child: profileTiles[index]["profileTile"],
-                      ),
-                  ),
+    return StoreConnector<AppState, ViewModel>(
+        converter: (Store<AppState> store) => ViewModel.create(store),
+        builder: (BuildContext context, ViewModel viewModel) {
+          var profileTiles = <Map> [
+              {  'profileTile': ProfileTile("Home", FontAwesomeIcons.solidUser) , 'index': TabPage.Home, },
+              {  'profileTile': ProfileTile("Details", FontAwesomeIcons.solidUser) , 'page': DetailsPage(goBack: goBack, ), },
+              {  'profileTile': ProfileTile("Progress", FontAwesomeIcons.spinner), 'page':ProgressPage(goBack, viewModel)},
+              {  'profileTile': ProfileTile("Network", FontAwesomeIcons.users) },
+              {  'profileTile': ProfileTile("Rewards", FontAwesomeIcons.ribbon), 'page' : RewardsPage(goBack, viewModel) },
+              {  'profileTile': ProfileTile("Offers", FontAwesomeIcons.percent), 'page': OffersPage(goBack) },
+              {  'profileTile': ProfileTile("Feedback", FontAwesomeIcons.solidComment), 'page': FeedbackPage(goBack) },
+              {  'profileTile': ProfileTile("Support", FontAwesomeIcons.question), 'page':SupportPage(goBack) },
+          ];
+          user = viewModel.user;
+          return Scaffold(
+              appBar: CustomAppBar(
+                text: "Menu",
+                hasBackButton: false,
+                context: context,
               ),
-              GestureDetector(
-                child: ProfileTile("Dev Tools", FontAwesomeIcons.code),
-                onTap: () {
-                  Navigator.push(
-                   context,
-                   CustomRoute(builder: (context) => QuizStartPage(0))
-                  );
-                },
-              ),
-            ],
-          )
-        : profileTiles[_currentPage - 1]["page"]
+              body: Container(
+                color: Color.fromRGBO(238,238,238,1),
+                child: 
+                _currentPage == 0 ? 
+                Column(
+                  children: <Widget>[
+                    Expanded(
+                      child:
+                        ListView.separated(
+                          separatorBuilder: (context, index) => ProfileDividor(),
+                          itemCount: profileTiles.length,
+                          itemBuilder: (context, index) => 
+                            GestureDetector(
+                              onTap: () => setState(() {
+                                  if (profileTiles[index]["profileTile"] == null) {
+                                    //Navigator.push(
+                                    // context,
+                                    // CustomRoute(builder: (context) => changePage(profileTiles[index]['index']))
+                                    //);
+                                  }
+                                  else {
+                                    _currentPage = index + 1;
+                                  }
+                              }),
+                              child: profileTiles[index]["profileTile"],
+                            ),
+                        ),
+                    ),
+                    GestureDetector(
+                      child: ProfileTile("Dev Tools", FontAwesomeIcons.code),
+                      onTap: () {
+                        Navigator.push(
+                         context,
+                         CustomRoute(builder: (context) => QuizStartPage(0))
+                        );
+                      },
+                    ),
+                  ],
+                )
+              : profileTiles[_currentPage - 1]["page"]
+            )
+          );
+        },
     );
+
   }
 }
 

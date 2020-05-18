@@ -44,7 +44,7 @@ class ProgressPage extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                CustomRoute(builder: (context) => TabsPage(model, currentIndex: 0,))
+                CustomRoute(builder: (context) => TabsPage(currentPage: TabPage.Campaigns,))
               );
             },
           ),
@@ -65,7 +65,7 @@ class ProgressPage extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                CustomRoute(builder: (context) => TabsPage(model, currentIndex: 0,))
+                CustomRoute(builder: (context) => TabsPage(currentPage: TabPage.Campaigns,))
               );
             },
           ),
