@@ -1,4 +1,3 @@
-import 'package:app/pages/Tabs.dart';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,8 +11,10 @@ import 'package:app/models/ViewModel.dart';
 import 'package:app/models/State.dart';
 
 import 'package:app/pages/profile/ProfileTile.dart';
+import 'package:app/pages/Tabs.dart';
 
 import 'package:app/pages/profile/profilePages/DetailsPage.dart';
+import 'package:app/pages/profile/profilePages/AboutPage.dart';
 import 'package:app/pages/profile/profilePages/ProgressPage.dart';
 import 'package:app/pages/profile/profilePages/RewardsPage.dart';
 import 'package:app/pages/profile/profilePages/OffersPage.dart';
@@ -52,23 +53,18 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-  GestureTapCallback goBack = () {
-    setState(() {
-      _currentPage = 0;  
-    });
-  };
-
+    
     return StoreConnector<AppState, ViewModel>(
         converter: (Store<AppState> store) => ViewModel.create(store),
         builder: (BuildContext context, ViewModel viewModel) {
           var profileTiles = <Map> [
               {  'profileTile': ProfileTile("Home", FontAwesomeIcons.home) , 'tabPage': TabPage.Home, },
-              {  'profileTile': ProfileTile("Profile", FontAwesomeIcons.userCircle) , 'page': DetailsPage(goBack: goBack, ), },
+              {  'profileTile': ProfileTile("Profile", FontAwesomeIcons.userCircle) , 'page': DetailsPage(), },
               {  'profileTile': ProfileTile("Campaigns", FontAwesomeIcons.bullhorn) , 'tabPage': TabPage.Campaigns, },
               {  'profileTile': ProfileTile("Actions", FontAwesomeIcons.clipboardCheck) , 'tabPage': TabPage.Actions, },
               {  'profileTile': ProfileTile("News", FontAwesomeIcons.newspaper) , 'tabPage': TabPage.News, },
               {  'profileTile': ProfileTile("Partners", FontAwesomeIcons.building) , 'page': null, },
-              {  'profileTile': ProfileTile("About", FontAwesomeIcons.infoCircle) , 'page': null, },
+              {  'profileTile': ProfileTile("About", FontAwesomeIcons.infoCircle) , 'page': AboutPage(), },
               
               // Old Pages
               //{  'profileTile': ProfileTile("Details", FontAwesomeIcons.solidUser) , 'page': DetailsPage(goBack: goBack, ), },
@@ -89,7 +85,6 @@ class _ProfileState extends State<Profile> {
               body: Container(
                 color: Color.fromRGBO(238,238,238,1),
                 child: 
-                _currentPage == 0 ? 
                 Column(
                   children: <Widget>[
                     Expanded(
@@ -116,7 +111,10 @@ class _ProfileState extends State<Profile> {
                                     widget.changeTabPage(profileTiles[index]["tabPage"]);
                                   }
                                   else {
-                                    _currentPage = index + 1;
+                                    Navigator.push(
+                                      context,
+                                      CustomRoute(builder: (context) => profileTiles[index]["page"])
+                                    );
                                   }
                               }),
                               child: profileTiles[index]["profileTile"],
@@ -134,7 +132,6 @@ class _ProfileState extends State<Profile> {
                     ),
                   ],
                 )
-              : profileTiles[_currentPage - 1]["page"]
             )
           );
         },

@@ -104,7 +104,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
     {
       'page': Profile(currentPage: _subIndex, changeTabPage: changePage),
       'icon': Icon(Icons.menu),
-      'title': Text("Profile"),
+      'title': Text("Menu"),
     },
   ];
   List <BottomNavigationBarItem> generateBottomNavBarItems() {

@@ -17,13 +17,6 @@ import 'package:redux/redux.dart';
 
 
 class DetailsPage extends StatefulWidget {
-  GestureTapCallback _goBack;
-  
-  DetailsPage({
-    @required goBack, 
-  }) {
-    _goBack = goBack;
-  }
   @override
   _DetailsPageState createState() => _DetailsPageState();
 }
@@ -48,7 +41,7 @@ class _DetailsPageState extends State<DetailsPage> {
             body: 
               Column(
                  children: <Widget>[
-                  PageTitle("My Details", hasBackButton: true, onClickBackButton: widget._goBack,),
+                  PageTitle("My Details", hasBackButton: true, onClickBackButton: (){},),
                   Expanded(
                     child: 
                       ListView.builder(
