@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 
-const double ICON_PADDING = 60;
-const double ITEM_HORIZONTAL = 30;
-const double ITEM_VERTICAL = 30;
+const double ICON_PADDING = 20;
+const double ITEM_HORIZONTAL = 20;
+const double ITEM_VERTICAL = 25;
 
 class ProfileTile extends StatelessWidget {
-  IconData _iconData;
-  String _text;
+  final IconData iconData;
+  final String text;
 
-  ProfileTile(text, iconData) {
-    _text = text; 
-    _iconData = iconData;
-  }
+  ProfileTile(this.text, this.iconData);
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -23,9 +21,13 @@ class ProfileTile extends StatelessWidget {
           children: <Widget>[
             Padding( 
                 padding: EdgeInsets.only(right: ICON_PADDING),
-                child: Icon(_iconData, size: 50,)
+                child: Icon(
+                  iconData, 
+                  size: 25,
+                  color: Theme.of(context).primaryColor,
+                )
             ),
-            Text(_text, style: Theme.of(context).primaryTextTheme.headline),
+            Text(text, style: Theme.of(context).primaryTextTheme.headline4),
           ],
         ),
       )

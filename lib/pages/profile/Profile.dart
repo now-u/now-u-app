@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app/assets/components/pageTitle.dart';
+import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/routes/customRoute.dart';
 
 import 'package:app/models/User.dart';
@@ -67,14 +68,19 @@ class _ProfileState extends State<Profile> {
       {  'profileTile': ProfileTile("Support", FontAwesomeIcons.question), 'page':SupportPage(goBack) },
   ];
 
-    return _currentPage == 0 ? 
+    return Scaffold(
+        appBar: CustomAppBar(
+          text: "Menu",
+          hasBackButton: false,
+          context: context,
+        ),
+        body: _currentPage == 0 ? 
         Column(
             children: <Widget>[
-              PageTitle("Your Profile"),
               Expanded(
                 child:
                   ListView.separated(
-                    separatorBuilder: (context, index) => Divider(),
+                    separatorBuilder: (context, index) => ProfileDividor(),
                     itemCount: profileTiles.length,
                     itemBuilder: (context, index) => 
                       GestureDetector(
@@ -97,10 +103,21 @@ class _ProfileState extends State<Profile> {
             ],
           )
         : profileTiles[_currentPage - 1]["page"]
-        ;
+    );
   }
 }
 
 Text sectionTitle(String t, BuildContext context) {
   return Text(t, style: Theme.of(context).primaryTextTheme.headline);
+}
+
+class ProfileDividor extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity, 
+      height: 1,
+      color: Color.fromRGBO(187,187,187,1),
+    );
+  }
 }
