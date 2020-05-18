@@ -31,7 +31,7 @@ class TabsPage extends StatefulWidget {
 
 
 class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
-
+  
   TabPage currentPage;
   int _subIndex;
 
@@ -102,7 +102,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
       'title': Text("News"),
     },
     {
-      'page': Profile(currentPage: _subIndex,),
+      'page': Profile(currentPage: _subIndex, changeTabPage: changePage),
       'icon': Icon(Icons.menu),
       'title': Text("Profile"),
     },
@@ -130,20 +130,6 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
                 unselectedFontSize: 13,
                 selectedFontSize: 15,
                 items: generateBottomNavBarItems(),
-                //[
-                //  BottomNavigationBarItem(
-                //      icon: Icon(Icons.check),
-                //      title: Text("Campaings"),
-                //  ),
-                //  BottomNavigationBarItem(
-                //      icon: Icon(Icons.home),
-                //      title: Text("Home"),
-                //  ),
-                //  BottomNavigationBarItem(
-                //      icon: Icon(Icons.menu),
-                //      title: Text("Profile"),
-                //  ),
-                //],
                 onTap: (index) {
                   setState(() {
                     currentPage = TabPage.values[index]; 

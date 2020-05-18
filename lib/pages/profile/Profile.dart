@@ -28,9 +28,11 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 class Profile extends StatefulWidget {
   final int currentPage;
+  final Function changeTabPage;
   Profile(
    {
    this.currentPage,
+   @required this.changeTabPage,
    }
   );
 
@@ -60,14 +62,22 @@ class _ProfileState extends State<Profile> {
         converter: (Store<AppState> store) => ViewModel.create(store),
         builder: (BuildContext context, ViewModel viewModel) {
           var profileTiles = <Map> [
-              {  'profileTile': ProfileTile("Home", FontAwesomeIcons.solidUser) , 'index': TabPage.Home, },
-              {  'profileTile': ProfileTile("Details", FontAwesomeIcons.solidUser) , 'page': DetailsPage(goBack: goBack, ), },
-              {  'profileTile': ProfileTile("Progress", FontAwesomeIcons.spinner), 'page':ProgressPage(goBack, viewModel)},
-              {  'profileTile': ProfileTile("Network", FontAwesomeIcons.users) },
-              {  'profileTile': ProfileTile("Rewards", FontAwesomeIcons.ribbon), 'page' : RewardsPage(goBack, viewModel) },
-              {  'profileTile': ProfileTile("Offers", FontAwesomeIcons.percent), 'page': OffersPage(goBack) },
-              {  'profileTile': ProfileTile("Feedback", FontAwesomeIcons.solidComment), 'page': FeedbackPage(goBack) },
-              {  'profileTile': ProfileTile("Support", FontAwesomeIcons.question), 'page':SupportPage(goBack) },
+              {  'profileTile': ProfileTile("Home", FontAwesomeIcons.home) , 'tabPage': TabPage.Home, },
+              {  'profileTile': ProfileTile("Profile", FontAwesomeIcons.userCircle) , 'page': DetailsPage(goBack: goBack, ), },
+              {  'profileTile': ProfileTile("Campaigns", FontAwesomeIcons.bullhorn) , 'tabPage': TabPage.Campaigns, },
+              {  'profileTile': ProfileTile("Actions", FontAwesomeIcons.clipboardCheck) , 'tabPage': TabPage.Actions, },
+              {  'profileTile': ProfileTile("News", FontAwesomeIcons.newspaper) , 'tabPage': TabPage.News, },
+              {  'profileTile': ProfileTile("Partners", FontAwesomeIcons.building) , 'page': null, },
+              {  'profileTile': ProfileTile("About", FontAwesomeIcons.infoCircle) , 'page': null, },
+              
+              // Old Pages
+              //{  'profileTile': ProfileTile("Details", FontAwesomeIcons.solidUser) , 'page': DetailsPage(goBack: goBack, ), },
+              //{  'profileTile': ProfileTile("Progress", FontAwesomeIcons.spinner), 'page':ProgressPage(goBack, viewModel)},
+              //{  'profileTile': ProfileTile("Network", FontAwesomeIcons.users) },
+              //{  'profileTile': ProfileTile("Rewards", FontAwesomeIcons.ribbon), 'page' : RewardsPage(goBack, viewModel) },
+              //{  'profileTile': ProfileTile("Offers", FontAwesomeIcons.percent), 'page': OffersPage(goBack) },
+              //{  'profileTile': ProfileTile("Feedback", FontAwesomeIcons.solidComment), 'page': FeedbackPage(goBack) },
+              //{  'profileTile': ProfileTile("Support", FontAwesomeIcons.question), 'page':SupportPage(goBack) },
           ];
           user = viewModel.user;
           return Scaffold(
@@ -90,11 +100,20 @@ class _ProfileState extends State<Profile> {
                           itemBuilder: (context, index) => 
                             GestureDetector(
                               onTap: () => setState(() {
-                                  if (profileTiles[index]["profileTile"] == null) {
+                                  if (profileTiles[index]["page"] == null) {
+                                    // TODO might switch to this style as it seems to rebuild anyway
+                                    // TODO fix the fact that it rebuilds stuff when switching page
                                     //Navigator.push(
                                     // context,
                                     // CustomRoute(builder: (context) => changePage(profileTiles[index]['index']))
                                     //);
+                                    //Navigator.of(context).push(
+                                    //  CustomRoute(builder: (BuildContext context) {
+                                    //    return TabsPage(currentPage: TabPage.Home);
+                                    //  })
+                                    //);
+                                    //Navigator.pushNamed(context, '/home');
+                                    widget.changeTabPage(profileTiles[index]["tabPage"]);
                                   }
                                   else {
                                     _currentPage = index + 1;

@@ -118,6 +118,8 @@ class _AppState extends State<App> {
               MyHomePage(store, deepLinkPageIndex),
           ),
           'intro': (context) => IntroPage(),
+          //'/campaign': (context) => TabsPage(currentPage: TabPage.Campaigns),
+          //'/home': (context) => TabsPage(currentPage: TabPage.Home),
           //TODO add login point
           //'logoin': 
           //TODO splash screen should be a route
