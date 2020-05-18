@@ -53,7 +53,7 @@ class AboutPage extends StatelessWidget {
          
          ListHeading("About"),
          SelectionItem(
-          "Follow us on Twitter", 
+          "FAQ", 
           onClick: () {
             Navigator.push(
               context, 
@@ -63,7 +63,14 @@ class AboutPage extends StatelessWidget {
             );
           },
          ),
-        
+         SelectionItem(
+           "Send us a message", 
+           onClick: () {launch("http://m.me/nowufb");},
+         ),
+         SelectionItem(
+           "Send us an email", 
+           onClick: () {launch("mailto:hello@now-u.com?subject=Hi there");},
+         ),
        ], 
       ), 
     );
@@ -79,10 +86,14 @@ class ListItem extends StatelessWidget {
     return Container(
       color: Colors.white,
       child: Padding(
-        padding: EdgeInsets.all(PADDING),
-        child: SelectionItem(
-          text,
-          onClick: onClick,
+        padding: EdgeInsets.all(0),
+        child: Container(
+          margin: EdgeInsets.all(0),
+          child: SelectionItem(
+            text,
+            onClick: onClick,
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          )
         ),
       )
     );

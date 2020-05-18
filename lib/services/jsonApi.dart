@@ -3,6 +3,7 @@ import 'package:app/services/api.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Article.dart';
+import 'package:app/models/FAQ.dart';
 
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -48,9 +49,26 @@ class JsonApi implements Api {
     return c;
   }
 
+  @override
   Future<Article> getVideoOfTheDay() async {
     String data = await rootBundle.loadString('assets/json/articles.json');
     Article a = Article.fromJson((json.decode(data) as List)[0]);
     return a; 
+  }
+  
+  @override
+  Future<List<FAQ>> getFAQs() async {
+    var response = await http.get(domainPrefix + "faqs");
+    if (response.statusCode == 200) {
+      print("We got a 200 when getting faqs!");
+      List<FAQ> faqs = json.decode(response.body)['data'].map((e) => FAQ.fromJson(e)).toList().cast<FAQ>();
+      print("Here is the faqs");
+      print(faqs);
+      return faqs;
+    }
+    else {
+      print("We got an error whilst doing the http request");
+      return Future.error("Error getting faqs in http api", StackTrace.fromString("The stack trace is"));
+    }
   }
 } 
