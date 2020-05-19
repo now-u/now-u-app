@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
+import 'package:app/services/storage.dart';
+
 class LoginPage extends StatefulWidget {
   static String tag = "login page";
   @override
@@ -13,6 +15,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   String _link;
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _repositry = Repository();
 
   @override
   void initState() {
@@ -34,7 +37,10 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         if (value.isEmpty) return "Email cannot be empty";
         return null;
       },
-      onSaved: (value) => _email = value,
+      onSaved: (value) {
+        _email = value;
+        _repositry.setEmail(value);
+      },
       decoration: InputDecoration(
         hintText: 'Email',
         prefixIcon: Icon(Icons.mail),
@@ -133,9 +139,11 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   Future<void> _signInWithEmailAndLink() async {
     final FirebaseAuth user = FirebaseAuth.instance;
     bool validLink = await user.isSignInWithEmailLink(_link);
+    print(_email);
+    _email = await _repositry.getEmail();
+    print(_email);
     if (validLink) {
       try {
-        print(_email);
         print(_link);
         await user.signInWithEmailAndLink(email: _email, link: _link);
       } catch (e) {

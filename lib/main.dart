@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:app/pages/Tabs.dart';
 import 'package:app/pages/other/SplashScreen.dart';
 import 'package:app/pages/intro/IntroPage.dart';
+import 'package:app/pages/login/login.dart';
 
 import 'package:app/assets/dynamicLinks.dart';
 
@@ -106,18 +107,17 @@ class _AppState extends State<App> {
               //store.state.campaigns == null 
               //|| store.state.campaigns.getActiveCampaigns() == null
               //|| store.state.campaigns.activeLength() < 3
-              store.state.loading
-              ?
-              SplashScreen()
-              //Container(
-              //  color: Colors.red,
-              //  height: MediaQuery.of(context).size.height,
-              //  width: MediaQuery.of(context).size.width,
-              //)
-              :
-              MyHomePage(store, deepLinkPageIndex),
+              //store.state.loading
+              //store.state.user.getId() == -1
+              //?
+              ////SplashScreen()
+              //LoginPage()
+              //:
+              MyHomePage(deepLinkPageIndex),
           ),
           'intro': (context) => IntroPage(),
+          'login': (context) => LoginPage(),
+          'home': (context) => MyHomePage(3),
           //'/campaign': (context) => TabsPage(currentPage: TabPage.Campaigns),
           //'/home': (context) => TabsPage(currentPage: TabPage.Home),
           //TODO add login point
@@ -236,10 +236,9 @@ class _AppState extends State<App> {
 }
 
 class MyHomePage extends StatefulWidget {
-  final DevToolsStore<AppState> store;
   final int currentIndex;
 
-  MyHomePage(this.store, this.currentIndex);
+  MyHomePage(this.currentIndex);
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -251,7 +250,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    store = widget.store;
     currentIndex = widget.currentIndex;
     super.initState();
     WidgetsBinding.instance.addObserver(this);

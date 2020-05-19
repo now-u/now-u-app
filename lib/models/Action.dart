@@ -146,9 +146,7 @@ CampaignActionType campaignActionTypeFromString (String s) {
   // Apparently if we return early it just doesnt do the return? Not sure why that would be but this seems to fix it
   CampaignActionType t = CampaignActionType.Other;
   campaignActionTypeData.forEach((key, value) {
-    print("Checking if " + value['name'] + " == " + s);
     if (value['name'] == s) {
-      print("MATCH");
       t = key;
     }
   });
