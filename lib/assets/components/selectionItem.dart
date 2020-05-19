@@ -48,9 +48,7 @@ class SelectionItem extends StatelessWidget {
             child: Icon(
               Icons.chevron_left,
               size: 25,
-              color: arrowColor == null
-                  ? Theme.of(context).primaryColor
-                  : arrowColor,
+              color: arrowColor ?? Theme.of(context).primaryColor,
             ),
           ),
         ],
