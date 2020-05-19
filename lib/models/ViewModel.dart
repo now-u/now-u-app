@@ -37,9 +37,13 @@ class ViewModel {
       store.dispatch(UpdateUserDetails(user));
     }
 
+    _onStartUp() {
+      store.dispatch(StartUp());
+    }
+
     return ViewModel(
       campaigns: store.state.campaigns,
-      user: store.state.user,
+      user: store.state.userState.user,
       api: store.state.api,
       onSelectCampaigns: _onSelectCampaigns,
       onCompleteAction: _onCompleteAction,

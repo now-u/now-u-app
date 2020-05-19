@@ -6,6 +6,8 @@ import 'package:app/services/storage.dart';
 
 class LoginPage extends StatefulWidget {
   static String tag = "login page";
+  final String deeplink;
+  LoginPage({this.deeplink});
   @override
   LoginPageState createState() => new LoginPageState();
 }
@@ -15,12 +17,25 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   String _link;
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _repositry = Repository();
+  final _repositry = StorageRepository();
 
   @override
   void initState() {
     super.initState();
+    if (widget.deeplink != null) {
+      _link = widget.deeplink;
+      _signInWithEmailAndLink();
+    }
     WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      print("On resumed email is");
+      print(_email);
+      _retrieveDynamicLink();
+    }
   }
 
   @override
@@ -111,14 +126,14 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
     return true;
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      print("On resumed email is");
-      print(_email);
-      _retrieveDynamicLink();
-    }
-  }
+  //@override
+  //void didChangeAppLifecycleState(AppLifecycleState state) {
+  //  if (state == AppLifecycleState.resumed) {
+  //    print("On resumed email is");
+  //    print(_email);
+  //    _retrieveDynamicLink();
+  //  }
+  //}
 
   Future<void> _retrieveDynamicLink() async {
     final PendingDynamicLinkData data =
@@ -145,7 +160,9 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
     if (validLink) {
       try {
         print(_link);
-        await user.signInWithEmailAndLink(email: _email, link: _link);
+        AuthResult result = await user.signInWithEmailAndLink(email: _email, link: _link);
+        print("We have a user!");
+        print(result.user);
       } catch (e) {
         print(e);
         _showDialog(e.toString());

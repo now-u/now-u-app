@@ -1,6 +1,7 @@
 import 'package:app/models/User.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaigns.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class InitaliseState {}
 
@@ -44,3 +45,13 @@ class LoadedUserDataAction {
 
   LoadedUserDataAction(this.user);
 }
+
+// User Actions
+class StartLoadingAction {}
+class LoginSuccessAction {
+  final FirebaseUser firebaseUser; 
+  LoginSuccessAction(this.firebaseUser);
+}
+
+// Logic called on startup 
+class StartUp {}

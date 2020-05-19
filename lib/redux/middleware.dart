@@ -57,10 +57,10 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
   }
   
   if (action is SelectCampaignsAction) {
-    saveUserToPrefs(store.state.user);
+    saveUserToPrefs(store.state.userState.user);
   }
   if (action is UpdateUserDetails) {
-    saveUserToPrefs(store.state.user);
+    saveUserToPrefs(store.state.userState.user);
   }
   //if (action is GetCampaingsAction) {
   //  print("the middleware is happening for get Campaings");
@@ -98,7 +98,7 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
   }
 
   if (action is GetUserDataAction) {
-    await loadUserFromPrefs(store.state.user).then((user) { 
+    await loadUserFromPrefs(store.state.userState.user).then((user) { 
           print("The user being loaded is:");
           print(user.getName());
           store.dispatch(LoadedUserDataAction(user)); 
@@ -106,8 +106,8 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
   }
   if (action is CompleteAction) {
     print("In middleware of completed Action user is");
-    print(store.state.user.getCompletedActions());
-    saveUserToPrefs(store.state.user);
+    print(store.state.userState.user.getCompletedActions());
+    saveUserToPrefs(store.state.userState.user);
   }
   if (action is GetDynamicLink) {
   }

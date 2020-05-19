@@ -6,11 +6,6 @@ enum ArticleType {
   Highlight,
 }
 
-enum ArticleCategory {
-  Test1,
-  Test2
-}
-
 class Articles {
 
   List<Article> articles;
@@ -34,7 +29,6 @@ class Article {
   int linkedAction;
   String videoLink;
   ArticleType type;
-  String category;
 
   Article({
     @required this.id, 
@@ -46,7 +40,6 @@ class Article {
     this.linkedAction, 
     this.videoLink, 
     this.type,
-    this.category
   });
 
   Article.fromJson(Map json) {
@@ -59,7 +52,6 @@ class Article {
     fullArticleLink = json['full_article_link'];
     videoLink       = json['video_link'];
     type            = json['type'];
-    category        = json['category'];
   }
   
   Map toJson() => {
@@ -72,7 +64,6 @@ class Article {
     'full_article_link': fullArticleLink,
     'video_link': videoLink,
     'type': type,
-    'category': category,
   };
 
   int getId() {
@@ -103,6 +94,9 @@ class Article {
     return type;
   }
   String getCategory() {
-    return category;
+    if (linkedCampaign != null) {
+      return linkedCampaign.toString();
+    }
+    return "General";
   }
 }

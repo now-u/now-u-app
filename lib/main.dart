@@ -6,7 +6,7 @@ import 'package:app/pages/other/SplashScreen.dart';
 import 'package:app/pages/intro/IntroPage.dart';
 import 'package:app/pages/login/login.dart';
 
-import 'package:app/assets/dynamicLinks.dart';
+//import 'package:app/assets/dynamicLinks.dart';
 
 import 'package:app/locator.dart';
 
@@ -72,6 +72,7 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   int deepLinkPageIndex = 1;
   Widget page;
+  Uri _deepLink;
   @override
   void initState() {
     // TODO: implement initState
@@ -101,18 +102,31 @@ class _AppState extends State<App> {
             onInit: (store) { 
               store.dispatch(GetCampaignsAction());
               store.dispatch(GetUserDataAction());
+              //_deepLink = await getLink(); 
+              // Dispatch getting deeplink
+
               //store.dispatch(InitaliseState);
             },
             builder: (BuildContext context, Store<AppState> store) =>
               //store.state.campaigns == null 
               //|| store.state.campaigns.getActiveCampaigns() == null
               //|| store.state.campaigns.activeLength() < 3
-              //store.state.loading
-              //store.state.user.getId() == -1
-              //?
-              ////SplashScreen()
-              //LoginPage()
+              store.state.loading ?
+              // Whilst loading show loading screen
+              SplashScreen() 
+              :
+              // If user has no email
+              store.state.userState.user.getEmail() == "" ?
+              //store.state.link != null && store.state.link.path == "emaillogin"?
+              //LoginPage(deeplink: store.state.link)
               //:
+              // If deeplink path is emaillogin
+              // Go to login page with deeplink
+              // Otherwise
+              // Go without deeplink login
+              LoginPage()
+              :
+              // Otherwise if the user has an email ie has been set up carry on
               MyHomePage(deepLinkPageIndex),
           ),
           'intro': (context) => IntroPage(),

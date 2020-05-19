@@ -9,7 +9,7 @@ import 'package:app/pages/campaign/CampaignPage.dart';
 import 'package:app/pages/news/NewsPage.dart';
 import 'package:app/pages/action/ActionPage.dart';
 
-import 'package:app/assets/dynamicLinks.dart';
+//import 'package:app/assets/dynamicLinks.dart';
 
 enum TabPage {
   Campaigns,
@@ -42,9 +42,9 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
     _subIndex = null;
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    handleDynamicLinks(
-      changePage
-    );
+    //handleDynamicLinks(
+    //  changePage
+    //);
   }
   
   @override
@@ -57,9 +57,9 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if(state == AppLifecycleState.resumed){
       print("Tabs resumed");
-      handleDynamicLinks(
-        changePage
-      );
+      //handleDynamicLinks(
+      //  changePage
+      //);
     }
   }
 

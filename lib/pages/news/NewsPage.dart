@@ -60,7 +60,7 @@ class _NewsListState extends State<NewsList> {
 
   bool searching;
   List<Article> articles;
-  ArticleCategory category;
+  String category;
   
   @override
   initState() {

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-class AuthProvider {
+class AuthenticationService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<void> sendSignInWithEmailLink(String email) async {
@@ -18,22 +18,6 @@ class AuthProvider {
 
   Future<AuthResult> signInWithEmailLink(String email, String link) async {
     return _auth.signInWithEmailAndLink(email: email, link: link);
-  }
-
-  Future<void> verifyPhoneNumber(
-      String phone,
-      PhoneCodeAutoRetrievalTimeout codeAutoRetrievalTimeout,
-      PhoneCodeSent codeSent,
-      Duration duration,
-      PhoneVerificationCompleted verificationCompleted,
-      PhoneVerificationFailed verificationFailed) async {
-    return _auth.verifyPhoneNumber(
-        phoneNumber: phone,
-        codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
-        codeSent: codeSent,
-        timeout: duration,
-        verificationCompleted: verificationCompleted,
-        verificationFailed: verificationFailed);
   }
 
   Future<AuthResult> signInWithCredential(AuthCredential credential) async {

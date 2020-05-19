@@ -7,7 +7,7 @@ import 'package:app/models/Campaigns.dart';
 AppState appStateReducer(AppState state, action) {
   return AppState(
     campaigns: state.campaigns,
-    user: userReducer(state.user, action),
+    userState: userStateReducer(state.userState, action),
     loading: loadingReducer(action) ?? state.loading,
     api: state.api,
   );
@@ -34,6 +34,16 @@ Campaigns campaignsReducer(Campaigns campaigns, action) {
   }
   return campaigns;
 }
+
+
+UserState userStateReducer(UserState userState, action) {
+  return UserState(
+    user: userReducer(userState.user, action),
+    isLoading: false,
+    loginError: false, 
+  );
+}
+
 
 User userReducer(User user, action) {
   if (action is SelectCampaignsAction) {
@@ -66,4 +76,3 @@ User userReducer(User user, action) {
   return user;
 
 }
-
