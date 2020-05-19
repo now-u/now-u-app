@@ -62,7 +62,7 @@ class Home extends StatelessWidget {
                     //ActionProgressTile(model.user.getCompletedActions().length, model.campaigns.getCampaignsFromIds(model.user.getSelectedCampaigns()).getActions().length),
 
                     HomeDividor(),
-                    sectionTitle("Actions", context),
+                    sectionTitle('Actions', context),
                     HomeActionTile(changePage),
 
                     HomeDividor(),
@@ -130,7 +130,7 @@ class HomeActionTile extends StatelessWidget {
                         ),
                     ),
                     HomeButton(
-                      text: "All actions",
+                      text: 'All actions',
                       changePage: changePage,
                       page: TabPage.Actions,
                     )
@@ -182,7 +182,7 @@ class ActionProgressTile extends StatelessWidget {
                            children: <Widget>[
                              Text(
                                (numberOfSelectedActions - numberOfCompletedAction).toString()
-                               + " actions left",
+                               + ' actions left',
                                style: textStyleFrom(
                                  Theme.of(context).primaryTextTheme.headline3,
                                  color: Colors.white,
@@ -199,7 +199,7 @@ class ActionProgressTile extends StatelessWidget {
                              Container(
                                width: MediaQuery.of(context).size.width * actionsHomeTileTextWidth - 5,
                                child: Text(
-                                 "You have completed " + numberOfCompletedAction.toString() + " of " + numberOfSelectedActions.toString() + " total actions from your active campaigns. Way to go!",
+                                 'You have completed ' + numberOfCompletedAction.toString() + ' of ' + numberOfSelectedActions.toString() + ' total actions from your active campaigns. Way to go!',
                                  textAlign: TextAlign.left,
                                  style: textStyleFrom(
                                    Theme.of(context).primaryTextTheme.bodyText1,

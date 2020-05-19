@@ -5,7 +5,7 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:app/services/storage.dart';
 
 class LoginPage extends StatefulWidget {
-  static String tag = "login page";
+  static String tag = 'login page';
   final String deeplink;
   LoginPage({this.deeplink});
   @override
@@ -49,7 +49,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
       validator: (value) {
-        if (value.isEmpty) return "Email cannot be empty";
+        if (value.isEmpty) return 'Email cannot be empty';
         return null;
       },
       onSaved: (value) {
@@ -70,7 +70,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         color: Colors.lightBlueAccent,
         textColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
-        child: Text("Send Verification Email"),
+        child: Text('Send Verification Email'),
         onPressed: (() async => await validateAndSave()
             ? _scaffoldKey.currentState.showSnackBar(snackBarEmailSent)
             : _scaffoldKey.currentState.showSnackBar(snackBarEmailNotSent)),
@@ -113,23 +113,23 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       user.sendSignInWithEmailLink(
           email: _email,
           androidInstallIfNotAvailable: true,
-          iOSBundleID: "com.nowu.app",
-          androidMinimumVersion: "16",
-          androidPackageName: "com.nowu.app",
-          url: "https://nowu.page.link/emaillogin",
+          iOSBundleID: 'com.nowu.app',
+          androidMinimumVersion: '16',
+          androidPackageName: 'com.nowu.app',
+          url: 'https://nowu.page.link/emaillogin',
           handleCodeInApp: true);
     } catch (e) {
       _showDialog(e.toString());
       return false;
     }
-    print(_email + "<< sent");
+    print(_email + '<< sent');
     return true;
   }
 
   //@override
   //void didChangeAppLifecycleState(AppLifecycleState state) {
   //  if (state == AppLifecycleState.resumed) {
-  //    print("On resumed email is");
+  //    print('On resumed email is');
   //    print(_email);
   //    _retrieveDynamicLink();
   //  }
@@ -140,11 +140,11 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         await FirebaseDynamicLinks.instance.getInitialLink();
 
     final Uri deepLink = data?.link;
-    print("THE LINK IS");
+    print('THE LINK IS');
     print(deepLink.toString());
 
     if (deepLink.toString() != null) {
-      print("The link is not null");
+      print('The link is not null');
       _link = deepLink.toString();
       _signInWithEmailAndLink();
     }
@@ -175,11 +175,11 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: new Text("Error"),
-          content: new Text("Please Try Again.Error code: " + error),
+          title: new Text('Error'),
+          content: new Text('Please Try Again.Error code: ' + error),
           actions: <Widget>[
             new FlatButton(
-              child: new Text("Close"),
+              child: new Text('Close'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -196,7 +196,7 @@ class LoggedIn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-      child: Text("We're in"),
+      child: Text('We're in'),
     ));
   }
 }

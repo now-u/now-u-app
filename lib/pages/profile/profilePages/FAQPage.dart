@@ -20,7 +20,7 @@ class FAQPage extends StatelessWidget {
             ),
             child: Align(
               alignment: Alignment.topLeft,
-              child: Text("About")
+              child: Text('About')
             )
           ),
           StoreConnector<AppState, ViewModel>(

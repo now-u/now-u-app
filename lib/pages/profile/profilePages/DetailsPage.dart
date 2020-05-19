@@ -38,7 +38,7 @@ class _DetailsPageState extends State<DetailsPage> {
             body: 
               Column(
                  children: <Widget>[
-                  PageTitle("My Details", hasBackButton: true, onClickBackButton: (){},),
+                  PageTitle('My Details', hasBackButton: true, onClickBackButton: (){},),
                   Expanded(
                     child: 
                       ListView.builder(

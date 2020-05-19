@@ -112,7 +112,7 @@ class _ActionInfoState extends State<ActionInfo> {
                                           height: MediaQuery.of(context).size.width * 0.1 ,
                                           //child: Image(image: AssetImage('assets/imgs/partypopperemoji.png'),),
                                         ),
-                                        Text("You have completed this action!")
+                                        Text('You have completed this action!')
                                          
                                       ],     
                                     ),
@@ -135,14 +135,14 @@ class _ActionInfoState extends State<ActionInfo> {
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: <Widget>[
                                       DarkButton(
-                                        "Mark as done",
+                                        'Mark as done',
                                         inverted: true,
                                         onPressed: () {
-                                          print("Getting newlyCompletedRewards");
+                                          print('Getting newlyCompletedRewards');
                                           List<Reward> newlyCompletedRewards = viewModel.user.newlyCompletedRewards(_action);
                                           setState(() {
                                             // TODO Somehow somewhere navigate to completed reward page if reward completed
-                                            print("Completing action");
+                                            print('Completing action');
                                             viewModel.onCompleteAction(_action, );
                                             if (newlyCompletedRewards.length > 0) {
                                               Navigator.push(
@@ -174,7 +174,7 @@ class _ActionInfoState extends State<ActionInfo> {
                                                                   ),
                                                                 ),
                                                                 Text(
-                                                                  "Nice Job",
+                                                                  'Nice Job',
                                                                   style: textStyleFrom(
                                                                     Theme.of(context).primaryTextTheme.headline2,
                                                                     color: Colors.white,
@@ -187,7 +187,7 @@ class _ActionInfoState extends State<ActionInfo> {
                                                             padding: EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 25),
                                                             child: Container(
                                                               child: Text(
-                                                                "Congratulations for completing this action! For that we are really proud of you!",
+                                                                'Congratulations for completing this action! For that we are really proud of you!',
                                                                 textAlign: TextAlign.center,
                                                                 style: textStyleFrom(
                                                                   Theme.of(context).primaryTextTheme.headline4,

@@ -36,7 +36,7 @@ class HttpApi implements Api {
     if (response.statusCode == 200) {
       print('200');
       Campaigns cs = Campaigns.fromJson(json.decode(response.body)['data']);
-      print("We got some camps");
+      print('We got some camps');
       return cs;
     }
     else {
@@ -70,17 +70,17 @@ class HttpApi implements Api {
   
   @override
   Future<List<FAQ>> getFAQs() async {
-    var response = await http.get(domainPrefix + "faqs");
+    var response = await http.get(domainPrefix + 'faqs');
     if (response.statusCode == 200) {
-      print("We got a 200 when getting faqs!");
+      print('We got a 200 when getting faqs!');
       List<FAQ> faqs = json.decode(response.body)['data'].map((e) => FAQ.fromJson(e)).toList().cast<FAQ>();
-      print("Here is the faqs");
+      print('Here is the faqs');
       print(faqs);
       return faqs;
     }
     else {
-      print("We got an error whilst doing the http request");
-      return Future.error("Error getting faqs in http api", StackTrace.fromString("The stack trace is"));
+      print('We got an error whilst doing the http request');
+      return Future.error('Error getting faqs in http api', StackTrace.fromString('The stack trace is'));
     }
   }
 } 

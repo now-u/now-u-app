@@ -48,48 +48,48 @@ class _ProfileState extends State<Profile> {
       builder: (BuildContext context, ViewModel viewModel) {
         var profileTiles = <Map>[
           {
-            'profileTile': ProfileTile("Home", FontAwesomeIcons.home),
+            'profileTile': ProfileTile('Home', FontAwesomeIcons.home),
             'tabPage': TabPage.Home,
           },
           {
-            'profileTile': ProfileTile("Profile", FontAwesomeIcons.userCircle),
+            'profileTile': ProfileTile('Profile', FontAwesomeIcons.userCircle),
             'page': DetailsPage(),
           },
           {
-            'profileTile': ProfileTile("Campaigns", FontAwesomeIcons.bullhorn),
+            'profileTile': ProfileTile('Campaigns', FontAwesomeIcons.bullhorn),
             'tabPage': TabPage.Campaigns,
           },
           {
             'profileTile':
-                ProfileTile("Actions", FontAwesomeIcons.clipboardCheck),
+                ProfileTile('Actions', FontAwesomeIcons.clipboardCheck),
             'tabPage': TabPage.Actions,
           },
           {
-            'profileTile': ProfileTile("News", FontAwesomeIcons.newspaper),
+            'profileTile': ProfileTile('News', FontAwesomeIcons.newspaper),
             'tabPage': TabPage.News,
           },
           {
-            'profileTile': ProfileTile("Partners", FontAwesomeIcons.building),
+            'profileTile': ProfileTile('Partners', FontAwesomeIcons.building),
             'page': null,
           },
           {
-            'profileTile': ProfileTile("About", FontAwesomeIcons.infoCircle),
+            'profileTile': ProfileTile('About', FontAwesomeIcons.infoCircle),
             'page': AboutPage(),
           },
 
           // Old Pages
-          //{  'profileTile': ProfileTile("Details", FontAwesomeIcons.solidUser) , 'page': DetailsPage(goBack: goBack, ), },
-          //{  'profileTile': ProfileTile("Progress", FontAwesomeIcons.spinner), 'page':ProgressPage(goBack, viewModel)},
-          //{  'profileTile': ProfileTile("Network", FontAwesomeIcons.users) },
-          //{  'profileTile': ProfileTile("Rewards", FontAwesomeIcons.ribbon), 'page' : RewardsPage(goBack, viewModel) },
-          //{  'profileTile': ProfileTile("Offers", FontAwesomeIcons.percent), 'page': OffersPage(goBack) },
-          //{  'profileTile': ProfileTile("Feedback", FontAwesomeIcons.solidComment), 'page': FeedbackPage(goBack) },
-          //{  'profileTile': ProfileTile("Support", FontAwesomeIcons.question), 'page':SupportPage(goBack) },
+          //{  'profileTile': ProfileTile('Details', FontAwesomeIcons.solidUser) , 'page': DetailsPage(goBack: goBack, ), },
+          //{  'profileTile': ProfileTile('Progress', FontAwesomeIcons.spinner), 'page':ProgressPage(goBack, viewModel)},
+          //{  'profileTile': ProfileTile('Network', FontAwesomeIcons.users) },
+          //{  'profileTile': ProfileTile('Rewards', FontAwesomeIcons.ribbon), 'page' : RewardsPage(goBack, viewModel) },
+          //{  'profileTile': ProfileTile('Offers', FontAwesomeIcons.percent), 'page': OffersPage(goBack) },
+          //{  'profileTile': ProfileTile('Feedback', FontAwesomeIcons.solidComment), 'page': FeedbackPage(goBack) },
+          //{  'profileTile': ProfileTile('Support', FontAwesomeIcons.question), 'page':SupportPage(goBack) },
         ];
         user = viewModel.user;
         return Scaffold(
             appBar: CustomAppBar(
-              text: "Menu",
+              text: 'Menu',
               hasBackButton: false,
               context: context,
             ),
@@ -103,7 +103,7 @@ class _ProfileState extends State<Profile> {
                         itemCount: profileTiles.length,
                         itemBuilder: (context, index) => GestureDetector(
                           onTap: () => setState(() {
-                            if (profileTiles[index]["page"] == null) {
+                            if (profileTiles[index]['page'] == null) {
                               // TODO might switch to this style as it seems to rebuild anyway
                               // TODO fix the fact that it rebuilds stuff when switching page
                               //Navigator.push(
@@ -117,21 +117,21 @@ class _ProfileState extends State<Profile> {
                               //);
                               //Navigator.pushNamed(context, '/home');
                               widget.changeTabPage(
-                                  profileTiles[index]["tabPage"]);
+                                  profileTiles[index]['tabPage']);
                             } else {
                               Navigator.push(
                                   context,
                                   CustomRoute(
                                       builder: (context) =>
-                                          profileTiles[index]["page"]));
+                                          profileTiles[index]['page']));
                             }
                           }),
-                          child: profileTiles[index]["profileTile"],
+                          child: profileTiles[index]['profileTile'],
                         ),
                       ),
                     ),
                     GestureDetector(
-                      child: ProfileTile("Dev Tools", FontAwesomeIcons.code),
+                      child: ProfileTile('Dev Tools', FontAwesomeIcons.code),
                       onTap: () {
                         Navigator.push(
                             context,

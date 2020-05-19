@@ -16,44 +16,44 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        text: "About",
+        text: 'About',
         context: context,
-        backButtonText: "Menu",
+        backButtonText: 'Menu',
       ),
       body: ListView(
        children: <Widget>[
-         ListHeading("Give us feedback"),
+         ListHeading('Give us feedback'),
          SelectionItem(
-          "Rate us on App Store", 
-          onClick: () {launch("www.google.com");},
+          'Rate us on App Store', 
+          onClick: () {launch('www.google.com');},
          ),
          ListDividor(),
          SelectionItem(
-          "Propose edits to now-u app", 
-          onClick: () {launch("https://docs.google.com/forms/d/e/1FAIpQLSc6zL_9wVJZiZryJP2sIl2SMTtJFoi7fRCAJ1_Gn-rAmWygBQ/viewform");},
+          'Propose edits to now-u app', 
+          onClick: () {launch('https://docs.google.com/forms/d/e/1FAIpQLSc6zL_9wVJZiZryJP2sIl2SMTtJFoi7fRCAJ1_Gn-rAmWygBQ/viewform');},
          ),
          ListDividor(),
-         SelectionItem("Propose a campaign"),
+         SelectionItem('Propose a campaign'),
          
-         ListHeading("Give us some love"),
+         ListHeading('Give us some love'),
          SelectionItem(
-          "Like us on Facebook", 
-          onClick: () {launch("https://www.facebook.com/nowufb");},
+          'Like us on Facebook', 
+          onClick: () {launch('https://www.facebook.com/nowufb');},
          ),
          ListDividor(),
          SelectionItem(
-          "Follow us on Instagram", 
-          onClick: () {launch("https://www.instagram.com/now_u_app/");},
+          'Follow us on Instagram', 
+          onClick: () {launch('https://www.instagram.com/now_u_app/');},
          ),
          ListDividor(),
          SelectionItem(
-          "Follow us on Twitter", 
-          onClick: () {launch("https://twitter.com/now_u_app");},
+          'Follow us on Twitter', 
+          onClick: () {launch('https://twitter.com/now_u_app');},
          ),
          
-         ListHeading("About"),
+         ListHeading('About'),
          SelectionItem(
-          "FAQ", 
+          'FAQ', 
           onClick: () {
             Navigator.push(
               context, 
@@ -64,12 +64,12 @@ class AboutPage extends StatelessWidget {
           },
          ),
          SelectionItem(
-           "Send us a message", 
-           onClick: () {launch("http://m.me/nowufb");},
+           'Send us a message', 
+           onClick: () {launch('http://m.me/nowufb');},
          ),
          SelectionItem(
-           "Send us an email", 
-           onClick: () {launch("mailto:hello@now-u.com?subject=Hi there");},
+           'Send us an email', 
+           onClick: () {launch('mailto:hello@now-u.com?subject=Hi there');},
          ),
        ], 
       ), 

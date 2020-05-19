@@ -35,7 +35,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    print("initing state");
+    print('initing state');
     currentPage = widget.currentPage;
     _subIndex = null;
     super.initState();
@@ -102,7 +102,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
     {
       'page': Profile(currentPage: _subIndex, changeTabPage: changePage),
       'icon': Icon(Icons.menu),
-      'title': Text("Menu"),
+      'title': Text('Menu'),
     },
   ];
   List <BottomNavigationBarItem> generateBottomNavBarItems() {
