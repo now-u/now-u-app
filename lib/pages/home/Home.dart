@@ -9,7 +9,6 @@ import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/progress.dart';
 
 import 'package:app/models/ViewModel.dart';
-import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Article.dart';
 import 'package:app/models/State.dart';
 

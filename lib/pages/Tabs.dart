@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:app/models/ViewModel.dart';
-
 import 'package:app/pages/home/Home.dart';
 import 'package:app/pages/profile/Profile.dart';
 import 'package:app/pages/campaign/CampaignPage.dart';

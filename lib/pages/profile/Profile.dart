@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:app/assets/components/pageTitle.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/routes/customRoute.dart';
 
@@ -15,11 +14,6 @@ import 'package:app/pages/Tabs.dart';
 
 import 'package:app/pages/profile/profilePages/DetailsPage.dart';
 import 'package:app/pages/profile/profilePages/AboutPage.dart';
-import 'package:app/pages/profile/profilePages/ProgressPage.dart';
-import 'package:app/pages/profile/profilePages/RewardsPage.dart';
-import 'package:app/pages/profile/profilePages/OffersPage.dart';
-import 'package:app/pages/profile/profilePages/FeedbackPage.dart';
-import 'package:app/pages/profile/profilePages/SupportPage.dart';
 import 'package:app/pages/other/quiz/quizStart.dart';
 
 import 'package:redux/redux.dart';
