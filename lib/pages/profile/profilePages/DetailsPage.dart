@@ -35,7 +35,7 @@ class _DetailsPageState extends State<DetailsPage> {
       StoreConnector<AppState, ViewModel>(
         converter: (Store<AppState> store) => ViewModel.create(store),
         builder: (BuildContext context, ViewModel model) {
-          user = model.user;
+          user = model.userModel.user;
           List userData = user.getAttributes().entries.toList();
           return Scaffold(
             body: 

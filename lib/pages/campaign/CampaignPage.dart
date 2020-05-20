@@ -55,7 +55,7 @@ class _CampaignPageBodyState extends State<CampaignPageBody> {
   @override
   void initState() {
     campaigns = widget.model.campaigns.getActiveCampaigns().toList();
-    user = widget.model.user;
+    user = widget.model.userModel.user;
     model = widget.model;
     onlyJoined = false;
     if (widget.campaignId != null) {
@@ -99,7 +99,7 @@ class _CampaignPageBodyState extends State<CampaignPageBody> {
                         )
                       ],
                     ),
-                    model.user.getSelectedCampaigns().length == 0 && onlyJoined ?
+                    model.userModel.user.getSelectedCampaigns().length == 0 && onlyJoined ?
                     Text("You havent selecetd any campaigns yet")
                     :
                     Container(),
@@ -117,7 +117,7 @@ class _CampaignPageBodyState extends State<CampaignPageBody> {
                               !onlyJoined ? // Then return everything
                               CampaignTile(campaigns[index])
                               :  // Otherwise only return selected campaigns
-                              model.user.getSelectedCampaigns().contains(campaigns[index].getId()) ? 
+                              model.userModel.user.getSelectedCampaigns().contains(campaigns[index].getId()) ? 
                               CampaignTile(campaigns[index])
                               : null;
 

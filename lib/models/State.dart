@@ -72,16 +72,17 @@ class UserState {
         auth: locator<AuthenticationService>(),
         repository: locator<SecureStorageService>(),
         //firebaseUser: null,
-        user: null,
-          //User(
-          //  id: 0,
-          //  fullName: "Andrew",
-          //  email: "andy@gmail.com",
-          //  age: 21,
-          //  location: "Bristol",
-          //  monthlyDonationLimit: 20.0,
-          //  homeOwner: false,
-          //)
+        //user: null,
+        // HMMMM => thinking
+          user: User(
+            id: 0,
+            fullName: "Andrew",
+            email: "andy@gmail.com",
+            age: 21,
+            location: "Bristol",
+            monthlyDonationLimit: 20.0,
+            homeOwner: false,
+          )
     );
   }
 

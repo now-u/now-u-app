@@ -158,7 +158,7 @@ class ActionProgressTile extends StatelessWidget {
     return StoreConnector<AppState, ViewModel>(
         converter: (Store<AppState> store) => ViewModel.create(store),
         builder: (BuildContext context, ViewModel viewModel) {
-          final int numberOfCompletedAction = viewModel.user.getCompletedActions().length;
+          final int numberOfCompletedAction = viewModel.userModel.user.getCompletedActions().length;
           final int numberOfSelectedActions = viewModel.campaigns.getActions().length;
           return 
            Container(

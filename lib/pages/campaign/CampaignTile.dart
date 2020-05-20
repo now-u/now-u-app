@@ -128,8 +128,8 @@ class _CampaignTileState extends State<CampaignTile> {
                       converter: (Store<AppState> store) => ViewModel.create(store),
                       builder: (BuildContext context, ViewModel viewModel) {
                         print("Before splash screen user is");
-                        print(viewModel.user.getSelectedCampaigns());
-                        bool selected = viewModel.user.getSelectedCampaigns().contains(widget.campaign.getId());
+                        print(viewModel.userModel.user.getSelectedCampaigns());
+                        bool selected = viewModel.userModel.user.getSelectedCampaigns().contains(widget.campaign.getId());
                         return 
                           Container(
                             height: 45,

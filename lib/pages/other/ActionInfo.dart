@@ -105,7 +105,7 @@ class _ActionInfoState extends State<ActionInfo> {
                                   )
                                 ),
                                 Container(height: 20),
-                                viewModel.user.isCompleted(_action) ?
+                                viewModel.userModel.user.isCompleted(_action) ?
                                   Padding(
                                     padding: EdgeInsets.all(10),
                                     child: Row(
@@ -141,7 +141,7 @@ class _ActionInfoState extends State<ActionInfo> {
                                         inverted: true,
                                         onPressed: () {
                                           print("Getting newlyCompletedRewards");
-                                          List<Reward> newlyCompletedRewards = viewModel.user.newlyCompletedRewards(_action);
+                                          List<Reward> newlyCompletedRewards = viewModel.userModel.user.newlyCompletedRewards(_action);
                                           setState(() {
                                             // TODO Somehow somewhere navigate to completed reward page if reward completed
                                             print("Completing action");

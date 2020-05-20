@@ -69,7 +69,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
     );
 
     Widget loginButton() {
-    Future<bool> validateAndSave(LoginViewModel model) async {
+    Future<bool> validateAndSave(UserViewModel model) async {
       final FormState form = _formKey.currentState;
       if (form.validate()) {
         form.save();
@@ -79,8 +79,8 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       return false;
     }
       return 
-       StoreConnector<AppState, LoginViewModel>(
-         converter: (store) => LoginViewModel.create(store),
+       StoreConnector<AppState, UserViewModel>(
+         converter: (store) => UserViewModel.create(store),
          builder: (_, viewModel) {
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 16.0),
@@ -97,7 +97,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
             );
          },
          onDidChange: (viewModel) {
-            print("tragic");
+            print("view model did change in login");
          }
       );
     }
