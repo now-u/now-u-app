@@ -3,11 +3,13 @@ import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Action.dart';
+import 'package:firebase_auth/firebase_auth.dart';
   
 List<int> rewardValues = [1, 5, 10, 25, 50, 100, 200];
 
 class User {
   int id;
+  FirebaseUser firebaseUser;
   String fullName;
   String email;
   int age;
@@ -25,8 +27,9 @@ class User {
 
   Map<CampaignActionType, int> completedActionsType;
   
-  User({id, fullName, email, age, location, monthlyDonationLimit, homeOwner, selectedCampaigns, completedCampaigns, completedActions, completedRewards, completedActionsType}) {
+  User({id, firebaseUser, fullName, email, age, location, monthlyDonationLimit, homeOwner, selectedCampaigns, completedCampaigns, completedActions, completedRewards, completedActionsType}) {
     this.id = id; 
+    this.firebaseUser = firebaseUser;
     this.fullName = fullName;
     this.email = email;
     this.age = age;
@@ -57,10 +60,12 @@ class User {
     completedRewards = [];
     completedActions = [];
     completedActionsType = initCompletedAction();
+    firebaseUser = null;
   }
 
   User copyWith({
     int id,
+    FirebaseUser firebaseUser,
     String fullName,
     String email,
     int age,
@@ -91,6 +96,7 @@ class User {
       completedRewards: completedRewards ?? this.completedRewards,
       completedActions: completedActions ?? this.completedActions,
       completedActionsType: completedActionsType ?? this.completedActionsType,
+      firebaseUser: firebaseUser ?? this.firebaseUser,
     );
   }
 

@@ -3,6 +3,7 @@ import 'package:app/services/httpApi.dart';
 import 'package:app/services/jsonApi.dart';
 import 'package:app/services/dynamicLinks.dart';
 import 'package:app/services/auth.dart';
+import 'package:app/services/storage.dart';
 
 import 'package:get_it/get_it.dart';
 
@@ -16,7 +17,8 @@ void setupLocator() {
   // Currently just return httpApi cause im too lazy but might come in handy
   locator.registerLazySingleton<Api>(() => USE_FAKE_API ? JsonApi() : HttpApi());
   locator.registerLazySingleton(() => DynamicLinkService());
-  locator.registerLazySingleton(() => AuthenticationService());
+  locator.registerLazySingleton<AuthenticationService>(() => AuthenticationService());
+  locator.registerLazySingleton<SecureStorageService>(() => SecureStorageService());
 }
 
 

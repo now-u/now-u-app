@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
+import 'package:app/models/State.dart';
+import 'package:app/models/ViewModel.dart';
+
 import 'package:app/services/storage.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login page';
@@ -14,18 +18,17 @@ class LoginPage extends StatefulWidget {
 
 class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   String _email;
-  String _link;
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _repositry = StorageRepository();
+  final _repositry = SecureStorageService();
 
   @override
   void initState() {
     super.initState();
-    if (widget.deeplink != null) {
-      _link = widget.deeplink;
-      _signInWithEmailAndLink();
-    }
+    //if (widget.deeplink != null) {
+    //  _link = widget.deeplink;
+    //  _signInWithEmailAndLink();
+    //}
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -34,7 +37,8 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed) {
       print('On resumed email is');
       print(_email);
-      _retrieveDynamicLink();
+      // TODO handle on resume
+      //_retrieveDynamicLink();
     }
   }
 
@@ -64,112 +68,80 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       ),
     );
 
-    final loginButton = Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: RaisedButton(
-        color: Colors.lightBlueAccent,
-        textColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
-        child: Text('Send Verification Email'),
-        onPressed: (() async => await validateAndSave()
-            ? _scaffoldKey.currentState.showSnackBar(snackBarEmailSent)
-            : _scaffoldKey.currentState.showSnackBar(snackBarEmailNotSent)),
-        padding: EdgeInsets.all(12),
-      ),
-    );
-
-    final loginForm = Form(
-      key: _formKey,
-      child: ListView(
-        shrinkWrap: true,
-        padding: EdgeInsets.only(left: 24, right: 24),
-        children: <Widget>[
-          SizedBox(height: 50),
-          email,
-          SizedBox(height: 40),
-          loginButton
-        ],
-      ),
-    );
-    return Scaffold(
-        key: _scaffoldKey,
-        backgroundColor: Colors.white,
-        body: Center(child: loginForm));
-  }
-
-  Future<bool> validateAndSave() async {
-    final FormState form = _formKey.currentState;
-    if (form.validate()) {
-      form.save();
-      bool sent = await _sendSignInWithEmailLink();
-      return sent;
-    }
-    return false;
-  }
-
-  Future<bool> _sendSignInWithEmailLink() async {
-    final FirebaseAuth user = FirebaseAuth.instance;
-    try {
-      user.sendSignInWithEmailLink(
-          email: _email,
-          androidInstallIfNotAvailable: true,
-          iOSBundleID: 'com.nowu.app',
-          androidMinimumVersion: '16',
-          androidPackageName: 'com.nowu.app',
-          url: 'https://nowu.page.link/emaillogin',
-          handleCodeInApp: true);
-    } catch (e) {
-      _showDialog(e.toString());
+    Widget loginButton() {
+    Future<bool> validateAndSave(LoginViewModel model) async {
+      final FormState form = _formKey.currentState;
+      if (form.validate()) {
+        form.save();
+        model.email(_email);
+        return true;
+      }
       return false;
     }
-    print(_email + '<< sent');
-    return true;
+      return 
+       StoreConnector<AppState, LoginViewModel>(
+         converter: (store) => LoginViewModel.create(store),
+         builder: (_, viewModel) {
+            return Padding(
+              padding: EdgeInsets.symmetric(vertical: 16.0),
+              child: RaisedButton(
+                color: Colors.lightBlueAccent,
+                textColor: Colors.white,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+                child: Text('Send Verification Email'),
+                onPressed: () {
+                  print("Button pressed");
+                  validateAndSave(viewModel);
+                },
+              )
+            );
+         },
+         onDidChange: (viewModel) {
+            print('tragic');
+         }
+      );
+    }
+
+
+    Form loginForm() {
+      return 
+        Form(
+          key: _formKey,
+          child: ListView(
+            shrinkWrap: true,
+            padding: EdgeInsets.only(left: 24, right: 24),
+            children: <Widget>[
+              SizedBox(height: 50),
+              email,
+              SizedBox(height: 40),
+              loginButton()
+            ],
+          ),
+        );
+    }
+    return 
+      Scaffold(
+        key: _scaffoldKey,
+        backgroundColor: Colors.white,
+        body: loginForm(),
+      );
   }
 
-  //@override
-  //void didChangeAppLifecycleState(AppLifecycleState state) {
-  //  if (state == AppLifecycleState.resumed) {
-  //    print('On resumed email is');
-  //    print(_email);
-  //    _retrieveDynamicLink();
+  //Future<void> _retrieveDynamicLink() async {
+  //  final PendingDynamicLinkData data =
+  //      await FirebaseDynamicLinks.instance.getInitialLink();
+
+  //  final Uri deepLink = data?.link;
+  //  print('THE LINK IS');
+  //  print(deepLink.toString());
+
+  //  if (deepLink.toString() != null) {
+  //    print('The link is not null');
+  //    _link = deepLink.toString();
+  //    _signInWithEmailAndLink();
   //  }
+  //  return deepLink.toString();
   //}
-
-  Future<void> _retrieveDynamicLink() async {
-    final PendingDynamicLinkData data =
-        await FirebaseDynamicLinks.instance.getInitialLink();
-
-    final Uri deepLink = data?.link;
-    print('THE LINK IS');
-    print(deepLink.toString());
-
-    if (deepLink.toString() != null) {
-      print('The link is not null');
-      _link = deepLink.toString();
-      _signInWithEmailAndLink();
-    }
-    return deepLink.toString();
-  }
-
-  Future<void> _signInWithEmailAndLink() async {
-    final FirebaseAuth user = FirebaseAuth.instance;
-    bool validLink = await user.isSignInWithEmailLink(_link);
-    print(_email);
-    _email = await _repositry.getEmail();
-    print(_email);
-    if (validLink) {
-      try {
-        print(_link);
-        AuthResult result =
-            await user.signInWithEmailAndLink(email: _email, link: _link);
-        print('We have a user!');
-        print(result.user);
-      } catch (e) {
-        print(e);
-        _showDialog(e.toString());
-      }
-    }
-  }
 
   void _showDialog(String error) {
     showDialog(
@@ -189,15 +161,5 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         );
       },
     );
-  }
-}
-
-class LoggedIn extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: Center(
-      child: Text('We\'re in'),
-    ));
   }
 }

@@ -26,7 +26,7 @@ class StorageProvider {
   }
 }
 
-class StorageRepository {
+class SecureStorageService {
   final _store =
       StorageProvider(flutterSecureStorage: new FlutterSecureStorage());
 

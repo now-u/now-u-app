@@ -43,13 +43,18 @@ class DynamicLinkService {
       print("Deep link was null");
     }
   }
+
+  Future<Uri> getLink() async {
+    PendingDynamicLinkData data = await FirebaseDynamicLinks.instance.getInitialLink();
+    return data?.link;
+  }
 }
 
 // Dynamic Links setup
 Future <Uri> createDynamicLink(bool short) async {
   final DynamicLinkParameters parameters = DynamicLinkParameters(
     uriPrefix: "https://nowu.page.link",
-    link: Uri.parse("https://now-u."),
+    link: Uri.parse("https://now-u.com"),
     androidParameters: AndroidParameters(
       packageName: "com.nowu.app",
       minimumVersion: 0,
@@ -77,7 +82,3 @@ Future <Uri> createDynamicLink(bool short) async {
   return url;
 }
 
-Future<Uri> getLink() async {
-  PendingDynamicLinkData data = await FirebaseDynamicLinks.instance.getInitialLink();
-  return data?.link;
-}

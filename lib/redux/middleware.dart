@@ -1,13 +1,21 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 
+import 'package:app/assets/routes/customRoute.dart';
 import 'package:redux/redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:redux_thunk/redux_thunk.dart';
 
 import 'package:app/models/State.dart';
 import 'package:app/models/User.dart';
 import 'package:app/models/Campaigns.dart';
+import 'package:app/models/ViewModel.dart';
 import 'package:app/redux/actions.dart';
+
+import 'package:app/pages/login/emailSentPage.dart';
+
+import 'package:app/main.dart';
 
 void saveUserToPrefs(User u) async {
   print('Saving json to shared prefs');
@@ -48,12 +56,6 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
   next(action);
 
   if (action is InitaliseState) {
-     store.dispatch(GetCampaignsAction).then(() {
-        store.dispatch(GetUserDataAction).then(
-          store.dispatch(InitalisedState())
-        );
-      }
-     );
   }
   
   if (action is SelectCampaignsAction) {
@@ -62,27 +64,6 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
   if (action is UpdateUserDetails) {
     saveUserToPrefs(store.state.userState.user);
   }
-  //if (action is GetCampaingsAction) {
-  //  print('the middleware is happening for get Campaings');
-  //  await loadFromPrefs().then((state) { 
-  //        print('The state at the get Camapings middelware is');
-  //        print(state.campaigns[0].isSelected());
-  //        //TODO FIND OUT WHY THIS IS NEVER CALLED / DOESNT WORK
-  //        print('Gonna do the dispatch');
-  //        store.dispatch(LoadedCampaignsAction(state.campaigns)); 
-  //        print('Thinks its done the loadedcampaignsaction');
-  //        // It thinks its done the dispatch
-  //      });
-  //
-  //if (action is FetchInitState) {
-  //  await loadFromPrefs(store.state).then((state) { 
-  //        print('The user being loaded is:');
-  //        print(state.user.getName());
-  //        store.dispatch(LoadedUserDataAction(state.user)); 
-  //  });
-
-  //}
-
   
   if (action is GetCampaignsAction) {
     await store.state.api.getCampaigns().then(
@@ -112,3 +93,76 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
   if (action is GetDynamicLink) {
   }
 }
+
+ThunkAction<AppState> emailUser (String email) {
+  return (Store<AppState> store) async {
+    Future (() async {
+      print("In thunk action");
+      print(store.state.userState.auth);
+      store.state.userState.auth.sendSignInWithEmailLink(email).then((loginResponse) {
+        print("Trying to send email");
+        store.dispatch(SentAuthEmail(email));
+        print("Trying to nav");
+        Keys.navKey.currentState.push(
+          CustomRoute(builder: (context) => EmailSentPage(LoginViewModel.create(store)))
+        );
+      }, onError: (error) {
+        store.dispatch(new LoginFailedAction());
+      });
+    });
+  };
+}
+
+ThunkAction loginUser (String email, String link) {
+  return (Store store) async {
+    Future (() async {
+      store.dispatch(StartLoadingUserAction());
+      store.state.userState.auth.signInWithEmailLink(email, link).then((loginResponse) {
+        store.dispatch(LoginSuccessAction(loginResponse));
+        Keys.navKey.currentState.pushNamed(Routes.intro);
+      }, onError: (error) {
+        store.dispatch(new LoginFailedAction());
+      });
+    });
+  };
+}
+
+ThunkAction initStore (Uri deepLink) {
+  print("DEEP LINK IN INIT | " + deepLink.toString());
+  if (deepLink != null) {
+    print("DEEP LINK PATH | " + deepLink.path);
+    print("DEEP LINK PATH | " + deepLink.query);
+  }
+  return (Store store) async {
+    Future (() async {
+     print("We are initing");
+     store.dispatch(GetUserDataAction()).then(
+      (dynamic u) {
+        store.dispatch(GetCampaignsAction()).then(
+          (dynamic r) {
+            if (store.state.userState.user == null) {
+              if (deepLink != null && deepLink.path == "/__/auth/action") {
+                print("The path is the thing");
+                store.state.userState.repository.getEmail().then((email) {
+                  store.state.userState.auth.signInWithEmailLink(email, deepLink.toString()).then((AuthResult r) {
+                    print("Signed in ish");
+                    print(r.user.email);
+                    print(r.user.hashCode);
+                    Keys.navKey.currentState.pushNamed(Routes.home);
+                  });
+                });
+              } else {
+                Keys.navKey.currentState.pushNamed(Routes.login);
+              }
+            }
+            else {
+              Keys.navKey.currentState.pushNamed(Routes.home);
+            }
+          }
+        );
+      }
+     );
+    });
+  };
+}
+
