@@ -47,10 +47,17 @@ class LoadedUserDataAction {
 }
 
 // User Actions
-class StartLoadingAction {}
+class StartLoadingUserAction {}
 class LoginSuccessAction {
   final FirebaseUser firebaseUser; 
   LoginSuccessAction(this.firebaseUser);
+}
+class LoginFailedAction {}
+
+class SendingAuthEmail {}
+class SentAuthEmail {
+  final String email;
+  SentAuthEmail(this.email);
 }
 
 // Logic called on startup 

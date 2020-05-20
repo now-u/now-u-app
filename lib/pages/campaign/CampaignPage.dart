@@ -28,7 +28,6 @@ class CampaignPage extends StatelessWidget {
         converter: (Store<AppState> store) => ViewModel.create(store),
         builder: (BuildContext context, ViewModel viewModel) {
           print("Before splash screen user is");
-          print(viewModel.user.getName());
           return CampaignPageBody(viewModel ,selectionMode, campaignId: campaignId);
         },
     );

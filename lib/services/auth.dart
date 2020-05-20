@@ -10,10 +10,10 @@ class AuthenticationService {
         androidInstallIfNotAvailable: true,
         androidMinimumVersion: '21',
         // TODO: replace name
-        androidPackageName: 'com.example.passwordlessdemo',
+        androidPackageName: 'com.nowu.app',
         handleCodeInApp: true,
         // TODO: replace id
-        iOSBundleID: 'com.example.passwordlessdemo');
+        iOSBundleID: 'com.nowu.app');
   }
 
   Future<AuthResult> signInWithEmailLink(String email, String link) async {

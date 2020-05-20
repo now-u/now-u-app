@@ -5,10 +5,12 @@ import 'package:app/pages/Tabs.dart';
 import 'package:app/pages/other/SplashScreen.dart';
 import 'package:app/pages/intro/IntroPage.dart';
 import 'package:app/pages/login/login.dart';
+import 'package:app/pages/login/emailSentPage.dart';
 
 //import 'package:app/assets/dynamicLinks.dart';
 
 import 'package:app/locator.dart';
+import 'package:app/services/dynamicLinks.dart';
 
 import 'package:app/models/User.dart';
 
@@ -22,6 +24,7 @@ import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_dev_tools/flutter_redux_dev_tools.dart';
 import 'package:redux_dev_tools/redux_dev_tools.dart';
+import 'package:redux_thunk/redux_thunk.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,7 +44,7 @@ MaterialColor darkBlue = MaterialColor(0xFF242334, darkBlueMap);
 const MaterialColor whiteMaterial = const MaterialColor(
   0xFFFFFFFF,
   const <int, Color>{
-    50: const Color(0xFFFFFFFF),
+   50: const Color(0xFFFFFFFF),
     100: const Color(0xFFFFFFFF),
     200: const Color(0xFFFFFFFF),
     300: const Color(0xFFFFFFFF),
@@ -64,6 +67,17 @@ Color lightGrey = Color.fromRGBO(119, 119, 119, 1);
 
 //List<Widget> _pages = <Widget>[Campaigns(campaigns), Home(), Profile(_user)];
 
+class Keys {
+  static final navKey = new GlobalKey<NavigatorState>();
+}
+
+class Routes {
+  static final home = "home";
+  static final intro = "intro";
+  static final login = "login";
+//  static final authEmailSent = "authEmailSent";
+}
+
 class App extends StatefulWidget {
   @override
   _AppState createState() => _AppState();
@@ -85,7 +99,7 @@ class _AppState extends State<App> {
     final DevToolsStore<AppState> store = DevToolsStore<AppState>(
         appStateReducer,
         initialState: AppState.initialState(),
-        middleware: [appStateMiddleware],
+        middleware: [appStateMiddleware, thunkMiddleware],
     );
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -96,42 +110,56 @@ class _AppState extends State<App> {
       store: store, 
       child: MaterialApp(
         title: 'Flutter Demo',
+        navigatorKey: Keys.navKey,
         initialRoute: '/',
         routes: {
           '/': (BuildContext context) => StoreBuilder<AppState>(
             onInit: (store) { 
-              store.dispatch(GetCampaignsAction());
-              store.dispatch(GetUserDataAction());
+              //store.dispatch(GetCampaignsAction());
+              //store.dispatch(GetUserDataAction());
+              DynamicLinkService deepLinkService = locator<DynamicLinkService>();
+              deepLinkService.getLink().then(
+                (Uri u) {
+                  store.dispatch(initStore(u));
+                }
+              );
               //_deepLink = await getLink(); 
               // Dispatch getting deeplink
 
               //store.dispatch(InitaliseState);
+              print("User state is: ");
+              print(store.state.userState.user);
+              print(store.state.userState.auth);
+              print(store.state.userState.isLoading);
+              print(store.state.userState.loginError);
             },
             builder: (BuildContext context, Store<AppState> store) =>
-              //store.state.campaigns == null 
-              //|| store.state.campaigns.getActiveCampaigns() == null
-              //|| store.state.campaigns.activeLength() < 3
-              store.state.loading ?
-              // Whilst loading show loading screen
-              SplashScreen() 
-              :
-              // If user has no email
-              store.state.userState.user.getEmail() == "" ?
-              //store.state.link != null && store.state.link.path == "emaillogin"?
-              //LoginPage(deeplink: store.state.link)
+              SplashScreen(),
+              ////store.state.campaigns == null 
+              ////|| store.state.campaigns.getActiveCampaigns() == null
+              ////|| store.state.campaigns.activeLength() < 3
+              //store.state.loading ?
+              //// Whilst loading show loading screen
+              //SplashScreen() 
               //:
-              // If deeplink path is emaillogin
-              // Go to login page with deeplink
-              // Otherwise
-              // Go without deeplink login
-              LoginPage()
-              :
-              // Otherwise if the user has an email ie has been set up carry on
-              MyHomePage(deepLinkPageIndex),
+              //// If user has no email
+              //store.state.userState.user == null ?
+              ////store.state.link != null && store.state.link.path == "emaillogin"?
+              ////LoginPage(deeplink: store.state.link)
+              ////:
+              //// If deeplink path is emaillogin
+              //// Go to login page with deeplink
+              //// Otherwise
+              //// Go without deeplink login
+              //LoginPage()
+              //:
+              //// Otherwise if the user has an email ie has been set up carry on
+              //MyHomePage(deepLinkPageIndex),
           ),
-          'intro': (context) => IntroPage(),
-          'login': (context) => LoginPage(),
-          'home': (context) => MyHomePage(3),
+          Routes.login: (context) => LoginPage(),
+          //Routes.authEmailSent: (context) => EmailSentPage(),
+          Routes.intro: (context) => IntroPage(),
+          Routes.home: (context) => MyHomePage(3),
           //'/campaign': (context) => TabsPage(currentPage: TabPage.Campaigns),
           //'/home': (context) => TabsPage(currentPage: TabPage.Home),
           //TODO add login point
@@ -300,7 +328,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           converter: (Store<AppState> store) => ViewModel.create(store),
           builder: (BuildContext context, ViewModel viewModel) {
             print("Before splash screen user is");
-            print(viewModel.user.getName());
+            //print(viewModel.user.getName());
             print(currentIndex);
             return TabsPage(currentPage: TabPage.Home);
           },
