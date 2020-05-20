@@ -32,7 +32,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      print("On resumed email is");
+      print('On resumed email is');
       print(_email);
       _retrieveDynamicLink();
     }
@@ -160,8 +160,9 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
     if (validLink) {
       try {
         print(_link);
-        AuthResult result = await user.signInWithEmailAndLink(email: _email, link: _link);
-        print("We have a user!");
+        AuthResult result =
+            await user.signInWithEmailAndLink(email: _email, link: _link);
+        print('We have a user!');
         print(result.user);
       } catch (e) {
         print(e);
@@ -196,7 +197,7 @@ class LoggedIn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-      child: Text('We're in'),
+      child: Text('We\'re in'),
     ));
   }
 }
