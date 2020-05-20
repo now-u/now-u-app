@@ -131,40 +131,52 @@ class _CampaignTileState extends State<CampaignTile> {
                         print(viewModel.userModel.user.getSelectedCampaigns());
                         bool selected = viewModel.userModel.user.getSelectedCampaigns().contains(widget.campaign.getId());
                         return 
-                          Container(
-                            height: 45,
-                            width: double.infinity,
-                            color: selected ? Theme.of(context).primaryColor : Color.fromRGBO(187,187,187,1),
-                            child: Center(
-                              child: 
-                              !selected ?
-                              Text(
-                                "Not joined",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white
-                                ),
-                              ) 
-                              :
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.check_circle,
-                                    size: 15,
-                                    color: Colors.white,
+                          GestureDetector(
+                            onTap: () {
+                              if (!viewModel.userModel.user.getSelectedCampaigns().contains(widget.campaign.getId())) {
+                                print("Campaign is not already selected");
+                                setState(() {
+                                  viewModel.userModel.user.addSelectedCamaping(widget.campaign.getId());
+                                  viewModel.onSelectCampaigns(viewModel.userModel.user);
+                                });
+                              }
+
+                            },
+                            child: Container(
+                              height: 45,
+                              width: double.infinity,
+                              color: selected ? Theme.of(context).primaryColor : Color.fromRGBO(187,187,187,1),
+                              child: Center(
+                                child: 
+                                !selected ?
+                                Text(
+                                  "Not joined",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white
                                   ),
-                                  SizedBox(width: 5),
-                                  Text(
-                                    "Joined",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white
+                                ) 
+                                :
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.check_circle,
+                                      size: 15,
+                                      color: Colors.white,
                                     ),
-                                  )
-                                ],
+                                    SizedBox(width: 5),
+                                    Text(
+                                      "Joined",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white
+                                      ),
+                                    )
+                                  ],
+                                )
                               )
                             )
                           );

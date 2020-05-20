@@ -4,8 +4,10 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Action.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-  
+
 List<int> rewardValues = [1, 5, 10, 25, 50, 100, 200];
+int pointsForJoiningCampaign = 10;
+int pointsForCompletingAction = 5;
 
 class User {
   int id;
@@ -27,7 +29,9 @@ class User {
 
   Map<CampaignActionType, int> completedActionsType;
   
-  User({id, firebaseUser, fullName, email, age, location, monthlyDonationLimit, homeOwner, selectedCampaigns, completedCampaigns, completedActions, completedRewards, completedActionsType}) {
+  int points;
+  
+  User({id, firebaseUser, fullName, email, age, location, monthlyDonationLimit, homeOwner, selectedCampaigns, completedCampaigns, completedActions, completedRewards, completedActionsType, points}) {
     this.id = id; 
     this.firebaseUser = firebaseUser;
     this.fullName = fullName;
@@ -43,8 +47,8 @@ class User {
     
     this.completedActionsType = 
         completedActionsType ?? initCompletedAction();
-    print("User object created with the completedActionsType");
-    print(this.completedActionsType);
+
+    this.points = points ?? 0;
   }
 
   User.empty(){
@@ -61,6 +65,7 @@ class User {
     completedActions = [];
     completedActionsType = initCompletedAction();
     firebaseUser = null;
+    points = 0;
   }
 
   User copyWith({
@@ -82,6 +87,8 @@ class User {
     List<int> completedActions,
 
     Map<CampaignActionType, int> completedActionsType,
+
+    int points,
   }) {
     return User(
       id: id ?? this.id,
@@ -97,6 +104,7 @@ class User {
       completedActions: completedActions ?? this.completedActions,
       completedActionsType: completedActionsType ?? this.completedActionsType,
       firebaseUser: firebaseUser ?? this.firebaseUser,
+      points: points ?? this.points,
     );
   }
 
@@ -114,6 +122,8 @@ class User {
     completedActions = json['completed_actions'] == null ? <int>[] : json['completed_actions'].cast<int>();
     completedRewards = json['completed_rewards'] == null ? <int>[] : json['completed_rewards'].cast<int>();
     completedActionsType = json['completed_actions_type'] == null ? this.initCompletedAction() : campaignActionTypesDecode(json['completed_actions_type'].cast<int>());
+    
+    points = json['points'];
   }
 Map toJson() => {
     'id': id, 
@@ -128,6 +138,7 @@ Map toJson() => {
     'completed_actions': completedActions, 
     'completed_rewards': completedRewards, 
     'completed_actions_type': campaignActionTypesEncode(completedActionsType), 
+    'points': points, 
   };
 
   Map getAttributes () {
@@ -198,9 +209,11 @@ Map toJson() => {
     if (selectedCampaigns == null) return 0;
     else return selectedCampaigns.length;
   }
-
   List<int> getCompletedActions() {
     return completedActions; 
+  }
+  int getPoints() {
+    return points;
   }
 
   void setName(String name) {
@@ -221,15 +234,31 @@ Map toJson() => {
   void setHomeOwner(bool homeOwner) {
     this.homeOwner = homeOwner;
   }
+  void setPoints(int points) {
+    this.points = points;
+  }
+  void incrementPoints(int points) {
+    this.points += points;
+    print("User points are now " + this.points.toString());
+  }
+  void decrementPoints(int points) {
+    this.points -= points;
+    print("User points are now " + this.points.toString());
+  }
+
   void addSelectedCamaping(int id) {
-    if (this.selectedCampaigns == null) {
-      this.selectedCampaigns = [id];
-    } else {
-      this.selectedCampaigns.add(id);
+    if (!selectedCampaigns.contains(id)) {
+      if (this.selectedCampaigns == null) {
+        this.selectedCampaigns = [id];
+      } else {
+        this.selectedCampaigns.add(id);
+      }
+      incrementPoints(pointsForJoiningCampaign);
     }
   }
   void removeSelectedCamaping(int id) {
     this.selectedCampaigns.remove(id);
+    decrementPoints(pointsForJoiningCampaign);
   }
 
   double getCampaignProgress(Campaign campaign) {
@@ -297,6 +326,7 @@ Map toJson() => {
     }
     completedActions.add(a.getId());
     completedActionsType.update(a.getType(), (int x) => x + 1);
+    incrementPoints(pointsForCompletingAction);
     print(a.getType().toString());
     print(completedActionsType[a.getType()]);
   }
