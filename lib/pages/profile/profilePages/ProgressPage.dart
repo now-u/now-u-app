@@ -28,14 +28,14 @@ class ProgressPage extends StatelessWidget {
               textAlign: TextAlign.center,
           ),
           Text(
-              '${ model.user.getActiveCampaignsProgress(model.campaigns) }', 
+              "${ model.userModel.user.getActiveCampaignsProgress(model.campaigns) }", 
               style: Theme.of(context).primaryTextTheme.display2,
               textAlign: TextAlign.center,
           ),
           Padding(
             padding: EdgeInsets.all(10),     
             child: ProgressBar(
-              progress: model.user.getActiveCampaignsProgress(model.campaigns),     
+              progress: model.userModel.user.getActiveCampaignsProgress(model.campaigns),     
               width: MediaQuery.of(context).size.width * 0.9,
             ),
           ),
@@ -54,11 +54,11 @@ class ProgressPage extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.all(10),
-            child: Text('You have taken part in ${ model.user.getSelectedCampaigns().length } campaigns'),
+            child: Text('You have taken part in ${ model.userModel.user.getSelectedCampaigns().length } campaigns'),
           ),
           Padding(
             padding: EdgeInsets.all(10),
-            child: Text('You have completed ${ model.user.getCompletedActions().length } actions'),
+            child: Text('You have completed ${ model.userModel.user.getCompletedActions().length } actions'),
           ),
           DarkButton(
             'Completed Campaigns', 

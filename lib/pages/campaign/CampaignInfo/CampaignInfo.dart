@@ -229,12 +229,12 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                           inverted: true,
                           onPressed: () {
                             print('Button pressed');
-                            print(model.user.getSelectedCampaigns());
-                            if (!model.user.getSelectedCampaigns().contains(campaign.getId())) {
+                            print(model.userModel.user.getSelectedCampaigns());
+                            if (!model.userModel.user.getSelectedCampaigns().contains(campaign.getId())) {
                               print('Campaign is not already selected');
                               setState(() {
-                                model.user.addSelectedCamaping(campaign.getId());
-                                model.onSelectCampaigns(model.user);
+                                model.userModel.user.addSelectedCamaping(campaign.getId());
+                                model.onSelectCampaigns(model.userModel.user);
                               });
                             }
                           }

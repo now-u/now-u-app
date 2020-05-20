@@ -15,7 +15,7 @@ import 'package:app/services/dynamicLinks.dart';
 import 'package:app/locator.dart';
 
 class EmailSentPage extends StatelessWidget with WidgetsBindingObserver {
-  LoginViewModel model;
+  final UserViewModel model;
 
   EmailSentPage(this.model);
   

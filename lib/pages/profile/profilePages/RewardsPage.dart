@@ -47,7 +47,7 @@ class _RewardsPageState extends State<RewardsPage> {
     //completedRewards = widget.model.user.getPreviousRewards();
     //nextRewards = widget.model.user.getNextRewards();
     //allrewards = completedRewards..addAll(nextRewards);
-    rewards = widget.model.user.getAllRewards();
+    rewards = widget.model.userModel.user.getAllRewards();
     dropdownValue = 'all';
     super.initState();
   }
@@ -87,14 +87,14 @@ class _RewardsPageState extends State<RewardsPage> {
                   setState(() {
                     dropdownValue = value;
                     if (value == 'all')  {
-                      rewards = widget.model.user.getAllRewards();
+                      rewards = widget.model.userModel.user.getAllRewards();
                     }
                     if (value == 'current')  {
-                      rewards = widget.model.user.getNextRewards();
+                      rewards = widget.model.userModel.user.getNextRewards();
                     }
                     if (value == 'completed')  {
                       print('Value = completed');
-                      rewards = widget.model.user.getPreviousRewards();
+                      rewards = widget.model.userModel.user.getPreviousRewards();
                       print(rewards.length);
                     }
                   });
@@ -152,7 +152,7 @@ class RewardTile extends StatelessWidget {
                   child: Icon(FontAwesomeIcons.ribbon, size: 50,)
               ),
               Text(reward.getTitle(), style: Theme.of(context).primaryTextTheme.body1),
-              Text(model.user.getRewardProgress(reward).toString(), style: Theme.of(context).primaryTextTheme.body1),
+              Text(model.userModel.user.getRewardProgress(reward).toString(), style: Theme.of(context).primaryTextTheme.body1),
             ],
           ),
         )

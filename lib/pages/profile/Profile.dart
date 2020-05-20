@@ -86,7 +86,7 @@ class _ProfileState extends State<Profile> {
           //{  'profileTile': ProfileTile('Feedback', FontAwesomeIcons.solidComment), 'page': FeedbackPage(goBack) },
           //{  'profileTile': ProfileTile('Support', FontAwesomeIcons.question), 'page':SupportPage(goBack) },
         ];
-        user = viewModel.user;
+        user = viewModel.userModel.user;
         return Scaffold(
             appBar: CustomAppBar(
               text: 'Menu',
