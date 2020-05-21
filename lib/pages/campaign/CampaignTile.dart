@@ -137,7 +137,11 @@ class _CampaignTileState extends State<CampaignTile> {
                                 print("Campaign is not already selected");
                                 setState(() {
                                   viewModel.userModel.user.addSelectedCamaping(widget.campaign.getId());
-                                  viewModel.onSelectCampaigns(viewModel.userModel.user);
+                                  viewModel.onSelectCampaigns(viewModel.userModel.user, () {
+                                    Scaffold.of(context).showSnackBar(
+                                      SnackBar(content: Text("All is well"),)
+                                    );
+                                  });
                                 });
                               }
 

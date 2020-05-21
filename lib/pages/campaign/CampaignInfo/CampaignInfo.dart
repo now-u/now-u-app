@@ -237,7 +237,11 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                               print("Campaign is not already selected");
                               setState(() {
                                 model.userModel.user.addSelectedCamaping(campaign.getId());
-                                model.onSelectCampaigns(model.userModel.user);
+                                model.onSelectCampaigns(model.userModel.user, () {
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    content: Text("Hi there"),
+                                  ));
+                                });
                               });
                             }
                           }

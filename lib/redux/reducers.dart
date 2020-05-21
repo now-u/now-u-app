@@ -46,45 +46,16 @@ Campaigns campaignsReducer(Campaigns campaigns, action) {
 //  );
 //}
 
-
-User userReducer(User user, action) {
-  if (action is SelectCampaignsAction) {
-    return action.user; 
-  }
-  if (action is CompleteAction) {
-    User u = user.copyWith();
-    print("Completing action");
-    u.completeAction(action.action);
-    print("Action completed");
-    print(u.getCompletedActions());
-    return u;
-  }
-  if (action is LoadedUserDataAction) {
-    print("The user that has been loaded is");
-    print(action.user.getName());
-    return action.user;
-  }
-  if (action is UpdateUserDetails) {
-    User u = user.copyWith(
-      fullName: action.user.getName(),
-      email: action.user.getEmail(),
-      age: action.user.getAge(),
-      location: action.user.getLocation(),
-    );
-    print("User in UpdateUserDetails is");
-    print("UserName is ${ u.getName() }");
-    return u; 
-  }
-  return user;
-
-}
-
 final userStateReducer = combineReducers<UserState>([
   TypedReducer<UserState, LoginSuccessAction>(_loginSuccess),
   TypedReducer<UserState, LoginFailedAction>(_loginFailed),
   TypedReducer<UserState, StartLoadingUserAction>(_startLoading),
   TypedReducer<UserState, SendingAuthEmail>(_sendingAuthEmail),
   TypedReducer<UserState, SentAuthEmail>(_sentAuthEmail),
+  TypedReducer<UserState, SelectCampaignsAction>(_selectCampaign),
+  TypedReducer<UserState, CompleteAction>(_completeAction),
+  TypedReducer<UserState, LoadedUserDataAction>(_loadedUserData),
+  TypedReducer<UserState, UpdateUserDetails>(_updateUserDetails),
 ]);
 
 UserState _loginSuccess(UserState state, LoginSuccessAction action) {
@@ -107,3 +78,24 @@ UserState _sentAuthEmail(UserState state, SentAuthEmail action) {
 UserState _sendingAuthEmail(UserState state, SendingAuthEmail action) {
   return state.copyWith(isLoading: true, loginError: false, emailSent: false);
 }
+UserState _selectCampaign(UserState state, SelectCampaignsAction action) {
+  return state.copyWith(user: action.user);
+}
+UserState _completeAction(UserState state, CompleteAction action) {
+    User u = state.user.copyWith();
+    u.completeAction(action.action);
+    return state.copyWith(user: u);
+}
+UserState _loadedUserData(UserState state, LoadedUserDataAction action) {
+  return state.copyWith(user: action.user);
+}
+UserState _updateUserDetails(UserState state, UpdateUserDetails action) {
+    User u = state.user.copyWith(
+      fullName: action.user.getName(),
+      email: action.user.getEmail(),
+      age: action.user.getAge(),
+      location: action.user.getLocation(),
+    );
+    return state.copyWith(user: u);
+}
+

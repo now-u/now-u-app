@@ -11,8 +11,9 @@ class InitalisedState {
 
 class SelectCampaignsAction {
   final User user;
+  final Function onSuccess;
 
-  SelectCampaignsAction(this.user);
+  SelectCampaignsAction(this.user, this.onSuccess);
 }
 
 class CompleteAction {

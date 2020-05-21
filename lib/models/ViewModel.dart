@@ -15,7 +15,7 @@ class ViewModel {
   final UserViewModel userModel;
   //final User user;
   final Api api;
-  final Function(User) onSelectCampaigns;
+  final Function(User, Function) onSelectCampaigns;
   final Function(User) onUpdateUserDetails;
   final Function(CampaignAction) onCompleteAction;
 
@@ -30,8 +30,8 @@ class ViewModel {
   });
 
   factory ViewModel.create(Store<AppState> store) {
-    _onSelectCampaigns(User u) {
-      store.dispatch(SelectCampaignsAction(u));
+    _onSelectCampaigns(User u, Function onSuccess) {
+      store.dispatch(SelectCampaignsAction(u, onSuccess));
     }
 
     _onCompleteAction(CampaignAction action) {

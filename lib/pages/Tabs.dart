@@ -131,9 +131,6 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
                 selectedFontSize: 15,
                 items: generateBottomNavBarItems(),
                 onTap: (index) {
-                  //Scaffold.of(context).showSnackBar(SnackBar(
-                  //  content: Text("Hello"),
-                  //));
                   setState(() {
                     currentPage = TabPage.values[index]; 
                     _subIndex = null;
@@ -143,4 +140,3 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
             );
   }
 }
-
