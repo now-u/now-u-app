@@ -121,22 +121,25 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
     return items;
   }
     return  
-          Scaffold(
-              body: _pages[currentPage.index]['page'],
-              bottomNavigationBar: BottomNavigationBar(
-                currentIndex: currentPage.index, 
-                type: BottomNavigationBarType.fixed, 
-                iconSize: 25,
-                unselectedFontSize: 13,
-                selectedFontSize: 15,
-                items: generateBottomNavBarItems(),
-                onTap: (index) {
-                  setState(() {
-                    currentPage = TabPage.values[index]; 
-                    _subIndex = null;
-                  }); 
-                },
-              ),
-            );
+      WillPopScope(
+        onWillPop: () async => false,
+        child: Scaffold(
+            body: _pages[currentPage.index]['page'],
+            bottomNavigationBar: BottomNavigationBar(
+              currentIndex: currentPage.index, 
+              type: BottomNavigationBarType.fixed, 
+              iconSize: 25,
+              unselectedFontSize: 13,
+              selectedFontSize: 15,
+              items: generateBottomNavBarItems(),
+              onTap: (index) {
+                setState(() {
+                  currentPage = TabPage.values[index]; 
+                  _subIndex = null;
+                }); 
+              },
+            ),
+          )
+        );
   }
 }
