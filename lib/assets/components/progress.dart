@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class ProgressBar extends StatelessWidget {
   final double width;
+  final double widthAsDecimal;
   final double height;
   final double progress;
   final Color doneColor;
@@ -12,6 +13,7 @@ class ProgressBar extends StatelessWidget {
   ProgressBar({
     @required this.progress,
     this.width, 
+    this.widthAsDecimal, 
     this.height,
     this.doneColor,
     this.toDoColor,
@@ -23,7 +25,7 @@ class ProgressBar extends StatelessWidget {
       child: Stack(
         children: <Widget>[
           Container(
-            width: width ?? double.infinity,
+            width: width ?? MediaQuery.of(context).size.width * (widthAsDecimal ?? 1),
             height: height ?? 20,
             decoration: BoxDecoration(
               color: toDoColor ?? Color.fromRGBO(255, 255, 255, 0.2),
@@ -31,7 +33,7 @@ class ProgressBar extends StatelessWidget {
             ),
           ),
           Container(
-            width: (width ?? double.infinity) * progress,
+            width: (width ?? MediaQuery.of(context).size.width) * progress * (widthAsDecimal ?? 1),
             height: height ?? 20,
             decoration: BoxDecoration(
               color: doneColor ?? Theme.of(context).accentColor,

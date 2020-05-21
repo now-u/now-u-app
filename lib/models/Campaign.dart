@@ -13,7 +13,8 @@ class Campaign {
   String headerImage;
   bool isCampaignSelected;
   List<CampaignAction> actions;
-  List<Organisation> organisations;
+  List<Organisation> generalPartners;
+  List<Organisation> campaignPartners;
   String videoLink;
   
   Campaign({
@@ -23,7 +24,8 @@ class Campaign {
     @required int numberOfCampaigners,
     @required String headerImage,
     @required List<CampaignAction> actions,
-    @required List<Organisation> organisations,
+    @required List<Organisation> generalPartners,
+    @required List<Organisation> campaignPartners,
     this.videoLink,
   }) {
     this.id = id; 
@@ -33,7 +35,8 @@ class Campaign {
     this.headerImage = headerImage;
     this.actions = actions;
     this.videoLink = videoLink;
-    this.organisations = organisations;
+    this.generalPartners = generalPartners;
+    this.campaignPartners = campaignPartners;
   }
 
   Campaign copyWith({
@@ -43,7 +46,8 @@ class Campaign {
     int numberOfCampaingers,
     String headerImage,
     List<CampaignAction> actions,
-    List<Organisation> organisations,
+    List<Organisation> generalPartners,
+    List<Organisation> campaignPartners,
     String videoLink,
   }) {
     return Campaign(
@@ -53,7 +57,8 @@ class Campaign {
       numberOfCampaigners: numberOfCampaingers ?? this.numberOfCampaingers,
       headerImage: headerImage ?? this.headerImage,
       actions: actions ?? this.actions,
-      organisations: organisations ?? this.organisations,
+      generalPartners: generalPartners ?? this.generalPartners,
+      campaignPartners: campaignPartners ?? this.campaignPartners,
       videoLink: videoLink ?? this.videoLink,
     );
   }
@@ -66,7 +71,8 @@ class Campaign {
     headerImage = json['header_image'];
     // TODO this proabably wont work
     actions = (json['actions']).map((e) => CampaignAction.fromJson(e)).toList().cast<CampaignAction>();
-    organisations = json.containsKey('organisations') ? (json['organisations']).map((e) => Organisation.fromJson(e)).toList().cast<Organisation>() : [];
+    campaignPartners = json.containsKey('campaign_partners') ? (json['campaign_partners']).map((e) => Organisation.fromJson(e)).toList().cast<Organisation>() : [];
+    generalPartners = json.containsKey('general_partners') ? (json['general_partners']).map((e) => Organisation.fromJson(e)).toList().cast<Organisation>() : [];
     videoLink = json['video_link'];
   }
 
@@ -78,7 +84,8 @@ class Campaign {
     'header_image': headerImage,
     // TODO this proabably wont work
     'actions': actions,
-    'organisations': organisations,
+    'general_partners': generalPartners,
+    'campaign_partners': campaignPartners,
     'video_link': videoLink,
   };
 
@@ -106,7 +113,10 @@ class Campaign {
   List<CampaignAction> getActions() {
     return actions; 
   }
-  List<Organisation> getOrgnaisations() {
-    return organisations; 
+  List<Organisation> getCampaignPartners() {
+    return campaignPartners; 
+  }
+  List<Organisation> getGeneralPartners() {
+    return generalPartners; 
   }
 }

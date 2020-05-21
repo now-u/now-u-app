@@ -36,6 +36,7 @@ dependencies:
   smooth_page_indicator: ^0.1.5
   rect_getter: ^0.1.0
   flutter_appavailability: ^0.0.21
+  flushbar: ^1.10.4
 
   get_it: ^4.0.2
 

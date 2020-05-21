@@ -17,14 +17,14 @@ import 'package:app/pages/login/emailSentPage.dart';
 
 import 'package:app/main.dart';
 
-void saveUserToPrefs(User u) async {
+Future<void> saveUserToPrefs(User u) async {
   print("Saving json to shared prefs");
   SharedPreferences preferences = await SharedPreferences.getInstance();
   var string = json.encode(u.toJson());
   await preferences.setString('user', string);
 }
 
-void saveCampaignsToPrefs(Campaigns cs) async {
+Future<void> saveCampaignsToPrefs(Campaigns cs) async {
   print("Saving Campaigns json to shared prefs");
   SharedPreferences preferences = await SharedPreferences.getInstance();
   var string = json.encode(cs.toJson());
@@ -59,7 +59,12 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
   }
   
   if (action is SelectCampaignsAction) {
-    saveUserToPrefs(store.state.userState.user);
+    saveUserToPrefs(store.state.userState.user).then(
+      (dynamic d) {
+        print("Campaign has been selected now running onSuccess");
+        action.onSuccess(10, 40);
+      }
+    );
   }
   if (action is UpdateUserDetails) {
     saveUserToPrefs(store.state.userState.user);

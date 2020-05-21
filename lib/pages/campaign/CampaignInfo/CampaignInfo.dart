@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:flushbar/flushbar.dart';
 
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/ViewModel.dart';
@@ -18,6 +19,7 @@ import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/detailScaffold.dart';
+import 'package:app/assets/components/pointsNotifier.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -188,6 +190,21 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
   //    });
   //  }
   //}
+  void joinCampaign(ViewModel viewModel, BuildContext context) {
+      if (!viewModel.userModel.user.getSelectedCampaigns().contains(campaign.getId())) {
+        setState(() {
+          viewModel.userModel.user.addSelectedCamaping(campaign.getId());
+          viewModel.onSelectCampaigns(viewModel.userModel.user, (int points, int nextBadgePoints) {
+            //scaffoldKey.currentState.showSnackBar(SnackBar(
+            //  content: Text("Hi there"),
+            //));
+            pointsNotifier(points, nextBadgePoints, context)..show(context);
+          });
+        });
+      } else {
+        pointsNotifier(10, 20, context)..show(context);
+      }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -198,6 +215,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
         text: "Campaign",
         context: context,
       ),
+      key: scaffoldKey,
       body: Container(
         child: ListView( 
           children: [
@@ -231,19 +249,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                           style: DarkButtonStyles.Small,
                           inverted: true,
                           onPressed: () {
-                            print("Button pressed");
-                            print(model.userModel.user.getSelectedCampaigns());
-                            if (!model.userModel.user.getSelectedCampaigns().contains(campaign.getId())) {
-                              print("Campaign is not already selected");
-                              setState(() {
-                                model.userModel.user.addSelectedCamaping(campaign.getId());
-                                model.onSelectCampaigns(model.userModel.user, () {
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    content: Text("Hi there"),
-                                  ));
-                                });
-                              });
-                            }
+                            joinCampaign(widget.model, context);
                           }
                         ),
                       ),
@@ -410,7 +416,9 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                   SizedBox(width: 10,),
                   DarkButton(
                     "Count me in!",
-                    onPressed: () {},
+                    onPressed: () {
+                      joinCampaign(widget.model, context);
+                    },
                     fontSize: 14,
                   ),
                 ],
