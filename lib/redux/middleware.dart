@@ -83,13 +83,13 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
     );
   }
 
-  //if (action is GetUserDataAction) {
-  //  await loadUserFromPrefs(store.state.userState.user).then((user) { 
-  //        print("The user being loaded is:");
-  //        print(user.getName());
-  //        store.dispatch(LoadedUserDataAction(user)); 
-  //  });
-  //}
+  if (action is GetUserDataAction) {
+    await loadUserFromPrefs(store.state.userState.user).then((user) { 
+          print("The user being loaded is:");
+          print(user.getName());
+          store.dispatch(LoadedUserDataAction(user)); 
+    });
+  }
   if (action is CompleteAction) {
     print("In middleware of completed Action user is");
     print(store.state.userState.user.getCompletedActions());
