@@ -20,7 +20,7 @@ import 'package:app/assets/components/pointsNotifier.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-const double H_PADDING = 10;
+const double H_PADDING = 20;
 
 class CampaignInfo extends StatelessWidget {
   final Campaign campaign;

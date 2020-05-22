@@ -99,6 +99,7 @@ class _ActionInfoState extends State<ActionInfo> {
                                   padding: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
                                   child: TextButton(
                                     _campaign.getTitle(),
+                                    width: MediaQuery.of(context).size.width * 0.8,
                                     fontSize: 11,
                                     onClick: () {
                                       Navigator.push(

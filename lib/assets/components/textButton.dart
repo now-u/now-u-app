@@ -7,6 +7,9 @@ class TextButton extends StatelessWidget {
   final bool iconLeft;
   final double fontSize;
 
+  // Handy to make text wrap  
+  final double width;
+
   TextButton(
     this.text, 
     {
@@ -14,6 +17,7 @@ class TextButton extends StatelessWidget {
     this.iconRight,
     this.iconLeft,
     this.fontSize,
+    this.width,
     }
 
   );
@@ -28,7 +32,8 @@ class TextButton extends StatelessWidget {
             this.iconLeft != null ? 
               Icon(Icons.chevron_left, size: 25, color: Theme.of(context).primaryColor,)
             : Container(),
-            Expanded (
+            Container (
+              width: width,
               child: Text(
                 text,
                 style: TextStyle(
