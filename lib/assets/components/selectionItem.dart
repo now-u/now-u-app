@@ -69,8 +69,8 @@ class SelectionItem extends StatelessWidget {
 }
 
 class ActionSelectionItem extends StatelessWidget {
-  final CampaignAction action;
-  final Campaign campaign;
+  @required final CampaignAction action;
+  @required final Campaign campaign;
   final Function extraOnTap;
   final bool isNew;
 

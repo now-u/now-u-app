@@ -28,109 +28,110 @@ class ActionPage extends StatefulWidget {
 }
 
 class _ActionPageState extends State<ActionPage> {
-  int campaignIndex;
+  Campaign campaign;
   List<CampaignAction> actions;
+  List<String> actionFilters;
 
   @override
   initState() {
-    campaignIndex = 0;
     actions = []; 
+    actionFilters = [];
+    
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        text: "Actions",
-        hasBackButton: false,
-        context: context,
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: Icon(
-              Icons.filter_list,
-              color: Theme.of(context).primaryColor,
-            ),
-          ),
-        ],
-      ),
-      body: StoreConnector<AppState, ViewModel>(
+    return StoreConnector<AppState, ViewModel>(
           converter: (Store<AppState> store) => ViewModel.create(store),
           builder: (BuildContext context, ViewModel viewModel) {
-            actions.addAll(viewModel.campaigns.getActiveCampaigns()[campaignIndex].getActions());
-            return Column(
-              children: <Widget>[
-
-                // Campaign selection widget
-                Container(
-                  height: CAMPAIGN_SELECT_HEIGHT,
-                  child: Stack(
-                    children: <Widget>[
-                      PageView.builder(
-                        controller: _controller,
-                        itemCount: viewModel.campaigns.getActiveCampaigns().length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return CampaignSelectionTile(viewModel.campaigns.getActiveCampaigns()[index]);
-                        },
-                        onPageChanged: (int pageIndex) {
-                          setState(() {
-                            campaignIndex = pageIndex;
-                            final int actionsLength = actions.length;
-                            for (int i =0; i < actionsLength; i++) {
-                              print("Removing " + i.toString());
-                              CampaignAction removedAction = actions.removeAt(i);
-                              AnimatedListRemovedItemBuilder builder = (context, animation) {
-                                return ActionSelectionItem(action: removedAction);
-                              };
-                              _animatedList.currentState.removeItem(
-                                i, builder
-                              );
-                            }
-                            actions.addAll(viewModel.campaigns.getActiveCampaigns()[campaignIndex].getActions());
-                            for (int i = 0; i < actions.length; i++) {
-                              print("Inserting " + i.toString());
-                              _animatedList.currentState.insertItem(i);
-                            }
-                          });
-                        }
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            CampaignSelectionChevron(CampaignSelectionChevronDirection.Left),
-                            CampaignSelectionChevron(CampaignSelectionChevronDirection.Right),
-                          ],
+            campaign = viewModel.campaigns.getActiveCampaigns()[0];
+            actions.addAll(campaign.getActions());
+            return 
+              Scaffold(
+                appBar: CustomAppBar(
+                  text: "Actions",
+                  hasBackButton: false,
+                  context: context,
+                  actions: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(right: 16.0),
+                      child: PopupMenuButton(
+                        icon: Icon(
+                          Icons.filter_list,
+                          color: Theme.of(context).primaryColor,
                         ),
+                        itemBuilder: (BuildContext context) {
+                          return 
+                            [
+                              PopupMenuItem(
+                                value: "hi",
+                                child: Text("hi"),
+                              )
+                            ];
+                        },
                       )
-                    ],
-                  )
+                    ),
+                  ],
                 ),
+                body: Column(
+                  children: <Widget>[
+                    // Campaign selection widget
+                    Container(
+                      height: CAMPAIGN_SELECT_HEIGHT,
+                      child: Stack(
+                        children: <Widget>[
+                          PageView.builder(
+                            controller: _controller,
+                            itemCount: viewModel.campaigns.getActiveCampaigns().length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return CampaignSelectionTile(viewModel.campaigns.getActiveCampaigns()[index]);
+                            },
+                            onPageChanged: (int pageIndex) {
+                              setState(() {
+                                campaign = viewModel.campaigns.getActiveCampaigns()[pageIndex];
+                                actions = [];
+                                actions.addAll(campaign.getActions());
+                              });
+                            }
+                          ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                CampaignSelectionChevron(CampaignSelectionChevronDirection.Left),
+                                CampaignSelectionChevron(CampaignSelectionChevronDirection.Right),
+                              ],
+                            ),
+                          )
+                        ],
+                      )
+                    ),
 
-                // Actions List
-                Expanded(
-                  child: AnimatedList(
-                    key: _animatedList,
-                    initialItemCount: actions.length,
-                    itemBuilder: (BuildContext context, int index, animation) {
-                      return Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: ActionSelectionItem(
-                          action: actions[index],
-                        )
-                      ); 
-                    }
-                  )
+                    // Actions List
+                    Expanded(
+                      child: AnimatedList(
+                        key: _animatedList,
+                        initialItemCount: actions.length,
+                        itemBuilder: (BuildContext context, int index, animation) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: ActionSelectionItem(
+                              campaign: campaign,
+                              action: actions[index],
+                            )
+                          ); 
+                        }
+                      )
+                    )
+
+                  ],
                 )
-
-              ],
-            );
-          }
-        )
-     );
+              );
+      }
+    );
   }
 }
 
