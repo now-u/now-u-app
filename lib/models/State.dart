@@ -96,7 +96,7 @@ class UserState {
 
   UserState copyWith({bool isLoading, bool loginError, User user, bool emailSent}) {
     return new UserState(
-      isLoading: isLoading ?? this.isLoading, loginError: loginError ?? this.loginError, user: user ?? this.user, emailSent: emailSent ?? this.emailSent, repository: this.repository
+      isLoading: isLoading ?? this.isLoading, loginError: loginError ?? this.loginError, user: user ?? this.user, emailSent: emailSent ?? this.emailSent, repository: this.repository, auth: this.auth,
     );
   }
 }

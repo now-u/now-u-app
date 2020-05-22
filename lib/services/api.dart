@@ -3,6 +3,8 @@ import 'package:app/models/Campaigns.dart';
 
 import 'package:app/models/Article.dart';
 
+import 'package:app/models/Organisation.dart';
+
 import 'package:app/models/FAQ.dart';
 
 abstract class Api {
@@ -13,4 +15,7 @@ abstract class Api {
   Future<Article> getVideoOfTheDay();
   
   Future<List<FAQ>> getFAQs();
+  
+  //Future<List<Organisation>> getPartners();
+  //Future<List<LearningActions>> getLearningCentre();
 }

@@ -49,6 +49,7 @@ Future<User> loadUserFromPrefs(User u) async {
     return u;
   }
   print("User.empty is being returned");
+  // TODO this should be null
   return User.empty();
 }
 
@@ -90,6 +91,7 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
           store.dispatch(LoadedUserDataAction(user)); 
     });
   }
+
   if (action is CompleteAction) {
     print("In middleware of completed Action user is");
     print(store.state.userState.user.getCompletedActions());
@@ -145,7 +147,8 @@ ThunkAction initStore (Uri deepLink) {
       (dynamic u) {
         store.dispatch(GetCampaignsAction()).then(
           (dynamic r) {
-            if (store.state.userState.user == null) {
+            // A user id of -1 means the user is the placeholder and therefore does not exist, well get rid of this eventually and keep it as null, but for now useful as when we go to homepage after login we have the placeholder user
+            if (store.state.userState.user == null || store.state.userState.user.getId() == -1) {
               if (deepLink != null && deepLink.path == "/loginMobile") {
                 print("The path is the thing");
                 print(deepLink.path);
@@ -153,8 +156,12 @@ ThunkAction initStore (Uri deepLink) {
                   store.state.userState.auth.signInWithEmailLink(email, deepLink.queryParameters['token']).then((User r) {
                     print("Signed in ish");
                     //print(r.user.email);
-                    //print(r.user.hashCode);
-                    Keys.navKey.currentState.pushNamed(Routes.home);
+                    //print(r.user.hashCode)
+                    // TODO if new user 
+                    // intro
+                    Keys.navKey.currentState.pushNamed(Routes.intro);
+                    // else home cause theyve already done the intro
+                    // Keys.navKey.currentState.pushNamed(Routes.home);
                   });
                 });
               } else {
