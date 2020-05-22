@@ -126,7 +126,7 @@ class _ActionInfoState extends State<ActionInfo> {
                                     children: <Widget>[
                                           Expanded(
                                             child: RichText(
-                                                text: TextSpan(text: _action.getDescription(), style: Theme.of(context).primaryTextTheme.bodyText1),
+                                                text: TextSpan(text: _action.getWhyDescription(), style: Theme.of(context).primaryTextTheme.bodyText1),
                                                 ),
                                           )
                                       ]

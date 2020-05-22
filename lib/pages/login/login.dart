@@ -4,6 +4,8 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 import 'package:app/models/State.dart';
 import 'package:app/models/ViewModel.dart';
+import 'package:app/services/dynamicLinks.dart';
+import 'package:app/locator.dart';
 
 import 'package:app/services/storage.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -16,7 +18,8 @@ class LoginPage extends StatefulWidget {
   LoginPageState createState() => new LoginPageState();
 }
 
-class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
+//class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
+class LoginPageState extends State<LoginPage> {
   String _email;
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -29,18 +32,27 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
     //  _link = widget.deeplink;
     //  _signInWithEmailAndLink();
     //}
-    WidgetsBinding.instance.addObserver(this);
+    //WidgetsBinding.instance.addObserver(this);
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      print("On resumed email is");
-      print(_email);
-      // TODO handle on resume
-      //_retrieveDynamicLink();
-    }
-  }
+  //@override
+  //void didChangeAppLifecycleState(AppLifecycleState state) {
+  //  if (state == AppLifecycleState.resumed) {
+  //    print("On resumed email is");
+  //    print(_email);
+  //    // TODO handle on resume
+  //    //_retrieveDynamicLink();
+  //    //DynamicLinkService deepLinkService = locator<DynamicLinkService>();
+  //    //deepLinkService.getLink().then((Uri link) {
+  //    //  print("Reconnect on email sent page");
+  //    //  print(link.toString());
+  //    //  model.repository.getEmail().then((email) {
+  //    //    print("Stored email is");
+  //    //    model.login(email, link.queryParameters['token']);
+  //    //  });
+  //    //});
+  //  }
+  //}
 
   @override
   Widget build(BuildContext context) {

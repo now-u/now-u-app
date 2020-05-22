@@ -168,30 +168,38 @@ Tuple3<String, String, String> generateCampaingActionDesc (CampaignActionType t)
 class CampaignAction {
   int id;
   String title;
-  String description;
+  double time;
+  String whatDescription;
+  String whyDescription;
   String link;
   CampaignActionType type;
 
   CampaignAction({
     @required int id, 
     @required String title, 
-    @required String description, 
+    @required String whatDescription, 
+    @required String whyDescription, 
     @required String link,
     @required CampaignActionType type,
+    @required double time,
   }) {
     this.id = id; 
     this.title = title;
-    this.description = description;
+    this.whatDescription = whatDescription;
+    this.whyDescription = whyDescription;
     this.link = link;
     this.type = type;
+    this.time = time;
   }
 
   CampaignAction.fromJson(Map json) {
     //print(json);
     id = json['id'];
     title = json['title'];
-    description = json['description'];
+    whatDescription = json['what_description'];
+    whyDescription = json['why_description'];
     link = json['link'];
+    time = json['time'];
     type = campaignActionTypeFromString(json['type']);
   }
 
@@ -201,11 +209,17 @@ class CampaignAction {
   String getTitle() {
     return title; 
   }
-  String getDescription() {
-    return description; 
+  String getWhatDescription() {
+    return whatDescription; 
+  }
+  String getWhyDescription() {
+    return whyDescription; 
   }
   String getLink() {
     return link; 
+  }
+  double getTime() {
+    return time; 
   }
   CampaignActionType getType() {
     return type; 

@@ -14,11 +14,23 @@ import 'package:app/models/ViewModel.dart';
 import 'package:app/services/dynamicLinks.dart';
 import 'package:app/locator.dart';
 
-class EmailSentPage extends StatelessWidget with WidgetsBindingObserver {
+class EmailSentPage extends StatefulWidget {
   final UserViewModel model;
 
   EmailSentPage(this.model);
   
+  @override
+  _EmailSentPageState createState() => _EmailSentPageState();
+}
+
+class _EmailSentPageState extends State<EmailSentPage> with WidgetsBindingObserver {
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
@@ -26,9 +38,10 @@ class EmailSentPage extends StatelessWidget with WidgetsBindingObserver {
       deepLinkService.getLink().then((Uri link) {
         print("Reconnect on email sent page");
         print(link.toString());
-        model.repository.getEmail().then((email) {
+        widget.model.repository.getEmail().then((email) {
           print("Stored email is");
-          model.login(email, link.toString());
+          print(email);
+          widget.model.login(email, link.queryParameters['token']);
         });
       });
     }

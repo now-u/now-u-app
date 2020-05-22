@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'package:app/models/User.dart';
+
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -34,13 +36,32 @@ class AuthenticationService {
     });
   }
 
-  Future<AuthResult> signInWithEmailLink(String email, String link) async {
-    return _auth.signInWithEmailAndLink(email: email, link: link);
+  Future<User> signInWithEmailLink(String email, String token) async {
+    print("The email is: " + email);
+    print("The token is: " + token);
+    http.post(
+      domainPrefix + 'users/login',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'email': email,
+        'token': token, 
+      }),
+    ).then( (http.Response response) {
+      print("THE RESPONSE BODY IS");
+      print(response.body);
+    }, onError: (error) {
+      print("There was an error signing in!");
+      print(error);
+    });
+    return null;
+    //return _auth.signInWithEmailAndLink(email: email, link: link);
   }
 
-  Future<AuthResult> signInWithCredential(AuthCredential credential) async {
-    return _auth.signInWithCredential(credential);
-  }
+  //Future<AuthResult> signInWithCredential(AuthCredential credential) async {
+  //  return _auth.signInWithCredential(credential);
+  //}
 
   Future<FirebaseUser> getCurrentUser() {
     return _auth.currentUser();

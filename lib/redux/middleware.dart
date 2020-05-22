@@ -83,13 +83,13 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
     );
   }
 
-  if (action is GetUserDataAction) {
-    await loadUserFromPrefs(store.state.userState.user).then((user) { 
-          print("The user being loaded is:");
-          print(user.getName());
-          store.dispatch(LoadedUserDataAction(user)); 
-    });
-  }
+  //if (action is GetUserDataAction) {
+  //  await loadUserFromPrefs(store.state.userState.user).then((user) { 
+  //        print("The user being loaded is:");
+  //        print(user.getName());
+  //        store.dispatch(LoadedUserDataAction(user)); 
+  //  });
+  //}
   if (action is CompleteAction) {
     print("In middleware of completed Action user is");
     print(store.state.userState.user.getCompletedActions());
@@ -146,13 +146,14 @@ ThunkAction initStore (Uri deepLink) {
         store.dispatch(GetCampaignsAction()).then(
           (dynamic r) {
             if (store.state.userState.user == null) {
-              if (deepLink != null && deepLink.path == "/__/auth/action") {
+              if (deepLink != null && deepLink.path == "/loginMobile") {
                 print("The path is the thing");
+                print(deepLink.path);
                 store.state.userState.repository.getEmail().then((email) {
-                  store.state.userState.auth.signInWithEmailLink(email, deepLink.toString()).then((AuthResult r) {
+                  store.state.userState.auth.signInWithEmailLink(email, deepLink.queryParameters['token']).then((User r) {
                     print("Signed in ish");
-                    print(r.user.email);
-                    print(r.user.hashCode);
+                    //print(r.user.email);
+                    //print(r.user.hashCode);
                     Keys.navKey.currentState.pushNamed(Routes.home);
                   });
                 });

@@ -344,14 +344,14 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
             ),
 
             // Organisation
-            SectionTitle("Organisation"),
+            SectionTitle("Partner Organisation"),
             Container(
               height: 140,
               //child: Expanded(
                 child: ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  itemCount: campaign.getOrgnaisations().length,
+                  itemCount: campaign.getCampaignPartners().length,
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
                       padding: EdgeInsets.all(8),
@@ -380,13 +380,13 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                                     //width: 20,
                                     height: 55,
                                     child: Image.network(
-                                      campaign.getOrgnaisations()[index].getLogoLink(),
+                                      campaign.getCampaignPartners()[index].getLogoLink(),
                                       fit: BoxFit.contain,
                                   )
                                 ),
                                 SizedBox(height: 10,),
                                 Text(
-                                  campaign.getOrgnaisations()[index].getName(),
+                                  campaign.getCampaignPartners()[index].getName(),
                                   style: Theme.of(context).primaryTextTheme.bodyText1,
                                   maxLines: 2,
                                   textAlign: TextAlign.center
