@@ -74,7 +74,7 @@ class _EmailSentPageState extends State<EmailSentPage> with WidgetsBindingObserv
                     child: IntroPageSection(
                       "Email sent",
                       "Eamil has been aksjfkladsjfl;k",
-                      AssetImage('assets/imgs/intro/il-joincamp@4x.png'),
+                      AssetImage('assets/imgs/intro/il-mail@4x.png'),
                     ),
                   ),
                 ),

@@ -7,21 +7,28 @@ import 'package:rect_getter/rect_getter.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
 
+import 'package:app/main.dart';
+
 List<Widget> pages = <Widget>[
                   IntroPageSection(
-                    "Join Campaigns",
+                    "Join campaigns",
                     "Every month, now-u adds 3 new campiangs that enable you to make a difference! You can choose to join one or a few, or all of them.",
-                    AssetImage('assets/imgs/intro/il-joincamp@4x.png'),
+                    AssetImage('assets/imgs/intro/On-Boarding illustrations-01.png'),
                   ),
                   IntroPageSection(
-                    "Join Campaigns",
+                    "Take action",
                     "Every month, now-u adds 3 new campiangs that enable you to make a difference! You can choose to join one or a few, or all of them.",
-                    AssetImage('assets/imgs/intro/il-actions@4x.png'),
+                    AssetImage('assets/imgs/intro/On-Boarding illustrations-02.png'),
                   ),
                   IntroPageSection(
-                    "Join Campaigns",
+                    "Hit achievements",
                     "Every month, now-u adds 3 new campiangs that enable you to make a difference! You can choose to join one or a few, or all of them.",
-                    AssetImage('assets/imgs/intro/il-achievem@4x.png'),
+                    AssetImage('assets/imgs/intro/On-Boarding illustrations-03.png'),
+                  ),
+                  IntroPageSection(
+                    "Create real impact",
+                    "Every month, now-u adds 3 new campiangs that enable you to make a difference! You can choose to join one or a few, or all of them.",
+                    AssetImage('assets/imgs/intro/On-Boarding illustrations-04.png'),
                   ),
 ];
 
@@ -268,7 +275,7 @@ class OrangePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO SUUPER HACKY --> need to sort out state being parsed around and instead use store connector
-    Navigator.pushNamed(context, '/');
+    Navigator.pushNamed(context, Routes.home);
     return Scaffold(
       body: Container(
         child: Center(child: Text('Now-U Home Page')),
