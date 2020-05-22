@@ -1,3 +1,5 @@
+import 'package:app/assets/StyleFrom.dart';
+import 'package:app/assets/components/darkButton.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
@@ -63,44 +65,62 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
 
     final email = TextFormField(
       keyboardType: TextInputType.emailAddress,
-      autofocus: false,
+      textInputAction: TextInputAction.go,
+      autofocus: true,
       validator: (value) {
         if (value.isEmpty) return "Email cannot be empty";
         return null;
       },
       onSaved: (value) {
+        print("Saved");
         _email = value;
         _repositry.setEmail(value);
       },
+      style: textStyleFrom(
+        Theme.of(context).primaryTextTheme.headline5,
+        color: Colors.white,
+      ),
       decoration: InputDecoration(
-        hintText: 'Email',
-        prefixIcon: Icon(Icons.mail),
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+        contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
+        filled: true,
+        fillColor: Color.fromRGBO(221,221,221,0.2),
+
+        hintText: 'e.g. jane.doe@email.com',
+        hintStyle: TextStyle(
+          color: colorFrom(
+            Theme.of(context).primaryColor,
+            opacity: 0.5,
+          ),
+        ),
+        //labelText: 'Your email address',
+        //labelStyle: textStyleFrom(
+        //  Theme.of(context).primaryTextTheme.headline3,
+        //  color: Colors.white
+        //),
+        ////floatingLabelBehavior: FloatingLabelBehavior.never,
+        //alignLabelWithHint: true,
+        //border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
 
     Widget loginButton() {
-    Future<bool> validateAndSave(UserViewModel model) async {
-      final FormState form = _formKey.currentState;
-      if (form.validate()) {
-        form.save();
-        model.email(_email);
-        return true;
+      Future<bool> validateAndSave(UserViewModel model) async {
+        final FormState form = _formKey.currentState;
+        if (form.validate()) {
+          form.save();
+          model.email(_email);
+          return true;
+        }
+        return false;
       }
-      return false;
-    }
       return 
        StoreConnector<AppState, UserViewModel>(
          converter: (store) => UserViewModel.create(store),
          builder: (_, viewModel) {
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: RaisedButton(
-                color: Colors.lightBlueAccent,
-                textColor: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
-                child: Text("Send Verification Email"),
+              child: DarkButton(
+                "Next",
                 onPressed: () {
                   print("Button pressed");
                   validateAndSave(viewModel);
@@ -119,22 +139,60 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       return 
         Form(
           key: _formKey,
-          child: ListView(
-            shrinkWrap: true,
+          child: Padding(
             padding: EdgeInsets.only(left: 24, right: 24),
-            children: <Widget>[
-              SizedBox(height: 50),
-              email,
-              SizedBox(height: 40),
-              loginButton()
-            ],
-          ),
+            child: SafeArea( 
+              child: Column(
+                //shrinkWrap: true,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      Text("Account Details",
+                          style: textStyleFrom(
+                            Theme.of(context).primaryTextTheme.headline3,
+                            color: Colors.white,
+                          ),
+                      ),
+                      Container(
+                        child: Text(
+                          "Enter the email address taht you would like to use to access now-u",
+                          style: textStyleFrom(
+                            Theme.of(context).primaryTextTheme.headline3,
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text(
+                        "Your email address",
+                        style: textStyleFrom(
+                          Theme.of(context).primaryTextTheme.headline3,
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                      SizedBox(height: 10),
+                      email,
+                    ],
+                  ),
+                  loginButton(),
+                ],
+              ),
+            )
+          )
         );
     }
     return 
       Scaffold(
         key: _scaffoldKey,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).primaryColorDark,
         body: loginForm(),
       );
   }
