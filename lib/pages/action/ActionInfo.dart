@@ -84,6 +84,7 @@ class _ActionInfoState extends State<ActionInfo> {
                           SliverList(
                             delegate: SliverChildListDelegate(
                               [
+                                // Title 
                                 Padding(
                                   padding: EdgeInsets.only(top: 10),
                                   child: Text(
@@ -92,10 +93,13 @@ class _ActionInfoState extends State<ActionInfo> {
                                     textAlign: TextAlign.left
                                   ),
                                 ),
+                                
+                                // Name of campaign // TODO if campaign not parsed go find it (current campaign is @required)
                                 Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
                                   child: TextButton(
                                     _campaign.getTitle(),
+                                    fontSize: 11,
                                     onClick: () {
                                       Navigator.push(
                                        context,
@@ -104,35 +108,46 @@ class _ActionInfoState extends State<ActionInfo> {
                                     },
                                   )
                                 ),
-                                Container(height: 20),
+
+                                SizedBox(height: 20),
+
+                                // Completion message
                                 viewModel.userModel.user.isCompleted(_action) ?
-                                  Padding(
-                                    padding: EdgeInsets.all(10),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Container(
-                                          height: MediaQuery.of(context).size.width * 0.1 ,
-                                          //child: Image(image: AssetImage('assets/imgs/partypopperemoji.png'),),
-                                        ),
-                                        Text("You have completed this action!")
-                                         
-                                      ],     
-                                    ),
-                                  )
-                                  :
-                                  Container(height: 0),
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                          Expanded(
-                                            child: RichText(
-                                                text: TextSpan(text: _action.getWhyDescription(), style: Theme.of(context).primaryTextTheme.bodyText1),
-                                                ),
-                                          )
-                                      ]
-                                ),
                                 Padding(
-                                  padding: EdgeInsets.only(top: 20, bottom: 20),
+                                  padding: EdgeInsets.all(10),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Container(
+                                        height: MediaQuery.of(context).size.width * 0.1 ,
+                                        //child: Image(image: AssetImage('assets/imgs/partypopperemoji.png'),),
+                                      ),
+                                      Text("You have completed this action!")
+                                       
+                                    ],     
+                                  ),
+                                )
+                                :
+                                Container(height: 0),
+
+                                // Text
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text("What should I do?", style: Theme.of(context).primaryTextTheme.headline3),
+                                    SizedBox(height: 10),
+                                    Text(_action.getWhatDescription() ?? "", style: Theme.of(context).primaryTextTheme.bodyText1),
+                                    
+                                    SizedBox(height: 30),
+
+                                    Text("Why is this useful?", style: Theme.of(context).primaryTextTheme.headline3),
+                                    SizedBox(height: 10),
+                                    Text(_action.getWhyDescription() ?? "", style: Theme.of(context).primaryTextTheme.bodyText1),
+                                  ],
+                                ),
+
+                                // Buttons
+                                Padding(
+                                  padding: EdgeInsets.only(top: 30, bottom: 20),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: <Widget>[
