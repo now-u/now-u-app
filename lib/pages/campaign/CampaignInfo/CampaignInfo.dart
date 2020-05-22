@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import 'package:flushbar/flushbar.dart';
 
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/ViewModel.dart';
@@ -13,12 +12,9 @@ import 'package:app/locator.dart';
 //import 'package:app/assets/components/videoPlayerFlutterSimple.dart';
 //import 'package:youtube_player/youtube_player.dart';
 import 'package:app/assets/components/selectionItem.dart';
-import 'package:app/assets/components/organisationTile.dart';
-import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/darkButton.dart';
-import 'package:app/assets/components/detailScaffold.dart';
 import 'package:app/assets/components/pointsNotifier.dart';
 
 import 'package:redux/redux.dart';

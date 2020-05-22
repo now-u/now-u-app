@@ -7,13 +7,15 @@ AppBar CustomAppBar(
       @required text,
       @required context,
       String backButtonText,
-      bool hasBackButton
+      bool hasBackButton,
+      List<Widget> actions,
     }
     ) {
   hasBackButton = hasBackButton == null ? true : hasBackButton;
   return AppBar(
    backgroundColor: Colors.white,
    automaticallyImplyLeading: false,
+   centerTitle: true,
    title: 
     Row(
       mainAxisSize: MainAxisSize.max,
@@ -50,5 +52,6 @@ AppBar CustomAppBar(
         )
       ],
     ),
+    actions: actions,
   );
 }
