@@ -150,17 +150,23 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                 children: <Widget>[
                   Column(
                     children: <Widget>[
-                      Text("Account Details",
+                      Padding(
+                        padding: EdgeInsets.only(top: 30, bottom: 10),
+                        child: Text("Account Details",
                           style: textStyleFrom(
                             Theme.of(context).primaryTextTheme.headline3,
                             color: Colors.white,
+                            fontWeight: FontWeight.w600,
                           ),
+                        ),
                       ),
                       Container(
+                        width: MediaQuery.of(context).size.width * 0.6,
                         child: Text(
-                          "Enter the email address taht you would like to use to access now-u",
+                          "Enter the email address that you would like to use to access now-u",
+                          textAlign: TextAlign.center,
                           style: textStyleFrom(
-                            Theme.of(context).primaryTextTheme.headline3,
+                            Theme.of(context).primaryTextTheme.headline5,
                             color: Colors.white,
                           ),
                         ),
@@ -170,13 +176,16 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      Text(
-                        "Your email address",
-                        style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.headline3,
-                          color: Colors.white,
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Your email address",
+                          style: textStyleFrom(
+                            Theme.of(context).primaryTextTheme.headline4,
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.left,
                         ),
-                        textAlign: TextAlign.left,
                       ),
                       SizedBox(height: 10),
                       email,

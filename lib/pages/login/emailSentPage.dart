@@ -16,8 +16,9 @@ import 'package:app/locator.dart';
 
 class EmailSentPage extends StatefulWidget {
   final UserViewModel model;
+  final String email;
 
-  EmailSentPage(this.model);
+  EmailSentPage(this.model, this.email);
   
   @override
   _EmailSentPageState createState() => _EmailSentPageState();
@@ -63,17 +64,18 @@ class _EmailSentPageState extends State<EmailSentPage> with WidgetsBindingObserv
                   child:
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text("Let's get started", style: Theme.of(context).primaryTextTheme.headline6,),
-                      ],
+                      //children: <Widget>[
+                      //  Text("Let's get started", style: Theme.of(context).primaryTextTheme.headline6,),
+                      //],
                     ),
                 ),
                 Expanded(
                   child: Container(
                     //physics: NeverScrollableScrollPhysics(),
                     child: IntroPageSection(
-                      "Email sent",
-                      "Eamil has been aksjfkladsjfl;k",
+                      "Check your email",
+                      "We have just sent an email to ${widget.email}",
+                      "It has a link that will sign you in to now-u and get you started",
                       AssetImage('assets/imgs/intro/il-mail@4x.png'),
                     ),
                   ),
@@ -102,16 +104,18 @@ class _EmailSentPageState extends State<EmailSentPage> with WidgetsBindingObserv
 
 class IntroPageSection extends StatelessWidget {
   final String title;
-  final String description;
+  final String description1;
+  final String description2;
   final AssetImage image;
 
-  IntroPageSection(this.title, this.description, this.image);
+  IntroPageSection(this.title, this.description1, this.description2, this.image);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Expanded(
+        Flexible(
+          flex: 3,
           child: Padding(
             padding: EdgeInsets.all(20),
             child: Image(
@@ -119,26 +123,47 @@ class IntroPageSection extends StatelessWidget {
             ),
           ),
         ),
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: Theme.of(context).primaryTextTheme.headline1.fontSize,
-            fontWeight: Theme.of(context).primaryTextTheme.headline1.fontWeight,
-            color: Colors.white,
-          )
+        Flexible(
+          flex: 2,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: Theme.of(context).primaryTextTheme.headline1.fontSize,
+                  fontWeight: Theme.of(context).primaryTextTheme.headline1.fontWeight,
+                  color: Colors.white,
+                )
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.6,
+                child: Text(
+                  description2,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: Theme.of(context).primaryTextTheme.bodyText1.fontSize,
+                    fontWeight: Theme.of(context).primaryTextTheme.bodyText1.fontWeight,
+                    color: Colors.white,
+                  )
+                )
+              ), 
+              Container(
+                width: MediaQuery.of(context).size.width * 0.6,
+                child: Text(
+                  description1,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: Theme.of(context).primaryTextTheme.bodyText1.fontSize,
+                    fontWeight: Theme.of(context).primaryTextTheme.bodyText1.fontWeight,
+                    color: Colors.white,
+                  )
+                )
+              ) 
+            ],
+          ),
         ),
-        Container(
-          width: MediaQuery.of(context).size.width * 0.7,
-          child: Text(
-            description,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: Theme.of(context).primaryTextTheme.bodyText1.fontSize,
-              fontWeight: Theme.of(context).primaryTextTheme.bodyText1.fontWeight,
-              color: Colors.white,
-            )
-          )
-        ) 
       ],
     );
   }
