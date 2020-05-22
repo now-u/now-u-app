@@ -24,6 +24,8 @@ import 'package:app/assets/components/pointsNotifier.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
+const double H_PADDING = 10;
+
 class CampaignInfo extends StatelessWidget {
   final Campaign campaign;
   final int campaignId;
@@ -127,7 +129,7 @@ class _CampaignInfoModelState extends State<CampaignModelInfo> with WidgetsBindi
           print("ConnectionState is none");
         }
         else if (snapshot.connectionState == ConnectionState.waiting) {
-          print("ConnectionState is wiaitng");
+          print("ConnectionState is waiting");
         }
         return 
           Scaffold(
@@ -296,7 +298,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
 
             // Youtube player
             Padding(
-               padding: EdgeInsets.all(10),
+               padding: EdgeInsets.all(H_PADDING),
                child: 
                 Container(
                   child:
@@ -311,16 +313,21 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
             ),
 
             // Description
-            Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: Text(
-                      campaign.getDescription(), 
-                      style: Theme.of(context).primaryTextTheme.bodyText1,
-                    ),
-                  ),
-                ]
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: H_PADDING, vertical: 10),
+              child: Text(
+                "What is this about?",
+                style: Theme.of(context).primaryTextTheme.headline3,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: H_PADDING,),
+              child: Expanded(
+                child: Text(
+                  campaign.getDescription(), 
+                  style: Theme.of(context).primaryTextTheme.bodyText1,
+                ),
+              ),
             ),
 
             // Actions

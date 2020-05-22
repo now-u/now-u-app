@@ -221,6 +221,9 @@ class CampaignAction {
   double getTime() {
     return time; 
   }
+  String getTimeText() {
+    return "1-2 mins"; 
+  }
   CampaignActionType getType() {
     return type; 
   }

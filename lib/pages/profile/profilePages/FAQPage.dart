@@ -36,7 +36,7 @@ class FAQPage extends StatelessWidget {
                         itemCount: snapshot.data.length,
                         itemBuilder: (BuildContext context, int index) {
                           return SelectionItem(
-                            snapshot.data[index].getQuestion(),
+                            text: snapshot.data[index].getQuestion(),
                             padding: EdgeInsets.all(0),
                           );
                         },

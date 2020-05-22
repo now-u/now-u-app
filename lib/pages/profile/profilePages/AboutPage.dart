@@ -24,36 +24,36 @@ class AboutPage extends StatelessWidget {
        children: <Widget>[
          ListHeading("Give us feedback"),
          SelectionItem(
-          "Rate us on App Store", 
+          text: "Rate us on App Store", 
           onClick: () {launch("www.google.com");},
          ),
          ListDividor(),
          SelectionItem(
-          "Propose edits to now-u app", 
+          text: "Propose edits to now-u app", 
           onClick: () {launch("https://docs.google.com/forms/d/e/1FAIpQLSc6zL_9wVJZiZryJP2sIl2SMTtJFoi7fRCAJ1_Gn-rAmWygBQ/viewform");},
          ),
          ListDividor(),
-         SelectionItem("Propose a campaign"),
+         SelectionItem(text: "Propose a campaign"),
          
          ListHeading("Give us some love"),
          SelectionItem(
-          "Like us on Facebook", 
+          text: "Like us on Facebook", 
           onClick: () {launch("https://www.facebook.com/nowufb");},
          ),
          ListDividor(),
          SelectionItem(
-          "Follow us on Instagram", 
+          text: "Follow us on Instagram", 
           onClick: () {launch("https://www.instagram.com/now_u_app/");},
          ),
          ListDividor(),
          SelectionItem(
-          "Follow us on Twitter", 
+          text: "Follow us on Twitter", 
           onClick: () {launch("https://twitter.com/now_u_app");},
          ),
          
          ListHeading("About"),
          SelectionItem(
-          "FAQ", 
+          text: "FAQ", 
           onClick: () {
             Navigator.push(
               context, 
@@ -64,11 +64,11 @@ class AboutPage extends StatelessWidget {
           },
          ),
          SelectionItem(
-           "Send us a message", 
+           text: "Send us a message", 
            onClick: () {launch("http://m.me/nowufb");},
          ),
          SelectionItem(
-           "Send us an email", 
+           text: "Send us an email", 
            onClick: () {launch("mailto:hello@now-u.com?subject=Hi there");},
          ),
        ], 
@@ -90,7 +90,7 @@ class ListItem extends StatelessWidget {
         child: Container(
           margin: EdgeInsets.all(0),
           child: SelectionItem(
-            text,
+            text: text,
             onClick: onClick,
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           )
