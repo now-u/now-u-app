@@ -75,7 +75,7 @@ class _IntroPageState extends State<IntroPage> {
 
   void _goToNextPage() {
     Navigator.of(context)
-        .push(FadeRouteBuilder(page: OrangePage()))
+        .push(FadeRouteBuilder(page: MyHomePage(3)))
         .then((_) => setState(() => rect = null));
   }
 
@@ -269,17 +269,4 @@ class FadeRouteBuilder<T> extends PageRouteBuilder<T> {
             return FadeTransition(opacity: animation1, child: child);
           },
         );
-}
-
-class OrangePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // TODO SUUPER HACKY --> need to sort out state being parsed around and instead use store connector
-    Navigator.pushNamed(context, Routes.home);
-    return Scaffold(
-      body: Container(
-        child: Center(child: Text('Now-U Home Page')),
-      ),
-    );
-  }
 }
