@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import 'package:app/models/Campaign.dart';
+import 'package:app/models/Organisation.dart';
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/State.dart';
 
@@ -347,62 +348,11 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
             ),
 
             // Organisation
-            SectionTitle("Partner Organisation"),
-            Container(
-              height: 140,
-              //child: Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: campaign.getCampaignPartners().length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: EdgeInsets.all(8),
-                        child: Container(
-                          width: 100,
-                          //height: 60,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color.fromRGBO(0,0,0,0.16),
-                                offset: Offset(0,3),
-                                blurRadius: 6
-                              )
-                            ]
-                          ),
-                          child: 
-                          Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Container(
-                                  //height: 80, width: 100,
-                                    //width: 20,
-                                    height: 55,
-                                    child: Image.network(
-                                      campaign.getCampaignPartners()[index].getLogoLink(),
-                                      fit: BoxFit.contain,
-                                  )
-                                ),
-                                SizedBox(height: 10,),
-                                Text(
-                                  campaign.getCampaignPartners()[index].getName(),
-                                  style: Theme.of(context).primaryTextTheme.bodyText1,
-                                  maxLines: 2,
-                                  textAlign: TextAlign.center
-                                )
-                              ],
-                            )
-                          ),
-                        )
-                      );
-                  },      
-               // )
-              )
-            ),
+            SectionTitle("Campaign Partners"),
+            OrganisationReel(campaign.getCampaignPartners()),
+            
+            SectionTitle("General Partners"),
+            OrganisationReel(campaign.getGeneralPartners()),
 
             // Buttons
             Padding(
@@ -442,6 +392,69 @@ class SectionTitle extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(25),
       child: Text(text, style: Theme.of(context).primaryTextTheme.headline,),
+    );
+  }
+}
+
+class OrganisationReel extends StatelessWidget {
+  final List<Organisation> organisations;
+  OrganisationReel(this.organisations);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 140,
+      //child: Expanded(
+        child: ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          itemCount: organisations.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: EdgeInsets.all(8),
+                child: Container(
+                  width: 100,
+                  //height: 60,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color.fromRGBO(0,0,0,0.16),
+                        offset: Offset(0,3),
+                        blurRadius: 6
+                      )
+                    ]
+                  ),
+                  child: 
+                  Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Container(
+                          //height: 80, width: 100,
+                            //width: 20,
+                            height: 55,
+                            child: Image.network(
+                              organisations[index].getLogoLink(),
+                              fit: BoxFit.contain,
+                          )
+                        ),
+                        SizedBox(height: 10,),
+                        Text(
+                          organisations[index].getName(),
+                          style: Theme.of(context).primaryTextTheme.bodyText1,
+                          maxLines: 2,
+                          textAlign: TextAlign.center
+                        )
+                      ],
+                    )
+                  ),
+                )
+              );
+          },      
+       // )
+      )
     );
   }
 }
