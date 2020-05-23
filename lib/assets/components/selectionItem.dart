@@ -7,6 +7,7 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/models/Learning.dart';
 
 import 'package:app/pages/action/ActionInfo.dart';
+import 'package:app/pages/campaign/LearningCentre/LearningTopicPage.dart';
 
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/StyleFrom.dart';
@@ -209,10 +210,20 @@ class ActionSelectionItem extends StatelessWidget {
 }
 
 class LearningResouceSelectionItem extends StatelessWidget {
-  @required final LearningResource resource;
+  final double defaultOuterHpadding = 10;
+  final double defaultInnerHpadding = 10;
+  final double defaultIconWidth = 50;
+  
+  final LearningResource resource;
+  final double innerHpadding;
+  final double outerHpadding;
+  final double iconWidth;
 
   LearningResouceSelectionItem({
-    this.resource,
+    @required this.resource,
+    this.iconWidth,
+    this.innerHpadding,
+    this.outerHpadding,
   });
 
   @override
@@ -222,7 +233,7 @@ class LearningResouceSelectionItem extends StatelessWidget {
           launch(resource.getLink());
         },
         child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 5),
+            padding: EdgeInsets.symmetric(vertical: 5, horizontal: outerHpadding ?? defaultOuterHpadding),
             child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -231,7 +242,7 @@ class LearningResouceSelectionItem extends StatelessWidget {
                     ),
                 child: 
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: innerHpadding ?? defaultInnerHpadding),
                   child: Row(
                     children: <Widget>[
                       Stack (
@@ -239,21 +250,21 @@ class LearningResouceSelectionItem extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.all(5),
                             child: Container(
-                              width: 50,
+                              width: iconWidth ?? defaultIconWidth,
                               height: 50,
                               decoration: BoxDecoration(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(8)),
-                                  color: Theme.of(context).primaryColor,
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  resource.getTypeIcon(),
                                   color: colorFrom(
                                     Theme.of(context).primaryColor,
                                     opacity: 0.15
                                   ),
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  resource.getTypeIcon(),
                                   size: 30,
+                                  color: Theme.of(context).primaryColor,
                                 ),
                               ),
                            ),
@@ -273,7 +284,7 @@ class LearningResouceSelectionItem extends StatelessWidget {
                             children: <Widget>[
                               Container(
                                 height: 40,
-                                width: MediaQuery.of(context).size.width * 0.8 - 50,
+                                width: MediaQuery.of(context).size.width - (outerHpadding ?? defaultOuterHpadding) * 2 - (innerHpadding ?? defaultInnerHpadding) * 2 - (iconWidth ?? defaultIconWidth) - 10 - 40,
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
@@ -344,7 +355,9 @@ class LearningTopicSelectionItem extends StatelessWidget {
     return GestureDetector(
         onTap: () {
           Navigator.push(context,
-              CustomRoute(builder: (context) => null)
+            CustomRoute(
+              builder: (context) => LearningTopicPage(topic),
+            )
           );
         },
         child: Padding(
@@ -382,14 +395,7 @@ class LearningTopicSelectionItem extends StatelessWidget {
                       SizedBox(width: 10),
                       Container(
                         child: SelectionItem(
-                           onClick: () {
-                             //Navigator.push(
-                             //   context,
-                             //   CustomRoute(
-                             //     builder: (context) => null
-                             //   )
-                             // );
-                            },
+                          onClick: null,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.max,

@@ -40,8 +40,8 @@ class LearningTopic {
   String getOurAnswer() {
     return ourAnswer;
   }
-  String getResources() {
-    return ourAnswer;
+  List<LearningResource> getResources() {
+    return resources;
   }
 }
 
