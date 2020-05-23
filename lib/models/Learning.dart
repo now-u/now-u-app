@@ -1,14 +1,18 @@
+import 'package:flutter/material.dart';
+
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 class LearningCentre {
   // Id of campaign
   int campaign;
-  List<LearningTopic> learningTopic;
+  List<LearningTopic> learningTopics;
 
   List<LearningTopic> getLearningTopics() {
-    return learningTopic;
+    return learningTopics;
   }
   LearningCentre.fromJson(Map json) {
     campaign = json['campaign'];
-    learningTopic = json['learning_topic'].map((e) => LearningTopic.fromJson(e)).toList().cast<LearningTopic>();
+    learningTopics = json['learning_topics'].map((e) => LearningTopic.fromJson(e)).toList().cast<LearningTopic>();
   }
 }
 
@@ -23,8 +27,21 @@ class LearningTopic {
     id = json['id'];
     title = json['title'];
     imageLink = json['image_link'];
-    ourAnswer = json['our_link'];
+    ourAnswer = json['our_answer'];
     resources = (json['resources']).map((e) => LearningResource.fromJson(e)).toList().cast<LearningResource>();
+  }
+
+  String getTitle() {
+    return title;
+  }
+  String getImageLink() {
+    return imageLink;
+  }
+  String getOurAnswer() {
+    return ourAnswer;
+  }
+  String getResources() {
+    return ourAnswer;
   }
 }
 
@@ -52,7 +69,24 @@ class LearningResource {
   String getType() {
     return type;
   }
+  IconData getTypeIcon() {
+    switch (type) {
+      case "read": {
+        return Icons.book;
+      }
+      case "video": {
+        return Icons.book;
+      }
+      case "personal_story": {
+        return FontAwesomeIcons.heart;
+      }
+    }
+    return FontAwesomeIcons.leanpub;
+  }
   double getTime() {
     return time;
+  }
+  String getTimeText() {
+    return time.toString();
   }
 }

@@ -5,6 +5,7 @@ import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Article.dart';
 import 'package:app/models/FAQ.dart';
 import 'package:app/models/Organisation.dart';
+import 'package:app/models/Learning.dart';
 
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -77,6 +78,13 @@ class JsonApi implements Api {
   Future<List<Organisation>> getPartners() async {
     String data = await rootBundle.loadString('assets/json/organisations.json');
     List<Organisation> c = json.decode(data).map((e) => Organisation.fromJson(e)).toList().cast<Organisation>();
+    return c;
+  }
+  
+  @override
+  Future<LearningCentre> getLearningCentre(int campaignId) async {
+    String data = await rootBundle.loadString('assets/json/learningCentre.json');
+    LearningCentre c = LearningCentre.fromJson(json.decode(data));
     return c;
   }
 } 

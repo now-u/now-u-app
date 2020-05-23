@@ -8,6 +8,8 @@ import 'package:app/models/Organisation.dart';
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/State.dart';
 
+import 'package:app/pages/campaign/LearningCentre/LearningCentrePage.dart';
+
 import 'package:app/services/api.dart';
 import 'package:app/locator.dart';
 
@@ -19,6 +21,7 @@ import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/pointsNotifier.dart';
 import 'package:app/assets/components/sectionTitle.dart';
+import 'package:app/assets/routes/customRoute.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -362,7 +365,12 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                 children: <Widget>[
                   DarkButton(
                     "Learn more",
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context, 
+                        CustomRoute(builder: (context) => LearningCentrePage(campaign.getId()))
+                      );
+                    },
                     inverted: true,
                     fontSize: 14,
                   ),

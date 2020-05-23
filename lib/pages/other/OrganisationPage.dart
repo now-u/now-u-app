@@ -55,6 +55,7 @@ class OraganisationInfoPage extends StatelessWidget {
               shrinkWrap: true,
               padding: EdgeInsets.symmetric(horizontal: 10),
               children: <Widget>[
+                SizedBox(height: 10),
                 SectionTitle(
                   "About",
                 ),

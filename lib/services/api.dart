@@ -1,5 +1,6 @@
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
+import 'package:app/models/Learning.dart';
 
 import 'package:app/models/Article.dart';
 
@@ -17,5 +18,5 @@ abstract class Api {
   Future<List<FAQ>> getFAQs();
   
   Future<List<Organisation>> getPartners();
-  //Future<List<LearningActions>> getLearningCentre();
+  Future<LearningCentre> getLearningCentre(int campaignId);
 }

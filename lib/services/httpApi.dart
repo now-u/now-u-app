@@ -5,6 +5,7 @@ import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Article.dart';
 import 'package:app/models/FAQ.dart';
 import 'package:app/models/Organisation.dart';
+import 'package:app/models/Learning.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -99,5 +100,9 @@ class HttpApi implements Api {
       print("We got an error whilst doing the http request");
       return Future.error("Error getting organisations in http api", StackTrace.fromString("The stack trace is"));
     }
+  }
+
+  Future<LearningCentre> getLearningCentre(int campaignId) {
+    return null;
   }
 } 
