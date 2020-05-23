@@ -4,6 +4,7 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Article.dart';
 import 'package:app/models/FAQ.dart';
+import 'package:app/models/Organisation.dart';
 
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -70,5 +71,12 @@ class JsonApi implements Api {
       print("We got an error whilst doing the http request");
       return Future.error("Error getting faqs in http api", StackTrace.fromString("The stack trace is"));
     }
+  }
+  
+  @override
+  Future<List<Organisation>> getPartners() async {
+    String data = await rootBundle.loadString('assets/json/organisations.json');
+    List<Organisation> c = json.decode(data).map((e) => Organisation.fromJson(e)).toList().cast<Organisation>();
+    return c;
   }
 } 

@@ -4,6 +4,7 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Article.dart';
 import 'package:app/models/FAQ.dart';
+import 'package:app/models/Organisation.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -81,6 +82,22 @@ class HttpApi implements Api {
     else {
       print("We got an error whilst doing the http request");
       return Future.error("Error getting faqs in http api", StackTrace.fromString("The stack trace is"));
+    }
+  }
+
+  @override
+  Future<List<Organisation>> getPartners() async {
+    var response = await http.get(domainPrefix + "organisations");
+    if (response.statusCode == 200) {
+      print("We got a 200 when getting articles!");
+      List<Organisation> c = json.decode(response.body)['data'].map((e) => Organisation.fromJson(e)).toList().cast<Organisation>();
+      print("Here is the aricles");
+      print(c);
+      return c;
+    }
+    else {
+      print("We got an error whilst doing the http request");
+      return Future.error("Error getting organisations in http api", StackTrace.fromString("The stack trace is"));
     }
   }
 } 

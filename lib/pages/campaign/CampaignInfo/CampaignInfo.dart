@@ -1,3 +1,4 @@
+import 'package:app/assets/components/organisationTile.dart';
 import 'package:flutter/material.dart';
 
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -310,13 +311,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
             ),
 
             // Description
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: H_PADDING, vertical: 10),
-              child: Text(
-                "What is this about?",
-                style: Theme.of(context).primaryTextTheme.headline3,
-              ),
-            ),
+            SectionTitle("What is this about?"),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: H_PADDING,),
               child: Expanded(
@@ -329,22 +324,25 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
 
             // Actions
             SectionTitle("Actions of the week"),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 3,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 0),
-                  child: ActionSelectionItem(
-                    campaign: campaign,
-                    action: campaign.getActions()[index],
-                    extraOnTap: (){
-                      _controller.pause();
-                    }
-                  ),
-                );
-              },      
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5),
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 3,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 0),
+                    child: ActionSelectionItem(
+                      campaign: campaign,
+                      action: campaign.getActions()[index],
+                      extraOnTap: (){
+                        _controller.pause();
+                      }
+                    ),
+                  );
+                },      
+              ),
             ),
 
             // Organisation
@@ -354,6 +352,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
             SectionTitle("General Partners"),
             OrganisationReel(campaign.getGeneralPartners()),
 
+            SizedBox(height: 10),
             // Buttons
             Padding(
               padding: EdgeInsets.all(10),
@@ -390,8 +389,11 @@ class SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(25),
-      child: Text(text, style: Theme.of(context).primaryTextTheme.headline,),
+      padding: EdgeInsets.symmetric(horizontal: H_PADDING, vertical: 10),
+      child: Text(
+        text,
+        style: Theme.of(context).primaryTextTheme.headline3,
+      ),
     );
   }
 }
@@ -411,47 +413,8 @@ class OrganisationReel extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return Padding(
               padding: EdgeInsets.all(8),
-                child: Container(
-                  width: 100,
-                  //height: 60,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color.fromRGBO(0,0,0,0.16),
-                        offset: Offset(0,3),
-                        blurRadius: 6
-                      )
-                    ]
-                  ),
-                  child: 
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Container(
-                          //height: 80, width: 100,
-                            //width: 20,
-                            height: 55,
-                            child: Image.network(
-                              organisations[index].getLogoLink(),
-                              fit: BoxFit.contain,
-                          )
-                        ),
-                        SizedBox(height: 10,),
-                        Text(
-                          organisations[index].getName(),
-                          style: Theme.of(context).primaryTextTheme.bodyText1,
-                          maxLines: 2,
-                          textAlign: TextAlign.center
-                        )
-                      ],
-                    )
-                  ),
-                )
-              );
+              child: OrganisationTile(organisations[index]),
+            );
           },      
        // )
       )

@@ -114,7 +114,8 @@ class _AppState extends State<App> {
         initialRoute: '/',
         routes: {
           '/': (BuildContext context) => StoreBuilder<AppState>(
-            onInit: (store) { 
+            onInitialBuild: (store) {
+            //onInit: (store) { 
               //store.dispatch(GetCampaignsAction());
               //store.dispatch(GetUserDataAction());
               DynamicLinkService deepLinkService = locator<DynamicLinkService>();

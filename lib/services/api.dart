@@ -16,6 +16,6 @@ abstract class Api {
   
   Future<List<FAQ>> getFAQs();
   
-  //Future<List<Organisation>> getPartners();
+  Future<List<Organisation>> getPartners();
   //Future<List<LearningActions>> getLearningCentre();
 }

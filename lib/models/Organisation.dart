@@ -12,7 +12,7 @@ class Organisation {
     name = json['name'];
     description = json['description'];
     logoLink = json['logo_link'];
-    linkedCampaigns = json['linked_campaigns'];
+    linkedCampaigns = json['linked_campaigns'].cast<int>();
     email = json['email'];
     website = json['website'];
   }

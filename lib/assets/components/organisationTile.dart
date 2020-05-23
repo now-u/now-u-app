@@ -9,45 +9,46 @@ class OrganisationTile extends StatelessWidget {
   );
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(10),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.red,
-        ),
-        //child: Expanded(
-          //padding: EdgeInsets.all(10),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Container(
-                height: 80,
-                child: 
-                  Container(child: Image.network(organisation.getLogoLink()),)
-              ),
-              Text(organisation.getName()),
-              Text(organisation.getName()),
-            ],
+    return Container(
+      width: 100,
+      //height: 60,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromRGBO(0,0,0,0.16),
+            offset: Offset(0,3),
+            blurRadius: 6
           )
-          //child: Column(
-          //  mainAxisSize: MainAxisSize.min,
-          //  children: <Widget>[
-          //    Container(
-          //      decoration: BoxDecoration(
-          //        image: DecorationImage(
-          //          image: NetworkImage(organisation.getLogoLink()),
-          //          fit: BoxFit.contain,
-          //        )
-          //      ),
-          //    ),
-          //    Container(
-          //      width: width ?? 40,
-          //      child: Text(organisation.getName()),
-          //    )
-          //  ],
-          //),
-        //),
-      )
-    );
+        ]
+      ),
+      child: 
+      Padding(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Container(
+              //height: 80, width: 100,
+                //width: 20,
+                height: 55,
+                child: Image.network(
+                  organisation.getLogoLink(),
+                  fit: BoxFit.contain,
+              )
+            ),
+            SizedBox(height: 10,),
+            Text(
+              organisation.getName(),
+              style: Theme.of(context).primaryTextTheme.bodyText1,
+              maxLines: 2,
+              textAlign: TextAlign.center
+            )
+          ],
+        )
+      ),
+   );
+
   }
 }

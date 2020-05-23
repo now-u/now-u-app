@@ -24,8 +24,8 @@ class Campaign {
     @required int numberOfCampaigners,
     @required String headerImage,
     @required List<CampaignAction> actions,
-    @required List<Organisation> generalPartners,
-    @required List<Organisation> campaignPartners,
+    List<Organisation> generalPartners,
+    List<Organisation> campaignPartners,
     this.videoLink,
   }) {
     this.id = id; 
@@ -35,8 +35,8 @@ class Campaign {
     this.headerImage = headerImage;
     this.actions = actions;
     this.videoLink = videoLink;
-    this.generalPartners = generalPartners;
-    this.campaignPartners = campaignPartners;
+    this.generalPartners = generalPartners ?? [];
+    this.campaignPartners = campaignPartners ?? [];
   }
 
   Campaign copyWith({
