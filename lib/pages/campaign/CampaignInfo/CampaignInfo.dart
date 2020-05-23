@@ -18,6 +18,7 @@ import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/pointsNotifier.dart';
+import 'package:app/assets/components/sectionTitle.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -311,7 +312,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
             ),
 
             // Description
-            SectionTitle("What is this about?"),
+            SectionTitle("What is this about?", padding: H_PADDING),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: H_PADDING,),
               child: Expanded(
@@ -323,7 +324,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
             ),
 
             // Actions
-            SectionTitle("Actions of the week"),
+            SectionTitle("Actions of the week", padding: H_PADDING),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 5),
               child: ListView.builder(
@@ -346,10 +347,10 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
             ),
 
             // Organisation
-            SectionTitle("Campaign Partners"),
+            SectionTitle("Campaign Partners", padding: H_PADDING),
             OrganisationReel(campaign.getCampaignPartners()),
             
-            SectionTitle("General Partners"),
+            SectionTitle("General Partners", padding: H_PADDING),
             OrganisationReel(campaign.getGeneralPartners()),
 
             SizedBox(height: 10),
@@ -379,21 +380,6 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
           ], 
         )
       )
-    );
-  }
-}
-
-class SectionTitle extends StatelessWidget {
-  final String text;
-  SectionTitle(this.text);
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: H_PADDING, vertical: 10),
-      child: Text(
-        text,
-        style: Theme.of(context).primaryTextTheme.headline3,
-      ),
     );
   }
 }
