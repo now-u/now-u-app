@@ -163,7 +163,7 @@ class ActionSelectionItem extends StatelessWidget {
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    action.getTitle() + "dasufiouqewopiutqpoweiutoiqwpeutpoqweutoiqwet",
+                                    action.getTitle(),
                                     style: Theme.of(context).primaryTextTheme.bodyText1,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,

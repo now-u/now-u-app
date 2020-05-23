@@ -38,3 +38,7 @@ lib/generated_plugin_registrant.dart
 
 # Firebase
 android/app/google-services.json
+
+#Key-store
+android/app/key.jks
+android/key.properties
