@@ -8,6 +8,7 @@ import 'package:app/assets/StyleFrom.dart';
 
 import 'package:app/pages/profile/profilePages/DetailsPage.dart';
 
+import 'package:app/models/Badge.dart';
 import 'package:app/models/State.dart';
 import 'package:app/models/ViewModel.dart';
 
@@ -90,11 +91,11 @@ class ProfilePage extends StatelessWidget {
                     crossAxisCount: 3,
                     childAspectRatio: 1,
                   ),
-                  itemCount: 12,
+                  itemCount: badges.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
                       padding: EdgeInsets.all(15),
-                      child: BadgeTile(),
+                      child: BadgeTile(badges[index]),
                     );
                   }
                 )
@@ -170,6 +171,9 @@ class ProgressTile extends StatelessWidget {
 
 class BadgeTile extends StatelessWidget {
 
+  final Badge badge;
+  BadgeTile(this.badge);
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -191,13 +195,13 @@ class BadgeTile extends StatelessWidget {
                   child: Container(
                     height: 120,
                     width: 120,
-                    child: Image.asset('assets/imgs/logo.png'),
+                    child: Image.asset(badge.getImage()),
                   )
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: Text(
-                    "now-u Superstar",
+                    badge.getName(),
                     style: Theme.of(context).primaryTextTheme.headline2,
                     textAlign: TextAlign.center,
                   ),
@@ -206,7 +210,7 @@ class BadgeTile extends StatelessWidget {
                 Container(
                   width: MediaQuery.of(context).size.width * 0.65,
                   child: Text(
-                    "You gained 900 points. Congratulations, now-u are a true superstar.",
+                    badge.getSuccessMessage(),
                     style: Theme.of(context).primaryTextTheme.bodyText1,
                     textAlign: TextAlign.center,
                   ),
@@ -234,7 +238,7 @@ class BadgeTile extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(10),
           child: Image(
-            image: AssetImage('assets/imgs/intro/il-mail@4x.png')
+            image: AssetImage(badge.getImage())
           ),
         ),
       ),

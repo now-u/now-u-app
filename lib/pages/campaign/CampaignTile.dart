@@ -7,6 +7,7 @@ import 'package:app/models/State.dart';
 
 import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
 import 'package:app/assets/routes/customRoute.dart';
+import 'package:app/assets/components/pointsNotifier.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/StyleFrom.dart';
 
@@ -137,10 +138,8 @@ class _CampaignTileState extends State<CampaignTile> {
                                 print("Campaign is not already selected");
                                 setState(() {
                                   viewModel.userModel.user.addSelectedCamaping(widget.campaign.getId());
-                                  viewModel.onSelectCampaigns(viewModel.userModel.user, () {
-                                    Scaffold.of(context).showSnackBar(
-                                      SnackBar(content: Text("All is well"),)
-                                    );
+                                  viewModel.onSelectCampaigns(viewModel.userModel.user, (int points, int nextBadgePoints) {
+                                    pointsNotifier(points, nextBadgePoints, context)..show(context);
                                   });
                                 });
                               }

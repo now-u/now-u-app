@@ -10,6 +10,7 @@ import 'package:app/models/State.dart';
 import 'package:app/models/User.dart';
 import 'package:app/models/Campaigns.dart';
 import 'package:app/models/ViewModel.dart';
+import 'package:app/models/Badge.dart';
 import 'package:app/redux/actions.dart';
 
 import 'package:app/pages/login/emailSentPage.dart';
@@ -62,7 +63,8 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
     saveUserToPrefs(store.state.userState.user).then(
       (dynamic d) {
         print("Campaign has been selected now running onSuccess");
-        action.onSuccess(10, 40);
+        print("The user has ${store.state.userState.user.getPoints()} points");
+        action.onSuccess(10, getNextBadge(store.state.userState.user.getPoints()));
       }
     );
   }
@@ -94,7 +96,10 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
   if (action is CompleteAction) {
     print("In middleware of completed Action user is");
     print(store.state.userState.user.getCompletedActions());
-    saveUserToPrefs(store.state.userState.user);
+    saveUserToPrefs(store.state.userState.user).then((_) {
+      action.onSuccess();
+    }
+    );
   }
   if (action is GetDynamicLink) {
   }

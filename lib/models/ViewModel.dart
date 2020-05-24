@@ -17,7 +17,7 @@ class ViewModel {
   final Api api;
   final Function(User, Function) onSelectCampaigns;
   final Function(User) onUpdateUserDetails;
-  final Function(CampaignAction) onCompleteAction;
+  final Function(CampaignAction, Function) onCompleteAction;
 
   ViewModel({
     this.campaigns,
@@ -34,8 +34,8 @@ class ViewModel {
       store.dispatch(SelectCampaignsAction(u, onSuccess));
     }
 
-    _onCompleteAction(CampaignAction action) {
-      store.dispatch(CompleteAction(action));
+    _onCompleteAction(CampaignAction action, Function onSuccess) {
+      store.dispatch(CompleteAction(action, onSuccess));
     }
 
     _onUpdateUserDetails(User user) {

@@ -18,8 +18,9 @@ class SelectCampaignsAction {
 
 class CompleteAction {
   final CampaignAction action;
+  final Function onSuccess;
 
-  CompleteAction(this.action);
+  CompleteAction(this.action, this.onSuccess);
 }
 
 class UpdateUserDetails {

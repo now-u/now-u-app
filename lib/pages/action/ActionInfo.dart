@@ -161,7 +161,7 @@ class _ActionInfoState extends State<ActionInfo> {
                                           setState(() {
                                             // TODO Somehow somewhere navigate to completed reward page if reward completed
                                             print("Completing action");
-                                            viewModel.onCompleteAction(_action, );
+                                            viewModel.onCompleteAction(_action, () {});
                                             if (newlyCompletedRewards.length > 0) {
                                               Navigator.push(
                                                 context, 
