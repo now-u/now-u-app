@@ -1,9 +1,12 @@
+import 'package:app/assets/routes/customRoute.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/progress.dart';
 import 'package:app/assets/StyleFrom.dart';
+
+import 'package:app/pages/profile/profilePages/DetailsPage.dart';
 
 import 'package:app/models/State.dart';
 import 'package:app/models/ViewModel.dart';
@@ -24,7 +27,11 @@ class ProfilePage extends StatelessWidget {
               Icons.settings,
               color: Theme.of(context).primaryColor,
             ),
-            onPressed: () {}
+            onPressed: () {
+              Navigator.of(context).push(
+                CustomRoute(builder: (context) => DetailsPage())
+              );
+            }
           )
         ]
       ),
@@ -87,7 +94,7 @@ class ProfilePage extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
                       padding: EdgeInsets.all(15),
-                      child: BageTile(),
+                      child: BadgeTile(),
                     );
                   }
                 )
@@ -161,17 +168,22 @@ class ProgressTile extends StatelessWidget {
   }
 }
 
-class BageTile extends StatelessWidget {
+class BadgeTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+
+        // Badge Popup
         showDialog(
           context: context,
           barrierDismissible: true,
           builder: (_) => AlertDialog(
-          content: Column(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(35),
+            ),
+            content: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Padding(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:app/assets/components/pageTitle.dart';
+import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/darkButton.dart';
 
 import 'package:app/models/User.dart';
@@ -26,7 +26,7 @@ class _DetailsPageState extends State<DetailsPage> {
   bool editingMode;
   @override
   void initState() {
-    editingMode = false;
+    editingMode = true;
     super.initState();
   }
   @override
@@ -38,10 +38,14 @@ class _DetailsPageState extends State<DetailsPage> {
           user = model.userModel.user;
           List userData = user.getAttributes().entries.toList();
           return Scaffold(
+            appBar: CustomAppBar(
+              text: "Setting",
+              backButtonText: "My profile",
+              context: context,
+            ),
             body: 
               Column(
                  children: <Widget>[
-                  PageTitle("My Details", hasBackButton: true, onClickBackButton: (){},),
                   Expanded(
                     child: 
                       ListView.builder(
@@ -65,67 +69,67 @@ class _DetailsPageState extends State<DetailsPage> {
                       )
                  ], 
               ),
-              floatingActionButton: 
-                !editingMode ?
-                Padding (
-                    padding: EdgeInsets.all(14),
-                    child: Container(
-                      height: 40,
-                      child: DarkButton(
-                        "Edit",
-                        onPressed: () {
-                          setState(() {
-                             editingMode= true;
-                           }); 
-                        },
-                      )
-                    )
-                )
-                :
-                Padding (
-                    padding: EdgeInsets.all(14),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                           padding: EdgeInsets.only(right: 10),
-                           child:
-                            Container(
-                              height: 40,
-                              child: DarkButton(
-                                "Cancel",
-                                onPressed: () {
-                                  setState(() {
-                                     editingMode = false;
-                                     //_model = widget.model;
-                                   }); 
-                                },
-                              ),
-                            ),
-                        ),
-                        Padding(
-                           padding: EdgeInsets.only(left: 10),
-                           child: 
-                            Container(
-                              height: 40, 
-                              child: DarkButton(
-                                "Update",
-                                onPressed: () {
-                                  setState(() {
-                                    //_selectionMode = false;
-                                    model.onUpdateUserDetails(user);
-                                    editingMode = false;
-                                  });
-                                },
-                              ),
-                            )
-                        ),
-                      
-                      ],   
-                    ),
-                )
-                ,
-              floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+              //floatingActionButton: 
+              //  !editingMode ?
+              //  Padding (
+              //      padding: EdgeInsets.all(14),
+              //      child: Container(
+              //        height: 40,
+              //        child: DarkButton(
+              //          "Edit",
+              //          onPressed: () {
+              //            setState(() {
+              //               editingMode= true;
+              //             }); 
+              //          },
+              //        )
+              //      )
+              //  )
+              //  :
+              //  Padding (
+              //      padding: EdgeInsets.all(14),
+              //      child: Row(
+              //        mainAxisAlignment: MainAxisAlignment.center,
+              //        children: <Widget>[
+              //          Padding(
+              //             padding: EdgeInsets.only(right: 10),
+              //             child:
+              //              Container(
+              //                height: 40,
+              //                child: DarkButton(
+              //                  "Cancel",
+              //                  onPressed: () {
+              //                    setState(() {
+              //                       editingMode = false;
+              //                       //_model = widget.model;
+              //                     }); 
+              //                  },
+              //                ),
+              //              ),
+              //          ),
+              //          Padding(
+              //             padding: EdgeInsets.only(left: 10),
+              //             child: 
+              //              Container(
+              //                height: 40, 
+              //                child: DarkButton(
+              //                  "Update",
+              //                  onPressed: () {
+              //                    setState(() {
+              //                      //_selectionMode = false;
+              //                      model.onUpdateUserDetails(user);
+              //                      editingMode = false;
+              //                    });
+              //                  },
+              //                ),
+              //              )
+              //          ),
+              //        
+              //        ],   
+              //      ),
+              //  )
+              //  ,
+              //floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           );
         }
     );
