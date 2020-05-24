@@ -1,0 +1,4 @@
+class Badge {
+  String image; 
+
+}
