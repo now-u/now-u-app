@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:redux/redux.dart';
@@ -125,7 +124,8 @@ ThunkAction loginUser (String email, String link) {
     Future (() async {
       store.dispatch(StartLoadingUserAction());
       store.state.userState.auth.signInWithEmailLink(email, link).then((loginResponse) {
-        store.dispatch(LoginSuccessAction(loginResponse));
+        // TODO add token to LoginSuccessAction
+        store.dispatch(LoginSuccessAction());
         Keys.navKey.currentState.pushNamed(Routes.intro);
       }, onError: (error) {
         store.dispatch(new LoginFailedAction());

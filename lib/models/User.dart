@@ -3,7 +3,6 @@ import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Action.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 List<int> rewardValues = [1, 5, 10, 25, 50, 100, 200];
 int pointsForJoiningCampaign = 10;
@@ -11,7 +10,7 @@ int pointsForCompletingAction = 5;
 
 class User {
   int id;
-  FirebaseUser firebaseUser;
+  //FirebaseUser firebaseUser;
   String fullName;
   String email;
   int age;
@@ -33,7 +32,7 @@ class User {
   
   User({id, firebaseUser, fullName, email, age, location, monthlyDonationLimit, homeOwner, selectedCampaigns, completedCampaigns, completedActions, completedRewards, completedActionsType, points}) {
     this.id = id; 
-    this.firebaseUser = firebaseUser;
+    //this.firebaseUser = firebaseUser;
     this.fullName = fullName;
     this.email = email;
     this.age = age;
@@ -64,13 +63,13 @@ class User {
     completedRewards = [];
     completedActions = [];
     completedActionsType = initCompletedAction();
-    firebaseUser = null;
+    //firebaseUser = null;
     points = 0;
   }
 
   User copyWith({
     int id,
-    FirebaseUser firebaseUser,
+    //FirebaseUser firebaseUser,
     String fullName,
     String email,
     int age,
@@ -103,7 +102,7 @@ class User {
       completedRewards: completedRewards ?? this.completedRewards,
       completedActions: completedActions ?? this.completedActions,
       completedActionsType: completedActionsType ?? this.completedActionsType,
-      firebaseUser: firebaseUser ?? this.firebaseUser,
+      //firebaseUser: firebaseUser ?? this.firebaseUser,
       points: points ?? this.points,
     );
   }

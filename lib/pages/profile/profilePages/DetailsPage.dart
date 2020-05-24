@@ -55,12 +55,13 @@ class _DetailsPageState extends State<DetailsPage> {
                             UserAttributeTile(
                               akey: userData[index].key.toString(),
                               //initalText: userData[index].value.toString(), 
-                              enabled: editingMode ? true : false, 
+                              enabled: editingMode, 
                               value: userData[index].value,
                               onChanged: 
                                 (v) { 
                                   setState(() {
                                      user.setAttribute(userData[index].key, v);
+                                     model.onUpdateUserDetails(user);
                                    }); 
                                 }
                             ); 
@@ -137,10 +138,10 @@ class _DetailsPageState extends State<DetailsPage> {
 }
 
 class UserAttributeTile extends StatelessWidget {
-  String akey;
-  var value;
-  bool enabled;
-  Function onChanged;
+  final String akey;
+  final value;
+  final bool enabled;
+  final Function onChanged;
 
   UserAttributeTile({
     this.akey,

@@ -59,7 +59,9 @@ final userStateReducer = combineReducers<UserState>([
 ]);
 
 UserState _loginSuccess(UserState state, LoginSuccessAction action) {
-  User u = state.user.copyWith(firebaseUser: action.firebaseUser);
+  // Add token to copy with
+  //User u = state.user.copyWith(token: action.token);
+  User u = state.user.copyWith();
   return state.copyWith(user: u, isLoading: false, loginError: false);
 }
 

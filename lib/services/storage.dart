@@ -2,7 +2,7 @@ import 'package:app/services/auth.dart';
 
 import 'package:meta/meta.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 
 class StorageProvider {
   StorageProvider({@required this.flutterSecureStorage})

@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:app/models/User.dart';
 
@@ -9,7 +9,7 @@ class AuthenticationService {
 
   final String domainPrefix = "https://now-u-api.herokuapp.com/api/v1/";
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  //final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<void> sendSignInWithEmailLink(String email) async {
     //return _auth.sendSignInWithEmailLink(
@@ -63,7 +63,7 @@ class AuthenticationService {
   //  return _auth.signInWithCredential(credential);
   //}
 
-  Future<FirebaseUser> getCurrentUser() {
-    return _auth.currentUser();
-  }
+  //Future<FirebaseUser> getCurrentUser() {
+  //  return _auth.currentUser();
+  //}
 }
