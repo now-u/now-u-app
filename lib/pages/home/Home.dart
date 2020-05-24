@@ -4,7 +4,6 @@ import 'package:app/pages/news/NewsPage.dart';
 import 'package:app/pages/Tabs.dart';
 
 import 'package:app/assets/components/selectionItem.dart';
-import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/progress.dart';
 
@@ -60,7 +59,6 @@ class Home extends StatelessWidget {
               child: ListView(
                   children: <Widget>[
                     ActionProgressTile(),
-                    //ActionProgressTile(model.user.getCompletedActions().length, model.campaigns.getCampaignsFromIds(model.user.getSelectedCampaigns()).getActions().length),
 
                     HomeDividor(),
                     sectionTitle("Actions", context),
@@ -147,92 +145,6 @@ class HomeActionTile extends StatelessWidget {
   }
 }
 
-class ActionProgressTile extends StatelessWidget {
-
-  final double actionsHomeTileTextWidth = 0.6;
-  final double actionsHomeTileHeight = 170;
-  final double actionsHomeTilePadding = 15;
-
-  @override
-  Widget build(BuildContext context) {
-    return StoreConnector<AppState, ViewModel>(
-        converter: (Store<AppState> store) => ViewModel.create(store),
-        builder: (BuildContext context, ViewModel viewModel) {
-          final int numberOfCompletedAction = viewModel.userModel.user.getCompletedActions().length;
-          final int numberOfSelectedActions = viewModel.campaigns.getActions().length;
-          return 
-           Container(
-             child: Stack(
-               children: <Widget>[
-                 Padding(
-                   padding: EdgeInsets.all(actionsHomeTilePadding),
-                   child: Container(
-                     width: double.infinity,
-                     height: actionsHomeTileHeight,
-                     decoration: BoxDecoration(
-                       color: Theme.of(context).primaryColor,
-                       borderRadius: BorderRadius.all(Radius.circular(20)),
-                     ),
-                     child: 
-                       Padding(
-                         padding: EdgeInsets.all(20),
-                         child: Column(
-                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                           mainAxisSize: MainAxisSize.max,
-                           crossAxisAlignment: CrossAxisAlignment.start,
-                           children: <Widget>[
-                             Text(
-                               (numberOfSelectedActions - numberOfCompletedAction).toString()
-                               + " actions left",
-                               style: textStyleFrom(
-                                 Theme.of(context).primaryTextTheme.headline3,
-                                 color: Colors.white,
-                               ),
-                               textAlign: TextAlign.left,
-                             ),
-                             ProgressBar(
-                               progress: numberOfCompletedAction/numberOfSelectedActions,
-                               width: MediaQuery.of(context).size.width * (actionsHomeTileTextWidth - 0.12),
-                               height: 15,
-                             ),
-                             SizedBox(height: 15,),
-                             // TODO need to get user active campiangs not all active campaigns
-                             Container(
-                               width: MediaQuery.of(context).size.width * actionsHomeTileTextWidth - 5,
-                               child: Text(
-                                 "You have completed " + numberOfCompletedAction.toString() + " of " + numberOfSelectedActions.toString() + " total actions from your active campaigns. Way to go!",
-                                 textAlign: TextAlign.left,
-                                 style: textStyleFrom(
-                                   Theme.of(context).primaryTextTheme.bodyText1,
-                                   color: Colors.white,
-                                   fontWeight: FontWeight.w500,
-                                   height: 1.0
-                                 ),
-                               ),
-                             ),
-                           ],
-                         ),
-                       )
-                   ),
-                 ),
-                 Positioned(
-                   left: MediaQuery.of(context).size.width * (actionsHomeTileTextWidth),
-                   top: actionsHomeTilePadding,
-                   child: Container(
-                     height: actionsHomeTileHeight,
-                     width: MediaQuery.of(context).size.width * (1-actionsHomeTileTextWidth),
-                     child: Image(
-                       image: AssetImage('assets/imgs/intro/il-reward@4x.png'),
-                     )
-                   )
-                 ),
-               ],
-             )
-           );
-         }
-      );
-    }
-}
 
 class HomeButton extends StatelessWidget {
   final String text;

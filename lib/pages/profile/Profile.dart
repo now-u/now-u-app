@@ -16,6 +16,7 @@ import 'package:app/pages/Tabs.dart';
 import 'package:app/pages/profile/profilePages/DetailsPage.dart';
 import 'package:app/pages/profile/profilePages/AboutPage.dart';
 import 'package:app/pages/profile/profilePages/PartnersPage.dart';
+import 'package:app/pages/profile/profilePages/ProfilePage.dart';
 import 'package:app/pages/profile/profilePages/ProgressPage.dart';
 import 'package:app/pages/profile/profilePages/RewardsPage.dart';
 import 'package:app/pages/profile/profilePages/OffersPage.dart';
@@ -60,7 +61,7 @@ class _ProfileState extends State<Profile> {
           },
           {
             'profileTile': ProfileTile("Profile", FontAwesomeIcons.userCircle),
-            'page': DetailsPage(),
+            'page': ProfilePage(),
           },
           {
             'profileTile': ProfileTile("Campaigns", FontAwesomeIcons.bullhorn),
