@@ -97,7 +97,7 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
     print("In middleware of completed Action user is");
     print(store.state.userState.user.getCompletedActions());
     saveUserToPrefs(store.state.userState.user).then((_) {
-      action.onSuccess();
+      action.onSuccess(5, getNextBadge(store.state.userState.user.getPoints()));
     }
     );
   }
