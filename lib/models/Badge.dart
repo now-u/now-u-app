@@ -25,41 +25,50 @@ class Badge {
   }
 }
 
+//Badge getLockedBadge(int points) {
+//  return Badge(
+//    name: "Locked",
+//    image: "assets/imgs/logo.png",
+//    points: points,
+//    successMessage: "You need ${points} to unlock this badge"
+//  );
+//}
+
 // Must be in order
 final List<Badge> badges = [
   Badge(
     name: "now-u superhero",
-    image: "assets/imgs/logo.png",
+    image: "assets/imgs/badges/achievement badges-new.png",
     points: 10,
     successMessage: "You gained 50 points. Congratulations, now-u are a true superstar"
   ),
   Badge(
     name: "now-u novice",
-    image: "assets/imgs/logo.png",
+    image: "assets/imgs/badges/achievement badges-hero.png",
     points: 30,
     successMessage: "You gained 50 points. Congratulations, now-u are a true superstar"
   ),
   Badge(
     name: "now-u hero",
-    image: "assets/imgs/logo.png",
+    image: "assets/imgs/badges/achievement badges-intermediate.png",
     points: 50,
     successMessage: "You gained 50 points. Congratulations, now-u are a true superstar"
   ),
   Badge(
     name: "now-u thing",
-    image: "assets/imgs/intro/il-mail@4x.png",
+    image: "assets/imgs/badges/achievement badges-champion.png",
     points: 80,
     successMessage: "You gained 50 points. Congratulations, now-u are a true superstar"
   ),
   Badge(
     name: "now-u whatsit",
-    image: "assets/imgs/logo.png",
+    image: "assets/imgs/badges/achievement badges-superhero.png",
     points: 100,
     successMessage: "You gained 50 points. Congratulations, now-u are a true superstar"
   ),
   Badge(
     name: "now-u supersuperhero",
-    image: "assets/imgs/logo.png",
+    image: "assets/imgs/badges/achievement badges-pro.png",
     points: 500,
     successMessage: "You gained 50 points. Congratulations, now-u are a true superstar"
   ),

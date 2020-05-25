@@ -93,9 +93,11 @@ class ProfilePage extends StatelessWidget {
                   ),
                   itemCount: badges.length,
                   itemBuilder: (BuildContext context, int index) {
+                    int userPoints = viewModel.userModel.user.getPoints();
                     return Padding(
                       padding: EdgeInsets.all(15),
-                      child: BadgeTile(badges[index]),
+                      child: 
+                        BadgeTile(badges[index], userPoints < badges[index].getPoints())
                     );
                   }
                 )
@@ -172,7 +174,9 @@ class ProgressTile extends StatelessWidget {
 class BadgeTile extends StatelessWidget {
 
   final Badge badge;
-  BadgeTile(this.badge);
+  final bool locked;
+  BadgeTile(this.badge, this.locked);
+
 
   @override
   Widget build(BuildContext context) {
@@ -195,12 +199,20 @@ class BadgeTile extends StatelessWidget {
                   child: Container(
                     height: 120,
                     width: 120,
-                    child: Image.asset(badge.getImage()),
+                    child:
+                      locked ? 
+                      Icon(
+                        Icons.lock, 
+                        size: 60,
+                        color: Theme.of(context).primaryColor
+                      ) :
+                      Image.asset(badge.getImage()),
                   )
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: Text(
+                    locked ? "Locked" :
                     badge.getName(),
                     style: Theme.of(context).primaryTextTheme.headline2,
                     textAlign: TextAlign.center,
@@ -210,6 +222,7 @@ class BadgeTile extends StatelessWidget {
                 Container(
                   width: MediaQuery.of(context).size.width * 0.65,
                   child: Text(
+                    locked ? "You need ${badge.getPoints()} to unlock this badge" :
                     badge.getSuccessMessage(),
                     style: Theme.of(context).primaryTextTheme.bodyText1,
                     textAlign: TextAlign.center,
@@ -222,14 +235,27 @@ class BadgeTile extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: 
+            locked 
+            ?
+              Color.fromRGBO(238,238,238,1)
+            :
+              Colors.white,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: colorFrom(
-                Colors.black, 
-                opacity: 0.16,
-              ),
+              color: 
+                locked 
+                ?
+                  colorFrom(
+                    Colors.black, 
+                    opacity: 0,
+                  )
+                :
+                  colorFrom(
+                    Colors.black, 
+                    opacity: 0.16,
+                  ),
               offset: Offset(3, 6),
               blurRadius: 6,
             )
@@ -237,9 +263,17 @@ class BadgeTile extends StatelessWidget {
         ),
         child: Padding(
           padding: EdgeInsets.all(10),
-          child: Image(
-            image: AssetImage(badge.getImage())
-          ),
+          child: 
+          locked ? 
+            Icon(
+              Icons.lock,
+              size: 60,
+              color: Theme.of(context).primaryColor,
+            ) 
+          :
+            Image(
+              image: AssetImage(badge.getImage())
+            ),
         ),
       ),
     );
