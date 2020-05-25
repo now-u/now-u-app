@@ -56,7 +56,7 @@ class ProgressBar extends StatelessWidget {
 
 class ActionProgressTile extends StatelessWidget {
 
-  final double actionsHomeTileTextWidth = 0.6;
+  final double actionsHomeTileTextWidth = 0.5;
   final double actionsHomeTileHeight = 170;
   final double actionsHomeTilePadding = 15;
 
@@ -99,7 +99,7 @@ class ActionProgressTile extends StatelessWidget {
                              ),
                              ProgressBar(
                                progress: numberOfCompletedAction/numberOfSelectedActions,
-                               width: MediaQuery.of(context).size.width * (actionsHomeTileTextWidth - 0.12),
+                               width: MediaQuery.of(context).size.width * (actionsHomeTileTextWidth - 0.12) + 20,
                                height: 15,
                              ),
                              SizedBox(height: 15,),
@@ -113,7 +113,8 @@ class ActionProgressTile extends StatelessWidget {
                                    Theme.of(context).primaryTextTheme.bodyText1,
                                    color: Colors.white,
                                    fontWeight: FontWeight.w500,
-                                   height: 1.0
+                                   height: 1.0,
+                                   fontSize: 13
                                  ),
                                ),
                              ),
@@ -123,13 +124,14 @@ class ActionProgressTile extends StatelessWidget {
                    ),
                  ),
                  Positioned(
-                   left: MediaQuery.of(context).size.width * (actionsHomeTileTextWidth),
-                   top: actionsHomeTilePadding,
+                   left: MediaQuery.of(context).size.width * (actionsHomeTileTextWidth) + 20,
+                   //top: actionsHomeTilePadding,
+                   top: 0,
                    child: Container(
                      height: actionsHomeTileHeight,
                      width: MediaQuery.of(context).size.width * (1-actionsHomeTileTextWidth),
                      child: Image(
-                       image: AssetImage('assets/imgs/intro/il-reward@4x.png'),
+                       image: AssetImage('assets/imgs/progress.png'),
                      )
                    )
                  ),

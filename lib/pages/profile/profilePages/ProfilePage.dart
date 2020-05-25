@@ -46,7 +46,7 @@ class ProfilePage extends StatelessWidget {
 
               // Hi there
               Text(
-                "Hi Jane!",
+                "Hi ${viewModel.userModel.user.getName()}!",
                 style: Theme.of(context).primaryTextTheme.headline2,
                 textAlign: TextAlign.center,
               ),
@@ -63,6 +63,11 @@ class ProfilePage extends StatelessWidget {
               ProgressTile(
                 text: "Total actions completed",
                 number: viewModel.userModel.user.getCompletedActions().length,
+                icon: FontAwesomeIcons.check,
+              ),
+              ProgressTile(
+                text: "Points earned",
+                number: viewModel.userModel.user.getPoints(),
                 icon: FontAwesomeIcons.check,
               ),
 

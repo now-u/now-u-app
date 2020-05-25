@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import 'package:app/models/Action.dart';
 import 'package:app/models/Organisation.dart';
+import 'package:app/models/SDG.dart';
 
 import 'dart:convert';
 
@@ -16,6 +17,7 @@ class Campaign {
   List<Organisation> generalPartners;
   List<Organisation> campaignPartners;
   String videoLink;
+  List<SDG> sdgs;
   
   Campaign({
     @required int id,
@@ -24,6 +26,7 @@ class Campaign {
     @required int numberOfCampaigners,
     @required String headerImage,
     @required List<CampaignAction> actions,
+    @required List<SDG> sdgs,
     List<Organisation> generalPartners,
     List<Organisation> campaignPartners,
     this.videoLink,
@@ -37,6 +40,7 @@ class Campaign {
     this.videoLink = videoLink;
     this.generalPartners = generalPartners ?? [];
     this.campaignPartners = campaignPartners ?? [];
+    this.sdgs = sdgs ?? [];
   }
 
   Campaign copyWith({
@@ -49,6 +53,7 @@ class Campaign {
     List<Organisation> generalPartners,
     List<Organisation> campaignPartners,
     String videoLink,
+    List<SDG> sdgs,
   }) {
     return Campaign(
       id: id ?? this.id,
@@ -60,6 +65,7 @@ class Campaign {
       generalPartners: generalPartners ?? this.generalPartners,
       campaignPartners: campaignPartners ?? this.campaignPartners,
       videoLink: videoLink ?? this.videoLink,
+      sdgs: sdgs ?? this.sdgs,
     );
   }
 
@@ -74,6 +80,7 @@ class Campaign {
     campaignPartners = json.containsKey('campaign_partners') ? (json['campaign_partners']).map((e) => Organisation.fromJson(e)).toList().cast<Organisation>() : [];
     generalPartners = json.containsKey('general_partners') ? (json['general_partners']).map((e) => Organisation.fromJson(e)).toList().cast<Organisation>() : [];
     videoLink = json['video_link'];
+    sdgs = json['sdgs'].map((s) => getSDGfromNumber(s));
   }
 
   Map toJson() => {
@@ -87,6 +94,7 @@ class Campaign {
     'general_partners': generalPartners,
     'campaign_partners': campaignPartners,
     'video_link': videoLink,
+    'sdg': sdgs.map((s) => s.getNumber()),
   };
 
   int getId() {
@@ -118,5 +126,8 @@ class Campaign {
   }
   List<Organisation> getGeneralPartners() {
     return generalPartners; 
+  }
+  List<SDG> getSDGs() {
+    return sdgs;
   }
 }

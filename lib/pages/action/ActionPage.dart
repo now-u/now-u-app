@@ -57,6 +57,7 @@ class _ActionPageState extends State<ActionPage> {
                     Padding(
                       padding: const EdgeInsets.only(right: 16.0),
                       child: PopupMenuButton(
+                        padding: EdgeInsets.all(0),
                         icon: Icon(
                           Icons.filter_list,
                           color: Theme.of(context).primaryColor,
@@ -64,10 +65,8 @@ class _ActionPageState extends State<ActionPage> {
                         itemBuilder: (BuildContext context) {
                           return 
                             [
-                              PopupMenuItem(
-                                value: "hi",
-                                child: Text("hi"),
-                              )
+                              buildPopupMenuHeader(context),
+                              buildPopupMenuHeader(context),
                             ];
                         },
                       )
@@ -211,4 +210,25 @@ class CampaignSelectionChevron extends StatelessWidget {
       )
     );
   }
+}
+
+PopupMenuItem buildPopupMenuHeader(
+      BuildContext context,
+    ) {
+    return PopupMenuItem(
+      textStyle: TextStyle(
+        backgroundColor: Theme.of(context).primaryColor,
+      ),
+      //value: "hi",
+      child: Container(
+        color: Theme.of(context).primaryColor,
+        child: Text(
+          "Joined campaigns",
+          style: textStyleFrom(
+            Theme.of(context).primaryTextTheme.headline4,
+            color: Colors.white,
+          ),
+        ),
+      )
+    );
 }
