@@ -24,33 +24,33 @@ dependencies:
   #youtube_player_flutter: ^6.0.0
   share: ^0.6.3+6
 
-  redux: ^4.0.0
-  flutter_redux: ^0.6.0
-  redux_thunk: ^0.3.0
+  #redux: ^4.0.0
+  #flutter_redux: ^0.6.0
+  #redux_thunk: ^0.3.0
   #shared_preferences: 0.5.6+3
-  path_provider: ^1.6.7
-  font_awesome_flutter: ^8.8.1
+  #path_provider: ^1.6.7
+  #font_awesome_flutter: ^8.8.1
   #url_launcher: ^5.4.2
   #url_launcher: ^5.0.0
-  dropdown_formfield: ^0.1.2
-  tuple: ^1.0.3
-  smooth_page_indicator: ^0.1.5
-  rect_getter: ^0.1.0
+  #dropdown_formfield: ^0.1.2
+  #tuple: ^1.0.3
+  #smooth_page_indicator: ^0.1.5
+  #rect_getter: ^0.1.0
   #flutter_appavailability: ^0.0.21
-  flushbar: ^1.10.4
-  permission_handler: ^5.0.0+hotfix.6
+  #flushbar: ^1.10.4
+  #permission_handler: ^5.0.0+hotfix.6
 
-  get_it: ^4.0.2
+  #get_it: ^4.0.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
+  #cupertino_icons: ^0.1.2
 
   # Firebase
   #firebase_dynamic_links: ^0.5.1
   #firebase_auth: ^0.16.0
   #google_sign_in: ^4.5.1
-  flutter_secure_storage: ^3.2.1+1
+  #flutter_secure_storage: ^3.2.1+1
 
 module: 
   androidx: true
