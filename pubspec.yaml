@@ -48,8 +48,6 @@ dependencies:
 
   # Firebase
   firebase_dynamic_links: ^0.5.1
-  #firebase_auth: ^0.16.0
-  #google_sign_in: ^4.5.1
   flutter_secure_storage: ^3.2.1+1
 
 
