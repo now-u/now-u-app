@@ -18,28 +18,24 @@ import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 class CampaignPage extends StatelessWidget {
-  final bool selectionMode;
-  final int campaignId;
 
-  CampaignPage(this.selectionMode, {this.campaignId});
+  CampaignPage();
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ViewModel>(
         converter: (Store<AppState> store) => ViewModel.create(store),
         builder: (BuildContext context, ViewModel viewModel) {
           print("Before splash screen user is");
-          return CampaignPageBody(viewModel ,selectionMode, campaignId: campaignId);
+          return CampaignPageBody(viewModel);
         },
     );
   }
 }
 
 class CampaignPageBody extends StatefulWidget {
-  final bool selectionMode;
-  final int campaignId;
   final ViewModel model;
 
-  CampaignPageBody(this.model, this.selectionMode, {this.campaignId});
+  CampaignPageBody(this.model);
 
   @override
   _CampaignPageBodyState createState() => _CampaignPageBodyState();
@@ -58,16 +54,7 @@ class _CampaignPageBodyState extends State<CampaignPageBody> {
     user = widget.model.userModel.user;
     model = widget.model;
     onlyJoined = false;
-    if (widget.campaignId != null) {
-      Future (() {
-          Navigator.push(
-            context, 
-            CustomRoute(builder: (context) => CampaignInfo(campaignId: widget.campaignId))
-          );
-      });
-    } else {
-      super.initState();
-    }
+    super.initState();
   }
 
   @override
