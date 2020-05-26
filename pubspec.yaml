@@ -31,7 +31,7 @@ dependencies:
   path_provider: ^1.6.7
   font_awesome_flutter: ^8.8.1
   #url_launcher: ^5.4.2
-  url_launcher: ^5.0.0
+  #url_launcher: ^5.0.0
   dropdown_formfield: ^0.1.2
   tuple: ^1.0.3
   smooth_page_indicator: ^0.1.5
