@@ -6,6 +6,7 @@
    "number_of_campaigners": 270,
    "header_image": "https://cdn.pixabay.com/photo/2013/04/16/14/23/eritrea-105081_960_720.jpg",
    "video_link": "hLrFyjGZ9NU",
+   "sdgs": [1,2,3],
    "actions": [
       {
         "id": 0,
@@ -202,6 +203,7 @@
    "number_of_campaigners": 341,
    "header_image": "https://cdn.pixabay.com/photo/2013/04/16/14/23/eritrea-105081_960_720.jpg",
    "video_link": "hLrFyjGZ9NU",
+   "sdgs": [12,2,7],
    "actions": [
       {
         "id": 3,
@@ -287,6 +289,7 @@
    "number_of_campaigners": 290,
    "header_image": "https://cdn.pixabay.com/photo/2013/04/16/14/23/eritrea-105081_960_720.jpg",
    "video_link": "hLrFyjGZ9NU",
+   "sdgs": [12,2,7],
    "actions": [
       {
         "id": 6,

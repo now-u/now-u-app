@@ -80,7 +80,7 @@ class Campaign {
     campaignPartners = json.containsKey('campaign_partners') ? (json['campaign_partners']).map((e) => Organisation.fromJson(e)).toList().cast<Organisation>() : [];
     generalPartners = json.containsKey('general_partners') ? (json['general_partners']).map((e) => Organisation.fromJson(e)).toList().cast<Organisation>() : [];
     videoLink = json['video_link'];
-    sdgs = json['sdgs'].map((s) => getSDGfromNumber(s));
+    sdgs = json['sdgs'].map((s) => getSDGfromNumber(s)).toList().cast<SDG>();
   }
 
   Map toJson() => {
@@ -94,7 +94,7 @@ class Campaign {
     'general_partners': generalPartners,
     'campaign_partners': campaignPartners,
     'video_link': videoLink,
-    'sdg': sdgs.map((s) => s.getNumber()),
+    'sdgs': sdgs.map((s) => s.getNumber()),
   };
 
   int getId() {

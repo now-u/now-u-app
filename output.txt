@@ -1,0 +1,157 @@
+[   +6 ms] executing: [/home/jelgar/Documents/dev/flutter/] git -c log.showSignature=false log -n 1 --pretty=format:%H
+[  +19 ms] Exit code 0 from: git -c log.showSignature=false log -n 1 --pretty=format:%H
+[        ] 2738a1148ba6c9a6114df62358109407c3ef2553
+[        ] executing: [/home/jelgar/Documents/dev/flutter/] git tag --contains HEAD
+[ +117 ms] Exit code 0 from: git tag --contains HEAD
+[        ] 1.18.0-11.1.pre
+[   +5 ms] executing: [/home/jelgar/Documents/dev/flutter/] git rev-parse --abbrev-ref --symbolic @{u}
+[   +3 ms] Exit code 0 from: git rev-parse --abbrev-ref --symbolic @{u}
+[        ] origin/beta
+[        ] executing: [/home/jelgar/Documents/dev/flutter/] git ls-remote --get-url origin
+[   +2 ms] Exit code 0 from: git ls-remote --get-url origin
+[        ] https://github.com/flutter/flutter.git
+[  +31 ms] executing: [/home/jelgar/Documents/dev/flutter/] git rev-parse --abbrev-ref HEAD
+[   +3 ms] Exit code 0 from: git rev-parse --abbrev-ref HEAD
+[        ] beta
+[  +26 ms] Artifact Instance of 'AndroidMavenArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[   +1 ms] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[   +4 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidMavenArtifacts' is not required, skipping update.
+[   +2 ms] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[   +1 ms] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[  +70 ms] Found plugin firebase_dynamic_links at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_dynamic_links-0.3.0/
+[   +3 ms] Found plugin flutter_appavailability at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_appavailability-0.0.21/
+[   +3 ms] Found plugin flutter_secure_storage at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_secure_storage-3.3.3/
+[   +7 ms] Found plugin path_provider at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-1.6.7/
+[   +2 ms] Found plugin path_provider_macos at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-0.0.4+2/
+[   +2 ms] Found plugin permission_handler at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler-5.0.0+hotfix.6/
+[   +6 ms] Found plugin share at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/share-0.6.4+1/
+[   +1 ms] Found plugin shared_preferences at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.5.6+3/
+[        ] Found plugin shared_preferences_macos at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-0.0.1+8/
+[   +1 ms] Found plugin shared_preferences_web at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-0.1.2+5/
+[   +6 ms] Found plugin url_launcher at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-5.4.5/
+[        ] Found plugin url_launcher_macos at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_macos-0.0.1+5/
+[   +1 ms] Found plugin url_launcher_web at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_web-0.1.1+4/
+[   +1 ms] Found plugin webview_media at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/webview_media-0.1.2/
+[  +33 ms] Found plugin firebase_dynamic_links at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_dynamic_links-0.3.0/
+[   +1 ms] Found plugin flutter_appavailability at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_appavailability-0.0.21/
+[   +1 ms] Found plugin flutter_secure_storage at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_secure_storage-3.3.3/
+[   +3 ms] Found plugin path_provider at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-1.6.7/
+[        ] Found plugin path_provider_macos at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-0.0.4+2/
+[   +1 ms] Found plugin permission_handler at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler-5.0.0+hotfix.6/
+[   +3 ms] Found plugin share at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/share-0.6.4+1/
+[        ] Found plugin shared_preferences at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.5.6+3/
+[        ] Found plugin shared_preferences_macos at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-0.0.1+8/
+[        ] Found plugin shared_preferences_web at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-0.1.2+5/
+[   +2 ms] Found plugin url_launcher at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-5.4.5/
+[        ] Found plugin url_launcher_macos at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_macos-0.0.1+5/
+[        ] Found plugin url_launcher_web at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_web-0.1.1+4/
+[        ] Found plugin webview_media at /home/jelgar/Documents/dev/flutter/.pub-cache/hosted/pub.dartlang.org/webview_media-0.1.2/
+[  +30 ms] Generating /home/jelgar/Documents/dev/now-u/app/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+[  +26 ms] You are building a fat APK that includes binaries for android-arm, android-arm64, android-x64.
+[        ] If you are deploying the app to the Play Store, it's recommended to use app bundles or split the APK to reduce the APK size.
+[        ]     To generate an app bundle, run:
+[        ]         flutter build appbundle --target-platform android-arm,android-arm64,android-x64
+[        ]         Learn more on: https://developer.android.com/guide/app-bundle
+[        ]     To split the APKs per ABI, run:
+[        ]         flutter build apk --target-platform android-arm,android-arm64,android-x64 --split-per-abi
+[        ]         Learn more on:  https://developer.android.com/studio/build/configure-apk-splits#configure-abi-split
+[  +13 ms] Running Gradle task 'assembleRelease'...
+[   +1 ms] gradle.properties already sets `android.enableR8`
+[   +1 ms] Using gradle from /home/jelgar/Documents/dev/now-u/app/android/gradlew.
+[        ] /home/jelgar/Documents/dev/now-u/app/android/gradlew mode: 33261 rwxr-xr-x.
+[   +4 ms] executing: /home/jelgar/Documents/dev/android-studio/jre/bin/java -version
+[  +37 ms] Exit code 0 from: /home/jelgar/Documents/dev/android-studio/jre/bin/java -version
+[        ] openjdk version "1.8.0_212-release"
+           OpenJDK Runtime Environment (build 1.8.0_212-release-1586-b4-5784211)
+           OpenJDK 64-Bit Server VM (build 25.212-b4-5784211, mixed mode)
+[   +3 ms] executing: [/home/jelgar/Documents/dev/now-u/app/android/] /home/jelgar/Documents/dev/now-u/app/android/gradlew -Pverbose=true -Ptarget-platform=android-arm,android-arm64,android-x64 -Ptarget=lib/main.dart -Ptrack-widget-creation=true -Pshrink=true assembleRelease
+[ +778 ms] > Configure project :app
+[        ] WARNING: The option 'android.enableR8' is deprecated and should not be used anymore.
+[        ] It will be removed in a future version of the Android Gradle plugin, and will no longer allow you to disable R8.
+[+3889 ms] > Task :app:compileFlutterBuildRelease
+[        ] [   +5 ms] executing: [/home/jelgar/Documents/dev/flutter/] git -c log.showSignature=false log -n 1 --pretty=format:%H
+[        ] [  +18 ms] Exit code 0 from: git -c log.showSignature=false log -n 1 --pretty=format:%H
+[        ] [        ] 2738a1148ba6c9a6114df62358109407c3ef2553
+[        ] [        ] executing: [/home/jelgar/Documents/dev/flutter/] git tag --contains HEAD
+[        ] [ +114 ms] Exit code 0 from: git tag --contains HEAD
+[        ] [        ] 1.18.0-11.1.pre
+[        ] [   +6 ms] executing: [/home/jelgar/Documents/dev/flutter/] git rev-parse --abbrev-ref --symbolic @{u}
+[        ] [   +2 ms] Exit code 0 from: git rev-parse --abbrev-ref --symbolic @{u}
+[        ] [        ] origin/beta
+[        ] [        ] executing: [/home/jelgar/Documents/dev/flutter/] git ls-remote --get-url origin
+[        ] [   +2 ms] Exit code 0 from: git ls-remote --get-url origin
+[        ] [        ] https://github.com/flutter/flutter.git
+[        ] [  +29 ms] executing: [/home/jelgar/Documents/dev/flutter/] git rev-parse --abbrev-ref HEAD
+[        ] [   +2 ms] Exit code 0 from: git rev-parse --abbrev-ref HEAD
+[        ] [        ] beta
+[        ] [  +22 ms] Artifact Instance of 'AndroidMavenArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] [   +1 ms] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] [   +4 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'AndroidMavenArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] [        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ] [  +63 ms] Initializing file store
+[        ] [   +8 ms] Done initializing file store
+[        ] [ +649 ms] kernel_snapshot: Starting due to {InvalidatedReason.inputChanged}
+[        ] [  +25 ms] /home/jelgar/Documents/dev/flutter/bin/cache/dart-sdk/bin/dart /home/jelgar/Documents/dev/flutter/bin/cache/artifacts/engine/linux-x64/frontend_server.dart.snapshot --sdk-root /home/jelgar/Documents/dev/flutter/bin/cache/artifacts/engine/common/flutter_patched_sdk_product/ --target=flutter -Ddart.developer.causal_async_stacks=false -Ddart.vm.profile=false -Ddart.vm.product=true --bytecode-options=source-positions --aot --tfa --packages /home/jelgar/Documents/dev/now-u/app/.packages --output-dill /home/jelgar/Documents/dev/now-u/app/.dart_tool/flutter_build/631dfcbf2b7029cfbe950d2a4fe3b01b/app.dill --depfile /home/jelgar/Documents/dev/now-u/app/.dart_tool/flutter_build/631dfcbf2b7029cfbe950d2a4fe3b01b/kernel_snapshot.d package:app/main.dart
+[+3595 ms] [+3559 ms] Persisting file store
+[        ] [   +7 ms] Done persisting file store
+[        ] [   +5 ms] "flutter assemble" took 5,980ms.
+[        ] > Task :app:compileFlutterBuildRelease FAILED
+[        ] 1 actionable task: 1 executed
+[ +332 ms] Running Gradle task 'assembleRelease'... (completed in 9.5s)
+[   +3 ms] "flutter apk" took 9,776ms.
