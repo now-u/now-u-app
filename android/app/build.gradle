@@ -63,8 +63,8 @@ android {
    buildTypes {
        release {
        // TODO change back to release
-           //signingConfig signingConfigs.release
-           signingConfig signingConfigs.debug
+           signingConfig signingConfigs.release
+           //signingConfig signingConfigs.debug
            ndk {
                abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
            }
