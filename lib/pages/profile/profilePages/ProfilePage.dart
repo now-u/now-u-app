@@ -88,7 +88,7 @@ class ProfilePage extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
 
-              Expanded(
+              Container(
                 child: GridView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
@@ -227,7 +227,7 @@ class BadgeTile extends StatelessWidget {
                 Container(
                   width: MediaQuery.of(context).size.width * 0.65,
                   child: Text(
-                    locked ? "You need ${badge.getPoints()} to unlock this badge" :
+                    locked ? "You need ${badge.getPoints()} points to unlock this badge" :
                     badge.getSuccessMessage(),
                     style: Theme.of(context).primaryTextTheme.bodyText1,
                     textAlign: TextAlign.center,
