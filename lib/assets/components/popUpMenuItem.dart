@@ -5,6 +5,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 
 // Examples can assume:
 // enum Commands { heroAndScholar, hurricaneCame }
@@ -15,11 +18,14 @@ import 'package:flutter/material.dart';
 
 const Duration _kMenuDuration = Duration(milliseconds: 300);
 const double _kMenuCloseIntervalEnd = 2.0 / 3.0;
-const double _kMenuHorizontalPadding = 16.0;
-const double _kMenuDividerHeight = 16.0;
+//const double _kMenuHorizontalPadding = 16.0;
+const double _kMenuHorizontalPadding = 0.0;
+//const double _kMenuDividerHeight = 16.0;
+const double _kMenuDividerHeight = 0.0;
 const double _kMenuMaxWidth = 5.0 * _kMenuWidthStep;
 const double _kMenuMinWidth = 2.0 * _kMenuWidthStep;
-const double _kMenuVerticalPadding = 8.0;
+//const double _kMenuVerticalPadding = 8.0;
+const double _kMenuVerticalPadding = 0.0;
 const double _kMenuWidthStep = 56.0;
 const double _kMenuScreenPadding = 8.0;
 

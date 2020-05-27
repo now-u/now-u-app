@@ -1,4 +1,5 @@
 import 'package:app/assets/components/customAppBar.dart';
+import 'package:app/assets/components/popUpMenuItem.dart' as customPopup;
 import 'package:flutter/material.dart';
 
 import 'package:app/models/Campaign.dart';
@@ -55,19 +56,15 @@ class _ActionPageState extends State<ActionPage> {
                   context: context,
                   actions: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.only(right: 16.0),
-                      child: PopupMenuButton(
+                      padding: const EdgeInsets.only(right: 0.0),
+                      child: customPopup.PopupMenuButton(
                         padding: EdgeInsets.all(0),
                         icon: Icon(
                           Icons.filter_list,
                           color: Theme.of(context).primaryColor,
                         ),
                         itemBuilder: (BuildContext context) {
-                          return 
-                            [
-                              buildPopupMenuHeader(context),
-                              buildPopupMenuHeader(context),
-                            ];
+                          return buildListPopupItems(context, viewModel);
                         },
                       )
                     ),
@@ -212,23 +209,80 @@ class CampaignSelectionChevron extends StatelessWidget {
   }
 }
 
-PopupMenuItem buildPopupMenuHeader(
+customPopup.PopupMenuItem buildPopupMenuHeader(
       BuildContext context,
+      String text,
     ) {
-    return PopupMenuItem(
-      textStyle: TextStyle(
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
+    return customPopup.PopupMenuItem(
       //value: "hi",
       child: Container(
+        height: 40.0,
         color: Theme.of(context).primaryColor,
-        child: Text(
-          "Joined campaigns",
-          style: textStyleFrom(
-            Theme.of(context).primaryTextTheme.headline4,
-            color: Colors.white,
-          ),
-        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Container(
+              child: Text(
+                text,
+                style: textStyleFrom(
+                  Theme.of(context).primaryTextTheme.headline4,
+                  color: Colors.white,
+                ),
+              ),
+            )
+          ],
+        )
       )
     );
 }
+
+customPopup.PopupMenuItem buildPopupMenuItem({
+      @required BuildContext context,
+      @required String text,
+    }) {
+    return customPopup.PopupMenuItem(
+      child: Container(
+        height: 40.0,
+        color: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Checkbox(
+              onChanged: (bool) {print("Checked");},
+              value: false,
+            ),
+            Container(
+              color: Colors.white,
+              child: Text(
+                "Joined campaigns",
+                style: textStyleFrom(
+                  Theme.of(context).primaryTextTheme.headline4,
+                  color: Colors.black,
+                ),
+              ),
+            )
+          ],
+        )
+      )
+    );
+}
+
+List<customPopup.PopupMenuItem> buildListPopupItems(BuildContext context, ViewModel viewModel) {
+  List<customPopup.PopupMenuItem> items = [
+    buildPopupMenuHeader(context, "Joined campaigns"),
+  ];
+  List<customPopup.PopupMenuItem> campaignSelectors = viewModel.campaigns.getSelectedActiveCampaigns(viewModel.userModel.user).map((c) => buildPopupMenuItem(context: context, text: c.getTitle())).toList();
+  print("campaign selectors are");
+  print(campaignSelectors);
+  items.addAll(campaignSelectors);
+  items.add(
+    buildPopupMenuHeader(context, "Categories"),
+  );
+  items.add(
+    buildPopupMenuHeader(context, "Time"),
+  );
+  return items;
+} 
+

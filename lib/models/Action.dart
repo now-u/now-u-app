@@ -4,6 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+enum CampaignActionSuperType{
+  GetInvolved,
+  Learn,
+  Advoacte,
+  RaiseMoney
+}
+
 enum CampaignActionType {
   Volunteer,
   Donation,
@@ -240,4 +247,22 @@ class CampaignAction {
     return defaultCampaignActionTypeData;
   }
 
+}
+
+abstract class TimeBracket {
+  double maxTime;
+  double minTime;
+
+  String timeText;
+
+  String getTimeText() {
+    return timeText;
+  }
+}
+
+class OneToFiveTimeBracket extends TimeBracket {
+  double minTime = 1;
+  double maxTime = 5;
+
+  String timeText = "1-5 mins";
 }

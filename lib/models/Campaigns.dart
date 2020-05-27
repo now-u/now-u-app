@@ -19,6 +19,15 @@ class Campaigns {
   List<Campaign> getActiveCampaigns() {
     return activeCampaigns; 
   }
+  
+  List<Campaign> getSelectedActiveCampaigns(User u) {
+    print("Getting asc");
+    var asc = activeCampaigns.where((c) => u.getSelectedCampaigns().contains(c.getId())).toList(); 
+    print("Got asc");
+    print(asc);
+    print(asc.length);
+    return asc;
+  }
 
   //TODO shuffle/ return in sesible order
   List<CampaignAction> getActions() {
