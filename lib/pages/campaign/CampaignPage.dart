@@ -17,42 +17,34 @@ import 'package:app/assets/components/customAppBar.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-class CampaignPage extends StatelessWidget {
+//class CampaignPage extends StatelessWidget {
+//
+//  CampaignPage();
+//  @override
+//  Widget build(BuildContext context) {
+//    return StoreConnector<AppState, ViewModel>(
+//        converter: (Store<AppState> store) => ViewModel.create(store),
+//        builder: (BuildContext context, ViewModel viewModel) {
+//          print("Before splash screen user is");
+//          return CampaignPageBody(viewModel);
+//        },
+//    );
+//  }
+//}
 
-  CampaignPage();
+class CampaignPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return StoreConnector<AppState, ViewModel>(
-        converter: (Store<AppState> store) => ViewModel.create(store),
-        builder: (BuildContext context, ViewModel viewModel) {
-          print("Before splash screen user is");
-          return CampaignPageBody(viewModel);
-        },
-    );
-  }
+  _CampaignPageState createState() => _CampaignPageState();
 }
 
-class CampaignPageBody extends StatefulWidget {
-  final ViewModel model;
-
-  CampaignPageBody(this.model);
-
-  @override
-  _CampaignPageBodyState createState() => _CampaignPageBodyState();
-}
-
-class _CampaignPageBodyState extends State<CampaignPageBody> {
+class _CampaignPageState extends State<CampaignPage> {
   List<Campaign> campaigns;
   Campaigns selectedCampaigns;
   User user;
-  ViewModel model;
   bool onlyJoined;
 
   @override
   void initState() {
-    campaigns = widget.model.campaigns.getActiveCampaigns().toList();
-    user = widget.model.userModel.user;
-    model = widget.model;
     onlyJoined = false;
     super.initState();
   }
@@ -69,7 +61,19 @@ class _CampaignPageBodyState extends State<CampaignPageBody> {
           context: context,
           hasBackButton: false,
         ), 
-        body: SafeArea(
+        body: 
+          StoreConnector<AppState, ViewModel>(
+            converter: (Store<AppState> store) => ViewModel.create(store),
+            builder: (BuildContext context, ViewModel viewModel) {
+              print("In page campaigns");
+              print(viewModel.campaigns);
+              print(viewModel.campaigns.getActiveCampaigns());
+              print(viewModel.campaigns.getActiveCampaigns().toList()[0]);
+              print(viewModel.campaigns.getActiveCampaigns().toList()[1]);
+              print(viewModel.campaigns.getActiveCampaigns().toList()[2]);
+              campaigns = viewModel.campaigns.getActiveCampaigns().toList();
+              user = viewModel.userModel.user;
+              return  SafeArea(
                 child: ListView(
                   children: <Widget>[
                     Row(
@@ -86,11 +90,11 @@ class _CampaignPageBodyState extends State<CampaignPageBody> {
                         )
                       ],
                     ),
-                    model.userModel.user.getSelectedCampaigns().length == 0 && onlyJoined ?
+                    viewModel.userModel.user.getSelectedCampaigns().length == 0 && onlyJoined ?
                     Text("You havent selecetd any campaigns yet")
                     :
                     Container(),
-                    Expanded(
+                    Container(
                       child: ListView(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
@@ -104,7 +108,7 @@ class _CampaignPageBodyState extends State<CampaignPageBody> {
                               !onlyJoined ? // Then return everything
                               CampaignTile(campaigns[index])
                               :  // Otherwise only return selected campaigns
-                              model.userModel.user.getSelectedCampaigns().contains(campaigns[index].getId()) ? 
+                              viewModel.userModel.user.getSelectedCampaigns().contains(campaigns[index].getId()) ? 
                               CampaignTile(campaigns[index])
                               : null;
 
@@ -118,7 +122,9 @@ class _CampaignPageBodyState extends State<CampaignPageBody> {
                     ),
                   ], 
                 ),
-              ),
+              );
+            },
+          )
       );
     }
 }

@@ -318,7 +318,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
             SectionTitle("What is this about?", padding: H_PADDING),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: H_PADDING,),
-              child: Expanded(
+              child: Container(
                 child: Text(
                   campaign.getDescription(), 
                   style: Theme.of(context).primaryTextTheme.bodyText1,
