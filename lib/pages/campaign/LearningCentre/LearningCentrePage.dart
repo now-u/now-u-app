@@ -22,32 +22,42 @@ class LearningCentrePage extends StatelessWidget {
       body: StoreConnector<AppState, ViewModel>(
         converter: (Store<AppState> store) => ViewModel.create(store),
         builder: (BuildContext context, ViewModel viewModel) {
-          return Column(
-            children: <Widget>[
-              FutureBuilder(
-                future:  viewModel.api.getLearningCentre(campaignId),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Expanded(
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: snapshot.data.getLearningTopics().length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return LearningTopicSelectionItem(
-                            topic: snapshot.data.getLearningTopics()[index],
-                          );
-                        }
-                      ),
-                    );
-                  }
-                  else {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                }
-              )
-            ],
+          return FutureBuilder(
+            future: viewModel.api.getLearningCentre(campaignId),
+            builder: (context, snapshot) {
+              return CustomScrollView(
+                slivers: <Widget>[
+                  SliverAppBar(
+                    backgroundColor: Colors.white,
+                    expandedHeight: 300,
+                    automaticallyImplyLeading: false,
+                    flexibleSpace: Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: Container(
+                            height: 200,
+                            width: 200,
+                            child: Image.asset(
+                              "assets/imgs/learning.png",
+                              width: 200,
+                              height: 200,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate ( (context, index) {
+                      return LearningTopicSelectionItem(
+                        topic: snapshot.data.getLearningTopics()[index],
+                      );
+                    }, childCount: snapshot.data.getLearningTopics().length ),
+                  )
+                ],
+              );
+            }
           );
         },
       )

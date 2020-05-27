@@ -37,7 +37,7 @@ class OraganisationInfoPage extends StatelessWidget {
             width: double.infinity,
             child: Padding(
               padding: EdgeInsets.all(10),
-              child: Expanded(
+              child: Container(
                 child: Text(
                   organisation.getName(),
                   style: textStyleFrom(

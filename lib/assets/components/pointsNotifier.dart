@@ -4,6 +4,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:app/assets/components/progress.dart';
 
 Flushbar pointsNotifier (int points, int nextBadgePoints, BuildContext context) {
+
   return notifier("Congrats! You just earned ${points} for joining a campaign. ${nextBadgePoints - points} points till your next bage", points / nextBadgePoints, context);
 }
 
