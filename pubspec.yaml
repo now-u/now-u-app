@@ -135,6 +135,10 @@ flutter:
         - asset: assets/fonts/SourceSansPro/SourceSansPro-Italic.ttf
           weight: 400
           style: italic
+    - family: CustomIcons
+      fonts:
+        - asset: assets/fonts/Icons/MyFlutterApp.ttf
+
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

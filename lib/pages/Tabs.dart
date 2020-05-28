@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:app/assets/icons/my_flutter_app_icons.dart';
+
 import 'package:app/models/ViewModel.dart';
 
 import 'package:app/pages/home/Home.dart';
@@ -83,7 +85,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
   List<Map> _pages = <Map>[
     {
       'page': CampaignPage(), 
-      'icon': Icon(Icons.check),
+      'icon': Icon(CustomIcons.campaign),
       'title': Text("Campaigns"),
     },
     {
@@ -98,7 +100,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
     },
     {
       'page': NewsPage(), 
-      'icon': Icon(FontAwesomeIcons.newspaper),
+      'icon': Icon(CustomIcons.news),
       'title': Text("News"),
     },
     {
@@ -128,9 +130,18 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
             bottomNavigationBar: BottomNavigationBar(
               currentIndex: currentPage.index, 
               type: BottomNavigationBarType.fixed, 
+              elevation: 3,
               iconSize: 25,
-              unselectedFontSize: 13,
-              selectedFontSize: 15,
+              unselectedLabelStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 10
+              ),
+              selectedLabelStyle: TextStyle(
+                color: Colors.black,
+                fontSize: 12
+              ),
+              selectedItemColor: Theme.of(context).primaryColor,
+              unselectedItemColor: Theme.of(context).primaryColorLight,
               items: generateBottomNavBarItems(),
               onTap: (index) {
                 setState(() {
