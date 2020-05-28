@@ -88,9 +88,11 @@ packages:
   firebase_dynamic_links:
     dependency: "direct main"
     description:
-      name: firebase_dynamic_links
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "packages/firebase_dynamic_links"
+      ref: HEAD
+      resolved-ref: ecab0e32363455cc9974426c022a065c55869f01
+      url: "git://github.com/FirebaseExtended/flutterfire.git"
+    source: git
     version: "0.5.1"
   flushbar:
     dependency: "direct main"

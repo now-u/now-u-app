@@ -47,7 +47,12 @@ dependencies:
   cupertino_icons: ^0.1.2
 
   # Firebase
-  firebase_dynamic_links: ^0.5.1
+  #firebase_dynamic_links: ^0.5.1
+  firebase_dynamic_links: 
+    git: 
+      url: git://github.com/FirebaseExtended/flutterfire.git
+      path: packages/firebase_dynamic_links
+
   flutter_secure_storage: ^3.2.1+1
 
 
