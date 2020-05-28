@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter_appavailability/flutter_appavailability.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:android_intent/android_intent.dart';
 
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:rect_getter/rect_getter.dart';
@@ -194,18 +196,29 @@ class OrangePage extends StatelessWidget {
   }
 }
 void openEmailApp(BuildContext context){
-    try{
-        AppAvailability.launchApp(Platform.isIOS ? "message://" : "com.google.android.gm").then((_) {
-                print("App Email launched!");
-              }).catchError((err) {
-                Scaffold.of(context).showSnackBar(SnackBar(
-                    content: Text("App Email not found!")
-                ));
-                print(err);
-              });
-    } catch(e) {
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text("Email App not found!")));
-    }
+    //try{
+    //    AppAvailability.launchApp(Platform.isIOS ? "message://" : "com.google.android.gm").then((_) {
+    //            print("App Email launched!");
+    //          }).catchError((err) {
+    //            Scaffold.of(context).showSnackBar(SnackBar(
+    //                content: Text("App Email not found!")
+    //            ));
+    //            print(err);
+    //          });
+    //} catch(e) {
+    //  Scaffold.of(context).showSnackBar(SnackBar(content: Text("Email App not found!")));
+    //}
+  if (Platform.isAndroid) {
+    AndroidIntent intent = AndroidIntent(
+      action: 'android.intent.action.MAIN',
+      category: 'android.intent.category.APP_EMAIL',
+    );
+    intent.launch().catchError((e) {
+    });
+  } else if (Platform.isIOS) {
+    launch("message://").catchError((e){
+    });
+  }
 }
 
 

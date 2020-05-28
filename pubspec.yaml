@@ -28,10 +28,11 @@ dependencies:
   flutter_redux: ^0.6.0
   redux_thunk: ^0.3.0
   shared_preferences: 0.5.6+3
-  path_provider: ^1.6.7
+  path_provider: ^1.6.9
   font_awesome_flutter: ^8.8.1
   #url_launcher: ^5.4.2
   url_launcher: ^5.0.0
+  android_intent: ^0.3.7+2
   dropdown_formfield: ^0.1.2
   tuple: ^1.0.3
   smooth_page_indicator: ^0.1.5
@@ -47,11 +48,11 @@ dependencies:
   cupertino_icons: ^0.1.2
 
   # Firebase
-  #firebase_dynamic_links: ^0.5.1
-  firebase_dynamic_links: 
-    git: 
-      url: git://github.com/FirebaseExtended/flutterfire.git
-      path: packages/firebase_dynamic_links
+  firebase_dynamic_links: ^0.5.1
+  #firebase_dynamic_links: 
+  #  git: 
+  #    url: git://github.com/FirebaseExtended/flutterfire.git
+  #    path: packages/firebase_dynamic_links
 
   flutter_secure_storage: ^3.2.1+1
 
