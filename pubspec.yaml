@@ -30,14 +30,14 @@ dependencies:
   shared_preferences: 0.5.6+3
   path_provider: ^1.6.9
   font_awesome_flutter: ^8.8.1
-  #url_launcher: ^5.4.2
-  url_launcher: ^5.0.0
+  url_launcher: ^5.4.2
+  #url_launcher: ^5.0.0
   android_intent: ^0.3.7+2
   dropdown_formfield: ^0.1.2
   tuple: ^1.0.3
   smooth_page_indicator: ^0.1.5
   rect_getter: ^0.1.0
-  flutter_appavailability: ^0.0.21
+  #flutter_appavailability: ^0.0.21
   flushbar: ^1.10.4
   permission_handler: ^5.0.0+hotfix.6
 
