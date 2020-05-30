@@ -1,6 +1,5 @@
-import 'package:app/assets/components/customAppBar.dart';
-import 'package:app/assets/components/popUpMenuItem.dart' as customPopup;
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Action.dart';
@@ -9,6 +8,8 @@ import 'package:app/models/State.dart';
 
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/selectionItem.dart';
+import 'package:app/assets/components/customAppBar.dart';
+import 'package:app/assets/components/popUpMenuItem.dart' as customPopup;
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -16,7 +17,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 const double CAMPAIGN_SELECT_HEIGHT = 120;
 final _controller = PageController(
   initialPage: 0,
-  viewportFraction: 1,
+  viewportFraction: 0.93,
 );
 final _animatedList = GlobalKey<AnimatedListState>();
 
@@ -72,39 +73,38 @@ class _ActionPageState extends State<ActionPage> {
                 ),
                 body: Column(
                   children: <Widget>[
+                    SizedBox(height: 15),
                     // Campaign selection widget
                     Container(
                       height: CAMPAIGN_SELECT_HEIGHT,
-                      child: Stack(
-                        children: <Widget>[
-                          PageView.builder(
-                            controller: _controller,
-                            itemCount: viewModel.campaigns.getActiveCampaigns().length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return CampaignSelectionTile(viewModel.campaigns.getActiveCampaigns()[index]);
-                            },
-                            onPageChanged: (int pageIndex) {
-                              setState(() {
-                                campaign = viewModel.campaigns.getActiveCampaigns()[pageIndex];
-                                actions = [];
-                                actions.addAll(campaign.getActions());
-                              });
-                            }
-                          ),
-                          Align(
-                            alignment: Alignment.center,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                CampaignSelectionChevron(CampaignSelectionChevronDirection.Left),
-                                CampaignSelectionChevron(CampaignSelectionChevronDirection.Right),
-                              ],
-                            ),
-                          )
-                        ],
+                      child: PageView.builder(
+                        controller: _controller,
+                        itemCount: viewModel.campaigns.getActiveCampaigns().length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return CampaignSelectionTile(viewModel.campaigns.getActiveCampaigns()[index]);
+                        },
+                        onPageChanged: (int pageIndex) {
+                          setState(() {
+                            campaign = viewModel.campaigns.getActiveCampaigns()[pageIndex];
+                            actions = [];
+                            actions.addAll(campaign.getActions());
+                          });
+                        }
                       )
                     ),
+                    SmoothPageIndicator(
+                      controller: _controller,
+                      count: viewModel.campaigns.getActiveCampaigns().length,
+                      effect: WormEffect(
+                        dotColor: Color.fromRGBO(150, 153, 168, 1),
+                        activeDotColor: Colors.orange,
+                        spacing: 10.0,
+                        dotHeight: 10,
+                        dotWidth: 10,
+                      ),
+                    ),
+
+                    SizedBox(height: 15,),
 
                     // Actions List
                     Expanded(
@@ -115,7 +115,7 @@ class _ActionPageState extends State<ActionPage> {
                           return Padding(
                             padding: EdgeInsets.symmetric(horizontal: 0),
                             child: ActionSelectionItem(
-                              outerHpadding: 5,
+                              outerHpadding: 10,
                               campaign: campaign,
                               action: actions[index],
                             )
@@ -137,44 +137,49 @@ class CampaignSelectionTile extends StatelessWidget {
   CampaignSelectionTile (this.campaign);
   @override
   Widget build(BuildContext context) {
-    return
-      Stack(
-        children: <Widget> [
-          Stack(
-            children: <Widget>[
-              Container(
-                height: CAMPAIGN_SELECT_HEIGHT,
-                decoration: BoxDecoration(
-                  image: DecorationImage( 
-                    image: NetworkImage(campaign.getHeaderImage()), 
-                    fit: BoxFit.cover, 
-                  ),
-                )
-              ),
-              Container(
-                height: CAMPAIGN_SELECT_HEIGHT,
-                color: colorFrom(
-                  Colors.black,
-                  opacity: 0.3,
-                )
-              ),
-            ],
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.6,
-              child: Text(
-                campaign.getTitle(),
-                textAlign: TextAlign.center,
-                style: textStyleFrom(
-                  Theme.of(context).primaryTextTheme.headline4,
-                  color: Colors.white,
-                )
-              )
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Stack(
+          children: <Widget> [
+            Stack(
+              children: <Widget>[
+                Container(
+                  height: CAMPAIGN_SELECT_HEIGHT,
+                  decoration: BoxDecoration(
+                    image: DecorationImage( 
+                      image: NetworkImage(campaign.getHeaderImage()), 
+                      fit: BoxFit.cover, 
+                    ),
+                  )
+                ),
+                Container(
+                  height: CAMPAIGN_SELECT_HEIGHT,
+                  color: colorFrom(
+                    Colors.black,
+                    opacity: 0.3,
+                  )
+                ),
+              ],
             ),
-          )
-        ]
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.6,
+                child: Text(
+                  campaign.getTitle(),
+                  textAlign: TextAlign.center,
+                  style: textStyleFrom(
+                    Theme.of(context).primaryTextTheme.headline4,
+                    color: Colors.white,
+                  )
+                )
+              ),
+            )
+          ]
+        )
+      )
     );
   }
 }
