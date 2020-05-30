@@ -6,6 +6,7 @@ class TextButton extends StatelessWidget {
   final bool iconRight;
   final bool iconLeft;
   final double fontSize;
+  final Color fontColor;
 
   // Handy to make text wrap  
   final double width;
@@ -18,6 +19,7 @@ class TextButton extends StatelessWidget {
     this.iconLeft,
     this.fontSize,
     this.width,
+    this.fontColor,
     }
 
   );
@@ -37,7 +39,7 @@ class TextButton extends StatelessWidget {
               child: Text(
                 text,
                 style: TextStyle(
-                  color: Theme.of(context).buttonColor,
+                  color: fontColor ?? Theme.of(context).buttonColor,
                   fontFamily: Theme.of(context).primaryTextTheme.button.fontFamily,
                   fontWeight: Theme.of(context).primaryTextTheme.button.fontWeight,
                   fontStyle: Theme.of(context).primaryTextTheme.button.fontStyle,
