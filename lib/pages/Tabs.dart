@@ -86,27 +86,27 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
     {
       'page': CampaignPage(), 
       'icon': Icon(CustomIcons.campaign),
-      'title': Text("Campaigns"),
+      'title': "Campaigns",
     },
     {
       'page': ActionPage(), 
       'icon': Icon(Icons.check),
-      'title': Text("Actions"),
+      'title': "Actions",
     },
     {
       'page': Home(changePage), 
       'icon': Icon(Icons.home),
-      'title': Text("Home"),
+      'title': "Home",
     },
     {
       'page': NewsPage(), 
       'icon': Icon(CustomIcons.news),
-      'title': Text("News"),
+      'title': "News",
     },
     {
       'page': Profile(currentPage: _subIndex, changeTabPage: changePage),
       'icon': Icon(Icons.menu),
-      'title': Text("Menu"),
+      'title': "Menu",
     },
   ];
   List <BottomNavigationBarItem> generateBottomNavBarItems() {
@@ -115,8 +115,26 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
      print("Doing thing" + i.toString());
      items.add(
       new BottomNavigationBarItem(
+        activeIcon: ShaderMask(
+          shaderCallback: (Rect bounds) {
+            return LinearGradient(
+              begin: Alignment.bottomLeft,
+              end: Alignment.topRight,
+              colors: <Color> [
+                Theme.of(context).errorColor,
+                Theme.of(context).primaryColor,
+              ]
+            ).createShader(bounds);
+          },
+          child: _pages[i]['icon'],
+        ),
         icon: _pages[i]['icon'],
-        title: _pages[i]['title'],
+        title: Text(
+          _pages[i]['title'], 
+          style: TextStyle(
+            color: Colors.black
+          ),
+        ),
       )
      );
     }
@@ -140,7 +158,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
                 color: Colors.black,
                 fontSize: 12
               ),
-              selectedItemColor: Theme.of(context).primaryColor,
+              //selectedItemColor: Theme.of(context).primaryColor,
               unselectedItemColor: Theme.of(context).primaryColorLight,
               items: generateBottomNavBarItems(),
               onTap: (index) {

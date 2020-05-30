@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 class SectionTitle extends StatelessWidget {
   final String text;
   final double padding;
+  final double vpadding;
 
   SectionTitle(
     this.text, 
     {
-      this.padding
+      this.padding,
+      this.vpadding
     }
   );
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: padding ?? 0, vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: padding ?? 0, vertical: vpadding ?? 10),
       child: Text(
         text,
         style: Theme.of(context).primaryTextTheme.headline3,

@@ -1,4 +1,5 @@
 import 'package:app/assets/components/organisationTile.dart';
+import 'package:app/assets/components/textButton.dart';
 import 'package:flutter/material.dart';
 
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -13,8 +14,6 @@ import 'package:app/pages/campaign/LearningCentre/LearningCentrePage.dart';
 import 'package:app/services/api.dart';
 import 'package:app/locator.dart';
 
-//import 'package:app/assets/components/videoPlayerFlutterSimple.dart';
-//import 'package:youtube_player/youtube_player.dart';
 import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/customAppBar.dart';
@@ -167,7 +166,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
   double top;
   double currentExtent;
 
-  bool _isPlayerReady = false;
+  //bool _isPlayerReady = false;
   YoutubePlayerController _controller;
 
   @override
@@ -218,176 +217,223 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
       appBar: CustomAppBar(
         text: "Campaign",
         context: context,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.book,
+              color: Theme.of(context).primaryColor,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context, 
+                CustomRoute(builder: (context) => LearningCentrePage(campaign.getId()))
+              );
+            },
+          )
+        ]
       ),
       key: scaffoldKey,
-      body: Container(
-        child: ListView( 
-          children: [
+      body: Stack(
+        children: [
+          ListView( 
+            children: [
 
-            // Image header
-            Container(
-              height: 200,
-              child: 
-                Stack(
-                  children: <Widget>[
+              // Image header
+              Container(
+                height: 200,
+              // Youtube player
+                child: Padding(
+                   padding: EdgeInsets.all(0),
+                   child: 
                     Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(campaign.getHeaderImage()),
-                          fit: BoxFit.cover,
-                        )
+                      child:
+                        YoutubePlayer(
+                          controller: _controller,
+                          showVideoProgressIndicator: true,
+                        ),
+                      //child: Material(
+                        //child: VideoPlayer(),  
+                      //), 
+                      )
+                ),
+
+
+              ),
+
+              // Title section
+              Container(
+                color: Color.fromRGBO(222,224,232,1),
+                child: Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.people,
+                            color: Color.fromRGBO(69,69,69,1),
+                            size: 16,
+                          ),
+                          SizedBox(width: 2),
+                          Text(
+                            campaign.getNumberOfCampaigners().toString() + " people have joined",
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.headline5,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromRGBO(63,61,86,1),
+                            )
+                          )
+                        ],
                       ),
+                    ],
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 18),
+              // Campaign
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: H_PADDING,),
+                child: Text(
+                  "Campaign",
+                  style: textStyleFrom(
+                    Theme.of(context).primaryTextTheme.bodyText1,
+                    color: Theme.of(context).primaryColor,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              //Title
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: H_PADDING,),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Text(
+                    campaign.getTitle(),
+                    style: textStyleFrom(
+                      Theme.of(context).primaryTextTheme.headline3,
+                      fontWeight: FontWeight.w600,
                     ),
-                    Container(
-                      color: colorFrom(
-                        Theme.of(context).primaryColorDark,
-                        opacity: 0.5,
+                  )
+                ),
+              ),
+              SizedBox(height: 18),
+
+              SectionTitle("What is this about?", padding: H_PADDING, vpadding: 0),
+              SizedBox(height: 10),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: H_PADDING,),
+                child: Container(
+                  child: Text(
+                    campaign.getDescription(), 
+                    style: Theme.of(context).primaryTextTheme.bodyText1,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+
+              // Actions
+              SectionTitle("What can I do?", padding: H_PADDING),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: H_PADDING,),
+                child: Container(
+                  child: Text(
+                    "Complete our weekly actions to help us tackle this challenge.", 
+                    style: Theme.of(context).primaryTextTheme.bodyText1,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 5),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: 3,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 0),
+                      child: ActionSelectionItem(
+                        campaign: campaign,
+                        action: campaign.getActions()[index],
+                        extraOnTap: (){
+                          _controller.pause();
+                        },
+                      ),
+                    );
+                  },      
+                ),
+              ),
+
+              // Organisation
+              SizedBox(height: 10),
+              SectionTitle("Campaign Partners", padding: H_PADDING, vpadding: 0),
+              OrganisationReel(campaign.getCampaignPartners()),
+              
+              SizedBox(height: 10),
+              SectionTitle("General Partners", padding: H_PADDING, vpadding: 0),
+              OrganisationReel(campaign.getGeneralPartners()),
+
+              SizedBox(height: 10),
+              // Buttons
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    DarkButton(
+                      "Learn more",
+                      onPressed: () {
+                        Navigator.push(
+                          context, 
+                          CustomRoute(builder: (context) => LearningCentrePage(campaign.getId()))
+                        );
+                      },
+                      inverted: true,
+                      fontSize: 14,
+                    ),
+                    SizedBox(width: 10,),
+                    DarkButton(
+                      "Count me in!",
+                      onPressed: () {
+                        joinCampaign(widget.model, context);
+                      },
+                      fontSize: 14,
+                    ),
+                  ],
+                ),
+              ),
+            ], 
+          ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                child: FlatButton(
+                    padding: EdgeInsets.all(0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 45,
+                    child: 
+                      Center(
+                        child: Text(
+                        "Join now",
+                        style: textStyleFrom(
+                          Theme.of(context).primaryTextTheme.button,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 17,
+                          color: Colors.white
+                        ),
                       )
                     ),
-                    Align( 
-                      alignment: Alignment.bottomRight,
-                      child: Padding(
-                        padding: EdgeInsets.all(15),
-                        child: DarkButton(
-                          "Join Now",
-                          style: DarkButtonStyles.Small,
-                          inverted: true,
-                          onPressed: () {
-                            joinCampaign(widget.model, context);
-                          }
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-            ),
-
-            // Title section
-            Container(
-              color: Color.fromRGBO(238,238,238,1),
-              child: Padding(
-                padding: EdgeInsets.all(15),
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      child: Text(
-                        campaign.getTitle(),
-                        style: Theme.of(context).primaryTextTheme.headline3,
-                      ),
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Icon(
-                          Icons.people,
-                          color: Color.fromRGBO(69,69,69,1),
-                          size: 16,
-                        ),
-                        SizedBox(width: 2),
-                        Text(
-                          campaign.getNumberOfCampaigners().toString() + " people have joined",
-                          style: textStyleFrom(
-                            Theme.of(context).primaryTextTheme.headline5,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromRGBO(69,69,69,1),
-                          )
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            // Youtube player
-            Padding(
-               padding: EdgeInsets.all(H_PADDING),
-               child: 
-                Container(
-                  child:
-                    YoutubePlayer(
-                      controller: _controller,
-                      showVideoProgressIndicator: true,
-                    ),
-                  //child: Material(
-                    //child: VideoPlayer(),  
-                  //), 
-                  )
-            ),
-
-            // Description
-            SectionTitle("What is this about?", padding: H_PADDING),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: H_PADDING,),
-              child: Container(
-                child: Text(
-                  campaign.getDescription(), 
-                  style: Theme.of(context).primaryTextTheme.bodyText1,
-                ),
-              ),
-            ),
-
-            // Actions
-            SectionTitle("Actions of the week", padding: H_PADDING),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5),
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: 3,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: ActionSelectionItem(
-                      campaign: campaign,
-                      action: campaign.getActions()[index],
-                      extraOnTap: (){
-                        _controller.pause();
-                      }
-                    ),
-                  );
-                },      
-              ),
-            ),
-
-            // Organisation
-            SectionTitle("Campaign Partners", padding: H_PADDING),
-            OrganisationReel(campaign.getCampaignPartners()),
-            
-            SectionTitle("General Partners", padding: H_PADDING),
-            OrganisationReel(campaign.getGeneralPartners()),
-
-            SizedBox(height: 10),
-            // Buttons
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  DarkButton(
-                    "Learn more",
-                    onPressed: () {
-                      Navigator.push(
-                        context, 
-                        CustomRoute(builder: (context) => LearningCentrePage(campaign.getId()))
-                      );
-                    },
-                    inverted: true,
-                    fontSize: 14,
                   ),
-                  SizedBox(width: 10,),
-                  DarkButton(
-                    "Count me in!",
-                    onPressed: () {
-                      joinCampaign(widget.model, context);
-                    },
-                    fontSize: 14,
-                  ),
-                ],
-              ),
-            ),
-          ], 
-        )
-      )
+                  onPressed: () {
+                    joinCampaign(widget.model, context);
+                  },
+                  color: Theme.of(context).primaryColor,
+                ),
+              )
+        ]
+      ),
     );
   }
 }

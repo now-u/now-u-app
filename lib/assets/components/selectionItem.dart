@@ -71,143 +71,220 @@ class SelectionItem extends StatelessWidget {
   }
 }
 
+//class ActionSelectionItem extends StatelessWidget {
+//  @required final CampaignAction action;
+//  @required final Campaign campaign;
+//  final Function extraOnTap;
+//  final bool isNew;
+//
+//  ActionSelectionItem({
+//    this.action,
+//    this.campaign,
+//    this.extraOnTap,
+//    this.isNew,
+//  });
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return GestureDetector(
+//        onTap: () {
+//          Navigator.push(context,
+//              CustomRoute(builder: (context) => ActionInfo(action, campaign)));
+//        },
+//        child: Padding(
+//            padding: EdgeInsets.symmetric(vertical: 5),
+//            child: Container(
+//                decoration: BoxDecoration(
+//                    borderRadius: BorderRadius.all(Radius.circular(8)),
+//                    color: colorFrom(Theme.of(context).primaryColor,
+//                        opacity: 0.05)
+//                    ),
+//                child: 
+//                Padding(
+//                  padding: EdgeInsets.symmetric(vertical: 10),
+//                  child: Row(
+//                    children: <Widget>[
+//                      Stack (
+//                        children: <Widget> [
+//                          Padding(
+//                           padding: EdgeInsets.all(5),
+//                           child: Container(
+//                             width: 50,
+//                             height: 50,
+//                             decoration: BoxDecoration(
+//                                 borderRadius:
+//                                     BorderRadius.all(Radius.circular(8)),
+//                                 color: action
+//                                     .getActionIconMap()['iconBackgroundColor']),
+//                             child: Center(
+//                               child: Icon(
+//                                 action.getActionIconMap()['icon'],
+//                                 color: action.getActionIconMap()['iconColor'],
+//                                 size: 30,
+//                               ),
+//                             ),
+//                           ),
+//                          ), 
+//                          !(isNew ?? false) ? Container() :
+//                          Positioned(
+//                            right: 0,
+//                            child: Container(
+//                              padding: EdgeInsets.all(1),
+//                              decoration: BoxDecoration(
+//                                color: Theme.of(context).primaryColor,
+//                                borderRadius: BorderRadius.circular(6),
+//                              ),
+//                              constraints: BoxConstraints(
+//                                minWidth: 12,
+//                                minHeight: 12,
+//                              ),
+//                            ),
+//                          ),
+//                        ]
+//                      ),
+//                      SizedBox(width: 10),
+//                      Expanded(
+//                        child: SelectionItem(
+//                           onClick: () {
+//                             if (extraOnTap != null) {
+//                               extraOnTap();
+//                             }
+//                             Navigator.push(
+//                                 context,
+//                                 CustomRoute(
+//                                     builder: (context) =>
+//                                         ActionInfo(action, campaign)));
+//                            },
+//                          child: Column(
+//                            crossAxisAlignment: CrossAxisAlignment.start,
+//                            mainAxisSize: MainAxisSize.max,
+//                            mainAxisAlignment: MainAxisAlignment.start,
+//                            children: <Widget>[
+//                              Container(
+//                                height: 40,
+//                                width: MediaQuery.of(context).size.width * 0.8 - 50,
+//                                child: Align(
+//                                  alignment: Alignment.centerLeft,
+//                                  child: Text(
+//                                    action.getTitle(),
+//                                    style: Theme.of(context).primaryTextTheme.bodyText1,
+//                                    maxLines: 2,
+//                                    overflow: TextOverflow.ellipsis,
+//                                  ),
+//                                ),
+//                              ),
+//                                  Row(
+//                                    mainAxisSize: MainAxisSize.max,
+//                                    mainAxisAlignment: MainAxisAlignment.start,
+//                                    children: <Widget>[
+//                                      Icon(
+//                                        Icons.access_time,
+//                                        size: 15,
+//                                        color: Theme.of(context).primaryColor,
+//                                      ),
+//                                      SizedBox(
+//                                        width: 2,
+//                                      ),
+//                                      Text(
+//                                        action.getTimeText(),
+//                                        style: textStyleFrom(
+//                                          Theme.of(context).primaryTextTheme.bodyText1,
+//                                          fontWeight: FontWeight.w600,
+//                                          color: Theme.of(context).primaryColor,
+//                                          fontSize: 11,
+//                                        )
+//                                      ),
+//                                    ],
+//                                  ),
+//                                ]
+//                              )
+//                          ),
+//                      )
+//                    ]
+//                  ),
+//                )
+//            )
+//        ),
+//      );
+//  }
+//}
+
 class ActionSelectionItem extends StatelessWidget {
-  @required final CampaignAction action;
-  @required final Campaign campaign;
-  final Function extraOnTap;
+  final double defaultOuterHpadding = 10;
+  final double defaultInnerHpadding = 10;
+  final double defaultIconWidth = 50;
+  
+  final CampaignAction action;
+  final Campaign campaign;
+  final double innerHpadding;
+  final double outerHpadding;
+  final double iconWidth;
   final bool isNew;
+  final Function extraOnTap;
 
   ActionSelectionItem({
-    this.action,
-    this.campaign,
-    this.extraOnTap,
+    @required this.action,
+    @required this.campaign,
+    this.iconWidth,
+    this.innerHpadding,
+    this.outerHpadding,
     this.isNew,
+    this.extraOnTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          Navigator.push(context,
-              CustomRoute(builder: (context) => ActionInfo(action, campaign)));
-        },
-        child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 5),
-            child: Container(
+    return LeadingSelectionItem(
+      onTap: () {
+        Navigator.push(context,
+          CustomRoute(builder: (context) => ActionInfo(action, campaign)));
+      },
+      leading:
+         Stack (
+           children: <Widget> [
+             Padding(
+              padding: EdgeInsets.all(5),
+              child: Container(
+                width: 50,
+                height: 50,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
-                    color: colorFrom(Theme.of(context).primaryColor,
-                        opacity: 0.05)
-                    ),
-                child: 
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Row(
-                    children: <Widget>[
-                      Stack (
-                        children: <Widget> [
-                          Padding(
-                           padding: EdgeInsets.all(5),
-                           child: Container(
-                             width: 50,
-                             height: 50,
-                             decoration: BoxDecoration(
-                                 borderRadius:
-                                     BorderRadius.all(Radius.circular(8)),
-                                 color: action
-                                     .getActionIconMap()['iconBackgroundColor']),
-                             child: Center(
-                               child: Icon(
-                                 action.getActionIconMap()['icon'],
-                                 color: action.getActionIconMap()['iconColor'],
-                                 size: 30,
-                               ),
-                             ),
-                           ),
-                          ), 
-                          !(isNew ?? false) ? Container() :
-                          Positioned(
-                            right: 0,
-                            child: Container(
-                              padding: EdgeInsets.all(1),
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColor,
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              constraints: BoxConstraints(
-                                minWidth: 12,
-                                minHeight: 12,
-                              ),
-                            ),
-                          ),
-                        ]
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: SelectionItem(
-                           onClick: () {
-                             if (extraOnTap != null) {
-                               extraOnTap();
-                             }
-                             Navigator.push(
-                                 context,
-                                 CustomRoute(
-                                     builder: (context) =>
-                                         ActionInfo(action, campaign)));
-                            },
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                height: 40,
-                                width: MediaQuery.of(context).size.width * 0.8 - 50,
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    action.getTitle(),
-                                    style: Theme.of(context).primaryTextTheme.bodyText1,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      Icon(
-                                        Icons.access_time,
-                                        size: 15,
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                      SizedBox(
-                                        width: 2,
-                                      ),
-                                      Text(
-                                        action.getTimeText(),
-                                        style: textStyleFrom(
-                                          Theme.of(context).primaryTextTheme.bodyText1,
-                                          fontWeight: FontWeight.w600,
-                                          color: Theme.of(context).primaryColor,
-                                          fontSize: 11,
-                                        )
-                                      ),
-                                    ],
-                                  ),
-                                ]
-                              )
-                          ),
-                      )
-                    ]
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(8)),
+                    color: action
+                        .getActionIconMap()['iconBackgroundColor']),
+                child: Center(
+                  child: Icon(
+                    action.getActionIconMap()['icon'],
+                    color: action.getActionIconMap()['iconColor'],
+                    size: 30,
                   ),
-                )
-            )
-        ),
-      );
+                ),
+              ),
+             ), 
+             !(isNew ?? false) ? Container() :
+             Positioned(
+               right: 0,
+               child: Container(
+                 padding: EdgeInsets.all(1),
+                 decoration: BoxDecoration(
+                   color: Theme.of(context).primaryColor,
+                   borderRadius: BorderRadius.circular(6),
+                 ),
+                 constraints: BoxConstraints(
+                   minWidth: 12,
+                   minHeight: 12,
+                 ),
+               ),
+             ),
+           ]
+         ),
+        text: action.getTitle(),
+        time: action.getTimeText(),
+        extraOverflow: 50
+    );
   }
 }
+
 
 class LearningResouceSelectionItem extends StatelessWidget {
   final double defaultOuterHpadding = 10;
@@ -228,10 +305,75 @@ class LearningResouceSelectionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return LeadingSelectionItem(
+      onTap: () {
+        launch(resource.getLink());
+      },
+      leading:
+        Stack (
+          children: <Widget> [
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: Container(
+                width: iconWidth ?? defaultIconWidth,
+                height: 50,
+                decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(8)),
+                    color: colorFrom(
+                      Theme.of(context).primaryColor,
+                      opacity: 0.15
+                    ),
+                ),
+                child: 
+                Center(
+                  child: Icon(
+                    resource.getTypeIcon(),
+                    size: 30,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+             ),
+            ), 
+          ]
+        ),
+        text: resource.getTitle(),
+        time: resource.getTimeText(),
+        extraOverflow: 40,
+
+    );
+  }
+}
+
+class LeadingSelectionItem extends StatelessWidget {
+  final double defaultOuterHpadding = 10;
+  final double defaultInnerHpadding = 10;
+  final double defaultIconWidth = 50;
+  
+  final double innerHpadding;
+  final double outerHpadding;
+  final double iconWidth;
+  final Widget leading;
+  final Function onTap;
+  final String text;
+  final String time;
+  final double extraOverflow;
+
+  LeadingSelectionItem({
+    this.iconWidth,
+    this.innerHpadding,
+    this.outerHpadding,
+    this.leading,
+    this.onTap,
+    this.text,
+    this.time,
+    this.extraOverflow,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {
-          launch(resource.getLink());
-        },
+        onTap: onTap,
         child: Padding(
             padding: EdgeInsets.symmetric(vertical: 5, horizontal: outerHpadding ?? defaultOuterHpadding),
             child: Container(
@@ -245,38 +387,11 @@ class LearningResouceSelectionItem extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: innerHpadding ?? defaultInnerHpadding),
                   child: Row(
                     children: <Widget>[
-                      Stack (
-                        children: <Widget> [
-                          Padding(
-                            padding: EdgeInsets.all(5),
-                            child: Container(
-                              width: iconWidth ?? defaultIconWidth,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(8)),
-                                  color: colorFrom(
-                                    Theme.of(context).primaryColor,
-                                    opacity: 0.15
-                                  ),
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  resource.getTypeIcon(),
-                                  size: 30,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                              ),
-                           ),
-                          ), 
-                        ]
-                      ),
+                      leading,
                       SizedBox(width: 10),
                       Expanded(
                         child: SelectionItem(
-                          onClick: () {
-                            launch(resource.getLink());
-                          },
+                          onClick: onTap,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.max,
@@ -284,11 +399,11 @@ class LearningResouceSelectionItem extends StatelessWidget {
                             children: <Widget>[
                               Container(
                                 height: 40,
-                                width: MediaQuery.of(context).size.width - (outerHpadding ?? defaultOuterHpadding) * 2 - (innerHpadding ?? defaultInnerHpadding) * 2 - (iconWidth ?? defaultIconWidth) - 10 - 40,
+                                width: MediaQuery.of(context).size.width - (outerHpadding ?? defaultOuterHpadding) * 2 - (innerHpadding ?? defaultInnerHpadding) * 2 - (iconWidth ?? defaultIconWidth) - 10 - extraOverflow ?? 40,
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    resource.getTitle(),
+                                    text,
                                     style: Theme.of(context).primaryTextTheme.bodyText1,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
@@ -308,7 +423,7 @@ class LearningResouceSelectionItem extends StatelessWidget {
                                         width: 2,
                                       ),
                                       Text(
-                                        resource.getTimeText(),
+                                        time,
                                         style: textStyleFrom(
                                           Theme.of(context).primaryTextTheme.bodyText1,
                                           fontWeight: FontWeight.w600,
