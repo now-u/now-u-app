@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-const double ICON_PADDING = 20;
+const double ICON_PADDING = 22;
 const double ITEM_HORIZONTAL = 20;
-const double ITEM_VERTICAL = 25;
+const double ITEM_VERTICAL = 18;
 
 class ProfileTile extends StatelessWidget {
   final IconData iconData;

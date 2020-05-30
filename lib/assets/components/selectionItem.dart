@@ -221,6 +221,7 @@ class ActionSelectionItem extends StatelessWidget {
   final double iconWidth;
   final bool isNew;
   final Function extraOnTap;
+  final Color backgroundColor;
 
   ActionSelectionItem({
     @required this.action,
@@ -230,11 +231,13 @@ class ActionSelectionItem extends StatelessWidget {
     this.outerHpadding,
     this.isNew,
     this.extraOnTap,
+    this.backgroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return LeadingSelectionItem(
+      backgroundColor: backgroundColor,
       innerHpadding: innerHpadding,
       outerHpadding: outerHpadding,
       iconWidth: iconWidth,
@@ -361,6 +364,7 @@ class LeadingSelectionItem extends StatelessWidget {
   final String text;
   final String time;
   final double extraOverflow;
+  final Color backgroundColor;
 
   LeadingSelectionItem({
     this.iconWidth,
@@ -371,6 +375,7 @@ class LeadingSelectionItem extends StatelessWidget {
     this.text,
     this.time,
     this.extraOverflow,
+    this.backgroundColor,
   });
 
   @override
@@ -382,9 +387,11 @@ class LeadingSelectionItem extends StatelessWidget {
             child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(8)),
-                    color: colorFrom(Theme.of(context).primaryColor,
-                        opacity: 0.05)
-                    ),
+                    color: 
+                      backgroundColor ?? 
+                      colorFrom(Theme.of(context).primaryColor,
+                          opacity: 0.05)
+                      ),
                 child: 
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: innerHpadding ?? defaultInnerHpadding),

@@ -1,3 +1,4 @@
+import 'package:app/assets/StyleFrom.dart';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,6 +13,7 @@ import 'package:app/models/State.dart';
 
 import 'package:app/pages/profile/ProfileTile.dart';
 import 'package:app/pages/Tabs.dart';
+import 'package:app/routes.dart';
 
 import 'package:app/pages/profile/profilePages/DetailsPage.dart';
 import 'package:app/pages/profile/profilePages/AboutPage.dart';
@@ -26,6 +28,7 @@ import 'package:app/pages/other/quiz/quizStart.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Profile extends StatefulWidget {
   final int currentPage;
@@ -56,34 +59,48 @@ class _ProfileState extends State<Profile> {
       builder: (BuildContext context, ViewModel viewModel) {
         var profileTiles = <Map>[
           {
-            'profileTile': ProfileTile("Home", FontAwesomeIcons.home),
-            'tabPage': TabPage.Home,
+            'profileTile': ProfileTile("Profile", FontAwesomeIcons.solidUserCircle),
+            'page': Routes.profile,
           },
           {
-            'profileTile': ProfileTile("Profile", FontAwesomeIcons.userCircle),
-            'page': ProfilePage(),
+            'profileTile': ProfileTile("Propose a campaigns", FontAwesomeIcons.bullhorn),
+            'link': "https://docs.google.com/forms/d/e/1FAIpQLSc6zL_9wVJZiZryJP2sIl2SMTtJFoi7fRCAJ1_Gn-rAmWygBQ/viewform",
           },
           {
-            'profileTile': ProfileTile("Campaigns", FontAwesomeIcons.bullhorn),
-            'tabPage': TabPage.Campaigns,
+            'profileTile': ProfileTile("Give feedback on the app", Icons.speaker_notes),
+            'link': "https://docs.google.com/forms/d/e/1FAIpQLSc6zL_9wVJZiZryJP2sIl2SMTtJFoi7fRCAJ1_Gn-rAmWygBQ/viewform",
           },
           {
             'profileTile':
-                ProfileTile("Actions", FontAwesomeIcons.clipboardCheck),
-            'tabPage': TabPage.Actions,
+                ProfileTile("Rate us on App Store", FontAwesomeIcons.solidStar),
+            'link': ""
           },
           {
-            'profileTile': ProfileTile("News", FontAwesomeIcons.newspaper),
-            'tabPage': TabPage.News,
+            'profileTile': ProfileTile("FAQ", FontAwesomeIcons.newspaper),
+            'page': Routes.faq,
           },
           {
-            'profileTile': ProfileTile("Partners", FontAwesomeIcons.building),
-            'page': PartnersPage(),
+            'profileTile': ProfileTile("Our Partners", FontAwesomeIcons.building),
+            'page': Routes.parteners,
           },
           {
-            'profileTile': ProfileTile("About", FontAwesomeIcons.infoCircle),
-            'page': AboutPage(),
+            'profileTile':
+                ProfileTile("Send us a message", FontAwesomeIcons.facebookMessenger),
+            'link': "http://m.me/nowufb"
           },
+          {
+            'profileTile':
+                ProfileTile("Send us an email", FontAwesomeIcons.solidEnvelope),
+            'link': "mailto:hello@now-u.com?subject=Hi there"
+          },
+          //{
+          //  'profileTile': ProfileTile("Partners", FontAwesomeIcons.building),
+          //  'page': PartnersPage(),
+          //},
+          //{
+          //  'profileTile': ProfileTile("About", FontAwesomeIcons.infoCircle),
+          //  'page': AboutPage(),
+          //},
 
           // Old Pages
           //{  'profileTile': ProfileTile("Details", FontAwesomeIcons.solidUser) , 'page': DetailsPage(goBack: goBack, ), },
@@ -96,47 +113,67 @@ class _ProfileState extends State<Profile> {
         ];
         user = viewModel.userModel.user;
         return Scaffold(
-            appBar: CustomAppBar(
-              text: "Menu",
-              hasBackButton: false,
-              context: context,
-            ),
             body: Container(
-                color: Color.fromRGBO(238, 238, 238, 1),
-                child: Column(
+                color: Colors.white,
+                child: ListView(
                   children: <Widget>[
-                    Expanded(
-                      child: ListView.separated(
-                        separatorBuilder: (context, index) => ProfileDividor(),
-                        itemCount: profileTiles.length,
-                        itemBuilder: (context, index) => GestureDetector(
-                          onTap: () => setState(() {
-                            if (profileTiles[index]["page"] == null) {
-                              // TODO might switch to this style as it seems to rebuild anyway
-                              // TODO fix the fact that it rebuilds stuff when switching page
-                              //Navigator.push(
-                              // context,
-                              // CustomRoute(builder: (context) => changePage(profileTiles[index]['index']))
-                              //);
-                              //Navigator.of(context).push(
-                              //  CustomRoute(builder: (BuildContext context) {
-                              //    return TabsPage(currentPage: TabPage.Home);
-                              //  })
-                              //);
-                              //Navigator.pushNamed(context, '/home');
-                              widget.changeTabPage(
-                                  profileTiles[index]["tabPage"]);
-                            } else {
-                              Navigator.push(
-                                  context,
-                                  CustomRoute(
-                                      builder: (context) =>
-                                          profileTiles[index]["page"]));
-                            }
-                          }),
-                          child: profileTiles[index]["profileTile"],
+                    SizedBox(height: 45),
+                    Padding(
+                      padding: EdgeInsets.only(left: 15),
+                      child: Text(
+                        "More",
+                        style: textStyleFrom(
+                          Theme.of(context).primaryTextTheme.headline2,
                         ),
                       ),
+                    ),
+                    SizedBox(height: 30),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      //separatorBuilder: (context, index) => ProfileDividor(),
+                      itemCount: profileTiles.length,
+                      itemBuilder: (context, index) => GestureDetector(
+                        onTap: () => setState(() {
+                          print("Tapping"); 
+                          if (profileTiles[index]["page"] != null) {
+                            print("Pushing page"); 
+                            Navigator.pushNamed(
+                              context,
+                              profileTiles[index]["page"]
+                            );
+                          } else if (profileTiles[index]["link"] != null) {
+                            launch(profileTiles[index]["link"]);
+                          } else {
+                          }
+                        }),
+                        child: profileTiles[index]["profileTile"],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Text(
+                        "Follow us on socail media",
+                        style: Theme.of(context).primaryTextTheme.bodyText1,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        SocialButton(
+                          icon: FontAwesomeIcons.instagram,
+                          link: "https://www.instagram.com/now_u_app/",
+                        ), 
+                        SocialButton(
+                          icon: FontAwesomeIcons.facebookF,
+                          link: "https://www.facebook.com/nowufb",
+                        ), 
+                        SocialButton(
+                          icon: FontAwesomeIcons.twitter,
+                          link: "https://twitter.com/now_u_app",
+                        ) 
+                      ],
                     ),
                     GestureDetector(
                       child: ProfileTile("Dev Tools", FontAwesomeIcons.code),
@@ -165,6 +202,38 @@ class ProfileDividor extends StatelessWidget {
       width: double.infinity,
       height: 1,
       color: Color.fromRGBO(187, 187, 187, 1),
+    );
+  }
+}
+
+class SocialButton extends StatelessWidget {
+  final double size = 50;
+  final IconData icon;
+  final String link;
+
+  SocialButton({
+    this.icon, 
+    this.link,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {launch(link);},
+      child: Container(
+        height: size, 
+        width: size,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(size/2),
+          color: Theme.of(context).primaryColor,
+        ),
+        child: Center(
+          child: Icon(
+            icon,
+            color: Colors.white,
+          ),
+        ),
+      )
     );
   }
 }

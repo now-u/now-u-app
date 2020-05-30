@@ -18,6 +18,7 @@ import 'package:app/assets/components/pointsNotifier.dart';
 
 import 'package:app/pages/login/emailSentPage.dart';
 
+import 'package:app/routes.dart';
 import 'package:app/main.dart';
 
 Future<void> saveUserToPrefs(User u) async {

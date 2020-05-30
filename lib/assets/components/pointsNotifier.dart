@@ -12,7 +12,7 @@ import 'package:app/models/Reward.dart';
 
 import 'package:app/pages/other/RewardComplete.dart';
 
-import 'package:app/main.dart';
+import 'package:app/routes.dart';
 
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/progress.dart';

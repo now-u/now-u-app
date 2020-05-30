@@ -1,5 +1,3 @@
-import 'package:app/assets/routes/customRoute.dart';
-import 'package:app/pages/profile/profilePages/ProfilePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -11,6 +9,8 @@ import 'package:app/pages/login/emailSentPage.dart';
 
 //import 'package:app/assets/dynamicLinks.dart';
 
+
+import 'package:app/routes.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/dynamicLinks.dart';
 
@@ -73,15 +73,6 @@ class Keys {
   static final navKey = new GlobalKey<NavigatorState>();
 }
 
-class Routes {
-  static final home = "home";
-  static final intro = "intro";
-  static final login = "login";
-
-  static const profile = "profile";
-//  static final authEmailSent = "authEmailSent";
-}
-
 class App extends StatefulWidget {
   @override
   _AppState createState() => _AppState();
@@ -116,21 +107,7 @@ class _AppState extends State<App> {
         title: 'Flutter Demo',
         navigatorKey: Keys.navKey,
         initialRoute: '/',
-        onGenerateRoute: (RouteSettings settings) {
-          switch (settings.name) {
-            case Routes.profile: {
-              return CustomRoute(
-                builder: (context) => ProfilePage()
-              );
-            }
-            // TODO add a 404 page
-            default: {
-              return CustomRoute(
-                builder: (context) => MyHomePage(3)
-              );
-            }
-          }
-        },
+        onGenerateRoute: initRoutes,
         routes: {
           '/': (BuildContext context) => StoreBuilder<AppState>(
             onInitialBuild: (store) {

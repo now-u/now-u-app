@@ -51,6 +51,10 @@ class _ActionPageState extends State<ActionPage> {
             actions.addAll(campaign.getActions());
             return 
               Scaffold(
+                backgroundColor: colorFrom(
+                  Theme.of(context).primaryColor,
+                  opacity: 0.05,
+                ),
                 appBar: CustomAppBar(
                   text: "Actions",
                   hasBackButton: false,
@@ -118,6 +122,7 @@ class _ActionPageState extends State<ActionPage> {
                               outerHpadding: 10,
                               campaign: campaign,
                               action: actions[index],
+                              backgroundColor: Colors.white,
                             )
                           ); 
                         }
