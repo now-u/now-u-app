@@ -41,19 +41,12 @@ Article articleWithVideo =
   );
 
 class Home extends StatelessWidget {
-  Function changePage;
+  final Function changePage;
   Home(this.changePage);
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Home", style: Theme.of(context).primaryTextTheme.headline3),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-        elevation: 3.0,
-      ),
       body: Container(
               color: Colors.white,
               child: ListView(

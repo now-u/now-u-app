@@ -8,8 +8,6 @@ import 'package:app/models/State.dart';
 
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/selectionItem.dart';
-import 'package:app/assets/components/customAppBar.dart';
-import 'package:app/assets/components/popUpMenuItem.dart' as customPopup;
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -55,28 +53,24 @@ class _ActionPageState extends State<ActionPage> {
                   Theme.of(context).primaryColor,
                   opacity: 0.05,
                 ),
-                appBar: CustomAppBar(
-                  text: "Actions",
-                  hasBackButton: false,
-                  context: context,
-                  actions: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(right: 0.0),
-                      child: customPopup.PopupMenuButton(
-                        padding: EdgeInsets.all(0),
-                        icon: Icon(
-                          Icons.filter_list,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        itemBuilder: (BuildContext context) {
-                          return buildListPopupItems(context, viewModel);
-                        },
-                      )
-                    ),
-                  ],
-                ),
                 body: Column(
                   children: <Widget>[
+                    SafeArea(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(
+                          onTap: () {
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.all(10.0),
+                            child: Icon(
+                                Icons.filter_list,
+                                color: Theme.of(context).primaryColor,  
+                              ),
+                            ),
+                          ),
+                      ),
+                    ),
                     SizedBox(height: 15),
                     // Campaign selection widget
                     Container(
@@ -188,112 +182,3 @@ class CampaignSelectionTile extends StatelessWidget {
     );
   }
 }
-
-enum CampaignSelectionChevronDirection {
-  Right,
-  Left
-}
-
-class CampaignSelectionChevron extends StatelessWidget {
-  final CampaignSelectionChevronDirection direction;
-   
-  CampaignSelectionChevron(this.direction);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        direction == CampaignSelectionChevronDirection.Left ? _controller.previousPage(curve: curve, duration: duration) : _controller.nextPage(curve: curve, duration: duration);
-      },
-      child: Container(
-        height: 80,
-        width: 60,
-        child: Center(
-          child: Icon(
-              direction == CampaignSelectionChevronDirection.Left ? Icons.chevron_left : Icons.chevron_right,
-              color: Colors.orange,
-              size: 40,
-          ),
-        )
-      )
-    );
-  }
-}
-
-customPopup.PopupMenuItem buildPopupMenuHeader(
-      BuildContext context,
-      String text,
-    ) {
-    return customPopup.PopupMenuItem(
-      //value: "hi",
-      child: Container(
-        height: 40.0,
-        color: Theme.of(context).primaryColor,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Container(
-              child: Text(
-                text,
-                style: textStyleFrom(
-                  Theme.of(context).primaryTextTheme.headline4,
-                  color: Colors.white,
-                ),
-              ),
-            )
-          ],
-        )
-      )
-    );
-}
-
-customPopup.PopupMenuItem buildPopupMenuItem({
-      @required BuildContext context,
-      @required String text,
-    }) {
-    return customPopup.PopupMenuItem(
-      child: Container(
-        height: 40.0,
-        color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Checkbox(
-              onChanged: (bool) {print("Checked");},
-              value: false,
-            ),
-            Container(
-              color: Colors.white,
-              child: Text(
-                "Joined campaigns",
-                style: textStyleFrom(
-                  Theme.of(context).primaryTextTheme.headline4,
-                  color: Colors.black,
-                ),
-              ),
-            )
-          ],
-        )
-      )
-    );
-}
-
-List<customPopup.PopupMenuItem> buildListPopupItems(BuildContext context, ViewModel viewModel) {
-  List<customPopup.PopupMenuItem> items = [
-    buildPopupMenuHeader(context, "Joined campaigns"),
-  ];
-  List<customPopup.PopupMenuItem> campaignSelectors = viewModel.campaigns.getSelectedActiveCampaigns(viewModel.userModel.user).map((c) => buildPopupMenuItem(context: context, text: c.getTitle())).toList();
-  print("campaign selectors are");
-  print(campaignSelectors);
-  items.addAll(campaignSelectors);
-  items.add(
-    buildPopupMenuHeader(context, "Categories"),
-  );
-  items.add(
-    buildPopupMenuHeader(context, "Time"),
-  );
-  return items;
-} 
-

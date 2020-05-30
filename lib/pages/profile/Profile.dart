@@ -153,7 +153,7 @@ class _ProfileState extends State<Profile> {
                     Padding(
                       padding: EdgeInsets.all(20),
                       child: Text(
-                        "Follow us on socail media",
+                        "Follow us on social media",
                         style: Theme.of(context).primaryTextTheme.bodyText1,
                       ),
                     ),
