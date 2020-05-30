@@ -66,23 +66,72 @@ class _CampaignTileState extends State<CampaignTile> {
             ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   // Image
-                  Container(
-                    height: 180,
-                    child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage( 
-                            image: NetworkImage(widget.campaign.getHeaderImage()), 
-                            fit: BoxFit.cover, 
+                  Stack(
+                    children: <Widget> [
+                      Container(
+                        height: 120,
+                        child: Padding(
+                          padding: EdgeInsets.all(0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage( 
+                                image: NetworkImage(widget.campaign.getHeaderImage()), 
+                                fit: BoxFit.cover, 
+                              ),
+                              //borderRadius: BorderRadius.only(topLeft: Radius.circular(10))
+                            )
                           ),
-                          borderRadius: BorderRadius.all(Radius.circular(10))
-                        )
+                        ),
                       ),
-                    ),
+                      StoreConnector<AppState, ViewModel>(
+                        converter: (Store<AppState> store) => ViewModel.create(store),
+                        builder: (BuildContext context, ViewModel viewModel) {
+                          bool selected = viewModel.userModel.user.getSelectedCampaigns().contains(widget.campaign.getId());
+                          if (selected) {
+                            return 
+                              Padding(
+                                padding: EdgeInsets.all(12),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).primaryColor,
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(5),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          Icons.check_circle,
+                                          color: Colors.white,
+                                          size: 20
+                                        ),
+                                        SizedBox(width: 3),
+                                        Text(
+                                          "Joined",
+                                          style: textStyleFrom(
+                                            Theme.of(context).primaryTextTheme.bodyText1,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        SizedBox(width: 5),
+                                      ],
+                                    ),
+                                  )
+                                )
+                              );
+                          }
+                          else {
+                            return Container();
+                          }
+                        }
+                      )
+                    ]
                   ),
+                  SizedBox(height: 10),
                   // Title
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: hPadding),
@@ -91,6 +140,7 @@ class _CampaignTileState extends State<CampaignTile> {
                       textAlign: TextAlign.left,
                       style: textStyleFrom(
                         Theme.of(context).primaryTextTheme.headline3,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -107,85 +157,37 @@ class _CampaignTileState extends State<CampaignTile> {
                               size: 18,
                             ),
                             SizedBox(width: 2),
-                            Text(
-                              widget.campaign.getNumberOfCampaigners().toString() + " campaigners", 
-                              style: textStyleFrom(
-                                Theme.of(context).primaryTextTheme.headline5,
-                                fontWeight: FontWeight.w500,
-                                color: Color.fromRGBO(63,61,86,1),
-                              ),
-                            ),
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: widget.campaign.getNumberOfCampaigners().toString(),
+                                    style: textStyleFrom(
+                                      Theme.of(context).primaryTextTheme.headline5,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color.fromRGBO(63,61,86,1),
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: " campaigners", 
+                                    style: textStyleFrom(
+                                      Theme.of(context).primaryTextTheme.headline5,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color.fromRGBO(63,61,86,1),
+                                    ),
+                                  ),
+                                ]
+                              )
+                            )
                           ],
                         ),
                         TextButton(
                           "See more",
-                          iconRight: true,
                           onClick: null,
                         ),
                       ],
                     ),
                   ),
-                  StoreConnector<AppState, ViewModel>(
-                      converter: (Store<AppState> store) => ViewModel.create(store),
-                      builder: (BuildContext context, ViewModel viewModel) {
-                        print("Before splash screen user is");
-                        print(viewModel.userModel.user.getSelectedCampaigns());
-                        bool selected = viewModel.userModel.user.getSelectedCampaigns().contains(widget.campaign.getId());
-                        return 
-                          GestureDetector(
-                            onTap: () {
-                              //if (!viewModel.userModel.user.getSelectedCampaigns().contains(widget.campaign.getId())) {
-                              //  print("Campaign is not already selected");
-                              //  setState(() {
-                              //    viewModel.userModel.user.addSelectedCamaping(widget.campaign.getId());
-                              //    viewModel.onSelectCampaigns(viewModel.userModel.user, (int points, int nextBadgePoints) {
-                              //      pointsNotifier(viewModel.userModel.user.getPoints(), points, nextBadgePoints, context)..show(context);
-                              //    });
-                              //  });
-                              //}
-                              joinCampaign(viewModel, context, widget.campaign);
-
-                            },
-                            child: Container(
-                              height: 45,
-                              width: double.infinity,
-                              color: selected ? Theme.of(context).primaryColor : Color.fromRGBO(187,187,187,1),
-                              child: Center(
-                                child: 
-                                !selected ?
-                                Text(
-                                  "Not joined",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white
-                                  ),
-                                ) 
-                                :
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.check_circle,
-                                      size: 15,
-                                      color: Colors.white,
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      "Joined",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.white
-                                      ),
-                                    )
-                                  ],
-                                )
-                              )
-                            )
-                          );
-                      },
-                  )
                 ],
               ),
           ),

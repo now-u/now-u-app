@@ -13,6 +13,8 @@ import 'package:app/models/State.dart';
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/customAppBar.dart';
+import 'package:app/assets/components/inputs.dart';
+import 'package:app/assets/StyleFrom.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -76,19 +78,34 @@ class _CampaignPageState extends State<CampaignPage> {
               return  SafeArea(
                 child: ListView(
                   children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        Switch(
-                          value: onlyJoined,
-                          onChanged: (value) {
-                            setState(() {
-                              onlyJoined = value;                              
-                            });
-                          },
-                          materialTapTargetSize: MaterialTapTargetSize.padded,
-                        )
-                      ],
+                    Padding(
+                      padding: EdgeInsets.only(top: 10, right: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            child: Text(
+                              "Show joined campaigns only",
+                              style: textStyleFrom(
+                                Theme.of(context).primaryTextTheme.bodyText1,
+                                color: Color.fromRGBO(63,61,86, 1),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          CustomSwitch(
+                            value: onlyJoined,
+                            onChanged: (value) {
+                              setState(() {
+                                onlyJoined = value;                              
+                              });
+                            },
+                            activeColor: Theme.of(context).primaryColor,
+                            inactiveColor: Color.fromRGBO(221,221,221,1)
+                          )
+                        ],
+                      )
                     ),
                     viewModel.userModel.user.getSelectedCampaigns().length == 0 && onlyJoined ?
                     Text("You havent selecetd any campaigns yet")

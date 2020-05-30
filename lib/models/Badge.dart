@@ -39,12 +39,6 @@ final List<Badge> badges = [
   Badge(
     name: "now-u newbie",
     image: "assets/imgs/badges/achievement badges-01.png",
-    points: 20,
-    successMessage: "Congratulations! You've completed your first actions and joined the now-u community! It's time to change together!"
-  ),
-  Badge(
-    name: "now-u newbie",
-    image: "assets/imgs/badges/achievement badges-01.png",
     points: 50,
     successMessage: "Congratulations! You've completed your first actions and joined the now-u community! It's time to change together!"
   ),
