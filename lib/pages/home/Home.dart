@@ -126,6 +126,7 @@ class HomeActionTile extends StatelessWidget {
                           ActionSelectionItem(
                             action: viewModel.campaigns.getActiveCampaigns()[index].getActions()[index],
                             campaign: viewModel.campaigns.getActiveCampaigns()[index],
+                            outerHpadding: 5,
                         ),
                     ),
                     HomeButton(

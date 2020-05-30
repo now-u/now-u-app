@@ -8,6 +8,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Organisation.dart';
 import 'package:app/models/SDG.dart';
+import 'package:app/models/Badge.dart';
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/State.dart';
 
@@ -198,21 +199,24 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
   //    });
   //  }
   //}
-  void joinCampaign(ViewModel viewModel, BuildContext context) {
-      if (!viewModel.userModel.user.getSelectedCampaigns().contains(campaign.getId())) {
-        setState(() {
-          viewModel.userModel.user.addSelectedCamaping(campaign.getId());
-          viewModel.onSelectCampaigns(viewModel.userModel.user, (int points, int nextBadgePoints) {
-            //scaffoldKey.currentState.showSnackBar(SnackBar(
-            //  content: Text("Hi there"),
-            //));
-            pointsNotifier(points, nextBadgePoints, context)..show(context);
-          });
-        });
-      } else {
-        pointsNotifier(10, 20, context)..show(context);
-      }
-  }
+  //void joinCampaign(ViewModel viewModel, BuildContext context) {
+  //    if (!viewModel.userModel.user.getSelectedCampaigns().contains(campaign.getId())) {
+  //      setState(() {
+  //        viewModel.userModel.user.addSelectedCamaping(campaign.getId());
+  //        viewModel.onSelectCampaigns(viewModel.userModel.user, (int points, int nextBadgePoints, bool newBadge) {
+  //          if (!newBadge) {
+  //            pointsNotifier(viewModel.userModel.user.getPoints(), points, nextBadgePoints, context)..show(context);
+  //          }
+  //          else {
+  //            gotBadgeNotifier(
+  //              badge: getNextBadgeFromInt(viewModel.userModel.user.getPoints()),
+  //              context: context,
+  //            );
+  //          }
+  //        });
+  //      });
+  //    }   
+  //}
 
   @override
   Widget build(BuildContext context) {
@@ -461,7 +465,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                     ),
                   ),
                   onPressed: () {
-                    joinCampaign(widget.model, context);
+                    joinCampaign(widget.model, context, campaign);
                   },
                   color: Theme.of(context).primaryColor,
                 ),

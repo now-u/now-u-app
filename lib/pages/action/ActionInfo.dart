@@ -161,7 +161,7 @@ class _ActionInfoState extends State<ActionInfo> {
                                             // TODO Somehow somewhere navigate to completed reward page if reward completed
                                             print("Completing action");
                                             viewModel.onCompleteAction(_action, (int points, int nextBadgePoints) {
-                                              pointsNotifier(points, nextBadgePoints, context)..show(context);
+                                              pointsNotifier(viewModel.userModel.user.getPoints(), points, nextBadgePoints, context)..show(context);
                                             });
                                             if (newlyCompletedRewards.length > 0) {
                                               Navigator.push(

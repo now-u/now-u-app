@@ -235,6 +235,9 @@ class ActionSelectionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LeadingSelectionItem(
+      innerHpadding: innerHpadding,
+      outerHpadding: outerHpadding,
+      iconWidth: iconWidth,
       onTap: () {
         Navigator.push(context,
           CustomRoute(builder: (context) => ActionInfo(action, campaign)));

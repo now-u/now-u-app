@@ -134,15 +134,16 @@ class _CampaignTileState extends State<CampaignTile> {
                         return 
                           GestureDetector(
                             onTap: () {
-                              if (!viewModel.userModel.user.getSelectedCampaigns().contains(widget.campaign.getId())) {
-                                print("Campaign is not already selected");
-                                setState(() {
-                                  viewModel.userModel.user.addSelectedCamaping(widget.campaign.getId());
-                                  viewModel.onSelectCampaigns(viewModel.userModel.user, (int points, int nextBadgePoints) {
-                                    pointsNotifier(points, nextBadgePoints, context)..show(context);
-                                  });
-                                });
-                              }
+                              //if (!viewModel.userModel.user.getSelectedCampaigns().contains(widget.campaign.getId())) {
+                              //  print("Campaign is not already selected");
+                              //  setState(() {
+                              //    viewModel.userModel.user.addSelectedCamaping(widget.campaign.getId());
+                              //    viewModel.onSelectCampaigns(viewModel.userModel.user, (int points, int nextBadgePoints) {
+                              //      pointsNotifier(viewModel.userModel.user.getPoints(), points, nextBadgePoints, context)..show(context);
+                              //    });
+                              //  });
+                              //}
+                              joinCampaign(viewModel, context, widget.campaign);
 
                             },
                             child: Container(

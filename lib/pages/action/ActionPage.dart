@@ -113,8 +113,9 @@ class _ActionPageState extends State<ActionPage> {
                         initialItemCount: actions.length,
                         itemBuilder: (BuildContext context, int index, animation) {
                           return Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            padding: EdgeInsets.symmetric(horizontal: 0),
                             child: ActionSelectionItem(
+                              outerHpadding: 5,
                               campaign: campaign,
                               action: actions[index],
                             )

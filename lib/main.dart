@@ -1,3 +1,5 @@
+import 'package:app/assets/routes/customRoute.dart';
+import 'package:app/pages/profile/profilePages/ProfilePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -75,6 +77,8 @@ class Routes {
   static final home = "home";
   static final intro = "intro";
   static final login = "login";
+
+  static const profile = "profile";
 //  static final authEmailSent = "authEmailSent";
 }
 
@@ -112,6 +116,21 @@ class _AppState extends State<App> {
         title: 'Flutter Demo',
         navigatorKey: Keys.navKey,
         initialRoute: '/',
+        onGenerateRoute: (RouteSettings settings) {
+          switch (settings.name) {
+            case Routes.profile: {
+              return CustomRoute(
+                builder: (context) => ProfilePage()
+              );
+            }
+            // TODO add a 404 page
+            default: {
+              return CustomRoute(
+                builder: (context) => MyHomePage(3)
+              );
+            }
+          }
+        },
         routes: {
           '/': (BuildContext context) => StoreBuilder<AppState>(
             onInitialBuild: (store) {

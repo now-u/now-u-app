@@ -39,6 +39,12 @@ final List<Badge> badges = [
   Badge(
     name: "now-u newbie",
     image: "assets/imgs/badges/achievement badges-01.png",
+    points: 20,
+    successMessage: "Congratulations! You've completed your first actions and joined the now-u community! It's time to change together!"
+  ),
+  Badge(
+    name: "now-u newbie",
+    image: "assets/imgs/badges/achievement badges-01.png",
     points: 50,
     successMessage: "Congratulations! You've completed your first actions and joined the now-u community! It's time to change together!"
   ),
@@ -114,6 +120,15 @@ int getNextBadge(int currentPoints) {
   for(int i = 0; i < badges.length; i++) {
     if (badges[i].getPoints() >= currentPoints) {
       return badges[i].getPoints();
+    }
+  }
+  return null;
+}
+
+Badge getNextBadgeFromInt( int points ) {
+  for(int i = 0; i < badges.length; i++) {
+    if (badges[i].getPoints() >= points) {
+      return badges[i];
     }
   }
   return null;

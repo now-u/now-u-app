@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/progress.dart';
+import 'package:app/assets/components/pointsNotifier.dart';
 import 'package:app/assets/StyleFrom.dart';
 
 import 'package:app/pages/profile/profilePages/DetailsPage.dart';
@@ -187,55 +188,11 @@ class BadgeTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-
         // Badge Popup
-        showDialog(
+        showBage(
+          locked: locked,
+          badge: badge,
           context: context,
-          barrierDismissible: true,
-          builder: (_) => AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(35),
-            ),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Container(
-                    height: 120,
-                    width: 120,
-                    child:
-                      locked ? 
-                      Icon(
-                        Icons.lock, 
-                        size: 60,
-                        color: Theme.of(context).primaryColor
-                      ) :
-                      Image.asset(badge.getImage()),
-                  )
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  child: Text(
-                    locked ? "Locked" :
-                    badge.getName(),
-                    style: Theme.of(context).primaryTextTheme.headline2,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                SizedBox(height: 20),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.65,
-                  child: Text(
-                    locked ? "You need ${badge.getPoints()} points to unlock this badge" :
-                    badge.getSuccessMessage(),
-                    style: Theme.of(context).primaryTextTheme.bodyText1,
-                    textAlign: TextAlign.center,
-                  ),
-                )
-              ],
-            ),
-          )
         );
       },
       child: Container(

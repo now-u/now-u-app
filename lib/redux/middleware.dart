@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:get/get.dart';
 
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:redux/redux.dart';
@@ -12,6 +13,8 @@ import 'package:app/models/Campaigns.dart';
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/Badge.dart';
 import 'package:app/redux/actions.dart';
+
+import 'package:app/assets/components/pointsNotifier.dart';
 
 import 'package:app/pages/login/emailSentPage.dart';
 
@@ -64,7 +67,14 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
       (dynamic d) {
         print("Campaign has been selected now running onSuccess");
         print("The user has ${store.state.userState.user.getPoints()} points");
-        action.onSuccess(10, getNextBadge(store.state.userState.user.getPoints()));
+        // If adding the 10 points earnt you a badge then dont do the thing
+        if (getNextBadge(store.state.userState.user.getPoints()) == getNextBadge(store.state.userState.user.getPoints() + 10)) {
+          action.onSuccess(10, getNextBadge(store.state.userState.user.getPoints()), false);
+        }
+        // Instead to the popup
+        else {
+          action.onSuccess(10, getNextBadge(store.state.userState.user.getPoints()), true);
+        }
       }
     );
   }
