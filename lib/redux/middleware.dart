@@ -108,7 +108,14 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
     print(store.state.userState.user.getCompletedActions());
     
     saveUserToPrefs(store.state.userState.user).then((_) {
-      action.onSuccess(5, getNextBadge(store.state.userState.user.getPoints()));
+      //action.onSuccess(5, getNextBadge(store.state.userState.user.getPoints()));
+      if (getNextBadge(store.state.userState.user.getPoints()) == getNextBadge(store.state.userState.user.getPoints() + 5)) {
+        action.onSuccess(5, getNextBadge(store.state.userState.user.getPoints()), false);
+      }
+      // Instead to the popup
+      else {
+        action.onSuccess(5, getNextBadge(store.state.userState.user.getPoints()), true);
+      }
     }
     );
   }

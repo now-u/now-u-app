@@ -156,72 +156,73 @@ class _ActionInfoState extends State<ActionInfo> {
                                         inverted: true,
                                         onPressed: () {
                                           print("Getting newlyCompletedRewards");
-                                          List<Reward> newlyCompletedRewards = viewModel.userModel.user.newlyCompletedRewards(_action);
+                                          //List<Reward> newlyCompletedRewards = viewModel.userModel.user.newlyCompletedRewards(_action);
                                           setState(() {
+                                            completeAction(viewModel, context, _action);
                                             // TODO Somehow somewhere navigate to completed reward page if reward completed
-                                            print("Completing action");
-                                            viewModel.onCompleteAction(_action, (int points, int nextBadgePoints) {
-                                              pointsNotifier(viewModel.userModel.user.getPoints(), points, nextBadgePoints, context)..show(context);
-                                            });
-                                            if (newlyCompletedRewards.length > 0) {
-                                              Navigator.push(
-                                                context, 
-                                                CustomRoute(builder: (context) => RewardCompletePage(viewModel, newlyCompletedRewards))
-                                              );
-                                            } else {
-                                              scaffoldKey.currentState.showBottomSheet(
-                                                (context) =>
-                                                  Container(
-                                                      decoration: BoxDecoration(
-                                                        color: Color.fromRGBO(243, 183, 0, 1),
-                                                        borderRadius: BorderRadius.vertical(top: Radius.circular(10))
-                                                      ),
-                                                      child: Column(
-                                                        mainAxisSize: MainAxisSize.min,
-                                                        children: <Widget>[
-                                                          Padding(
-                                                            padding: EdgeInsets.only(top: 20),
-                                                            child: Row(
-                                                              mainAxisAlignment: MainAxisAlignment.center,
-                                                              children: <Widget>[
-                                                                Padding(
-                                                                  padding: EdgeInsets.only(right: 10.0),
-                                                                  child: Icon(
-                                                                    Icons.check_circle,
-                                                                    color: Colors.white,
-                                                                    size: 36.0,
-                                                                  ),
-                                                                ),
-                                                                Text(
-                                                                  "Nice Job",
-                                                                  style: textStyleFrom(
-                                                                    Theme.of(context).primaryTextTheme.headline2,
-                                                                    color: Colors.white,
-                                                                  )
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding: EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 25),
-                                                            child: Container(
-                                                              child: Text(
-                                                                "Congratulations for completing this action! For that we are really proud of you!",
-                                                                textAlign: TextAlign.center,
-                                                                style: textStyleFrom(
-                                                                  Theme.of(context).primaryTextTheme.headline4,
-                                                                  color: Colors.white
-                                                                ),
+                                            //print("Completing action");
+                                            //viewModel.onCompleteAction(_action, (int points, int nextBadgePoints) {
+                                            //  pointsNotifier(viewModel.userModel.user.getPoints(), points, nextBadgePoints, context)..show(context);
+                                            //});
+                                            //if (newlyCompletedRewards.length > 0) {
+                                            //  Navigator.push(
+                                            //    context, 
+                                            //    CustomRoute(builder: (context) => RewardCompletePage(viewModel, newlyCompletedRewards))
+                                            //  );
+                                            //} else {
+                                            //  scaffoldKey.currentState.showBottomSheet(
+                                            //    (context) =>
+                                            //      Container(
+                                            //          decoration: BoxDecoration(
+                                            //            color: Color.fromRGBO(243, 183, 0, 1),
+                                            //            borderRadius: BorderRadius.vertical(top: Radius.circular(10))
+                                            //          ),
+                                            //          child: Column(
+                                            //            mainAxisSize: MainAxisSize.min,
+                                            //            children: <Widget>[
+                                            //              Padding(
+                                            //                padding: EdgeInsets.only(top: 20),
+                                            //                child: Row(
+                                            //                  mainAxisAlignment: MainAxisAlignment.center,
+                                            //                  children: <Widget>[
+                                            //                    Padding(
+                                            //                      padding: EdgeInsets.only(right: 10.0),
+                                            //                      child: Icon(
+                                            //                        Icons.check_circle,
+                                            //                        color: Colors.white,
+                                            //                        size: 36.0,
+                                            //                      ),
+                                            //                    ),
+                                            //                    Text(
+                                            //                      "Nice Job",
+                                            //                      style: textStyleFrom(
+                                            //                        Theme.of(context).primaryTextTheme.headline2,
+                                            //                        color: Colors.white,
+                                            //                      )
+                                            //                    ),
+                                            //                  ],
+                                            //                ),
+                                            //              ),
+                                            //              Padding(
+                                            //                padding: EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 25),
+                                            //                child: Container(
+                                            //                  child: Text(
+                                            //                    "Congratulations for completing this action! For that we are really proud of you!",
+                                            //                    textAlign: TextAlign.center,
+                                            //                    style: textStyleFrom(
+                                            //                      Theme.of(context).primaryTextTheme.headline4,
+                                            //                      color: Colors.white
+                                            //                    ),
 
-                                                              ),
-                                                            )
-                                                          ),
+                                            //                  ),
+                                            //                )
+                                            //              ),
 
-                                                        ],
-                                                      )
-                                                    )
-                                              );
-                                            }
+                                            //            ],
+                                            //          )
+                                            //        )
+                                            //  );
+                                            //}
                                           });
                                         },
                                       ),

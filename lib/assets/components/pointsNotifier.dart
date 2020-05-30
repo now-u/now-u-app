@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flushbar/flushbar.dart';
 
+import 'package:app/assets/routes/customRoute.dart';
+
 import 'package:app/models/Badge.dart';
 import 'package:app/models/Campaign.dart';
+import 'package:app/models/Action.dart';
 import 'package:app/models/ViewModel.dart';
+import 'package:app/models/Reward.dart';
+
+import 'package:app/pages/other/RewardComplete.dart';
 
 import 'package:app/main.dart';
 
@@ -24,6 +30,36 @@ void joinCampaign(ViewModel viewModel, BuildContext context, Campaign campaign) 
           badge: getNextBadgeFromInt(viewModel.userModel.user.getPoints()),
           context: context,
         );
+      }
+    });
+  }   
+}
+
+void completeAction(ViewModel viewModel, BuildContext context, CampaignAction action) {
+  if (!viewModel.userModel.user.getCompletedActions().contains(action.getId())) {
+    viewModel.onCompleteAction(action, (int points, int nextBadgePoints, bool newBadge) {
+      // If you did not get a new badge
+      if (!newBadge) {
+        List<Reward> newlyCompletedRewards = viewModel.userModel.user.newlyCompletedRewards(action);
+        // If you did get a new reward
+        if (newlyCompletedRewards.length > 0) {
+          Navigator.push(
+            context, 
+            CustomRoute(builder: (context) => RewardCompletePage(viewModel, newlyCompletedRewards))
+          );
+        }
+        // Otherwise just shw the popup
+        else {
+        pointsNotifier(viewModel.userModel.user.getPoints(), points, nextBadgePoints, context)..show(context);
+        }
+      }
+      // If you did get a new badge then show that popup
+      else {
+          Text("You did not get a new badge");
+          gotBadgeNotifier(
+            badge: getNextBadgeFromInt(viewModel.userModel.user.getPoints()),
+            context: context,
+          );
       }
     });
   }   
