@@ -149,6 +149,15 @@ Map campaignActionTypeData = {
   CampaignActionType.Other: defaultCampaignActionTypeData
 };
 
+List<Map> timeBrackets = [
+  {"text": "1-5 mins", "minTime": 0, "maxTime": 5},
+  {"text": "5-15 mins", "minTime": 5, "maxTime": 15},
+  {"text": "15-30 mins", "minTime": 15, "maxTime": 30},
+  {"text": "30 mins to 1hr", "minTime": 30, "maxTime": 60},
+  {"text": "few hours", "minTime": 60, "maxTime": 240},
+  {"text": "long term", "minTime": 240, "maxTime": double.infinity},
+];
+
 CampaignActionType campaignActionTypeFromString (String s) {
   // Apparently if we return early it just doesnt do the return? Not sure why that would be but this seems to fix it
   CampaignActionType t = CampaignActionType.Other;
@@ -206,7 +215,7 @@ class CampaignAction {
     whatDescription = json['what_description'];
     whyDescription = json['why_description'];
     link = json['link'];
-    time = json['time'];
+    time = json['time'].toDouble();
     type = campaignActionTypeFromString(json['type']);
   }
 
@@ -229,7 +238,9 @@ class CampaignAction {
     return time; 
   }
   String getTimeText() {
-    return "1-2 mins"; 
+    return timeBrackets.firstWhere(
+      (b) => b['maxTime'] > time
+    )['text'];
   }
   CampaignActionType getType() {
     return type; 
@@ -247,22 +258,4 @@ class CampaignAction {
     return defaultCampaignActionTypeData;
   }
 
-}
-
-abstract class TimeBracket {
-  double maxTime;
-  double minTime;
-
-  String timeText;
-
-  String getTimeText() {
-    return timeText;
-  }
-}
-
-class OneToFiveTimeBracket extends TimeBracket {
-  double minTime = 1;
-  double maxTime = 5;
-
-  String timeText = "1-5 mins";
 }
