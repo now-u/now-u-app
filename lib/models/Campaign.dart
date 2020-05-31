@@ -70,17 +70,32 @@ class Campaign {
   }
 
   Campaign.fromJson(Map json) {
+    print("Getting campaigns from json");
+    print(json);
     id = json['id'];
     title = json['title'];
-    description = json['description'];
+    description = json['description_app'];
     numberOfCampaingers = json['number_of_campaigners'];
     headerImage = json['header_image'];
     // TODO this proabably wont work
+    print("Getting action");
     actions = (json['actions']).map((e) => CampaignAction.fromJson(e)).toList().cast<CampaignAction>();
-    campaignPartners = json.containsKey('campaign_partners') ? (json['campaign_partners']).map((e) => Organisation.fromJson(e)).toList().cast<Organisation>() : [];
-    generalPartners = json.containsKey('general_partners') ? (json['general_partners']).map((e) => Organisation.fromJson(e)).toList().cast<Organisation>() : [];
+    print("GOT ACTIONS");
+    print("Getting ORGANISATIONS");
+    campaignPartners = 
+        json.containsKey('campaign_partners') 
+      ? (json['campaign_partners']).map((e) => Organisation.fromJson(e)).toList().cast<Organisation>() 
+      : [];
+    print("GOT ORGANISATIONS");
+    print("GETTING PARTNERS");
+    generalPartners = 
+        json.containsKey('general_partners') 
+      ? (json['general_partners']).map((e) => Organisation.fromJson(e)).toList().cast<Organisation>() 
+      : [];
+    print("GOT PARTNERS");
     videoLink = json['video_link'];
-    sdgs = json['sdgs'].map((s) => getSDGfromNumber(s)).toList().cast<SDG>();
+    //sdgs = [];
+    sdgs = json['sdgs'].map((s) => getSDGfromNumber(s['id'])).toList().cast<SDG>();
   }
 
   Map toJson() => {

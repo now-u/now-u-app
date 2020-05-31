@@ -375,19 +375,25 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
 
               // Organisation
               SizedBox(height: 10),
+              campaign.getCampaignPartners().isEmpty ? Container() :
               SectionTitle("Campaign Partners", padding: H_PADDING, vpadding: 0),
+              campaign.getCampaignPartners().isEmpty ? Container() :
               OrganisationReel(campaign.getCampaignPartners()),
               
               SizedBox(height: 10),
+              campaign.getGeneralPartners().isEmpty ? Container() :
               SectionTitle("General Partners", padding: H_PADDING, vpadding: 0),
+              campaign.getGeneralPartners().isEmpty ? Container() :
               OrganisationReel(campaign.getGeneralPartners()),
 
               SizedBox(height: 10),
 
               // SDGs
               SizedBox(height: 10),
+              campaign.getSDGs().isEmpty ? Container() :
               SectionTitle("UN Sustainable Developemnt Goals focus", padding: H_PADDING, vpadding: 0),
               SDGReel(campaign.getSDGs()),
+              campaign.getSDGs().isEmpty ? Container() :
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: H_PADDING),
                 child: RichText(
