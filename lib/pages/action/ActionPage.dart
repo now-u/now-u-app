@@ -28,26 +28,64 @@ class ActionPage extends StatefulWidget {
   _ActionPageState createState() => _ActionPageState();
 }
 
+bool hasSelected (Map sel) {
+  // If any of the values are true then at least one is selected 
+  for(final value in sel.values) {
+    print("Checking value");
+    if(value) {
+      print("true value");
+      return true;
+    }
+  }
+  // Otherwise we dont care about this filter
+  return false;
+}
+
+List<CampaignAction> getActions(Campaign campaign, Map<String, Map> selections) {
+  List<CampaignAction> tmpActions = [];
+  tmpActions.addAll(campaign.getActions());
+  if (hasSelected(selections['times'])) {
+    // Remove the ones with the wrong times
+    print("It has the thing");
+    tmpActions.removeWhere((a) => !selections['times'][a.getTimeText()]);
+  }
+  if (hasSelected(selections['categories'])) {
+    tmpActions.removeWhere((a) => !selections['categories'][a.getSuperType()]);
+  }
+  if (hasSelected(selections['times'])) {
+  }
+  print(tmpActions.length);
+  return tmpActions;
+}
+
 class _ActionPageState extends State<ActionPage> {
   Campaign campaign;
-  List<CampaignAction> actions;
-  List<String> actionFilters;
+  List<CampaignAction> actions = [];
+  Map<String, Map> selections = {
+    "times": {},
+    "campaigns": {},
+    "categories": {},
+  };
 
-  @override
   initState() {
-    actions = []; 
-    actionFilters = [];
-    
+    for (int i = 0; i < timeBrackets.length; i++) {
+      selections['times'][timeBrackets[i]['text']] = false;
+    }
+    for (int i = 0; i < CampaignActionSuperType.values.length; i++) {
+      selections['categories'][CampaignActionSuperType.values[i]] = false;
+    }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ViewModel>(
+          onInit: (Store<AppState> store) {
+            campaign = store.state.campaigns.getActiveCampaigns()[0];
+            actions.addAll(campaign.getActions());
+          },
           converter: (Store<AppState> store) => ViewModel.create(store),
           builder: (BuildContext context, ViewModel viewModel) {
-            campaign = viewModel.campaigns.getActiveCampaigns()[0];
-            actions.addAll(campaign.getActions());
             return 
               Scaffold(
                 backgroundColor: colorFrom(
@@ -97,8 +135,7 @@ class _ActionPageState extends State<ActionPage> {
                         onPageChanged: (int pageIndex) {
                           setState(() {
                             campaign = viewModel.campaigns.getActiveCampaigns()[pageIndex];
-                            actions = [];
-                            actions.addAll(campaign.getActions());
+                            actions = getActions(campaign, selections);
                           });
                         }
                       )
@@ -119,10 +156,9 @@ class _ActionPageState extends State<ActionPage> {
 
                     // Actions List
                     Expanded(
-                      child: AnimatedList(
-                        key: _animatedList,
-                        initialItemCount: actions.length,
-                        itemBuilder: (BuildContext context, int index, animation) {
+                      child: ListView.builder(
+                        itemCount: actions.length,
+                        itemBuilder: (BuildContext context, int index) {
                           return Padding(
                             padding: EdgeInsets.symmetric(horizontal: 0),
                             child: ActionSelectionItem(
@@ -148,8 +184,12 @@ class _ActionPageState extends State<ActionPage> {
     final result = await Navigator.push(
       context,
       // Create the SelectionScreen in the next step.
-      MaterialPageRoute(builder: (context) => SortScreen()),
+      MaterialPageRoute(builder: (context) => SortScreen(selections)),
     );
+    setState(() {
+      selections = result ?? this.selections;
+      actions = getActions(campaign, selections);
+    });
   }
 }
 
@@ -207,11 +247,19 @@ class CampaignSelectionTile extends StatelessWidget {
 }
 
 class SortScreen extends StatefulWidget {
+  final Map<String, Map> selections;
+  SortScreen(this.selections);
   @override
   _SortScreenState createState() => _SortScreenState();
 }
 
 class _SortScreenState extends State<SortScreen> {
+  Map<String, Map> selections;
+  initState() {
+    selections = widget.selections;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -230,7 +278,7 @@ class _SortScreenState extends State<SortScreen> {
                         Navigator.pop(context);
                       },
                       child: Icon(
-                        FontAwesomeIcons.times,
+                        Icons.close,
                         color: Theme.of(context).primaryColor,
                         size: 30,
                       ),
@@ -244,12 +292,54 @@ class _SortScreenState extends State<SortScreen> {
                     )
                   ],
                 ),
-                ListView.builder(
+
+                SizedBox(height: 20),
+
+                // Times
+                SelectionTitle("Time"),
+                ListView.separated(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: timeBrackets.length,
+                  separatorBuilder: (BuildContext context, int index) => ListDividor(),
                   itemBuilder: (BuildContext context, int index) {
-                    return Text(timeBrackets[index]['text']);
+                    return CheckboxListTile(
+                      dense: true,
+                      controlAffinity: ListTileControlAffinity.leading,
+                      activeColor: Theme.of(context).primaryColor,
+                      title: Text(timeBrackets[index]['text']),
+                      value: selections['times'][timeBrackets[index]['text']],
+                      onChanged: (bool value) {
+                        setState(() {
+                          selections['times'][timeBrackets[index]['text']] = value;
+                        });
+                      }
+                    );
+                    //return Text(timeBrackets[index]['text']);
+                  },
+                ),
+
+                // Categories
+                SelectionTitle("Categories"),
+                ListView.separated(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: CampaignActionSuperType.values.length,
+                  separatorBuilder: (BuildContext context, int index) => ListDividor(),
+                  itemBuilder: (BuildContext context, int index) {
+                    return CheckboxListTile(
+                      dense: true,
+                      controlAffinity: ListTileControlAffinity.leading,
+                      activeColor: Theme.of(context).primaryColor,
+                      title: Text(campaignActionSuperTypeData[CampaignActionSuperType.values[index]]['name']),
+                      value: selections['categories'][CampaignActionSuperType.values[index]],
+                      onChanged: (bool value) {
+                        setState(() {
+                          selections['categories'][CampaignActionSuperType.values[index]] = value;
+                        });
+                      }
+                    );
+                    //return Text(timeBrackets[index]['text']);
                   },
                 )
               ],
@@ -277,6 +367,7 @@ class _SortScreenState extends State<SortScreen> {
                 ),
               ),
               onPressed: () {
+                Navigator.pop(context, selections);
               },
               color: Theme.of(context).primaryColor,
             ),
@@ -287,4 +378,34 @@ class _SortScreenState extends State<SortScreen> {
   }
 }
 
+class SelectionTitle extends StatelessWidget {
+  final String text;
+  SelectionTitle(this.text);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        child: Text(
+          text,
+          style: textStyleFrom(
+            Theme.of(context).primaryTextTheme.headline3,
+            fontWeight: FontWeight.w600,
+          ),
+        )
+      ),
+    );
+  }
+}
+
+class ListDividor extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 1,
+      width: double.infinity,
+      color: Color.fromRGBO(221,221,221,1),
+    );
+  }
+}
 

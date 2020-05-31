@@ -35,6 +35,29 @@ Color yellowO = colorFrom(yellow, opacity: 0.15);
 Color blue = Color.fromRGBO(1, 26, 67, 1);
 Color blueO = colorFrom(blue, opacity: 0.15);
 
+Map campaignActionSuperTypeData = {
+ CampaignActionSuperType.GetInvolved: {
+   'name': "Get involved",
+   'iconColor': red,
+   'iconBackgroundColor': redO,
+ }, 
+ CampaignActionSuperType.Learn: {
+   'name': "Learn",
+   'iconColor': blue,
+   'iconBackgroundColor': blueO,
+ },
+ CampaignActionSuperType.Advoacte: {
+   'name': "Advoacte",
+   'iconColor': orange,
+   'iconBackgroundColor': orangeO,
+ },
+ CampaignActionSuperType.RaiseMoney: {
+   'name': "Advoacte",
+   'iconColor': yellow,
+   'iconBackgroundColor': yellowO,
+ },
+};
+
 Map defaultCampaignActionTypeData = 
   {
     'name': "other",          
@@ -42,8 +65,7 @@ Map defaultCampaignActionTypeData =
     'pastVerb': "Completed", 
     'displayName': "special action", 
     'icon': FontAwesomeIcons.check, 
-    'iconColor': Colors.red,
-    'iconBackgroundColor': Colors.redAccent
+    'type': CampaignActionSuperType.GetInvolved,
   };
 
 Map campaignActionTypeData = {
@@ -53,8 +75,7 @@ Map campaignActionTypeData = {
     'pastVerb': "Volunteered", 
     'displayName': "volunteer", 
     'icon': FontAwesomeIcons.handsHelping, 
-    'iconColor': red,
-    'iconBackgroundColor': redO,
+    'type': CampaignActionSuperType.GetInvolved,
   },
   CampaignActionType.Donation: {
     'name': "donation", 
@@ -62,8 +83,7 @@ Map campaignActionTypeData = {
     'pastVerb': "Made", 
     'displayName': "donation", 
     'icon': FontAwesomeIcons.handHoldingHeart, 
-    'iconColor': yellow,
-    'iconBackgroundColor': yellowO,
+    'type': CampaignActionSuperType.RaiseMoney,
   },
   CampaignActionType.Fundraise: {
     'name': "fundraise", 
@@ -71,8 +91,7 @@ Map campaignActionTypeData = {
     'pastVerb': "Took part in", 
     'displayName': "fundraiser", 
     'icon': FontAwesomeIcons.piggyBank, 
-    'iconColor': yellow,
-    'iconBackgroundColor': yellowO,
+    'type': CampaignActionSuperType.RaiseMoney,
   },
   CampaignActionType.Awareness: {
     'name': "awareness", 
@@ -80,8 +99,7 @@ Map campaignActionTypeData = {
     'pastVerb': "Raised awareness", 
     'displayName': "time", 
     'icon': FontAwesomeIcons.bullhorn, 
-    'iconColor': orange,
-    'iconBackgroundColor': orangeO,
+    'type': CampaignActionSuperType.Advoacte,
   },
   CampaignActionType.Petition: {
     'name': "petition", 
@@ -89,8 +107,7 @@ Map campaignActionTypeData = {
     'pastVerb': "Signed", 
     'displayName': "petiton", 
     'icon': FontAwesomeIcons.penNib, 
-    'iconColor': orange,
-    'iconBackgroundColor': orangeO,
+    'type': CampaignActionSuperType.Advoacte,
   },
   CampaignActionType.Behaviour: {
     'name': "behaviour", 
@@ -98,8 +115,7 @@ Map campaignActionTypeData = {
     'pastVerb': "Completed", 
     'displayName': "behaviour change action", 
     'icon': FontAwesomeIcons.exchangeAlt, 
-    'iconColor': red,
-    'iconBackgroundColor': redO,
+    'type': CampaignActionSuperType.GetInvolved,
   },
   CampaignActionType.Contact: {
     'name': "contact", 
@@ -107,8 +123,7 @@ Map campaignActionTypeData = {
     'pastVerb': "Completed", 
     'displayName': "contact change action", 
     'icon': FontAwesomeIcons.envelope, 
-    'iconColor': orange,
-    'iconBackgroundColor': orangeO,
+    'type': CampaignActionSuperType.Advoacte,
   },
   CampaignActionType.Protest: {
     'name': "protest", 
@@ -116,8 +131,7 @@ Map campaignActionTypeData = {
     'pastVerb': "Took part in", 
     'displayName': "protest", 
     'icon': FontAwesomeIcons.fistRaised, 
-    'iconColor': red,
-    'iconBackgroundColor': redO,
+    'type': CampaignActionSuperType.GetInvolved,
   },
   CampaignActionType.Connect: {
     'name': "connect", 
@@ -125,8 +139,7 @@ Map campaignActionTypeData = {
     'pastVerb': "Connted", 
     'displayName': "times", 
     'icon': FontAwesomeIcons.link, 
-    'iconColor': red,
-    'iconBackgroundColor': redO,
+    'type': CampaignActionSuperType.GetInvolved,
   },
   CampaignActionType.Learn: {
     'name': "learn", 
@@ -134,8 +147,7 @@ Map campaignActionTypeData = {
     'pastVerb': "Completed", 
     'displayName': "learning action", 
     'icon': FontAwesomeIcons.bookReader, 
-    'iconColor': blue,
-    'iconBackgroundColor': blueO,
+    'type': CampaignActionSuperType.Learn,
   },
   CampaignActionType.Quiz: {
     'name': "quiz", 
@@ -143,8 +155,7 @@ Map campaignActionTypeData = {
     'pastVerb': "Completed", 
     'displayName': "quiz", 
     'icon': FontAwesomeIcons.questionCircle, 
-    'iconColor': blue,
-    'iconBackgroundColor': blueO,
+    'type': CampaignActionSuperType.Learn,
   },
   CampaignActionType.Other: defaultCampaignActionTypeData
 };
@@ -245,14 +256,17 @@ class CampaignAction {
   CampaignActionType getType() {
     return type; 
   }
+  CampaignActionSuperType getSuperType() {
+    return campaignActionTypeData[type]['type']; 
+  }
   Map getActionIconMap () {
     print("Getting the actionicon map for");
     print(type.toString());
     if (campaignActionTypeData.containsKey(type)) {
       return {
         'icon': campaignActionTypeData[type]['icon'],
-        'iconColor': campaignActionTypeData[type]['iconColor'],
-        'iconBackgroundColor': campaignActionTypeData[type]['iconBackgroundColor']
+        'iconColor': campaignActionSuperTypeData[campaignActionTypeData[type]['type']]['iconColor'],
+        'iconBackgroundColor': campaignActionSuperTypeData[campaignActionTypeData[type]['type']]['iconBackgroundColor'],
       };
     }
     return defaultCampaignActionTypeData;
