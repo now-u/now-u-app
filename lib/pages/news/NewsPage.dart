@@ -100,6 +100,7 @@ class _NewsListState extends State<NewsList> {
           NewsDividor(),
           SizedBox(height: PAGE_PADDING,),
           searching ? Container() :
+          
           Padding(
             padding: EdgeInsets.symmetric(horizontal: PAGE_PADDING),
             child: Text(
@@ -110,39 +111,41 @@ class _NewsListState extends State<NewsList> {
               )
             ),
           ),
+          SizedBox(height: 10),
           // Featured news articles
-          articles.length >= 2 && !searching ?
-          Padding(
-            padding: EdgeInsets.all(PAGE_PADDING),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                      padding: EdgeInsets.only(right: PAGE_PADDING/2),
-                      child: NewsImageTile(
-                        article: articles[0],
-                      ),
-                    )
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(left: PAGE_PADDING/2),
-                    child: NewsImageTile(
-                      article: articles[1],
-                    ),
-                  )
-                ),
-              ],
-            ),
-          )
-          : Container(),
+          //articles.length >= 2 && !searching ?
+          //Padding(
+          //  padding: EdgeInsets.all(PAGE_PADDING),
+          //  child: Row(
+          //    mainAxisAlignment: MainAxisAlignment.start,
+          //    crossAxisAlignment: CrossAxisAlignment.start,
+          //    children: <Widget>[
+          //      Expanded(
+          //        child: Padding(
+          //            padding: EdgeInsets.only(right: PAGE_PADDING/2),
+          //            child: NewsImageTile(
+          //              article: articles[0],
+          //            ),
+          //          )
+          //      ),
+          //      Expanded(
+          //        child: Padding(
+          //          padding: EdgeInsets.only(left: PAGE_PADDING/2),
+          //          child: NewsImageTile(
+          //            article: articles[1],
+          //          ),
+          //        )
+          //      ),
+          //    ],
+          //  ),
+          //)
+          //: Container(),
           // List of other news articles 
           ListView.builder(
             shrinkWrap: true,
             physics: ClampingScrollPhysics(),
-            itemCount: articles.length < 2 ? articles.length : articles.length - 2,
+            //itemCount: articles.length < 2 ? articles.length : articles.length - 2,
+            itemCount: articles.length,
             itemBuilder: (BuildContext context, int index) {
               return 
               Padding(
@@ -152,7 +155,8 @@ class _NewsListState extends State<NewsList> {
                 ),
                 child: NewsTextTile(
                   article: 
-                    articles.length < 2 ? articles[index] : articles[index + 2],
+                    //articles.length < 2 ? articles[index] : articles[index + 2],
+                    articles[index]
                 )
               );
             },
@@ -333,17 +337,30 @@ class NewsTextTile extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Flexible(
+              flex: 1,
+              child: NewsGraphic(
+                image: article.getHeaderImage(), 
+                height: height
+              )
+            ),
+            SizedBox(width: 15,),
+            Flexible(
               flex: 2,
-              child: Container(
+              child: Align(
+                alignment: Alignment.centerLeft,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget> [
-                    Text(
-                      article.getCategory(),
-                      style: textStyleFrom(
-                        Theme.of(context).primaryTextTheme.headline5,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 11,
+                    Container(
+                      child: Text(
+                        article.getCategory(),
+                        style: textStyleFrom(
+                          Theme.of(context).primaryTextTheme.headline5,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 11,
+                        ),
                       ),
                     ),
                     SizedBox(height: 6),
@@ -361,13 +378,6 @@ class NewsTextTile extends StatelessWidget {
               ),
             ),
             SizedBox(width: 10,),
-            Flexible(
-              flex: 1,
-              child: NewsGraphic(
-                image: article.getHeaderImage(), 
-                height: height
-              )
-            )
           ],
         ),
       ),
@@ -403,7 +413,7 @@ class NewsGraphic extends StatelessWidget {
 
     return 
     Padding(
-      padding: EdgeInsets.symmetric(),
+      padding: EdgeInsets.symmetric(vertical: 5),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.red,
