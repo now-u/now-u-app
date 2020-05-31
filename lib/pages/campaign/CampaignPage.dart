@@ -58,11 +58,6 @@ class _CampaignPageState extends State<CampaignPage> {
     //var _campaigns = widget.model.campaigns.map((Campaign c) => c).toList();
     return 
       Scaffold(
-        appBar: CustomAppBar(
-          text: "Active Campaigns",
-          context: context,
-          hasBackButton: false,
-        ), 
         body: 
           StoreConnector<AppState, ViewModel>(
             converter: (Store<AppState> store) => ViewModel.create(store),
@@ -78,6 +73,33 @@ class _CampaignPageState extends State<CampaignPage> {
               return  SafeArea(
                 child: ListView(
                   children: <Widget>[
+                    SafeArea(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(
+                          onTap: () {
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.all(10.0),
+                            child: Icon(
+                                Icons.book,
+                                color: Theme.of(context).primaryColor,  
+                              ),
+                            ),
+                          ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20),
+                      child: Container(
+                        width: double.infinity,
+                        child: Text(
+                          "Active Campaigns",
+                          textAlign: TextAlign.left,
+                          style: Theme.of(context).primaryTextTheme.headline2,
+                        ),
+                      ),
+                    ),
                     Padding(
                       padding: EdgeInsets.only(top: 10, right: 10),
                       child: Row(

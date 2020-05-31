@@ -1,3 +1,4 @@
+import 'package:app/assets/StyleFrom.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/pages/news/NewsPage.dart';
@@ -40,6 +41,8 @@ Article articleWithVideo =
     videoLink: "https://www.youtube.com/watch?v=ybn_SO990go",
   );
 
+final double headerHeight = 240;
+
 class Home extends StatelessWidget {
   final Function changePage;
   Home(this.changePage);
@@ -47,13 +50,42 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: colorFrom(
+        Theme.of(context).primaryColor,
+        opacity: 0.05,
+      ),
       body: Container(
-              color: Colors.white,
               child: ListView(
                   children: <Widget>[
-                    ActionProgressTile(),
+                    ClipPath(
+                      child: Container(
+                        height: headerHeight,
+                        child: Stack(
+                          children: <Widget> [
+                            ActionProgressData(
+                              actionsHomeTileHeight: 170,
+                              actionsHomeTilePadding: 15,
+                              actionsHomeTileTextWidth: 0.5,
+                            ),
+                            Positioned(
+                              right: -20,
+                              //top: actionsHomeTilePadding,
+                              bottom: 10,
+                              child: Container(
+                                height: 170,
+                                width: MediaQuery.of(context).size.width * (0.5),
+                                child: Image(
+                                  image: AssetImage('assets/imgs/progress.png'),
+                                )
+                              )
+                            ),
+                          ],
+                        ),
+                        color: Theme.of(context).primaryColor
+                      ),
+                      clipper: BezierClipper(),
+                    ),
 
-                    HomeDividor(),
                     sectionTitle("Actions", context),
                     HomeActionTile(changePage),
 
@@ -81,17 +113,14 @@ class Home extends StatelessWidget {
 }
  
 Widget sectionTitle(String t, BuildContext context) {
-  return 
-    Center(
-      child: Padding(
-        padding: EdgeInsets.all(10),
-        child:
-          Text(t, style: 
-            Theme.of(context).primaryTextTheme.headline3,
-            textAlign: TextAlign.start,
-          ),
-      )
-    );
+  return Padding(
+    padding: EdgeInsets.all(10),
+    child:
+      Text(t, style: 
+        Theme.of(context).primaryTextTheme.headline3,
+        textAlign: TextAlign.start,
+      ),
+  );
 }
 
 class HomeActionTile extends StatelessWidget {
@@ -120,6 +149,7 @@ class HomeActionTile extends StatelessWidget {
                             action: viewModel.campaigns.getActiveCampaigns()[index].getActions()[index],
                             campaign: viewModel.campaigns.getActiveCampaigns()[index],
                             outerHpadding: 5,
+                            backgroundColor: Colors.white,
                         ),
                     ),
                     HomeButton(
@@ -186,5 +216,33 @@ class HomeDividor extends StatelessWidget {
       color: Color.fromRGBO(238,238,238, 1),
     );
   }
+}
+
+class BezierClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = new Path();
+    path.lineTo(0.0, size.height - 40);
+
+    var firstControlPoint = Offset(size.width / 4, size.height - 65);
+    var firstEndPoint = Offset(size.width / 2.25, size.height - 40);
+    path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
+        firstEndPoint.dx, firstEndPoint.dy);
+
+    var secondControlPoint =
+        Offset(size.width - (size.width / 3.25), size.height);
+    var secondEndPoint = Offset(size.width, size.height - 35);
+    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
+        secondEndPoint.dx, secondEndPoint.dy);
+
+    path.lineTo(size.width, size.height - 20);
+    path.lineTo(size.width, 0.0);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
 
