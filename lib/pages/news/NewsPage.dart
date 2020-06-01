@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/StyleFrom.dart';
+import 'package:app/assets/components/header.dart';
 import 'package:app/assets/components/searchBar.dart';
 
 import 'package:app/pages/news/ArticlePage.dart';
@@ -20,8 +21,9 @@ final double PAGE_PADDING = 15;
 class NewsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Padding(
         padding: EdgeInsets.all(0),
         // TODO do a test of a list of all articles
         child: StoreConnector<AppState, ViewModel>(
@@ -75,32 +77,55 @@ class _NewsListState extends State<NewsList> {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-          SizedBox(height: PAGE_PADDING),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: PAGE_PADDING),
-            child: SearchBar(
-              (value){
-                filterArticlesList(value);
-              },
-              editingController,
-            ),
-          ),
+        Container(
+          color: Color.fromRGBO(247,248,252,1),
+          child: Column(
+            children: <Widget> [
+              searching ? Container() :
+              PageHeader(
+                title: "News", 
+                onTap: (){
+                  setState(() {
+                    searching = true;
+                  });
+                },
+                icon: Icons.search,
+              ),
+              
+              !searching ? Container() :
+              SizedBox(height: PAGE_PADDING),
+              !searching ? Container() :
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: PAGE_PADDING),
+                child: SearchBar(
+                  (value){
+                    filterArticlesList(value);
+                  },
+                  editingController,
+                  autofocus: true,
+                ),
+              ),
 
-          // Video of the day
-          searching ? Container() :
-          Padding(
-            padding: EdgeInsets.all(PAGE_PADDING),
-            child: Container(
-              child: VideoOTDTile(
-                // TODO need to do actual request for video of the day
-              )
-            ),
-          ),
-          searching ?  Container() :
-          NewsDividor(),
-          SizedBox(height: PAGE_PADDING,),
-          searching ? Container() :
+              // Video of the day
+              searching ? Container() :
+              Padding(
+                padding: EdgeInsets.all(0),
+                child: Container(
+                  child: VideoOTDTile(
+                    borderRadius: 0,
+                    elevated: false,
+                    textPadding: 15,
+                    // TODO need to do actual request for video of the day
+                  )
+                ),
+              ),
+            ]
+          )
+        ),
           
+        SizedBox(height: PAGE_PADDING,),
+        
+          searching ? Container() :
           Padding(
             padding: EdgeInsets.symmetric(horizontal: PAGE_PADDING),
             child: Text(
@@ -199,6 +224,15 @@ class _NewsListState extends State<NewsList> {
 
 // Video of the day
 class VideoOTDTile extends StatelessWidget {
+  final double borderRadius;
+  final bool elevated;
+  final double textPadding;
+
+  VideoOTDTile({
+    this.borderRadius,
+    this.elevated,
+    this.textPadding,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -220,30 +254,39 @@ class VideoOTDTile extends StatelessWidget {
                       child: NewsGraphic(
                         video: snapshot.data.getVideoLink(),
                         height: 185,
+                        borderRadius: borderRadius,
+                        elevated: elevated,
                       ),
                     ),
                     SizedBox(height: 10),
-                    Text(
-                      "Clip of the day",
-                      textAlign: TextAlign.left,
-                      style: textStyleFrom(
-                        Theme.of(context).primaryTextTheme.headline5,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 11,
-                        color: Theme.of(context).primaryColor
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: textPadding ?? 0),
+                      child: Text(
+                        "Clip of the day",
+                        textAlign: TextAlign.left,
+                        style: textStyleFrom(
+                          Theme.of(context).primaryTextTheme.headline5,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 11,
+                          color: Theme.of(context).primaryColor
+                        ),
                       ),
                     ),
                     SizedBox(height: 4),
-                    Text(
-                      snapshot.data.getTitle(),
-                      textAlign: TextAlign.left,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: textStyleFrom(
-                        Theme.of(context).primaryTextTheme.headline5,
-                        fontWeight: FontWeight.w600,
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: textPadding ?? 0),
+                      child: Text(
+                        snapshot.data.getTitle(),
+                        textAlign: TextAlign.left,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: textStyleFrom(
+                          Theme.of(context).primaryTextTheme.headline5,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
+                    SizedBox(height: textPadding),
                   ],
                 );
               }
@@ -386,17 +429,22 @@ class NewsTextTile extends StatelessWidget {
 }
 
 class NewsGraphic extends StatelessWidget {
+  final double defaultBorderRadius = 10;
+
   final String image;
   final String video;
   final double height;
-  final double borderRadius = 10;
-  
+  final double borderRadius;
+  final bool elevated;
+
   YoutubePlayerController controller;
 
   NewsGraphic({
     this.image, 
     this.video, 
-    this.height
+    this.height,
+    this.borderRadius,
+    this.elevated,
   }):assert(image != null || video != null);
 
   @override
@@ -417,10 +465,10 @@ class NewsGraphic extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: Colors.red,
-          borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+          borderRadius: BorderRadius.all(Radius.circular(borderRadius ?? defaultBorderRadius)),
           boxShadow: [
             BoxShadow(
-              color: Color.fromRGBO(0,0,0,0.16),
+              color: Color.fromRGBO(0,0,0,elevated ?? true ? 0.16 : 0),
               offset: Offset(0, 4.0),
               blurRadius: 6
             )
@@ -428,7 +476,7 @@ class NewsGraphic extends StatelessWidget {
         ),
         height: height ?? 150,
         child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+          borderRadius: BorderRadius.all(Radius.circular(borderRadius ?? defaultBorderRadius)),
           child: 
           image != null ?
           Image.network(

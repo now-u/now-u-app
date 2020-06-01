@@ -9,6 +9,7 @@ import 'package:app/models/State.dart';
 
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/selectionItem.dart';
+import 'package:app/assets/components/header.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -94,33 +95,13 @@ class _ActionPageState extends State<ActionPage> {
                 ),
                 body: Column(
                   children: <Widget>[
-                    SafeArea(
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: GestureDetector(
-                          onTap: () {
-                            _navigateAndDisplaySelection(context);
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: Icon(
-                                Icons.filter_list,
-                                color: Theme.of(context).primaryColor,  
-                              ),
-                            ),
-                          ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 20),
-                      child: Container(
-                        width: double.infinity,
-                        child: Text(
-                          "Actions",
-                          textAlign: TextAlign.left,
-                          style: Theme.of(context).primaryTextTheme.headline2,
-                        ),
-                      ),
+
+                    PageHeader(
+                      title: "Actions",
+                      onTap: () {
+                        _navigateAndDisplaySelection(context);
+                      },
+                      icon: Icons.filter_list,
                     ),
                     SizedBox(height: 15),
                     // Campaign selection widget

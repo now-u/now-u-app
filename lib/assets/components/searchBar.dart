@@ -7,10 +7,14 @@ class SearchBar extends StatelessWidget {
  
   final Function onChanged;
   final TextEditingController controller;
+  final bool autofocus;
 
   SearchBar(
     this.onChanged, 
-    this.controller
+    this.controller,
+    {
+    this.autofocus,
+    }
   );
 
   @override
@@ -25,6 +29,7 @@ class SearchBar extends StatelessWidget {
             color: Color.fromRGBO(238,238,238,1)
           ),
           child: TextField(
+            autofocus: autofocus ?? false,
             controller: controller,
             onChanged: onChanged,
             decoration: InputDecoration(

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:app/pages/campaign/CampaignTile.dart';
-import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
-import 'package:app/pages/campaign/SelectionComplete.dart';
 
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
@@ -10,9 +8,7 @@ import 'package:app/models/ViewModel.dart';
 import 'package:app/models/User.dart';
 import 'package:app/models/State.dart';
 
-import 'package:app/assets/routes/customRoute.dart';
-import 'package:app/assets/components/darkButton.dart';
-import 'package:app/assets/components/customAppBar.dart';
+import 'package:app/assets/components/header.dart';
 import 'package:app/assets/components/inputs.dart';
 import 'package:app/assets/StyleFrom.dart';
 
@@ -73,32 +69,10 @@ class _CampaignPageState extends State<CampaignPage> {
               return  SafeArea(
                 child: ListView(
                   children: <Widget>[
-                    SafeArea(
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: GestureDetector(
-                          onTap: () {
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: Icon(
-                                Icons.book,
-                                color: Theme.of(context).primaryColor,  
-                              ),
-                            ),
-                          ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 20),
-                      child: Container(
-                        width: double.infinity,
-                        child: Text(
-                          "Active Campaigns",
-                          textAlign: TextAlign.left,
-                          style: Theme.of(context).primaryTextTheme.headline2,
-                        ),
-                      ),
+                    PageHeader(
+                      title: "Active Campaigns",
+                      onTap: () {},
+                      icon: Icons.book,
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 10, right: 10),
