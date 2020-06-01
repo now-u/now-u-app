@@ -148,6 +148,8 @@ ThunkAction loginUser (String email, String link) {
     Future (() async {
       store.dispatch(StartLoadingUserAction());
       store.state.userState.auth.signInWithEmailLink(email, link).then((loginResponse) {
+        print(loginResponse);
+        
         // TODO add token to LoginSuccessAction
         store.dispatch(LoginSuccessAction());
         Keys.navKey.currentState.pushNamed(Routes.intro);
@@ -172,9 +174,9 @@ ThunkAction initStore (Uri deepLink) {
         store.dispatch(GetCampaignsAction()).then(
           (dynamic r) {
             // A user id of -1 means the user is the placeholder and therefore does not exist, well get rid of this eventually and keep it as null, but for now useful as when we go to homepage after login we have the placeholder user
-            //if (store.state.userState.user == null || store.state.userState.user.getId() == -1) {
+            if (store.state.userState.user == null || store.state.userState.user.getId() == -1) {
             // Skip Login Screen
-            if (store.state.userState.user == null) {
+            //if (store.state.userState.user == null) {
               if (deepLink != null && deepLink.path == "/loginMobile") {
                 print("The path is the thing");
                 print(deepLink.path);

@@ -46,6 +46,8 @@ class DynamicLinkService {
 
   Future<Uri> getLink() async {
     PendingDynamicLinkData data = await FirebaseDynamicLinks.instance.getInitialLink();
+    print("Data is");
+    print(data);
     return data?.link;
   }
 }

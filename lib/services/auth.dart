@@ -51,6 +51,16 @@ class AuthenticationService {
     ).then( (http.Response response) {
       print("THE RESPONSE BODY IS");
       print(response.body);
+      http.get(
+        domainPrefix + 'users/me',
+        headers: <String, String>{
+          'token': json.decode(response.body)['data']['token'],
+        }
+      ).then(
+        (http.Response userResponse) {
+          print(userResponse.body);
+        }
+      );
     }, onError: (error) {
       print("There was an error signing in!");
       print(error);
@@ -58,6 +68,7 @@ class AuthenticationService {
     return null;
     //return _auth.signInWithEmailAndLink(email: email, link: link);
   }
+
 
   //Future<AuthResult> signInWithCredential(AuthCredential credential) async {
   //  return _auth.signInWithCredential(credential);

@@ -15,6 +15,8 @@ import 'package:app/models/ViewModel.dart';
 import 'package:app/services/dynamicLinks.dart';
 import 'package:app/locator.dart';
 
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+
 class EmailSentPage extends StatefulWidget {
   final UserViewModel model;
   final String email;
@@ -36,16 +38,38 @@ class _EmailSentPageState extends State<EmailSentPage> with WidgetsBindingObserv
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      DynamicLinkService deepLinkService = locator<DynamicLinkService>();
-      deepLinkService.getLink().then((Uri link) {
-        print("Reconnect on email sent page");
-        print(link.toString());
-        widget.model.repository.getEmail().then((email) {
-          print("Stored email is");
-          print(email);
-          widget.model.login(email, link.queryParameters['token']);
-        });
-      });
+      //DynamicLinkService deepLinkService = locator<DynamicLinkService>();
+      //deepLinkService.getLink().then((Uri link) {
+      //  print("Reconnect on email sent page");
+      //  print(link.toString());
+      //  widget.model.repository.getEmail().then((email) {
+      //    print("Stored email is");
+      //    print(email);
+      //    widget.model.login(email, link.queryParameters['token']);
+      //  });
+      //});
+      FirebaseDynamicLinks.instance.onLink(
+      onSuccess: (PendingDynamicLinkData dynamicLink) async {
+        print(dynamicLink);
+        final Uri deepLink = dynamicLink?.link;
+        print(deepLink);
+        print(deepLink.path);
+        print(deepLink.queryParameters['token']);
+
+        if (deepLink != null && deepLink.path == "/loginMobile") {
+          print(deepLink.queryParameters['token']);
+          widget.model.repository.getEmail().then((email) {
+            print("Stored email is");
+            print(email);
+            widget.model.login(email, deepLink.queryParameters['token']);
+          });
+        }
+      },
+      onError: (OnLinkErrorException e) async {
+        print('onLinkError');
+        print(e.message);
+      }
+      );
     }
   }
 
