@@ -67,8 +67,11 @@ class _DetailsPageState extends State<DetailsPage> {
                             ); 
                         },
                       ),
-                      )
-                 ], 
+                  ),
+                  Text(
+                    user.getToken(),
+                  ),
+                ], 
               ),
               //floatingActionButton: 
               //  !editingMode ?

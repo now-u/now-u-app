@@ -29,8 +29,10 @@ class User {
   Map<CampaignActionType, int> completedActionsType;
   
   int points;
+
+  String token;
   
-  User({id, firebaseUser, fullName, email, age, location, monthlyDonationLimit, homeOwner, selectedCampaigns, completedCampaigns, completedActions, completedRewards, completedActionsType, points}) {
+  User({id, token, fullName, email, age, location, monthlyDonationLimit, homeOwner, selectedCampaigns, completedCampaigns, completedActions, completedRewards, completedActionsType, points}) {
     this.id = id; 
     //this.firebaseUser = firebaseUser;
     this.fullName = fullName;
@@ -48,8 +50,12 @@ class User {
         completedActionsType ?? initCompletedAction();
 
     this.points = points ?? 0;
+
+    this.token = token;
   }
 
+
+  // This will be removed real soon cause if the user token is null then we need to login again 
   User.empty(){
     id= -1;
     fullName= "unknown";
@@ -63,7 +69,7 @@ class User {
     completedRewards = [];
     completedActions = [];
     completedActionsType = initCompletedAction();
-    //firebaseUser = null;
+    token = null;
     points = 0;
   }
 
@@ -88,6 +94,8 @@ class User {
     Map<CampaignActionType, int> completedActionsType,
 
     int points,
+
+    String token,
   }) {
     return User(
       id: id ?? this.id,
@@ -104,6 +112,7 @@ class User {
       completedActionsType: completedActionsType ?? this.completedActionsType,
       //firebaseUser: firebaseUser ?? this.firebaseUser,
       points: points ?? this.points,
+      token: token ?? this.token,
     );
   }
 
@@ -123,6 +132,7 @@ class User {
     completedActionsType = json['completed_actions_type'] == null ? this.initCompletedAction() : campaignActionTypesDecode(json['completed_actions_type'].cast<int>());
     
     points = json['points'];
+    token = json['token'];
   }
 Map toJson() => {
     'id': id, 
@@ -138,6 +148,7 @@ Map toJson() => {
     'completed_rewards': completedRewards, 
     'completed_actions_type': campaignActionTypesEncode(completedActionsType), 
     'points': points, 
+    'token': token,
   };
 
   Map getAttributes () {
@@ -213,6 +224,9 @@ Map toJson() => {
   }
   int getPoints() {
     return points;
+  }
+  String getToken() {
+    return token;
   }
 
   void setName(String name) {

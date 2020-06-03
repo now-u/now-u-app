@@ -51,8 +51,8 @@ class LoadedUserDataAction {
 // User Actions
 class StartLoadingUserAction {}
 class LoginSuccessAction {
-  //final FirebaseUser firebaseUser; 
-  //LoginSuccessAction(this.firebaseUser);
+  final String token; 
+  LoginSuccessAction(this.token);
 }
 class LoginFailedAction {}
 

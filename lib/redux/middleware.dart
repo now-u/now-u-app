@@ -62,7 +62,7 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
 
   if (action is InitaliseState) {
   }
-  
+
   if (action is SelectCampaignsAction) {
     saveUserToPrefs(store.state.userState.user).then(
       (dynamic d) {
@@ -80,6 +80,11 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
     );
   }
   if (action is UpdateUserDetails) {
+    saveUserToPrefs(store.state.userState.user);
+  }
+  
+  if (action is LoginSuccessAction) {
+    print(action.token);
     saveUserToPrefs(store.state.userState.user);
   }
   
@@ -147,16 +152,17 @@ ThunkAction loginUser (String email, String link) {
   return (Store store) async {
     Future (() async {
       store.dispatch(StartLoadingUserAction());
-      store.state.userState.auth.signInWithEmailLink(email, link).then((loginResponse) {
-        print(loginResponse);
-        
-        // TODO add token to LoginSuccessAction
-        store.dispatch(LoginSuccessAction());
-        Keys.navKey.currentState.pushNamed(Routes.intro);
-      }, onError: (error) {
-        store.dispatch(new LoginFailedAction());
-      });
-    });
+      String token = await store.state.userState.auth.signInWithEmailLink(email, link);
+
+      print("The loging response here is");
+      print(token);
+      // TODO add token to LoginSuccessAction
+      if (token != null) {
+        store.dispatch(LoginSuccessAction(token));
+          Keys.navKey.currentState.pushNamed(Routes.intro);
+        }
+      }
+    );
   };
 }
 
@@ -174,7 +180,7 @@ ThunkAction initStore (Uri deepLink) {
         store.dispatch(GetCampaignsAction()).then(
           (dynamic r) {
             // A user id of -1 means the user is the placeholder and therefore does not exist, well get rid of this eventually and keep it as null, but for now useful as when we go to homepage after login we have the placeholder user
-            if (store.state.userState.user == null || store.state.userState.user.getId() == -1) {
+            if (store.state.userState.user == null || store.state.userState.user.getToken() == null) {
             // Skip Login Screen
             //if (store.state.userState.user == null) {
               if (deepLink != null && deepLink.path == "/loginMobile") {

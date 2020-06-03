@@ -61,7 +61,7 @@ final userStateReducer = combineReducers<UserState>([
 UserState _loginSuccess(UserState state, LoginSuccessAction action) {
   // Add token to copy with
   //User u = state.user.copyWith(token: action.token);
-  User u = state.user.copyWith();
+  User u = state.user.copyWith(token: action.token);
   return state.copyWith(user: u, isLoading: false, loginError: false);
 }
 

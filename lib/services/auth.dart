@@ -36,10 +36,14 @@ class AuthenticationService {
     });
   }
 
-  Future<User> signInWithEmailLink(String email, String token) async {
+  Future<String> signInWithEmailLink(String email, String token) async {
+
+    // TODO USE AWAIT
+    // TODO handle errors
+
     print("The email is: " + email);
     print("The token is: " + token);
-    http.post(
+    http.Response response = await http.post(
       domainPrefix + 'users/login',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -48,24 +52,17 @@ class AuthenticationService {
         'email': email,
         'token': token, 
       }),
-    ).then( (http.Response response) {
-      print("THE RESPONSE BODY IS");
-      print(response.body);
-      http.get(
-        domainPrefix + 'users/me',
-        headers: <String, String>{
-          'token': json.decode(response.body)['data']['token'],
-        }
-      ).then(
-        (http.Response userResponse) {
-          print(userResponse.body);
-        }
-      );
-    }, onError: (error) {
-      print("There was an error signing in!");
-      print(error);
-    });
-    return null;
+    );
+    print("THE RESPONSE BODY IS");
+    print(response.body);
+    http.Response userResponse = await http.get(
+      domainPrefix + 'users/me',
+      headers: <String, String>{
+        'token': json.decode(response.body)['data']['token'],
+      }
+    );
+    print(userResponse.body);
+    return json.decode(userResponse.body)['data']['token'];
     //return _auth.signInWithEmailAndLink(email: email, link: link);
   }
 
