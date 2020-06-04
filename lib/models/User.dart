@@ -250,6 +250,9 @@ Map toJson() => {
   void setPoints(int points) {
     this.points = points;
   }
+  void setToken(String token) {
+    this.token = token;
+  }
   void incrementPoints(int points) {
     this.points += points;
     print("User points are now " + this.points.toString());

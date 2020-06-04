@@ -52,9 +52,9 @@ Future<User> loadUserFromPrefs(User u) async {
     print(u.completedActionsType);
     return u;
   }
-  print("User.empty is being returned");
+  print("Returning null user is being returned");
   // TODO this should be null
-  return User.empty();
+  return null;
 }
 
 void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) async {
@@ -163,6 +163,21 @@ ThunkAction loginUser (String email, String link) {
         }
       }
     );
+  };
+}
+
+ThunkAction skipLoginAction () {
+  return (Store store) async {
+    Future (() async {
+      User u = User.empty();
+      u.setToken("dummyToken");
+      store.dispatch(UpdateUserDetails(u)).then(
+        (_) {
+          Keys.navKey.currentState.pushNamed(Routes.intro);
+        }
+      );
+      
+    });
   };
 }
 

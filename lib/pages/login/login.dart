@@ -1,5 +1,6 @@
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/darkButton.dart';
+import 'package:app/assets/components/textButton.dart';
 import 'package:flutter/material.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
@@ -134,6 +135,23 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       );
     }
 
+    Widget skipButton() {
+       return StoreConnector<AppState, UserViewModel>(
+         converter: (store) => UserViewModel.create(store),
+         builder: (_, viewModel) {
+            return Padding(
+              padding: EdgeInsets.symmetric(vertical: 16.0),
+              child: TextButton(
+                "Skip",
+                onClick: () {
+                  viewModel.skipLogin();
+                },
+              )
+            );
+          }
+        );
+    }
+
 
     Form loginForm() {
       return 
@@ -192,6 +210,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                     ],
                   ),
                   loginButton(),
+                  skipButton(),
                 ],
               ),
             )

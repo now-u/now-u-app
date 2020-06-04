@@ -63,6 +63,7 @@ class UserViewModel {
 
   final Function (String, String) login;
   final Function (String) email;
+  final Function () skipLogin;
 
   UserViewModel({
     this.isLoading,
@@ -72,6 +73,7 @@ class UserViewModel {
     this.email,
     this.auth,
     this.repository,
+    this.skipLogin,
   });
   factory UserViewModel.create(Store<AppState> store) {
 
@@ -89,6 +91,9 @@ class UserViewModel {
       email: (String email) {
         print("Dispatching send email action | " + email);
         store.dispatch(emailUser(email));
+      },
+      skipLogin: () {
+        store.dispatch(skipLoginAction());
       }
     );
   }
