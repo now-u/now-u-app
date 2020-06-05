@@ -18,10 +18,37 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>signup</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.nowu.app</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>This is required for the functioning of the app but is not used to collect any information</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Calender permission can be used to add events from the app into your personal calendar with your permission</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Contact permission will be used to make adding contacts to your network quicker.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Location is used to give personalised, local, recommendations</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Location is used to give personalised, local, recommendations</string>
+	<key>NSMotionUsageDescription</key>
+	<string>This is required for the functioning of the app but is not used to collect any information</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Can be used as an alternative input method when required to type</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -42,27 +69,6 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
-    <true/>
-
-    <key>NSContactsUsageDescription</key>
-    <string>Contact permission will be used to make adding contacts to your network quicker.</string>
-      
-    <key>NSCalendarsUsageDescription</key>
-    <string>Calender permission can be used to add events from the app into your personal calendar with your permission</string>
-
-    <key>NSAppleMusicUsageDescription</key>
-    <string>This is required for the functioning of the app but is not used to collect any information</string>
-
-    <key>NSMotionUsageDescription</key>
-    <string>This is required for the functioning of the app but is not used to collect any information</string>
-    
-    <key>NSSpeechRecognitionUsageDescription</key>
-    <string>Can be used as an alternative input method when required to type</string>
-    
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>Location is used to give personalised, local, recommendations</string>
-    
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Location is used to give personalised, local, recommendations</string>
+	<true/>
 </dict>
 </plist>
