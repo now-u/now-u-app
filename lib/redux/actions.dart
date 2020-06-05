@@ -23,9 +23,12 @@ class CompleteAction {
   CompleteAction(this.action, this.onSuccess);
 }
 
+class CreateNewUser {
+  final User user;
+  CreateNewUser(this.user);
+}
 class UpdateUserDetails {
   final User user;
-
   UpdateUserDetails(this.user);
 }
 
@@ -44,7 +47,6 @@ class GetUserDataAction {}
 
 class LoadedUserDataAction {
   final User user;
-
   LoadedUserDataAction(this.user);
 }
 

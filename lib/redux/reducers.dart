@@ -56,6 +56,7 @@ final userStateReducer = combineReducers<UserState>([
   TypedReducer<UserState, CompleteAction>(_completeAction),
   TypedReducer<UserState, LoadedUserDataAction>(_loadedUserData),
   TypedReducer<UserState, UpdateUserDetails>(_updateUserDetails),
+  TypedReducer<UserState, CreateNewUser>(_createNewUser),
 ]);
 
 UserState _loginSuccess(UserState state, LoginSuccessAction action) {
@@ -99,5 +100,8 @@ UserState _updateUserDetails(UserState state, UpdateUserDetails action) {
       location: action.user.getLocation(),
     );
     return state.copyWith(user: u);
+}
+UserState _createNewUser(UserState state, CreateNewUser action) {
+  return state.copyWith(user: action.user);
 }
 

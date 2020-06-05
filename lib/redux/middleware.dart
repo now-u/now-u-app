@@ -103,9 +103,7 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
 
   if (action is GetUserDataAction) {
     await loadUserFromPrefs(store.state.userState.user).then((user) { 
-          print("The user being loaded is:");
-          print(user.getName());
-          store.dispatch(LoadedUserDataAction(user)); 
+      store.dispatch(LoadedUserDataAction(user)); 
     });
   }
 
@@ -170,8 +168,8 @@ ThunkAction skipLoginAction () {
   return (Store store) async {
     Future (() async {
       User u = User.empty();
-      u.setToken("dummyToken");
-      store.dispatch(UpdateUserDetails(u)).then(
+      u.setToken(null);
+      store.dispatch(CreateNewUser(u)).then(
         (_) {
           Keys.navKey.currentState.pushNamed(Routes.intro);
         }
@@ -218,6 +216,8 @@ ThunkAction initStore (Uri deepLink) {
               }
             }
             else {
+              // Go home
+              print("Going home");
               Keys.navKey.currentState.pushNamed(Routes.home);
             }
           }
