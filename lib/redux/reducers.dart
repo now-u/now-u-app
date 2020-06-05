@@ -3,6 +3,7 @@ import 'package:app/redux/middleware.dart';
 import 'package:app/models/State.dart';
 import 'package:app/models/User.dart';
 import 'package:app/models/Campaigns.dart';
+import 'package:time/time.dart';
 
 import 'package:redux/redux.dart';
 
@@ -54,6 +55,7 @@ final userStateReducer = combineReducers<UserState>([
   TypedReducer<UserState, SentAuthEmail>(_sentAuthEmail),
   TypedReducer<UserState, SelectCampaignsAction>(_selectCampaign),
   TypedReducer<UserState, CompleteAction>(_completeAction),
+  TypedReducer<UserState, RejectAction>(_rejectAction),
   TypedReducer<UserState, LoadedUserDataAction>(_loadedUserData),
   TypedReducer<UserState, UpdateUserDetails>(_updateUserDetails),
   TypedReducer<UserState, CreateNewUser>(_createNewUser),
@@ -87,6 +89,15 @@ UserState _selectCampaign(UserState state, SelectCampaignsAction action) {
 UserState _completeAction(UserState state, CompleteAction action) {
     User u = state.user.copyWith();
     u.completeAction(action.action);
+    return state.copyWith(user: u);
+}
+UserState _rejectAction(UserState state, RejectAction action) {
+    User u = state.user.copyWith();
+    u.rejectAction(
+      action.action,
+      reason: action.reason,
+      time: DateTime.now(),
+    );
     return state.copyWith(user: u);
 }
 UserState _loadedUserData(UserState state, LoadedUserDataAction action) {

@@ -18,6 +18,7 @@ class ViewModel {
   final Function(User, Function) onSelectCampaigns;
   final Function(User) onUpdateUserDetails;
   final Function(CampaignAction, Function) onCompleteAction;
+  final Function(CampaignAction, String) onRejectAction;
 
   ViewModel({
     this.campaigns,
@@ -26,6 +27,7 @@ class ViewModel {
     this.api,
     this.onSelectCampaigns,
     this.onCompleteAction,
+    this.onRejectAction,
     this.onUpdateUserDetails,
   });
 
@@ -36,6 +38,9 @@ class ViewModel {
 
     _onCompleteAction(CampaignAction action, Function onSuccess) {
       store.dispatch(CompleteAction(action, onSuccess));
+    }
+    _onRejectAction(CampaignAction action, String reason) {
+      store.dispatch(RejectAction(action, reason));
     }
 
     _onUpdateUserDetails(User user) {
@@ -49,6 +54,7 @@ class ViewModel {
       api: store.state.api,
       onSelectCampaigns: _onSelectCampaigns,
       onCompleteAction: _onCompleteAction,
+      onRejectAction: _onRejectAction,
       onUpdateUserDetails: _onUpdateUserDetails,
     );
   }

@@ -10,7 +10,7 @@ import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
 import 'package:app/pages/other/RewardComplete.dart';
 
 import 'package:app/assets/StyleFrom.dart';
-import 'package:app/assets/components/detailScaffold.dart';
+import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/customAppBar.dart';
@@ -19,6 +19,7 @@ import 'package:app/assets/components/pointsNotifier.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final double HEADER_HEIGHT = 200;
 final double H_PADDING = 10;
@@ -193,26 +194,41 @@ class _ActionInfoState extends State<ActionInfo> {
                         ),
                       ),
 
-                      // Buttons
-                      Padding(
-                        padding: EdgeInsets.only(top: 30, bottom: 20, right: H_PADDING),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            DarkButton(
-                              "Mark as done",
-                              inverted: true,
-                              onPressed: () {
-                                print("Getting newlyCompletedRewards");
-                                //List<Reward> newlyCompletedRewards = viewModel.userModel.user.newlyCompletedRewards(_action);
-                              },
-                            ),
-                          ],
-
-                        )
+                      // Button
+                      SizedBox(height: 20),
+                      Align(
+                        alignment: Alignment.topCenter,
+                        child: DarkButton(
+                          "Go to link",
+                          style: DarkButtonStyles.Large,
+                          inverted: true,
+                          onPressed: () {
+                            launch(
+                              _action.getLink()
+                            );
+                          }
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          TextButton(
+                            "This action is not for me",
+                            fontSize: 14,
+                            onClick: () {
+                              showDialog(
+                                context: context,
+                                barrierDismissible: true,
+                                builder: (_) => RejectDialogue(_action, viewModel),
+                              );
+                            }
+                          ),
+                        ]
                       ),
                       SizedBox(
-                        height: 45,
+                        height: 65,
                       ),
                     ],
                   ),
@@ -249,6 +265,84 @@ class _ActionInfoState extends State<ActionInfo> {
               );
             },
         )
+    );
+  }
+}
+
+class RejectDialogue extends StatefulWidget {
+  final CampaignAction action;
+  final ViewModel model;
+  RejectDialogue(this.action, this.model);
+  @override
+  _RejectDialougeState createState() => _RejectDialougeState();
+}
+
+class _RejectDialougeState extends State<RejectDialogue> {
+  String selectedReason = "";
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(35),
+      ),
+      content: Container(
+        width: double.maxFinite,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                padding: EdgeInsets.all(10),
+                icon: Icon(
+                  Icons.close,
+                  color:  Color.fromRGBO(136,136,136,1),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                }
+              ),
+            ),
+            Container(
+              child: Text(
+                "Let us know why this action is not for you"
+              )
+            ),
+            Container(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: rejectionReasons.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return CheckboxSelectionItem(
+                    title: rejectionReasons[index] ,
+                    onChanged: (_) {
+                      setState(() {
+                        selectedReason = rejectionReasons[index];
+                      });
+                    },
+                    value: selectedReason == rejectionReasons[index] 
+                  );
+                }
+              ),
+            ),
+            SizedBox(height: 20),
+            Align(
+              alignment: Alignment.center,
+              child: DarkButton(
+                "Hide action",
+                onPressed: 
+                  selectedReason == "" ? null :
+                  () {
+                    widget.model.onRejectAction(widget.action, selectedReason);
+                    Navigator.pop(context);
+                  },
+              ),
+            ),
+            SizedBox(height: 20),
+          ],
+        ),
+      )
     );
   }
 }

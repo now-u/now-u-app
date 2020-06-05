@@ -551,3 +551,26 @@ class LearningTopicSelectionItem extends StatelessWidget {
       );
   }
 }
+
+class CheckboxSelectionItem extends StatelessWidget {
+  final bool value;
+  final Function onChanged;
+  final String title;
+  CheckboxSelectionItem({
+    @required this.value,
+    @required this.onChanged,
+    @required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CheckboxListTile(
+      dense: true,
+      controlAffinity: ListTileControlAffinity.leading,
+      activeColor: Theme.of(context).primaryColor,
+      title: Text(title),
+      value: value,
+      onChanged: onChanged,
+    );
+  }
+}

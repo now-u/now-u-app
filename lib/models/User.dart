@@ -3,6 +3,7 @@ import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Action.dart';
+import 'package:time/time.dart';
 
 List<int> rewardValues = [1, 5, 10, 25, 50, 100, 200];
 int pointsForJoiningCampaign = 10;
@@ -26,13 +27,17 @@ class User {
   List<int> completedRewards = []; 
   List<int> completedActions = [];
 
+  // Key is rejected id
+  // Map stores rejection time and rejection reason
+  Map<int, Map> rejectedActions = {};
+
   Map<CampaignActionType, int> completedActionsType;
   
   int points;
 
   String token;
   
-  User({id, token, fullName, email, age, location, monthlyDonationLimit, homeOwner, selectedCampaigns, completedCampaigns, completedActions, completedRewards, completedActionsType, points}) {
+  User({id, token, fullName, email, age, location, monthlyDonationLimit, homeOwner, selectedCampaigns, completedCampaigns, completedActions, rejectedActions, completedRewards, completedActionsType, points}) {
     this.id = id; 
     //this.firebaseUser = firebaseUser;
     this.fullName = fullName;
@@ -52,6 +57,8 @@ class User {
     this.points = points ?? 0;
 
     this.token = token;
+    
+    this.rejectedActions = rejectedActions;
   }
 
 
@@ -68,6 +75,7 @@ class User {
     completedCampaigns = [];
     completedRewards = [];
     completedActions = [];
+    rejectedActions = {};
     completedActionsType = initCompletedAction();
     token = null;
     points = 0;
@@ -90,6 +98,7 @@ class User {
     List<int> completedCampaigns,
     List<int> completedRewards,
     List<int> completedActions,
+    Map<int, Map> rejectedActions,
 
     Map<CampaignActionType, int> completedActionsType,
 
@@ -109,8 +118,8 @@ class User {
       completedCampaigns: completedCampaigns ?? this.completedCampaigns,
       completedRewards: completedRewards ?? this.completedRewards,
       completedActions: completedActions ?? this.completedActions,
+      rejectedActions: rejectedActions ?? this.rejectedActions,
       completedActionsType: completedActionsType ?? this.completedActionsType,
-      //firebaseUser: firebaseUser ?? this.firebaseUser,
       points: points ?? this.points,
       token: token ?? this.token,
     );
@@ -128,6 +137,7 @@ class User {
     selectedCampaigns = json['selected_campaigns'] == null ? <int>[] : json['selected_campaigns'].cast<int>();
     completedCampaigns = json['completed_campaigns'] == null ? <int>[] : json['completed_campaigns'].cast<int>();
     completedActions = json['completed_actions'] == null ? <int>[] : json['completed_actions'].cast<int>();
+    rejectedActions = json['rejected_actions'] == null ? {} : json['rejected_actions'].cast<Map>();
     completedRewards = json['completed_rewards'] == null ? <int>[] : json['completed_rewards'].cast<int>();
     completedActionsType = json['completed_actions_type'] == null ? this.initCompletedAction() : campaignActionTypesDecode(json['completed_actions_type'].cast<int>());
     
@@ -145,6 +155,7 @@ Map toJson() => {
     'selected_campaigns': selectedCampaigns, 
     'completed_campaigns': completedCampaigns, 
     'completed_actions': completedActions, 
+    'rejected_actions': rejectedActions, 
     'completed_rewards': completedRewards, 
     'completed_actions_type': campaignActionTypesEncode(completedActionsType), 
     'points': points, 
@@ -227,6 +238,9 @@ Map toJson() => {
   }
   String getToken() {
     return token;
+  }
+  Map getRejectedActions() {
+    return rejectedActions;
   }
 
   void setName(String name) {
@@ -345,6 +359,15 @@ Map toJson() => {
     incrementPoints(pointsForCompletingAction);
     print(a.getType().toString());
     print(completedActionsType[a.getType()]);
+  }
+  void rejectAction(CampaignAction a, {
+    String reason,
+    DateTime time,
+  }) {
+    rejectedActions[a.getId()] = {
+      "reason": reason,
+      "time": time,
+    };
   }
 
   bool isMilestone(int x) {

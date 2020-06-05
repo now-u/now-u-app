@@ -26,6 +26,15 @@ enum CampaignActionType {
   Other 
 }
 
+List<String> rejectionReasons = [
+  "It requires too much effort",
+  "It takes too long",
+  "It does not seem useful/impactful",
+  "I have completed too many of these",
+  "This is not something I like doing",
+  "Other",
+];
+
 Color red = Color.fromRGBO(211, 0, 1, 1);
 Color redO = colorFrom(red, opacity: 0.15);
 Color orange = Color.fromRGBO(255, 136, 0, 1);
@@ -260,8 +269,6 @@ class CampaignAction {
     return campaignActionTypeData[type]['type']; 
   }
   Map getActionIconMap () {
-    print("Getting the actionicon map for");
-    print(type.toString());
     if (campaignActionTypeData.containsKey(type)) {
       return {
         'icon': campaignActionTypeData[type]['icon'],

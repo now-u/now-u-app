@@ -45,6 +45,7 @@ class TextButton extends StatelessWidget {
                   fontStyle: Theme.of(context).primaryTextTheme.button.fontStyle,
                   fontSize: fontSize ?? 16,
                 ),
+                textAlign: TextAlign.center,
               )
             ),
             this.iconRight != null ? 

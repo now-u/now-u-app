@@ -23,6 +23,12 @@ class CompleteAction {
   CompleteAction(this.action, this.onSuccess);
 }
 
+class RejectAction {
+  final CampaignAction action;
+  final String reason;
+  RejectAction(this.action, this.reason);
+}
+
 class CreateNewUser {
   final User user;
   CreateNewUser(this.user);

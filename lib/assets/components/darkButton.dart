@@ -94,8 +94,8 @@ class SecondaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       height: darkButtonStyleStyles[style]['height'],
-      elevation: 0,
       onPressed: onPressed,
+      elevation: 16.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(darkButtonStyleStyles[style]['borderRadius']),
         side: BorderSide(
@@ -144,7 +144,12 @@ class PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialButton(
       height: darkButtonStyleStyles[style]['height'],
+      elevation: 0,
       color: Theme.of(context).buttonColor ,
+      disabledColor: colorFrom(
+        Theme.of(context).primaryColor,
+        opacity: 0.5,
+      ),
       onPressed: onPressed,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(darkButtonStyleStyles[style]['borderRadius']),

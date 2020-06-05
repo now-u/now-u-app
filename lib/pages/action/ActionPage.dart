@@ -308,11 +308,8 @@ class _SortScreenState extends State<SortScreen> {
                   itemCount: CampaignActionSuperType.values.length,
                   separatorBuilder: (BuildContext context, int index) => ListDividor(),
                   itemBuilder: (BuildContext context, int index) {
-                    return CheckboxListTile(
-                      dense: true,
-                      controlAffinity: ListTileControlAffinity.leading,
-                      activeColor: Theme.of(context).primaryColor,
-                      title: Text(campaignActionSuperTypeData[CampaignActionSuperType.values[index]]['name']),
+                    return CheckboxSelectionItem(
+                      title: campaignActionSuperTypeData[CampaignActionSuperType.values[index]]['name'],
                       value: selections['categories'][CampaignActionSuperType.values[index]],
                       onChanged: (bool value) {
                         setState(() {
@@ -322,7 +319,8 @@ class _SortScreenState extends State<SortScreen> {
                     );
                     //return Text(timeBrackets[index]['text']);
                   },
-                )
+                ),
+                SizedBox(height: 40,),
               ],
             ),
           ),
