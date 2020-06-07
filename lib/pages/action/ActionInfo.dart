@@ -255,6 +255,7 @@ class _ActionInfoState extends State<ActionInfo> {
                       ),
                       onPressed: () {
                         setState(() {
+                          print("Print button pressed");
                           completeAction(viewModel, context, _action);
                         });
                       },

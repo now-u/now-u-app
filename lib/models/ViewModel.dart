@@ -1,4 +1,5 @@
 import 'package:app/models/Campaigns.dart';
+import 'package:app/models/Campaign.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/User.dart';
 import 'package:app/services/api.dart';
@@ -15,7 +16,7 @@ class ViewModel {
   final UserViewModel userModel;
   //final User user;
   final Api api;
-  final Function(User, Function) onSelectCampaigns;
+  final Function(Campaign, Function) onJoinCampaign;
   final Function(User) onUpdateUserDetails;
   final Function(CampaignAction, Function) onCompleteAction;
   final Function(CampaignAction, String) onRejectAction;
@@ -25,19 +26,19 @@ class ViewModel {
     this.userModel,
     //this.user,
     this.api,
-    this.onSelectCampaigns,
+    this.onJoinCampaign,
     this.onCompleteAction,
     this.onRejectAction,
     this.onUpdateUserDetails,
   });
 
   factory ViewModel.create(Store<AppState> store) {
-    _onSelectCampaigns(User u, Function onSuccess) {
-      store.dispatch(SelectCampaignsAction(u, onSuccess));
+    _onJoinCampaign(Campaign c, Function onSuccess) {
+      store.dispatch(JoinCampaign(c, onSuccess));
     }
 
     _onCompleteAction(CampaignAction action, Function onSuccess) {
-      store.dispatch(CompleteAction(action, onSuccess));
+      store.dispatch(CompleteAction(action, store.state.userState.user.copyWith(), onSuccess));
     }
     _onRejectAction(CampaignAction action, String reason) {
       store.dispatch(RejectAction(action, reason));
@@ -52,7 +53,7 @@ class ViewModel {
       userModel: UserViewModel.create(store),
       //user: store.state.userState.user,
       api: store.state.api,
-      onSelectCampaigns: _onSelectCampaigns,
+      onJoinCampaign: _onJoinCampaign,
       onCompleteAction: _onCompleteAction,
       onRejectAction: _onRejectAction,
       onUpdateUserDetails: _onUpdateUserDetails,

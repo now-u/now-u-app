@@ -358,7 +358,7 @@ Map toJson() => {
     }
     completedActions.add(a.getId());
     completedActionsType.update(a.getType(), (int x) => x + 1);
-    incrementPoints(pointsForCompletingAction);
+    //incrementPoints(pointsForCompletingAction);
     print(a.getType().toString());
     print(completedActionsType[a.getType()]);
   }

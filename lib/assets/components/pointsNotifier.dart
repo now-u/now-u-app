@@ -19,8 +19,8 @@ import 'package:app/assets/components/progress.dart';
 
 void joinCampaign(ViewModel viewModel, BuildContext context, Campaign campaign) {
   if (!viewModel.userModel.user.getSelectedCampaigns().contains(campaign.getId())) {
-    viewModel.userModel.user.addSelectedCamaping(campaign.getId());
-    viewModel.onSelectCampaigns(viewModel.userModel.user, (int points, int nextBadgePoints, bool newBadge) {
+    //viewModel.userModel.user.addSelectedCamaping(campaign.getId());
+    viewModel.onJoinCampaign( campaign, (int points, int nextBadgePoints, bool newBadge) {
       if (!newBadge) {
         pointsNotifier(viewModel.userModel.user.getPoints(), points, nextBadgePoints, context)..show(context);
       }
@@ -36,7 +36,11 @@ void joinCampaign(ViewModel viewModel, BuildContext context, Campaign campaign) 
 }
 
 void completeAction(ViewModel viewModel, BuildContext context, CampaignAction action) {
+  print("In complete action function");
+  print(viewModel.userModel.user.getCompletedActions());
+  print(action.getId());
   if (!viewModel.userModel.user.getCompletedActions().contains(action.getId())) {
+    print("Calling on complete action");
     viewModel.onCompleteAction(action, (int points, int nextBadgePoints, bool newBadge) {
       // If you did not get a new badge
       if (!newBadge) {

@@ -53,7 +53,7 @@ final userStateReducer = combineReducers<UserState>([
   TypedReducer<UserState, StartLoadingUserAction>(_startLoading),
   TypedReducer<UserState, SendingAuthEmail>(_sendingAuthEmail),
   TypedReducer<UserState, SentAuthEmail>(_sentAuthEmail),
-  TypedReducer<UserState, SelectCampaignsAction>(_selectCampaign),
+  TypedReducer<UserState, JoinedCampaign>(_joinedCampaign),
   TypedReducer<UserState, CompleteAction>(_completeAction),
   TypedReducer<UserState, RejectAction>(_rejectAction),
   TypedReducer<UserState, LoadedUserDataAction>(_loadedUserData),
@@ -80,13 +80,17 @@ UserState _sentAuthEmail(UserState state, SentAuthEmail action) {
 UserState _sendingAuthEmail(UserState state, SendingAuthEmail action) {
   return state.copyWith(isLoading: true, loginError: false, emailSent: false);
 }
-UserState _selectCampaign(UserState state, SelectCampaignsAction action) {
-  return state.copyWith(user: action.user);
+UserState _joinedCampaign(UserState state, JoinedCampaign action) {
+  User u = state.user.copyWith(
+    points: action.points,
+    selectedCampaigns: action.joinedCampaigns,
+  );
+  return state.copyWith(user: u);
 }
 UserState _completeAction(UserState state, CompleteAction action) {
-    User u = state.user.copyWith();
-    u.completeAction(action.action);
-    return state.copyWith(user: u);
+    //User u = state.user.copyWith();
+    //u.completeAction(action.action);
+    return state.copyWith(user: action.user);
 }
 UserState _rejectAction(UserState state, RejectAction action) {
     User u = state.user.copyWith();

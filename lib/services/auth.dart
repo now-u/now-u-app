@@ -108,4 +108,43 @@ class AuthenticationService {
       return null;
     }
   }
+
+  Future<User> completeAction(String token, int actionId) async {
+    http.Response response = await http.post(
+      domainPrefix + 'users/me/actions/${actionId}/complete',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'token': token, 
+      },
+    );
+    if (response.statusCode == 200) {
+      print("The new deets after joining campaign are");
+      print(response.body);
+      User u = User.fromJson(json.decode(response.body));
+      return u;
+    } else {
+      print("There was an error updateing user details");
+      return null;
+    }
+  }
+
+  Future<User> joinCampaign(String token, int campaignId) async {
+    http.Response response = await http.post(
+      domainPrefix + 'users/me/campaigns/${campaignId}',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'token': token, 
+      },
+    );
+    if (response.statusCode == 200) {
+      print("The new deets after joining campaign are");
+      print(response.body);
+      User u = User.fromJson(json.decode(response.body));
+      return u;
+    } else {
+      print("There was an error updateing user details");
+      return null;
+    }
+
+  }
 }

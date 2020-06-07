@@ -1,5 +1,6 @@
 import 'package:app/models/User.dart';
 import 'package:app/models/Action.dart';
+import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 
@@ -9,18 +10,26 @@ class InitalisedState {
   InitalisedState();
 }
 
-class SelectCampaignsAction {
-  final User user;
+class JoinCampaign {
+  final Campaign campaign;
   final Function onSuccess;
 
-  SelectCampaignsAction(this.user, this.onSuccess);
+  JoinCampaign(this.campaign, this.onSuccess);
+}
+class JoinedCampaign {
+  final int points;
+  final List<int> joinedCampaigns;  
+  final Function onSuccess;
+
+  JoinedCampaign(this.points, this.joinedCampaigns, this.onSuccess);
 }
 
 class CompleteAction {
   final CampaignAction action;
+  final User user;
   final Function onSuccess;
 
-  CompleteAction(this.action, this.onSuccess);
+  CompleteAction(this.action, this.user, this.onSuccess);
 }
 
 class RejectAction {

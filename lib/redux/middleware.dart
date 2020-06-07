@@ -63,22 +63,34 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
   if (action is InitaliseState) {
   }
 
-  if (action is SelectCampaignsAction) {
-    saveUserToPrefs(store.state.userState.user).then(
+  if (action is JoinCampaign) {
+    User responseUser = await store.state.userState.auth.joinCampaign(store.state.userState.user.getToken(), action.campaign.getId());
+    store.dispatch(JoinedCampaign(
+      responseUser.getPoints(),
+      responseUser.getSelectedCampaigns(),
+      action.onSuccess,
+    ));
+  }
+  if (action is JoinedCampaign) {
+    saveUserToPrefs(store.state.userState.user.copyWith(
+      points: action.points,
+      selectedCampaigns: action.joinedCampaigns,
+            )).then(
       (dynamic d) {
         print("Campaign has been selected now running onSuccess");
         print("The user has ${store.state.userState.user.getPoints()} points");
         // If adding the 10 points earnt you a badge then dont do the thing
-        if (getNextBadge(store.state.userState.user.getPoints()) == getNextBadge(store.state.userState.user.getPoints() + 10)) {
-          action.onSuccess(10, getNextBadge(store.state.userState.user.getPoints()), false);
+        if (getNextBadge(store.state.userState.user.getPoints()) == action.points) {
+          action.onSuccess(10, getNextBadge(action.points), false);
         }
         // Instead to the popup
         else {
-          action.onSuccess(10, getNextBadge(store.state.userState.user.getPoints()), true);
+          action.onSuccess(10, getNextBadge(action.points), true);
         }
       }
     );
   }
+
   if (action is UpdateUserDetails) {
     User newUser = await store.state.userState.auth.updateUserDetails(
       action.user
@@ -110,6 +122,7 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
         store.dispatch(LoadedCampaignsAction(cs));
       }, onError: (e, st) {
         print(e);
+        // TODO lol whats going on here
         return store.state.campaigns;
         //loadCampaignsFromPrefs()
       } 
@@ -125,16 +138,46 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
   if (action is CompleteAction) {
     print("In middleware of completed Action user is");
     print(store.state.userState.user.getCompletedActions());
+    print(action.action.getId());
+    if (store.state.userState.user.getCompletedActions().contains(action.action.getId())) {
+      print("This action has already been completed");
+      return;
+    } 
+    User responseUser = await store.state.userState.auth.completeAction(
+      store.state.userState.user.getToken(),
+      action.action.getId(),
+    );
+    print(store.state.userState.user.getCompletedActions());
     
-    saveUserToPrefs(store.state.userState.user).then((_) {
-      //action.onSuccess(5, getNextBadge(store.state.userState.user.getPoints()));
-      if (getNextBadge(store.state.userState.user.getPoints()) == getNextBadge(store.state.userState.user.getPoints() + 5)) {
-        action.onSuccess(5, getNextBadge(store.state.userState.user.getPoints()), false);
+    action.user.setPoints(
+      responseUser.getPoints(),
+    );
+
+    List newlyCompletedActions = responseUser.getCompletedActions().where((a) => !store.state.userState.user.getCompletedActions().contains(a)).toList();
+    for (int i = 0; i < newlyCompletedActions.length; i++ ) {
+      action.user.completeAction(newlyCompletedActions[i]);
+    }
+
+    int newPoints = action.user.getPoints();
+    int oldPoints = store.state.userState.user.getPoints();
+
+    saveUserToPrefs(action.user).then((_) {
+      if (getNextBadge(newPoints) > getNextBadge(oldPoints)) {
+        // Do the new badge popup
+        action.onSuccess(5, getNextBadge(newPoints), true);
       }
-      // Instead to the popup
       else {
-        action.onSuccess(5, getNextBadge(store.state.userState.user.getPoints()), true);
+        // Do the points notifier
+        action.onSuccess(5, getNextBadge(newPoints), false);
       }
+      //action.onSuccess(5, getNextBadge(store.state.userState.user.getPoints()));
+    //  if (getNextBadge(store.state.userState.user.getPoints()) == getNextBadge(store.state.userState.user.getPoints() + 5)) {
+    //    action.onSuccess(5, getNextBadge(store.state.userState.user.getPoints()), false);
+    //  }
+    //  // Instead do the popup
+    //  else {
+    //    action.onSuccess(5, getNextBadge(store.state.userState.user.getPoints()), true);
+    //  }
     }
     );
   }

@@ -11,7 +11,7 @@ import 'package:get_it/get_it.dart';
 
 GetIt locator = GetIt.instance;
 
-const bool USE_FAKE_API = true;
+const bool USE_FAKE_API = false;
 
 void setupLocator() {
   // Currently just return httpApi cause im too lazy but might come in handy
