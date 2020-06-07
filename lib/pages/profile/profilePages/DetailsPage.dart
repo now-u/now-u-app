@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/darkButton.dart';
+import 'package:app/assets/StyleFrom.dart';
 
 import 'package:app/models/User.dart';
 import 'package:app/models/ViewModel.dart';
@@ -23,6 +24,7 @@ class DetailsPage extends StatefulWidget {
 
 class _DetailsPageState extends State<DetailsPage> {
   User user;
+  List userData;
   bool editingMode;
   @override
   void initState() {
@@ -33,10 +35,18 @@ class _DetailsPageState extends State<DetailsPage> {
   Widget build(BuildContext context) {
     return 
       StoreConnector<AppState, ViewModel>(
+          onInit: (Store<AppState> store) {
+            user = store.state.userState.user;
+            userData = user.getAttributes().entries.toList();
+          },
+        onInitialBuild: (ViewModel v) {
+          setState(() {
+            user = v.userModel.user.copyWith();
+            userData = user.getAttributes().entries.toList();
+          });
+        },
         converter: (Store<AppState> store) => ViewModel.create(store),
         builder: (BuildContext context, ViewModel model) {
-          user = model.userModel.user;
-          List userData = user.getAttributes().entries.toList();
           return Scaffold(
             appBar: CustomAppBar(
               text: "Setting",
@@ -44,99 +54,76 @@ class _DetailsPageState extends State<DetailsPage> {
               context: context,
             ),
             body: 
-              Column(
-                 children: <Widget>[
-                  Expanded(
-                    child: 
-                      ListView.builder(
-                        itemCount: userData.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return  
-                            UserAttributeTile(
-                              akey: userData[index].key.toString(),
-                              //initalText: userData[index].value.toString(), 
-                              enabled: editingMode, 
-                              value: userData[index].value,
-                              onChanged: 
-                                (v) { 
-                                  setState(() {
-                                     user.setAttribute(userData[index].key, v);
-                                     model.onUpdateUserDetails(user);
-                                   }); 
-                                }
-                            ); 
-                        },
+              Stack(
+                children: <Widget> [
+                  Column(
+                     children: <Widget>[
+                       Expanded(
+                         child: 
+                           ListView.builder(
+                             itemCount: userData.length,
+                             itemBuilder: (BuildContext context, int index) {
+                               return  
+                                 UserAttributeTile(
+                                   akey: userData[index].key.toString(),
+                                   //initalText: userData[index].value.toString(), 
+                                   value: userData[index].value,
+                                   onChanged: 
+                                     (v) { 
+                                       setState(() {
+                                          user.setAttribute(userData[index].key, v);
+                                        }); 
+                                     }
+                                 ); 
+                             },
+                           ),
+                       ),
+                      Text(
+                        user.getToken(),
                       ),
+                    ], 
                   ),
-                  Text(
-                    user.getToken(),
-                  ),
-                ], 
-              ),
-              //floatingActionButton: 
-              //  !editingMode ?
-              //  Padding (
-              //      padding: EdgeInsets.all(14),
-              //      child: Container(
-              //        height: 40,
-              //        child: DarkButton(
-              //          "Edit",
-              //          onPressed: () {
-              //            setState(() {
-              //               editingMode= true;
-              //             }); 
-              //          },
-              //        )
-              //      )
-              //  )
-              //  :
-              //  Padding (
-              //      padding: EdgeInsets.all(14),
-              //      child: Row(
-              //        mainAxisAlignment: MainAxisAlignment.center,
-              //        children: <Widget>[
-              //          Padding(
-              //             padding: EdgeInsets.only(right: 10),
-              //             child:
-              //              Container(
-              //                height: 40,
-              //                child: DarkButton(
-              //                  "Cancel",
-              //                  onPressed: () {
-              //                    setState(() {
-              //                       editingMode = false;
-              //                       //_model = widget.model;
-              //                     }); 
-              //                  },
-              //                ),
-              //              ),
-              //          ),
-              //          Padding(
-              //             padding: EdgeInsets.only(left: 10),
-              //             child: 
-              //              Container(
-              //                height: 40, 
-              //                child: DarkButton(
-              //                  "Update",
-              //                  onPressed: () {
-              //                    setState(() {
-              //                      //_selectionMode = false;
-              //                      model.onUpdateUserDetails(user);
-              //                      editingMode = false;
-              //                    });
-              //                  },
-              //                ),
-              //              )
-              //          ),
-              //        
-              //        ],   
-              //      ),
-              //  )
-              //  ,
-              //floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    child: FlatButton(
+                        padding: EdgeInsets.all(0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 45,
+                        child: 
+                          Center(
+                            child: Text(
+                            "Save Changes",
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.button,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 17,
+                              color: Colors.white
+                            ),
+                          )
+                        ),
+                      ),
+                      onPressed: () {
+                        model.onUpdateUserDetails(
+                          user
+                        );
+                      },
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  )
+                ]
+              )
           );
         }
     );
+  }
+}
+
+class UserAttributeList extends StatelessWidget {
+  //final List userData;
+  @override
+  Widget build(BuildContext context) {
   }
 }
 

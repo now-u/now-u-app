@@ -53,10 +53,15 @@ class AuthenticationService {
         'token': token, 
       }),
     );
-    print("THE RESPONSE BODY IS");
-    print(response.body);
-    User u = await getUser(json.decode(response.body)['data']['token']);
-    return u;
+    if (response.statusCode == 200) {
+      print("THE RESPONSE BODY IS");
+      print(response.body);
+      User u = await getUser(json.decode(response.body)['data']['token']);
+      return u;
+    }
+    print("There was an error");
+    print(response.headers);
+    return null;
     //return _auth.signInWithEmailAndLink(email: email, link: link);
   }
 
@@ -78,5 +83,29 @@ class AuthenticationService {
     print("The returned user token is:");
     print(u.getToken());
     return u;
+  }
+
+  Future<User> updateUserDetails(User user) async {
+    print("The user token is" + user.getToken());
+    print("User attribues are");
+    print(user.getAttributes());
+    print(json.encode(user.getAttributes()));
+    http.Response response = await http.put(
+      domainPrefix + 'users/me',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'token': user.getToken(), 
+      },
+      body: json.encode(user.getAttributes()),
+    );
+    if (response.statusCode == 200) {
+      print("The new user deets are");
+      print(response.body);
+      User u = User.fromJson(json.decode(response.body));
+      return u;
+    } else {
+      print("There was an error updateing user details");
+      return null;
+    }
   }
 }

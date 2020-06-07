@@ -80,7 +80,18 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
     );
   }
   if (action is UpdateUserDetails) {
-    saveUserToPrefs(store.state.userState.user);
+    User newUser = await store.state.userState.auth.updateUserDetails(
+      action.user
+    );
+
+    // Update the users attributes to match those returned by the api
+    Map attributes = newUser.getAttributes();
+    for (int i = 0; i < attributes.keys.length; i++) {
+      action.user.setAttribute(attributes.keys.toList()[i], attributes.values.toList()[i]);
+    }
+
+    // Save the user locally
+    saveUserToPrefs(action.user);
   }
   
   if (action is LoginSuccessAction) {

@@ -14,7 +14,7 @@ class User {
   //FirebaseUser firebaseUser;
   String fullName;
   String email;
-  int age;
+  String dateOfBirth;
 
   // TODO make some attributes class that can take any attrribute so I dont need this
   String location;
@@ -37,18 +37,18 @@ class User {
 
   String token;
   
-  User({id, token, fullName, email, age, location, monthlyDonationLimit, homeOwner, selectedCampaigns, completedCampaigns, completedActions, rejectedActions, completedRewards, completedActionsType, points}) {
+  User({id, token, fullName, email, dateOfBirth, location, monthlyDonationLimit, homeOwner, selectedCampaigns, completedCampaigns, completedActions, rejectedActions, completedRewards, completedActionsType, points}) {
     this.id = id; 
-    //this.firebaseUser = firebaseUser;
     this.fullName = fullName;
     this.email = email;
-    this.age = age;
+    this.dateOfBirth = dateOfBirth;
     this.location = location;
     this.monthlyDonationLimit = monthlyDonationLimit;
     this.homeOwner = homeOwner;
     
     this.selectedCampaigns = selectedCampaigns ?? [];
     this.completedActions = completedActions ?? [];
+    this.rejectedActions = rejectedActions ?? [];
     //this.completedRewards = completedRewards ?? [];
     
     this.completedActionsType = 
@@ -57,8 +57,6 @@ class User {
     this.points = points ?? 0;
 
     this.token = token;
-    
-    this.rejectedActions = rejectedActions;
   }
 
 
@@ -67,7 +65,7 @@ class User {
     id= -1;
     fullName= "unknown";
     email = "unknown";
-    age= -1;
+    dateOfBirth = "00/00/0000";
     location= "uknown";
     monthlyDonationLimit= -1;
     homeOwner= false;
@@ -86,7 +84,7 @@ class User {
     //FirebaseUser firebaseUser,
     String fullName,
     String email,
-    int age,
+    String dateOfBirth,
 
     // TODO make some attributes class that can take any attrribute so I dont need this
     String location,
@@ -110,7 +108,7 @@ class User {
       id: id ?? this.id,
       fullName: fullName ?? this.fullName,
       email: email ?? this.email,
-      age: age ?? this.age,
+      dateOfBirth: dateOfBirth ?? this.dateOfBirth,
       location: location ?? this.location,
       monthlyDonationLimit: monthlyDonationLimit ?? this.monthlyDonationLimit,
       homeOwner: homeOwner ?? this.homeOwner,
@@ -129,7 +127,7 @@ class User {
     id = json['id'];
     fullName = json['full_name'];
     email = json['email'];
-    age = json['age'];
+    dateOfBirth = json['date_of_birth'];
     location = json['location'];
     monthlyDonationLimit = json['monthly_donation_limit'];
     homeOwner = json['home_owner'];
@@ -148,7 +146,7 @@ Map toJson() => {
     'id': id, 
     'full_name': fullName, 
     'email': email, 
-    'age': age, 
+    'date_of_birth': dateOfBirth, 
     'location': location, 
     'monthly_donation_limit': monthlyDonationLimit, 
     'home_owner': homeOwner, 
@@ -165,17 +163,17 @@ Map toJson() => {
   Map getAttributes () {
     return {
       //'id' : id, 
-      'fullName': fullName, 
+      'full_name': fullName, 
       'email': email,
-      'age': age,
+      'date_of_birth': dateOfBirth,
       'location': location,
-      'monthlyDonationLimit': monthlyDonationLimit,
-      'homeOwner': homeOwner,
+      'monthly_donation_limit': monthlyDonationLimit,
+      'home_owner': homeOwner,
     };
   }
   void setAttribute (String k, v) {
     switch (k) {
-      case 'fullName': {
+      case 'full_name': {
         this.setName(v);
         break;
       }
@@ -183,19 +181,19 @@ Map toJson() => {
         this.setEmail(v);
         break;
       }
-      case 'age': {
-        this.setAge(v);
+      case 'date_of_birth': {
+        this.setDateOfBirth(v);
         break;
       }
       case 'location': {
         this.setLocation(v);
         break;
       }
-      case 'monthlyDonationLimit': {
+      case 'monthly_donation_limit': {
         this.setMonthlyDonationLimit(v);
         break;
       }
-      case 'homeOwner': {
+      case 'home_owner': {
         this.setHomeOwner(v);
         break;
       }
@@ -211,8 +209,12 @@ Map toJson() => {
   String getEmail() {
     return email; 
   }
+  String getDateOfBirth() {
+    return dateOfBirth; 
+  }
   int getAge() {
-    return age; 
+    //TODO calculate from dob
+    return -1;
   }
   String getLocation() {
     return location;
@@ -249,8 +251,8 @@ Map toJson() => {
   void setEmail(String email) {
     this.email = email; 
   }
-  void setAge(int age) {
-    this.age = age; 
+  void setDateOfBirth(String dob) {
+    this.dateOfBirth = dateOfBirth; 
   }
   void setLocation(location) {
     this.location = location;

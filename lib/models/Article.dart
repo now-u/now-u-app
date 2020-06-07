@@ -14,9 +14,9 @@ class Articles {
     return articles;
   }
 
-  List<Article> getArticlesByType(ArticleType type) {
-    return articles.where((a) => a.getType() == type);
-  }
+  //List<Article> getArticlesByType(ArticleType type) {
+  //  return articles.where((a) => a.getType() == type);
+  //}
 }
 
 class Article {
@@ -28,7 +28,8 @@ class Article {
   int linkedCampaign;
   int linkedAction;
   String videoLink;
-  ArticleType type;
+  //ArticleType type;
+  bool isVideoOfTheDay;
 
   Article({
     @required this.id, 
@@ -39,19 +40,21 @@ class Article {
     this.fullArticleLink, 
     this.linkedAction, 
     this.videoLink, 
-    this.type,
+    //this.type,
+    this.isVideoOfTheDay,
   });
 
   Article.fromJson(Map json) {
-    id              = json['id'];
-    title           = json['title'];
-    body            = json['body'];
-    headerImage     = json['header_image'];
-    linkedCampaign  = json['linked_campaign'];
-    linkedAction    = json['linked_action'];
-    fullArticleLink = json['full_article_link'];
-    videoLink       = json['video_link'];
-    type            = json['type'];
+    id                = json['id'];
+    title             = json['title'];
+    body              = json['body'];
+    headerImage       = json['header_image'];
+    linkedCampaign    = json['linked_campaign'];
+    linkedAction      = json['linked_action'];
+    fullArticleLink   = json['full_article_link'];
+    videoLink         = json['video_link'];
+    //type            = json['type'];
+    isVideoOfTheDay   = json['video_of_the_day'] ?? false;
   }
   
   Map toJson() => {
@@ -63,7 +66,8 @@ class Article {
     'linked_action': linkedAction,
     'full_article_link': fullArticleLink,
     'video_link': videoLink,
-    'type': type,
+    //'type': type,
+    'video_of_the_day': videoLink,
   };
 
   int getId() {
@@ -90,8 +94,11 @@ class Article {
   String getVideoLink() {
     return videoLink; 
   }
-  ArticleType getType() {
-    return type;
+  //ArticleType getType() {
+  //  return type;
+  //}
+  bool getIsVideoOfTheDay() {
+    return isVideoOfTheDay;
   }
   String getCategory() {
     if (linkedCampaign != null) {

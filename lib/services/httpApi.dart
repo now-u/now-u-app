@@ -55,7 +55,7 @@ class HttpApi implements Api {
     if (response.statusCode == 200) {
       print("We got a 200 when getting articles!");
       List<Article> c = json.decode(response.body)['data'].map((e) => Article.fromJson(e)).toList().cast<Article>();
-      print("Here is the aricles");
+      print("Here are the aricles");
       print(c);
       return c;
     }
@@ -68,9 +68,26 @@ class HttpApi implements Api {
   // TODO implement
   @override
   Future<Article> getVideoOfTheDay() async {
-    return null;
+    // TODO handle there being no video of the day
+    var response = await http.get(domainPrefix + "articles");
+    if (response.statusCode == 200) {
+      print("We got a 200 when getting articles!");
+      List<Article> arts = json.decode(response.body)['data'].map((e) => Article.fromJson(e)).toList().cast<Article>();
+      print("Here are the aricles");
+      for (int i = 0; i < arts.length; i++){
+        if(arts[i].getIsVideoOfTheDay() && arts[i].getVideoLink() != null) {
+          print("Video of the day title is" + arts[i].getTitle());
+          return arts[i];
+        }
+      }
+      return null;
+    }
+    else {
+      print("We got an error whilst doing the http request");
+      return Future.error("Error getting campaign in http api", StackTrace.fromString("The stack trace is"));
+    }
   }
-  
+
   @override
   Future<List<FAQ>> getFAQs() async {
     var response = await http.get(domainPrefix + "faqs");

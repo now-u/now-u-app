@@ -101,12 +101,12 @@ UserState _loadedUserData(UserState state, LoadedUserDataAction action) {
   return state.copyWith(user: action.user);
 }
 UserState _updateUserDetails(UserState state, UpdateUserDetails action) {
-    User u = state.user.copyWith(
-      fullName: action.user.getName(),
-      email: action.user.getEmail(),
-      age: action.user.getAge(),
-      location: action.user.getLocation(),
-    );
+  // TODO Use set user attributes
+    User u = state.user.copyWith();
+    Map attributes = action.user.getAttributes();
+    for (int i = 0; i < attributes.keys.length; i++) {
+      u.setAttribute(attributes.keys.toList()[i], attributes.values.toList()[i]);
+    }
     return state.copyWith(user: u);
 }
 UserState _createNewUser(UserState state, CreateNewUser action) {
