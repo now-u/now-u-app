@@ -36,7 +36,7 @@ class AuthenticationService {
     });
   }
 
-  Future<String> signInWithEmailLink(String email, String token) async {
+  Future<User> signInWithEmailLink(String email, String token) async {
 
     // TODO USE AWAIT
     // TODO handle errors
@@ -55,14 +55,8 @@ class AuthenticationService {
     );
     print("THE RESPONSE BODY IS");
     print(response.body);
-    http.Response userResponse = await http.get(
-      domainPrefix + 'users/me',
-      headers: <String, String>{
-        'token': json.decode(response.body)['data']['token'],
-      }
-    );
-    print(userResponse.body);
-    return json.decode(userResponse.body)['data']['token'];
+    User u = await getUser(json.decode(response.body)['data']['token']);
+    return u;
     //return _auth.signInWithEmailAndLink(email: email, link: link);
   }
 
@@ -71,7 +65,18 @@ class AuthenticationService {
   //  return _auth.signInWithCredential(credential);
   //}
 
-  //Future<FirebaseUser> getCurrentUser() {
-  //  return _auth.currentUser();
-  //}
+  Future<User> getUser(String token) async {
+    http.Response userResponse = await http.get(
+      domainPrefix + 'users/me',
+      headers: <String, String>{
+        'token': token,
+      }
+    );
+    print("The returned user is:");
+    print(userResponse.body);
+    User u = User.fromJson(json.decode(userResponse.body)["data"]);
+    print("The returned user token is:");
+    print(u.getToken());
+    return u;
+  }
 }

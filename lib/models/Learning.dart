@@ -45,6 +45,12 @@ class LearningTopic {
   }
 }
 
+enum LearningResourceType {
+  Video, 
+  Reading, 
+}
+
+
 class LearningResource {
   int id;
   String title;

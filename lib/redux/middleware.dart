@@ -84,8 +84,12 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
   }
   
   if (action is LoginSuccessAction) {
-    print(action.token);
-    saveUserToPrefs(store.state.userState.user);
+    // This might be the old user
+    print(store.state.userState.user);
+    print(store.state.userState.user.getName());
+    print("The logged in users token is");
+    print(action.user.getToken());
+    saveUserToPrefs(action.user);
   }
   
   if (action is GetCampaignsAction) {
@@ -150,13 +154,16 @@ ThunkAction loginUser (String email, String link) {
   return (Store store) async {
     Future (() async {
       store.dispatch(StartLoadingUserAction());
-      String token = await store.state.userState.auth.signInWithEmailLink(email, link);
+      User user = await store.state.userState.auth.signInWithEmailLink(email, link);
 
       print("The loging response here is");
-      print(token);
+      print(user);
       // TODO add token to LoginSuccessAction
-      if (token != null) {
-        store.dispatch(LoginSuccessAction(token));
+      if (user != null) {
+        store.dispatch(LoginSuccessAction(user));
+          print("New user is ");
+          print(user.getName());
+          print(user.getToken());
           Keys.navKey.currentState.pushNamed(Routes.intro);
         }
       }

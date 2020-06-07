@@ -59,8 +59,8 @@ class LoadedUserDataAction {
 // User Actions
 class StartLoadingUserAction {}
 class LoginSuccessAction {
-  final String token; 
-  LoginSuccessAction(this.token);
+  final User user; 
+  LoginSuccessAction(this.user);
 }
 class LoginFailedAction {}
 

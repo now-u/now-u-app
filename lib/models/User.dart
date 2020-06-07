@@ -29,7 +29,7 @@ class User {
 
   // Key is rejected id
   // Map stores rejection time and rejection reason
-  Map<int, Map> rejectedActions = {};
+  List<int> rejectedActions = [];
 
   Map<CampaignActionType, int> completedActionsType;
   
@@ -75,7 +75,7 @@ class User {
     completedCampaigns = [];
     completedRewards = [];
     completedActions = [];
-    rejectedActions = {};
+    rejectedActions = [];
     completedActionsType = initCompletedAction();
     token = null;
     points = 0;
@@ -98,7 +98,7 @@ class User {
     List<int> completedCampaigns,
     List<int> completedRewards,
     List<int> completedActions,
-    Map<int, Map> rejectedActions,
+    List<int> rejectedActions,
 
     Map<CampaignActionType, int> completedActionsType,
 
@@ -137,11 +137,11 @@ class User {
     selectedCampaigns = json['selected_campaigns'] == null ? <int>[] : json['selected_campaigns'].cast<int>();
     completedCampaigns = json['completed_campaigns'] == null ? <int>[] : json['completed_campaigns'].cast<int>();
     completedActions = json['completed_actions'] == null ? <int>[] : json['completed_actions'].cast<int>();
-    rejectedActions = json['rejected_actions'] == null ? {} : json['rejected_actions'].cast<Map>();
+    rejectedActions = json['rejected_actions'] == null ? <int>[] : json['rejected_actions'].cast<int>();
     completedRewards = json['completed_rewards'] == null ? <int>[] : json['completed_rewards'].cast<int>();
     completedActionsType = json['completed_actions_type'] == null ? this.initCompletedAction() : campaignActionTypesDecode(json['completed_actions_type'].cast<int>());
     
-    points = json['points'];
+    points = json['points'] ?? 0;
     token = json['token'];
   }
 Map toJson() => {
@@ -239,7 +239,7 @@ Map toJson() => {
   String getToken() {
     return token;
   }
-  Map getRejectedActions() {
+  List<int> getRejectedActions() {
     return rejectedActions;
   }
 
@@ -360,14 +360,8 @@ Map toJson() => {
     print(a.getType().toString());
     print(completedActionsType[a.getType()]);
   }
-  void rejectAction(CampaignAction a, {
-    String reason,
-    DateTime time,
-  }) {
-    rejectedActions[a.getId()] = {
-      "reason": reason,
-      "time": time,
-    };
+  void rejectAction(CampaignAction a) {
+    rejectedActions.add(a.getId());
   }
 
   bool isMilestone(int x) {
