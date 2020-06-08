@@ -13,8 +13,8 @@ import 'dart:convert';
 
 class HttpApi implements Api {
 
-  final String domainPrefix = "https://now-u-api.herokuapp.com/api/v1/";
-  //final String domainPrefix = "https://api.now-u.com/api/v1/";
+  //final String domainPrefix = "https://now-u-api.herokuapp.com/api/v1/";
+  final String domainPrefix = "https://api.now-u.com/api/v1/";
 
   @override
   Future<Campaign> getCampaign(int id) async {
