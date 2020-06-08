@@ -108,11 +108,10 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
   
   if (action is LoginSuccessAction) {
     // This might be the old user
-    print(store.state.userState.user);
-    print(store.state.userState.user.getName());
-    print("The logged in users token is");
-    print(action.user.getToken());
+    print("In Lgoin Success reducer");
+    print(action.user);
     saveUserToPrefs(action.user);
+    print("Completed reducer");
   }
   
   if (action is GetCampaignsAction) {

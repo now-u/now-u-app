@@ -4,6 +4,7 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Action.dart';
 import 'package:time/time.dart';
+import 'dart:convert';
 
 List<int> rewardValues = [1, 5, 10, 25, 50, 100, 200];
 int pointsForJoiningCampaign = 10;
@@ -24,7 +25,7 @@ class User {
   // Progress (All data stored as ids)
   List<int> selectedCampaigns = []; // Stores all campaings that have been selected (including old ones)
   List<int> completedCampaigns = []; // Stores campaings where all actions have been completed (maybe we should do 80% of something)
-  List<int> completedRewards = []; 
+  //List<int> completedRewards = []; 
   List<int> completedActions = [];
 
   // Key is rejected id
@@ -45,7 +46,7 @@ class User {
     this.location = location;
     this.monthlyDonationLimit = monthlyDonationLimit;
     this.homeOwner = homeOwner;
-    
+
     this.selectedCampaigns = selectedCampaigns ?? [];
     this.completedActions = completedActions ?? [];
     this.rejectedActions = rejectedActions ?? [];
@@ -71,7 +72,7 @@ class User {
     homeOwner= false;
     selectedCampaigns = [];
     completedCampaigns = [];
-    completedRewards = [];
+    //completedRewards = [];
     completedActions = [];
     rejectedActions = [];
     completedActionsType = initCompletedAction();
@@ -94,7 +95,7 @@ class User {
     // Progress
     List<int> selectedCampaigns,
     List<int> completedCampaigns,
-    List<int> completedRewards,
+    //List<int> completedRewards,
     List<int> completedActions,
     List<int> rejectedActions,
 
@@ -114,7 +115,7 @@ class User {
       homeOwner: homeOwner ?? this.homeOwner,
       selectedCampaigns: selectedCampaigns ?? this.selectedCampaigns,
       completedCampaigns: completedCampaigns ?? this.completedCampaigns,
-      completedRewards: completedRewards ?? this.completedRewards,
+      //completedRewards: completedRewards ?? this.completedRewards,
       completedActions: completedActions ?? this.completedActions,
       rejectedActions: rejectedActions ?? this.rejectedActions,
       completedActionsType: completedActionsType ?? this.completedActionsType,
@@ -123,20 +124,64 @@ class User {
     );
   }
 
-  User.fromJson(Map json) {
+  User.fromJson(Map json, ) {
+    print("Getting user deets");
     id = json['id'];
     fullName = json['full_name'];
     email = json['email'];
+    print("Getting up to email");
     dateOfBirth = json['date_of_birth'];
     location = json['location'];
     monthlyDonationLimit = json['monthly_donation_limit'];
     homeOwner = json['home_owner'];
     // For cast not to throw null exception must be a default value of [] in User class
-    selectedCampaigns = json['selected_campaigns'] == null ? <int>[] : json['selected_campaigns'].cast<int>();
-    completedCampaigns = json['completed_campaigns'] == null ? <int>[] : json['completed_campaigns'].cast<int>();
-    completedActions = json['completed_actions'] == null ? <int>[] : json['completed_actions'].cast<int>();
-    rejectedActions = json['rejected_actions'] == null ? <int>[] : json['rejected_actions'].cast<int>();
-    completedRewards = json['completed_rewards'] == null ? <int>[] : json['completed_rewards'].cast<int>();
+    selectedCampaigns = 
+          json['selected_campaigns'] == null  || json['selected_campaigns'].isEmpty ? <int>[] :
+          (json['selected_campaigns']).map((c) { 
+            if (c is int) {
+              // If we are dealing with a list of ints
+              return c;
+            }
+            // Else get the item from the map
+            return c['id']; 
+          }).toList().cast<int>();
+          // Campaigns.fromJson(json['selected_campaigns']).getActiveCampaigns().map((c) => c.getId()).toList().cast<int>();
+    print("Got the selected campaigns");
+    completedCampaigns = 
+          json['completed_campaigns'] == null  || json['completed_campaigns'].isEmpty ? <int>[] :
+          (json['completed_campaigns']).map((c) { 
+            if (c is int) {
+              // If we are dealing with a list of ints
+              return c;
+            }
+            // Else get the item from the map
+            return c['id']; 
+          }).toList().cast<int>();
+    completedActions = 
+          json['completed_actions'] == null  || json['completed_actions'].isEmpty ? <int>[] :
+          (json['completed_actions']).map((c) { 
+            if (c is int) {
+              // If we are dealing with a list of ints
+              return c;
+            }
+            // Else get the item from the map
+            return c['id']; 
+          }).toList().cast<int>();
+    rejectedActions = 
+          json['rejected_actions'] == null  || json['rejected_actions'].isEmpty ? <int>[] :
+          (json['rejected_actions']).map((c) { 
+            if (c is int) {
+              // If we are dealing with a list of ints
+              return c;
+            }
+            // Else get the item from the map
+            return c['id']; 
+          }).toList().cast<int>();
+    //completedRewards = 
+    //    json['completed_rewards'] == null ? <int>[] : 
+    //    json['completed_rewards'].cast<int>();
+
+    
     completedActionsType = json['completed_actions_type'] == null ? this.initCompletedAction() : campaignActionTypesDecode(json['completed_actions_type'].cast<int>());
     
     points = json['points'] ?? 0;
@@ -154,7 +199,7 @@ Map toJson() => {
     'completed_campaigns': completedCampaigns, 
     'completed_actions': completedActions, 
     'rejected_actions': rejectedActions, 
-    'completed_rewards': completedRewards, 
+    //'completed_rewards': completedRewards, 
     'completed_actions_type': campaignActionTypesEncode(completedActionsType), 
     'points': points, 
     'token': token,
