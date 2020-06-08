@@ -1,5 +1,6 @@
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
+import 'package:app/models/Action.dart';
 import 'package:app/models/Learning.dart';
 
 import 'package:app/models/Article.dart';
@@ -11,6 +12,7 @@ import 'package:app/models/FAQ.dart';
 abstract class Api {
   Future<Campaign> getCampaign(int id);
   Future<Campaigns> getCampaigns();
+  Future<CampaignAction> getAction(int id);
 
   Future<List<Article>> getArticles();
   Future<Article> getVideoOfTheDay();

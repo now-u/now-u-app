@@ -1,6 +1,7 @@
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
+import 'package:app/assets/components/inputs.dart';
 import 'package:flutter/material.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
@@ -64,9 +65,9 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       content: Text('Email Not Sent. Error.'),
     );
 
-    final email = TextFormField(
+    final email = CustomTextFormField(
+      style: CustomFormFieldStyle.Dark,
       keyboardType: TextInputType.emailAddress,
-      textInputAction: TextInputAction.go,
       autofocus: true,
       validator: (value) {
         if (value.isEmpty) return "Email cannot be empty";
@@ -77,31 +78,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         _email = value;
         _repositry.setEmail(value);
       },
-      style: textStyleFrom(
-        Theme.of(context).primaryTextTheme.headline5,
-        color: Colors.white,
-      ),
-      decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
-        filled: true,
-        fillColor: Color.fromRGBO(221,221,221,0.2),
-
-        hintText: 'e.g. jane.doe@email.com',
-        hintStyle: TextStyle(
-          color: colorFrom(
-            Theme.of(context).primaryColor,
-            opacity: 0.5,
-          ),
-        ),
-        //labelText: 'Your email address',
-        //labelStyle: textStyleFrom(
-        //  Theme.of(context).primaryTextTheme.headline3,
-        //  color: Colors.white
-        //),
-        ////floatingLabelBehavior: FloatingLabelBehavior.never,
-        //alignLabelWithHint: true,
-        //border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
+      hintText: 'e.g. jane.doe@email.com',
     );
 
     Widget loginButton() {

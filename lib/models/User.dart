@@ -133,50 +133,65 @@ class User {
     dateOfBirth = json['date_of_birth'];
     location = json['location'];
     monthlyDonationLimit = json['monthly_donation_limit'];
-    homeOwner = json['home_owner'];
+    homeOwner = json['home_owner'] ?? false;
+    print("Getting up to selectedCampaigns");
     // For cast not to throw null exception must be a default value of [] in User class
-    selectedCampaigns = 
-          json['selected_campaigns'] == null  || json['selected_campaigns'].isEmpty ? <int>[] :
-          (json['selected_campaigns']).map((c) { 
-            if (c is int) {
-              // If we are dealing with a list of ints
-              return c;
-            }
-            // Else get the item from the map
-            return c['id']; 
-          }).toList().cast<int>();
-          // Campaigns.fromJson(json['selected_campaigns']).getActiveCampaigns().map((c) => c.getId()).toList().cast<int>();
-    print("Got the selected campaigns");
-    completedCampaigns = 
-          json['completed_campaigns'] == null  || json['completed_campaigns'].isEmpty ? <int>[] :
-          (json['completed_campaigns']).map((c) { 
-            if (c is int) {
-              // If we are dealing with a list of ints
-              return c;
-            }
-            // Else get the item from the map
-            return c['id']; 
-          }).toList().cast<int>();
-    completedActions = 
-          json['completed_actions'] == null  || json['completed_actions'].isEmpty ? <int>[] :
-          (json['completed_actions']).map((c) { 
-            if (c is int) {
-              // If we are dealing with a list of ints
-              return c;
-            }
-            // Else get the item from the map
-            return c['id']; 
-          }).toList().cast<int>();
-    rejectedActions = 
-          json['rejected_actions'] == null  || json['rejected_actions'].isEmpty ? <int>[] :
-          (json['rejected_actions']).map((c) { 
-            if (c is int) {
-              // If we are dealing with a list of ints
-              return c;
-            }
-            // Else get the item from the map
-            return c['id']; 
-          }).toList().cast<int>();
+    selectedCampaigns =
+      json['selected_campaigns'] == null  || json['selected_campaigns'].isEmpty ? <int>[] :
+      json['selected_campaigns'].cast<int>();
+    print("Getting up to completed campaigns");
+    completedCampaigns =
+      json['completed_campaigns'] == null  || json['completed_campaigns'].isEmpty ? <int>[] :
+      json['completed_campaigns'].cast<int>();
+    print("Getting up to completed actions");
+    completedActions =
+      json['completed_actions'] == null  || json['completed_actions'].isEmpty ? <int>[] :
+      json['completed_actions'].cast<int>();
+    rejectedActions =
+      json['rejected_actions'] == null  || json['rejected_actions'].isEmpty ? <int>[] :
+      json['rejected_actions'].cast<int>();
+    //selectedCampaigns = 
+    //      json['selected_campaigns'] == null  || json['selected_campaigns'].isEmpty ? <int>[] :
+    //      (json['selected_campaigns']).map((c) { 
+    //        if (c is int) {
+    //          // If we are dealing with a list of ints
+    //          return c;
+    //        }
+    //        // Else get the item from the map
+    //        return c['id']; 
+    //      }).toList().cast<int>();
+    //      // Campaigns.fromJson(json['selected_campaigns']).getActiveCampaigns().map((c) => c.getId()).toList().cast<int>();
+    //print("Got the selected campaigns");
+    //completedCampaigns = 
+    //      json['completed_campaigns'] == null  || json['completed_campaigns'].isEmpty ? <int>[] :
+    //      (json['completed_campaigns']).map((c) { 
+    //        if (c is int) {
+    //          // If we are dealing with a list of ints
+    //          return c;
+    //        }
+    //        // Else get the item from the map
+    //        return c['id']; 
+    //      }).toList().cast<int>();
+    //completedActions = 
+    //      json['completed_actions'] == null  || json['completed_actions'].isEmpty ? <int>[] :
+    //      (json['completed_actions']).map((c) { 
+    //        if (c is int) {
+    //          // If we are dealing with a list of ints
+    //          return c;
+    //        }
+    //        // Else get the item from the map
+    //        return c['id']; 
+    //      }).toList().cast<int>();
+    //rejectedActions = 
+    //      json['rejected_actions'] == null  || json['rejected_actions'].isEmpty ? <int>[] :
+    //      (json['rejected_actions']).map((c) { 
+    //        if (c is int) {
+    //          // If we are dealing with a list of ints
+    //          return c;
+    //        }
+    //        // Else get the item from the map
+    //        return c['id']; 
+    //      }).toList().cast<int>();
     //completedRewards = 
     //    json['completed_rewards'] == null ? <int>[] : 
     //    json['completed_rewards'].cast<int>();
@@ -186,6 +201,7 @@ class User {
     
     points = json['points'] ?? 0;
     token = json['token'];
+    print("Got new user");
   }
 Map toJson() => {
     'id': id, 
@@ -210,9 +226,9 @@ Map toJson() => {
       //'id' : id, 
       'full_name': fullName, 
       'email': email,
-      'date_of_birth': dateOfBirth,
+      'date_of_birth': dateOfBirth ?? -1,
       'location': location,
-      'monthly_donation_limit': monthlyDonationLimit,
+      'monthly_donation_limit': monthlyDonationLimit ?? -1,
       'home_owner': homeOwner,
     };
   }
@@ -395,7 +411,7 @@ Map toJson() => {
     } 
     return count / reward.successNumber;
   }
-  
+ 
   void completeAction(CampaignAction a, {Function onCompleteReward}) {
     if (completedActions.contains(a.getId())) {
       print("You can only complete an action once");

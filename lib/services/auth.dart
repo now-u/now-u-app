@@ -8,7 +8,8 @@ import 'package:http/http.dart' as http;
 
 class AuthenticationService {
 
-  final String domainPrefix = "https://now-u-api.herokuapp.com/api/v1/";
+  //final String domainPrefix = "https://now-u-api.herokuapp.com/api/v1/";
+  final String domainPrefix = "https://api.now-u.com/api/v1/";
 
   //final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -122,7 +123,7 @@ class AuthenticationService {
     if (response.statusCode == 200) {
       print("The new deets after joining campaign are");
       print(response.body);
-      User u = User.fromJson(json.decode(response.body));
+      User u = User.fromJson(json.decode(response.body)['data']);
       return u;
     } else {
       print("There was an error updateing user details");
@@ -141,10 +142,7 @@ class AuthenticationService {
     if (response.statusCode == 200) {
       print("The new deets after joining campaign are");
       print(response.body);
-      Campaigns selectedCampaigns = Campaigns.fromJson(json.decode(response.body)["selected_campaigns"]);
-      Map userjson = json.decode(response.body);
-      userjson["selected_campaigns"] = selectedCampaigns.getActiveCampaigns().map((c) => c.getId()).toList();
-      User u = User.fromJson(userjson);
+      User u = User.fromJson(json.decode(response.body)["data"]);
       return u;
     } else {
       print("There was an error updateing user details");

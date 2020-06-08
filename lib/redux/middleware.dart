@@ -11,6 +11,7 @@ import 'package:app/models/State.dart';
 import 'package:app/models/User.dart';
 import 'package:app/models/Campaigns.dart';
 import 'package:app/models/ViewModel.dart';
+import 'package:app/models/Action.dart';
 import 'package:app/models/Badge.dart';
 import 'package:app/redux/actions.dart';
 
@@ -152,9 +153,18 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
       responseUser.getPoints(),
     );
 
-    List newlyCompletedActions = responseUser.getCompletedActions().where((a) => !store.state.userState.user.getCompletedActions().contains(a)).toList();
+    print("Doing fancy list thing");
+    List<int> newlyCompletedActions = responseUser.getCompletedActions().where((a) => !store.state.userState.user.getCompletedActions().contains(a)).toList();
+    print("Doing fancy list thing");
     for (int i = 0; i < newlyCompletedActions.length; i++ ) {
-      action.user.completeAction(newlyCompletedActions[i]);
+      if (newlyCompletedActions[i] == action.action.getId()) {
+        action.user.completeAction(action.action);
+      }
+      else {
+        // TODO make it so if there are completed action is actually users the complete action function -- need to wait for /actions request
+        //CampaignAction a = await store.state.api.getAction(action.action.getId());
+        //action.user.completeAction(a);
+      }
     }
 
     int newPoints = action.user.getPoints();

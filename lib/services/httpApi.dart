@@ -3,6 +3,7 @@ import 'package:app/services/api.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Article.dart';
+import 'package:app/models/Action.dart';
 import 'package:app/models/FAQ.dart';
 import 'package:app/models/Organisation.dart';
 import 'package:app/models/Learning.dart';
@@ -41,6 +42,23 @@ class HttpApi implements Api {
       Campaigns cs = Campaigns.fromJson(json.decode(response.body)['data']);
       print("We got some camps");
       return cs;
+    }
+    else {
+      // TODO different error different reults
+      print("We got an error whilst doing the http request");
+      return Future.error("Error getting campaigns in http api", StackTrace.fromString("The stack trace is"));
+    }
+  }
+  
+  @override
+  Future<CampaignAction> getAction(int id) async {
+    print("Getting action");
+    var response = await http.get(domainPrefix + "actions/${id}");
+    if (response.statusCode == 200) {
+      print("200");
+      CampaignAction a = CampaignAction.fromJson(json.decode(response.body)['data']);
+      print("We got an action");
+      return a;
     }
     else {
       // TODO different error different reults

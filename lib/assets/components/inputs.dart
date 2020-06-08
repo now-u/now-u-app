@@ -1,7 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:app/assets/StyleFrom.dart';
 
 final double WIDTH = 60;
 final double HEIGHT = 30;
+
+enum CustomFormFieldStyle {
+  Light,
+  Dark
+}
+
+class CustomTextFormField extends StatelessWidget {
+  final bool autofocus;
+  final TextInputType keyboardType;
+  final Function validator;
+  final Function onSaved;
+  final CustomFormFieldStyle style;
+  final String hintText;
+
+  CustomTextFormField({
+    @required this.autofocus,
+    @required this.keyboardType,
+    @required this.validator,
+    @required this.onSaved,
+    @required this.style,
+    @required this.hintText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: TextFormField(
+        keyboardType: keyboardType ?? TextInputType.text,
+        textInputAction: TextInputAction.go,
+        autofocus: autofocus,
+        validator: validator,
+        onSaved: onSaved,
+        style: textStyleFrom(
+          Theme.of(context).primaryTextTheme.headline5,
+          color: Colors.white,
+        ),
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
+          filled: true,
+          fillColor: Color.fromRGBO(221,221,221,0.2),
+
+          hintText: hintText,
+          hintStyle: TextStyle(
+            color: colorFrom(
+              Theme.of(context).primaryColor,
+              opacity: 0.5,
+            ),
+          ),
+        ),
+      )
+    );
+  }
+}
 
 class CustomSwitch extends StatefulWidget {
   final bool value;

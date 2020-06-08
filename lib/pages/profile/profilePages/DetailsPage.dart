@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/StyleFrom.dart';
+import 'package:app/assets/components/inputs.dart';
 
 import 'package:app/models/User.dart';
 import 'package:app/models/ViewModel.dart';
@@ -120,23 +121,14 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 }
 
-class UserAttributeList extends StatelessWidget {
-  //final List userData;
-  @override
-  Widget build(BuildContext context) {
-  }
-}
-
 class UserAttributeTile extends StatelessWidget {
   final String akey;
-  final value;
-  final bool enabled;
+  final dynamic value;
   final Function onChanged;
 
   UserAttributeTile({
     this.akey,
     this.value, 
-    this.enabled,
     this.onChanged,
   });
   @override
@@ -144,12 +136,29 @@ class UserAttributeTile extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
       child: 
+        value is bool ?    
+        Row(
+          children: [
+            Text(akey),
+            SizedBox(width: 10),
+            CustomSwitch(
+              value: value,
+              onChanged: (value) {
+                onChanged(value);
+              },
+              activeColor: Theme.of(context).primaryColor,
+              inactiveColor: Color.fromRGBO(221,221,221,1)
+            )
+          ],
+        )
+        : 
         TextFormField(
           keyboardType: 
             (value is int) ? TextInputType.number: 
             TextInputType.text,
-          enabled: enabled,
-          initialValue: value.toString(),   
+          initialValue: 
+            (value is int) && (value == -1) ? "None" :
+            value.toString(),   
           onChanged: (String s) {
             onChanged(s);
           },
@@ -157,13 +166,6 @@ class UserAttributeTile extends StatelessWidget {
             labelText: akey.toString()
           ),
         )
-      //: 
-      //NumberPicker.integer(
-      //  initialValue: 30,
-      //  minValue: 0,
-      //  maxValue: 120,
-      //  onChanged: onChanged
-      //)
     );
   }
 }

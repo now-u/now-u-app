@@ -85,6 +85,7 @@ UserState _joinedCampaign(UserState state, JoinedCampaign action) {
     points: action.points,
     selectedCampaigns: action.joinedCampaigns,
   );
+  print("reduced joined campaign");
   return state.copyWith(user: u);
 }
 UserState _completeAction(UserState state, CompleteAction action) {
