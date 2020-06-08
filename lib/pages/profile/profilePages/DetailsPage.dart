@@ -25,7 +25,6 @@ class DetailsPage extends StatefulWidget {
 
 class _DetailsPageState extends State<DetailsPage> {
   User user;
-  List userData;
   bool editingMode;
   @override
   void initState() {
@@ -37,15 +36,9 @@ class _DetailsPageState extends State<DetailsPage> {
     return 
       StoreConnector<AppState, ViewModel>(
           onInit: (Store<AppState> store) {
-            user = store.state.userState.user;
-            userData = user.getAttributes().entries.toList();
+            print("Initing store");
+            user = store.state.userState.user.copyWith();
           },
-        onInitialBuild: (ViewModel v) {
-          setState(() {
-            user = v.userModel.user.copyWith();
-            userData = user.getAttributes().entries.toList();
-          });
-        },
         converter: (Store<AppState> store) => ViewModel.create(store),
         builder: (BuildContext context, ViewModel model) {
           return Scaffold(
@@ -62,18 +55,24 @@ class _DetailsPageState extends State<DetailsPage> {
                        Expanded(
                          child: 
                            ListView.builder(
-                             itemCount: userData.length,
+                             itemCount: user.getAttributes().length,
                              itemBuilder: (BuildContext context, int index) {
                                return  
                                  UserAttributeTile(
-                                   akey: userData[index].key.toString(),
+                                   akey: user.getAttributes().keys.toList()[index].toString(),
                                    //initalText: userData[index].value.toString(), 
-                                   value: userData[index].value,
+                                   value: user.getAttributes().values.toList()[index],
                                    onChanged: 
                                      (v) { 
                                        setState(() {
-                                          user.setAttribute(userData[index].key, v);
+                                            print(user.getDateOfBirth());
+                                            print(v);
+                                            print(user.getAttributes().keys.toList()[index]);
+                                            user.setAttribute(user.getAttributes().keys.toList()[index], v);
+                                          print(user.getDateOfBirth());
                                         }); 
+                                        print("User data of birth is");
+                                        print(user.getDateOfBirth());
                                      }
                                  ); 
                              },
@@ -154,10 +153,10 @@ class UserAttributeTile extends StatelessWidget {
         : 
         TextFormField(
           keyboardType: 
-            (value is int) ? TextInputType.number: 
+            (value is double) || (value is int) ? TextInputType.number: 
             TextInputType.text,
           initialValue: 
-            (value is int) && (value == -1) ? "None" :
+            value == null || (value is int) && value == -1 ? null : 
             value.toString(),   
           onChanged: (String s) {
             onChanged(s);

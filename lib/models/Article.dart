@@ -22,18 +22,22 @@ class Articles {
 class Article {
   int id;
   String title;
+  String subtitle;
   String body;
   String headerImage;
-  String fullArticleLink;
   int linkedCampaign;
   int linkedAction;
   String videoLink;
+  
+  String fullArticleLink;
+  String linkText;
   //ArticleType type;
   bool isVideoOfTheDay;
 
   Article({
     @required this.id, 
     @required this.title, 
+    @required this.subtitle, 
     @required this.body, 
     @required this.headerImage, 
     this.linkedCampaign, 
@@ -47,11 +51,13 @@ class Article {
   Article.fromJson(Map json) {
     id                = json['id'];
     title             = json['title'];
+    subtitle          = json['subtitle'];
     body              = json['body'];
     headerImage       = json['header_image'];
     linkedCampaign    = json['linked_campaign'];
     linkedAction      = json['linked_action'];
     fullArticleLink   = json['full_article_link'];
+    linkText          = json['link_text'];
     videoLink         = json['video_link'];
     //type            = json['type'];
     isVideoOfTheDay   = json['video_of_the_day'] ?? false;
@@ -68,6 +74,8 @@ class Article {
     'video_link': videoLink,
     //'type': type,
     'video_of_the_day': videoLink,
+    'link_text': linkText,
+    'subtitle': subtitle,
   };
 
   int getId() {
@@ -75,6 +83,9 @@ class Article {
   }
   String getTitle() {
     return title; 
+  }
+  String getSubtitle() {
+    return subtitle; 
   }
   String getBody() {
     return body; 
@@ -84,6 +95,9 @@ class Article {
   }
   String getFullArticleLink() {
     return fullArticleLink; 
+  }
+  String getLinkText() {
+    return linkText; 
   }
   int getLinkedCampaign() {
     return linkedCampaign; 

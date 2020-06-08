@@ -46,6 +46,10 @@ class UpdateUserDetails {
   final User user;
   UpdateUserDetails(this.user);
 }
+class UpdatedUserDetails {
+  final User user;
+  UpdatedUserDetails(this.user);
+}
 
 class GetCampaignsAction {}
 

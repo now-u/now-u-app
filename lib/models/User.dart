@@ -226,28 +226,29 @@ Map toJson() => {
       //'id' : id, 
       'full_name': fullName, 
       'email': email,
-      'date_of_birth': dateOfBirth ?? -1,
+      'date_of_birth': dateOfBirth,
       'location': location,
-      'monthly_donation_limit': monthlyDonationLimit ?? -1,
+      'monthly_donation_limit': monthlyDonationLimit ?? -1.0,
       'home_owner': homeOwner,
     };
   }
   void setAttribute (String k, v) {
     switch (k) {
       case 'full_name': {
-        this.setName(v);
+        this.setName(v.toString());
         break;
       }
       case 'email': {
-        this.setEmail(v);
+        this.setEmail(v.toString());
         break;
       }
       case 'date_of_birth': {
-        this.setDateOfBirth(v);
+        print("Settting attribute dob");
+        this.setDateOfBirth(v.toString());
         break;
       }
       case 'location': {
-        this.setLocation(v);
+        this.setLocation(v.toString());
         break;
       }
       case 'monthly_donation_limit': {
@@ -255,7 +256,8 @@ Map toJson() => {
         break;
       }
       case 'home_owner': {
-        this.setHomeOwner(v);
+        bool value = v;
+        this.setHomeOwner(value);
         break;
       }
     }     
@@ -313,12 +315,13 @@ Map toJson() => {
     this.email = email; 
   }
   void setDateOfBirth(String dob) {
+    print("The user's new data of birth is" + dob);
     this.dateOfBirth = dateOfBirth; 
   }
   void setLocation(location) {
     this.location = location;
   }
-  void setMonthlyDonationLimit(monthlyDonationLimit) {
+  void setMonthlyDonationLimit(double monthlyDonationLimit) {
     this.monthlyDonationLimit = monthlyDonationLimit;
   }
   void setHomeOwner(bool homeOwner) {

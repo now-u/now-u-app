@@ -93,8 +93,9 @@ class Campaign {
     print("GOT PARTNERS");
     videoLink = json['video_link'];
     //sdgs = [];
+    print("Gettingsdgs");
     sdgs = 
-      json['sdgs'] == null ? [] :  
+      json['sdgs'] == null ? <int>[] :  
       json['sdgs'].map((s) => getSDGfromNumber(s['id'])).toList().cast<SDG>();
     print("Got whole camapign");
   }

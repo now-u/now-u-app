@@ -57,7 +57,7 @@ final userStateReducer = combineReducers<UserState>([
   TypedReducer<UserState, CompleteAction>(_completeAction),
   TypedReducer<UserState, RejectAction>(_rejectAction),
   TypedReducer<UserState, LoadedUserDataAction>(_loadedUserData),
-  TypedReducer<UserState, UpdateUserDetails>(_updateUserDetails),
+  TypedReducer<UserState, UpdatedUserDetails>(_updatedUserDetails),
   TypedReducer<UserState, CreateNewUser>(_createNewUser),
 ]);
 
@@ -105,14 +105,16 @@ UserState _rejectAction(UserState state, RejectAction action) {
 UserState _loadedUserData(UserState state, LoadedUserDataAction action) {
   return state.copyWith(user: action.user);
 }
-UserState _updateUserDetails(UserState state, UpdateUserDetails action) {
-  // TODO Use set user attributes
-    User u = state.user.copyWith();
-    Map attributes = action.user.getAttributes();
-    for (int i = 0; i < attributes.keys.length; i++) {
-      u.setAttribute(attributes.keys.toList()[i], attributes.values.toList()[i]);
-    }
-    return state.copyWith(user: u);
+UserState _updatedUserDetails(UserState state, UpdatedUserDetails action) {
+    //User u = state.user.copyWith();
+    //Map attributes = action.user.getAttributes();
+    //print("Setting attributes");
+    //for (int i = 0; i < attributes.keys.length; i++) {
+    //  print("Setting value " + attributes.keys.toList()[i].toString() + " to " + attributes.values.toList()[i].toString());
+    //  u.setAttribute(attributes.keys.toList()[i], attributes.values.toList()[i]);
+    //}
+    //print("Set attributes");
+    return state.copyWith(user: action.user);
 }
 UserState _createNewUser(UserState state, CreateNewUser action) {
   return state.copyWith(user: action.user);

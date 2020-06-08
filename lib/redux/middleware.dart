@@ -93,6 +93,7 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
   }
 
   if (action is UpdateUserDetails) {
+    print("In update user details middleware");
     User newUser = await store.state.userState.auth.updateUserDetails(
       action.user
     );
@@ -100,11 +101,13 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
     // Update the users attributes to match those returned by the api
     Map attributes = newUser.getAttributes();
     for (int i = 0; i < attributes.keys.length; i++) {
+      print("Setting value " + attributes.keys.toList()[i].toString() + " to " + attributes.values.toList()[i].toString());
       action.user.setAttribute(attributes.keys.toList()[i], attributes.values.toList()[i]);
     }
 
     // Save the user locally
     saveUserToPrefs(action.user);
+    store.dispatch(UpdatedUserDetails(action.user));
   }
   
   if (action is LoginSuccessAction) {

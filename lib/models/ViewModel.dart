@@ -45,6 +45,7 @@ class ViewModel {
     }
 
     _onUpdateUserDetails(User user) {
+      print("_onUpdateUserDetails");
       store.dispatch(UpdateUserDetails(user));
     }
 
