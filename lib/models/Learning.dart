@@ -10,9 +10,10 @@ class LearningCentre {
   List<LearningTopic> getLearningTopics() {
     return learningTopics;
   }
-  LearningCentre.fromJson(Map json) {
-    campaign = json['campaign'];
-    learningTopics = json['learning_topics'].map((e) => LearningTopic.fromJson(e)).toList().cast<LearningTopic>();
+  LearningCentre.fromJson(List json) {
+    print("Getting learning centre from json");
+    //campaign = json['campaign'];
+    learningTopics = json.map((e) => LearningTopic.fromJson(e)).toList().cast<LearningTopic>();
   }
 }
 
@@ -24,11 +25,13 @@ class LearningTopic {
   List<LearningResource> resources;
   
   LearningTopic.fromJson(Map json) {
+    print("Getting learning topic from json");
     id = json['id'];
     title = json['title'];
     imageLink = json['image_link'];
     ourAnswer = json['our_answer'];
-    resources = (json['resources']).map((e) => LearningResource.fromJson(e)).toList().cast<LearningResource>();
+    print("Got the things up till resources");
+    resources = (json['learning_resources']).map((e) => LearningResource.fromJson(e)).toList().cast<LearningResource>();
   }
 
   String getTitle() {

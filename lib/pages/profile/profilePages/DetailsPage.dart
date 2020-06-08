@@ -68,6 +68,8 @@ class _DetailsPageState extends State<DetailsPage> {
                                             print(user.getDateOfBirth());
                                             print(v);
                                             print(user.getAttributes().keys.toList()[index]);
+                                            if (user.getAttributes().keys.toList()[index] is double) {
+                                            }
                                             user.setAttribute(user.getAttributes().keys.toList()[index], v);
                                           print(user.getDateOfBirth());
                                         }); 
@@ -155,11 +157,16 @@ class UserAttributeTile extends StatelessWidget {
           keyboardType: 
             (value is double) || (value is int) ? TextInputType.number: 
             TextInputType.text,
+          enabled: akey == value ? false : true,
           initialValue: 
             value == null || (value is int) && value == -1 ? null : 
             value.toString(),   
           onChanged: (String s) {
-            onChanged(s);
+            if (value is double) {
+              onChanged(double.parse(s));
+            } else {
+              onChanged(s);
+            }
           },
           decoration: InputDecoration(
             labelText: akey.toString()

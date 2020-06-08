@@ -13,8 +13,8 @@ import 'dart:convert';
 
 class HttpApi implements Api {
 
-  //final String domainPrefix = "https://now-u-api.herokuapp.com/api/v1/";
-  final String domainPrefix = "https://api.now-u.com/api/v1/";
+  final String domainPrefix = "https://now-u-api.herokuapp.com/api/v1/";
+  //final String domainPrefix = "https://api.now-u.com/api/v1/";
 
   @override
   Future<Campaign> getCampaign(int id) async {
@@ -138,7 +138,22 @@ class HttpApi implements Api {
     }
   }
 
-  Future<LearningCentre> getLearningCentre(int campaignId) {
-    return null;
+  Future<LearningCentre> getLearningCentre(int campaignId) async {
+    http.Response response = await http.get(domainPrefix + "campaigns/${campaignId}/learning_topics");
+    if (response.statusCode == 200) {
+     print(response.body);
+     print("Got the response");
+     print((json.decode(response.body)));
+     List jsonData = json.decode(response.body)["data"] as List;
+     print(jsonData);
+     LearningCentre lc = LearningCentre.fromJson(jsonData);
+     print("Got learning center");
+     print(lc.getLearningTopics()[0]);
+     return lc;
+    }
+    else {
+      print("We got an error whilst doing the http request");
+      return Future.error("Error getting learning centre in http api", StackTrace.fromString("The stack trace is"));
+    }
   }
 } 
