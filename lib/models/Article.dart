@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:app/models/Campaigns.dart';
 
 enum ArticleType {
   News,
@@ -68,7 +69,7 @@ class Article {
     'title': title,
     'body': body,
     'header_image': headerImage,
-    'linked_campaign': linkedCampaign,
+    'campaign_id': linkedCampaign,
     'linked_action': linkedAction,
     'full_article_link': fullArticleLink,
     'video_link': videoLink,
@@ -114,8 +115,15 @@ class Article {
   bool getIsVideoOfTheDay() {
     return isVideoOfTheDay;
   }
-  String getCategory() {
+  String getCategory({Campaigns cs}) {
     if (linkedCampaign != null) {
+      if (cs != null) {
+        for (int i = 0; i < cs.activeLength(); i++) {
+          if (cs.getActiveCampaigns()[i].getId() == linkedCampaign) {
+            return cs.getActiveCampaigns()[i].getTitle();
+          }
+        }
+      }
       return linkedCampaign.toString();
     }
     return "General";

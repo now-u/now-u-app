@@ -291,7 +291,9 @@ class VideoOTDTile extends StatelessWidget {
                 );
               }
               else{
-                return CircularProgressIndicator();
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
               }
             }
           );
@@ -317,7 +319,8 @@ class NewsImageTile extends StatelessWidget {
         //mainAxisSize: MainAxisSize.min,
         children: <Widget> [
           Container(
-            width: double.infinity,
+            //width: double.infinity,
+            width: MediaQuery.of(context).size.width * 0.3,
             child: NewsGraphic(
               image: article.getHeaderImage(),
               height: 100,
@@ -464,7 +467,7 @@ class NewsGraphic extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 5),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.red,
+          color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.all(Radius.circular(borderRadius ?? defaultBorderRadius)),
           boxShadow: [
             BoxShadow(
@@ -475,6 +478,7 @@ class NewsGraphic extends StatelessWidget {
           ]
         ),
         height: height ?? 150,
+        width: MediaQuery.of(context).size.width * 0.3,
         child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(borderRadius ?? defaultBorderRadius)),
           child: 

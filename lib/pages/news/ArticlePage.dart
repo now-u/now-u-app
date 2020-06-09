@@ -1,3 +1,4 @@
+import 'package:app/assets/components/darkButton.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/models/Article.dart';
@@ -5,6 +6,7 @@ import 'package:app/models/Article.dart';
 import 'package:app/assets/components/detailScaffold.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/customAppBar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ArticlePage extends StatelessWidget {
   
@@ -72,6 +74,15 @@ class ArticlePage extends StatelessWidget {
                           )
                         ),
                         SizedBox(height: 20),
+                        Padding(
+                          padding: EdgeInsets.only(top: 10),
+                          child: Text(
+                            article.getSubtitle(),
+                            style: Theme.of(context).primaryTextTheme.headline3,
+                            textAlign: TextAlign.left
+                          ),
+                        ),
+                        SizedBox(height: 8,),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
@@ -82,7 +93,16 @@ class ArticlePage extends StatelessWidget {
                                   )
                               ]
                         ),
-                        SizedBox(height: 25,)
+                        SizedBox(height: 25,),
+                        DarkButton(
+                          article.getLinkText(),
+                          inverted: true,
+                          onPressed: () {
+                            launch(
+                              article.getFullArticleLink(),
+                            );
+                          }
+                        )
                       ],
                     )
                   )
