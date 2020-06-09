@@ -511,7 +511,6 @@ class LearningTopicSelectionItem extends StatelessWidget {
                       Container(
                         width: imageWidth ?? defaultImageWidth,
                         height: height ?? defaultHeight,
-                        color: Colors.orange,
                         child: Image.network(
                           topic.getImageLink(),
                           fit: BoxFit.cover,

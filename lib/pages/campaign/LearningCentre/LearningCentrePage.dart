@@ -37,6 +37,7 @@ class LearningCentrePage extends StatelessWidget {
               :
               Column(
                 children: <Widget>[
+                  // Header
                   Container(
                     color: Colors.white,
                     height: HEADING_HEIGHT,
@@ -108,6 +109,7 @@ class LearningCentrePage extends StatelessWidget {
                       ],
                     ),
                   ),
+                  // BODY
                   Expanded(
                     child: ListView.builder(
                       shrinkWrap: true,
