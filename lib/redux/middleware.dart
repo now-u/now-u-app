@@ -81,12 +81,12 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
         print("Campaign has been selected now running onSuccess");
         print("The user has ${store.state.userState.user.getPoints()} points");
         // If adding the 10 points earnt you a badge then dont do the thing
-        if (getNextBadge(store.state.userState.user.getPoints()) == action.points) {
-          action.onSuccess(10, getNextBadge(action.points), false);
+        if (getNextBadge(store.state.userState.user.getPoints()) == getNextBadge(action.points)) {
+          action.onSuccess(action.points, 10, getNextBadge(action.points), false);
         }
         // Instead to the popup
         else {
-          action.onSuccess(10, getNextBadge(action.points), true);
+          action.onSuccess(action.points, 10, getNextBadge(action.points), true);
         }
       }
     );
@@ -176,11 +176,11 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
     saveUserToPrefs(action.user).then((_) {
       if (getNextBadge(newPoints) > getNextBadge(oldPoints)) {
         // Do the new badge popup
-        action.onSuccess(5, getNextBadge(newPoints), true);
+        action.onSuccess(newPoints, 5, getNextBadge(newPoints), true);
       }
       else {
         // Do the points notifier
-        action.onSuccess(5, getNextBadge(newPoints), false);
+        action.onSuccess(newPoints, 5, getNextBadge(newPoints), false);
       }
       //action.onSuccess(5, getNextBadge(store.state.userState.user.getPoints()));
     //  if (getNextBadge(store.state.userState.user.getPoints()) == getNextBadge(store.state.userState.user.getPoints() + 5)) {

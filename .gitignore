@@ -30,6 +30,7 @@
 .pub/
 /build/
 
+
 # Web related
 lib/generated_plugin_registrant.dart
 
@@ -42,3 +43,6 @@ android/app/google-services.json
 #Key-store
 android/app/key.jks
 android/key.properties
+
+#secrets
+assets/json/secrets.json

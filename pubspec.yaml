@@ -57,6 +57,7 @@ dependencies:
   #    path: packages/firebase_dynamic_links
 
   flutter_secure_storage: ^3.2.1+1
+  wiredash: ^0.2.0
 
 
 dev_dependencies:

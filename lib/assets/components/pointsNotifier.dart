@@ -20,14 +20,14 @@ import 'package:app/assets/components/progress.dart';
 void joinCampaign(ViewModel viewModel, BuildContext context, Campaign campaign) {
   if (!viewModel.userModel.user.getSelectedCampaigns().contains(campaign.getId())) {
     //viewModel.userModel.user.addSelectedCamaping(campaign.getId());
-    viewModel.onJoinCampaign( campaign, (int points, int nextBadgePoints, bool newBadge) {
+    viewModel.onJoinCampaign( campaign, (int points, int userPoints, int nextBadgePoints, bool newBadge) {
       if (!newBadge) {
-        pointsNotifier(viewModel.userModel.user.getPoints(), points, nextBadgePoints, context)..show(context);
+        pointsNotifier(userPoints, points, nextBadgePoints, context)..show(context);
       }
       else {
         Text("You did not get a new badge");
         gotBadgeNotifier(
-          badge: getNextBadgeFromInt(viewModel.userModel.user.getPoints()),
+          badge: getNextBadgeFromInt(userPoints),
           context: context,
         );
       }
@@ -41,7 +41,7 @@ void completeAction(ViewModel viewModel, BuildContext context, CampaignAction ac
   print(action.getId());
   if (!viewModel.userModel.user.getCompletedActions().contains(action.getId())) {
     print("Calling on complete action");
-    viewModel.onCompleteAction(action, (int points, int nextBadgePoints, bool newBadge) {
+    viewModel.onCompleteAction(action, (int userPoints, int points, int nextBadgePoints, bool newBadge) {
       // If you did not get a new badge
       if (!newBadge) {
         List<Reward> newlyCompletedRewards = viewModel.userModel.user.newlyCompletedRewards(action);
@@ -54,7 +54,7 @@ void completeAction(ViewModel viewModel, BuildContext context, CampaignAction ac
         }
         // Otherwise just shw the popup
         else {
-        pointsNotifier(viewModel.userModel.user.getPoints(), points, nextBadgePoints, context)..show(context);
+        pointsNotifier(userPoints, points, nextBadgePoints, context)..show(context);
         }
       }
       // If you did get a new badge then show that popup
