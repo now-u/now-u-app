@@ -183,44 +183,15 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
       YoutubePlayerController(
         initialVideoId: YoutubePlayer.convertUrlToId(campaign.getVideoLink()),
         flags: YoutubePlayerFlags(
-            autoPlay: false,
+            autoPlay: !model.userModel.user.getSelectedCampaigns().contains(campaign.getId()),
             mute: false,
         ),
       );
     super.initState();
   }
 
-  //void listener() {
-  //  if (_isPlayerReady && mounted && !_controller.value.isFullScreen) {
-  //    setState(() {
-  //      _playerState = _controller.value.playerState;
-  //      _videoMetaData = _controller.metadata;
-  //    });
-  //  }
-  //}
-  //void joinCampaign(ViewModel viewModel, BuildContext context) {
-  //    if (!viewModel.userModel.user.getSelectedCampaigns().contains(campaign.getId())) {
-  //      setState(() {
-  //        viewModel.userModel.user.addSelectedCamaping(campaign.getId());
-  //        viewModel.onSelectCampaigns(viewModel.userModel.user, (int points, int nextBadgePoints, bool newBadge) {
-  //          if (!newBadge) {
-  //            pointsNotifier(viewModel.userModel.user.getPoints(), points, nextBadgePoints, context)..show(context);
-  //          }
-  //          else {
-  //            gotBadgeNotifier(
-  //              badge: getNextBadgeFromInt(viewModel.userModel.user.getPoints()),
-  //              context: context,
-  //            );
-  //          }
-  //        });
-  //      });
-  //    }   
-  //}
-
   @override
   Widget build(BuildContext context) {
-    //TODO add ios support https://pub.dev/packages/youtube_player_flutter
-    //print(campaign.getId());
     return Scaffold(
       appBar: CustomAppBar(
         text: "Campaign",

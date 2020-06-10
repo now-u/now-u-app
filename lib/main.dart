@@ -112,17 +112,18 @@ class _AppState extends State<App> {
 
     return StoreProvider<AppState>(
       store: store, 
-      child: FutureBuilder(
-        future: getSecrets(),
-        builder:(BuildContext context, AsyncSnapshot snapshot) {
-          if (!snapshot.hasData) {
-            return Container();
-          }
-          return Wiredash(
-            projectId: snapshot.data['wiredash_project_id'],
-            secret: snapshot.data['wiredash_key'],
-            navigatorKey: Keys.navKey,
-            child: 
+      child: 
+      //FutureBuilder(
+      //  future: getSecrets(),
+      //  builder:(BuildContext context, AsyncSnapshot snapshot) {
+      //    if (!snapshot.hasData) {
+      //      return Container();
+      //    }
+          //return Wiredash(
+          //  projectId: snapshot.data['wiredash_project_id'],
+          //  secret: snapshot.data['wiredash_key'],
+          //  navigatorKey: Keys.navKey,
+          //  child: 
               MaterialApp(
                 title: 'Flutter Demo',
                 navigatorKey: Keys.navKey,
@@ -176,7 +177,7 @@ class _AppState extends State<App> {
                   Routes.login: (context) => LoginPage(),
                   //Routes.authEmailSent: (context) => EmailSentPage(),
                   Routes.intro: (context) => IntroPage(),
-                  Routes.home: (context) => MyHomePage(3),
+                  //Routes.home: (context) => MyHomePage(3),
                   //'/campaign': (context) => TabsPage(currentPage: TabPage.Campaigns),
                   //'/home': (context) => TabsPage(currentPage: TabPage.Home),
                   //TODO add login point
@@ -291,9 +292,9 @@ class _AppState extends State<App> {
                 //  )  
                )
             );
-          }
-        ),
-      );
+          //}
+        //),
+      //);
   }
 }
 

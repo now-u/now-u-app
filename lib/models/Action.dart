@@ -56,12 +56,12 @@ Map campaignActionSuperTypeData = {
    'iconBackgroundColor': blueO,
  },
  CampaignActionSuperType.Advoacte: {
-   'name': "Advoacte",
+   'name': "Advocate",
    'iconColor': orange,
    'iconBackgroundColor': orangeO,
  },
  CampaignActionSuperType.RaiseMoney: {
-   'name': "Advoacte",
+   'name': "Raise Money",
    'iconColor': yellow,
    'iconBackgroundColor': yellowO,
  },

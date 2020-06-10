@@ -63,12 +63,12 @@ class _ProfileState extends State<Profile> {
             'page': Routes.profile,
           },
           {
-            'profileTile': ProfileTile("Propose a campaigns", FontAwesomeIcons.bullhorn),
-            'link': "https://docs.google.com/forms/d/e/1FAIpQLSc6zL_9wVJZiZryJP2sIl2SMTtJFoi7fRCAJ1_Gn-rAmWygBQ/viewform",
+            'profileTile': ProfileTile("Propose an action or campaign", FontAwesomeIcons.bullhorn),
+            'link': "https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform",
           },
           {
             'profileTile': ProfileTile("Give feedback on the app", Icons.speaker_notes),
-            'link': "https://docs.google.com/forms/d/e/1FAIpQLSc6zL_9wVJZiZryJP2sIl2SMTtJFoi7fRCAJ1_Gn-rAmWygBQ/viewform",
+            'link': "https://docs.google.com/forms/d/e/1FAIpQLSflMOarmyXRv7DRbDQPWRayCpE5X4d8afOpQ1hjXfdvzbnzQQ/viewform",
           },
           {
             'profileTile':

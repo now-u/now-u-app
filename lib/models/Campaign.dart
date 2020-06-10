@@ -121,7 +121,9 @@ class Campaign {
     return title; 
   }
   String getDescription() {
-    return description; 
+    // TODO function to remove escape characters
+    var descriptionWithoutNs = description.replaceAll('\\n', '\n\n');
+    return descriptionWithoutNs; 
   }
   int getNumberOfCampaigners() {
     return numberOfCampaingers; 

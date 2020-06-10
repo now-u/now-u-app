@@ -40,7 +40,7 @@ class LearningTopicPage extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15),
                   child: Text(
-                    "What is domestic abuse?",
+                    topic.getTitle(),
                     style: textStyleFrom(
                       Theme.of(context).primaryTextTheme.headline3,
                     ),

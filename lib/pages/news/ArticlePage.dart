@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 
 import 'package:app/models/Article.dart';
 
+import 'package:app/models/ViewModel.dart';
+import 'package:app/models/State.dart';
+
+import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:app/assets/components/detailScaffold.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/customAppBar.dart';
@@ -60,18 +65,23 @@ class ArticlePage extends StatelessWidget {
                             textAlign: TextAlign.left
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
-                          child: TextButton(
-                            article.getCategory(),
-                            onClick: () {
-                              // TODO link to news page with category search/filter
-                              //Navigator.push(
-                              // context,
-                              // CustomRoute(builder: (context) => CampaignInfo(campaign: _campaign, model: _model))
-                              //);
-                            },
-                          )
+                        StoreConnector<AppState, ViewModel>(
+                            converter: (Store<AppState> store) => ViewModel.create(store),
+                            builder: (BuildContext context, ViewModel viewModel) {
+                              return Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
+                                child: TextButton(
+                                  article.getCategory(campaigns: viewModel.campaigns),
+                                  onClick: () {
+                                    // TODO link to news page with category search/filter
+                                    //Navigator.push(
+                                    // context,
+                                    // CustomRoute(builder: (context) => CampaignInfo(campaign: _campaign, model: _model))
+                                    //);
+                                  },
+                                )
+                              );
+                            }
                         ),
                         SizedBox(height: 20),
                         Padding(

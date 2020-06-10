@@ -6,16 +6,20 @@ import 'package:app/main.dart';
 import 'package:app/pages/profile/profilePages/FAQPage.dart';
 import 'package:app/pages/profile/profilePages/ProfilePage.dart';
 import 'package:app/pages/profile/profilePages/PartnersPage.dart';
+import 'package:app/pages/Tabs.dart';
 
 
 class Routes {
-  static final home = "home";
   static final intro = "intro";
   static final login = "login";
 
   static const profile = "profile";
   static const faq = "faq";
   static const parteners = "parteners";
+
+  // Tab View Routes
+  static const home = "home";
+  static const campaign = "campaign";
 //  static final authEmailSent = "authEmailSent";
 }
 
@@ -35,6 +39,16 @@ Function initRoutes =
       case Routes.parteners: {
         return CustomRoute(
           builder: (context) => PartnersPage()
+        );
+      }
+      case Routes.home: {
+        return CustomRoute(
+          builder: (context) => TabsPage(currentPage: TabPage.Home)
+        );
+      }
+      case Routes.campaign: {
+        return CustomRoute(
+          builder: (context) => TabsPage(currentPage: TabPage.Campaigns)
         );
       }
       // TODO add a 404 page

@@ -115,12 +115,12 @@ class Article {
   bool getIsVideoOfTheDay() {
     return isVideoOfTheDay;
   }
-  String getCategory({Campaigns cs}) {
+  String getCategory({Campaigns campaigns}) {
     if (linkedCampaign != null) {
-      if (cs != null) {
-        for (int i = 0; i < cs.activeLength(); i++) {
-          if (cs.getActiveCampaigns()[i].getId() == linkedCampaign) {
-            return cs.getActiveCampaigns()[i].getTitle();
+      if (campaigns != null) {
+        for (int i = 0; i < campaigns.activeLength(); i++) {
+          if (campaigns.getActiveCampaigns()[i].getId() == linkedCampaign) {
+            return campaigns.getActiveCampaigns()[i].getTitle();
           }
         }
       }

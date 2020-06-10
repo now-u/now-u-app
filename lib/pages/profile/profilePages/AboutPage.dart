@@ -33,7 +33,12 @@ class AboutPage extends StatelessWidget {
           onClick: () {launch("https://docs.google.com/forms/d/e/1FAIpQLSc6zL_9wVJZiZryJP2sIl2SMTtJFoi7fRCAJ1_Gn-rAmWygBQ/viewform");},
          ),
          ListDividor(),
-         SelectionItem(text: "Propose a campaign"),
+         SelectionItem(
+          text: "Propose an action or campaign",
+          onClick: () {
+            launch("https://docs.google.com/forms/d/1qv0DzXll02Szjh0SVmV-ysuYGQ2oPNS8-_qDZRYDbBA/edit");
+          }
+         ),
          
          ListHeading("Give us some love"),
          SelectionItem(

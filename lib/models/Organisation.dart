@@ -31,7 +31,8 @@ class Organisation {
     return name;
   }
   String getDescription() {
-    return description;
+    var descriptionWithoutNs = description.replaceAll('\\n', '\n\n');
+    return descriptionWithoutNs;
   }
   String getLogoLink() {
     return logoLink;

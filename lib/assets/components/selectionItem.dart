@@ -462,6 +462,7 @@ class LearningTopicSelectionItem extends StatelessWidget {
   final double defaultHpadding = 10;
   final double defaultHeight = 80;
   final double rightOuterPadding = 10;
+  final double borderRadius = 8;
 
   @required final LearningTopic topic;
   final double hpadding;
@@ -489,7 +490,7 @@ class LearningTopicSelectionItem extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 5, horizontal: hpadding ?? defaultHpadding),
             child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
@@ -509,6 +510,9 @@ class LearningTopicSelectionItem extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
                       Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+                        ),
                         width: imageWidth ?? defaultImageWidth,
                         height: height ?? defaultHeight,
                         child: Image.network(

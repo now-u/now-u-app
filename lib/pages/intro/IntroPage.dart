@@ -12,22 +12,22 @@ import 'package:app/main.dart';
 List<Widget> pages = <Widget>[
                   IntroPageSection(
                     "Join campaigns",
-                    "Every month, now-u adds 3 new campiangs that enable you to make a difference! You can choose to join one or a few, or all of them.",
+                    "Every month, now-u runs 3 campaigns. You can choose which campaigns to join to start making a difference to causes you care about!",
                     AssetImage('assets/imgs/intro/On-Boarding illustrations-01.png'),
                   ),
                   IntroPageSection(
                     "Take action",
-                    "Every month, now-u adds 3 new campiangs that enable you to make a difference! You can choose to join one or a few, or all of them.",
+                    "We will add new actions throughout the month. You will be invited to complete easy and impactful actions to drive change in just a few minutes, as well as being shown opportunities to get more involved if you’re feeling inspired!",
                     AssetImage('assets/imgs/intro/On-Boarding illustrations-02.png'),
                   ),
                   IntroPageSection(
                     "Hit achievements",
-                    "Every month, now-u adds 3 new campiangs that enable you to make a difference! You can choose to join one or a few, or all of them.",
+                    "We reward your dedication! Each campaign you join and action you complete earns you points towards your next badge. Track your progress and rise through the ranks!",
                     AssetImage('assets/imgs/intro/On-Boarding illustrations-03.png'),
                   ),
                   IntroPageSection(
                     "Create real impact",
-                    "Every month, now-u adds 3 new campiangs that enable you to make a difference! You can choose to join one or a few, or all of them.",
+                    "Take meaningful action for causes you care about and help support amazing organisations and movements building a better world.",
                     AssetImage('assets/imgs/intro/On-Boarding illustrations-04.png'),
                   ),
 ];
@@ -75,7 +75,8 @@ class _IntroPageState extends State<IntroPage> {
 
   void _goToNextPage() {
     Navigator.of(context)
-        .push(FadeRouteBuilder(page: MyHomePage(3)))
+        // This is very bad dont use MyHomePage need named route
+        .push(FadeRouteBuilder(page: MyHomePage(1)))
         .then((_) => setState(() => rect = null));
   }
 
