@@ -185,7 +185,8 @@ class _NewsListState extends State<NewsList> {
                 )
               );
             },
-          )
+          ),
+          SizedBox(width: 20),
       ],
     );
   }
@@ -258,35 +259,53 @@ class VideoOTDTile extends StatelessWidget {
                         elevated: elevated,
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: textPadding ?? 0),
-                      child: Text(
-                        "Clip of the day",
-                        textAlign: TextAlign.left,
-                        style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.headline5,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 11,
-                          color: Theme.of(context).primaryColor
-                        ),
-                      ),
+                    Container(
+                      width: double.infinity,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context, 
+                            CustomRoute( 
+                              builder: (context) => ArticlePage(snapshot.data)
+                            )
+                          );
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 10),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: textPadding ?? 0),
+                              child: Text(
+                                "Clip of the day",
+                                textAlign: TextAlign.left,
+                                style: textStyleFrom(
+                                  Theme.of(context).primaryTextTheme.headline5,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 11,
+                                  color: Theme.of(context).primaryColor
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 4),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: textPadding ?? 0),
+                              child: Text(
+                                snapshot.data.getTitle(),
+                                textAlign: TextAlign.left,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: textStyleFrom(
+                                  Theme.of(context).primaryTextTheme.headline5,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: textPadding),
+                          ],
+                        )
+                      )
                     ),
-                    SizedBox(height: 4),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: textPadding ?? 0),
-                      child: Text(
-                        snapshot.data.getTitle(),
-                        textAlign: TextAlign.left,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.headline5,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: textPadding),
                   ],
                 );
               }
@@ -328,14 +347,19 @@ class NewsImageTile extends StatelessWidget {
           ),
           // TODO This should probably link to the catergory as well (ie search for the category)
           SizedBox(height: 5),
-          Text(
-            article.getCategory(),
-            textAlign: TextAlign.left,
-            style: textStyleFrom(
-              Theme.of(context).primaryTextTheme.headline5,
-              fontWeight: FontWeight.w600,
-              fontSize: 11,
-            ),
+          StoreConnector<AppState, ViewModel>(
+            converter: (Store<AppState> store) => ViewModel.create(store),
+            builder: (BuildContext context, ViewModel model) {
+              return Text(
+                article.getCategory(),
+                textAlign: TextAlign.left,
+                style: textStyleFrom(
+                  Theme.of(context).primaryTextTheme.headline5,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 11,
+                ),
+              );
+            }
           ),
           SizedBox(height: 2),
           Text(
@@ -400,13 +424,18 @@ class NewsTextTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget> [
                     Container(
-                      child: Text(
-                        article.getCategory(),
-                        style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.headline5,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 11,
-                        ),
+                      child: StoreConnector<AppState, ViewModel>(
+                        converter: (Store<AppState> store) => ViewModel.create(store),
+                        builder: (BuildContext context, ViewModel model) {
+                          return Text(
+                            article.getCategory(campaigns: model.campaigns),
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.headline5,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 11,
+                            ),
+                          );
+                        }
                       ),
                     ),
                     SizedBox(height: 6),

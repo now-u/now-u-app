@@ -7,13 +7,18 @@ import 'package:app/assets/routes/customRoute.dart';
 
 class OrganisationTile extends StatelessWidget {
   final Organisation organisation;
+  final Function extraOnTap;
   OrganisationTile(
     this.organisation,
+    {this.extraOnTap}
   );
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        if (extraOnTap != null) {
+          extraOnTap();
+        }
         Navigator.push(
           context, 
           CustomRoute(builder: (context) => OraganisationInfoPage(organisation))

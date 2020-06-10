@@ -4,17 +4,43 @@ class Organisation {
   String description;
   String logoLink;
   List<int> linkedCampaigns;
+  String organisationType;
   String email;
   String website;
+
+  String instagram;
+  String facebook;
+  String twitter;
+  
+  String extraText1;
+  String extraLink1;
+  String extraText2;
+  String extraLink2;
+  String extraText3;
+  String extraLink3;
   
   Organisation.fromJson(Map json) {
     id = json['id'];
     name = json['name'];
     description = json['description'];
     logoLink = json['logo_link'];
+    organisationType = json['organisation_type'];
     //linkedCampaigns = json['linked_campaigns'].cast<int>();
     email = json['email'];
     website = json['website'];
+
+    instagram = json['IG_link'];
+    facebook = json['FB_link'];
+    twitter = json['twitter_link'];
+
+    extraText1 = json['extra_text_1'];
+    extraLink1 = json['extra_link_1'];
+    
+    extraText2 = json['extra_text_2'];
+    extraLink2 = json['extra_link_2'];
+
+    extraText3 = json['extra_text_3'];
+    extraLink3 = json['extra_link_3'];
   }
 
   Map toJson() => {
@@ -45,5 +71,37 @@ class Organisation {
   }
   String getWebsite() {
     return website;
+  }
+
+  String getFacebook() {
+    return facebook;
+  }
+  String getInstagram() {
+    return instagram;
+  }
+  String getTwitter() {
+    return twitter;
+  }
+  String getExtraText1() {
+    return extraText1;
+  }
+  String getExtraLink1() {
+    return extraLink1;
+  }
+  String getExtraText2() {
+    return extraText2;
+  }
+  String getExtraLink2() {
+    return extraLink2;
+  }
+  String getExtraText3() {
+    return extraText3;
+  }
+  String getExtraLink3() {
+    return extraLink3;
+  }
+
+  List<String> getContactInfo() {
+
   }
 }

@@ -242,6 +242,7 @@ class ActionSelectionItem extends StatelessWidget {
       outerHpadding: outerHpadding,
       iconWidth: iconWidth,
       onTap: () {
+        extraOnTap();
         Navigator.push(context,
           CustomRoute(builder: (context) => ActionInfo(action, campaign)));
       },

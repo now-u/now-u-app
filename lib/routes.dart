@@ -18,8 +18,9 @@ class Routes {
   static const parteners = "parteners";
 
   // Tab View Routes
-  static const home = "home";
   static const campaign = "campaign";
+  static const actions = "actions";
+  static const home = "home";
 //  static final authEmailSent = "authEmailSent";
 }
 
@@ -49,6 +50,11 @@ Function initRoutes =
       case Routes.campaign: {
         return CustomRoute(
           builder: (context) => TabsPage(currentPage: TabPage.Campaigns)
+        );
+      }
+      case Routes.actions: {
+        return CustomRoute(
+          builder: (context) => TabsPage(currentPage: TabPage.Actions)
         );
       }
       // TODO add a 404 page

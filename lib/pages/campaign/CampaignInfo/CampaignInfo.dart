@@ -15,6 +15,7 @@ import 'package:app/pages/campaign/LearningCentre/LearningCentrePage.dart';
 
 import 'package:app/services/api.dart';
 import 'package:app/locator.dart';
+import 'package:app/routes.dart';
 
 import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/StyleFrom.dart';
@@ -77,6 +78,13 @@ class _CampaignInfoModelState extends State<CampaignModelInfo> with WidgetsBindi
     print("The state is");
     print(state);
   }
+  
+  @override 
+  void dispose() {
+    print("Campaign info model state disposed");
+    super.dispose();
+  }
+  
 
   void initState() {
     // if give campaing use that
@@ -190,6 +198,14 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
     super.initState();
   }
 
+  @override 
+  void dispose() {
+    print("Campaign info state disposed");
+    _controller.pause();
+    super.dispose();
+  }
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -203,6 +219,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
               color: Theme.of(context).primaryColor,
             ),
             onPressed: () {
+              _controller.pause();
               Navigator.push(
                 context, 
                 CustomRoute(builder: (context) => LearningCentrePage(campaign.getId()))
@@ -343,19 +360,35 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                   },      
                 ),
               ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget> [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: H_PADDING, vertical: 10),
+                    child: TextButton(
+                      "See more actions",
+                      onClick: () {
+                        Navigator.of(context).pushNamed(Routes.actions);
+                      },
+                      iconRight: true,
+                    ),
+                  ),
+                ],
+              ),
 
               // Organisation
-              SizedBox(height: 10),
-              campaign.getCampaignPartners().isEmpty ? Container() :
-              SectionTitle("Campaign Partners", padding: H_PADDING, vpadding: 0),
-              campaign.getCampaignPartners().isEmpty ? Container() :
-              OrganisationReel(campaign.getCampaignPartners()),
+              //SizedBox(height: 10),
+              //campaign.getCampaignPartners().isEmpty ? Container() :
+              //SectionTitle("Campaign Partners", padding: H_PADDING, vpadding: 0),
+              //campaign.getCampaignPartners().isEmpty ? Container() :
+              //OrganisationReel(campaign.getCampaignPartners()),
               
               SizedBox(height: 10),
               campaign.getGeneralPartners().isEmpty ? Container() :
-              SectionTitle("General Partners", padding: H_PADDING, vpadding: 0),
+              SectionTitle("Campaign Partners", padding: H_PADDING, vpadding: 0),
               campaign.getGeneralPartners().isEmpty ? Container() :
-              OrganisationReel(campaign.getGeneralPartners()),
+              OrganisationReel(campaign.getGeneralPartners(), _controller),
 
               SizedBox(height: 10),
 
@@ -454,7 +487,8 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
 
 class OrganisationReel extends StatelessWidget {
   final List<Organisation> organisations;
-  OrganisationReel(this.organisations);
+  final YoutubePlayerController controller;
+  OrganisationReel(this.organisations, this.controller);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -467,7 +501,12 @@ class OrganisationReel extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return Padding(
               padding: EdgeInsets.all(8),
-              child: OrganisationTile(organisations[index]),
+              child: OrganisationTile(
+                organisations[index], 
+                extraOnTap: () {
+                  controller.pause();
+                },
+              ),
             );
           },      
        // )

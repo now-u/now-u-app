@@ -75,6 +75,14 @@ class OraganisationInfoPage extends StatelessWidget {
                 Text(
                   organisation.getEmail(),
                 ),
+                organisation.getInstagram() == null ? Container() :
+                Text(
+                  organisation.getInstagram(),
+                ),
+                organisation.getFacebook() == null ? Container() :
+                Text(
+                  organisation.getFacebook(),
+                ),
                 SizedBox(height: 20),
                 
               ],

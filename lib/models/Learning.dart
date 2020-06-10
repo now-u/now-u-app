@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'package:app/models/Action.dart';
+
 
 class LearningCentre {
   // Id of campaign
@@ -96,6 +98,8 @@ class LearningResource {
     return time;
   }
   String getTimeText() {
-    return time.toString();
+    return timeBrackets.firstWhere(
+      (b) => b['maxTime'] > time
+    )['text'];
   }
 }

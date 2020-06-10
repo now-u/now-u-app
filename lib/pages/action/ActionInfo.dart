@@ -34,7 +34,7 @@ class ActionInfo extends StatefulWidget {
   _ActionInfoState createState() => _ActionInfoState();
 }
 
-class _ActionInfoState extends State<ActionInfo> {
+class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
   final double expandedHeight = 400.0;
 
   CampaignAction _action;
@@ -48,6 +48,8 @@ class _ActionInfoState extends State<ActionInfo> {
   }
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+
   
   @override
   Widget build(BuildContext context) {

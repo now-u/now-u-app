@@ -55,7 +55,7 @@ class Article {
     subtitle          = json['subtitle'];
     body              = json['body'];
     headerImage       = json['header_image'];
-    linkedCampaign    = json['linked_campaign'];
+    linkedCampaign    = json['campaign_id'];
     linkedAction      = json['linked_action'];
     fullArticleLink   = json['full_article_link'];
     linkText          = json['link_text'];
@@ -116,15 +116,18 @@ class Article {
     return isVideoOfTheDay;
   }
   String getCategory({Campaigns campaigns}) {
+    print("Getting catergory");
+    print(linkedCampaign);
+    print(campaigns);
     if (linkedCampaign != null) {
       if (campaigns != null) {
+        print(campaigns.getActiveCampaigns());
         for (int i = 0; i < campaigns.activeLength(); i++) {
           if (campaigns.getActiveCampaigns()[i].getId() == linkedCampaign) {
             return campaigns.getActiveCampaigns()[i].getTitle();
           }
         }
       }
-      return linkedCampaign.toString();
     }
     return "General";
   }

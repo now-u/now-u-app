@@ -19,22 +19,23 @@ class LearningTopicPage extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          // Header
-          Container(
-            width: double.infinity,
-            height: 180,
-            child: Image.network(
-              topic.getImageLink(),
-              fit: BoxFit.cover
-            ),
-          ),
-
-          // Body
           Expanded(
             child: ListView(
               shrinkWrap: true,
               children: <Widget>[
+                // Header
+                Container(
+                  width: double.infinity,
+                  height: 180,
+                  child: Image.network(
+                    topic.getImageLink(),
+                    fit: BoxFit.cover
+                  ),
+                ),
+
                 SizedBox(height: 20),
+                
+                // Body
 
                 // Title
                 Padding(
