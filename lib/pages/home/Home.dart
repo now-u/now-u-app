@@ -9,37 +9,12 @@ import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/progress.dart';
 
 import 'package:app/models/ViewModel.dart';
-import 'package:app/models/Campaigns.dart';
-import 'package:app/models/Article.dart';
 import 'package:app/models/State.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 const double BUTTON_PADDING = 10;
-
-Article newsArticle = 
-  Article(
-    id: 1,
-    title: "After 13 years in development, we have finally completed this very important thing!",
-    body: "Magna ac nibh ultrices vehicula. Maecenas commodo facilisis lectus.  Praesent sed mi. Phasellus ipsum. Donec quis tellus id lectus faucibus molestie. Praesent vel ligula. Nam venenatis neque quis mauris. Proin felis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur.",
-    headerImage: "https://images.unsplash.com/photo-1526951521990-620dc14c214b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80",
-    linkedAction: 1,
-    linkedCampaign: 1,
-    fullArticleLink: "https://www.bbc.co.uk/news/uk-52439348",
-  );
-
-Article articleWithVideo = 
-  Article(
-    id: 2,
-    title: "After 13 years in development, we have finally completed this very important thing!",
-    body: "Magna ac nibh ultrices vehicula. Maecenas commodo facilisis lectus.  Praesent sed mi. Phasellus ipsum. Donec quis tellus id lectus faucibus molestie. Praesent vel ligula. Nam venenatis neque quis mauris. Proin felis. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur.",
-    headerImage: "https://images.unsplash.com/photo-1526951521990-620dc14c214b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80",
-    linkedAction: 1,
-    linkedCampaign: 1,
-    fullArticleLink: "https://www.bbc.co.uk/news/uk-52439348",
-    videoLink: "https://www.youtube.com/watch?v=ybn_SO990go",
-  );
 
 final double headerHeight = 240;
 
@@ -124,7 +99,7 @@ Widget sectionTitle(String t, BuildContext context) {
 }
 
 class HomeActionTile extends StatelessWidget {
-  Function changePage;
+  final Function changePage;
   HomeActionTile(this.changePage);
   @override
   Widget build(BuildContext context) {

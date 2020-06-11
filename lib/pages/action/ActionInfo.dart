@@ -201,7 +201,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                       Align(
                         alignment: Alignment.topCenter,
                         child: DarkButton(
-                          "Go to link",
+                          "Complete Action",
                           style: DarkButtonStyles.Large,
                           inverted: true,
                           onPressed: () {
