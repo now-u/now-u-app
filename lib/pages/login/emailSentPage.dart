@@ -50,11 +50,14 @@ class _EmailSentPageState extends State<EmailSentPage> with WidgetsBindingObserv
       //});
       FirebaseDynamicLinks.instance.onLink(
       onSuccess: (PendingDynamicLinkData dynamicLink) async {
-        print(dynamicLink);
+        print('dynamicLink: $dynamicLink');
         final Uri deepLink = dynamicLink?.link;
-        print(deepLink);
-        print(deepLink.path);
-        print(deepLink.queryParameters['token']);
+        print('deepLink: $deepLink');
+        print('deepLink.path: ${deepLink.path}');
+        print('token parameter: ${deepLink.queryParameters['token']}');
+        print('deepLink.query: ${deepLink.query}');
+        print('deepLink.pathSegments: ${deepLink.pathSegments}');
+        print('deepLink.queryParametersAll: ${deepLink.queryParametersAll}');
 
         if (deepLink != null && deepLink.path == "/loginMobile") {
           print(deepLink.queryParameters['token']);
