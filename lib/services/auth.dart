@@ -40,7 +40,6 @@ class AuthenticationService {
 
   Future<User> signInWithEmailLink(String email, String token) async {
 
-    // TODO USE AWAIT
     // TODO handle errors
 
     print("The email is: " + email);

@@ -178,14 +178,16 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
   ViewModel model;
   double top;
   double currentExtent;
+  bool joined;
 
   //bool _isPlayerReady = false;
   YoutubePlayerController _controller;
 
   @override
   initState() {
-    model = widget.model;
     campaign = widget.campaign;
+    model = widget.model;
+    joined = widget.model.userModel.user.getSelectedCampaigns().contains(campaign.getId());
     top = 0.0;
     _controller = 
       YoutubePlayerController(
@@ -210,6 +212,9 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
+        extraOnTap: () {
+          _controller.dispose();
+        },
         text: "Campaign",
         context: context,
         actions: [
@@ -219,7 +224,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
               color: Theme.of(context).primaryColor,
             ),
             onPressed: () {
-              _controller.pause();
+              _controller.dispose();
               Navigator.push(
                 context, 
                 CustomRoute(builder: (context) => LearningCentrePage(campaign.getId()))
@@ -452,8 +457,9 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
               SizedBox(height: 45)
             ], 
           ),
-              Positioned(
-                bottom: 0,
+              AnimatedPositioned(
+                bottom: joined ? -50 : 0,
+                duration: Duration(milliseconds: 500),
                 left: 0,
                 child: FlatButton(
                     padding: EdgeInsets.all(0),
@@ -474,6 +480,9 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                     ),
                   ),
                   onPressed: () {
+                    setState(() {
+                      joined = true;
+                    });
                     joinCampaign(widget.model, context, campaign);
                   },
                   color: Theme.of(context).primaryColor,

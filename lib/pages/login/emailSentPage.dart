@@ -38,6 +38,7 @@ class _EmailSentPageState extends State<EmailSentPage> with WidgetsBindingObserv
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
+      print("email page life cycle resumed");
       //DynamicLinkService deepLinkService = locator<DynamicLinkService>();
       //deepLinkService.getLink().then((Uri link) {
       //  print("Reconnect on email sent page");
@@ -50,6 +51,7 @@ class _EmailSentPageState extends State<EmailSentPage> with WidgetsBindingObserv
       //});
       FirebaseDynamicLinks.instance.onLink(
       onSuccess: (PendingDynamicLinkData dynamicLink) async {
+        print("Have dynamic link");
         print('dynamicLink: $dynamicLink');
         final Uri deepLink = dynamicLink?.link;
         print('deepLink: $deepLink');

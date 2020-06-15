@@ -298,6 +298,8 @@ class _AppState extends State<App> {
   }
 }
 
+
+// TODO this can go its useless
 class MyHomePage extends StatefulWidget {
   final int currentIndex;
 
