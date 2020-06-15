@@ -43,6 +43,7 @@ class _CampaignPageState extends State<CampaignPage> {
 
   @override
   void initState() {
+    campaigns = [];
     onlyJoined = false;
     super.initState();
   }
@@ -56,6 +57,10 @@ class _CampaignPageState extends State<CampaignPage> {
       Scaffold(
         body: 
           StoreConnector<AppState, ViewModel>(
+            onInit: (Store<AppState> store) {
+              campaigns = store.state.campaigns.getActiveCampaigns();
+              user = store.state.userState.user;
+            },
             converter: (Store<AppState> store) => ViewModel.create(store),
             builder: (BuildContext context, ViewModel viewModel) {
               print("In page campaigns");
@@ -64,8 +69,8 @@ class _CampaignPageState extends State<CampaignPage> {
               print(viewModel.campaigns.getActiveCampaigns().toList()[0]);
               print(viewModel.campaigns.getActiveCampaigns().toList()[1]);
               print(viewModel.campaigns.getActiveCampaigns().toList()[2]);
-              campaigns = viewModel.campaigns.getActiveCampaigns().toList();
-              user = viewModel.userModel.user;
+              //campaigns = viewModel.campaigns.getActiveCampaigns().toList();
+              //user = viewModel.userModel.user;
               return  SafeArea(
                 child: ListView(
                   children: <Widget>[
@@ -94,7 +99,13 @@ class _CampaignPageState extends State<CampaignPage> {
                             value: onlyJoined,
                             onChanged: (value) {
                               setState(() {
-                                onlyJoined = value;                              
+                                onlyJoined = value;
+                                if (value) {
+                                  campaigns = viewModel.getActiveSelectedCampaings();
+                                }
+                                else {
+                                  campaigns = viewModel.campaigns.getActiveCampaigns();
+                                }
                               });
                             },
                             activeColor: Theme.of(context).primaryColor,
@@ -103,8 +114,10 @@ class _CampaignPageState extends State<CampaignPage> {
                         ],
                       )
                     ),
-                    viewModel.userModel.user.getSelectedCampaigns().length == 0 && onlyJoined ?
-                    Text("You havent selecetd any campaigns yet")
+                    viewModel.getActiveSelectedCampaings().length == 0 && onlyJoined ?
+                    Center(
+                      child: Text("You havent selecetd any campaigns yet"),
+                    )
                     :
                     Container(),
                     Container(
@@ -117,14 +130,7 @@ class _CampaignPageState extends State<CampaignPage> {
                             shrinkWrap: true,
                             itemCount: campaigns.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return
-                              !onlyJoined ? // Then return everything
-                              CampaignTile(campaigns[index])
-                              :  // Otherwise only return selected campaigns
-                              viewModel.userModel.user.getSelectedCampaigns().contains(campaigns[index].getId()) ? 
-                              CampaignTile(campaigns[index])
-                              : null;
-
+                              return CampaignTile(campaigns[index]);
                             },
                           ),
                           SizedBox(
