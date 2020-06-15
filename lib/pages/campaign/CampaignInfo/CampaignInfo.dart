@@ -492,6 +492,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                 children: [
                   TextButton(
                     "I no longer want to be part of this campaign",
+                    fontSize: 14,
                     onClick: () {
                       print("Unjoining campaign");
                       model.onUnjoinCampaign(campaign);

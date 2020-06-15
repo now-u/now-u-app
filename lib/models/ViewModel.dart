@@ -24,6 +24,7 @@ class ViewModel {
 
   // Helper functions
   final Function() getActiveSelectedCampaings;
+  final Function({bool includeCompleted, bool includeRejected}) getActiveActions; // Non-rejected, non-completed 
 
   ViewModel({
     this.campaigns,
@@ -38,6 +39,7 @@ class ViewModel {
 
     // Helper functions
     this.getActiveSelectedCampaings,
+    this.getActiveActions,
   });
 
   factory ViewModel.create(Store<AppState> store) {
@@ -64,6 +66,18 @@ class ViewModel {
     _getActiveSelectedCampaigns() {
       return store.state.userState.user.filterSelectedCampaigns(store.state.campaigns.getActiveCampaigns());
     }
+    List<CampaignAction> _getActiveActions({bool includeCompleted, bool includeRejected}) {
+      print("Getting actions");
+      List<CampaignAction> actions = [];
+      actions.addAll(store.state.campaigns.getActions());
+      if (!(includeRejected ?? false)) {
+        actions.removeWhere((a) => store.state.userState.user.getRejectedActions().contains(a.getId()));
+      }
+      if (!(includeCompleted ?? false)) {
+        actions.removeWhere((a) => store.state.userState.user.getCompletedActions().contains(a.getId()));
+      }
+      return actions;
+    }
 
     return ViewModel(
       campaigns: store.state.campaigns,
@@ -78,6 +92,7 @@ class ViewModel {
 
       // Helper Functions
       getActiveSelectedCampaings: _getActiveSelectedCampaigns,
+      getActiveActions: _getActiveActions,
     );
   }
 }

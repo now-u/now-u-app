@@ -45,12 +45,19 @@ bool hasSelected (Map sel) {
   return false;
 }
 
-List<CampaignAction> getActions(Campaign campaign, Map<String, Map> selections) {
+List<CampaignAction> getActions(Campaign campaign, Map<String, Map> selections, ViewModel model) {
   List<CampaignAction> tmpActions = [];
   if (campaign == null) {
     return tmpActions;
   }
-  tmpActions.addAll(campaign.getActions());
+  //tmpActions.addAll(campaign.getActions());
+  bool includeCompleted = selections['extras']['completed'];
+  bool includeRejected = selections['extras']['rejected'];
+  // Get all the actions
+  tmpActions.addAll(model.getActiveActions(includeCompleted: includeCompleted, includeRejected: includeRejected));
+  // Filter them for the campaign
+  tmpActions.removeWhere((a) => !campaign.getActions().contains(a));
+  print("Got some temp ations");
   if (hasSelected(selections['times'])) {
     // Remove the ones with the wrong times
     print("It has the thing");
@@ -58,8 +65,6 @@ List<CampaignAction> getActions(Campaign campaign, Map<String, Map> selections) 
   }
   if (hasSelected(selections['categories'])) {
     tmpActions.removeWhere((a) => !selections['categories'][a.getSuperType()]);
-  }
-  if (hasSelected(selections['times'])) {
   }
   print(tmpActions.length);
   return tmpActions;
@@ -72,6 +77,10 @@ class _ActionPageState extends State<ActionPage> {
     "times": {},
     "campaigns": {},
     "categories": {},
+    "extras": {
+      "completed": false,
+      "rejected": false,
+    }
   };
 
   initState() {
@@ -112,7 +121,7 @@ class _ActionPageState extends State<ActionPage> {
                     PageHeader(
                       title: "Actions",
                       onTap: () {
-                        _navigateAndDisplaySelection(context);
+                        _navigateAndDisplaySelection(context, viewModel);
                       },
                       icon: Icons.filter_list,
                     ),
@@ -148,7 +157,7 @@ class _ActionPageState extends State<ActionPage> {
                               actions = [];
                             } else {
                               campaign = viewModel.userModel.user.filterSelectedCampaigns(viewModel.campaigns.getActiveCampaigns())[pageIndex];
-                              actions = getActions(campaign, selections);
+                              actions = getActions(campaign, selections, viewModel);
                             }
                           });
                         }
@@ -201,7 +210,7 @@ class _ActionPageState extends State<ActionPage> {
       }
     );
   }
-  _navigateAndDisplaySelection(BuildContext context) async {
+  _navigateAndDisplaySelection(BuildContext context, ViewModel model) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
     final result = await Navigator.push(
@@ -211,7 +220,9 @@ class _ActionPageState extends State<ActionPage> {
     );
     setState(() {
       selections = result ?? this.selections;
-      actions = getActions(campaign, selections);
+      print("Getting new acitons");
+      actions = getActions(campaign, selections, model);
+      print("got new acitons");
     });
   }
 }
@@ -401,6 +412,33 @@ class _SortScreenState extends State<SortScreen> {
                     );
                     //return Text(timeBrackets[index]['text']);
                   },
+                ),
+
+                // Extras
+                SelectionTitle("Extras"),
+                ListView(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  children: [
+                    CheckboxSelectionItem(
+                      title: "Include completed",
+                      value: selections['extras']['completed'],
+                      onChanged: (bool value) {
+                        setState(() {
+                          selections['extras']['completed'] = value;
+                        });
+                      }
+                    ),
+                    CheckboxSelectionItem(
+                      title: "Include rejected",
+                      value: selections['extras']['rejected'],
+                      onChanged: (bool value) {
+                        setState(() {
+                          selections['extras']['rejected'] = value;
+                        });
+                      }
+                    ),
+                  ],
                 ),
                 SizedBox(height: 40,),
               ],
