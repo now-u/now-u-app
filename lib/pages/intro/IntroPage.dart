@@ -1,4 +1,5 @@
 import 'package:app/assets/routes/customRoute.dart';
+import 'package:app/pages/Tabs.dart';
 import 'package:flutter/material.dart';
 
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -76,7 +77,7 @@ class _IntroPageState extends State<IntroPage> {
   void _goToNextPage() {
     Navigator.of(context)
         // This is very bad dont use MyHomePage need named route
-        .push(FadeRouteBuilder(page: MyHomePage(1)))
+        .push(FadeRouteBuilder(page: TabsPage(currentPage: TabPage.Campaigns)))
         .then((_) => setState(() => rect = null));
   }
 

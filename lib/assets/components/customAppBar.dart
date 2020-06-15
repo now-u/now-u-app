@@ -9,6 +9,7 @@ AppBar CustomAppBar(
       String backButtonText,
       bool hasBackButton,
       List<Widget> actions,
+      Function extraOnTap,
     }
     ) {
   hasBackButton = hasBackButton == null ? true : hasBackButton;
@@ -30,6 +31,9 @@ AppBar CustomAppBar(
             backButtonText ?? "Back",
             iconLeft: true,
             onClick: (){
+              if (extraOnTap != null) {
+                extraOnTap();
+              }
               Navigator.pop(context);
             },
           ),
