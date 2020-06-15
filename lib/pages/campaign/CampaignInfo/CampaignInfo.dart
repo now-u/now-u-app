@@ -201,7 +201,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
   @override 
   void dispose() {
     print("Campaign info state disposed");
-    _controller.pause();
+    _controller.dispose();
     super.dispose();
   }
   
