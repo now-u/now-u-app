@@ -7,6 +7,7 @@ import 'package:app/pages/Tabs.dart';
 import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/progress.dart';
+import 'package:app/assets/components/viewCampaigns.dart';
 
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/State.dart';
@@ -109,30 +110,38 @@ class HomeActionTile extends StatelessWidget {
       child: StoreConnector<AppState, ViewModel>(
         converter: (Store<AppState> store) => ViewModel.create(store),
         builder: (BuildContext context, ViewModel viewModel) {
-          return Column(
-            children: <Widget>[
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: 3,
-                itemBuilder: 
-                  (BuildContext context, int index) => 
-                    ActionSelectionItem(
-                      action: viewModel.campaigns.getActiveCampaigns()[index].getActions()[index],
-                      campaign: viewModel.campaigns.getActiveCampaigns()[index],
-                      outerHpadding: 10,
-                      backgroundColor: Colors.white,
-                  ),
-              ),
-              HomeButton(
-                text: "All actions",
-                changePage: changePage,
-                page: TabPage.Actions,
-              )
-              //ActionItem(user.getFollowUpAction()),
-              //TODO Work ou where follow up actions should be
-            ]
-          );
+          if (viewModel.getActiveSelectedCampaings().length == 0) {
+            return Container(
+              height: 200,
+              child: ViewCampaigns(),
+            );
+          }
+          else {
+            return Column(
+              children: <Widget>[
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: 3,
+                  itemBuilder: 
+                    (BuildContext context, int index) => 
+                      ActionSelectionItem(
+                        action: viewModel.campaigns.getActiveCampaigns()[index].getActions()[index],
+                        campaign: viewModel.campaigns.getActiveCampaigns()[index],
+                        outerHpadding: 10,
+                        backgroundColor: Colors.white,
+                    ),
+                ),
+                HomeButton(
+                  text: "All actions",
+                  changePage: changePage,
+                  page: TabPage.Actions,
+                )
+                //ActionItem(user.getFollowUpAction()),
+                //TODO Work ou where follow up actions should be
+              ]
+            );
+          }
         }
       )
             

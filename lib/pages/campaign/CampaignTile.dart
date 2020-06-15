@@ -7,7 +7,7 @@ import 'package:app/models/State.dart';
 
 import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
 import 'package:app/assets/routes/customRoute.dart';
-import 'package:app/assets/components/pointsNotifier.dart';
+import 'package:app/assets/components/joinedIndicator.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/StyleFrom.dart';
 
@@ -99,28 +99,7 @@ class _CampaignTileState extends State<CampaignTile> {
                                     color: Theme.of(context).primaryColor,
                                     borderRadius: BorderRadius.circular(15),
                                   ),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(5),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Icon(
-                                          Icons.check_circle,
-                                          color: Colors.white,
-                                          size: 20
-                                        ),
-                                        SizedBox(width: 3),
-                                        Text(
-                                          "Joined",
-                                          style: textStyleFrom(
-                                            Theme.of(context).primaryTextTheme.bodyText1,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        SizedBox(width: 5),
-                                      ],
-                                    ),
-                                  )
+                                  child: JoinedIndicator(),
                                 )
                               );
                           }

@@ -17,9 +17,13 @@ class ViewModel {
   //final User user;
   final Api api;
   final Function(Campaign, Function) onJoinCampaign;
+  final Function(Campaign) onUnjoinCampaign;
   final Function(User) onUpdateUserDetails;
   final Function(CampaignAction, Function) onCompleteAction;
   final Function(CampaignAction, String) onRejectAction;
+
+  // Helper functions
+  final Function() getActiveSelectedCampaings;
 
   ViewModel({
     this.campaigns,
@@ -27,14 +31,21 @@ class ViewModel {
     //this.user,
     this.api,
     this.onJoinCampaign,
+    this.onUnjoinCampaign,
     this.onCompleteAction,
     this.onRejectAction,
     this.onUpdateUserDetails,
+
+    // Helper functions
+    this.getActiveSelectedCampaings,
   });
 
   factory ViewModel.create(Store<AppState> store) {
     _onJoinCampaign(Campaign c, Function onSuccess) {
       store.dispatch(JoinCampaign(c, onSuccess));
+    }
+    _onUnjoinCampaign(Campaign c) {
+      store.dispatch(UnjoinCampaign(c));
     }
 
     _onCompleteAction(CampaignAction action, Function onSuccess) {
@@ -49,15 +60,24 @@ class ViewModel {
       store.dispatch(UpdateUserDetails(user));
     }
 
+    // Helper Functions
+    _getActiveSelectedCampaigns() {
+      return store.state.userState.user.filterSelectedCampaigns(store.state.campaigns.getActiveCampaigns());
+    }
+
     return ViewModel(
       campaigns: store.state.campaigns,
       userModel: UserViewModel.create(store),
       //user: store.state.userState.user,
       api: store.state.api,
       onJoinCampaign: _onJoinCampaign,
+      onUnjoinCampaign: _onUnjoinCampaign,
       onCompleteAction: _onCompleteAction,
       onRejectAction: _onRejectAction,
       onUpdateUserDetails: _onUpdateUserDetails,
+
+      // Helper Functions
+      getActiveSelectedCampaings: _getActiveSelectedCampaigns,
     );
   }
 }

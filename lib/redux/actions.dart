@@ -24,6 +24,18 @@ class JoinedCampaign {
   JoinedCampaign(this.points, this.joinedCampaigns, this.onSuccess);
 }
 
+class UnjoinCampaign {
+  final Campaign campaign;
+
+  UnjoinCampaign(this.campaign);
+}
+class UnjoinedCampaign {
+  final int points;
+  final List<int> joinedCampaigns;  
+
+  UnjoinedCampaign(this.points, this.joinedCampaigns);
+}
+
 class CompleteAction {
   final CampaignAction action;
   final User user;

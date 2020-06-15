@@ -72,6 +72,13 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
       action.onSuccess,
     ));
   }
+  if (action is UnjoinCampaign) {
+    User responseUser = await store.state.userState.auth.unjoinCampaign(store.state.userState.user.getToken(), action.campaign.getId());
+    store.dispatch(UnjoinedCampaign(
+      responseUser.getPoints(),
+      responseUser.getSelectedCampaigns(),
+    ));
+  }
   if (action is JoinedCampaign) {
     saveUserToPrefs(store.state.userState.user.copyWith(
       points: action.points,
@@ -90,6 +97,12 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
         }
       }
     );
+  }
+  if (action is UnjoinedCampaign) {
+    saveUserToPrefs(store.state.userState.user.copyWith(
+      points: action.points,
+      selectedCampaigns: action.joinedCampaigns,
+    ));
   }
 
   if (action is UpdateUserDetails) {

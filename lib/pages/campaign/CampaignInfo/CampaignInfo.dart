@@ -18,6 +18,7 @@ import 'package:app/locator.dart';
 import 'package:app/routes.dart';
 
 import 'package:app/assets/components/selectionItem.dart';
+import 'package:app/assets/components/joinedIndicator.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/darkButton.dart';
@@ -203,8 +204,8 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
   @override 
   void dispose() {
     print("Campaign info state disposed");
-    _controller.dispose();
     super.dispose();
+    _controller.dispose();
   }
   
 
@@ -213,7 +214,6 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
     return Scaffold(
       appBar: CustomAppBar(
         extraOnTap: () {
-          _controller.dispose();
         },
         text: "Campaign",
         context: context,
@@ -224,7 +224,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
               color: Theme.of(context).primaryColor,
             ),
             onPressed: () {
-              _controller.dispose();
+              //_controller.dispose();
               Navigator.push(
                 context, 
                 CustomRoute(builder: (context) => LearningCentrePage(campaign.getId()))
@@ -248,9 +248,19 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                    child: 
                     Container(
                       child:
-                        YoutubePlayer(
-                          controller: _controller,
-                          showVideoProgressIndicator: true,
+                        YoutubePlayerBuilder(
+                          player: 
+                            YoutubePlayer(
+                              controller: _controller,
+                              showVideoProgressIndicator: true,
+                            ),
+                          builder: (context, player) {
+                            return Column(
+                              children: [
+                                player,
+                              ],
+                            );
+                          },
                         ),
                       //child: Material(
                         //child: VideoPlayer(),  
@@ -289,6 +299,27 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                     ],
                   ),
                 ),
+              ),
+
+              // Joined Indicator
+              Row(
+                mainAxisSize: MainAxisSize.max, 
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  (joined) ?
+                  Padding(
+                    padding: EdgeInsets.all(12),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: JoinedIndicator(),
+                    )
+                  )
+                  :
+                  Container(),
+                ],
               ),
 
               SizedBox(height: 18),
@@ -454,7 +485,24 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                 ),
               ),
 
-              SizedBox(height: 45)
+              SizedBox(height: 20),
+              joined ?
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    "I no longer want to be part of this campaign",
+                    onClick: () {
+                      print("Unjoining campaign");
+                      model.onUnjoinCampaign(campaign);
+                      Navigator.of(context).pushNamed(Routes.campaign);
+                    },
+                  )
+                ]
+              )
+              :
+              Container(),
+              SizedBox(height: 25)
             ], 
           ),
               AnimatedPositioned(

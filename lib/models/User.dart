@@ -291,6 +291,9 @@ Map toJson() => {
   List<int> getSelectedCampaigns() {
     return selectedCampaigns ?? [];
   }
+  List<Campaign> filterSelectedCampaigns(List<Campaign> campaigns) {
+    return campaigns.where((c) => selectedCampaigns.contains(c.getId())).toList();
+  }
   int getSelectedCampaignsLength() {
     if (selectedCampaigns == null) return 0;
     else return selectedCampaigns.length;

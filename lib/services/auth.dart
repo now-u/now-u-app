@@ -147,6 +147,25 @@ class AuthenticationService {
       print("There was an error updateing user details");
       return null;
     }
-
   }
+
+  Future<User> unjoinCampaign(String token, int campaignId) async {
+    http.Response response = await http.delete(
+      domainPrefix + 'users/me/campaigns/${campaignId}',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'token': token, 
+      },
+    );
+    if (response.statusCode == 200) {
+      print("The new deets after joining campaign are");
+      print(response.body);
+      User u = User.fromJson(json.decode(response.body)["data"]);
+      return u;
+    } else {
+      print("There was an error updateing user details");
+      return null;
+    }
+  }
+  
 }

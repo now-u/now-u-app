@@ -54,6 +54,7 @@ final userStateReducer = combineReducers<UserState>([
   TypedReducer<UserState, SendingAuthEmail>(_sendingAuthEmail),
   TypedReducer<UserState, SentAuthEmail>(_sentAuthEmail),
   TypedReducer<UserState, JoinedCampaign>(_joinedCampaign),
+  TypedReducer<UserState, UnjoinedCampaign>(_unjoinedCampaign),
   TypedReducer<UserState, CompleteAction>(_completeAction),
   TypedReducer<UserState, RejectAction>(_rejectAction),
   TypedReducer<UserState, LoadedUserDataAction>(_loadedUserData),
@@ -86,6 +87,14 @@ UserState _joinedCampaign(UserState state, JoinedCampaign action) {
     selectedCampaigns: action.joinedCampaigns,
   );
   print("reduced joined campaign");
+  return state.copyWith(user: u);
+}
+UserState _unjoinedCampaign(UserState state, UnjoinedCampaign action) {
+  User u = state.user.copyWith(
+    points: action.points,
+    selectedCampaigns: action.joinedCampaigns,
+  );
+  print("reduced unjoined campaign");
   return state.copyWith(user: u);
 }
 UserState _completeAction(UserState state, CompleteAction action) {

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import 'package:app/routes.dart';
+
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/ViewModel.dart';
@@ -10,6 +12,7 @@ import 'package:app/models/State.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/components/header.dart';
+import 'package:app/assets/components/viewCampaigns.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -82,8 +85,15 @@ class _ActionPageState extends State<ActionPage> {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ViewModel>(
           onInit: (Store<AppState> store) {
-            campaign = store.state.campaigns.getActiveCampaigns()[0];
-            actions.addAll(campaign.getActions());
+            var campaigns = store.state.userState.user.filterSelectedCampaigns(store.state.campaigns.getActiveCampaigns());
+            if (campaigns.length != 0) {
+              campaign = store.state.campaigns.getActiveCampaigns()[0];
+              actions.addAll(campaign.getActions());
+            }
+            else {
+              campaign = null;
+              actions = [];
+            }
           },
           converter: (Store<AppState> store) => ViewModel.create(store),
           builder: (BuildContext context, ViewModel viewModel) {
@@ -109,21 +119,37 @@ class _ActionPageState extends State<ActionPage> {
                       height: CAMPAIGN_SELECT_HEIGHT,
                       child: PageView.builder(
                         controller: _controller,
-                        itemCount: viewModel.campaigns.getActiveCampaigns().length,
+                        itemCount: viewModel.userModel.user.getSelectedCampaigns().length + 1,
+                        //itemCount: viewModel.campaigns.getActiveCampaigns().length,
                         itemBuilder: (BuildContext context, int index) {
-                          return CampaignSelectionTile(viewModel.campaigns.getActiveCampaigns()[index]);
+                          //return CampaignSelectionTile(viewModel.campaigns.getActiveCampaigns()[index]);
+                          if (index == viewModel.userModel.user.getSelectedCampaigns().length) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushNamed(Routes.campaign);
+                              },
+                              child: AddCampaignTile(),
+                            );
+                          }
+                          return CampaignSelectionTile(viewModel.userModel.user.filterSelectedCampaigns(viewModel.campaigns.getActiveCampaigns())[index]);
                         },
                         onPageChanged: (int pageIndex) {
                           setState(() {
-                            campaign = viewModel.campaigns.getActiveCampaigns()[pageIndex];
-                            actions = getActions(campaign, selections);
+                            if (pageIndex == viewModel.userModel.user.getSelectedCampaigns().length) {
+                              campaign = null;
+                              actions = [];
+                            } else {
+                              campaign = viewModel.userModel.user.filterSelectedCampaigns(viewModel.campaigns.getActiveCampaigns())[pageIndex];
+                              actions = getActions(campaign, selections);
+                            }
                           });
                         }
                       )
                     ),
                     SmoothPageIndicator(
                       controller: _controller,
-                      count: viewModel.campaigns.getActiveCampaigns().length,
+                      //count: viewModel.campaigns.getActiveCampaigns().length,
+                      count: viewModel.userModel.user.getSelectedCampaigns().length + 1,
                       effect: WormEffect(
                         dotColor: Color.fromRGBO(150, 153, 168, 1),
                         activeDotColor: Colors.orange,
@@ -137,7 +163,11 @@ class _ActionPageState extends State<ActionPage> {
 
                     // Actions List
                     Expanded(
-                      child: ListView.builder(
+                      child: 
+                      campaign == null ?
+                      ViewCampaigns()
+                      :
+                      ListView.builder(
                         itemCount: actions.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Padding(
@@ -218,6 +248,46 @@ class CampaignSelectionTile extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   )
                 )
+              ),
+            )
+          ]
+        )
+      )
+    );
+  }
+}
+
+class AddCampaignTile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Stack(
+          children: <Widget> [
+            Stack(
+              children: <Widget>[
+                Container(
+                  height: CAMPAIGN_SELECT_HEIGHT,
+                  color: Colors.grey,
+                ),
+                Container(
+                  height: CAMPAIGN_SELECT_HEIGHT,
+                  color: colorFrom(
+                    Colors.black,
+                    opacity: 0.4,
+                  )
+                ),
+              ],
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.6,
+                child: Icon(
+                  Icons.add,
+                ),
               ),
             )
           ]
