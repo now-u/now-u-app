@@ -4,8 +4,6 @@ import 'dart:convert';
 
 import 'package:app/pages/Tabs.dart';
 import 'package:app/pages/other/SplashScreen.dart';
-import 'package:app/pages/intro/IntroPage.dart';
-import 'package:app/pages/login/login.dart';
 import 'package:app/pages/login/emailSentPage.dart';
 
 //import 'package:app/assets/dynamicLinks.dart';
@@ -127,63 +125,21 @@ class _AppState extends State<App> {
               MaterialApp(
                 title: 'Flutter Demo',
                 navigatorKey: Keys.navKey,
-                initialRoute: '/',
+                initialRoute: Routes.beta,
                 onGenerateRoute: initRoutes,
                 routes: {
                   '/': (BuildContext context) => StoreBuilder<AppState>(
                     onInitialBuild: (store) {
-                    //onInit: (store) { 
-                      //store.dispatch(GetCampaignsAction());
-                      //store.dispatch(GetUserDataAction());
                       DynamicLinkService deepLinkService = locator<DynamicLinkService>();
                       deepLinkService.getLink().then(
                         (Uri u) {
                           store.dispatch(initStore(u));
                         }
                       );
-                      //_deepLink = await getLink(); 
-                      // Dispatch getting deeplink
-
-                      //store.dispatch(InitaliseState);
-                      print("User state is: ");
-                      print(store.state.userState.user);
-                      print(store.state.userState.auth);
-                      print(store.state.userState.isLoading);
-                      print(store.state.userState.loginError);
                     },
                     builder: (BuildContext context, Store<AppState> store) =>
                       SplashScreen(),
-                      ////store.state.campaigns == null 
-                      ////|| store.state.campaigns.getActiveCampaigns() == null
-                      ////|| store.state.campaigns.activeLength() < 3
-                      //store.state.loading ?
-                      //// Whilst loading show loading screen
-                      //SplashScreen() 
-                      //:
-                      //// If user has no email
-                      //store.state.userState.user == null ?
-                      ////store.state.link != null && store.state.link.path == "emaillogin"?
-                      ////LoginPage(deeplink: store.state.link)
-                      ////:
-                      //// If deeplink path is emaillogin
-                      //// Go to login page with deeplink
-                      //// Otherwise
-                      //// Go without deeplink login
-                      //LoginPage()
-                      //:
-                      //// Otherwise if the user has an email ie has been set up carry on
-                      //MyHomePage(deepLinkPageIndex),
                   ),
-                  Routes.login: (context) => LoginPage(),
-                  //Routes.authEmailSent: (context) => EmailSentPage(),
-                  Routes.intro: (context) => IntroPage(),
-                  //Routes.home: (context) => MyHomePage(3),
-                  //'/campaign': (context) => TabsPage(currentPage: TabPage.Campaigns),
-                  //'/home': (context) => TabsPage(currentPage: TabPage.Home),
-                  //TODO add login point
-                  //'logoin': 
-                  //TODO splash screen should be a route
-                  //'splashscreen': (context) =>
                 },
 
                 theme: ThemeData(
@@ -268,93 +224,10 @@ class _AppState extends State<App> {
                   //textSelectionColor: white, // Text used on top of 
 
                 ),
-                //home: 
-                //  StoreBuilder<AppState>(
-                //    onInit: (store) { 
-                //      store.dispatch(GetCampaignsAction());
-                //      store.dispatch(GetUserDataAction());
-                //      //store.dispatch(InitaliseState);
-                //    },
-                //    builder: (BuildContext context, Store<AppState> store) =>
-                //      //store.state.campaigns == null 
-                //      //|| store.state.campaigns.getActiveCampaigns() == null
-                //      //|| store.state.campaigns.activeLength() < 3
-                //      store.state.loading
-                //      ?
-                //      SplashScreen()
-                //      //Container(
-                //      //  color: Colors.red,
-                //      //  height: MediaQuery.of(context).size.height,
-                //      //  width: MediaQuery.of(context).size.width,
-                //      //)
-                //      :
-                //      MyHomePage(store, deepLinkPageIndex),
-                //  )  
                )
             );
           //}
         //),
       //);
-  }
-}
-
-
-// TODO this can go its useless
-class MyHomePage extends StatefulWidget {
-  final int currentIndex;
-
-  MyHomePage(this.currentIndex);
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
-
-  DevToolsStore<AppState> store;
-  int currentIndex;
-
-  @override
-  void initState() {
-    currentIndex = widget.currentIndex;
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-  } 
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if(state == AppLifecycleState.resumed){
-      print("App resumed");
-      //Function onClick = (int index) {
-      //  print("Setting current index");
-      //  setState(() {
-      //    currentIndex = index;
-      //  });
-      //};
-      //handleDynamicLinks(
-      //  onClick 
-      //);
-    }
-  }
-
-  @override 
-  Widget build(BuildContext context) {
-  print("The currentIndex is");
-  print(currentIndex);
-    return
-      StoreConnector<AppState, ViewModel>(
-          converter: (Store<AppState> store) => ViewModel.create(store),
-          builder: (BuildContext context, ViewModel viewModel) {
-            print("Before splash screen user is");
-            //print(viewModel.user.getName());
-            print(currentIndex);
-            return TabsPage(currentPage: TabPage.Home);
-          },
-      );
   }
 }

@@ -6,27 +6,49 @@ import 'package:app/main.dart';
 import 'package:app/pages/profile/profilePages/FAQPage.dart';
 import 'package:app/pages/profile/profilePages/ProfilePage.dart';
 import 'package:app/pages/profile/profilePages/PartnersPage.dart';
+import 'package:app/pages/intro/IntroPage.dart';
+import 'package:app/pages/login/login.dart';
+import 'package:app/pages/other/BetaPage.dart';
 import 'package:app/pages/Tabs.dart';
 
 
 class Routes {
-  static final intro = "intro";
-  static final login = "login";
-
-  static const profile = "profile";
-  static const faq = "faq";
-  static const parteners = "parteners";
+  // Intro
+  static const intro = "intro";
+  static const login = "login";
 
   // Tab View Routes
   static const campaign = "campaign";
   static const actions = "actions";
   static const home = "home";
+  
+  // Other
+  static const profile = "profile";
+  static const faq = "faq";
+  static const parteners = "parteners";
+ 
+  // Beta only
+  static const beta = "beta";
 //  static final authEmailSent = "authEmailSent";
 }
 
 Function initRoutes =
   (RouteSettings settings) {
     switch (settings.name) {
+
+      // Into
+      case Routes.login: {
+        return CustomRoute(
+          builder: (context) => LoginPage()
+        );
+      }
+      case Routes.intro: {
+        return CustomRoute(
+          builder: (context) => IntroPage()
+        );
+      }
+
+
       case Routes.profile: {
         return CustomRoute(
           builder: (context) => ProfilePage()
@@ -42,6 +64,8 @@ Function initRoutes =
           builder: (context) => PartnersPage()
         );
       }
+
+      // Tab page
       case Routes.home: {
         return CustomRoute(
           builder: (context) => TabsPage(currentPage: TabPage.Home)
@@ -57,10 +81,18 @@ Function initRoutes =
           builder: (context) => TabsPage(currentPage: TabPage.Actions)
         );
       }
+
+      // Beta 
+      case Routes.beta: {
+        return CustomRoute(
+          builder: (context) => BetaPage()
+        );
+      }
+
       // TODO add a 404 page
       default: {
         return CustomRoute(
-          builder: (context) => MyHomePage(3)
+          builder: (context) => TabsPage(currentPage: TabPage.Home)
         );
       }
     }

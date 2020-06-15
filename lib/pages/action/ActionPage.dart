@@ -100,12 +100,19 @@ class _ActionPageState extends State<ActionPage> {
             var campaigns = store.state.userState.user.filterSelectedCampaigns(store.state.campaigns.getActiveCampaigns());
             if (campaigns.length != 0) {
               campaign = store.state.campaigns.getActiveCampaigns()[0];
-              actions.addAll(campaign.getActions());
+
+              // TODO make this not add all the actions -> only those that are not selected
+              // actions.addAll(campaign.getActions());
             }
             else {
               campaign = null;
               actions = [];
             }
+          },
+          onInitialBuild: (ViewModel model) {
+            setState(() {
+              actions = getActions(campaign, selections, model);
+            });
           },
           converter: (Store<AppState> store) => ViewModel.create(store),
           builder: (BuildContext context, ViewModel viewModel) {
