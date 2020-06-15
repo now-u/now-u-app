@@ -47,6 +47,9 @@ bool hasSelected (Map sel) {
 
 List<CampaignAction> getActions(Campaign campaign, Map<String, Map> selections) {
   List<CampaignAction> tmpActions = [];
+  if (campaign == null) {
+    return tmpActions;
+  }
   tmpActions.addAll(campaign.getActions());
   if (hasSelected(selections['times'])) {
     // Remove the ones with the wrong times
@@ -119,7 +122,12 @@ class _ActionPageState extends State<ActionPage> {
                       height: CAMPAIGN_SELECT_HEIGHT,
                       child: PageView.builder(
                         controller: _controller,
-                        itemCount: viewModel.userModel.user.getSelectedCampaigns().length + 1,
+                        itemCount: 
+                          // If all the active campaigns have been joined
+                          viewModel.getActiveSelectedCampaings().length == viewModel.campaigns.getActiveCampaigns().length ?
+                          viewModel.userModel.user.getSelectedCampaigns().length
+                          :
+                          viewModel.userModel.user.getSelectedCampaigns().length + 1,
                         //itemCount: viewModel.campaigns.getActiveCampaigns().length,
                         itemBuilder: (BuildContext context, int index) {
                           //return CampaignSelectionTile(viewModel.campaigns.getActiveCampaigns()[index]);
@@ -149,7 +157,11 @@ class _ActionPageState extends State<ActionPage> {
                     SmoothPageIndicator(
                       controller: _controller,
                       //count: viewModel.campaigns.getActiveCampaigns().length,
-                      count: viewModel.userModel.user.getSelectedCampaigns().length + 1,
+                      count: 
+                        viewModel.getActiveSelectedCampaings().length == viewModel.campaigns.getActiveCampaigns().length ?
+                        viewModel.userModel.user.getSelectedCampaigns().length
+                        :
+                        viewModel.userModel.user.getSelectedCampaigns().length + 1,
                       effect: WormEffect(
                         dotColor: Color.fromRGBO(150, 153, 168, 1),
                         activeDotColor: Colors.orange,
