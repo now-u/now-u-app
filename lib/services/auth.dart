@@ -130,6 +130,30 @@ class AuthenticationService {
     }
   }
 
+  Future<User> rejectAction(String token, int actionId, String reason) async {
+    Map jsonBody = {'reason': reason};
+    http.Response response = await http.post(
+      domainPrefix + 'users/me/actions/${actionId}/reject',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'token': token,
+      },
+      body: json.encode(jsonBody),
+    );
+    if (response.statusCode == 200) {
+      print("The new deets after joining campaign are");
+      print(response.body);
+      User u = User.fromJson(json.decode(response.body)['data']);
+      return u;
+    } else {
+      print("There was an error updating user details");
+      print(response.body);
+      print("The token was ${token}");
+      print("The actionId was ${actionId.toString()}");
+      return null;
+    }
+  }
+
   Future<User> joinCampaign(String token, int campaignId) async {
     http.Response response = await http.post(
       domainPrefix + 'users/me/campaigns/${campaignId}',

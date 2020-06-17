@@ -131,6 +131,21 @@ void appStateMiddleware(
   }
 
   if (action is GetDynamicLink) {}
+
+  if (action is RejectAction) {
+    var responseUser = await store.state.userState.auth.rejectAction(
+        store.state.userState.user.getToken(),
+        action.action.getId(),
+        action.reason);
+    User newUser = store.state.userState.user.copyWith(
+      points: responseUser.getPoints(),
+      rejectedActions: responseUser.getRejectedActions(),
+    );
+
+    saveUserToPrefs(newUser).then((_) {
+      store.dispatch(RejectedAction(newUser));
+    });
+  }
 }
 
 ThunkAction<AppState> joinCampaign(Campaign campaign, BuildContext context) {

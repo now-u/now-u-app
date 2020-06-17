@@ -5,6 +5,7 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/Reward.dart';
 import 'package:app/models/State.dart';
+import 'package:app/routes.dart';
 
 import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
 import 'package:app/pages/other/RewardComplete.dart';
@@ -321,7 +322,7 @@ class _RejectDialougeState extends State<RejectDialogue> {
                       : () {
                           widget.model
                               .onRejectAction(widget.action, selectedReason);
-                          Navigator.pop(context);
+                          Navigator.of(context).pushNamed(Routes.actions);
                         },
                 ),
               ),

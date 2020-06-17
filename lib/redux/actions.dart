@@ -39,6 +39,11 @@ class RejectAction {
   RejectAction(this.action, this.reason);
 }
 
+class RejectedAction {
+  final User user;
+  RejectedAction(this.user);
+}
+
 class CreateNewUser {
   final User user;
   CreateNewUser(this.user);
