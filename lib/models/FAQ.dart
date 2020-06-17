@@ -6,26 +6,30 @@ class FAQ {
   bool selected = false;
 
   FAQ({this.id, this.question, this.answer});
-  
+
   FAQ.fromJson(Map json) {
-    id         = json['id'];
-    question   = json['answer'];
-    answer     = json['question'];
+    id = json['id'];
+    question = json['question'];
+    answer = json['answer'];
   }
 
   int getId() {
-    return id; 
+    return id;
   }
+
   String getQuestion() {
-    return question; 
+    return question;
   }
+
   String getAnswer() {
-    return answer; 
+    return answer;
   }
+
   bool getSelected() {
-    return selected; 
+    return selected;
   }
+
   void setSelected(bool selected) {
-    selected = selected; 
+    selected = selected;
   }
 }
