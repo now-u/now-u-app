@@ -17,27 +17,27 @@ import 'package:app/routes.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/progress.dart';
 
-void joinCampaign(
-    ViewModel viewModel, BuildContext context, Campaign campaign) {
-  if (!viewModel.userModel.user
-      .getSelectedCampaigns()
-      .contains(campaign.getId())) {
-    //viewModel.userModel.user.addSelectedCamaping(campaign.getId());
-    viewModel.onJoinCampaign(campaign,
-        (int points, int userPoints, int nextBadgePoints, bool newBadge) {
-      if (!newBadge) {
-        pointsNotifier(userPoints, points, nextBadgePoints, context)
-          ..show(context);
-      } else {
-        Text("You did not get a new badge");
-        gotBadgeNotifier(
-          badge: getNextBadgeFromInt(userPoints),
-          context: context,
-        );
-      }
-    });
-  }
-}
+//void joinCampaign(
+//    ViewModel viewModel, BuildContext context, Campaign campaign) {
+//  if (!viewModel.userModel.user
+//      .getSelectedCampaigns()
+//      .contains(campaign.getId())) {
+//    //viewModel.userModel.user.addSelectedCamaping(campaign.getId());
+//    viewModel.onJoinCampaign(campaign,
+//        (int points, int userPoints, int nextBadgePoints, bool newBadge) {
+//      if (!newBadge) {
+//        pointsNotifier(userPoints, points, nextBadgePoints, context)
+//          ..show(context);
+//      } else {
+//        Text("You did not get a new badge");
+//        gotBadgeNotifier(
+//          badge: getNextBadgeFromInt(userPoints),
+//          context: context,
+//        );
+//      }
+//    });
+//  }
+//}
 
 // WARNING
 // This has got terrible out of hand

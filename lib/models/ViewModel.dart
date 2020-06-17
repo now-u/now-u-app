@@ -18,7 +18,7 @@ class ViewModel {
   final UserViewModel userModel;
   //final User user;
   final Api api;
-  final Function(Campaign, Function) onJoinCampaign;
+  final Function(Campaign, BuildContext) onJoinCampaign;
   final Function(Campaign) onUnjoinCampaign;
   final Function(User) onUpdateUserDetails;
   final Function(CampaignAction, BuildContext) onCompleteAction;
@@ -46,8 +46,8 @@ class ViewModel {
   });
 
   factory ViewModel.create(Store<AppState> store) {
-    _onJoinCampaign(Campaign c, Function onSuccess) {
-      store.dispatch(JoinCampaign(c, onSuccess));
+    _onJoinCampaign(Campaign campaign, BuildContext context) {
+      store.dispatch(joinCampaign(campaign, context));
     }
 
     _onUnjoinCampaign(Campaign c) {

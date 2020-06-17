@@ -11,6 +11,7 @@ import 'package:redux_thunk/redux_thunk.dart';
 import 'package:app/models/State.dart';
 import 'package:app/models/User.dart';
 import 'package:app/models/Campaigns.dart';
+import 'package:app/models/Campaign.dart';
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Badge.dart';
@@ -67,15 +68,6 @@ void appStateMiddleware(
 
   if (action is InitaliseState) {}
 
-  if (action is JoinCampaign) {
-    User responseUser = await store.state.userState.auth.joinCampaign(
-        store.state.userState.user.getToken(), action.campaign.getId());
-    store.dispatch(JoinedCampaign(
-      responseUser.getPoints(),
-      responseUser.getSelectedCampaigns(),
-      action.onSuccess,
-    ));
-  }
   if (action is UnjoinCampaign) {
     User responseUser = await store.state.userState.auth.unjoinCampaign(
         store.state.userState.user.getToken(), action.campaign.getId());
@@ -83,24 +75,6 @@ void appStateMiddleware(
       responseUser.getPoints(),
       responseUser.getSelectedCampaigns(),
     ));
-  }
-  if (action is JoinedCampaign) {
-    saveUserToPrefs(store.state.userState.user.copyWith(
-      points: action.points,
-      selectedCampaigns: action.joinedCampaigns,
-    )).then((dynamic d) {
-      print("Campaign has been selected now running onSuccess");
-      print("The user has ${store.state.userState.user.getPoints()} points");
-      // If adding the 10 points earnt you a badge then dont do the thing
-      if (getNextBadge(store.state.userState.user.getPoints()) ==
-          getNextBadge(action.points)) {
-        action.onSuccess(action.points, 10, getNextBadge(action.points), false);
-      }
-      // Instead to the popup
-      else {
-        action.onSuccess(action.points, 10, getNextBadge(action.points), true);
-      }
-    });
   }
   if (action is UnjoinedCampaign) {
     saveUserToPrefs(store.state.userState.user.copyWith(
@@ -157,6 +131,51 @@ void appStateMiddleware(
   }
 
   if (action is GetDynamicLink) {}
+}
+
+ThunkAction<AppState> joinCampaign(Campaign campaign, BuildContext context) {
+  return (Store<AppState> store) async {
+    Future(() async {
+      if (store.state.userState.user
+          .getSelectedCampaigns()
+          .contains(campaign.getId())) {
+        print("This campaigns has already been joined");
+        return;
+      }
+      User responseUser = await store.state.userState.auth.joinCampaign(
+          store.state.userState.user.getToken(), campaign.getId());
+
+      User newUser = store.state.userState.user.copyWith(
+        points: responseUser.getPoints(),
+        selectedCampaigns: responseUser.getSelectedCampaigns(),
+      );
+      //viewModel.userModel.user.addSelectedCamaping(campaign.getId());
+      int newPoints = newUser.getPoints();
+      int oldPoints = store.state.userState.user.getPoints();
+
+      print("Points");
+      print(newPoints);
+      print(oldPoints);
+
+      saveUserToPrefs(newUser).then((_) {
+        store.dispatch(JoinedCampaign(newUser));
+        // If the users new next badge is different to their current badge
+        // Then they must have earnt a new badge
+        if (getNextBadge(newPoints) > getNextBadge(oldPoints)) {
+          print("New badge");
+          // Do the new badge popup
+          // If you did get a new badge then show that popup
+          gotBadgeNotifier(
+            badge: getNextBadgeFromInt(oldPoints),
+            context: context,
+          );
+        } else {
+          pointsNotifier(newPoints, 10, getNextBadge(newPoints), context)
+            ..show(context);
+        }
+      });
+    });
+  };
 }
 
 ThunkAction<AppState> completeAction(

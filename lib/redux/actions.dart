@@ -10,19 +10,9 @@ class InitalisedState {
   InitalisedState();
 }
 
-class JoinCampaign {
-  final Campaign campaign;
-  final Function onSuccess;
-
-  JoinCampaign(this.campaign, this.onSuccess);
-}
-
 class JoinedCampaign {
-  final int points;
-  final List<int> joinedCampaigns;
-  final Function onSuccess;
-
-  JoinedCampaign(this.points, this.joinedCampaigns, this.onSuccess);
+  User user;
+  JoinedCampaign(this.user);
 }
 
 class UnjoinCampaign {

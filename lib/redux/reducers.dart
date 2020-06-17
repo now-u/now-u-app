@@ -83,12 +83,7 @@ UserState _sendingAuthEmail(UserState state, SendingAuthEmail action) {
 }
 
 UserState _joinedCampaign(UserState state, JoinedCampaign action) {
-  User u = state.user.copyWith(
-    points: action.points,
-    selectedCampaigns: action.joinedCampaigns,
-  );
-  print("reduced joined campaign");
-  return state.copyWith(user: u);
+  return state.copyWith(user: action.user);
 }
 
 UserState _unjoinedCampaign(UserState state, UnjoinedCampaign action) {
