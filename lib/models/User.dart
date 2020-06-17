@@ -23,9 +23,11 @@ class User {
   bool homeOwner;
 
   // Progress (All data stored as ids)
-  List<int> selectedCampaigns = []; // Stores all campaings that have been selected (including old ones)
-  List<int> completedCampaigns = []; // Stores campaings where all actions have been completed (maybe we should do 80% of something)
-  //List<int> completedRewards = []; 
+  List<int> selectedCampaigns =
+      []; // Stores all campaings that have been selected (including old ones)
+  List<int> completedCampaigns =
+      []; // Stores campaings where all actions have been completed (maybe we should do 80% of something)
+  //List<int> completedRewards = [];
   List<int> completedActions = [];
 
   // Key is rejected id
@@ -33,13 +35,28 @@ class User {
   List<int> rejectedActions = [];
 
   Map<CampaignActionType, int> completedActionsType;
-  
+
   int points;
 
   String token;
-  
-  User({id, token, fullName, email, dateOfBirth, location, monthlyDonationLimit, homeOwner, selectedCampaigns, completedCampaigns, completedActions, rejectedActions, completedRewards, completedActionsType, points}) {
-    this.id = id; 
+
+  User(
+      {id,
+      token,
+      fullName,
+      email,
+      dateOfBirth,
+      location,
+      monthlyDonationLimit,
+      homeOwner,
+      selectedCampaigns,
+      completedCampaigns,
+      completedActions,
+      rejectedActions,
+      completedRewards,
+      completedActionsType,
+      points}) {
+    this.id = id;
     this.fullName = fullName;
     this.email = email;
     this.dateOfBirth = dateOfBirth;
@@ -51,25 +68,23 @@ class User {
     this.completedActions = completedActions ?? [];
     this.rejectedActions = rejectedActions ?? [];
     //this.completedRewards = completedRewards ?? [];
-    
-    this.completedActionsType = 
-        completedActionsType ?? initCompletedAction();
+
+    this.completedActionsType = completedActionsType ?? initCompletedAction();
 
     this.points = points ?? 0;
 
     this.token = token;
   }
 
-
-  // This will be removed real soon cause if the user token is null then we need to login again 
-  User.empty(){
-    id= -1;
-    fullName= "unknown";
+  // This will be removed real soon cause if the user token is null then we need to login again
+  User.empty() {
+    id = -1;
+    fullName = "unknown";
     email = "unknown";
     dateOfBirth = "00/00/0000";
-    location= "uknown";
-    monthlyDonationLimit= -1;
-    homeOwner= false;
+    location = "uknown";
+    monthlyDonationLimit = -1;
+    homeOwner = false;
     selectedCampaigns = [];
     completedCampaigns = [];
     //completedRewards = [];
@@ -98,11 +113,8 @@ class User {
     //List<int> completedRewards,
     List<int> completedActions,
     List<int> rejectedActions,
-
     Map<CampaignActionType, int> completedActionsType,
-
     int points,
-
     String token,
   }) {
     return User(
@@ -124,7 +136,9 @@ class User {
     );
   }
 
-  User.fromJson(Map json, ) {
+  User.fromJson(
+    Map json,
+  ) {
     print("Getting user deets");
     id = json['id'];
     fullName = json['full_name'];
@@ -137,94 +151,100 @@ class User {
     print("Getting up to selectedCampaigns");
     // For cast not to throw null exception must be a default value of [] in User class
     selectedCampaigns =
-      json['selected_campaigns'] == null  || json['selected_campaigns'].isEmpty ? <int>[] :
-      json['selected_campaigns'].cast<int>();
+        json['selected_campaigns'] == null || json['selected_campaigns'].isEmpty
+            ? <int>[]
+            : json['selected_campaigns'].cast<int>();
     print("Getting up to completed campaigns");
-    completedCampaigns =
-      json['completed_campaigns'] == null  || json['completed_campaigns'].isEmpty ? <int>[] :
-      json['completed_campaigns'].cast<int>();
+    completedCampaigns = json['completed_campaigns'] == null ||
+            json['completed_campaigns'].isEmpty
+        ? <int>[]
+        : json['completed_campaigns'].cast<int>();
     print("Getting up to completed actions");
     completedActions =
-      json['completed_actions'] == null  || json['completed_actions'].isEmpty ? <int>[] :
-      json['completed_actions'].cast<int>();
+        json['completed_actions'] == null || json['completed_actions'].isEmpty
+            ? <int>[]
+            : json['completed_actions'].cast<int>();
     rejectedActions =
-      json['rejected_actions'] == null  || json['rejected_actions'].isEmpty ? <int>[] :
-      json['rejected_actions'].cast<int>();
-    //selectedCampaigns = 
+        json['rejected_actions'] == null || json['rejected_actions'].isEmpty
+            ? <int>[]
+            : json['rejected_actions'].cast<int>();
+    //selectedCampaigns =
     //      json['selected_campaigns'] == null  || json['selected_campaigns'].isEmpty ? <int>[] :
-    //      (json['selected_campaigns']).map((c) { 
+    //      (json['selected_campaigns']).map((c) {
     //        if (c is int) {
     //          // If we are dealing with a list of ints
     //          return c;
     //        }
     //        // Else get the item from the map
-    //        return c['id']; 
+    //        return c['id'];
     //      }).toList().cast<int>();
     //      // Campaigns.fromJson(json['selected_campaigns']).getActiveCampaigns().map((c) => c.getId()).toList().cast<int>();
     //print("Got the selected campaigns");
-    //completedCampaigns = 
+    //completedCampaigns =
     //      json['completed_campaigns'] == null  || json['completed_campaigns'].isEmpty ? <int>[] :
-    //      (json['completed_campaigns']).map((c) { 
+    //      (json['completed_campaigns']).map((c) {
     //        if (c is int) {
     //          // If we are dealing with a list of ints
     //          return c;
     //        }
     //        // Else get the item from the map
-    //        return c['id']; 
+    //        return c['id'];
     //      }).toList().cast<int>();
-    //completedActions = 
+    //completedActions =
     //      json['completed_actions'] == null  || json['completed_actions'].isEmpty ? <int>[] :
-    //      (json['completed_actions']).map((c) { 
+    //      (json['completed_actions']).map((c) {
     //        if (c is int) {
     //          // If we are dealing with a list of ints
     //          return c;
     //        }
     //        // Else get the item from the map
-    //        return c['id']; 
+    //        return c['id'];
     //      }).toList().cast<int>();
-    //rejectedActions = 
+    //rejectedActions =
     //      json['rejected_actions'] == null  || json['rejected_actions'].isEmpty ? <int>[] :
-    //      (json['rejected_actions']).map((c) { 
+    //      (json['rejected_actions']).map((c) {
     //        if (c is int) {
     //          // If we are dealing with a list of ints
     //          return c;
     //        }
     //        // Else get the item from the map
-    //        return c['id']; 
+    //        return c['id'];
     //      }).toList().cast<int>();
-    //completedRewards = 
-    //    json['completed_rewards'] == null ? <int>[] : 
+    //completedRewards =
+    //    json['completed_rewards'] == null ? <int>[] :
     //    json['completed_rewards'].cast<int>();
 
-    
-    completedActionsType = json['completed_actions_type'] == null ? this.initCompletedAction() : campaignActionTypesDecode(json['completed_actions_type'].cast<int>());
-    
+    completedActionsType = json['completed_actions_type'] == null
+        ? this.initCompletedAction()
+        : campaignActionTypesDecode(json['completed_actions_type'].cast<int>());
+
     points = json['points'] ?? 0;
     token = json['token'];
     print("Got new user");
   }
-Map toJson() => {
-    'id': id, 
-    'full_name': fullName, 
-    'email': email, 
-    'date_of_birth': dateOfBirth, 
-    'location': location, 
-    'monthly_donation_limit': monthlyDonationLimit, 
-    'home_owner': homeOwner, 
-    'selected_campaigns': selectedCampaigns, 
-    'completed_campaigns': completedCampaigns, 
-    'completed_actions': completedActions, 
-    'rejected_actions': rejectedActions, 
-    //'completed_rewards': completedRewards, 
-    'completed_actions_type': campaignActionTypesEncode(completedActionsType), 
-    'points': points, 
-    'token': token,
-  };
+  Map toJson() => {
+        'id': id,
+        'full_name': fullName,
+        'email': email,
+        'date_of_birth': dateOfBirth,
+        'location': location,
+        'monthly_donation_limit': monthlyDonationLimit,
+        'home_owner': homeOwner,
+        'selected_campaigns': selectedCampaigns,
+        'completed_campaigns': completedCampaigns,
+        'completed_actions': completedActions,
+        'rejected_actions': rejectedActions,
+        //'completed_rewards': completedRewards,
+        'completed_actions_type':
+            campaignActionTypesEncode(completedActionsType),
+        'points': points,
+        'token': token,
+      };
 
-  Map getAttributes () {
+  Map getAttributes() {
     return {
-      //'id' : id, 
-      'full_name': fullName, 
+      //'id' : id,
+      'full_name': fullName,
       'email': email,
       'date_of_birth': dateOfBirth,
       'location': location,
@@ -232,114 +252,148 @@ Map toJson() => {
       'home_owner': homeOwner,
     };
   }
-  void setAttribute (String k, v) {
+
+  void setAttribute(String k, v) {
     switch (k) {
-      case 'full_name': {
-        this.setName(v.toString());
-        break;
-      }
-      case 'email': {
-        this.setEmail(v.toString());
-        break;
-      }
-      case 'date_of_birth': {
-        print("Settting attribute dob");
-        this.setDateOfBirth(v.toString());
-        break;
-      }
-      case 'location': {
-        this.setLocation(v.toString());
-        break;
-      }
-      case 'monthly_donation_limit': {
-        this.setMonthlyDonationLimit(v);
-        break;
-      }
-      case 'home_owner': {
-        bool value = v;
-        this.setHomeOwner(value);
-        break;
-      }
-    }     
+      case 'full_name':
+        {
+          this.setName(v.toString());
+          break;
+        }
+      case 'email':
+        {
+          this.setEmail(v.toString());
+          break;
+        }
+      case 'date_of_birth':
+        {
+          print("Settting attribute dob");
+          this.setDateOfBirth(v.toString());
+          break;
+        }
+      case 'location':
+        {
+          this.setLocation(v.toString());
+          break;
+        }
+      case 'monthly_donation_limit':
+        {
+          this.setMonthlyDonationLimit(v);
+          break;
+        }
+      case 'home_owner':
+        {
+          bool value = v;
+          this.setHomeOwner(value);
+          break;
+        }
+    }
   }
 
   int getId() {
-    return id; 
+    return id;
   }
+
   String getName() {
-    return fullName; 
+    return fullName;
   }
+
   String getEmail() {
-    return email; 
+    return email;
   }
+
   String getDateOfBirth() {
-    return dateOfBirth; 
+    return dateOfBirth;
   }
+
   int getAge() {
     //TODO calculate from dob
     return -1;
   }
+
   String getLocation() {
     return location;
   }
+
   double getMonthlyDonationLimit() {
     return monthlyDonationLimit;
   }
+
   bool getHomeOwner() {
     return homeOwner;
   }
+
   List<int> getSelectedCampaigns() {
     return selectedCampaigns ?? [];
   }
+
   List<Campaign> filterSelectedCampaigns(List<Campaign> campaigns) {
-    return campaigns.where((c) => selectedCampaigns.contains(c.getId())).toList();
+    return campaigns
+        .where((c) => selectedCampaigns.contains(c.getId()))
+        .toList();
   }
+
   int getSelectedCampaignsLength() {
-    if (selectedCampaigns == null) return 0;
-    else return selectedCampaigns.length;
+    if (selectedCampaigns == null)
+      return 0;
+    else
+      return selectedCampaigns.length;
   }
+
   List<int> getCompletedActions() {
-    return completedActions; 
+    return completedActions;
   }
+
   int getPoints() {
     return points;
   }
+
   String getToken() {
     return token;
   }
+
   List<int> getRejectedActions() {
     return rejectedActions;
   }
 
   void setName(String name) {
-    this.fullName = name; 
+    this.fullName = name;
   }
+
   void setEmail(String email) {
-    this.email = email; 
+    this.email = email;
   }
+
   void setDateOfBirth(String dob) {
     print("The user's new data of birth is" + dob);
-    this.dateOfBirth = dateOfBirth; 
+    this.dateOfBirth = dateOfBirth;
   }
+
   void setLocation(location) {
     this.location = location;
   }
+
   void setMonthlyDonationLimit(double monthlyDonationLimit) {
     this.monthlyDonationLimit = monthlyDonationLimit;
   }
+
   void setHomeOwner(bool homeOwner) {
     this.homeOwner = homeOwner;
   }
+
   void setPoints(int points) {
     this.points = points;
   }
+
   void setToken(String token) {
     this.token = token;
   }
+
   void incrementPoints(int points) {
     this.points += points;
     print("User points are now " + this.points.toString());
   }
+
   void decrementPoints(int points) {
     this.points -= points;
     print("User points are now " + this.points.toString());
@@ -355,26 +409,28 @@ Map toJson() => {
       incrementPoints(pointsForJoiningCampaign);
     }
   }
+
   void removeSelectedCamaping(int id) {
     this.selectedCampaigns.remove(id);
     decrementPoints(pointsForJoiningCampaign);
   }
 
   double getCampaignProgress(Campaign campaign) {
-     return numberOfCompletedActionsForCampaign(campaign) / campaign.getActions().length;
+    return numberOfCompletedActionsForCampaign(campaign) /
+        campaign.getActions().length;
   }
 
   int numberOfCompletedActionsForCampaign(Campaign campaign) {
     int count = 0;
     List<CampaignAction> actions = campaign.getActions();
-    for(int i = 0; i < actions.length; i++){
-      if( this.completedActions.contains(actions[i].getId()) ) {
+    for (int i = 0; i < actions.length; i++) {
+      if (this.completedActions.contains(actions[i].getId())) {
         count++;
       }
-    } 
+    }
     return count;
   }
-  
+
   double getActiveCampaignsProgress(Campaigns campaigns) {
     double total = 0;
     for (int i = 0; i < campaigns.activeLength(); i++) {
@@ -382,8 +438,6 @@ Map toJson() => {
     }
     return total / campaigns.activeLength();
   }
-
-
 
   // Progress
   // Return the reward progress
@@ -393,31 +447,28 @@ Map toJson() => {
     int count = 0;
     if (type == RewardType.CompletedActionsNumber) {
       count = this.completedActions.length;
-    }
-    else if (type == RewardType.CompletedCampaignsNumber) {
+    } else if (type == RewardType.CompletedCampaignsNumber) {
       count = this.completedCampaigns.length;
-    } 
-    else if (type == RewardType.SelectInOneMonthCampaignsNumber) {
+    } else if (type == RewardType.SelectInOneMonthCampaignsNumber) {
       count = this.selectedCampaigns.length;
-    }
-    else if (type == RewardType.CompletedTypedActionsNumber) {
+    } else if (type == RewardType.CompletedTypedActionsNumber) {
       if (reward.getActionType() == null) {
-        print("A CompletedTypedActionsNumber reward requires a CampaignActionType");
+        print(
+            "A CompletedTypedActionsNumber reward requires a CampaignActionType");
         return 0;
-      }
-      else {
+      } else {
         count = this.completedActionsType[reward.getActionType()];
       }
     }
 
-    // return 
+    // return
     if (count > reward.successNumber) {
       //completeReward(reward);
       return 1;
-    } 
+    }
     return count / reward.successNumber;
   }
- 
+
   void completeAction(CampaignAction a, {Function onCompleteReward}) {
     if (completedActions.contains(a.getId())) {
       print("You can only complete an action once");
@@ -429,40 +480,36 @@ Map toJson() => {
     print(a.getType().toString());
     print(completedActionsType[a.getType()]);
   }
+
   void rejectAction(CampaignAction a) {
     rejectedActions.add(a.getId());
   }
 
   bool isMilestone(int x) {
-    if ( x < 300 ) {
+    if (x < 300) {
       return rewardValues.contains(x);
-    }
-    else 
+    } else
       return x % 50 == 0;
   }
 
   // Returns the news rewards completed when this action is completed
   List<Reward> newlyCompletedRewards(CampaignAction completedAction) {
     List<Reward> newRewards = [];
-    if (isMilestone(completedActions.length+1)) {
-      newRewards.add(
-        Reward(
-          successNumber: completedActions.length+1,
-          type: RewardType.CompletedActionsNumber,
-          //title: nextValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ nextValue(v, rewardValues)} ${ k.toString() }",
-        )
-      );
+    if (isMilestone(completedActions.length + 1)) {
+      newRewards.add(Reward(
+        successNumber: completedActions.length + 1,
+        type: RewardType.CompletedActionsNumber,
+        //title: nextValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ nextValue(v, rewardValues)} ${ k.toString() }",
+      ));
     }
     print(completedAction.getType());
     print(this.completedActionsType);
-    if (isMilestone(completedActionsType[completedAction.getType()]+1)) {
-      newRewards.add(
-        Reward(
-          successNumber: completedActionsType[completedAction.getType()] + 1,
-          type: RewardType.CompletedTypedActionsNumber,
-          actionType: completedAction.getType(),
-        ) 
-      );
+    if (isMilestone(completedActionsType[completedAction.getType()] + 1)) {
+      newRewards.add(Reward(
+        successNumber: completedActionsType[completedAction.getType()] + 1,
+        type: RewardType.CompletedTypedActionsNumber,
+        actionType: completedAction.getType(),
+      ));
     }
     return newRewards;
   }
@@ -475,7 +522,7 @@ Map toJson() => {
   bool isCompleted(CampaignAction a) {
     return completedActions.contains(a.getId());
   }
-  
+
   Map<CampaignActionType, int> initCompletedAction() {
     Map<CampaignActionType, int> cas = {};
     List<CampaignActionType> types = CampaignActionType.values;
@@ -488,92 +535,81 @@ Map toJson() => {
     return cas;
   }
 
-  int nextValue (int x, List<int> nums) {
-    for ( int i = 0; i < nums.length; i++ ) {
-      if(rewardValues[i] > x) return rewardValues[i];
+  int nextValue(int x, List<int> nums) {
+    for (int i = 0; i < nums.length; i++) {
+      if (rewardValues[i] > x) return rewardValues[i];
     }
     return ((x % 100) + 1) * 100; // Keep incrememnting rewardValues in 100s
   }
-  int prevValue (int x, List<int> nums) {
+
+  int prevValue(int x, List<int> nums) {
     if (x <= 0) return 0; // In this case no reward completed
     if (x >= 300) {
       return ((x % 100)) * 100; // Keep incrememnting rewardValues in 100s
 
     }
-    for ( int i = nums.length - 1; i >= 0; i-- ) {
-      if(rewardValues[i] <= x) return rewardValues[i];
+    for (int i = nums.length - 1; i >= 0; i--) {
+      if (rewardValues[i] <= x) return rewardValues[i];
     }
     return 0; // Probably bad news if we get here
   }
- 
+
   // Get rewards to be completed
   List<Reward> getNextRewards({int x}) {
     List<Reward> rewards = [];
     // Get new CompletedTypedActionsNumber
     completedActionsType.forEach((k, v) {
-      rewards.add(
-        Reward(
-          successNumber: nextValue(v, rewardValues),
-          type: RewardType.CompletedTypedActionsNumber,
-          actionType: k,
-          //title: nextValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ nextValue(v, rewardValues)} ${ k.toString() }",
-        )
-      );
+      rewards.add(Reward(
+        successNumber: nextValue(v, rewardValues),
+        type: RewardType.CompletedTypedActionsNumber,
+        actionType: k,
+        //title: nextValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ nextValue(v, rewardValues)} ${ k.toString() }",
+      ));
     });
     // Add next completedActionsNumber
-    rewards.add(
-      Reward(
-        successNumber: nextValue(completedCampaigns.length, rewardValues),
-        type: RewardType.CompletedCampaignsNumber,
-      )
-    );
-    
-    // Add total completed actions 
-    rewards.add(
-      Reward(
-        successNumber: nextValue(completedActions.length, rewardValues),
-        type: RewardType.CompletedActionsNumber,
-      )
-    );
+    rewards.add(Reward(
+      successNumber: nextValue(completedCampaigns.length, rewardValues),
+      type: RewardType.CompletedCampaignsNumber,
+    ));
+
+    // Add total completed actions
+    rewards.add(Reward(
+      successNumber: nextValue(completedActions.length, rewardValues),
+      type: RewardType.CompletedActionsNumber,
+    ));
     return rewards;
   }
-  
+
   // Get largest reward that have been completed
   List<Reward> getPreviousRewards({int x}) {
     List<Reward> rewards = [];
     // Get pev (complted) CompletedTypedActionsNumber
     completedActionsType.forEach((k, v) {
       if (prevValue(v, rewardValues) != 0) {
-        rewards.add(
-          Reward(
-            //id: ,  // Need to generate id based on value --> same each time generated
-            successNumber: prevValue(v, rewardValues),
-            type: RewardType.CompletedTypedActionsNumber,
-            actionType: k,
-            //title: prevValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ prevValue(v, rewardValues)} ${ k.toString() }",
-          )
-        );
+        rewards.add(Reward(
+          //id: ,  // Need to generate id based on value --> same each time generated
+          successNumber: prevValue(v, rewardValues),
+          type: RewardType.CompletedTypedActionsNumber,
+          actionType: k,
+          //title: prevValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ prevValue(v, rewardValues)} ${ k.toString() }",
+        ));
       }
     });
-    
-    // Add total completed campaigns 
+
+    // Add total completed campaigns
     if (completedCampaigns.length > 0) {
-      rewards.add(
-        Reward(
-          successNumber: prevValue(completedCampaigns.length, rewardValues),
-          type: RewardType.CompletedCampaignsNumber,
-        )
-      );
+      rewards.add(Reward(
+        successNumber: prevValue(completedCampaigns.length, rewardValues),
+        type: RewardType.CompletedCampaignsNumber,
+      ));
     }
-    
-    // Add total completed actions 
+
+    // Add total completed actions
     if (completedActions.length > 0) {
-      rewards.add(
-        Reward(
-          successNumber: prevValue(completedActions.length, rewardValues),
-          type: RewardType.CompletedActionsNumber,
-        )
-      );
+      rewards.add(Reward(
+        successNumber: prevValue(completedActions.length, rewardValues),
+        type: RewardType.CompletedActionsNumber,
+      ));
     }
 
     print("previous rewards");
@@ -586,14 +622,10 @@ Map toJson() => {
     List<Reward> nextRewards = getNextRewards();
     return completedRewards..addAll(nextRewards);
   }
-
-  
 }
 
-
-
 // TODO this feels very fragile. Find out what happens if I delete/add a CampaignActionType
-List<int> campaignActionTypesEncode ( Map<CampaignActionType, int> cats ) {
+List<int> campaignActionTypesEncode(Map<CampaignActionType, int> cats) {
   List<int> encodable = <int>[];
   List<CampaignActionType> list = CampaignActionType.values;
   for (int i = 0; i < list.length; i++) {
@@ -601,8 +633,9 @@ List<int> campaignActionTypesEncode ( Map<CampaignActionType, int> cats ) {
   }
   return encodable;
 }
-Map<CampaignActionType, int> campaignActionTypesDecode ( List<int> ints) {
-  Map<CampaignActionType, int> cats = { };
+
+Map<CampaignActionType, int> campaignActionTypesDecode(List<int> ints) {
+  Map<CampaignActionType, int> cats = {};
   List<CampaignActionType> types = CampaignActionType.values;
   for (int i = 0; i < ints.length; i++) {
     CampaignActionType t = types[i];
