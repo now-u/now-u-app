@@ -117,6 +117,7 @@ class _NewsListState extends State<NewsList> {
                                               : indexCategory;
 
                                           print("The category is $category");
+                                          articles.clear();
                                           articles.addAll(widget.articles);
                                           if (category != null) {
                                             articles.removeWhere((a) =>
