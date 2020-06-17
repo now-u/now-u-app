@@ -101,7 +101,7 @@ class _CampaignPageState extends State<CampaignPage> {
                               setState(() {
                                 onlyJoined = value;
                                 if (value) {
-                                  campaigns = viewModel.getActiveSelectedCampaings();
+                                  campaigns = viewModel.getActiveSelectedCampaings().getActiveCampaigns();
                                 }
                                 else {
                                   campaigns = viewModel.campaigns.getActiveCampaigns();
@@ -114,7 +114,7 @@ class _CampaignPageState extends State<CampaignPage> {
                         ],
                       )
                     ),
-                    viewModel.getActiveSelectedCampaings().length == 0 && onlyJoined ?
+                    viewModel.getActiveSelectedCampaings().activeLength() == 0 && onlyJoined ?
                     Center(
                       child: Text("You havent selecetd any campaigns yet"),
                     )

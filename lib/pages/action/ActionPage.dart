@@ -140,7 +140,7 @@ class _ActionPageState extends State<ActionPage> {
                         controller: _controller,
                         itemCount: 
                           // If all the active campaigns have been joined
-                          viewModel.getActiveSelectedCampaings().length == viewModel.campaigns.getActiveCampaigns().length ?
+                          viewModel.getActiveSelectedCampaings().activeLength() == viewModel.campaigns.getActiveCampaigns().length ?
                           viewModel.userModel.user.getSelectedCampaigns().length
                           :
                           viewModel.userModel.user.getSelectedCampaigns().length + 1,
@@ -174,7 +174,7 @@ class _ActionPageState extends State<ActionPage> {
                       controller: _controller,
                       //count: viewModel.campaigns.getActiveCampaigns().length,
                       count: 
-                        viewModel.getActiveSelectedCampaings().length == viewModel.campaigns.getActiveCampaigns().length ?
+                        viewModel.getActiveSelectedCampaings().activeLength() == viewModel.campaigns.getActiveCampaigns().length ?
                         viewModel.userModel.user.getSelectedCampaigns().length
                         :
                         viewModel.userModel.user.getSelectedCampaigns().length + 1,

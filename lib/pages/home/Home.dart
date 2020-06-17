@@ -110,7 +110,7 @@ class HomeActionTile extends StatelessWidget {
       child: StoreConnector<AppState, ViewModel>(
         converter: (Store<AppState> store) => ViewModel.create(store),
         builder: (BuildContext context, ViewModel viewModel) {
-          if (viewModel.getActiveSelectedCampaings().length == 0) {
+          if (viewModel.getActiveSelectedCampaings().getActions().length == 0) {
             return Container(
               height: 200,
               child: ViewCampaigns(),

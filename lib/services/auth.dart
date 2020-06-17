@@ -7,7 +7,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class AuthenticationService {
-
   //final String domainPrefix = "https://now-u-api.herokuapp.com/api/v1/";
   final String domainPrefix = "https://api.now-u.com/api/v1/";
 
@@ -24,7 +23,8 @@ class AuthenticationService {
     //    handleCodeInApp: true,
     //    // TODO: replace id
     //    iOSBundleID: 'com.nowu.app');
-    http.post(
+    http
+        .post(
       domainPrefix + 'users',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -32,14 +32,14 @@ class AuthenticationService {
       body: jsonEncode(<String, String>{
         'email': email,
       }),
-    ).then( (http.Response response) {
+    )
+        .then((http.Response response) {
       print("THE RESPONSE BODY IS");
       print(response.body);
     });
   }
 
   Future<User> signInWithEmailLink(String email, String token) async {
-
     // TODO handle errors
 
     print("The email is: " + email);
@@ -51,7 +51,7 @@ class AuthenticationService {
       },
       body: jsonEncode(<String, String>{
         'email': email,
-        'token': token, 
+        'token': token,
       }),
     );
     if (response.statusCode == 200) {
@@ -67,18 +67,15 @@ class AuthenticationService {
     //return _auth.signInWithEmailAndLink(email: email, link: link);
   }
 
-
   //Future<AuthResult> signInWithCredential(AuthCredential credential) async {
   //  return _auth.signInWithCredential(credential);
   //}
 
   Future<User> getUser(String token) async {
-    http.Response userResponse = await http.get(
-      domainPrefix + 'users/me',
-      headers: <String, String>{
-        'token': token,
-      }
-    );
+    http.Response userResponse =
+        await http.get(domainPrefix + 'users/me', headers: <String, String>{
+      'token': token,
+    });
     print("The returned user is:");
     print(userResponse.body);
     User u = User.fromJson(json.decode(userResponse.body)["data"]);
@@ -96,7 +93,7 @@ class AuthenticationService {
       domainPrefix + 'users/me',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'token': user.getToken(), 
+        'token': user.getToken(),
       },
       body: json.encode(user.getAttributes()),
     );
@@ -116,7 +113,7 @@ class AuthenticationService {
       domainPrefix + 'users/me/actions/${actionId}/complete',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'token': token, 
+        'token': token,
       },
     );
     if (response.statusCode == 200) {
@@ -125,7 +122,10 @@ class AuthenticationService {
       User u = User.fromJson(json.decode(response.body)['data']);
       return u;
     } else {
-      print("There was an error updateing user details");
+      print("There was an error updating user details");
+      print(response.body);
+      print("The token was ${token}");
+      print("The actionId was ${actionId.toString()}");
       return null;
     }
   }
@@ -135,7 +135,7 @@ class AuthenticationService {
       domainPrefix + 'users/me/campaigns/${campaignId}',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'token': token, 
+        'token': token,
       },
     );
     if (response.statusCode == 200) {
@@ -154,7 +154,7 @@ class AuthenticationService {
       domainPrefix + 'users/me/campaigns/${campaignId}',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'token': token, 
+        'token': token,
       },
     );
     if (response.statusCode == 200) {
@@ -167,5 +167,4 @@ class AuthenticationService {
       return null;
     }
   }
-  
 }

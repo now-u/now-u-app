@@ -16,9 +16,10 @@ class JoinCampaign {
 
   JoinCampaign(this.campaign, this.onSuccess);
 }
+
 class JoinedCampaign {
   final int points;
-  final List<int> joinedCampaigns;  
+  final List<int> joinedCampaigns;
   final Function onSuccess;
 
   JoinedCampaign(this.points, this.joinedCampaigns, this.onSuccess);
@@ -29,19 +30,17 @@ class UnjoinCampaign {
 
   UnjoinCampaign(this.campaign);
 }
+
 class UnjoinedCampaign {
   final int points;
-  final List<int> joinedCampaigns;  
+  final List<int> joinedCampaigns;
 
   UnjoinedCampaign(this.points, this.joinedCampaigns);
 }
 
-class CompleteAction {
-  final CampaignAction action;
+class CompletedAction {
   final User user;
-  final Function onSuccess;
-
-  CompleteAction(this.action, this.user, this.onSuccess);
+  CompletedAction(this.user);
 }
 
 class RejectAction {
@@ -54,10 +53,12 @@ class CreateNewUser {
   final User user;
   CreateNewUser(this.user);
 }
+
 class UpdateUserDetails {
   final User user;
   UpdateUserDetails(this.user);
 }
+
 class UpdatedUserDetails {
   final User user;
   UpdatedUserDetails(this.user);
@@ -83,17 +84,20 @@ class LoadedUserDataAction {
 
 // User Actions
 class StartLoadingUserAction {}
+
 class LoginSuccessAction {
-  final User user; 
+  final User user;
   LoginSuccessAction(this.user);
 }
+
 class LoginFailedAction {}
 
 class SendingAuthEmail {}
+
 class SentAuthEmail {
   final String email;
   SentAuthEmail(this.email);
 }
 
-// Logic called on startup 
+// Logic called on startup
 class StartUp {}

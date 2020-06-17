@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Action.dart';
@@ -19,12 +21,13 @@ class ViewModel {
   final Function(Campaign, Function) onJoinCampaign;
   final Function(Campaign) onUnjoinCampaign;
   final Function(User) onUpdateUserDetails;
-  final Function(CampaignAction, Function) onCompleteAction;
+  final Function(CampaignAction, BuildContext) onCompleteAction;
   final Function(CampaignAction, String) onRejectAction;
 
   // Helper functions
   final Function() getActiveSelectedCampaings;
-  final Function({bool includeCompleted, bool includeRejected}) getActiveActions; // Non-rejected, non-completed 
+  final Function({bool includeCompleted, bool includeRejected})
+      getActiveActions; // Non-rejected, non-completed
 
   ViewModel({
     this.campaigns,
@@ -46,13 +49,19 @@ class ViewModel {
     _onJoinCampaign(Campaign c, Function onSuccess) {
       store.dispatch(JoinCampaign(c, onSuccess));
     }
+
     _onUnjoinCampaign(Campaign c) {
       store.dispatch(UnjoinCampaign(c));
     }
 
-    _onCompleteAction(CampaignAction action, Function onSuccess) {
-      store.dispatch(CompleteAction(action, store.state.userState.user.copyWith(), onSuccess));
+    //_onCompleteAction(CampaignAction action, Function onSuccess) {
+    //  //store.dispatch(CompleteAction(action, store.state.userState.user.copyWith(), onSuccess));
+    //}
+    _onCompleteAction(CampaignAction action, BuildContext context) {
+      //store.dispatch(CompleteAction(action, store.state.userState.user.copyWith(), onSuccess));
+      store.dispatch(completeAction(action, context));
     }
+
     _onRejectAction(CampaignAction action, String reason) {
       store.dispatch(RejectAction(action, reason));
     }
@@ -63,18 +72,39 @@ class ViewModel {
     }
 
     // Helper Functions
-    _getActiveSelectedCampaigns() {
-      return store.state.userState.user.filterSelectedCampaigns(store.state.campaigns.getActiveCampaigns());
+    Campaigns _getActiveSelectedCampaigns() {
+      return Campaigns(store.state.userState.user
+          .filterSelectedCampaigns(store.state.campaigns.getActiveCampaigns()));
     }
-    List<CampaignAction> _getActiveActions({bool includeCompleted, bool includeRejected}) {
+
+    //List<Campaign> _getActiveUnselectedCampaigns() {
+    //  List<Campaign> campaigns = [];
+    //  campaigns.addAll(store.state.campaigns.getActiveCampaigns());
+    //  campaigns.removeWhere((c) => store.state.userState.user.getSelectedCampaigns().contains(c.getId()));S
+    //  return campaigns;
+    //}
+    List<CampaignAction> _getActiveActions(
+        {bool includeCompleted,
+        bool includeRejected,
+        bool onlySelectedCampaigns}) {
       print("Getting actions");
       List<CampaignAction> actions = [];
       actions.addAll(store.state.campaigns.getActions());
       if (!(includeRejected ?? false)) {
-        actions.removeWhere((a) => store.state.userState.user.getRejectedActions().contains(a.getId()));
+        actions.removeWhere((a) => store.state.userState.user
+            .getRejectedActions()
+            .contains(a.getId()));
       }
       if (!(includeCompleted ?? false)) {
-        actions.removeWhere((a) => store.state.userState.user.getCompletedActions().contains(a.getId()));
+        actions.removeWhere((a) => store.state.userState.user
+            .getCompletedActions()
+            .contains(a.getId()));
+      }
+      if (onlySelectedCampaigns ?? false) {
+        // If action is not in the selected campaings then get rid
+        Campaigns activeSelectedCampaigns = _getActiveSelectedCampaigns();
+        actions.removeWhere(
+            (action) => !activeSelectedCampaigns.getActions().contains(action));
       }
       return actions;
     }
@@ -104,9 +134,9 @@ class UserViewModel {
   final AuthenticationService auth;
   final SecureStorageService repository;
 
-  final Function (String, String) login;
-  final Function (String) email;
-  final Function () skipLogin;
+  final Function(String, String) login;
+  final Function(String) email;
+  final Function() skipLogin;
 
   UserViewModel({
     this.isLoading,
@@ -119,25 +149,23 @@ class UserViewModel {
     this.skipLogin,
   });
   factory UserViewModel.create(Store<AppState> store) {
-
     print("In login ViewModel create");
     print(store.state.userState.auth);
     return UserViewModel(
-      isLoading: store.state.userState.isLoading,
-      loginError: store.state.userState.loginError,
-      user: store.state.userState.user,
-      auth: store.state.userState.auth,
-      repository: store.state.userState.repository,
-      login: (String email, String link) {
-        store.dispatch(loginUser(email, link));
-      },
-      email: (String email) {
-        print("Dispatching send email action | " + email);
-        store.dispatch(emailUser(email));
-      },
-      skipLogin: () {
-        store.dispatch(skipLoginAction());
-      }
-    );
+        isLoading: store.state.userState.isLoading,
+        loginError: store.state.userState.loginError,
+        user: store.state.userState.user,
+        auth: store.state.userState.auth,
+        repository: store.state.userState.repository,
+        login: (String email, String link) {
+          store.dispatch(loginUser(email, link));
+        },
+        email: (String email) {
+          print("Dispatching send email action | " + email);
+          store.dispatch(emailUser(email));
+        },
+        skipLogin: () {
+          store.dispatch(skipLoginAction());
+        });
   }
 }

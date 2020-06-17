@@ -71,6 +71,9 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       autofocus: true,
       validator: (value) {
         if (value.isEmpty) return "Email cannot be empty";
+        if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)) {
+          return "Email must be a valid email address";
+        }
         return null;
       },
       onSaved: (value) {

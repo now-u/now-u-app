@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:redux/redux.dart';
@@ -13,11 +14,13 @@ import 'package:app/models/Campaigns.dart';
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Badge.dart';
+import 'package:app/models/Reward.dart';
 import 'package:app/redux/actions.dart';
 
 import 'package:app/assets/components/pointsNotifier.dart';
 
 import 'package:app/pages/login/emailSentPage.dart';
+import 'package:app/pages/other/RewardComplete.dart';
 
 import 'package:app/routes.dart';
 import 'package:app/main.dart';
@@ -41,7 +44,7 @@ Future<User> loadUserFromPrefs(User u) async {
   final SharedPreferences preferences = await SharedPreferences.getInstance();
   var string = preferences.getString('user');
   print(string);
-  
+
   if (string != null) {
     //print(string);
     //print("Decoding json from state");
@@ -58,14 +61,15 @@ Future<User> loadUserFromPrefs(User u) async {
   return null;
 }
 
-void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) async {
+void appStateMiddleware(
+    Store<AppState> store, action, NextDispatcher next) async {
   next(action);
 
-  if (action is InitaliseState) {
-  }
+  if (action is InitaliseState) {}
 
   if (action is JoinCampaign) {
-    User responseUser = await store.state.userState.auth.joinCampaign(store.state.userState.user.getToken(), action.campaign.getId());
+    User responseUser = await store.state.userState.auth.joinCampaign(
+        store.state.userState.user.getToken(), action.campaign.getId());
     store.dispatch(JoinedCampaign(
       responseUser.getPoints(),
       responseUser.getSelectedCampaigns(),
@@ -73,7 +77,8 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
     ));
   }
   if (action is UnjoinCampaign) {
-    User responseUser = await store.state.userState.auth.unjoinCampaign(store.state.userState.user.getToken(), action.campaign.getId());
+    User responseUser = await store.state.userState.auth.unjoinCampaign(
+        store.state.userState.user.getToken(), action.campaign.getId());
     store.dispatch(UnjoinedCampaign(
       responseUser.getPoints(),
       responseUser.getSelectedCampaigns(),
@@ -83,20 +88,19 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
     saveUserToPrefs(store.state.userState.user.copyWith(
       points: action.points,
       selectedCampaigns: action.joinedCampaigns,
-            )).then(
-      (dynamic d) {
-        print("Campaign has been selected now running onSuccess");
-        print("The user has ${store.state.userState.user.getPoints()} points");
-        // If adding the 10 points earnt you a badge then dont do the thing
-        if (getNextBadge(store.state.userState.user.getPoints()) == getNextBadge(action.points)) {
-          action.onSuccess(action.points, 10, getNextBadge(action.points), false);
-        }
-        // Instead to the popup
-        else {
-          action.onSuccess(action.points, 10, getNextBadge(action.points), true);
-        }
+    )).then((dynamic d) {
+      print("Campaign has been selected now running onSuccess");
+      print("The user has ${store.state.userState.user.getPoints()} points");
+      // If adding the 10 points earnt you a badge then dont do the thing
+      if (getNextBadge(store.state.userState.user.getPoints()) ==
+          getNextBadge(action.points)) {
+        action.onSuccess(action.points, 10, getNextBadge(action.points), false);
       }
-    );
+      // Instead to the popup
+      else {
+        action.onSuccess(action.points, 10, getNextBadge(action.points), true);
+      }
+    });
   }
   if (action is UnjoinedCampaign) {
     saveUserToPrefs(store.state.userState.user.copyWith(
@@ -107,22 +111,25 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
 
   if (action is UpdateUserDetails) {
     print("In update user details middleware");
-    User newUser = await store.state.userState.auth.updateUserDetails(
-      action.user
-    );
+    User newUser =
+        await store.state.userState.auth.updateUserDetails(action.user);
 
     // Update the users attributes to match those returned by the api
     Map attributes = newUser.getAttributes();
     for (int i = 0; i < attributes.keys.length; i++) {
-      print("Setting value " + attributes.keys.toList()[i].toString() + " to " + attributes.values.toList()[i].toString());
-      action.user.setAttribute(attributes.keys.toList()[i], attributes.values.toList()[i]);
+      print("Setting value " +
+          attributes.keys.toList()[i].toString() +
+          " to " +
+          attributes.values.toList()[i].toString());
+      action.user.setAttribute(
+          attributes.keys.toList()[i], attributes.values.toList()[i]);
     }
 
     // Save the user locally
     saveUserToPrefs(action.user);
     store.dispatch(UpdatedUserDetails(action.user));
   }
-  
+
   if (action is LoginSuccessAction) {
     // This might be the old user
     print("In Lgoin Success reducer");
@@ -130,98 +137,131 @@ void appStateMiddleware (Store<AppState> store, action, NextDispatcher next) asy
     saveUserToPrefs(action.user);
     print("Completed reducer");
   }
-  
-  if (action is GetCampaignsAction) {
-    await store.state.api.getCampaigns().then(
-      (Campaigns cs) {
-        print(cs.getActiveCampaigns());
-        store.dispatch(LoadedCampaignsAction(cs));
-      }, onError: (e, st) {
-        print(e);
-        // TODO lol whats going on here
-        return store.state.campaigns;
-        //loadCampaignsFromPrefs()
-      } 
-    );
-  }
 
-  if (action is GetUserDataAction) {
-    await loadUserFromPrefs(store.state.userState.user).then((user) { 
-      store.dispatch(LoadedUserDataAction(user)); 
+  if (action is GetCampaignsAction) {
+    await store.state.api.getCampaigns().then((Campaigns cs) {
+      print(cs.getActiveCampaigns());
+      store.dispatch(LoadedCampaignsAction(cs));
+    }, onError: (e, st) {
+      print(e);
+      // TODO lol whats going on here
+      return store.state.campaigns;
+      //loadCampaignsFromPrefs()
     });
   }
 
-  if (action is CompleteAction) {
-    print("In middleware of completed Action user is");
-    print(store.state.userState.user.getCompletedActions());
-    print(action.action.getId());
-    if (store.state.userState.user.getCompletedActions().contains(action.action.getId())) {
-      print("This action has already been completed");
-      return;
-    } 
-    User responseUser = await store.state.userState.auth.completeAction(
-      store.state.userState.user.getToken(),
-      action.action.getId(),
-    );
-    print(store.state.userState.user.getCompletedActions());
-    
-    action.user.setPoints(
-      responseUser.getPoints(),
-    );
-
-    print("Doing fancy list thing");
-    List<int> newlyCompletedActions = responseUser.getCompletedActions().where((a) => !store.state.userState.user.getCompletedActions().contains(a)).toList();
-    print("Doing fancy list thing");
-    for (int i = 0; i < newlyCompletedActions.length; i++ ) {
-      if (newlyCompletedActions[i] == action.action.getId()) {
-        action.user.completeAction(action.action);
-      }
-      else {
-        // TODO make it so if there are completed action is actually users the complete action function -- need to wait for /actions request
-        //CampaignAction a = await store.state.api.getAction(action.action.getId());
-        //action.user.completeAction(a);
-      }
-    }
-
-    int newPoints = action.user.getPoints();
-    int oldPoints = store.state.userState.user.getPoints();
-
-    saveUserToPrefs(action.user).then((_) {
-      if (getNextBadge(newPoints) > getNextBadge(oldPoints)) {
-        // Do the new badge popup
-        action.onSuccess(newPoints, 5, getNextBadge(newPoints), true);
-      }
-      else {
-        // Do the points notifier
-        action.onSuccess(newPoints, 5, getNextBadge(newPoints), false);
-      }
-      //action.onSuccess(5, getNextBadge(store.state.userState.user.getPoints()));
-    //  if (getNextBadge(store.state.userState.user.getPoints()) == getNextBadge(store.state.userState.user.getPoints() + 5)) {
-    //    action.onSuccess(5, getNextBadge(store.state.userState.user.getPoints()), false);
-    //  }
-    //  // Instead do the popup
-    //  else {
-    //    action.onSuccess(5, getNextBadge(store.state.userState.user.getPoints()), true);
-    //  }
-    }
-    );
+  if (action is GetUserDataAction) {
+    await loadUserFromPrefs(store.state.userState.user).then((user) {
+      store.dispatch(LoadedUserDataAction(user));
+    });
   }
-  if (action is GetDynamicLink) {
-  }
+
+  if (action is GetDynamicLink) {}
 }
 
-ThunkAction<AppState> emailUser (String email) {
+ThunkAction<AppState> completeAction(
+    CampaignAction action, BuildContext context) {
   return (Store<AppState> store) async {
-    Future (() async {
+    Future(() async {
+      // If the action is already completed then dont do anything
+      if (store.state.userState.user
+          .getCompletedActions()
+          .contains(action.getId())) {
+        print("This action has already been completed");
+        return;
+      }
+
+      // Else complete the action
+      // Make complete action request
+      User completeResponse = await store.state.userState.auth.completeAction(
+        store.state.userState.user.getToken(),
+        action.getId(),
+      );
+      // Take the response and update the users points
+      User newUser = store.state.userState.user.copyWith(
+        points: completeResponse.getPoints(),
+      );
+      print("Doing fancy list thing");
+      // Get all the actions that the user has now completed (that they hadnt completed before)
+      List<int> newlyCompletedActions = completeResponse
+          .getCompletedActions()
+          .where((a) =>
+              !store.state.userState.user.getCompletedActions().contains(a))
+          .toList();
+      print("Doing fancy list thing");
+
+      // Complete all those new actions for the user
+      for (int i = 0; i < newlyCompletedActions.length; i++) {
+        if (newlyCompletedActions[i] == action.getId()) {
+          newUser.completeAction(action);
+        } else {
+          // TODO make it so if there are completed action is actually users the complete action function -- need to wait for /actions request
+          //CampaignAction a = await store.state.api.getAction(action.action.getId());
+          //action.user.completeAction(a);
+        }
+      }
+
+      // This is where you say "but James why do you not just copyWith completedCampaigns as the new completed campaigns"
+      // And I would respond excellent question
+      // The logic is that currently the server does no keep track of completed type, this can easily change at somepoint and will probably be updated to be a server side thing soon but for now its not, so we need to keep track of which type of actions the user has completed
+      // Then youd say "yes but what about when a user logs in for the first time do we keep track of the completed aciton types then"
+      // And I would respond no
+      // TODO fix the above / just get the server to keep track of completed action type
+
+      int newPoints = newUser.getPoints();
+      int oldPoints = store.state.userState.user.getPoints();
+
+      print("Points");
+      print(newPoints);
+      print(oldPoints);
+
+      saveUserToPrefs(newUser).then((_) {
+        store.dispatch(CompletedAction(newUser));
+        // If the users new next badge is different to their current badge
+        // Then they must have earnt a new badge
+        if (getNextBadge(newPoints) > getNextBadge(oldPoints)) {
+          print("New badge");
+          // Do the new badge popup
+          // If you did get a new badge then show that popup
+          gotBadgeNotifier(
+            badge: getNextBadgeFromInt(oldPoints),
+            context: context,
+          );
+        } else {
+          // TODO fix this rewards notification part
+          List<Reward> newlyCompletedRewards =
+              store.state.userState.user.newlyCompletedRewards(action);
+          // If you did get a new reward
+          if (newlyCompletedRewards.length > 0) {
+            Navigator.push(
+                context,
+                CustomRoute(
+                    builder: (context) =>
+                        RewardCompletePage(newlyCompletedRewards)));
+          } else {
+            pointsNotifier(newPoints, 5, getNextBadge(newPoints), context)
+              ..show(context);
+          }
+        }
+      });
+    });
+  };
+}
+// Once we get the new user
+
+ThunkAction<AppState> emailUser(String email) {
+  return (Store<AppState> store) async {
+    Future(() async {
       print("In thunk action");
       print(store.state.userState.auth);
-      store.state.userState.auth.sendSignInWithEmailLink(email).then((loginResponse) {
+      store.state.userState.auth.sendSignInWithEmailLink(email).then(
+          (loginResponse) {
         print("Trying to send email");
         store.dispatch(SentAuthEmail(email));
         print("Trying to nav");
-        Keys.navKey.currentState.push(
-          CustomRoute(builder: (context) => EmailSentPage(UserViewModel.create(store), email))
-        );
+        Keys.navKey.currentState.push(CustomRoute(
+            builder: (context) =>
+                EmailSentPage(UserViewModel.create(store), email)));
       }, onError: (error) {
         store.dispatch(new LoginFailedAction());
       });
@@ -229,88 +269,83 @@ ThunkAction<AppState> emailUser (String email) {
   };
 }
 
-ThunkAction loginUser (String email, String link) {
+ThunkAction loginUser(String email, String link) {
   return (Store store) async {
-    Future (() async {
+    Future(() async {
       store.dispatch(StartLoadingUserAction());
-      User user = await store.state.userState.auth.signInWithEmailLink(email, link);
+      User user =
+          await store.state.userState.auth.signInWithEmailLink(email, link);
 
       print("The loging response here is");
       print(user);
       // TODO add token to LoginSuccessAction
       if (user != null) {
         store.dispatch(LoginSuccessAction(user));
-          print("New user is ");
-          print(user.getName());
-          print(user.getToken());
-          Keys.navKey.currentState.pushNamed(Routes.intro);
-        }
+        print("New user is ");
+        print(user.getName());
+        print(user.getToken());
+        Keys.navKey.currentState.pushNamed(Routes.intro);
       }
-    );
-  };
-}
-
-ThunkAction skipLoginAction () {
-  return (Store store) async {
-    Future (() async {
-      User u = User.empty();
-      u.setToken(null);
-      store.dispatch(CreateNewUser(u)).then(
-        (_) {
-          Keys.navKey.currentState.pushNamed(Routes.intro);
-        }
-      );
-      
     });
   };
 }
 
-ThunkAction initStore (Uri deepLink) {
+ThunkAction skipLoginAction() {
+  return (Store store) async {
+    Future(() async {
+      User u = User.empty();
+      u.setToken(null);
+      store.dispatch(CreateNewUser(u)).then((_) {
+        Keys.navKey.currentState.pushNamed(Routes.intro);
+      });
+    });
+  };
+}
+
+ThunkAction initStore(Uri deepLink) {
   print("DEEP LINK IN INIT | " + deepLink.toString());
   if (deepLink != null) {
     print("DEEP LINK PATH | " + deepLink.path);
     print("DEEP LINK PATH | " + deepLink.query);
   }
   return (Store store) async {
-    Future (() async {
-     print("We are initing");
-     store.dispatch(GetUserDataAction()).then(
-      (dynamic u) {
-        store.dispatch(GetCampaignsAction()).then(
-          (dynamic r) {
-            // A user id of -1 means the user is the placeholder and therefore does not exist, well get rid of this eventually and keep it as null, but for now useful as when we go to homepage after login we have the placeholder user
-            if (store.state.userState.user == null || store.state.userState.user.getToken() == null) {
+    Future(() async {
+      print("We are initing");
+      store.dispatch(GetUserDataAction()).then((dynamic u) {
+        store.dispatch(GetCampaignsAction()).then((dynamic r) {
+          // A user id of -1 means the user is the placeholder and therefore does not exist, well get rid of this eventually and keep it as null, but for now useful as when we go to homepage after login we have the placeholder user
+          if (store.state.userState.user == null ||
+              store.state.userState.user.getToken() == null) {
             // Skip Login Screen
             //if (store.state.userState.user == null) {
-              if (deepLink != null && deepLink.path == "/loginMobile") {
-                print("The path is the thing");
-                print(deepLink.path);
-                store.state.userState.repository.getEmail().then((email) {
-                  store.state.userState.auth.signInWithEmailLink(email, deepLink.queryParameters['token']).then((User r) {
-                    print("Signed in ish");
-                    //print(r.user.email);
-                    //print(r.user.hashCode)
-                    // TODO if new user 
-                    // intro
-                    Keys.navKey.currentState.pushNamed(Routes.intro);
-                    // else home cause theyve already done the intro
-                    // Keys.navKey.currentState.pushNamed(Routes.home);
-                  });
+            if (deepLink != null && deepLink.path == "/loginMobile") {
+              print("The path is the thing");
+              print(deepLink.path);
+              store.state.userState.repository.getEmail().then((email) {
+                store.state.userState.auth
+                    .signInWithEmailLink(
+                        email, deepLink.queryParameters['token'])
+                    .then((User r) {
+                  print("Signed in ish");
+                  //print(r.user.email);
+                  //print(r.user.hashCode)
+                  // TODO if new user
+                  // intro
+                  Keys.navKey.currentState.pushNamed(Routes.intro);
+                  // else home cause theyve already done the intro
+                  // Keys.navKey.currentState.pushNamed(Routes.home);
                 });
-              } else {
-                Keys.navKey.currentState.pushNamed(Routes.login);
-              }
+              });
+            } else {
+              Keys.navKey.currentState.pushNamed(Routes.login);
             }
-            else {
-              // Go home
-              print("Going home");
-              Keys.navKey.currentState.pushNamed(Routes.home);
-            }
+          } else {
+            // Go home
+            print("Going home");
+            Keys.navKey.currentState.pushNamed(Routes.home);
           }
-        );
-      }
-     );
+        });
+      });
     });
   };
 }
-

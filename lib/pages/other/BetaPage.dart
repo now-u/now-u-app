@@ -44,7 +44,7 @@ class BetaPage extends StatelessWidget {
                       }
                     ),
                     TextSpan(
-                      text: "When you are using the app you can find this link in the 'more' section under 'Give us feedback on the app'",
+                      text: ". When you are using the app you can find this link in the 'more' section under 'Give us feedback on the app'",
                       style: textStyleFrom(
                         Theme.of(context).primaryTextTheme.bodyText1,
                       ),
