@@ -6,6 +6,10 @@ import 'package:app/models/Campaigns.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+class AuthError {
+  static const unauthorized = "unauthorized";
+}
+
 class AuthenticationService {
   //final String domainPrefix = "https://now-u-api.herokuapp.com/api/v1/";
   final String domainPrefix = "https://api.now-u.com/api/v1/";
@@ -102,6 +106,9 @@ class AuthenticationService {
       print(response.body);
       User u = User.fromJson(json.decode(response.body));
       return u;
+    }
+    if (response.statusCode == 401) {
+      return Future.error(AuthError.unauthorized);
     } else {
       print("There was an error updateing user details");
       return null;
@@ -121,6 +128,8 @@ class AuthenticationService {
       print(response.body);
       User u = User.fromJson(json.decode(response.body)['data']);
       return u;
+    } else if (response.statusCode == 401) {
+      return Future.error(AuthError.unauthorized);
     } else {
       print("There was an error updating user details");
       print(response.body);
@@ -145,6 +154,8 @@ class AuthenticationService {
       print(response.body);
       User u = User.fromJson(json.decode(response.body)['data']);
       return u;
+    } else if (response.statusCode == 401) {
+      return Future.error(AuthError.unauthorized);
     } else {
       print("There was an error updating user details");
       print(response.body);
@@ -167,6 +178,8 @@ class AuthenticationService {
       print(response.body);
       User u = User.fromJson(json.decode(response.body)["data"]);
       return u;
+    } else if (response.statusCode == 401) {
+      return Future.error(AuthError.unauthorized);
     } else {
       print("There was an error updateing user details");
       return null;
@@ -186,6 +199,8 @@ class AuthenticationService {
       print(response.body);
       User u = User.fromJson(json.decode(response.body)["data"]);
       return u;
+    } else if (response.statusCode == 401) {
+      return Future.error(AuthError.unauthorized);
     } else {
       print("There was an error updateing user details");
       return null;

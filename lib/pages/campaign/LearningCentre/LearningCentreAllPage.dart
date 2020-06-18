@@ -104,8 +104,8 @@ class LearningCentreAllPage extends StatelessWidget {
               shrinkWrap: true,
               itemCount: viewModel.campaigns.activeLength(),
               itemBuilder: (context, index) {
-                return Text(
-                    viewModel.campaigns.getActiveCampaigns()[index].getTitle());
+                return LearningCentreCampaignSelectionItem(
+                    campaign: viewModel.campaigns.getActiveCampaigns()[index]);
               },
             ))
           ],

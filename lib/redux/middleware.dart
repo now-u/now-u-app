@@ -18,6 +18,8 @@ import 'package:app/models/Badge.dart';
 import 'package:app/models/Reward.dart';
 import 'package:app/redux/actions.dart';
 
+import 'package:app/services/auth.dart';
+
 import 'package:app/assets/components/pointsNotifier.dart';
 
 import 'package:app/pages/login/emailSentPage.dart';
@@ -207,10 +209,14 @@ ThunkAction<AppState> completeAction(
 
       // Else complete the action
       // Make complete action request
-      User completeResponse = await store.state.userState.auth.completeAction(
+      User completeResponse = await store.state.userState.auth
+          .completeAction(
         store.state.userState.user.getToken(),
         action.getId(),
-      );
+      )
+          .catchError((Error error) {
+        if (error.obs == AuthError.unauthorized) onAuthError();
+      });
       // Take the response and update the users points
       User newUser = store.state.userState.user.copyWith(
         points: completeResponse.getPoints(),
@@ -382,4 +388,8 @@ ThunkAction initStore(Uri deepLink) {
       });
     });
   };
+}
+
+void onAuthError() {
+  Keys.navKey.currentState.pushNamed(Routes.login);
 }

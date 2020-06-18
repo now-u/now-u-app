@@ -10,7 +10,7 @@ import 'package:app/pages/intro/IntroPage.dart';
 import 'package:app/pages/login/login.dart';
 import 'package:app/pages/other/BetaPage.dart';
 import 'package:app/pages/Tabs.dart';
-
+import 'package:app/pages/campaign/LearningCentre/LearningCentreAllPage.dart';
 
 class Routes {
   // Intro
@@ -21,79 +21,80 @@ class Routes {
   static const campaign = "campaign";
   static const actions = "actions";
   static const home = "home";
-  
+
   // Other
   static const profile = "profile";
   static const faq = "faq";
   static const parteners = "parteners";
- 
+
+  // Learning
+  static const learningAll = "learning";
+
   // Beta only
   static const beta = "beta";
 //  static final authEmailSent = "authEmailSent";
 }
 
-Function initRoutes =
-  (RouteSettings settings) {
-    switch (settings.name) {
+Function initRoutes = (RouteSettings settings) {
+  switch (settings.name) {
 
-      // Into
-      case Routes.login: {
-        return CustomRoute(
-          builder: (context) => LoginPage()
-        );
+    // Into
+    case Routes.login:
+      {
+        return CustomRoute(builder: (context) => LoginPage());
       }
-      case Routes.intro: {
-        return CustomRoute(
-          builder: (context) => IntroPage()
-        );
+    case Routes.intro:
+      {
+        return CustomRoute(builder: (context) => IntroPage());
       }
 
-
-      case Routes.profile: {
-        return CustomRoute(
-          builder: (context) => ProfilePage()
-        );
+    case Routes.profile:
+      {
+        return CustomRoute(builder: (context) => ProfilePage());
       }
-      case Routes.faq: {
-        return CustomRoute(
-          builder: (context) => FAQPage()
-        );
+    case Routes.faq:
+      {
+        return CustomRoute(builder: (context) => FAQPage());
       }
-      case Routes.parteners: {
-        return CustomRoute(
-          builder: (context) => PartnersPage()
-        );
+    case Routes.parteners:
+      {
+        return CustomRoute(builder: (context) => PartnersPage());
       }
 
-      // Tab page
-      case Routes.home: {
+    // Tab page
+    case Routes.home:
+      {
         return CustomRoute(
-          builder: (context) => TabsPage(currentPage: TabPage.Home)
-        );
+            builder: (context) => TabsPage(currentPage: TabPage.Home));
       }
-      case Routes.campaign: {
+    case Routes.campaign:
+      {
         return CustomRoute(
-          builder: (context) => TabsPage(currentPage: TabPage.Campaigns)
-        );
+            builder: (context) => TabsPage(currentPage: TabPage.Campaigns));
       }
-      case Routes.actions: {
+    case Routes.actions:
+      {
         return CustomRoute(
-          builder: (context) => TabsPage(currentPage: TabPage.Actions)
-        );
-      }
-
-      // Beta 
-      case Routes.beta: {
-        return CustomRoute(
-          builder: (context) => BetaPage()
-        );
+            builder: (context) => TabsPage(currentPage: TabPage.Actions));
       }
 
-      // TODO add a 404 page
-      default: {
-        return CustomRoute(
-          builder: (context) => TabsPage(currentPage: TabPage.Home)
-        );
+    // Learning
+    case Routes.learningAll:
+      {
+        return CustomRoute(builder: (context) => LearningCentreAllPage());
       }
-    }
-  };
+
+    // Beta
+    case Routes.beta:
+      {
+        return CustomRoute(builder: (context) => BetaPage());
+      }
+
+    // TODO add a 404 page
+    default:
+      {
+        return CustomRoute(
+            builder: (context) => TabsPage(currentPage: TabPage.Home));
+      }
+  }
+};

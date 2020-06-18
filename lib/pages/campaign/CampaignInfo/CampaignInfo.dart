@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Organisation.dart';
@@ -209,7 +210,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
           actions: [
             IconButton(
               icon: Icon(
-                Icons.book,
+                FontAwesomeIcons.book,
                 color: Theme.of(context).primaryColor,
               ),
               onPressed: () {
@@ -425,34 +426,8 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                 ? Container()
                 : SectionTitle("UN Sustainable Development Goals focus",
                     padding: H_PADDING, vpadding: 0),
-            SDGReel(campaign.getSDGs()),
-            campaign.getSDGs().isEmpty
-                ? Container()
-                : Padding(
-                    padding: EdgeInsets.symmetric(horizontal: H_PADDING),
-                    child: RichText(
-                      text: TextSpan(children: [
-                        TextSpan(
-                            text: "Go to ",
-                            style:
-                                Theme.of(context).primaryTextTheme.bodyText1),
-                        TextSpan(
-                            text: "sustainabledevelopment.un.org ",
-                            style: textStyleFrom(
-                              Theme.of(context).primaryTextTheme.bodyText1,
-                              color: Theme.of(context).buttonColor,
-                            ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                launch("sustainabledevelopment.un.org");
-                              }),
-                        TextSpan(
-                            text: "to find out more",
-                            style:
-                                Theme.of(context).primaryTextTheme.bodyText1),
-                      ]),
-                    ),
-                  ),
+            //SDGReel(campaign.getSDGs()),
+            SDGList(campaign.getSDGs()),
 
             // Buttons
             Padding(
@@ -461,7 +436,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   DarkButton(
-                    "Learn more",
+                    "Learning centre",
                     onPressed: () {
                       Navigator.push(
                           context,
@@ -555,9 +530,9 @@ class OrganisationReel extends StatelessWidget {
   }
 }
 
-class SDGReel extends StatelessWidget {
+class SDGList extends StatelessWidget {
   final List<SDG> sdgs;
-  SDGReel(this.sdgs);
+  SDGList(this.sdgs);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -565,12 +540,11 @@ class SDGReel extends StatelessWidget {
         //child: Expanded(
         child: ListView.builder(
           shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
           itemCount: sdgs.length,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
-              padding: EdgeInsets.all(8),
-              child: SDGTile(sdgs[index]),
+              padding: EdgeInsets.all(10),
+              child: SDGSelectionItem(sdgs[index]),
             );
           },
           // )
@@ -578,29 +552,50 @@ class SDGReel extends StatelessWidget {
   }
 }
 
-class SDGTile extends StatelessWidget {
+class SDGSelectionItem extends StatelessWidget {
   final SDG sdg;
-  SDGTile(this.sdg);
+  SDGSelectionItem(this.sdg);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        launch(sdg.getLink());
-      },
-      child: Container(
-        child: Padding(
-          padding: EdgeInsets.all(0),
-          child: Image.asset(
-            sdg.getImage(),
-          ),
-        ),
-        decoration: BoxDecoration(color: Colors.white, boxShadow: [
-          BoxShadow(
-              color: Color.fromRGBO(0, 0, 0, 0.16),
-              offset: Offset(0, 3),
-              blurRadius: 6)
-        ]),
-      ),
-    );
+        onTap: () {
+          launch(sdg.getLink());
+        },
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Container(
+              height: 75,
+              width: 75,
+              child: Padding(
+                padding: EdgeInsets.all(0),
+                child: Image.asset(
+                  sdg.getImage(),
+                ),
+              ),
+            ),
+            SizedBox(width: 10),
+            Expanded(
+              child: RichText(
+                text: TextSpan(children: [
+                  TextSpan(
+                      text:
+                          "This campaign is working towards the United Nations Sustainable Development Goal ${sdg.getNumber()}. Find out more at ",
+                      style: Theme.of(context).primaryTextTheme.bodyText1),
+                  TextSpan(
+                      text: "sustainabledevelopment.un.org",
+                      style: textStyleFrom(
+                        Theme.of(context).primaryTextTheme.bodyText1,
+                        color: Theme.of(context).buttonColor,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          launch("https://sustainabledevelopment.un.org");
+                        }),
+                ]),
+              ),
+            ),
+          ],
+        ));
   }
 }
