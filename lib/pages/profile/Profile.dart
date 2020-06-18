@@ -59,16 +59,25 @@ class _ProfileState extends State<Profile> {
       builder: (BuildContext context, ViewModel viewModel) {
         var profileTiles = <Map>[
           {
-            'profileTile': ProfileTile("Profile", FontAwesomeIcons.solidUserCircle),
+            'profileTile':
+                ProfileTile("Profile", FontAwesomeIcons.solidUserCircle),
             'page': Routes.profile,
           },
           {
-            'profileTile': ProfileTile("Propose an action or campaign", FontAwesomeIcons.bullhorn),
-            'link': "https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform",
+            'profileTile': ProfileTile("Learning", FontAwesomeIcons.book),
+            'page': Routes.learningAll,
           },
           {
-            'profileTile': ProfileTile("Give feedback on the app", Icons.speaker_notes),
-            'link': "https://docs.google.com/forms/d/e/1FAIpQLSflMOarmyXRv7DRbDQPWRayCpE5X4d8afOpQ1hjXfdvzbnzQQ/viewform",
+            'profileTile': ProfileTile(
+                "Propose an action or campaign", FontAwesomeIcons.bullhorn),
+            'link':
+                "https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform",
+          },
+          {
+            'profileTile':
+                ProfileTile("Give feedback on the app", Icons.speaker_notes),
+            'link':
+                "https://docs.google.com/forms/d/e/1FAIpQLSflMOarmyXRv7DRbDQPWRayCpE5X4d8afOpQ1hjXfdvzbnzQQ/viewform",
           },
           {
             'profileTile':
@@ -80,12 +89,13 @@ class _ProfileState extends State<Profile> {
             'page': Routes.faq,
           },
           {
-            'profileTile': ProfileTile("Our Partners", FontAwesomeIcons.building),
+            'profileTile':
+                ProfileTile("Our Partners", FontAwesomeIcons.building),
             'page': Routes.parteners,
           },
           {
-            'profileTile':
-                ProfileTile("Send us a message", FontAwesomeIcons.facebookMessenger),
+            'profileTile': ProfileTile(
+                "Send us a message", FontAwesomeIcons.facebookMessenger),
             'link': "http://m.me/nowufb"
           },
           {
@@ -135,17 +145,14 @@ class _ProfileState extends State<Profile> {
                       itemCount: profileTiles.length,
                       itemBuilder: (context, index) => GestureDetector(
                         onTap: () => setState(() {
-                          print("Tapping"); 
+                          print("Tapping");
                           if (profileTiles[index]["page"] != null) {
-                            print("Pushing page"); 
+                            print("Pushing page");
                             Navigator.pushNamed(
-                              context,
-                              profileTiles[index]["page"]
-                            );
+                                context, profileTiles[index]["page"]);
                           } else if (profileTiles[index]["link"] != null) {
                             launch(profileTiles[index]["link"]);
-                          } else {
-                          }
+                          } else {}
                         }),
                         child: profileTiles[index]["profileTile"],
                       ),
@@ -158,21 +165,21 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         SocialButton(
                           icon: FontAwesomeIcons.instagram,
                           link: "https://www.instagram.com/now_u_app/",
-                        ), 
+                        ),
                         SocialButton(
                           icon: FontAwesomeIcons.facebookF,
                           link: "https://www.facebook.com/nowufb",
-                        ), 
+                        ),
                         SocialButton(
                           icon: FontAwesomeIcons.twitter,
                           link: "https://twitter.com/now_u_app",
-                        ) 
+                        )
                       ],
                     ),
                     GestureDetector(
@@ -212,28 +219,29 @@ class SocialButton extends StatelessWidget {
   final String link;
 
   SocialButton({
-    this.icon, 
+    this.icon,
     this.link,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {launch(link);},
-      child: Container(
-        height: size, 
-        width: size,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(size/2),
-          color: Theme.of(context).primaryColor,
-        ),
-        child: Center(
-          child: Icon(
-            icon,
-            color: Colors.white,
+        onTap: () {
+          launch(link);
+        },
+        child: Container(
+          height: size,
+          width: size,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(size / 2),
+            color: Theme.of(context).primaryColor,
           ),
-        ),
-      )
-    );
+          child: Center(
+            child: Icon(
+              icon,
+              color: Colors.white,
+            ),
+          ),
+        ));
   }
 }

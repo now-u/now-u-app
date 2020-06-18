@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Learning.dart';
+import 'package:app/models/ViewModel.dart';
+import 'package:app/models/State.dart';
 
 import 'package:app/pages/action/ActionInfo.dart';
 import 'package:app/pages/campaign/LearningCentre/LearningCentrePage.dart';
@@ -237,56 +241,71 @@ class ActionSelectionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LeadingSelectionItem(
-        backgroundColor: backgroundColor,
-        innerHpadding: innerHpadding,
-        outerHpadding: outerHpadding,
-        iconWidth: iconWidth,
-        onTap: () {
-          if (extraOnTap != null) {
-            extraOnTap();
-          }
-          Navigator.push(context,
-              CustomRoute(builder: (context) => ActionInfo(action, campaign)));
-        },
-        leading: Stack(children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(5),
-            child: Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  color: action.getActionIconMap()['iconBackgroundColor']),
-              child: Center(
-                child: Icon(
-                  action.getActionIconMap()['icon'],
-                  color: action.getActionIconMap()['iconColor'],
-                  size: 30,
-                ),
-              ),
-            ),
-          ),
-          !(isNew ?? false)
-              ? Container()
-              : Positioned(
-                  right: 0,
+    return StoreConnector<AppState, ViewModel>(
+        converter: (Store<AppState> store) => ViewModel.create(store),
+        builder: (BuildContext context, ViewModel viewModel) {
+          bool completed = viewModel.userModel.user
+              .getCompletedActions()
+              .contains(action.getId());
+          return LeadingSelectionItem(
+              backgroundColor: backgroundColor,
+              innerHpadding: innerHpadding,
+              outerHpadding: outerHpadding,
+              iconWidth: iconWidth,
+              onTap: () {
+                if (extraOnTap != null) {
+                  extraOnTap();
+                }
+                Navigator.push(
+                    context,
+                    CustomRoute(
+                        builder: (context) => ActionInfo(action, campaign)));
+              },
+              leading: Stack(children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(5),
                   child: Container(
-                    padding: EdgeInsets.all(1),
+                    width: 50,
+                    height: 50,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    constraints: BoxConstraints(
-                      minWidth: 12,
-                      minHeight: 12,
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        color: completed
+                            ? Colors.grey
+                            : action.getActionIconMap()['iconBackgroundColor']),
+                    child: Center(
+                      child: Icon(
+                        completed
+                            ? Icons.check
+                            : action.getActionIconMap()['icon'],
+                        color: completed
+                            ? Colors.white
+                            : action.getActionIconMap()['iconColor'],
+                        size: 30,
+                      ),
                     ),
                   ),
                 ),
-        ]),
-        text: action.getTitle(),
-        time: action.getTimeText(),
-        extraOverflow: 50);
+                !(isNew ?? false)
+                    ? Container()
+                    : Positioned(
+                        right: 0,
+                        child: Container(
+                          padding: EdgeInsets.all(1),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          constraints: BoxConstraints(
+                            minWidth: 12,
+                            minHeight: 12,
+                          ),
+                        ),
+                      ),
+              ]),
+              text: action.getTitle(),
+              time: action.getTimeText(),
+              extraOverflow: 50);
+        });
   }
 }
 
