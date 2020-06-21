@@ -173,8 +173,8 @@ Function gotBadgeNotifier({
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.5,
+                FittedBox(
+                  //width: MediaQuery.of(context).size.width * 0.5,
                   child: Text(
                     "Congratulations",
                     style: Theme.of(context).primaryTextTheme.headline2,

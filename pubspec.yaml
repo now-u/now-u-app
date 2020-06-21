@@ -145,6 +145,7 @@ flutter:
     - family: ActionIcons
       fonts:
         - asset: assets/fonts/Icons/ActionIcons.ttf
+          weight: 900
 
   #   - family: Schyler
   #     fonts:

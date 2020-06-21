@@ -73,6 +73,7 @@ void appStateMiddleware(
   if (action is UnjoinCampaign) {
     User responseUser = await store.state.userState.auth.unjoinCampaign(
         store.state.userState.user.getToken(), action.campaign.getId());
+    print("new user points ${responseUser.getPoints()}");
     store.dispatch(UnjoinedCampaign(
       responseUser.getPoints(),
       responseUser.getSelectedCampaigns(),
@@ -170,7 +171,9 @@ ThunkAction<AppState> joinCampaign(Campaign campaign, BuildContext context) {
         return;
       }
       User responseUser = await store.state.userState.auth.joinCampaign(
-          store.state.userState.user.getToken(), campaign.getId());
+        store.state.userState.user.getToken(), campaign.getId());
+
+      print("new user points ${responseUser.getPoints()}");
 
       User newUser = store.state.userState.user.copyWith(
         points: responseUser.getPoints(),
@@ -228,6 +231,7 @@ ThunkAction<AppState> completeAction(
         if (error.obs == AuthError.unauthorized) onAuthError();
       });
       // Take the response and update the users points
+      print("new user points ${completeResponse.getPoints()}");
       User newUser = store.state.userState.user.copyWith(
         points: completeResponse.getPoints(),
       );

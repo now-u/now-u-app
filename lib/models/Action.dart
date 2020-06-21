@@ -85,7 +85,7 @@ Map campaignActionTypeData = {
     'type': CampaignActionSuperType.GetInvolved,
   },
   CampaignActionType.Donation: {
-    'name': "donation",
+    'name': "donate",
     'verb': "Make",
     'pastVerb': "Made",
     'displayName': "donation",
@@ -109,7 +109,7 @@ Map campaignActionTypeData = {
     'type': CampaignActionSuperType.Advoacte,
   },
   CampaignActionType.Petition: {
-    'name': "petition",
+    'name': "sign",
     'verb': "Sign",
     'pastVerb': "Signed",
     'displayName': "petiton",
