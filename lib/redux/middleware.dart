@@ -269,19 +269,21 @@ ThunkAction<AppState> completeAction(
           );
         } else {
           // TODO fix this rewards notification part
-          List<Reward> newlyCompletedRewards =
-              store.state.userState.user.newlyCompletedRewards(action);
+          // Rewards
+          //List<Reward> newlyCompletedRewards =
+          //    store.state.userState.user.newlyCompletedRewards(action);
           // If you did get a new reward
-          if (newlyCompletedRewards.length > 0) {
-            Navigator.push(
-                context,
-                CustomRoute(
-                    builder: (context) =>
-                        RewardCompletePage(newlyCompletedRewards)));
-          } else {
+          //if (newlyCompletedRewards.length > 0) {
+          //  Navigator.push(
+          //      context,
+          //      CustomRoute(
+          //          builder: (context) =>
+          //              RewardCompletePage(newlyCompletedRewards)));
+          //} else {
+          // Points Notifier
             pointsNotifier(newPoints, 5, getNextBadge(newPoints), context)
               ..show(context);
-          }
+          //}
         }
       });
     });

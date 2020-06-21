@@ -94,34 +94,68 @@ Flushbar pointsNotifier(int userPoints, int earnedPoints, int nextBadgePoints,
 
 Flushbar notifier(String message, double progress, BuildContext context) {
   return Flushbar(
-    duration: Duration(seconds: 3),
-    flushbarPosition: FlushbarPosition.TOP,
-    borderRadius: 10,
-    backgroundColor: Colors.white,
-    titleText: Padding(
-        padding: EdgeInsets.all(10),
-        child: RichText(
-          text: TextSpan(
-              style: Theme.of(context).primaryTextTheme.bodyText1,
-              children: <TextSpan>[
-                TextSpan(
-                  text: message,
-                ),
-              ]),
-        )),
-    messageText: Container(
-      width: double.infinity,
-      height: 20,
-      child: Align(
-        alignment: Alignment.center,
-        child: ProgressBar(
-            progress: progress,
-            widthAsDecimal: 0.9,
-            toDoColor: Colors.grey,
-            doneColor: Theme.of(context).primaryColor),
+      duration: Duration(seconds: 3),
+      flushbarPosition: FlushbarPosition.BOTTOM,
+      borderRadius: 10,
+      //backgroundColor: Colors.white,
+      backgroundGradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [Theme.of(context).primaryColor, Theme.of(context).errorColor],
       ),
-    ),
-  );
+      titleText: Padding(
+        padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(FontAwesomeIcons.checkCircle, color: Colors.white, size: 40),
+            SizedBox(width: 10),
+            Text(
+              "Nice job!",
+              style: textStyleFrom(
+                Theme.of(context).primaryTextTheme.headline3,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+      messageText: Column(
+        children: [
+          Padding(
+              padding: EdgeInsets.all(10),
+              child: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                    style: textStyleFrom(
+                      Theme.of(context).primaryTextTheme.bodyText1,
+                      color: Colors.white,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: message,
+                      ),
+                    ]),
+              )),
+          Container(
+            width: double.infinity,
+            height: 20,
+            child: Align(
+              alignment: Alignment.center,
+              child: ProgressBar(
+                progress: progress,
+                widthAsDecimal: 0.9,
+                doneColor: Color.fromRGBO(255, 176, 58, 1),
+                toDoColor: colorFrom(
+                  Colors.white,
+                  opacity: 0.3,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ));
 }
 
 Function gotBadgeNotifier({
