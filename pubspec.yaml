@@ -142,6 +142,9 @@ flutter:
     - family: CustomIcons
       fonts:
         - asset: assets/fonts/Icons/MyFlutterApp.ttf
+    - family: ActionIcons
+      fonts:
+        - asset: assets/fonts/Icons/ActionIcons.ttf
 
   #   - family: Schyler
   #     fonts:

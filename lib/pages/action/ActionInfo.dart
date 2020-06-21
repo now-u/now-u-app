@@ -62,6 +62,9 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
         body: StoreConnector<AppState, ViewModel>(
           converter: (Store<AppState> store) => ViewModel.create(store),
           builder: (BuildContext context, ViewModel viewModel) {
+            bool completed = viewModel.userModel.user
+                .getCompletedActions()
+                .contains(_action.getId());
             return Stack(
               children: [
                 ListView(
@@ -111,6 +114,33 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                       height: 10,
                       color: _action.getActionIconMap()['iconColor'],
                     ),
+                    !completed
+                        ? Container()
+                        : Container(
+                            width: double.infinity,
+                            color: Color.fromRGBO(189, 192, 205, 1),
+                            child: Padding(
+                              padding: EdgeInsets.all(10),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.check,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    "Completed",
+                                    style: textStyleFrom(
+                                      Theme.of(context)
+                                          .primaryTextTheme
+                                          .headline5,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )),
+
                     // Title
                     Padding(
                       padding: EdgeInsets.only(

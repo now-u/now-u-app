@@ -18,6 +18,7 @@ import 'package:redux/redux.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 final double PAGE_PADDING = 15;
+final Color HEADER_COLOR = Color.fromRGBO(247, 248, 252, 1);
 
 class NewsPage extends StatelessWidget {
   @override
@@ -75,7 +76,8 @@ class _NewsListState extends State<NewsList> {
     return ListView(
       children: <Widget>[
         Container(
-            color: Color.fromRGBO(247, 248, 252, 1),
+            //color: Color.fromRGBO(247, 248, 252, 1),
+            color: HEADER_COLOR,
             child: Column(children: <Widget>[
               searching
                   ? Container()
@@ -298,6 +300,7 @@ class VideoOTDTile extends StatelessWidget {
                             ),
                           ),
                           Container(
+                              color: HEADER_COLOR,
                               width: double.infinity,
                               child: GestureDetector(
                                   onTap: () {

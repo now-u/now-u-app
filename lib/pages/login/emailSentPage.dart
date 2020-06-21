@@ -22,13 +22,13 @@ class EmailSentPage extends StatefulWidget {
   final String email;
 
   EmailSentPage(this.model, this.email);
-  
+
   @override
   _EmailSentPageState createState() => _EmailSentPageState();
 }
 
-class _EmailSentPageState extends State<EmailSentPage> with WidgetsBindingObserver {
-
+class _EmailSentPageState extends State<EmailSentPage>
+    with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
@@ -50,7 +50,7 @@ class _EmailSentPageState extends State<EmailSentPage> with WidgetsBindingObserv
       //  });
       //});
       FirebaseDynamicLinks.instance.onLink(
-      onSuccess: (PendingDynamicLinkData dynamicLink) async {
+          onSuccess: (PendingDynamicLinkData dynamicLink) async {
         print("Have dynamic link");
         print('dynamicLink: $dynamicLink');
         final Uri deepLink = dynamicLink?.link;
@@ -69,66 +69,55 @@ class _EmailSentPageState extends State<EmailSentPage> with WidgetsBindingObserv
             widget.model.login(email, deepLink.queryParameters['token']);
           });
         }
-      },
-      onError: (OnLinkErrorException e) async {
+      }, onError: (OnLinkErrorException e) async {
         print('onLinkError');
         print(e.message);
-      }
-      );
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return 
-    Stack(
-      children: <Widget> [
-        Scaffold(
+    return Stack(children: <Widget>[
+      Scaffold(
           body: Container(
-            color: Theme.of(context).primaryColorDark,
-            child: Column(
-              children: <Widget>[
-                SafeArea(child: Container(),),
-                Padding(
-                  padding: EdgeInsets.only(top: 20, bottom: 40),
-                  child:
-                    Row(
+              color: Theme.of(context).primaryColorDark,
+              child: Column(
+                children: <Widget>[
+                  SafeArea(
+                    child: Container(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 20, bottom: 40),
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       //children: <Widget>[
                       //  Text("Let's get started", style: Theme.of(context).primaryTextTheme.headline6,),
                       //],
                     ),
-                ),
-                Expanded(
-                  child: Container(
-                    //physics: NeverScrollableScrollPhysics(),
-                    child: IntroPageSection(
-                      "Check your email",
-                      "We have just sent an email to ${widget.email}",
-                      "It has a link that will sign you in to now-u and get you started",
-                      AssetImage('assets/imgs/intro/il-mail@4x.png'),
+                  ),
+                  Expanded(
+                    child: Container(
+                      //physics: NeverScrollableScrollPhysics(),
+                      child: IntroPageSection(
+                        "Check your email",
+                        "We have just sent an email to ${widget.email}",
+                        "It has a link that will sign you in to now-u and get you started",
+                        AssetImage('assets/imgs/intro/il-mail@4x.png'),
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(40),
-                  child: Container(
-                    width: double.infinity,
-                    child: DarkButton(
-                      "Open Email",
-                      onPressed: () {
-                        // TODO open email
-                        openEmailApp(context);
-                      }
-                    )
-                  )
-                ),
-              ],
-            )
-          )
-        ),
-      ]
-    );
+                  Padding(
+                      padding: EdgeInsets.all(40),
+                      child: Container(
+                          width: double.infinity,
+                          child: DarkButton("Open Email", onPressed: () {
+                            // TODO open email
+                            openEmailApp(context);
+                          }))),
+                ],
+              ))),
+    ]);
   }
 }
 
@@ -138,59 +127,68 @@ class IntroPageSection extends StatelessWidget {
   final String description2;
   final AssetImage image;
 
-  IntroPageSection(this.title, this.description1, this.description2, this.image);
+  IntroPageSection(
+      this.title, this.description1, this.description2, this.image);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         Flexible(
-          flex: 3,
           child: Padding(
             padding: EdgeInsets.all(20),
-            child: Image(
-              image: image
-            ),
+            child: Image(image: image),
           ),
         ),
-        Flexible(
-          flex: 2,
+        Container(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: Theme.of(context).primaryTextTheme.headline1.fontSize,
-                  fontWeight: Theme.of(context).primaryTextTheme.headline1.fontWeight,
-                  color: Colors.white,
-                )
+              Text(title,
+                  style: TextStyle(
+                    fontSize:
+                        Theme.of(context).primaryTextTheme.headline1.fontSize,
+                    fontWeight:
+                        Theme.of(context).primaryTextTheme.headline1.fontWeight,
+                    color: Colors.white,
+                  )),
+              SizedBox(
+                height: 10,
               ),
               Container(
-                width: MediaQuery.of(context).size.width * 0.6,
-                child: Text(
-                  description2,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: Theme.of(context).primaryTextTheme.bodyText1.fontSize,
-                    fontWeight: Theme.of(context).primaryTextTheme.bodyText1.fontWeight,
-                    color: Colors.white,
-                  )
-                )
-              ), 
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: Text(description2,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: Theme.of(context)
+                            .primaryTextTheme
+                            .bodyText1
+                            .fontSize,
+                        fontWeight: Theme.of(context)
+                            .primaryTextTheme
+                            .bodyText1
+                            .fontWeight,
+                        color: Colors.white,
+                      ))),
+              SizedBox(
+                height: 5,
+              ),
               Container(
-                width: MediaQuery.of(context).size.width * 0.6,
-                child: Text(
-                  description1,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: Theme.of(context).primaryTextTheme.bodyText1.fontSize,
-                    fontWeight: Theme.of(context).primaryTextTheme.bodyText1.fontWeight,
-                    color: Colors.white,
-                  )
-                )
-              ) 
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: Text(description1,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: Theme.of(context)
+                            .primaryTextTheme
+                            .bodyText1
+                            .fontSize,
+                        fontWeight: Theme.of(context)
+                            .primaryTextTheme
+                            .bodyText1
+                            .fontWeight,
+                        color: Colors.white,
+                      )))
             ],
           ),
         ),
@@ -223,32 +221,30 @@ class OrangePage extends StatelessWidget {
     );
   }
 }
-void openEmailApp(BuildContext context){
-    //try{
-    //    AppAvailability.launchApp(Platform.isIOS ? "message://" : "com.google.android.gm").then((_) {
-    //            print("App Email launched!");
-    //          }).catchError((err) {
-    //            Scaffold.of(context).showSnackBar(SnackBar(
-    //                content: Text("App Email not found!")
-    //            ));
-    //            print(err);
-    //          });
-    //} catch(e) {
-    //  Scaffold.of(context).showSnackBar(SnackBar(content: Text("Email App not found!")));
-    //}
+
+void openEmailApp(BuildContext context) {
+  //try{
+  //    AppAvailability.launchApp(Platform.isIOS ? "message://" : "com.google.android.gm").then((_) {
+  //            print("App Email launched!");
+  //          }).catchError((err) {
+  //            Scaffold.of(context).showSnackBar(SnackBar(
+  //                content: Text("App Email not found!")
+  //            ));
+  //            print(err);
+  //          });
+  //} catch(e) {
+  //  Scaffold.of(context).showSnackBar(SnackBar(content: Text("Email App not found!")));
+  //}
   if (Platform.isAndroid) {
     AndroidIntent intent = AndroidIntent(
       action: 'android.intent.action.MAIN',
       category: 'android.intent.category.APP_EMAIL',
     );
-    intent.launch().catchError((e) {
-    });
+    intent.launch().catchError((e) {});
   } else if (Platform.isIOS) {
-    launch("message://").catchError((e){
-    });
+    launch("message://").catchError((e) {});
   }
 }
-
 
 //Future<void> _retrieveDynamicLink() async {
 //  final PendingDynamicLinkData data =

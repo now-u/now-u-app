@@ -13,24 +13,26 @@ class ProfileTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(ITEM_HORIZONTAL, ITEM_VERTICAL, ITEM_HORIZONTAL, ITEM_VERTICAL),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Padding( 
-                padding: EdgeInsets.only(right: ICON_PADDING),
-                child: Icon(
-                  iconData, 
-                  size: 25,
-                  color: Theme.of(context).primaryColor,
-                )
-            ),
-            Text(text, style: Theme.of(context).primaryTextTheme.headline4),
-          ],
-        ),
-      )
-    );
+        child: Container(
+            color: Colors.white,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(ITEM_HORIZONTAL, ITEM_VERTICAL,
+                  ITEM_HORIZONTAL, ITEM_VERTICAL),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                      padding: EdgeInsets.only(right: ICON_PADDING),
+                      child: Icon(
+                        iconData,
+                        size: 25,
+                        color: Theme.of(context).primaryColor,
+                      )),
+                  Text(text,
+                      style: Theme.of(context).primaryTextTheme.headline4),
+                ],
+              ),
+            )));
   }
 }

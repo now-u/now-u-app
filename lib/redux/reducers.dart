@@ -59,6 +59,7 @@ final userStateReducer = combineReducers<UserState>([
   TypedReducer<UserState, LoadedUserDataAction>(_loadedUserData),
   TypedReducer<UserState, UpdatedUserDetails>(_updatedUserDetails),
   TypedReducer<UserState, CreateNewUser>(_createNewUser),
+  TypedReducer<UserState, Logout>(_logout),
 ]);
 
 UserState _loginSuccess(UserState state, LoginSuccessAction action) {
@@ -121,4 +122,12 @@ UserState _updatedUserDetails(UserState state, UpdatedUserDetails action) {
 
 UserState _createNewUser(UserState state, CreateNewUser action) {
   return state.copyWith(user: action.user);
+}
+
+UserState _logout(UserState state, Logout action) {
+  print("Setting user token to null");
+  return state.copyWith(
+      user: state.user.copyWith(
+    token: "",
+  ));
 }

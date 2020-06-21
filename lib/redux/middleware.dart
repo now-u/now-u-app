@@ -148,6 +148,16 @@ void appStateMiddleware(
       store.dispatch(RejectedAction(newUser));
     });
   }
+
+  if (action is Logout) {
+    print("Updating user in shared pref with empty token");
+    User u = store.state.userState.user.copyWith(
+      token: "",
+    );
+    saveUserToPrefs(u).then((_) {
+      Keys.navKey.currentState.pushNamed(Routes.login);
+    });
+  }
 }
 
 ThunkAction<AppState> joinCampaign(Campaign campaign, BuildContext context) {
@@ -214,7 +224,7 @@ ThunkAction<AppState> completeAction(
         store.state.userState.user.getToken(),
         action.getId(),
       )
-          .catchError((Error error) {
+          .catchError((error) {
         if (error.obs == AuthError.unauthorized) onAuthError();
       });
       // Take the response and update the users points
@@ -357,7 +367,8 @@ ThunkAction initStore(Uri deepLink) {
         store.dispatch(GetCampaignsAction()).then((dynamic r) {
           // A user id of -1 means the user is the placeholder and therefore does not exist, well get rid of this eventually and keep it as null, but for now useful as when we go to homepage after login we have the placeholder user
           if (store.state.userState.user == null ||
-              store.state.userState.user.getToken() == null) {
+              store.state.userState.user.getToken() == null ||
+              store.state.userState.user.getToken() == "") {
             // Skip Login Screen
             //if (store.state.userState.user == null) {
             if (deepLink != null && deepLink.path == "/loginMobile") {

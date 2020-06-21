@@ -49,6 +49,8 @@ class CreateNewUser {
   CreateNewUser(this.user);
 }
 
+class Logout {}
+
 class UpdateUserDetails {
   final User user;
   UpdateUserDetails(this.user);

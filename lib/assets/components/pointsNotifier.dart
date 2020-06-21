@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flushbar/flushbar.dart';
 
 import 'package:app/assets/routes/customRoute.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app/models/Badge.dart';
 import 'package:app/models/Campaign.dart';

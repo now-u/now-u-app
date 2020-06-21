@@ -424,7 +424,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
             SizedBox(height: 10),
             campaign.getSDGs().isEmpty
                 ? Container()
-                : SectionTitle("UN Sustainable Development Goals focus",
+                : SectionTitle("UN Sustainable Development Goals",
                     padding: H_PADDING, vpadding: 0),
             //SDGReel(campaign.getSDGs()),
             SDGList(campaign.getSDGs()),

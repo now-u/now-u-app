@@ -23,6 +23,7 @@ class ViewModel {
   final Function(User) onUpdateUserDetails;
   final Function(CampaignAction, BuildContext) onCompleteAction;
   final Function(CampaignAction, String) onRejectAction;
+  final Function() onLogout;
 
   // Helper functions
   final Function() getActiveSelectedCampaings;
@@ -41,6 +42,7 @@ class ViewModel {
     this.onCompleteAction,
     this.onRejectAction,
     this.onUpdateUserDetails,
+    this.onLogout,
 
     // Helper functions
     this.getActiveSelectedCampaings,
@@ -71,6 +73,10 @@ class ViewModel {
     _onUpdateUserDetails(User user) {
       print("_onUpdateUserDetails");
       store.dispatch(UpdateUserDetails(user));
+    }
+
+    _onLogout() {
+      store.dispatch(Logout());
     }
 
     // Helper Functions
@@ -128,6 +134,7 @@ class ViewModel {
       onCompleteAction: _onCompleteAction,
       onRejectAction: _onRejectAction,
       onUpdateUserDetails: _onUpdateUserDetails,
+      onLogout: _onLogout,
 
       // Helper Functions
       getActiveSelectedCampaings: _getActiveSelectedCampaigns,
