@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+// Custom Icons
+import 'package:app/assets/icons/my_flutter_app_icons.dart';
+
 enum CampaignActionSuperType { GetInvolved, Learn, Advoacte, RaiseMoney }
 
 enum CampaignActionType {
@@ -68,6 +71,7 @@ Map defaultCampaignActionTypeData = {
   'pastVerb': "Completed",
   'displayName': "special action",
   'icon': FontAwesomeIcons.check,
+  //'Type': CustomIcons.heartHand,
   'type': CampaignActionSuperType.GetInvolved,
 };
 
@@ -77,7 +81,7 @@ Map campaignActionTypeData = {
     'verb': "Volunteer",
     'pastVerb': "Volunteered",
     'displayName': "volunteer",
-    'icon': FontAwesomeIcons.handsHelping,
+    'icon': CustomIcons.volunteer,
     'type': CampaignActionSuperType.GetInvolved,
   },
   CampaignActionType.Donation: {
@@ -85,7 +89,7 @@ Map campaignActionTypeData = {
     'verb': "Make",
     'pastVerb': "Made",
     'displayName': "donation",
-    'icon': FontAwesomeIcons.handHoldingHeart,
+    'icon': CustomIcons.icon_donate_01,
     'type': CampaignActionSuperType.RaiseMoney,
   },
   CampaignActionType.Fundraise: {
@@ -93,7 +97,7 @@ Map campaignActionTypeData = {
     'verb': "Take part in",
     'pastVerb': "Took part in",
     'displayName': "fundraiser",
-    'icon': FontAwesomeIcons.piggyBank,
+    'icon': CustomIcons.icon_fundraise_01,
     'type': CampaignActionSuperType.RaiseMoney,
   },
   CampaignActionType.Awareness: {
@@ -101,7 +105,7 @@ Map campaignActionTypeData = {
     'verb': "Raise awareness",
     'pastVerb': "Raised awareness",
     'displayName': "time",
-    'icon': FontAwesomeIcons.bullhorn,
+    'icon': CustomIcons.icon_raise_awareness_01,
     'type': CampaignActionSuperType.Advoacte,
   },
   CampaignActionType.Petition: {
@@ -109,7 +113,7 @@ Map campaignActionTypeData = {
     'verb': "Sign",
     'pastVerb': "Signed",
     'displayName': "petiton",
-    'icon': FontAwesomeIcons.penNib,
+    'icon': CustomIcons.icon_petition_01,
     'type': CampaignActionSuperType.Advoacte,
   },
   CampaignActionType.Behaviour: {
@@ -125,7 +129,7 @@ Map campaignActionTypeData = {
     'verb': "Complete",
     'pastVerb': "Completed",
     'displayName': "contact change action",
-    'icon': FontAwesomeIcons.envelope,
+    'icon': CustomIcons.icon_contact_01,
     'type': CampaignActionSuperType.Advoacte,
   },
   CampaignActionType.Protest: {
@@ -133,7 +137,7 @@ Map campaignActionTypeData = {
     'verb': "Take part in",
     'pastVerb': "Took part in",
     'displayName': "protest",
-    'icon': FontAwesomeIcons.fistRaised,
+    'icon': CustomIcons.icon_protest_01,
     'type': CampaignActionSuperType.GetInvolved,
   },
   CampaignActionType.Connect: {
@@ -141,7 +145,8 @@ Map campaignActionTypeData = {
     'verb': "Connect",
     'pastVerb': "Connted",
     'displayName': "times",
-    'icon': FontAwesomeIcons.link,
+    //'icon': FontAwesomeIcons.link,
+    'icon': CustomIcons.icon_connect_01,
     'type': CampaignActionSuperType.GetInvolved,
   },
   CampaignActionType.Learn: {
@@ -149,7 +154,7 @@ Map campaignActionTypeData = {
     'verb': "Complete",
     'pastVerb': "Completed",
     'displayName': "learning action",
-    'icon': FontAwesomeIcons.bookReader,
+    'icon': CustomIcons.icon_learning_01,
     'type': CampaignActionSuperType.Learn,
   },
   CampaignActionType.Quiz: {
@@ -157,7 +162,7 @@ Map campaignActionTypeData = {
     'verb': "Complete",
     'pastVerb': "Completed",
     'displayName': "quiz",
-    'icon': FontAwesomeIcons.questionCircle,
+    'icon': CustomIcons.icon_quiz_01,
     'type': CampaignActionSuperType.Learn,
   },
   CampaignActionType.Other: defaultCampaignActionTypeData
