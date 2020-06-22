@@ -32,28 +32,16 @@ class CustomIcons {
       IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData campaign =
       IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData volunteer =
-      IconData(0xe801, fontFamily: _actionIcons, fontPackage: _kFontPkg);
-  static const IconData icon_connect_01 =
-      IconData(0xe802, fontFamily: _actionIcons, fontPackage: _kFontPkg);
-  static const IconData icon_contact_01 =
-      IconData(0xe803, fontFamily: _actionIcons, fontPackage: _kFontPkg);
-  static const IconData icon_donate_01 =
-      IconData(0xe804, fontFamily: _actionIcons, fontPackage: _kFontPkg);
-  static const IconData icon_fundraise_01 =
-      IconData(0xe805, fontFamily: _actionIcons, fontPackage: _kFontPkg);
-  static const IconData icon_learning_01 =
-      IconData(0xe806, fontFamily: _actionIcons, fontPackage: _kFontPkg);
-  static const IconData icon_petition_01 =
-      IconData(0xe807, fontFamily: _actionIcons, fontPackage: _kFontPkg);
-  static const IconData icon_protest_01 =
-      IconData(0xe808, fontFamily: _actionIcons, fontPackage: _kFontPkg);
-  static const IconData icon_quiz_01 =
-      IconData(0xe809, fontFamily: _actionIcons, fontPackage: _kFontPkg);
-  static const IconData icon_raise_awareness_01 =
-      IconData(0xe80a, fontFamily: _actionIcons, fontPackage: _kFontPkg);
-  static const IconData icon_raise_awareness_01_01 =
-      IconData(0xe80b, fontFamily: _actionIcons, fontPackage: _kFontPkg);
-  static const IconData icon_vol_01 =
-      IconData(0xe80c, fontFamily: _actionIcons, fontPackage: _kFontPkg);
+
+  static const IconData icon_vol_1 = IconData(0xe80d, fontFamily: _actionIcons, fontPackage: _kFontPkg);
+  static const IconData icon_raise_awareness_01_01 = IconData(0xe80e, fontFamily: _actionIcons, fontPackage: _kFontPkg);
+  static const IconData icon_petition_01 = IconData(0xe80f, fontFamily: _actionIcons, fontPackage: _kFontPkg);
+  static const IconData icon_learning_01 = IconData(0xe810, fontFamily: _actionIcons, fontPackage: _kFontPkg);
+  static const IconData icon_fundraise_01 = IconData(0xe811, fontFamily: _actionIcons, fontPackage: _kFontPkg);
+  static const IconData icon_donate_01 = IconData(0xe812, fontFamily: _actionIcons, fontPackage: _kFontPkg);
+  static const IconData icon_contact_01 = IconData(0xe813, fontFamily: _actionIcons, fontPackage: _kFontPkg);
+  static const IconData icon_connect_01 = IconData(0xe814, fontFamily: _actionIcons, fontPackage: _kFontPkg);
+  static const IconData icon_behaviour_01 = IconData(0xe815, fontFamily: _actionIcons, fontPackage: _kFontPkg);
+  static const IconData icon_quiz_01 = IconData(0xe816, fontFamily: _actionIcons, fontPackage: _kFontPkg);
+  static const IconData icon_protest_01 = IconData(0xe817, fontFamily: _actionIcons, fontPackage: _kFontPkg);
 }

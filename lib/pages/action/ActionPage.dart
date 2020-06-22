@@ -579,7 +579,7 @@ class _ActiveDoneSelectorState extends State<ActiveDoneSelector> {
     return GestureDetector(
         onTap: widget.onClick,
         child: Padding(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.only(top: 0, bottom: 10, left: 10, right: 10),
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),

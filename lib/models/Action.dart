@@ -81,7 +81,7 @@ Map campaignActionTypeData = {
     'verb': "Volunteer",
     'pastVerb': "Volunteered",
     'displayName': "volunteer",
-    'icon': CustomIcons.volunteer,
+    'icon': CustomIcons.icon_vol_1,
     'type': CampaignActionSuperType.GetInvolved,
   },
   CampaignActionType.Donation: {
@@ -105,7 +105,7 @@ Map campaignActionTypeData = {
     'verb': "Raise awareness",
     'pastVerb': "Raised awareness",
     'displayName': "time",
-    'icon': CustomIcons.icon_raise_awareness_01,
+    'icon': CustomIcons.icon_raise_awareness_01_01,
     'type': CampaignActionSuperType.Advoacte,
   },
   CampaignActionType.Petition: {
@@ -121,7 +121,7 @@ Map campaignActionTypeData = {
     'verb': "Complete",
     'pastVerb': "Completed",
     'displayName': "behaviour change action",
-    'icon': FontAwesomeIcons.exchangeAlt,
+    'icon': CustomIcons.icon_behaviour_01,
     'type': CampaignActionSuperType.GetInvolved,
   },
   CampaignActionType.Contact: {

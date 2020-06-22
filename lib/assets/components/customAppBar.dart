@@ -53,7 +53,7 @@ AppBar CustomAppBar({
         Expanded(
           child: Container(
               //flex: 1,
-              child: actions.length == 0
+              child: actions == null || actions.length == 0
                   ? Container()
                   : Align(
                       alignment: Alignment.centerRight,
