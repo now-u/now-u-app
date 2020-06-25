@@ -9,6 +9,7 @@ import 'package:app/routes.dart';
 
 import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
 import 'package:app/pages/other/RewardComplete.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/selectionItem.dart';
@@ -52,21 +53,37 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: CustomAppBar(
-          text: "Action",
-          backButtonText: "Home",
-          context: context,
-        ),
-        key: scaffoldKey,
-        body: StoreConnector<AppState, ViewModel>(
-          converter: (Store<AppState> store) => ViewModel.create(store),
-          builder: (BuildContext context, ViewModel viewModel) {
-            bool completed = viewModel.userModel.user
-                .getCompletedActions()
-                .contains(_action.getId());
-            return Stack(
-              children: [
+    return StoreConnector<AppState, ViewModel>(
+        converter: (Store<AppState> store) => ViewModel.create(store),
+        builder: (BuildContext context, ViewModel viewModel) {
+          bool completed = viewModel.userModel.user
+              .getCompletedActions()
+              .contains(_action.getId());
+          bool starred = viewModel.userModel.user
+              .getStarredActions()
+              .contains(_action.getId());
+          return Scaffold(
+              appBar: CustomAppBar(
+                  text: "Action",
+                  backButtonText: "Home",
+                  context: context,
+                  actions: [
+                    IconButton(
+                      icon: Icon(
+                          starred
+                              ? FontAwesomeIcons.solidStar
+                              : FontAwesomeIcons.star,
+                          color: Theme.of(context).primaryColor),
+                      onPressed: () {
+                        setState(() {
+                          starred = true;
+                        });
+                        viewModel.onStarAction(_action);
+                      },
+                    )
+                  ]),
+              key: scaffoldKey,
+              body: Stack(children: [
                 ListView(
                   children: [
                     Container(
@@ -285,10 +302,8 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                     color: Theme.of(context).primaryColor,
                   ),
                 )
-              ],
-            );
-          },
-        ));
+              ]));
+        });
   }
 }
 

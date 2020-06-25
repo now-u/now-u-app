@@ -71,7 +71,9 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       autofocus: true,
       validator: (value) {
         if (value.isEmpty) return "Email cannot be empty";
-        if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)) {
+        if (!RegExp(
+                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+            .hasMatch(value)) {
           return "Email must be a valid email address";
         }
         return null;
@@ -94,115 +96,110 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         }
         return false;
       }
-      return 
-       StoreConnector<AppState, UserViewModel>(
-         converter: (store) => UserViewModel.create(store),
-         builder: (_, viewModel) {
+
+      return StoreConnector<AppState, UserViewModel>(
+          converter: (store) => UserViewModel.create(store),
+          builder: (_, viewModel) {
             return Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: DarkButton(
-                "Next",
-                onPressed: () {
-                  print("Button pressed");
-                  validateAndSave(viewModel);
-                },
-              )
-            );
-         },
-         onDidChange: (viewModel) {
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+                child: DarkButton(
+                  "Next",
+                  onPressed: () {
+                    print("Button pressed");
+                    validateAndSave(viewModel);
+                  },
+                ));
+          },
+          onDidChange: (viewModel) {
             print("view model did change in login");
-         }
-      );
+          });
     }
 
     Widget skipButton() {
-       return StoreConnector<AppState, UserViewModel>(
-         converter: (store) => UserViewModel.create(store),
-         builder: (_, viewModel) {
+      return StoreConnector<AppState, UserViewModel>(
+          converter: (store) => UserViewModel.create(store),
+          builder: (_, viewModel) {
             return Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: TextButton(
-                "Skip",
-                onClick: () {
-                  viewModel.skipLogin();
-                },
-              )
-            );
-          }
-        );
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+                child: TextButton(
+                  "Skip",
+                  onClick: () {
+                    viewModel.skipLogin();
+                  },
+                ));
+          });
     }
-
 
     Form loginForm() {
-      return 
-        Form(
+      return Form(
           key: _formKey,
           child: Padding(
-            padding: EdgeInsets.only(left: 24, right: 24),
-            child: SafeArea( 
-              child: Column(
-                //shrinkWrap: true,
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(top: 30, bottom: 10),
-                        child: Text("Account Details",
-                          style: textStyleFrom(
-                            Theme.of(context).primaryTextTheme.headline3,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
+              padding: EdgeInsets.only(left: 24, right: 24),
+              child: SafeArea(
+                child: Column(
+                  //shrinkWrap: true,
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(top: 30, bottom: 10),
+                          child: Text(
+                            "Account Details",
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.headline3,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.6,
-                        child: Text(
-                          "Enter the email address that you would like to use to access now-u",
-                          textAlign: TextAlign.center,
-                          style: textStyleFrom(
-                            Theme.of(context).primaryTextTheme.headline5,
-                            color: Colors.white,
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          child: Text(
+                            "Enter the email address that you would like to use to access now-u",
+                            textAlign: TextAlign.center,
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.headline5,
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Your email address",
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.headline4,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.left,
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "Your email address",
-                          style: textStyleFrom(
-                            Theme.of(context).primaryTextTheme.headline4,
-                            color: Colors.white,
-                          ),
-                          textAlign: TextAlign.left,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      email,
-                    ],
-                  ),
-                  loginButton(),
-                  skipButton(),
-                ],
-              ),
-            )
-          )
-        );
+                        SizedBox(height: 10),
+                        email,
+                      ],
+                    ),
+                    loginButton(),
+
+                    // Uncomment to readd Skip button
+                    //skipButton(),
+                  ],
+                ),
+              )));
     }
-    return 
-      Scaffold(
-        key: _scaffoldKey,
-        backgroundColor: Theme.of(context).primaryColorDark,
-        body: loginForm(),
-      );
+
+    return Scaffold(
+      key: _scaffoldKey,
+      backgroundColor: Theme.of(context).primaryColorDark,
+      body: loginForm(),
+    );
   }
 
   //Future<void> _retrieveDynamicLink() async {

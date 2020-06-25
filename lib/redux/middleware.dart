@@ -208,7 +208,7 @@ ThunkAction<AppState> joinCampaign(Campaign campaign, BuildContext context) {
   };
 }
 
-ThunkAction<AppState> starAction(CampaignAction action, BuildContext context) {
+ThunkAction<AppState> starAction(CampaignAction action) {
   return (Store<AppState> store) async {
     Future(() async {
       if (store.state.userState.user
@@ -237,7 +237,7 @@ ThunkAction<AppState> starAction(CampaignAction action, BuildContext context) {
         action.getId(),
       )
           .catchError((error) {
-        if (error.obs == AuthError.unauthorized) onAuthError();
+        if (error == AuthError.unauthorized) onAuthError();
       });
 
       User newUser = store.state.userState.user.copyWith(

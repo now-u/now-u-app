@@ -176,9 +176,9 @@ class User {
             ? <int>[]
             : json['rejected_actions'].cast<int>();
     starredActions =
-        json['starred_actions'] == null || json['starred_actions'].isEmpty
+        json['favourited_actions'] == null || json['favourited_actions'].isEmpty
             ? <int>[]
-            : json['starred_actions'].cast<int>();
+            : json['favourited_actions'].cast<int>();
     //selectedCampaigns =
     //      json['selected_campaigns'] == null  || json['selected_campaigns'].isEmpty ? <int>[] :
     //      (json['selected_campaigns']).map((c) {

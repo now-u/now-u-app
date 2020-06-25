@@ -107,14 +107,25 @@ class _EmailSentPageState extends State<EmailSentPage>
                       ),
                     ),
                   ),
+                  SizedBox(height: 30),
                   Padding(
-                      padding: EdgeInsets.all(40),
+                      padding: EdgeInsets.symmetric(horizontal: 40),
                       child: Container(
                           width: double.infinity,
                           child: DarkButton("Open Email", onPressed: () {
                             // TODO open email
                             openEmailApp(context);
                           }))),
+                  SizedBox(height: 20),
+                  Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton("I did not recieve an email", onClick: () {
+                          Navigator.of(context).pop();
+                        }),
+                      ]),
+                  SizedBox(height: 10),
                 ],
               ))),
     ]);
