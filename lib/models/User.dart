@@ -34,6 +34,8 @@ class User {
   // Map stores rejection time and rejection reason
   List<int> rejectedActions = [];
 
+  List<int> starredActions = [];
+
   Map<CampaignActionType, int> completedActionsType;
 
   int points;
@@ -53,6 +55,7 @@ class User {
       completedCampaigns,
       completedActions,
       rejectedActions,
+      starredActions,
       completedRewards,
       completedActionsType,
       points}) {
@@ -67,6 +70,7 @@ class User {
     this.selectedCampaigns = selectedCampaigns ?? [];
     this.completedActions = completedActions ?? [];
     this.rejectedActions = rejectedActions ?? [];
+    this.starredActions = starredActions ?? [];
     //this.completedRewards = completedRewards ?? [];
 
     this.completedActionsType = completedActionsType ?? initCompletedAction();
@@ -90,6 +94,7 @@ class User {
     //completedRewards = [];
     completedActions = [];
     rejectedActions = [];
+    starredActions = [];
     completedActionsType = initCompletedAction();
     token = null;
     points = 0;
@@ -113,6 +118,7 @@ class User {
     //List<int> completedRewards,
     List<int> completedActions,
     List<int> rejectedActions,
+    List<int> starredActions,
     Map<CampaignActionType, int> completedActionsType,
     int points,
     String token,
@@ -130,6 +136,7 @@ class User {
       //completedRewards: completedRewards ?? this.completedRewards,
       completedActions: completedActions ?? this.completedActions,
       rejectedActions: rejectedActions ?? this.rejectedActions,
+      starredActions: starredActions ?? this.starredActions,
       completedActionsType: completedActionsType ?? this.completedActionsType,
       points: points ?? this.points,
       token: token ?? this.token,
@@ -168,6 +175,10 @@ class User {
         json['rejected_actions'] == null || json['rejected_actions'].isEmpty
             ? <int>[]
             : json['rejected_actions'].cast<int>();
+    starredActions =
+        json['starred_actions'] == null || json['starred_actions'].isEmpty
+            ? <int>[]
+            : json['starred_actions'].cast<int>();
     //selectedCampaigns =
     //      json['selected_campaigns'] == null  || json['selected_campaigns'].isEmpty ? <int>[] :
     //      (json['selected_campaigns']).map((c) {
@@ -234,6 +245,7 @@ class User {
         'completed_campaigns': completedCampaigns,
         'completed_actions': completedActions,
         'rejected_actions': rejectedActions,
+        'starred_actions': starredActions,
         //'completed_rewards': completedRewards,
         'completed_actions_type':
             campaignActionTypesEncode(completedActionsType),
@@ -354,6 +366,10 @@ class User {
 
   List<int> getRejectedActions() {
     return rejectedActions;
+  }
+
+  List<int> getStarredActions() {
+    return starredActions;
   }
 
   void setName(String name) {

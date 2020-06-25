@@ -118,6 +118,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     ),
                     onPressed: () {
                       model.onUpdateUserDetails(user);
+                      Navigator.of(context).pop();
                     },
                     color: Theme.of(context).primaryColor,
                   ),

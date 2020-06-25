@@ -139,6 +139,30 @@ class AuthenticationService {
     }
   }
 
+  Future<User> starAction(String token, int actionId) async {
+    http.Response response = await http.post(
+      domainPrefix + 'users/me/actions/${actionId}/favourite',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'token': token,
+      },
+    );
+    if (response.statusCode == 200) {
+      print("The new deets after staring action are");
+      print(response.body);
+      User u = User.fromJson(json.decode(response.body)['data']);
+      return u;
+    } else if (response.statusCode == 401) {
+      return Future.error(AuthError.unauthorized);
+    } else {
+      print("There was an error updating user details");
+      print(response.body);
+      print("The token was ${token}");
+      print("The actionId was ${actionId.toString()}");
+      return null;
+    }
+  }
+
   Future<User> rejectAction(String token, int actionId, String reason) async {
     Map jsonBody = {'reason': reason};
     http.Response response = await http.post(

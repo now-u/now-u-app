@@ -56,6 +56,7 @@ final userStateReducer = combineReducers<UserState>([
   TypedReducer<UserState, UnjoinedCampaign>(_unjoinedCampaign),
   TypedReducer<UserState, CompletedAction>(_completedAction),
   TypedReducer<UserState, RejectedAction>(_rejectedAction),
+  TypedReducer<UserState, StarredAction>(_starredAction),
   TypedReducer<UserState, LoadedUserDataAction>(_loadedUserData),
   TypedReducer<UserState, UpdatedUserDetails>(_updatedUserDetails),
   TypedReducer<UserState, CreateNewUser>(_createNewUser),
@@ -101,6 +102,10 @@ UserState _completedAction(UserState state, CompletedAction action) {
 }
 
 UserState _rejectedAction(UserState state, RejectedAction action) {
+  return state.copyWith(user: action.user);
+}
+
+UserState _starredAction(UserState state, StarredAction action) {
   return state.copyWith(user: action.user);
 }
 

@@ -103,6 +103,12 @@ class _ProfileState extends State<Profile> {
                 ProfileTile("Send us an email", FontAwesomeIcons.solidEnvelope),
             'link': "mailto:hello@now-u.com?subject=Hi there"
           },
+          {
+            'profileTile':
+                ProfileTile("Privacy Policy", FontAwesomeIcons.fingerprint),
+            'link':
+                "https://now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf"
+          },
           //{
           //  'profileTile': ProfileTile("Partners", FontAwesomeIcons.building),
           //  'page': PartnersPage(),

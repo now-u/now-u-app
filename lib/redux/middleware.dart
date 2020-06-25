@@ -171,7 +171,7 @@ ThunkAction<AppState> joinCampaign(Campaign campaign, BuildContext context) {
         return;
       }
       User responseUser = await store.state.userState.auth.joinCampaign(
-        store.state.userState.user.getToken(), campaign.getId());
+          store.state.userState.user.getToken(), campaign.getId());
 
       print("new user points ${responseUser.getPoints()}");
 
@@ -208,6 +208,50 @@ ThunkAction<AppState> joinCampaign(Campaign campaign, BuildContext context) {
   };
 }
 
+ThunkAction<AppState> starAction(CampaignAction action, BuildContext context) {
+  return (Store<AppState> store) async {
+    Future(() async {
+      if (store.state.userState.user
+          .getStarredActions()
+          .contains(action.getId())) {
+        print("This action has already been starred");
+        return;
+      }
+      if (store.state.userState.user
+          .getCompletedActions()
+          .contains(action.getId())) {
+        print("This action has already been completed");
+        return;
+      }
+      if (store.state.userState.user
+          .getRejectedActions()
+          .contains(action.getId())) {
+        print("This action has already been rejected");
+        return;
+      }
+
+      // If not already complete/rejected/starred
+      User userResponse = await store.state.userState.auth
+          .starAction(
+        store.state.userState.user.getToken(),
+        action.getId(),
+      )
+          .catchError((error) {
+        if (error.obs == AuthError.unauthorized) onAuthError();
+      });
+
+      User newUser = store.state.userState.user.copyWith(
+        starredActions: userResponse.getStarredActions(),
+      );
+
+      saveUserToPrefs(newUser).then((_) {
+        store.dispatch(StarredAction(newUser));
+      });
+    });
+  };
+}
+
+// If the action is already completed then dont do anything
 ThunkAction<AppState> completeAction(
     CampaignAction action, BuildContext context) {
   return (Store<AppState> store) async {
@@ -295,8 +339,8 @@ ThunkAction<AppState> completeAction(
           //              RewardCompletePage(newlyCompletedRewards)));
           //} else {
           // Points Notifier
-            pointsNotifier(newPoints, 5, getNextBadge(newPoints), context)
-              ..show(context);
+          pointsNotifier(newPoints, 5, getNextBadge(newPoints), context)
+            ..show(context);
           //}
         }
       });

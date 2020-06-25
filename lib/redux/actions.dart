@@ -44,6 +44,11 @@ class RejectedAction {
   RejectedAction(this.user);
 }
 
+class StarredAction {
+  final User user;
+  StarredAction(this.user);
+}
+
 class CreateNewUser {
   final User user;
   CreateNewUser(this.user);

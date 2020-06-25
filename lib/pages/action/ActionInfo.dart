@@ -256,9 +256,10 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                     ),
                   ],
                 ),
-                Positioned(
-                  bottom: 0,
+                AnimatedPositioned(
+                  bottom: completed ? -50 : 0,
                   left: 0,
+                  duration: Duration(milliseconds: 500),
                   child: FlatButton(
                     padding: EdgeInsets.all(0),
                     child: Container(
@@ -277,7 +278,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                     onPressed: () {
                       setState(() {
                         print("Print button pressed");
-                        //completeAction(viewModel, context, _action);
+                        completed = true;
                         viewModel.onCompleteAction(_action, context);
                       });
                     },
