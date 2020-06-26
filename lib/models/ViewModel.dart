@@ -31,7 +31,8 @@ class ViewModel {
   final Function(
       {bool includeCompleted,
       bool includeRejected,
-      bool includeTodo}) getActiveActions; // Non-rejected, non-completed
+      bool includeTodo,
+      bool includeStarred}) getActiveActions; // Non-rejected, non-completed
 
   ViewModel({
     this.campaigns,
@@ -101,7 +102,8 @@ class ViewModel {
         {bool includeCompleted,
         bool includeRejected,
         bool onlySelectedCampaigns,
-        bool includeTodo}) {
+        bool includeTodo,
+        bool includeStarred}) {
       print("Getting actions");
       List<CampaignAction> actions = [];
       actions.addAll(store.state.campaigns.getActions());
@@ -120,6 +122,10 @@ class ViewModel {
         actions.removeWhere((a) => store.state.userState.user
             .getCompletedActions()
             .contains(a.getId()));
+      }
+      if (!(includeStarred ?? true)) {
+        actions.removeWhere((a) =>
+            store.state.userState.user.getStarredActions().contains(a.getId()));
       }
       if (onlySelectedCampaigns ?? false) {
         // If action is not in the selected campaings then get rid

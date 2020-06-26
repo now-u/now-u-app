@@ -55,11 +55,13 @@ List<CampaignAction> getActions(
   bool includeCompleted = selections['extras']['completed'];
   bool includeRejected = selections['extras']['rejected'];
   bool includeToDo = selections['extras']['todo'];
+  bool includeStarred = selections['extras']['starred'];
   // Get all the actions
   tmpActions.addAll(model.getActiveActions(
       includeCompleted: includeCompleted,
       includeRejected: includeRejected,
-      includeTodo: includeToDo));
+      includeTodo: includeToDo,
+      includeStarred: includeStarred));
   // Filter them for the campaign
   tmpActions.removeWhere((a) => !campaign.getActions().contains(a));
   print("Got some temp ations");
@@ -87,6 +89,7 @@ class _ActionPageState extends State<ActionPage> {
       "todo": true,
       "completed": false,
       "rejected": false,
+      "starred": true,
     }
   };
 
@@ -228,6 +231,27 @@ class _ActionPageState extends State<ActionPage> {
                               children: [
                                 Row(
                                   children: [
+                                    ActiveDoneSelector(
+                                      "All",
+                                      () {
+                                        setState(() {
+                                          selections['extras']['starred'] =
+                                              true;
+                                          selections['extras']['todo'] = true;
+                                          selections['extras']['rejected'] =
+                                              false;
+                                          selections['extras']['completed'] =
+                                              false;
+
+                                          actions = getActions(
+                                              campaign, selections, viewModel);
+                                        });
+                                      },
+                                      selections['extras']['todo'] &&
+                                          selections['extras']['starred'] &&
+                                          !selections['extras']['rejected'] &&
+                                          !selections['extras']['completed'],
+                                    ),
                                     ActiveDoneSelector(
                                       "To do",
                                       () {
