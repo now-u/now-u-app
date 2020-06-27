@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import 'package:app/pages/other/SplashScreen.dart';
 
@@ -23,6 +24,7 @@ import 'package:redux_thunk/redux_thunk.dart';
 import 'package:wiredash/wiredash.dart';
 
 void main() {
+  Crashlytics.instance.enableInDevMode = true;
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(statusBarColor: darkBlue),
