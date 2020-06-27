@@ -25,6 +25,7 @@ class DetailsPage extends StatefulWidget {
 class _DetailsPageState extends State<DetailsPage> {
   User user;
   bool editingMode;
+  DateTime dob;
   @override
   void initState() {
     editingMode = true;
@@ -62,16 +63,28 @@ class _DetailsPageState extends State<DetailsPage> {
                                   .toList()[index]
                                   .toString(),
                               //initalText: userData[index].value.toString(),
-                              value:
-                                  user.getAttributes().values.toList()[index],
+                              value: user
+                                          .getAttributes()
+                                          .keys
+                                          .toList()[index]
+                                          .toString() ==
+                                      "date_of_birth"
+                                  ? dob
+                                  : user.getAttributes().values.toList()[index],
                               onChanged: (v) {
                                 setState(() {
                                   print(user.getDateOfBirth());
-                                  print(v);
                                   print(user
                                       .getAttributes()
                                       .keys
                                       .toList()[index]);
+                                  if (user
+                                          .getAttributes()
+                                          .keys
+                                          .toList()[index] ==
+                                      "date_of_birth") {
+                                    dob = v;
+                                  }
                                   user.setAttribute(
                                       user.getAttributes().keys.toList()[index],
                                       v);
@@ -83,6 +96,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         },
                       ),
                     ),
+                    SizedBox(height: 15),
                     Align(
                         alignment: Alignment.center,
                         child: DarkButton(
@@ -133,6 +147,31 @@ class UserAttributeTile extends StatelessWidget {
     this.value,
     this.onChanged,
   });
+  Future<Null> _selectDate(
+      BuildContext context, DateTime date, Function onChanged) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: date ?? DateTime(1995, 1),
+      firstDate: DateTime(1800, 1),
+      lastDate: DateTime(2100),
+      builder: (BuildContext context, Widget child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            primaryColor: Theme.of(context).primaryColor,
+            accentColor: Colors.green,
+            colorScheme:
+                ColorScheme.light(primary: Theme.of(context).primaryColor),
+            //buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+          ),
+          child: child,
+        );
+      },
+    );
+    if (picked != null && picked != date) {
+      onChanged(picked);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -151,22 +190,35 @@ class UserAttributeTile extends StatelessWidget {
                       inactiveColor: Color.fromRGBO(221, 221, 221, 1))
                 ],
               )
-            : TextFormField(
-                keyboardType: (value is double) || (value is int)
-                    ? TextInputType.number
-                    : TextInputType.text,
-                enabled: akey == value ? false : true,
-                initialValue: value == null || (value is int) && value == -1
-                    ? null
-                    : value.toString(),
-                onChanged: (String s) {
-                  if (value is double) {
-                    onChanged(double.parse(s));
-                  } else {
-                    onChanged(s);
-                  }
-                },
-                decoration: InputDecoration(labelText: akey.toString()),
-              ));
+            : akey == "date_of_birth"
+                ? GestureDetector(
+                    onTap: () => _selectDate(context, value, onChanged),
+                    child: AbsorbPointer(
+                        child: TextFormField(
+                            decoration:
+                                InputDecoration(labelText: "Date of Birth"),
+                            initialValue:
+                                value == null ? "" : dateToString(value))))
+                : TextFormField(
+                    keyboardType: (value is double) || (value is int)
+                        ? TextInputType.number
+                        : TextInputType.text,
+                    enabled: akey == value ? false : true,
+                    initialValue: value == null || (value is int) && value == -1
+                        ? null
+                        : value.toString(),
+                    onChanged: (String s) {
+                      if (value is double) {
+                        onChanged(double.parse(s));
+                      } else {
+                        onChanged(s);
+                      }
+                    },
+                    decoration: InputDecoration(labelText: akey.toString()),
+                  ));
   }
+}
+
+String dateToString(DateTime date) {
+  return "${date.day}-${date.month}-${date.year}";
 }

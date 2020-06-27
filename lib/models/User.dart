@@ -15,7 +15,7 @@ class User {
   //FirebaseUser firebaseUser;
   String fullName;
   String email;
-  String dateOfBirth;
+  DateTime dateOfBirth;
 
   // TODO make some attributes class that can take any attrribute so I dont need this
   String location;
@@ -85,7 +85,7 @@ class User {
     id = -1;
     fullName = "unknown";
     email = "unknown";
-    dateOfBirth = "00/00/0000";
+    dateOfBirth = DateTime(1990, 1, 1);
     location = "uknown";
     monthlyDonationLimit = -1;
     homeOwner = false;
@@ -105,7 +105,7 @@ class User {
     //FirebaseUser firebaseUser,
     String fullName,
     String email,
-    String dateOfBirth,
+    DateTime dateOfBirth,
 
     // TODO make some attributes class that can take any attrribute so I dont need this
     String location,
@@ -151,7 +151,7 @@ class User {
     fullName = json['full_name'];
     email = json['email'];
     print("Getting up to email");
-    dateOfBirth = json['date_of_birth'];
+    dateOfBirth = DateTime.tryParse(json['date_of_birth']);
     location = json['location'];
     monthlyDonationLimit = json['monthly_donation_limit'];
     homeOwner = json['home_owner'] ?? false;
@@ -237,7 +237,7 @@ class User {
         'id': id,
         'full_name': fullName,
         'email': email,
-        'date_of_birth': dateOfBirth,
+        'date_of_birth': dateOfBirth.toIso8601String(),
         'location': location,
         'monthly_donation_limit': monthlyDonationLimit,
         'home_owner': homeOwner,
@@ -245,7 +245,7 @@ class User {
         'completed_campaigns': completedCampaigns,
         'completed_actions': completedActions,
         'rejected_actions': rejectedActions,
-        'starred_actions': starredActions,
+        'favourited_actions': starredActions,
         //'completed_rewards': completedRewards,
         'completed_actions_type':
             campaignActionTypesEncode(completedActionsType),
@@ -265,6 +265,18 @@ class User {
     };
   }
 
+  Map getPostAttributes() {
+    return {
+      //'id' : id,
+      'full_name': fullName,
+      'email': email,
+      'date_of_birth': dateOfBirth.toString(),
+      'location': location,
+      'monthly_donatIon_limit': monthlyDonationLimit,
+      'home_owner': homeOwner,
+    };
+  }
+
   void setAttribute(String k, v) {
     switch (k) {
       case 'full_name':
@@ -280,7 +292,7 @@ class User {
       case 'date_of_birth':
         {
           print("Settting attribute dob");
-          this.setDateOfBirth(v.toString());
+          this.setDateOfBirth(v);
           break;
         }
       case 'location':
@@ -314,7 +326,7 @@ class User {
     return email;
   }
 
-  String getDateOfBirth() {
+  DateTime getDateOfBirth() {
     return dateOfBirth;
   }
 
@@ -380,8 +392,7 @@ class User {
     this.email = email;
   }
 
-  void setDateOfBirth(String dob) {
-    print("The user's new data of birth is" + dob);
+  void setDateOfBirth(DateTime dob) {
     this.dateOfBirth = dob;
   }
 

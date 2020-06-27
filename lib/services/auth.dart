@@ -92,14 +92,14 @@ class AuthenticationService {
     print("The user token is" + user.getToken());
     print("User attribues are");
     print(user.getAttributes());
-    print(json.encode(user.getAttributes()));
+    print(json.encode(user.getPostAttributes()));
     http.Response response = await http.put(
       domainPrefix + 'users/me',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'token': user.getToken(),
       },
-      body: json.encode(user.getAttributes()),
+      body: json.encode(user.getPostAttributes()),
     );
     if (response.statusCode == 200) {
       print("The new user deets are");
