@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:app/pages/news/NewsPage.dart';
 import 'package:app/pages/Tabs.dart';
+import 'package:app/pages/campaign/CampaignTile.dart';
 
 import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/components/darkButton.dart';
@@ -61,6 +62,8 @@ class Home extends StatelessWidget {
                       ),
                       clipper: BezierClipper(),
                     ),
+
+                    CampaignCarosel(),
 
                     sectionTitle("Actions", context),
                     HomeActionTile(changePage),
@@ -226,3 +229,32 @@ class BezierClipper extends CustomClipper<Path> {
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
 
+class CampaignCarosel extends StatelessWidget {
+  final _controller = PageController(
+    initialPage: 0,
+    viewportFraction: 0.85,
+  );
+  @override
+  Widget build(BuildContext context) {
+      return StoreConnector<AppState, ViewModel>(
+        converter: (Store<AppState> store) => ViewModel.create(store),
+        builder: (BuildContext context, ViewModel viewModel) {
+    return SizedBox(
+    height: 250,
+    child: PageView.builder(
+        controller: _controller,
+        itemCount: viewModel.campaigns.getActiveCampaigns().length,
+            // If all the active campaigns have been joined
+        //itemCount: viewModel.campaigns.getActiveCampaigns().length,
+        itemBuilder: (BuildContext context, int index) {
+          return CampaignTile(viewModel
+              .userModel.user
+              .filterSelectedCampaigns(viewModel.campaigns
+                  .getActiveCampaigns())[index]);
+        },
+      ),
+    );
+      }
+    );
+  }
+}

@@ -541,6 +541,7 @@ class SDGList extends StatelessWidget {
         //child: Expanded(
         child: ListView.builder(
           shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
           itemCount: sdgs.length,
           itemBuilder: (BuildContext context, int index) {
             return Padding(

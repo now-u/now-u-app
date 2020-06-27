@@ -80,6 +80,7 @@ class _CampaignTileState extends State<CampaignTile> {
     return Tile(
       onTap: _onTapMoreInfo,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           // Image
