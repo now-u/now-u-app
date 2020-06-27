@@ -269,9 +269,16 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
 
                     SizedBox(height: 20),
                     Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         mainAxisSize: MainAxisSize.max,
                         children: [
+                          completed ?
+                          TextButton("Mark as not done", fontSize: 14,
+                            onClick: () {
+                              viewModel.onRemoveActionStatus(_action);
+                            }
+                          )
+                          :
                           TextButton("Hide this action", fontSize: 14,
                               onClick: () {
                             showDialog(
@@ -281,21 +288,22 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                   RejectDialogue(_action, viewModel),
                             );
                           }),
+
+                          SizedBox(width: 10),
                         ]),
                     SizedBox(
-                      height: completed ? 20 : 65,
+                      height: completed ? 55 : 70,
                     ),
                   ],
                 ),
-                AnimatedPositioned(
-                  bottom: completed ? -80 : 0,
+                Positioned(
+                  bottom: 0, 
                   left: 0,
-                  duration: Duration(milliseconds: 500),
                   child: FlatButton(
                     padding: EdgeInsets.all(0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: 60,
+                      height: completed ? 45 : 60,
                       child: Center(
                           child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -307,14 +315,24 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                             size: 30,
                           ),
                           SizedBox(width: 20),
-                          Text(
-                            starred ? "Remove from To-Dos" : "Add to my To-Dos",
-                            style: textStyleFrom(
-                                Theme.of(context).primaryTextTheme.button,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 17,
-                                color: Colors.white),
-                          ),
+                          completed ? 
+                            Text(
+                              "You completed this action",
+                              style: textStyleFrom(
+                                  Theme.of(context).primaryTextTheme.button,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 17,
+                                  color: Colors.white),
+                            )
+                          : 
+                            Text(
+                              starred ? "Remove from To-Dos" : "Add to my To-Dos",
+                              style: textStyleFrom(
+                                  Theme.of(context).primaryTextTheme.button,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 17,
+                                  color: Colors.white),
+                            ),
                         ],
                       )),
                     ),
@@ -326,7 +344,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                         starred = !starred;
                       });
                     },
-                    color: Theme.of(context).primaryColor,
+                    color: completed ? Color.fromRGBO(155,159,177,1): Theme.of(context).primaryColor,
                   ),
                 )
               ]));
