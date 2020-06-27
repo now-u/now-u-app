@@ -251,6 +251,32 @@ ThunkAction<AppState> starAction(CampaignAction action) {
   };
 }
 
+ThunkAction<AppState> removeActionStatus(CampaignAction action) {
+  return (Store<AppState> store) async {
+    Future(() async {
+      // If not already complete/rejected/starred
+      User userResponse = await store.state.userState.auth
+          .removeActionStatus(
+        store.state.userState.user.getToken(),
+        action.getId(),
+      )
+          .catchError((error) {
+        if (error == AuthError.unauthorized) onAuthError();
+      });
+
+      User newUser = store.state.userState.user.copyWith(
+        starredActions: userResponse.getStarredActions(),
+        rejectedActions: userResponse.getRejectedActions(),
+        completedActions: userResponse.getCompletedActions(),
+      );
+
+      saveUserToPrefs(newUser).then((_) {
+        store.dispatch(RemovedActionStatus(newUser));
+      });
+    });
+  };
+}
+
 // If the action is already completed then dont do anything
 ThunkAction<AppState> completeAction(
     CampaignAction action, BuildContext context) {

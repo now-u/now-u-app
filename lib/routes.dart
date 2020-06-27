@@ -11,6 +11,7 @@ import 'package:app/pages/login/login.dart';
 import 'package:app/pages/other/BetaPage.dart';
 import 'package:app/pages/Tabs.dart';
 import 'package:app/pages/campaign/LearningCentre/LearningCentreAllPage.dart';
+import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
 
 class Routes {
   // Intro
@@ -21,6 +22,8 @@ class Routes {
   static const campaign = "campaign";
   static const actions = "actions";
   static const home = "home";
+
+  static const campaigns = "campaigns";
 
   // Other
   static const profile = "profile";
@@ -36,6 +39,8 @@ class Routes {
 }
 
 Function initRoutes = (RouteSettings settings) {
+  final args = settings.arguments;
+
   switch (settings.name) {
 
     // Into
@@ -69,6 +74,17 @@ Function initRoutes = (RouteSettings settings) {
       }
     case Routes.campaign:
       {
+        return CustomRoute(
+            builder: (context) => TabsPage(currentPage: TabPage.Campaigns));
+      }
+    case Routes.campaigns:
+      {
+        if (args is int) {
+          return CustomRoute(
+              builder: (context) => CampaignInfo(
+                    campaignId: args,
+                  ));
+        }
         return CustomRoute(
             builder: (context) => TabsPage(currentPage: TabPage.Campaigns));
       }
