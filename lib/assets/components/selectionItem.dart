@@ -270,7 +270,7 @@ class ActionSelectionItem extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                         color: completed
-                            ? Colors.grey
+                            ? action.getActionIconMap()['iconColor']
                             : action.getActionIconMap()['iconBackgroundColor']),
                     child: Center(
                       child: Icon(

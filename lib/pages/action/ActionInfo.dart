@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
@@ -165,36 +166,106 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                       }),
                     ),
 
-                    //Dividor
-                    Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                        child: Container(
-                          width: double.infinity,
-                          color: Color.fromRGBO(222, 223, 232, 1),
-                          height: 1,
-                        )),
+                    !completed
+                        ?
+                        // If not completed show the then button
+                        Column(
+                            children: [
+                              //Dividor
+                              Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 20),
+                                  child: Container(
+                                    width: double.infinity,
+                                    color: Color.fromRGBO(222, 223, 232, 1),
+                                    height: 1,
+                                  )),
 
-                    // Then
-                    Center(
-                        child: Padding(
-                      padding: EdgeInsets.all(15),
-                      child: Text(
-                        "Then",
-                        style: Theme.of(context).primaryTextTheme.headline2,
-                      ),
-                    )),
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: DarkButton("Mark as done",
-                          style: DarkButtonStyles.Large,
-                          inverted: true, onPressed: () {
-                        setState(() {
-                          completed = true;
-                          viewModel.onCompleteAction(_action, context);
-                        });
-                      }),
-                    ),
+                              // Then
+                              Center(
+                                  child: Padding(
+                                padding: EdgeInsets.all(15),
+                                child: Text(
+                                  "Then",
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .headline2,
+                                ),
+                              )),
+                              Align(
+                                alignment: Alignment.topCenter,
+                                child: DarkButton("Mark as done",
+                                    style: DarkButtonStyles.Large,
+                                    inverted: true, onPressed: () {
+                                  setState(() {
+                                    completed = true;
+                                    viewModel.onCompleteAction(
+                                        _action, context);
+                                  });
+                                }),
+                              ),
+                            ],
+                          )
+                        : // Otherwise show the youre great thing
+                        Padding(
+                          padding: EdgeInsets.only(top: 20, bottom: 10),
+                          child: Container(
+                            color: Color.fromRGBO(255, 243, 230, 1),
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    "Many small actions have a big impact",
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context)
+                                        .primaryTextTheme
+                                        .headline2,
+                                  ),
+                                  SizedBox(height: 10),
+                                  RichText(
+                                    textAlign: TextAlign.center,
+                                    text: TextSpan(
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .bodyText1,
+                                      children: [
+                                        TextSpan(
+                                          text:
+                                              "You have completed this action and contributed to the goals of the ",
+                                        ),
+                                        TextSpan(
+                                            text: _campaign.getTitle(),
+                                            style: textStyleFrom(
+                                              Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .bodyText1,
+                                              color:
+                                                  Theme.of(context).buttonColor,
+                                            ),
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () {
+                                                Navigator.of(context).pushNamed(
+                                                    Routes.campaigns,
+                                                    arguments:
+                                                        _campaign.getId());
+                                              }),
+                                        TextSpan(
+                                          text: " campaign.",
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: 15),
+                                  Icon(FontAwesomeIcons.calendar,
+                                      color: Theme.of(context).primaryColor,
+                                      size: 60),
+                                  SizedBox(height: 20),
+                                ],
+                              ),
+                            )
+                          )
+                        ),
 
                     SizedBox(height: 20),
                     Row(
