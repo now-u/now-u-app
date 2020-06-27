@@ -102,7 +102,7 @@ class ViewModel {
         {bool includeCompleted,
         bool includeRejected,
         bool onlySelectedCampaigns,
-        bool includeTodo,
+        bool includeTodo, // Todo actions are unstarred and uncompleted
         bool includeStarred}) {
       print("Getting actions");
       List<CampaignAction> actions = [];
@@ -114,9 +114,13 @@ class ViewModel {
       }
       // If dont include todo actions then get rid of those todo
       if (!(includeTodo ?? true)) {
-        actions.removeWhere((a) => !store.state.userState.user
-            .getCompletedActions()
-            .contains(a.getId()));
+        actions.removeWhere((a) =>
+            !store.state.userState.user
+                .getCompletedActions()
+                .contains(a.getId()) &&
+            !store.state.userState.user
+                .getStarredActions()
+                .contains(a.getId()));
       }
       if (!(includeCompleted ?? false)) {
         actions.removeWhere((a) => store.state.userState.user

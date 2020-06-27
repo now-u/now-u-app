@@ -72,8 +72,6 @@ class _DetailsPageState extends State<DetailsPage> {
                                       .getAttributes()
                                       .keys
                                       .toList()[index]);
-                                  if (user.getAttributes().keys.toList()[index]
-                                      is double) {}
                                   user.setAttribute(
                                       user.getAttributes().keys.toList()[index],
                                       v);
@@ -84,9 +82,6 @@ class _DetailsPageState extends State<DetailsPage> {
                               });
                         },
                       ),
-                    ),
-                    Text(
-                      user.getToken(),
                     ),
                     Align(
                         alignment: Alignment.center,

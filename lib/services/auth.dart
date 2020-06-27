@@ -157,6 +157,7 @@ class AuthenticationService {
     } else {
       print("There was an error updating user details");
       print(response.body);
+      print(response.statusCode);
       print("The token was ${token}");
       print("The actionId was ${actionId.toString()}");
       return null;

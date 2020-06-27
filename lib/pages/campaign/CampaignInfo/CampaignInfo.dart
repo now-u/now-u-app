@@ -184,9 +184,10 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
     _controller = YoutubePlayerController(
       initialVideoId: YoutubePlayer.convertUrlToId(campaign.getVideoLink()),
       flags: YoutubePlayerFlags(
-        autoPlay: !model.userModel.user
-            .getSelectedCampaigns()
-            .contains(campaign.getId()),
+        autoPlay: false,
+        //autoPlay: !model.userModel.user
+        //    .getSelectedCampaigns()
+        //    .contains(campaign.getId()),
         mute: false,
       ),
     );

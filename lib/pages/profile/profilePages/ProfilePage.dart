@@ -20,108 +20,100 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        text: "My Profile",
-        context: context,
-        actions: [
-          IconButton(
+      appBar: CustomAppBar(text: "My Profile", context: context, actions: [
+        IconButton(
             icon: Icon(
               Icons.settings,
               color: Theme.of(context).primaryColor,
             ),
             onPressed: () {
-              Navigator.of(context).push(
-                CustomRoute(builder: (context) => DetailsPage())
-              );
-            }
-          )
-        ]
-      ),
-
+              Navigator.of(context)
+                  .push(CustomRoute(builder: (context) => DetailsPage()));
+            })
+      ]),
       body: StoreConnector<AppState, ViewModel>(
-        converter: (Store<AppState> store) => ViewModel.create(store),
-        builder: (BuildContext context, ViewModel viewModel) {
-          return ListView (
-            children: <Widget>[
-              SizedBox(height: 12),
+          converter: (Store<AppState> store) => ViewModel.create(store),
+          builder: (BuildContext context, ViewModel viewModel) {
+            return ListView(
+              children: <Widget>[
+                SizedBox(height: 12),
 
-              // Hi there
-              Text(
-                "Hi ${viewModel.userModel.user.getName()}!",
-                style: Theme.of(context).primaryTextTheme.headline2,
-                textAlign: TextAlign.center,
-              ),
-
-              // Action Profile Tile
-              ActionProgressTile(),
-
-              // Progress Tiles
-              ProgressTile(
-                text: "Total campaigns joined",
-                number: viewModel.userModel.user.getSelectedCampaigns().length,
-                icon: FontAwesomeIcons.bullhorn,
-              ),
-              ProgressTile(
-                text: "Total actions completed",
-                number: viewModel.userModel.user.getCompletedActions().length,
-                icon: FontAwesomeIcons.check,
-              ),
-              ProgressTile(
-                text: "Points earned",
-                number: viewModel.userModel.user.getPoints(),
-                icon: FontAwesomeIcons.check,
-              ),
-
-              // Divdor
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 15,),
-                child: Container(
-                  height: 2,
-                  width: double.infinity,
-                  color: Color.fromRGBO(238,238,238,1),
+                // Hi there
+                Text(
+                  "Hi ${viewModel.userModel.user.getName() ?? "there"}!",
+                  style: Theme.of(context).primaryTextTheme.headline2,
+                  textAlign: TextAlign.center,
                 ),
-              ),
 
-              // Achievements
-              Text(
-                "Achievements",
-                style: Theme.of(context).primaryTextTheme.headline3,
-                textAlign: TextAlign.center,
-              ),
+                // Action Profile Tile
+                ActionProgressTile(),
 
-              Container(
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 1,
+                // Progress Tiles
+                ProgressTile(
+                  text: "Total campaigns joined",
+                  number:
+                      viewModel.userModel.user.getSelectedCampaigns().length,
+                  icon: FontAwesomeIcons.bullhorn,
+                ),
+                ProgressTile(
+                  text: "Total actions completed",
+                  number: viewModel.userModel.user.getCompletedActions().length,
+                  icon: FontAwesomeIcons.check,
+                ),
+                ProgressTile(
+                  text: "Points earned",
+                  number: viewModel.userModel.user.getPoints(),
+                  icon: FontAwesomeIcons.check,
+                ),
+
+                // Divdor
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 15,
                   ),
-                  itemCount: badges.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    int userPoints = viewModel.userModel.user.getPoints();
-                    return Padding(
-                      padding: EdgeInsets.all(15),
-                      child: 
-                        BadgeTile(badges[index], userPoints < badges[index].getPoints())
-                    );
-                  }
-                )
-              )
-            ],
-          );
-        }
-      ),
+                  child: Container(
+                    height: 2,
+                    width: double.infinity,
+                    color: Color.fromRGBO(238, 238, 238, 1),
+                  ),
+                ),
+
+                // Achievements
+                Text(
+                  "Achievements",
+                  style: Theme.of(context).primaryTextTheme.headline3,
+                  textAlign: TextAlign.center,
+                ),
+
+                Container(
+                    child: GridView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            new SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          childAspectRatio: 1,
+                        ),
+                        itemCount: badges.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          int userPoints = viewModel.userModel.user.getPoints();
+                          return Padding(
+                              padding: EdgeInsets.all(15),
+                              child: BadgeTile(badges[index],
+                                  userPoints < badges[index].getPoints()));
+                        }))
+              ],
+            );
+          }),
     );
   }
 }
 
 class ProgressTile extends StatelessWidget {
-  
   final double borderRadius = 10;
 
   final int number;
-  final String  text;
+  final String text;
   final IconData icon;
   ProgressTile({
     @required this.number,
@@ -135,7 +127,7 @@ class ProgressTile extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(borderRadius),
         child: Container(
-          color: Color.fromRGBO(238,238,238,1),
+          color: Color.fromRGBO(238, 238, 238, 1),
           child: Row(
             children: <Widget>[
               Container(
@@ -145,7 +137,7 @@ class ProgressTile extends StatelessWidget {
                   color: Colors.orange,
                   borderRadius: BorderRadius.circular(borderRadius),
                 ),
-                child: Padding( 
+                child: Padding(
                   padding: EdgeInsets.all(2),
                   child: Icon(
                     icon,
@@ -158,9 +150,8 @@ class ProgressTile extends StatelessWidget {
               Text(
                 number.toString(),
                 style: textStyleFrom(
-                  Theme.of(context).primaryTextTheme.headline4,
-                  fontWeight: FontWeight.w600
-                ),
+                    Theme.of(context).primaryTextTheme.headline4,
+                    fontWeight: FontWeight.w600),
               ),
               SizedBox(width: 10),
               Text(
@@ -178,11 +169,9 @@ class ProgressTile extends StatelessWidget {
 }
 
 class BadgeTile extends StatelessWidget {
-
   final Badge badge;
   final bool locked;
   BadgeTile(this.badge, this.locked);
-
 
   @override
   Widget build(BuildContext context) {
@@ -197,45 +186,32 @@ class BadgeTile extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: 
-            locked 
-            ?
-              Color.fromRGBO(238,238,238,1)
-            :
-              Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: 
-                locked 
-                ?
-                  colorFrom(
-                    Colors.black, 
-                    opacity: 0,
-                  )
-                :
-                  colorFrom(
-                    Colors.black, 
-                    opacity: 0.16,
-                  ),
-              offset: Offset(3, 6),
-              blurRadius: 6,
-            )
-          ]
-        ),
+            color: locked ? Color.fromRGBO(238, 238, 238, 1) : Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: locked
+                    ? colorFrom(
+                        Colors.black,
+                        opacity: 0,
+                      )
+                    : colorFrom(
+                        Colors.black,
+                        opacity: 0.16,
+                      ),
+                offset: Offset(3, 6),
+                blurRadius: 6,
+              )
+            ]),
         child: Padding(
           padding: EdgeInsets.all(10),
-          child: 
-          locked ? 
-            Icon(
-              Icons.lock,
-              size: 60,
-              color: Theme.of(context).primaryColor,
-            ) 
-          :
-            Image(
-              image: AssetImage(badge.getImage())
-            ),
+          child: locked
+              ? Icon(
+                  Icons.lock,
+                  size: 60,
+                  color: Theme.of(context).primaryColor,
+                )
+              : Image(image: AssetImage(badge.getImage())),
         ),
       ),
     );

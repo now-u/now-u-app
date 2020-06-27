@@ -382,7 +382,7 @@ class User {
 
   void setDateOfBirth(String dob) {
     print("The user's new data of birth is" + dob);
-    this.dateOfBirth = dateOfBirth;
+    this.dateOfBirth = dob;
   }
 
   void setLocation(location) {

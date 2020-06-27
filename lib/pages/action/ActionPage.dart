@@ -255,34 +255,44 @@ class _ActionPageState extends State<ActionPage> {
                                     ActiveDoneSelector(
                                       "To do",
                                       () {
-                                        print("extras todo");
-                                        print(selections['extras']['todo']);
                                         setState(() {
-                                          selections['extras']['todo'] =
-                                              !selections['extras']['todo'];
+                                          selections['extras']['starred'] =
+                                              true;
+                                          selections['extras']['todo'] = false;
+                                          selections['extras']['rejected'] =
+                                              false;
+                                          selections['extras']['completed'] =
+                                              false;
 
                                           actions = getActions(
                                               campaign, selections, viewModel);
                                         });
                                       },
-                                      selections['extras']['todo'],
+                                      !selections['extras']['todo'] &&
+                                          selections['extras']['starred'] &&
+                                          !selections['extras']['rejected'] &&
+                                          !selections['extras']['completed'],
                                     ),
                                     ActiveDoneSelector(
                                       "Completed",
                                       () {
-                                        print("extras completed");
-                                        print(
-                                            selections['extras']['completed']);
                                         setState(() {
+                                          selections['extras']['starred'] =
+                                              false;
+                                          selections['extras']['todo'] = false;
+                                          selections['extras']['rejected'] =
+                                              false;
                                           selections['extras']['completed'] =
-                                              !selections['extras']
-                                                  ['completed'];
+                                              true;
 
                                           actions = getActions(
                                               campaign, selections, viewModel);
                                         });
                                       },
-                                      selections['extras']['completed'],
+                                      !selections['extras']['todo'] &&
+                                          !selections['extras']['starred'] &&
+                                          !selections['extras']['rejected'] &&
+                                          selections['extras']['completed'],
                                     ),
                                   ],
                                 ),
