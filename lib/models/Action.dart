@@ -33,20 +33,24 @@ List<String> rejectionReasons = [
   "Other",
 ];
 
+// Depreciated
 Color red = Color.fromRGBO(211, 0, 1, 1);
 Color redO = colorFrom(red, opacity: 0.15);
-Color orange = Color.fromRGBO(255, 136, 0, 1);
-Color orangeO = colorFrom(orange, opacity: 0.15);
-Color yellow = Color.fromRGBO(243, 183, 0, 1);
-Color yellowO = colorFrom(yellow, opacity: 0.15);
-Color blue = Color.fromRGBO(1, 26, 67, 1);
-Color blueO = colorFrom(blue, opacity: 0.15);
+
+Color green = Color.fromRGBO(89, 152, 26, 0.7);
+Color greenO = colorFrom(green, opacity: 0.2);
+Color orange = Color.fromRGBO(255, 136, 0, 0.7);
+Color orangeO = colorFrom(orange, opacity: 0.2);
+Color yellow = Color.fromRGBO(243, 183, 0, 0.7);
+Color yellowO = colorFrom(yellow, opacity: 0.2);
+Color blue = Color.fromRGBO(38, 151, 211, 0.7);
+Color blueO = colorFrom(blue, opacity: 0.2);
 
 Map campaignActionSuperTypeData = {
   CampaignActionSuperType.GetInvolved: {
     'name': "Get involved",
-    'iconColor': red,
-    'iconBackgroundColor': redO,
+    'iconColor': orange,
+    'iconBackgroundColor': orangeO,
   },
   CampaignActionSuperType.Learn: {
     'name': "Learn",
@@ -275,6 +279,15 @@ class CampaignAction {
 
   CampaignActionSuperType getSuperType() {
     return campaignActionTypeData[type]['type'];
+  }
+
+  Map getSuperTypeData() {
+    return campaignActionSuperTypeData[campaignActionTypeData[type]['type']];
+  }
+
+  String getSuperTypeName() {
+    return campaignActionSuperTypeData[campaignActionTypeData[type]['type']]
+        ['name'];
   }
 
   Map getActionIconMap() {

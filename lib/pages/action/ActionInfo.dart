@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
@@ -22,6 +23,7 @@ import 'package:app/assets/components/pointsNotifier.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 final double HEADER_HEIGHT = 200;
 final double H_PADDING = 10;
@@ -64,158 +66,57 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
               .contains(_action.getId());
           return Scaffold(
               appBar: CustomAppBar(
-                  text: "Action",
-                  backButtonText: "Home",
-                  context: context,
-                  actions: [
-                    IconButton(
-                      icon: Icon(
-                          starred
-                              ? FontAwesomeIcons.solidStar
-                              : FontAwesomeIcons.star,
-                          color: Theme.of(context).primaryColor),
-                      onPressed: () {
-                        setState(() {
-                          starred = true;
-                        });
-                        viewModel.onStarAction(_action);
-                      },
-                    )
-                  ]),
+                text: _action.getSuperTypeName(),
+                backButtonText: "Actions",
+                context: context,
+              ),
               key: scaffoldKey,
               body: Stack(children: [
                 ListView(
                   children: [
                     Container(
-                      height: HEADER_HEIGHT,
                       width: double.infinity,
-                      child: Stack(children: <Widget>[
-                        Container(
-                          height: HEADER_HEIGHT,
-                          width: double.infinity,
-                          child: Image.network(
-                            _campaign.getHeaderImage(),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Container(
-                          height: HEADER_HEIGHT,
-                          width: double.infinity,
-                          color: Color.fromRGBO(0, 0, 0, 0.2),
-                        ),
-                        Container(
-                          height: HEADER_HEIGHT,
-                          child: Center(
-                            child: Icon(
-                              _action.getActionIconMap()['icon'],
-                              size: 80,
-                              color: _action.getActionIconMap()['iconColor'],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                            bottom: 10,
-                            right: 10,
-                            child: TextButton("See the Campaign",
-                                iconRight: true,
-                                fontColor: Colors.white, onClick: () {
-                              Navigator.push(
-                                  context,
-                                  CustomRoute(
-                                      builder: (context) =>
-                                          CampaignInfo(campaign: _campaign)));
-                            })),
-                      ]),
+                      color: _action.getSuperTypeData()['iconBackgroundColor'],
+                      child: Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text(_action.getTitle())),
                     ),
                     Container(
                       height: 10,
                       color: _action.getActionIconMap()['iconColor'],
                     ),
-                    !completed
-                        ? Container()
-                        : Container(
-                            width: double.infinity,
-                            color: Color.fromRGBO(189, 192, 205, 1),
-                            child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.check,
-                                    color: Colors.white,
-                                  ),
-                                  SizedBox(width: 10),
-                                  Text(
-                                    "Completed",
-                                    style: textStyleFrom(
-                                      Theme.of(context)
-                                          .primaryTextTheme
-                                          .headline5,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )),
-
-                    // Title
                     Padding(
-                      padding: EdgeInsets.only(
-                          top: 10, left: H_PADDING, right: H_PADDING),
-                      child: Text(
-                        _action.getTitle(),
-                        style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.headline3,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        textAlign: TextAlign.left,
-                      ),
-                    ),
-                    // Time
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: 10, left: H_PADDING, right: H_PADDING),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Icon(
-                            Icons.access_time,
-                            size: 15,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          SizedBox(
-                            width: 2,
-                          ),
-                          Text(_action.getTimeText(),
-                              style: textStyleFrom(
-                                Theme.of(context).primaryTextTheme.bodyText1,
-                                fontWeight: FontWeight.w600,
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 11,
-                              )),
-                        ],
-                      ),
-                    ),
-
-                    SizedBox(height: 15),
-
-                    // Completion message
-                    viewModel.userModel.user.isCompleted(_action)
-                        ? Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Row(
-                              children: <Widget>[
-                                Container(
-                                  height:
-                                      MediaQuery.of(context).size.width * 0.1,
-                                  //child: Image(image: AssetImage('assets/imgs/partypopperemoji.png'),),
+                        padding: EdgeInsets.all(10),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  _action.getActionIconMap()['icon'],
+                                  color:
+                                      _action.getActionIconMap()['iconColor'],
                                 ),
-                                Text("You have completed this action!")
+                                SizedBox(width: 6),
+                                Icon(FontAwesomeIcons.clock, size: 12),
+                                SizedBox(width: 3),
+                                Text(_action.getTimeText()),
                               ],
                             ),
-                          )
-                        : Container(height: 0),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushNamed(
+                                    Routes.campaigns,
+                                    arguments: _campaign.getId());
+                              },
+                              child: Text("See the campaign"),
+                            ),
+                          ],
+                        )),
+
+                    SizedBox(height: 15),
 
                     // Text
                     Padding(
@@ -243,8 +144,19 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                       ),
                     ),
 
-                    // Button
+                    // Buttons
                     SizedBox(height: 20),
+
+                    // First
+                    Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Text(
+                          "First",
+                          style: Theme.of(context).primaryTextTheme.headline2,
+                        ),
+                      ),
+                    ),
                     Align(
                       alignment: Alignment.topCenter,
                       child: DarkButton("Take action",
@@ -253,12 +165,121 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                         launch(_action.getLink());
                       }),
                     ),
+
+                    !completed
+                        ?
+                        // If not completed show the then button
+                        Column(
+                            children: [
+                              //Dividor
+                              Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 20),
+                                  child: Container(
+                                    width: double.infinity,
+                                    color: Color.fromRGBO(222, 223, 232, 1),
+                                    height: 1,
+                                  )),
+
+                              // Then
+                              Center(
+                                  child: Padding(
+                                padding: EdgeInsets.all(15),
+                                child: Text(
+                                  "Then",
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .headline2,
+                                ),
+                              )),
+                              Align(
+                                alignment: Alignment.topCenter,
+                                child: DarkButton("Mark as done",
+                                    style: DarkButtonStyles.Large,
+                                    inverted: true, onPressed: () {
+                                  setState(() {
+                                    completed = true;
+                                    viewModel.onCompleteAction(
+                                        _action, context);
+                                  });
+                                }),
+                              ),
+                            ],
+                          )
+                        : // Otherwise show the youre great thing
+                        Padding(
+                          padding: EdgeInsets.only(top: 20, bottom: 10),
+                          child: Container(
+                            color: Color.fromRGBO(255, 243, 230, 1),
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    "Many small actions have a big impact",
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context)
+                                        .primaryTextTheme
+                                        .headline2,
+                                  ),
+                                  SizedBox(height: 10),
+                                  RichText(
+                                    textAlign: TextAlign.center,
+                                    text: TextSpan(
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .bodyText1,
+                                      children: [
+                                        TextSpan(
+                                          text:
+                                              "You have completed this action and contributed to the goals of the ",
+                                        ),
+                                        TextSpan(
+                                            text: _campaign.getTitle(),
+                                            style: textStyleFrom(
+                                              Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .bodyText1,
+                                              color:
+                                                  Theme.of(context).buttonColor,
+                                            ),
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () {
+                                                Navigator.of(context).pushNamed(
+                                                    Routes.campaigns,
+                                                    arguments:
+                                                        _campaign.getId());
+                                              }),
+                                        TextSpan(
+                                          text: " campaign.",
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: 15),
+                                  Icon(FontAwesomeIcons.calendar,
+                                      color: Theme.of(context).primaryColor,
+                                      size: 60),
+                                  SizedBox(height: 20),
+                                ],
+                              ),
+                            )
+                          )
+                        ),
+
                     SizedBox(height: 20),
                     Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          TextButton("This action is not for me", fontSize: 14,
+                          completed ?
+                          TextButton("Mark as not done", fontSize: 14,
+                            onClick: () {
+                              viewModel.onRemoveActionStatus(_action);
+                            }
+                          )
+                          :
+                          TextButton("Hide this action", fontSize: 14,
                               onClick: () {
                             showDialog(
                               context: context,
@@ -267,39 +288,63 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                   RejectDialogue(_action, viewModel),
                             );
                           }),
+
+                          SizedBox(width: 10),
                         ]),
                     SizedBox(
-                      height: 65,
+                      height: completed ? 55 : 70,
                     ),
                   ],
                 ),
-                AnimatedPositioned(
-                  bottom: completed ? -50 : 0,
+                Positioned(
+                  bottom: 0, 
                   left: 0,
-                  duration: Duration(milliseconds: 500),
                   child: FlatButton(
                     padding: EdgeInsets.all(0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: 45,
+                      height: completed ? 45 : 60,
                       child: Center(
-                          child: Text(
-                        "Mark as done",
-                        style: textStyleFrom(
-                            Theme.of(context).primaryTextTheme.button,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 17,
-                            color: Colors.white),
+                          child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.calendar,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                          SizedBox(width: 20),
+                          completed ? 
+                            Text(
+                              "You completed this action",
+                              style: textStyleFrom(
+                                  Theme.of(context).primaryTextTheme.button,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 17,
+                                  color: Colors.white),
+                            )
+                          : 
+                            Text(
+                              starred ? "Remove from To-Dos" : "Add to my To-Dos",
+                              style: textStyleFrom(
+                                  Theme.of(context).primaryTextTheme.button,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 17,
+                                  color: Colors.white),
+                            ),
+                        ],
                       )),
                     ),
                     onPressed: () {
+                      starred
+                          ? viewModel.onRemoveActionStatus(_action)
+                          : viewModel.onStarAction(_action);
                       setState(() {
-                        print("Print button pressed");
-                        completed = true;
-                        viewModel.onCompleteAction(_action, context);
+                        starred = !starred;
                       });
                     },
-                    color: Theme.of(context).primaryColor,
+                    color: completed ? Color.fromRGBO(155,159,177,1): Theme.of(context).primaryColor,
                   ),
                 )
               ]));

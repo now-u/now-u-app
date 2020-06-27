@@ -49,6 +49,11 @@ class StarredAction {
   StarredAction(this.user);
 }
 
+class RemovedActionStatus {
+  final User user;
+  RemovedActionStatus(this.user);
+}
+
 class CreateNewUser {
   final User user;
   CreateNewUser(this.user);

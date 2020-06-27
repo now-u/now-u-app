@@ -162,6 +162,7 @@ class _AppState extends State<App> {
             // or simply save your changes to "hot reload" in a Flutter IDE).
             // Notice that the counter didn't reset back to zero; the application
             // is not restarted.
+            applyElevationOverlayColor: true,
             fontFamily: 'Nunito',
             primaryTextTheme: TextTheme(
               headline1: TextStyle(

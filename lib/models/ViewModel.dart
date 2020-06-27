@@ -24,6 +24,7 @@ class ViewModel {
   final Function(CampaignAction, BuildContext) onCompleteAction;
   final Function(CampaignAction, String) onRejectAction;
   final Function(CampaignAction) onStarAction;
+  final Function(CampaignAction) onRemoveActionStatus;
   final Function() onLogout;
 
   // Helper functions
@@ -43,6 +44,7 @@ class ViewModel {
     this.onUnjoinCampaign,
     this.onCompleteAction,
     this.onRejectAction,
+    this.onRemoveActionStatus,
     this.onStarAction,
     this.onUpdateUserDetails,
     this.onLogout,
@@ -75,6 +77,10 @@ class ViewModel {
 
     _onStarAction(CampaignAction action) {
       store.dispatch(starAction(action));
+    }
+
+    _onRemoveActionStatus(CampaignAction action) {
+      store.dispatch(removeActionStatus(action));
     }
 
     _onUpdateUserDetails(User user) {
@@ -149,6 +155,7 @@ class ViewModel {
       onUnjoinCampaign: _onUnjoinCampaign,
       onCompleteAction: _onCompleteAction,
       onRejectAction: _onRejectAction,
+      onRemoveActionStatus: _onRemoveActionStatus,
       onStarAction: _onStarAction,
       onUpdateUserDetails: _onUpdateUserDetails,
       onLogout: _onLogout,
