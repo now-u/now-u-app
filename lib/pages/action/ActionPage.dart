@@ -1,3 +1,4 @@
+import 'package:app/assets/components/darkButton.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -134,7 +135,58 @@ class _ActionPageState extends State<ActionPage> {
                 Theme.of(context).primaryColorDark,
                 opacity: 0.05,
               ),
-              body: Column(
+              body: 
+
+              viewModel.getActiveSelectedCampaings().getActiveCampaigns().length == 0 ?
+
+              Column(
+                children: [
+                  PageHeader(
+                    title: "Actions",
+                    onTap: () {
+                      _navigateAndDisplaySelection(context, viewModel);
+                    },
+                    icon: Icons.filter_list,
+                  ),
+
+                  SizedBox(height: 15),
+
+                  Expanded(
+                    child: Image.asset('assets/imgs/graphics/ilstr_empty.png'),
+                  ),
+
+                  Text(
+                    "No actions yet",
+                    style: textStyleFrom(
+                      Theme.of(context).primaryTextTheme.headline2,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+                    child: Text(
+                      "Join a campaign to see the actions you take to support it!",
+                      style: textStyleFrom(
+                        Theme.of(context).primaryTextTheme.bodyText1,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    child: DarkButton(
+                      "See campaigns",
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(Routes.campaign);
+                      },
+                    )
+                  )
+
+                ],
+              )
+
+              :
+
+              Column(
                 children: <Widget>[
                   PageHeader(
                     title: "Actions",
@@ -144,84 +196,92 @@ class _ActionPageState extends State<ActionPage> {
                     icon: Icons.filter_list,
                   ),
                   SizedBox(height: 15),
-                  // Campaign selection widget
-                  Container(
-                      height: CAMPAIGN_SELECT_HEIGHT,
-                      child: PageView.builder(
-                          controller: _controller,
-                          itemCount:
-                              // If all the active campaigns have been joined
-                              viewModel
-                                          .getActiveSelectedCampaings()
-                                          .activeLength() ==
-                                      viewModel.campaigns
-                                          .getActiveCampaigns()
-                                          .length
-                                  ? viewModel.userModel.user
-                                      .getSelectedCampaigns()
-                                      .length
-                                  : viewModel.userModel.user
-                                          .getSelectedCampaigns()
-                                          .length +
-                                      1,
-                          //itemCount: viewModel.campaigns.getActiveCampaigns().length,
-                          itemBuilder: (BuildContext context, int index) {
-                            //return CampaignSelectionTile(viewModel.campaigns.getActiveCampaigns()[index]);
-                            if (index ==
-                                viewModel.userModel.user
-                                    .getSelectedCampaigns()
-                                    .length) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context)
-                                      .pushNamed(Routes.campaign);
-                                },
-                                child: AddCampaignTile(),
-                              );
-                            }
-                            return Padding(
-                              padding: EdgeInsets.symmetric(vertical:10),
-                              child: CampaignSelectionTile(viewModel
-                                .userModel.user
-                                .filterSelectedCampaigns(viewModel.campaigns
-                                    .getActiveCampaigns())[index]
-                              ),
-                            );
-                          },
-                          onPageChanged: (int pageIndex) {
-                            setState(() {
-                              if (pageIndex ==
-                                  viewModel.userModel.user
-                                      .getSelectedCampaigns()
-                                      .length) {
-                                campaign = null;
-                                actions = [];
-                              } else {
-                                campaign = viewModel.userModel.user
-                                    .filterSelectedCampaigns(viewModel.campaigns
-                                        .getActiveCampaigns())[pageIndex];
-                                actions =
-                                    getActions(campaign, selections, viewModel);
-                              }
-                            });
-                          })),
-                  SmoothPageIndicator(
-                    controller: _controller,
-                    //count: viewModel.campaigns.getActiveCampaigns().length,
-                    count: viewModel
-                                .getActiveSelectedCampaings()
-                                .activeLength() ==
-                            viewModel.campaigns.getActiveCampaigns().length
-                        ? viewModel.userModel.user.getSelectedCampaigns().length
-                        : viewModel.userModel.user
-                                .getSelectedCampaigns()
-                                .length +
-                            1,
-                    effect: customSmoothPageInducatorEffect,
-                  ),
 
-                  SizedBox(
-                    height: 15,
+                  Column(
+                    children: [
+                      // Campaign selection widget
+                      Container(
+                          height: CAMPAIGN_SELECT_HEIGHT,
+                          child: PageView.builder(
+                              controller: _controller,
+                              itemCount:
+                                  // If all the active campaigns have been joined
+                                  viewModel
+                                              .getActiveSelectedCampaings()
+                                              .activeLength() ==
+                                          viewModel.campaigns
+                                              .getActiveCampaigns()
+                                              .length
+                                      ? viewModel.userModel.user
+                                          .getSelectedCampaigns()
+                                          .length
+                                      : viewModel.userModel.user
+                                              .getSelectedCampaigns()
+                                              .length +
+                                          1,
+                              //itemCount: viewModel.campaigns.getActiveCampaigns().length,
+                              itemBuilder: (BuildContext context, int index) {
+                                //return CampaignSelectionTile(viewModel.campaigns.getActiveCampaigns()[index]);
+                                if (index ==
+                                    viewModel.userModel.user
+                                        .getSelectedCampaigns()
+                                        .length) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .pushNamed(Routes.campaign);
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(vertical: 10),
+                                      child: AddCampaignTile(),
+                                    )
+                                  );
+                                }
+                                return Padding(
+                                  padding: EdgeInsets.symmetric(vertical:10),
+                                  child: CampaignSelectionTile(viewModel
+                                    .userModel.user
+                                    .filterSelectedCampaigns(viewModel.campaigns
+                                        .getActiveCampaigns())[index]
+                                  ),
+                                );
+                              },
+                              onPageChanged: (int pageIndex) {
+                                setState(() {
+                                  if (pageIndex ==
+                                      viewModel.userModel.user
+                                          .getSelectedCampaigns()
+                                          .length) {
+                                    campaign = null;
+                                    actions = [];
+                                  } else {
+                                    campaign = viewModel.userModel.user
+                                        .filterSelectedCampaigns(viewModel.campaigns
+                                            .getActiveCampaigns())[pageIndex];
+                                    actions =
+                                        getActions(campaign, selections, viewModel);
+                                  }
+                                });
+                              })),
+                      SmoothPageIndicator(
+                        controller: _controller,
+                        //count: viewModel.campaigns.getActiveCampaigns().length,
+                        count: viewModel
+                                    .getActiveSelectedCampaings()
+                                    .activeLength() ==
+                                viewModel.campaigns.getActiveCampaigns().length
+                            ? viewModel.userModel.user.getSelectedCampaigns().length
+                            : viewModel.userModel.user
+                                    .getSelectedCampaigns()
+                                    .length +
+                                1,
+                        effect: customSmoothPageInducatorEffect,
+                      ),
+
+                      SizedBox(
+                        height: 15,
+                      ),
+                    ],
                   ),
 
                   // Actions List

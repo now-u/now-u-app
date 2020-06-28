@@ -397,10 +397,13 @@ class CampaignCarosel extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
                       padding: EdgeInsets.symmetric(vertical: 10),
-                      child: CampaignTile(viewModel
-                        .userModel.user
-                        .filterSelectedCampaigns(viewModel.campaigns
-                            .getActiveCampaigns())[index],
+                      child: CampaignTile(
+                        viewModel.campaigns.getActiveCampaigns()[index],
+                          // Used to only selected campaigns ==> remeber to change count
+                      //viewModel
+                      //  .userModel.user
+                      //  .filterSelectedCampaigns(viewModel.campaigns
+                      //      .getActiveCampaigns())[index],
                         hOuterPadding: 4,
                       ),
                     );
