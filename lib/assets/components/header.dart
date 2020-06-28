@@ -21,7 +21,9 @@ class PageHeader extends StatelessWidget {
                 : MainAxisAlignment.end,
             children: [
               backButton ?? false
-                  ? Padding(
+                  ? Container(
+                    height: 40,
+                    child: Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: padding ?? 10.0, vertical: 10.0),
                       child: TextButton(
@@ -31,7 +33,8 @@ class PageHeader extends StatelessWidget {
                         },
                         iconLeft: true,
                       ))
-                  : Container(),
+                    )
+                  : Container(height: 40,),
               icon == null
                   ? Container()
                   : Align(

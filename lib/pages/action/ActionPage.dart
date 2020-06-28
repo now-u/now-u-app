@@ -20,7 +20,7 @@ import 'package:app/assets/components/smoothPageIndicatorEffect.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-const double CAMPAIGN_SELECT_HEIGHT = 80;
+const double CAMPAIGN_SELECT_HEIGHT = 120;
 final _controller = PageController(
   initialPage: 0,
   viewportFraction: 0.93,
@@ -179,10 +179,14 @@ class _ActionPageState extends State<ActionPage> {
                                 child: AddCampaignTile(),
                               );
                             }
-                            return CampaignSelectionTile(viewModel
+                            return Padding(
+                              padding: EdgeInsets.symmetric(vertical:10),
+                              child: CampaignSelectionTile(viewModel
                                 .userModel.user
                                 .filterSelectedCampaigns(viewModel.campaigns
-                                    .getActiveCampaigns())[index]);
+                                    .getActiveCampaigns())[index]
+                              ),
+                            );
                           },
                           onPageChanged: (int pageIndex) {
                             setState(() {

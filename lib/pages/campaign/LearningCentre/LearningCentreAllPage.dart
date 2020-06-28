@@ -1,3 +1,4 @@
+import 'package:app/assets/components/header.dart';
 import 'package:flutter/material.dart';
 
 import 'package:redux/redux.dart';
@@ -69,32 +70,9 @@ class LearningCentreAllPage extends StatelessWidget {
                       height: 180,
                     ),
                   ),
-                  SafeArea(
-                      child: Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TextButton(
-                                  "Menu",
-                                  onClick: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  iconLeft: true,
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  "Learning centre",
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .headline2,
-                                )
-                              ],
-                            ),
-                          ))),
+                  PageHeader(
+                    title: "Learning",
+                  )
                 ],
               ),
             ),

@@ -15,6 +15,7 @@ import 'package:app/pages/campaign/LearningCentre/LearningCentrePage.dart';
 import 'package:app/pages/campaign/LearningCentre/LearningTopicPage.dart';
 
 import 'package:app/assets/routes/customRoute.dart';
+import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/StyleFrom.dart';
 
 class SelectionItem extends StatelessWidget {
@@ -393,11 +394,7 @@ class LeadingSelectionItem extends StatelessWidget {
       child: Padding(
           padding: EdgeInsets.symmetric(
               vertical: 5, horizontal: outerHpadding ?? defaultOuterHpadding),
-          child: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  color: backgroundColor ??
-                      colorFrom(Theme.of(context).primaryColor, opacity: 0.05)),
+          child: CustomTile(
               child: Padding(
                 padding: EdgeInsets.symmetric(
                     vertical: 10,

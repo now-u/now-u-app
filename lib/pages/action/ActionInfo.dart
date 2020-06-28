@@ -108,7 +108,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                             GestureDetector(
                               onTap: () {
                                 Navigator.of(context).pushNamed(
-                                    Routes.campaigns,
+                                    Routes.campaignInfo,
                                     arguments: _campaign.getId());
                               },
                               child: Text("See the campaign"),
@@ -246,7 +246,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                             recognizer: TapGestureRecognizer()
                                               ..onTap = () {
                                                 Navigator.of(context).pushNamed(
-                                                    Routes.campaigns,
+                                                    Routes.campaignInfo,
                                                     arguments:
                                                         _campaign.getId());
                                               }),

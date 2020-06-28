@@ -4,6 +4,7 @@ import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import 'package:app/models/Learning.dart';
+import 'package:app/routes.dart';
 
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/State.dart';
@@ -32,54 +33,11 @@ class LearningCentrePage extends StatelessWidget {
             builder: (context, snapshot) {
               return !snapshot.hasData
                   ? Center(child: CircularProgressIndicator())
-                  : Column(
+                  : ListView(
                       children: <Widget>[
                         // Header
                         Container(
-                          color: Colors.white,
-                          height: HEADING_HEIGHT,
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                  top: -40,
-                                  left:
-                                      MediaQuery.of(context).size.width * 0.5 -
-                                          40,
-                                  child: Container(
-                                    height: CIRCLE_1_RADIUS,
-                                    width: CIRCLE_1_RADIUS,
-                                    decoration: BoxDecoration(
-                                      color: colorFrom(
-                                        Theme.of(context).primaryColor,
-                                        opacity: 0.2,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          CIRCLE_1_RADIUS / 2),
-                                    ),
-                                  )),
-                              Positioned(
-                                  top: 120,
-                                  left: -80,
-                                  child: Container(
-                                    height: CIRCLE_2_RADIUS,
-                                    width: CIRCLE_2_RADIUS,
-                                    decoration: BoxDecoration(
-                                      color: colorFrom(
-                                        Theme.of(context).primaryColor,
-                                        opacity: 0.2,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          CIRCLE_2_RADIUS / 2),
-                                    ),
-                                  )),
-                              Align(
-                                alignment: Alignment.bottomRight,
-                                child: Image.asset(
-                                  "assets/imgs/learning.png",
-                                  height: 180,
-                                ),
-                              ),
-                              SafeArea(
+                              child: SafeArea(
                                   child: Padding(
                                       padding: EdgeInsets.all(10),
                                       child: Align(
@@ -98,6 +56,9 @@ class LearningCentrePage extends StatelessWidget {
                                             ),
                                             SizedBox(height: 10),
                                             Text(
+                                              viewModel.campaigns.getActiveCampaigns().map((c) => c.getId()).contains(campaignId) ? 
+                                              viewModel.campaigns.getActiveCampaigns().firstWhere((c) => c.getId() == campaignId).getTitle() 
+                                              :
                                               "Learning centre",
                                               style: Theme.of(context)
                                                   .primaryTextTheme
@@ -105,21 +66,37 @@ class LearningCentrePage extends StatelessWidget {
                                             )
                                           ],
                                         ),
-                                      ))),
-                            ],
+                                      )),
                           ),
                         ),
                         // BODY
                         Expanded(
                             child: ListView.builder(
                           shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
                           itemCount: snapshot.data.getLearningTopics().length,
                           itemBuilder: (context, index) {
                             return LearningTopicSelectionItem(
                               topic: snapshot.data.getLearningTopics()[index],
                             );
                           },
-                        ))
+                        )),
+
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 20),
+                              child: TextButton(
+                                "See Campaign",
+                                onClick: () {
+                                  Navigator.of(context).pushNamed(Routes.campaignInfo, arguments: campaignId);
+                                },
+                              )
+                            ),
+                          ]
+                        )
                       ],
                     );
             });

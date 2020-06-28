@@ -24,7 +24,7 @@ class Routes {
   static const actions = "actions";
   static const home = "home";
 
-  static const campaigns = "campaigns";
+  static const campaignInfo = "campaignInfo";
 
   // Other
   static const profile = "profile";
@@ -79,7 +79,7 @@ Function initRoutes = (RouteSettings settings) {
         return CustomRoute(
             builder: (context) => TabsPage(currentPage: TabPage.Campaigns));
       }
-    case Routes.campaigns:
+    case Routes.campaignInfo:
       {
         if (args is int) {
           return CustomRoute(

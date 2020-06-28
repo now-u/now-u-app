@@ -197,7 +197,7 @@ class SocialButton extends StatelessWidget {
             height: size,
             width: size,
             child: Padding(
-              padding: EdgeInsets.all(3),
+              padding: EdgeInsets.all(6),
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(size / 2),

@@ -127,16 +127,19 @@ class _NewsListState extends State<NewsList> {
                                         });
                                       },
                                       child: 
-                                          SelectionPill(
-                                            "#" +
-                                                model.campaigns
-                                                    .getActiveCampaigns()[
-                                                        index]
-                                                    .getTitle(),
-                                            getCategoryFromIndex( model.campaigns, index) == category,
-                                            fontSize: 12,
-                                            borderRadius: 14,
-                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(vertical: 5),
+                                            child: SelectionPill(
+                                              "#" +
+                                                  model.campaigns
+                                                      .getActiveCampaigns()[
+                                                          index]
+                                                      .getTitle(),
+                                              getCategoryFromIndex( model.campaigns, index) == category,
+                                              fontSize: 12,
+                                              borderRadius: 14,
+                                            ),
+                                        )
                                     ));
                       }
                     )
