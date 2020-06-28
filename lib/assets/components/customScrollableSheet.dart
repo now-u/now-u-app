@@ -5,10 +5,16 @@ import 'package:app/assets/StyleFrom.dart';
 class ScrollableSheetPage extends StatelessWidget {
   final Widget header;
   final List<Widget> children;
+  final double initialChildSize;
+  final double minChildSize;
+  final Shadow shadow;
   
   ScrollableSheetPage({
     @required this.header,
     @required this.children,
+    this.initialChildSize,
+    this.minChildSize,
+    this.shadow,
   });
   
   @override
@@ -24,14 +30,14 @@ class ScrollableSheetPage extends StatelessWidget {
             header,
 
             DraggableScrollableSheet(
-              initialChildSize: 0.72,
-              minChildSize: 0.72,
+              initialChildSize: initialChildSize ?? 0.72,
+              minChildSize: minChildSize ?? 0.72,
               builder: (context, controller) {
                 return ListView(
                   controller: controller,
                   children: [
                     ClipShadowPath( 
-                      shadow: Shadow(
+                      shadow: shadow ?? Shadow(
                         blurRadius: 5,
                         color: Color.fromRGBO(121, 43, 2, 0.3),
                         offset: Offset(0, -3),

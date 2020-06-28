@@ -13,6 +13,7 @@ import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/textButton.dart';
+import 'package:app/assets/components/customScrollableSheet.dart';
 
 const double CIRCLE_1_RADIUS = 150;
 const double CIRCLE_2_RADIUS = 250;
@@ -25,68 +26,41 @@ class LearningCentreAllPage extends StatelessWidget {
         body: StoreConnector<AppState, ViewModel>(
       converter: (Store<AppState> store) => ViewModel.create(store),
       builder: (BuildContext context, ViewModel viewModel) {
-        return Column(
-          children: <Widget>[
+        return ScrollableSheetPage(
+            shadow: Shadow(color: Colors.transparent),
             // Header
-            Container(
-              color: Colors.white,
-              height: HEADING_HEIGHT,
-              child: Stack(
-                children: [
-                  Positioned(
-                      top: -40,
-                      left: MediaQuery.of(context).size.width * 0.5 - 40,
-                      child: Container(
-                        height: CIRCLE_1_RADIUS,
-                        width: CIRCLE_1_RADIUS,
-                        decoration: BoxDecoration(
-                          color: colorFrom(
-                            Theme.of(context).primaryColor,
-                            opacity: 0.2,
-                          ),
-                          borderRadius:
-                              BorderRadius.circular(CIRCLE_1_RADIUS / 2),
-                        ),
-                      )),
-                  Positioned(
-                      top: 120,
-                      left: -80,
-                      child: Container(
-                        height: CIRCLE_2_RADIUS,
-                        width: CIRCLE_2_RADIUS,
-                        decoration: BoxDecoration(
-                          color: colorFrom(
-                            Theme.of(context).primaryColor,
-                            opacity: 0.2,
-                          ),
-                          borderRadius:
-                              BorderRadius.circular(CIRCLE_2_RADIUS / 2),
-                        ),
-                      )),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Image.asset(
-                      "assets/imgs/learning.png",
-                      height: 180,
+            header: 
+              Container(
+                color: Colors.white,
+                height: HEADING_HEIGHT,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      right: -30,
+                      bottom: -10,
+                      child: Image.asset(
+                        "assets/imgs/graphics/ilstr_learning@3x.png",
+                        height: 220,
+                      ),
                     ),
-                  ),
-                  PageHeader(
-                    title: "Learning",
-                  )
-                ],
+                    PageHeader(
+                      title: "Learning",
+                    )
+                  ],
+                ),
               ),
-            ),
             // BODY
-            Expanded(
-                child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: viewModel.campaigns.activeLength(),
-              itemBuilder: (context, index) {
-                return LearningCentreCampaignSelectionItem(
-                    campaign: viewModel.campaigns.getActiveCampaigns()[index]);
-              },
-            ))
-          ],
+            children: [
+              ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: viewModel.campaigns.activeLength(),
+                itemBuilder: (context, index) {
+                  return LearningCentreCampaignSelectionItem(
+                      campaign: viewModel.campaigns.getActiveCampaigns()[index]);
+                },
+              )
+            ]
         );
       },
     ));
