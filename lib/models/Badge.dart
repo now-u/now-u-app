@@ -40,7 +40,7 @@ class Badge {
 // Must be in order
 final List<Badge> badges = [
   Badge(
-      name: "now-u newbie",
+      name: "now-u pinoeer",
       image: "assets/imgs/badges/achievement badges-01.png",
       points: 50,
       successMessage:

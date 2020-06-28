@@ -1,4 +1,5 @@
 import 'package:app/assets/StyleFrom.dart';
+import 'package:app/assets/components/customTile.dart';
 import 'package:flutter/material.dart';
 
 final double defaultBorderRadius = 8.0;
@@ -88,31 +89,33 @@ class SecondaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: darkButtonStyleStyles[style]['height'],
-      child: RaisedButton(
-        color: Colors.white,
-        onPressed: onPressed,
-        elevation: 5.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-              darkButtonStyleStyles[style]['borderRadius']),
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: darkButtonStyleStyles[style]['vPadding'],
-            horizontal: darkButtonStyleStyles[style]['hPadding'],
-          ),
-          child: Text(
-            text,
-            style: textStyleFrom(
-              Theme.of(context).primaryTextTheme.button,
-              color: Theme.of(context).buttonColor,
-              fontSize: fontSize ?? darkButtonStyleStyles[style]['fontSize'],
+    return CustomTile(
+      child:
+        Container(
+          height: darkButtonStyleStyles[style]['height'],
+          child: RaisedButton(
+            color: Colors.white,
+            onPressed: onPressed,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                  darkButtonStyleStyles[style]['borderRadius']),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: darkButtonStyleStyles[style]['vPadding'],
+                horizontal: darkButtonStyleStyles[style]['hPadding'],
+              ),
+              child: Text(
+                text,
+                style: textStyleFrom(
+                  Theme.of(context).primaryTextTheme.button,
+                  color: Theme.of(context).buttonColor,
+                  fontSize: fontSize ?? darkButtonStyleStyles[style]['fontSize'],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
+        )
     );
   }
 }

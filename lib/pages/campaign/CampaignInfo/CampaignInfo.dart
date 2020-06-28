@@ -385,7 +385,8 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
             ),
 
             SizedBox(height: 10),
-
+            
+            campaign.getGeneralPartners().length == 0 ? Container() :
             Container(
               color: Color.fromRGBO(247,248,252,1),
               child: Padding(

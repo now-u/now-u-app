@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flushbar/flushbar.dart';
+import 'dart:math';
 
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -17,6 +18,24 @@ import 'package:app/routes.dart';
 
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/progress.dart';
+
+List<String> actionSuccessTitle = [
+  "Amazing work!",
+  "Way to go!",
+  "Great work!",
+  "Keep it up!",
+];
+List<String> actionSuccessMessages = [
+  "Every action you take is a small step towards driving real change. Thank you so much for being part of our community working together to make a difference!",
+];
+List<String> campaignSuccessTitle = [
+  "Thank you!",
+  "Amazing!",
+  "Brilliant!",
+];
+List<String> campaignSuccessMessages = [
+  "As part of this now-u community of campaigners, we hope that our combined actions will help make a real difference to this incredibly important issue.",
+];
 
 //void joinCampaign(
 //    ViewModel viewModel, BuildContext context, Campaign campaign) {
@@ -87,13 +106,18 @@ import 'package:app/assets/components/progress.dart';
 
 Flushbar pointsNotifier(int userPoints, int earnedPoints, int nextBadgePoints,
     BuildContext context) {
+      var rng = new Random();
+      int index = rng.nextInt(earnedPoints == 10 ? campaignSuccessTitle.length : actionSuccessTitle.length);
+      int index2 = rng.nextInt(earnedPoints == 10 ? campaignSuccessMessages.length : actionSuccessMessages.length);
   return notifier(
-      "Congrats! You just earned ${earnedPoints} points! ${nextBadgePoints - (userPoints)} points till your next badge",
+      //"Congrats! You just earned ${earnedPoints} points! ${nextBadgePoints - (userPoints)} points till your next badge",
+      earnedPoints == 10 ? campaignSuccessTitle[index] : actionSuccessTitle[index],
+      earnedPoints == 10 ? campaignSuccessMessages[index2] : actionSuccessMessages[index2],
       userPoints / nextBadgePoints,
       context);
 }
 
-Flushbar notifier(String message, double progress, BuildContext context) {
+Flushbar notifier(String title, String message, double progress, BuildContext context) {
   return Flushbar(
       duration: Duration(seconds: 3),
       flushbarPosition: FlushbarPosition.BOTTOM,
@@ -113,7 +137,7 @@ Flushbar notifier(String message, double progress, BuildContext context) {
             Icon(FontAwesomeIcons.checkCircle, color: Colors.white, size: 40),
             SizedBox(width: 10),
             Text(
-              "Nice job!",
+              title,
               style: textStyleFrom(
                 Theme.of(context).primaryTextTheme.headline3,
                 color: Colors.white,
@@ -139,22 +163,22 @@ Flushbar notifier(String message, double progress, BuildContext context) {
                       ),
                     ]),
               )),
-          Container(
-            width: double.infinity,
-            height: 20,
-            child: Align(
-              alignment: Alignment.center,
-              child: ProgressBar(
-                progress: progress,
-                widthAsDecimal: 0.9,
-                doneColor: Color.fromRGBO(255, 176, 58, 1),
-                toDoColor: colorFrom(
-                  Colors.white,
-                  opacity: 0.3,
-                ),
-              ),
-            ),
-          ),
+          //Container(
+          //  width: double.infinity,
+          //  height: 20,
+          //  child: Align(
+          //    alignment: Alignment.center,
+          //    child: ProgressBar(
+          //      progress: progress,
+          //      widthAsDecimal: 0.9,
+          //      doneColor: Color.fromRGBO(255, 176, 58, 1),
+          //      toDoColor: colorFrom(
+          //        Colors.white,
+          //        opacity: 0.3,
+          //      ),
+          //    ),
+          //  ),
+          //),
         ],
       ));
 }
@@ -184,7 +208,7 @@ Function gotBadgeNotifier({
                 Container(
                   width: MediaQuery.of(context).size.width * 0.65,
                   child: Text(
-                    "You earned a new badge",
+                    "You reached a new milestone",
                     style: Theme.of(context).primaryTextTheme.bodyText1,
                     textAlign: TextAlign.center,
                   ),
@@ -214,30 +238,30 @@ Function gotBadgeNotifier({
                   ),
                 ),
                 SizedBox(height: 20),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.65,
-                  child: RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(children: [
-                      TextSpan(
-                          text: "See all your achievements in your ",
-                          style: Theme.of(context).primaryTextTheme.bodyText1),
-                      TextSpan(
-                          text: "profile",
-                          style: textStyleFrom(
-                            Theme.of(context).primaryTextTheme.bodyText1,
-                            color: Theme.of(context).buttonColor,
-                          ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.pushNamed(context, Routes.profile);
-                            }),
-                      TextSpan(
-                          text: ".",
-                          style: Theme.of(context).primaryTextTheme.bodyText1),
-                    ]),
-                  ),
-                )
+                //Container(
+                //  width: MediaQuery.of(context).size.width * 0.65,
+                //  child: RichText(
+                //    textAlign: TextAlign.center,
+                //    text: TextSpan(children: [
+                //      TextSpan(
+                //          text: "See all your achievements in your ",
+                //          style: Theme.of(context).primaryTextTheme.bodyText1),
+                //      TextSpan(
+                //          text: "profile",
+                //          style: textStyleFrom(
+                //            Theme.of(context).primaryTextTheme.bodyText1,
+                //            color: Theme.of(context).buttonColor,
+                //          ),
+                //          recognizer: TapGestureRecognizer()
+                //            ..onTap = () {
+                //              Navigator.pushNamed(context, Routes.profile);
+                //            }),
+                //      TextSpan(
+                //          text: ".",
+                //          style: Theme.of(context).primaryTextTheme.bodyText1),
+                //    ]),
+                //  ),
+                //)
               ],
             ),
           ));
