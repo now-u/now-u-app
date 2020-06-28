@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app/assets/components/pageTitle.dart';
 import 'package:app/assets/components/customAppBar.dart';
+import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/routes/customRoute.dart';
 
 import 'package:app/models/User.dart';
@@ -15,15 +16,6 @@ import 'package:app/pages/profile/ProfileTile.dart';
 import 'package:app/pages/Tabs.dart';
 import 'package:app/routes.dart';
 
-import 'package:app/pages/profile/profilePages/DetailsPage.dart';
-import 'package:app/pages/profile/profilePages/AboutPage.dart';
-import 'package:app/pages/profile/profilePages/PartnersPage.dart';
-import 'package:app/pages/profile/profilePages/ProfilePage.dart';
-import 'package:app/pages/profile/profilePages/ProgressPage.dart';
-import 'package:app/pages/profile/profilePages/RewardsPage.dart';
-import 'package:app/pages/profile/profilePages/OffersPage.dart';
-import 'package:app/pages/profile/profilePages/FeedbackPage.dart';
-import 'package:app/pages/profile/profilePages/SupportPage.dart';
 import 'package:app/pages/other/quiz/quizStart.dart';
 
 import 'package:redux/redux.dart';
@@ -109,23 +101,6 @@ class _ProfileState extends State<Profile> {
             'link':
                 "https://now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf"
           },
-          //{
-          //  'profileTile': ProfileTile("Partners", FontAwesomeIcons.building),
-          //  'page': PartnersPage(),
-          //},
-          //{
-          //  'profileTile': ProfileTile("About", FontAwesomeIcons.infoCircle),
-          //  'page': AboutPage(),
-          //},
-
-          // Old Pages
-          //{  'profileTile': ProfileTile("Details", FontAwesomeIcons.solidUser) , 'page': DetailsPage(goBack: goBack, ), },
-          //{  'profileTile': ProfileTile("Progress", FontAwesomeIcons.spinner), 'page':ProgressPage(goBack, viewModel)},
-          //{  'profileTile': ProfileTile("Network", FontAwesomeIcons.users) },
-          //{  'profileTile': ProfileTile("Rewards", FontAwesomeIcons.ribbon), 'page' : RewardsPage(goBack, viewModel) },
-          //{  'profileTile': ProfileTile("Offers", FontAwesomeIcons.percent), 'page': OffersPage(goBack) },
-          //{  'profileTile': ProfileTile("Feedback", FontAwesomeIcons.solidComment), 'page': FeedbackPage(goBack) },
-          //{  'profileTile': ProfileTile("Support", FontAwesomeIcons.question), 'page':SupportPage(goBack) },
         ];
         user = viewModel.userModel.user;
         return Scaffold(
@@ -147,7 +122,6 @@ class _ProfileState extends State<Profile> {
                     ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      //separatorBuilder: (context, index) => ProfileDividor(),
                       itemCount: profileTiles.length,
                       itemBuilder: (context, index) => GestureDetector(
                         onTap: () => setState(() {
@@ -163,13 +137,7 @@ class _ProfileState extends State<Profile> {
                         child: profileTiles[index]["profileTile"],
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.all(20),
-                      child: Text(
-                        "Follow us on social media",
-                        style: Theme.of(context).primaryTextTheme.bodyText1,
-                      ),
-                    ),
+                    SizedBox(height: 15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       mainAxisSize: MainAxisSize.max,
@@ -188,33 +156,21 @@ class _ProfileState extends State<Profile> {
                         )
                       ],
                     ),
-                    GestureDetector(
-                      child: ProfileTile("Dev Tools", FontAwesomeIcons.code),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            CustomRoute(
-                                builder: (context) => QuizStartPage(0)));
-                      },
-                    ),
+                    SizedBox(height: 20),
+
+                    // Dev Tools
+                    //GestureDetector(
+                    //  child: ProfileTile("Dev Tools", FontAwesomeIcons.code),
+                    //  onTap: () {
+                    //    Navigator.push(
+                    //        context,
+                    //        CustomRoute(
+                    //            builder: (context) => QuizStartPage(0)));
+                    //  },
+                    //),
                   ],
                 )));
       },
-    );
-  }
-}
-
-Text sectionTitle(String t, BuildContext context) {
-  return Text(t, style: Theme.of(context).primaryTextTheme.headline);
-}
-
-class ProfileDividor extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 1,
-      color: Color.fromRGBO(187, 187, 187, 1),
     );
   }
 }
@@ -235,19 +191,28 @@ class SocialButton extends StatelessWidget {
         onTap: () {
           launch(link);
         },
-        child: Container(
-          height: size,
-          width: size,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(size / 2),
-            color: Theme.of(context).primaryColor,
-          ),
-          child: Center(
-            child: Icon(
-              icon,
-              color: Colors.white,
+        child: CustomTile(
+          borderRadius: size/2,
+          child: Container(
+            height: size,
+            width: size,
+            child: Padding(
+              padding: EdgeInsets.all(3),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(size / 2),
+                  color: Theme.of(context).primaryColor,
+                ),
+                child: Center(
+                  child: Icon(
+                    icon,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
             ),
-          ),
-        ));
+          )
+        )
+      );
   }
 }

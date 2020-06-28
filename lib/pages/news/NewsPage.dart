@@ -78,13 +78,13 @@ class _NewsListState extends State<NewsList> {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
+        PageHeader(
+          title: "News",
+        ),
         Container(
             //color: Color.fromRGBO(247, 248, 252, 1),
             color: HEADER_COLOR,
             child: Column(children: <Widget>[
-              PageHeader(
-                title: "News",
-              ),
 
               StoreConnector<AppState, ViewModel>(
                   converter: (Store<AppState> store) => ViewModel.create(store),
@@ -135,6 +135,7 @@ class _NewsListState extends State<NewsList> {
                                                     .getTitle(),
                                             getCategoryFromIndex( model.campaigns, index) == category,
                                             fontSize: 12,
+                                            borderRadius: 14,
                                           ),
                                     ));
                       }

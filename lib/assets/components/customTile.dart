@@ -17,17 +17,19 @@ class CustomTile extends StatelessWidget {
   final Widget child;
   final bool onWhiteBackground;
   final Color color;
+  final double borderRadius;
   CustomTile({
     this.child,
     this.onWhiteBackground,
     this.color,
+    this.borderRadius,
   });
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: color ?? Colors.white,
-        borderRadius: tileBorderRadius(),
+        borderRadius: tileBorderRadius(borderRadius: borderRadius),
         boxShadow: [
           customTileBoxShadow(
             onWhiteBackground ?? false
@@ -35,7 +37,7 @@ class CustomTile extends StatelessWidget {
         ]
       ),
       child: ClipRRect(
-        borderRadius: tileBorderRadius(),
+        borderRadius: tileBorderRadius(borderRadius: borderRadius),
         child: child, 
       ),
     );
