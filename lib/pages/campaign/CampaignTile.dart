@@ -50,8 +50,16 @@ class Tile extends StatelessWidget {
 
 class CampaignTile extends StatefulWidget {
   final Campaign campaign;
+  final double hPadding;
+  final double hOuterPadding;
 
-  CampaignTile(this.campaign);
+  CampaignTile(
+    this.campaign,
+    {
+      this.hPadding,
+      this.hOuterPadding,
+    }
+  );
 
   @override
   _CampaignTileState createState() => _CampaignTileState();
@@ -76,8 +84,10 @@ class _CampaignTileState extends State<CampaignTile> {
     };
 
     var borderRadius = 20.0;
-    var hPadding = 15.0;
+    var hPadding = widget.hPadding ?? 15.0;
+    var hOuterPadding = widget.hOuterPadding;
     return Tile(
+      hPadding: hOuterPadding,
       onTap: _onTapMoreInfo,
       child: Column(
         mainAxisSize: MainAxisSize.min,

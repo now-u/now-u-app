@@ -93,7 +93,7 @@ class SecondaryButton extends StatelessWidget {
       child: RaisedButton(
         color: Colors.white,
         onPressed: onPressed,
-        elevation: 9.0,
+        elevation: 5.0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
               darkButtonStyleStyles[style]['borderRadius']),

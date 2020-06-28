@@ -13,6 +13,7 @@ import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/components/header.dart';
 import 'package:app/assets/components/viewCampaigns.dart';
+import 'package:app/assets/components/smoothPageIndicatorEffect.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -210,13 +211,7 @@ class _ActionPageState extends State<ActionPage> {
                                 .getSelectedCampaigns()
                                 .length +
                             1,
-                    effect: WormEffect(
-                      dotColor: Color.fromRGBO(150, 153, 168, 1),
-                      activeDotColor: Colors.orange,
-                      spacing: 10.0,
-                      dotHeight: 10,
-                      dotWidth: 10,
-                    ),
+                    effect: customSmoothPageInducatorEffect,
                   ),
 
                   SizedBox(

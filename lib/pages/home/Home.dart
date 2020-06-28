@@ -2,9 +2,12 @@ import 'package:app/assets/StyleFrom.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'package:app/routes.dart';
+
 import 'package:app/pages/news/NewsPage.dart';
 import 'package:app/pages/Tabs.dart';
 import 'package:app/pages/campaign/CampaignTile.dart';
+import 'package:app/pages/other/InfoPage.dart';
 import 'package:intl/intl.dart';
 import 'package:app/assets/ClipShadowPath.dart';
 
@@ -12,6 +15,7 @@ import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/progress.dart';
 import 'package:app/assets/components/viewCampaigns.dart';
+import 'package:app/assets/components/smoothPageIndicatorEffect.dart';
 
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/State.dart';
@@ -19,6 +23,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 const double BUTTON_PADDING = 10;
 
@@ -87,28 +93,68 @@ class Home extends StatelessWidget {
                            
                             SizedBox(height: 70),
 
-                            HomeTitle("${DateFormat("MMMM").format(DateTime.now())}'s +  campaigns"),
+                            HomeTitle(
+                              "${DateFormat("MMMM").format(DateTime.now())}'s campaigns",
+                              subtitle: "Our campaigns are always in partnership with trusted institutions. Here’s the ones for ${DateFormat("MMMM").format(DateTime.now())}:",
+                              infoTitle: "My Impact",
+                              infoText: "At the end of each campaign you joined, we will ask you to answer a (non mandatory) survey to let us know how much you learnt, if you felt like you made a difference, and your overall thoughts on the campaigns.\n Then you will receive an impact report with infographics for the campaign with a full impact report with all our metrics and learnings.\n We are also working to bring some of these numbers to be displayed in the app soon :)",
+                            ),
 
                             CampaignCarosel(),
 
-                            sectionTitle("Actions", context),
-                            HomeActionTile(changePage),
+                            SizedBox(height: 15),
 
-                            HomeDividor(),
-                            sectionTitle("Highlights", context),
-                            Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Container(
-                                child: VideoOTDTile(),
+                            Container(
+                              color: Color.fromRGBO(255,243,230,1),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 10),
+                                child: Column(
+                                  children: [
+                                    HomeTitle(
+                                      "Take action now!",
+                                      subtitle: "Find out what you can start doing to support your campaign:",
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(15),
+                                      child: DarkButton(
+                                        "See my Actions",
+                                        onPressed: () {
+                                          Navigator.of(context).pushNamed(Routes.actions);
+                                        },
+                                      )
+                                    )
+                                  ],
+                                )
+                              )
+                            ),
+                           
+                            SizedBox(height: 10),
+
+                            Container(
+                              child: Padding(
+                                padding: EdgeInsets.all(10),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "What cause do you want to support next?",
+                                      style: Theme.of(context).primaryTextTheme.bodyText1,
+                                    ),
+
+                                    Padding(
+                                      padding: EdgeInsets.all(15),
+                                      child: DarkButton(
+                                        "Suggest a campaign",
+                                        onPressed: () {
+                                          launch("https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform");
+                                        },
+                                        inverted: true,
+                                      ),
+                                    )
+                                  ],
+                                )
                               ),
                             ),
-                            HomeButton(
-                              text: "All news",
-                              changePage: changePage,
-                              page: TabPage.News
 
-                            )
-                            
                           ],
                         )
                       )
@@ -295,28 +341,42 @@ class BezierClipper extends CustomClipper<Path> {
 class CampaignCarosel extends StatelessWidget {
   final _controller = PageController(
     initialPage: 0,
-    viewportFraction: 0.85,
+    viewportFraction: 0.93,
   );
   @override
   Widget build(BuildContext context) {
-      return StoreConnector<AppState, ViewModel>(
-        converter: (Store<AppState> store) => ViewModel.create(store),
-        builder: (BuildContext context, ViewModel viewModel) {
-    return SizedBox(
-    height: 250,
-    child: PageView.builder(
-        controller: _controller,
-        itemCount: viewModel.campaigns.getActiveCampaigns().length,
-            // If all the active campaigns have been joined
-        //itemCount: viewModel.campaigns.getActiveCampaigns().length,
-        itemBuilder: (BuildContext context, int index) {
-          return CampaignTile(viewModel
-              .userModel.user
-              .filterSelectedCampaigns(viewModel.campaigns
-                  .getActiveCampaigns())[index]);
-        },
-      ),
-    );
+    return StoreConnector<AppState, ViewModel>(
+      converter: (Store<AppState> store) => ViewModel.create(store),
+      builder: (BuildContext context, ViewModel viewModel) {
+        return Column(
+          children: [
+            Container(
+              height: 270,
+              child: PageView.builder(
+                  controller: _controller,
+                  itemCount: viewModel.campaigns.getActiveCampaigns().length,
+                      // If all the active campaigns have been joined
+                  //itemCount: viewModel.campaigns.getActiveCampaigns().length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: CampaignTile(viewModel
+                        .userModel.user
+                        .filterSelectedCampaigns(viewModel.campaigns
+                            .getActiveCampaigns())[index],
+                        hOuterPadding: 4,
+                      ),
+                    );
+                  },
+                ),
+              ),
+              SmoothPageIndicator(
+                controller: _controller,
+                count: viewModel.campaigns.getActiveCampaigns().length,
+                effect: customSmoothPageInducatorEffect,
+              )
+          ]
+        );
       }
     );
   }
@@ -345,29 +405,41 @@ class HomeTitle extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: Theme.of(context).primaryTextTheme.headline3,
-              ),
-              SizedBox(width: 7,),
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: Theme.of(context).primaryTextTheme.headline3,
+                ),
+                SizedBox(width: 7,),
 
-              infoText == null ? Container() :
-              Icon(
-                FontAwesomeIcons.questionCircle,
-                color: Theme.of(context).primaryColor,
-              ),
-            ]
+                infoText == null ? Container() :
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(
+                      Routes.info,
+                      arguments: InfoPageArgumnets(
+                        title: infoTitle, 
+                        body: infoText,
+                      ),
+                    );
+                  },
+                  child: Icon(
+                    FontAwesomeIcons.questionCircle,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ) 
+              ]
+            )
           ),
-
-          SizedBox(height: 10),
 
           subtitle == null ? Container() :
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 10),
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
             child: Text(
               subtitle,
               style: Theme.of(context).primaryTextTheme.bodyText1,

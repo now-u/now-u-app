@@ -9,6 +9,7 @@ import 'package:app/pages/profile/profilePages/PartnersPage.dart';
 import 'package:app/pages/intro/IntroPage.dart';
 import 'package:app/pages/login/login.dart';
 import 'package:app/pages/other/BetaPage.dart';
+import 'package:app/pages/other/InfoPage.dart';
 import 'package:app/pages/Tabs.dart';
 import 'package:app/pages/campaign/LearningCentre/LearningCentreAllPage.dart';
 import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
@@ -29,6 +30,7 @@ class Routes {
   static const profile = "profile";
   static const faq = "faq";
   static const parteners = "parteners";
+  static const info = "info";
 
   // Learning
   static const learningAll = "learning";
@@ -98,6 +100,20 @@ Function initRoutes = (RouteSettings settings) {
     case Routes.learningAll:
       {
         return CustomRoute(builder: (context) => LearningCentreAllPage());
+      }
+
+    // Other
+    case Routes.info:
+      {
+        if (args is InfoPageArgumnets) {
+          return CustomRoute(
+              builder: (context) => InfoPage(
+                  args
+              )
+          );
+        }
+        return CustomRoute(
+            builder: (context) => TabsPage(currentPage: TabPage.Campaigns));
       }
 
     // Beta
