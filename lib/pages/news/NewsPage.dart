@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/header.dart';
-import 'package:app/assets/components/searchBar.dart';
+import 'package:app/assets/components/customTile.dart';
+import 'package:app/assets/components/selectionPill.dart';
 
 import 'package:app/pages/news/ArticlePage.dart';
 
@@ -14,7 +15,9 @@ import 'package:app/models/State.dart';
 import 'package:app/models/Campaigns.dart';
 
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:intl/intl.dart';
 import 'package:redux/redux.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 final double PAGE_PADDING = 15;
@@ -79,29 +82,21 @@ class _NewsListState extends State<NewsList> {
             //color: Color.fromRGBO(247, 248, 252, 1),
             color: HEADER_COLOR,
             child: Column(children: <Widget>[
-              searching
-                  ? Container()
-                  : PageHeader(
-                      title: "News",
-                      onTap: () {
-                        setState(() {
-                          searching = true;
-                        });
-                      },
-                      icon: Icons.search,
-                    ),
+              PageHeader(
+                title: "News",
+              ),
 
               StoreConnector<AppState, ViewModel>(
                   converter: (Store<AppState> store) => ViewModel.create(store),
                   builder: (BuildContext context, ViewModel model) {
                     return Container(
-                        height: 40,
+                        height: 60,
                         child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: model.campaigns.activeLength(),
                             itemBuilder: (BuildContext context, int index) {
                               return Padding(
-                                  padding: EdgeInsets.all(10),
+                                  padding: EdgeInsets.all(5),
                                   child: GestureDetector(
                                       onTap: () {
                                         print("Detecting");
@@ -131,104 +126,51 @@ class _NewsListState extends State<NewsList> {
                                           print("State set");
                                         });
                                       },
-                                      child: getCategoryFromIndex(
-                                                  model.campaigns, index) ==
-                                              category
-                                          ? Text(
-                                              "#" +
-                                                  model.campaigns
-                                                      .getActiveCampaigns()[
-                                                          index]
-                                                      .getTitle(),
-                                              style: textStyleFrom(
-                                                  Theme.of(context)
-                                                      .primaryTextTheme
-                                                      .bodyText1,
-                                                  fontSize: 11,
-                                                  color: Colors.orange))
-                                          : Text(
-                                              "#" +
-                                                  model.campaigns
-                                                      .getActiveCampaigns()[
-                                                          index]
-                                                      .getTitle(),
-                                              style: textStyleFrom(
-                                                Theme.of(context)
-                                                    .primaryTextTheme
-                                                    .bodyText1,
-                                                fontSize: 11,
-                                                color: Color.fromRGBO(
-                                                    117, 117, 117, 1),
-                                              ))));
-                            }));
-                  }),
-
-              !searching ? Container() : SizedBox(height: PAGE_PADDING),
-              !searching
-                  ? Container()
-                  : Padding(
-                      padding: EdgeInsets.symmetric(horizontal: PAGE_PADDING),
-                      child: SearchBar(
-                        (value) {
-                          filterArticlesList(value);
-                        },
-                        editingController,
-                        autofocus: true,
-                      ),
-                    ),
-
-              // Video of the day
-              searching
-                  ? Container()
-                  : Padding(
-                      padding: EdgeInsets.all(0),
-                      child: Container(
-                          child: VideoOTDTile(
-                        borderRadius: 0,
-                        elevated: false,
-                        textPadding: 15,
-                        // TODO need to do actual request for video of the day
-                      )),
-                    ),
-            ])),
-
-        SizedBox(
-          height: PAGE_PADDING,
-        ),
-
-        searching
-            ? Container()
-            : Padding(
-                padding: EdgeInsets.symmetric(horizontal: PAGE_PADDING),
-                child: Text("Recent News",
-                    style: textStyleFrom(
-                      Theme.of(context).primaryTextTheme.headline4,
-                      fontWeight: FontWeight.w600,
-                    )),
+                                      child: 
+                                          SelectionPill(
+                                            "#" +
+                                                model.campaigns
+                                                    .getActiveCampaigns()[
+                                                        index]
+                                                    .getTitle(),
+                                            getCategoryFromIndex( model.campaigns, index) == category,
+                                            fontSize: 12,
+                                          ),
+                                    ));
+                      }
+                    )
+                  );
+                }
               ),
-        SizedBox(height: 10),
 
-        // News aritcles
-        ListView.builder(
-          shrinkWrap: true,
-          physics: ClampingScrollPhysics(),
-          //itemCount: articles.length < 2 ? articles.length : articles.length - 2,
-          itemCount: articles.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Padding(
-                padding: EdgeInsets.only(
-                  left: PAGE_PADDING,
-                  right: PAGE_PADDING,
-                  bottom: PAGE_PADDING / 2,
-                ),
-                child: NewsTextTile(
-                    article:
-                        //articles.length < 2 ? articles[index] : articles[index + 2],
-                        articles[index]));
-          },
-        ),
-        SizedBox(width: 20),
-      ],
+              SizedBox(
+                height: PAGE_PADDING,
+              ),
+
+              SizedBox(height: 10),
+
+              // News aritcles
+              ListView.builder(
+                shrinkWrap: true,
+                physics: ClampingScrollPhysics(),
+                itemCount: articles.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                      padding: EdgeInsets.only(
+                        left: PAGE_PADDING,
+                        right: PAGE_PADDING,
+                        bottom: 10,
+                      ),
+                      child: NewsTile(
+                          article:
+                              articles[index]));
+                },
+              ),
+              SizedBox(width: 20),
+            ],
+          )
+        ) 
+      ]
     );
   }
 
@@ -263,309 +205,83 @@ class _NewsListState extends State<NewsList> {
   }
 }
 
-// Video of the day
-class VideoOTDTile extends StatelessWidget {
-  final double borderRadius;
-  final bool elevated;
-  final double textPadding;
-
-  VideoOTDTile({
-    this.borderRadius,
-    this.elevated,
-    this.textPadding,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        child: StoreConnector<AppState, ViewModel>(
-            converter: (Store<AppState> store) => ViewModel.create(store),
-            builder: (BuildContext context, ViewModel model) {
-              return FutureBuilder(
-                  future: model.api.getVideoOfTheDay(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        //mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Container(
-                            width: double.infinity,
-                            child: NewsGraphic(
-                              video: snapshot.data.getVideoLink(),
-                              height: 185,
-                              borderRadius: borderRadius,
-                              elevated: elevated,
-                            ),
-                          ),
-                          Container(
-                              color: HEADER_COLOR,
-                              width: double.infinity,
-                              child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        CustomRoute(
-                                            builder: (context) =>
-                                                ArticlePage(snapshot.data)));
-                                  },
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(height: 10),
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: textPadding ?? 0),
-                                        child: Text(
-                                          "Clip of the day",
-                                          textAlign: TextAlign.left,
-                                          style: textStyleFrom(
-                                              Theme.of(context)
-                                                  .primaryTextTheme
-                                                  .headline5,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 11,
-                                              color: Theme.of(context)
-                                                  .primaryColor),
-                                        ),
-                                      ),
-                                      SizedBox(height: 4),
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: textPadding ?? 0),
-                                        child: Text(
-                                          snapshot.data.getTitle(),
-                                          textAlign: TextAlign.left,
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: textStyleFrom(
-                                            Theme.of(context)
-                                                .primaryTextTheme
-                                                .headline5,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(height: textPadding),
-                                    ],
-                                  ))),
-                        ],
-                      );
-                    } else {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  });
-            }));
-  }
-}
-
-class NewsImageTile extends StatelessWidget {
-  final Article article;
-
-  NewsImageTile({@required this.article});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        //mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Container(
-            //width: double.infinity,
-            width: MediaQuery.of(context).size.width * 0.3,
-            child: NewsGraphic(
-              image: article.getHeaderImage(),
-              height: 100,
-            ),
-          ),
-          // TODO This should probably link to the catergory as well (ie search for the category)
-          SizedBox(height: 5),
-          StoreConnector<AppState, ViewModel>(
-              converter: (Store<AppState> store) => ViewModel.create(store),
-              builder: (BuildContext context, ViewModel model) {
-                return Text(
-                  article.getCategory(),
-                  textAlign: TextAlign.left,
-                  style: textStyleFrom(
-                    Theme.of(context).primaryTextTheme.headline5,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 11,
-                  ),
-                );
-              }),
-          SizedBox(height: 2),
-          Text(
-            article.getTitle(),
-            textAlign: TextAlign.left,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: textStyleFrom(
-              Theme.of(context).primaryTextTheme.headline5,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          SizedBox(height: 10),
-        ],
-      ),
-    );
-  }
-}
-
-class NewsTextTile extends StatelessWidget {
+class NewsTile extends StatelessWidget {
   final Article article;
   final double height = 80;
 
-  NewsTextTile({@required this.article});
+  NewsTile({@required this.article});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context, CustomRoute(builder: (context) => ArticlePage(article)));
+        launch(
+          article.getFullArticleLink()
+        );
       },
-      child: Container(
-        height: height,
-        width: double.infinity,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Flexible(
-                flex: 1,
-                child: NewsGraphic(
-                    image: article.getHeaderImage(), height: height)),
-            SizedBox(
-              width: 15,
-            ),
-            Flexible(
-              flex: 2,
-              child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          child: StoreConnector<AppState, ViewModel>(
-                              converter: (Store<AppState> store) =>
-                                  ViewModel.create(store),
-                              builder: (BuildContext context, ViewModel model) {
-                                return Text(
-                                  article.getCategory(
-                                      campaigns: model.campaigns),
-                                  style: textStyleFrom(
-                                    Theme.of(context)
-                                        .primaryTextTheme
-                                        .headline5,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 11,
-                                  ),
-                                );
-                              }),
-                        ),
-                        SizedBox(height: 6),
-                        Text(
-                          article.getTitle(),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: textStyleFrom(
-                            Theme.of(context).primaryTextTheme.headline5,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ])),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+      child: CustomTile(
+          child: Column(
+            children: [
+              Container(
+                height: 160,
+                width: double.infinity,
+                child: Image.network(
+                  article.getHeaderImage(),
+                  fit: BoxFit.cover,
+                )
+              ),
 
-class NewsGraphic extends StatelessWidget {
-  final double defaultBorderRadius = 10;
-
-  final String image;
-  final String video;
-  final double height;
-  final double borderRadius;
-  final bool elevated;
-
-  YoutubePlayerController controller;
-
-  NewsGraphic({
-    this.image,
-    this.video,
-    this.height,
-    this.borderRadius,
-    this.elevated,
-  }) : assert(image != null || video != null);
-
-  @override
-  Widget build(BuildContext context) {
-    if (video != null) {
-      controller = YoutubePlayerController(
-        initialVideoId: YoutubePlayer.convertUrlToId(video),
-        flags: YoutubePlayerFlags(
-          autoPlay: false,
-          mute: false,
-        ),
-      );
-    }
-
-    return Padding(
-        padding: EdgeInsets.symmetric(vertical: 5),
-        child: Container(
-            decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius: BorderRadius.all(
-                    Radius.circular(borderRadius ?? defaultBorderRadius)),
-                boxShadow: [
-                  BoxShadow(
-                      color:
-                          Color.fromRGBO(0, 0, 0, elevated ?? true ? 0.16 : 0),
-                      offset: Offset(0, 4.0),
-                      blurRadius: 6)
-                ]),
-            height: height ?? 150,
-            width: MediaQuery.of(context).size.width * 0.3,
-            child: ClipRRect(
-              borderRadius: BorderRadius.all(
-                  Radius.circular(borderRadius ?? defaultBorderRadius)),
-              child: image != null
-                  ? Image.network(
-                      image,
-                      fit: BoxFit.cover,
-                    )
-                  : YoutubePlayer(
-                      controller: controller,
-                      showVideoProgressIndicator: true,
+              // Titile
+              Padding(
+                padding: EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start, 
+                  children: [
+                    Text(
+                      article.getTitle(),
+                      style: Theme.of(context).primaryTextTheme.headline3,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
-            )));
-  }
-}
-
-class NewsDividor extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.symmetric(horizontal: PAGE_PADDING),
-        child: Container(
-          width: double.infinity,
-          height: 1,
-          color: Color.fromRGBO(221, 221, 221, 1),
-        ));
+                    SizedBox(height: 5),
+                    Text(
+                      article.getSubtitle(),
+                      style: textStyleFrom(
+                        Theme.of(context).primaryTextTheme.headline5,
+                        color: Color.fromRGBO(109, 113,129, 1)
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      DateFormat('d MMMM yyyy').format(article.getCreationTime()),
+                      style: textStyleFrom(
+                        Theme.of(context).primaryTextTheme.bodyText1,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // Source
+              article.getSource() == null ? Container() :
+              Container(
+                color: Color.fromRGBO(247,248,252,1),
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Text(
+                      article.getSource()
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+      )
+    );
   }
 }
 

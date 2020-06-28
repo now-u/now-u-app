@@ -11,6 +11,8 @@ import 'package:app/models/State.dart';
 
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/selectionItem.dart';
+import 'package:app/assets/components/customTile.dart';
+import 'package:app/assets/components/selectionPill.dart';
 import 'package:app/assets/components/header.dart';
 import 'package:app/assets/components/viewCampaigns.dart';
 import 'package:app/assets/components/smoothPageIndicatorEffect.dart';
@@ -18,7 +20,7 @@ import 'package:app/assets/components/smoothPageIndicatorEffect.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-const double CAMPAIGN_SELECT_HEIGHT = 120;
+const double CAMPAIGN_SELECT_HEIGHT = 80;
 final _controller = PageController(
   initialPage: 0,
   viewportFraction: 0.93,
@@ -338,8 +340,11 @@ class CampaignSelectionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-        child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
+        child: CustomTile(
+            color: colorFrom(
+              Theme.of(context).primaryColorDark,
+              opacity:0.05,
+            ),
             child: Stack(children: <Widget>[
               Stack(
                 children: <Widget>[
@@ -355,7 +360,7 @@ class CampaignSelectionTile extends StatelessWidget {
                       height: CAMPAIGN_SELECT_HEIGHT,
                       color: colorFrom(
                         Colors.black,
-                        opacity: 0.4,
+                        opacity: 0.5,
                       )),
                 ],
               ),
@@ -368,7 +373,7 @@ class CampaignSelectionTile extends StatelessWidget {
                         style: textStyleFrom(
                           Theme.of(context).primaryTextTheme.headline4,
                           color: Colors.white,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w800,
                         ))),
               )
             ])));
@@ -608,27 +613,12 @@ class _ActiveDoneSelectorState extends State<ActiveDoneSelector> {
     return GestureDetector(
         onTap: widget.onClick,
         child: Padding(
-            padding: EdgeInsets.only(top: 0, bottom: 10, left: 10, right: 10),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: widget.selected
-                    ? Colors.white
-                    : Color.fromRGBO(230, 230, 230, 1),
-              ),
-              child: Center(
-                child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: Text(
-                      widget.text,
-                      style: textStyleFrom(
-                        Theme.of(context).primaryTextTheme.headline4,
-                        color: widget.selected
-                            ? Theme.of(context).primaryColor
-                            : Color.fromRGBO(117, 117, 117, 1),
-                      ),
-                    )),
-              ),
-            )));
+          padding: EdgeInsets.only(left: 12, bottom: 10),
+          child: SelectionPill(
+            widget.text, 
+            widget.selected
+          ),
+        )
+    );
   }
 }

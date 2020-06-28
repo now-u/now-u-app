@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:app/assets/ClipShadowPath.dart';
 
 import 'package:app/assets/components/selectionItem.dart';
+import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/progress.dart';
 import 'package:app/assets/components/viewCampaigns.dart';
@@ -166,8 +167,8 @@ class Home extends StatelessWidget {
                                       children: [
                                         Stack(
                                           children: [
-                                            Image.asset(),
-                                            BadgeIndicator(),
+                                            //Image.asset(),
+                                            //BadgeIndicator(),
                                             HomeTitle(
                                               "My Impact",
                                               infoTitle: "My Impact",
@@ -494,11 +495,7 @@ class ImpactTile extends StatelessWidget {
   ImpactTile(this.number, this.text);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-        color: Colors.white,
-      ),
+    return CustomTile(
       child: Row(
         children: [
           SizedBox(width: 20),

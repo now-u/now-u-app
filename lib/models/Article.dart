@@ -29,6 +29,8 @@ class Article {
   int linkedCampaign;
   int linkedAction;
   String videoLink;
+  DateTime createdAt;
+  String source;
   
   String fullArticleLink;
   String linkText;
@@ -45,6 +47,8 @@ class Article {
     this.fullArticleLink, 
     this.linkedAction, 
     this.videoLink, 
+    this.createdAt,
+    this.source,
     //this.type,
     this.isVideoOfTheDay,
   });
@@ -55,11 +59,13 @@ class Article {
     subtitle          = json['subtitle'];
     body              = json['body'];
     headerImage       = json['header_image'];
+    createdAt         = DateTime.parse(json['created_at']);
     linkedCampaign    = json['campaign_id'];
     linkedAction      = json['linked_action'];
     fullArticleLink   = json['full_article_link'];
     linkText          = json['link_text'];
     videoLink         = json['video_link'];
+    source            = json['source'];
     //type            = json['type'];
     isVideoOfTheDay   = json['video_of_the_day'] ?? false;
   }
@@ -69,7 +75,8 @@ class Article {
     'title': title,
     'body': body,
     'header_image': headerImage,
-    'campaign_id': linkedCampaign,
+    'created_at': headerImage,
+    'campaign_id': createdAt.toIso8601String(),
     'linked_action': linkedAction,
     'full_article_link': fullArticleLink,
     'video_link': videoLink,
@@ -77,6 +84,7 @@ class Article {
     'video_of_the_day': videoLink,
     'link_text': linkText,
     'subtitle': subtitle,
+    'source': source,
   };
 
   int getId() {
@@ -108,6 +116,12 @@ class Article {
   }
   String getVideoLink() {
     return videoLink; 
+  }
+  DateTime getCreationTime() {
+    return createdAt; 
+  }
+  String getSource() {
+    return source; 
   }
   //ArticleType getType() {
   //  return type;
