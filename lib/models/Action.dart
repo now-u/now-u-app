@@ -5,7 +5,7 @@ import 'package:tuple/tuple.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Custom Icons
-import 'package:app/assets/icons/my_flutter_app_icons.dart';
+import 'package:app/assets/icons/customIcons.dart';
 
 enum CampaignActionSuperType { GetInvolved, Learn, Advoacte, RaiseMoney }
 
@@ -49,21 +49,25 @@ Color blueO = colorFrom(blue, opacity: 0.2);
 Map campaignActionSuperTypeData = {
   CampaignActionSuperType.GetInvolved: {
     'name': "Get involved",
+    'icon': CustomIcons.ic_getinvolved,
     'iconColor': orange,
     'iconBackgroundColor': orangeO,
   },
   CampaignActionSuperType.Learn: {
     'name': "Learn",
+    'icon': CustomIcons.ic_learning,
     'iconColor': blue,
     'iconBackgroundColor': blueO,
   },
   CampaignActionSuperType.Advoacte: {
     'name': "Advocate",
+    'icon': CustomIcons.ic_raiseawareness,
     'iconColor': orange,
     'iconBackgroundColor': orangeO,
   },
   CampaignActionSuperType.RaiseMoney: {
     'name': "Raise Money",
+    'icon': CustomIcons.ic_raisemoney,
     'iconColor': yellow,
     'iconBackgroundColor': yellowO,
   },
@@ -74,7 +78,7 @@ Map defaultCampaignActionTypeData = {
   'verb': "Complete",
   'pastVerb': "Completed",
   'displayName': "special action",
-  'icon': FontAwesomeIcons.check,
+  //'icon': FontAwesomeIcons.check,
   //'Type': CustomIcons.heartHand,
   'type': CampaignActionSuperType.GetInvolved,
 };
@@ -85,7 +89,7 @@ Map campaignActionTypeData = {
     'verb': "Volunteer",
     'pastVerb': "Volunteered",
     'displayName': "volunteer",
-    'icon': CustomIcons.icon_vol_1,
+    //'icon': CustomIcons.icon_vol_1,
     'type': CampaignActionSuperType.GetInvolved,
   },
   CampaignActionType.Donation: {
@@ -93,7 +97,7 @@ Map campaignActionTypeData = {
     'verb': "Make",
     'pastVerb': "Made",
     'displayName': "donation",
-    'icon': CustomIcons.icon_donate_01,
+    //'icon': CustomIcons.icon_donate_01,
     'type': CampaignActionSuperType.RaiseMoney,
   },
   CampaignActionType.Fundraise: {
@@ -101,7 +105,7 @@ Map campaignActionTypeData = {
     'verb': "Take part in",
     'pastVerb': "Took part in",
     'displayName': "fundraiser",
-    'icon': CustomIcons.icon_fundraise_01,
+    //'icon': CustomIcons.icon_fundraise_01,
     'type': CampaignActionSuperType.RaiseMoney,
   },
   CampaignActionType.Awareness: {
@@ -109,7 +113,7 @@ Map campaignActionTypeData = {
     'verb': "Raise awareness",
     'pastVerb': "Raised awareness",
     'displayName': "time",
-    'icon': CustomIcons.icon_raise_awareness_01_01,
+    //'icon': CustomIcons.icon_raise_awareness_01_01,
     'type': CampaignActionSuperType.Advoacte,
   },
   CampaignActionType.Petition: {
@@ -117,7 +121,7 @@ Map campaignActionTypeData = {
     'verb': "Sign",
     'pastVerb': "Signed",
     'displayName': "petiton",
-    'icon': CustomIcons.icon_petition_01,
+    //'icon': CustomIcons.icon_petition_01,
     'type': CampaignActionSuperType.Advoacte,
   },
   CampaignActionType.Behaviour: {
@@ -125,7 +129,7 @@ Map campaignActionTypeData = {
     'verb': "Complete",
     'pastVerb': "Completed",
     'displayName': "behaviour change action",
-    'icon': CustomIcons.icon_behaviour_01,
+    //'icon': CustomIcons.icon_behaviour_01,
     'type': CampaignActionSuperType.GetInvolved,
   },
   CampaignActionType.Contact: {
@@ -133,7 +137,7 @@ Map campaignActionTypeData = {
     'verb': "Complete",
     'pastVerb': "Completed",
     'displayName': "contact change action",
-    'icon': CustomIcons.icon_contact_01,
+    //'icon': CustomIcons.icon_contact_01,
     'type': CampaignActionSuperType.Advoacte,
   },
   CampaignActionType.Protest: {
@@ -141,7 +145,7 @@ Map campaignActionTypeData = {
     'verb': "Take part in",
     'pastVerb': "Took part in",
     'displayName': "protest",
-    'icon': CustomIcons.icon_protest_01,
+    //'icon': CustomIcons.icon_protest_01,
     'type': CampaignActionSuperType.GetInvolved,
   },
   CampaignActionType.Connect: {
@@ -150,7 +154,7 @@ Map campaignActionTypeData = {
     'pastVerb': "Connted",
     'displayName': "times",
     //'icon': FontAwesomeIcons.link,
-    'icon': CustomIcons.icon_connect_01,
+    //'icon': CustomIcons.icon_connect_01,
     'type': CampaignActionSuperType.GetInvolved,
   },
   CampaignActionType.Learn: {
@@ -158,7 +162,7 @@ Map campaignActionTypeData = {
     'verb': "Complete",
     'pastVerb': "Completed",
     'displayName': "learning action",
-    'icon': CustomIcons.icon_learning_01,
+    //'icon': CustomIcons.icon_learning_01,
     'type': CampaignActionSuperType.Learn,
   },
   CampaignActionType.Quiz: {
@@ -166,7 +170,7 @@ Map campaignActionTypeData = {
     'verb': "Complete",
     'pastVerb': "Completed",
     'displayName': "quiz",
-    'icon': CustomIcons.icon_quiz_01,
+    //'icon': CustomIcons.icon_quiz_01,
     'type': CampaignActionSuperType.Learn,
   },
   CampaignActionType.Other: defaultCampaignActionTypeData
@@ -293,7 +297,9 @@ class CampaignAction {
   Map getActionIconMap() {
     if (campaignActionTypeData.containsKey(type)) {
       return {
-        'icon': campaignActionTypeData[type]['icon'],
+        'icon': 
+            campaignActionSuperTypeData[campaignActionTypeData[type]['type']]
+                ['icon'],
         'iconColor':
             campaignActionSuperTypeData[campaignActionTypeData[type]['type']]
                 ['iconColor'],

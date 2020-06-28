@@ -7,6 +7,7 @@ class Organisation {
   String organisationType;
   String email;
   String website;
+  String geographicReach;
 
   String instagram;
   String facebook;
@@ -28,6 +29,7 @@ class Organisation {
     //linkedCampaigns = json['linked_campaigns'].cast<int>();
     email = json['email'];
     website = json['website'];
+    geographicReach = json['geographic_reach'];
 
     instagram = json['IG_link'];
     facebook = json['FB_link'];
@@ -71,6 +73,14 @@ class Organisation {
   }
   String getWebsite() {
     return website;
+  }
+  String getGeographicReach() {
+    return geographicReach;
+  }
+  String getOrganistaionType() {
+    if (organisationType == null) {return null;}
+    String s = organisationType.replaceAll("_", " ");
+    return "${s[0].toUpperCase()}${s.substring(1)}";
   }
 
   String getFacebook() {

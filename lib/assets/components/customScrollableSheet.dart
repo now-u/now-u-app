@@ -8,6 +8,7 @@ class ScrollableSheetPage extends StatelessWidget {
   final double initialChildSize;
   final double minChildSize;
   final Shadow shadow;
+  final Color color;
   
   ScrollableSheetPage({
     @required this.header,
@@ -15,12 +16,13 @@ class ScrollableSheetPage extends StatelessWidget {
     this.initialChildSize,
     this.minChildSize,
     this.shadow,
+    this.color,
   });
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: colorFrom(
+      backgroundColor: color ?? colorFrom(
         Theme.of(context).primaryColor,
         opacity: 0.05,
       ),
@@ -44,7 +46,7 @@ class ScrollableSheetPage extends StatelessWidget {
                       ),
                       clipper: BezierTopClipper(),
                       child: Container(
-                      color: Color.fromRGBO(247,248,252,1),
+                      color: color ?? Color.fromRGBO(247,248,252,1),
                       child: 
                       ListView(
                         shrinkWrap: true,

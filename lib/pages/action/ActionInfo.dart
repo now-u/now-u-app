@@ -19,6 +19,7 @@ import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/components/pointsNotifier.dart';
+import 'package:app/assets/icons/customIcons.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -78,12 +79,34 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                       width: double.infinity,
                       color: _action.getSuperTypeData()['iconBackgroundColor'],
                       child: Padding(
-                          padding: EdgeInsets.all(10),
+                          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
                           child: Text(_action.getTitle())),
                     ),
                     Container(
-                      height: 10,
+                      height: completed ? null : 10,
                       color: _action.getActionIconMap()['iconColor'],
+                      child: completed ? 
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              CustomIcons.ic_check,
+                              size: 15,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 7),
+                            Text(
+                              "Done",
+                              style: textStyleFrom(
+                                Theme.of(context).primaryTextTheme.bodyText1,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        )
+                        :
+                        Container(),
                     ),
                     Padding(
                         padding: EdgeInsets.all(10),
@@ -291,20 +314,21 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
 
                           SizedBox(width: 10),
 
-                          !completed ? Container() :
-                          Container(
-                            height: 65,
-                            color: Color.fromRGBO(115, 159, 117, 1),
-                            child: Center(
-                              child: Text(
-                                "You completed this action",
-                                style: textStyleFrom(
-                                  Theme.of(context).primaryTextTheme.bodyText1,
-                                ),
-                              ),
-                            ),
-                          )
                         ]),
+                    SizedBox(height: 15),
+                    !completed ? Container() :
+                    Container(
+                      height: 65,
+                      color: Color.fromRGBO(155, 159, 177, 1),
+                      child: Center(
+                        child: Text(
+                          "You completed this action",
+                          style: textStyleFrom(
+                            Theme.of(context).primaryTextTheme.bodyText1,
+                          ),
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: completed ? 0 : 70,
                     ),
@@ -325,7 +349,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Icon(
-                            FontAwesomeIcons.calendar,
+                            starred ? CustomIcons.ic_todo_remove : CustomIcons.ic_todo_add,
                             color: Colors.white,
                             size: 30,
                           ),

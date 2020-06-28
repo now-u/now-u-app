@@ -50,14 +50,20 @@ class _ProfileState extends State<Profile> {
       converter: (Store<AppState> store) => ViewModel.create(store),
       builder: (BuildContext context, ViewModel viewModel) {
         var profileTiles = <Map>[
+          // Profile disabled for v1
+          //{
+          //  'profileTile':
+          //      ProfileTile("Profile", FontAwesomeIcons.solidUserCircle),
+          //  'page': Routes.profile,
+          //},
           {
             'profileTile':
-                ProfileTile("Profile", FontAwesomeIcons.solidUserCircle),
-            'page': Routes.profile,
+                ProfileTile("Our Partners", FontAwesomeIcons.building),
+            'page': Routes.parteners,
           },
           {
-            'profileTile': ProfileTile("Learning", FontAwesomeIcons.book),
-            'page': Routes.learningAll,
+            'profileTile': ProfileTile("Campaigns", FontAwesomeIcons.book),
+            'page': Routes.campaign,
           },
           {
             'profileTile': ProfileTile(
@@ -79,11 +85,6 @@ class _ProfileState extends State<Profile> {
           {
             'profileTile': ProfileTile("FAQ", FontAwesomeIcons.newspaper),
             'page': Routes.faq,
-          },
-          {
-            'profileTile':
-                ProfileTile("Our Partners", FontAwesomeIcons.building),
-            'page': Routes.parteners,
           },
           {
             'profileTile': ProfileTile(

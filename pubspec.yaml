@@ -146,11 +146,7 @@ flutter:
           style: italic
     - family: CustomIcons
       fonts:
-        - asset: assets/fonts/Icons/MyFlutterApp.ttf
-    - family: ActionIcons
-      fonts:
-        - asset: assets/fonts/Icons/ActionIcons.ttf
-          weight: 900
+        - asset: assets/fonts/Icons/CustomIcons.ttf
 
   #   - family: Schyler
   #     fonts:

@@ -350,6 +350,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text("• "),
+                          SizedBox(width: 3),
                           Expanded(
                             child: Text(
                               t,

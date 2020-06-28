@@ -53,6 +53,33 @@ class OraganisationInfoPage extends StatelessWidget {
                   organisation.getDescription(),
                 ),
                 SizedBox(height: 20),
+               
+                organisation.getGeographicReach() == null ? Container() :
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SectionTitle(
+                      "Geographic reach",
+                    ),
+                    Text(
+                      organisation.getGeographicReach(),
+                    ),
+                  ]
+                ),
+
+
+                organisation.getOrganistaionType() == null ? Container() :
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SectionTitle(
+                      "Organisation type",
+                    ),
+                    Text(
+                      organisation.getOrganistaionType(),
+                    ),
+                  ]
+                ),
 
 
                 getSocialMediaChildren(organisation).length == 0 ? Container() :

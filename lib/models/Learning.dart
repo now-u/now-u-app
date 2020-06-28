@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:app/assets/icons/customIcons.dart';
 
 import 'package:app/models/Action.dart';
 
@@ -97,15 +98,23 @@ class LearningResource {
     switch (type) {
       case "reading":
         {
-          return FontAwesomeIcons.bookOpen;
+          return CustomIcons.ic_learning;
         }
       case "video":
         {
-          return FontAwesomeIcons.video;
+          return CustomIcons.ic_video;
         }
       case "infographic":
         {
-          return FontAwesomeIcons.image;
+          return CustomIcons.ic_report;
+        }
+      case "report":
+        {
+          return CustomIcons.ic_report;
+        }
+      case "story":
+        {
+          return CustomIcons.ic_story;
         }
       case "other":
         {

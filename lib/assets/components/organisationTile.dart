@@ -1,3 +1,4 @@
+import 'package:app/assets/StyleFrom.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/models/Organisation.dart';
@@ -44,10 +45,9 @@ class OrganisationTile extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Container(
+              Expanded(
                 //height: 80, width: 100,
                   //width: 20,
-                  height: 55,
                   child: Image.network(
                     organisation.getLogoLink(),
                     fit: BoxFit.contain,
@@ -56,8 +56,12 @@ class OrganisationTile extends StatelessWidget {
               SizedBox(height: 10,),
               Text(
                 organisation.getName(),
-                style: Theme.of(context).primaryTextTheme.bodyText1,
+                style: textStyleFrom(
+                  Theme.of(context).primaryTextTheme.bodyText1,
+                  fontSize: 12,
+                ),
                 maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center
               )
             ],

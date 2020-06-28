@@ -33,7 +33,7 @@ class CustomIcons {
   static const IconData ic_back = IconData(0xe815, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_down = IconData(0xe816, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_forward = IconData(0xe817, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData ic_up = IconData(0xe818, fontFamily: _kF:wontFam, fontPackage: _kFontPkg);
+  static const IconData ic_up = IconData(0xe818, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_quote = IconData(0xe819, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_report = IconData(0xe81a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_story = IconData(0xe81b, fontFamily: _kFontFam, fontPackage: _kFontPkg);

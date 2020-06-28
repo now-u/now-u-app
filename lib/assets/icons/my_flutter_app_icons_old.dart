@@ -24,6 +24,9 @@ class CustomIcons {
 
   static const _kFontFam = 'CustomIcons';
   static const _actionIcons = 'ActionIcons';
+
+  static const _customIcons = 'CustomIcons';
+
   static const _kFontPkg = null;
 
   static const IconData home =

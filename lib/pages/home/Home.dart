@@ -115,8 +115,8 @@ class Home extends StatelessWidget {
                HomeTitle(
                  "${DateFormat("MMMM").format(DateTime.now())}'s campaigns",
                  subtitle: "Our campaigns are always in partnership with trusted institutions. Here’s the ones for ${DateFormat("MMMM").format(DateTime.now())}:",
-                 infoTitle: "My Impact",
-                 infoText: "At the end of each campaign you joined, we will ask you to answer a (non mandatory) survey to let us know how much you learnt, if you felt like you made a difference, and your overall thoughts on the campaigns.\n Then you will receive an impact report with infographics for the campaign with a full impact report with all our metrics and learnings.\n We are also working to bring some of these numbers to be displayed in the app soon :)",
+                 infoTitle: "Campaigns",
+                 infoText: "We run 3 campaigns each month, with one additional campaign for our first month of July. We only select a few causes per month to focus the efforts of as many people as possible on each campaign.\n We aim to tackle a wide range of social and environmental issues and we would love to hear your suggestions for campaigns we could run!\n We select issues based on several factors, including their severity, the ability of our users to tackle them, and the timing of specific events with momentum that could lead to real change. The theme for our July campaigns is: issues exacerbated by the pandemic.\n Once a campaign is over, that of course does not mean the issue has been solved! Whilst we will move onto a new set of issues each month, we will continue to provide users with details of how to stay engaged with other causes, and return to core issues in future campaigns.",
                ),
 
                CampaignCarosel(),
@@ -190,7 +190,7 @@ class Home extends StatelessWidget {
                                HomeTitle(
                                  "My Impact",
                                  infoTitle: "My Impact",
-                                 infoText: "At the end of each campaign you joined, we will ask you to answer a (non mandatory) survey to let us know how much you learnt, if you felt like you made a difference, and your overall thoughts on the campaigns.\n Then you will receive an impact report with infographics for the campaign with a full impact report with all our metrics and learnings.\n We are also working to bring some of these numbers to be displayed in the app soon :)",
+                                 infoText: "The impact of our campaigns is crucial. Our aim is to create campaigns that do as much good as possible, so we’re working hard to design ways to measure the impact that now-u users have through our campaigns.\n We will keep you updated on your personal progress in the app, and share regular now-u community progress updates on our blog, news feed and social media.\n At the end of each campaign you joined, we will give you a quick survey about your experience of the campaign. We will use this data, as well as a wide range of other metrics, to create impact reports to share with you and our charity partners.\n We will try to learn as much as possible from these impact assessments so that we can keep improving our campaigns and helping you do good!",
                                ),
                              ]
                            ),

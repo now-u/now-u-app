@@ -607,12 +607,14 @@ class LearningCentreCampaignSelectionItem extends StatelessWidget {
   final double hpadding;
   final double imageWidth;
   final double height;
+  final bool onWhiteBackground;
 
   LearningCentreCampaignSelectionItem({
     this.campaign,
     this.hpadding,
     this.imageWidth,
     this.height,
+    this.onWhiteBackground,
   });
 
   @override
@@ -628,20 +630,8 @@ class LearningCentreCampaignSelectionItem extends StatelessWidget {
       child: Padding(
           padding: EdgeInsets.symmetric(
               vertical: 5, horizontal: hpadding ?? defaultHpadding),
-          child: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: colorFrom(
-                        Colors.black,
-                        opacity: 0.16,
-                      ),
-                      offset: Offset(0, 3),
-                      blurRadius: 6,
-                    )
-                  ]),
+          child: CustomTile(
+              onWhiteBackground: onWhiteBackground ?? false,
               child: Padding(
                 padding: EdgeInsets.only(right: rightOuterPadding),
                 child: Row(mainAxisSize: MainAxisSize.max, children: <Widget>[

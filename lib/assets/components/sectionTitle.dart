@@ -15,10 +15,10 @@ class SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: padding ?? 0, vertical: vpadding ?? 10),
+      padding: EdgeInsets.symmetric(horizontal: padding ?? 0, vertical: vpadding ?? 15),
       child: Text(
         text,
-        style: Theme.of(context).primaryTextTheme.headline3,
+        style: Theme.of(context).primaryTextTheme.headline4,
       ),
     );
   }

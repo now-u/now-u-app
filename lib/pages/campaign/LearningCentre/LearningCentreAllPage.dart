@@ -27,11 +27,12 @@ class LearningCentreAllPage extends StatelessWidget {
       converter: (Store<AppState> store) => ViewModel.create(store),
       builder: (BuildContext context, ViewModel viewModel) {
         return ScrollableSheetPage(
+            color: Colors.white,
             shadow: Shadow(color: Colors.transparent),
             // Header
             header: 
               Container(
-                color: Colors.white,
+                color: Color.fromRGBO(247,248,252,1),
                 height: HEADING_HEIGHT,
                 child: Stack(
                   children: [
@@ -57,9 +58,12 @@ class LearningCentreAllPage extends StatelessWidget {
                 itemCount: viewModel.campaigns.activeLength(),
                 itemBuilder: (context, index) {
                   return LearningCentreCampaignSelectionItem(
-                      campaign: viewModel.campaigns.getActiveCampaigns()[index]);
+                    campaign: viewModel.campaigns.getActiveCampaigns()[index],
+                    onWhiteBackground: true,
+                  );
                 },
-              )
+              ),
+              SizedBox(height: 20),
             ]
         );
       },

@@ -2,7 +2,7 @@ import 'package:app/pages/campaign/LearningCentre/LearningCentreAllPage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:app/assets/icons/my_flutter_app_icons.dart';
+import 'package:app/assets/icons/customIcons.dart';
 
 import 'package:app/models/ViewModel.dart';
 
@@ -12,9 +12,11 @@ import 'package:app/pages/campaign/CampaignPage.dart';
 import 'package:app/pages/news/NewsPage.dart';
 import 'package:app/pages/action/ActionPage.dart';
 
+
 //import 'package:app/assets/dynamicLinks.dart';
 
-enum TabPage { Learning, Actions, Home, News, Menu }
+// These must be in the corect order
+enum TabPage { Home, Actions, Learning, News, Menu }
 
 class TabsPage extends StatefulWidget {
   final TabPage currentPage;
@@ -76,27 +78,27 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
     List<Map> _pages = <Map>[
       {
         'page': Home(changePage),
-        'icon': Icon(Icons.home),
+        'icon': Icon(CustomIcons.ic_home),
         'title': "Home",
       },
       {
         'page': ActionPage(),
-        'icon': Icon(Icons.check),
+        'icon': Icon(CustomIcons.ic_actions),
         'title': "Actions",
       },
       {
         'page': LearningCentreAllPage(),
-        'icon': Icon(CustomIcons.campaign),
+        'icon': Icon(CustomIcons.ic_learning),
         'title': "Learning",
       },
       {
         'page': NewsPage(),
-        'icon': Icon(CustomIcons.news),
+        'icon': Icon(CustomIcons.ic_news),
         'title': "News",
       },
       {
         'page': Profile(currentPage: _subIndex, changeTabPage: changePage),
-        'icon': Icon(FontAwesomeIcons.ellipsisH),
+        'icon': Icon(CustomIcons.ic_more),
         'title': "More",
       },
     ];
@@ -113,6 +115,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
                   colors: <Color>[
                     Theme.of(context).errorColor,
                     Theme.of(context).primaryColor,
+                    Theme.of(context).primaryColor,
                   ]).createShader(bounds);
             },
             child: _pages[i]['icon'],
@@ -120,7 +123,6 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
           icon: _pages[i]['icon'],
           title: Text(
             _pages[i]['title'],
-            style: TextStyle(color: Colors.black),
           ),
         ));
       }
@@ -136,10 +138,10 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
             type: BottomNavigationBarType.fixed,
             elevation: 3,
             iconSize: 25,
-            unselectedLabelStyle: TextStyle(color: Colors.black, fontSize: 10),
-            selectedLabelStyle: TextStyle(color: Colors.black, fontSize: 12),
+            unselectedLabelStyle: TextStyle(color: Color.fromRGBO(155,159,177,1), fontSize: 10),
+            selectedLabelStyle: TextStyle(color: Colors.red, fontSize: 12),
             //selectedItemColor: Theme.of(context).primaryColor,
-            unselectedItemColor: Theme.of(context).primaryColorLight,
+            unselectedItemColor: Color.fromRGBO(155,159,177,1),
             items: generateBottomNavBarItems(),
             onTap: (index) {
               setState(() {

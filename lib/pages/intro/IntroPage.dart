@@ -13,22 +13,17 @@ import 'package:app/main.dart';
 List<Widget> pages = <Widget>[
                   IntroPageSection(
                     "Join campaigns",
-                    "Every month, now-u runs 3 campaigns. You can choose which campaigns to join to start making a difference to causes you care about!",
+                    "Every month, we’ll bring you 3 campaigns in partnership with charities. You can join as many as you like to start making a real difference to causes you care about",
                     AssetImage('assets/imgs/intro/On-Boarding illustrations-01.png'),
                   ),
                   IntroPageSection(
                     "Take action",
-                    "We will add new actions throughout the month. You will be invited to complete easy and impactful actions to drive change in just a few minutes, as well as being shown opportunities to get more involved if you’re feeling inspired!",
+                    "Advocate, raise money, learn and get involved - choose your ways of doing good",
                     AssetImage('assets/imgs/intro/On-Boarding illustrations-02.png'),
                   ),
                   IntroPageSection(
-                    "Hit achievements",
-                    "We reward your dedication! Each campaign you join and action you complete earns you points towards your next badge. Track your progress and rise through the ranks!",
-                    AssetImage('assets/imgs/intro/On-Boarding illustrations-03.png'),
-                  ),
-                  IntroPageSection(
                     "Create real impact",
-                    "Take meaningful action for causes you care about and help support amazing organisations and movements building a better world.",
+                    "Become part of the now-u community and see how our combined actions can help shape a better world",
                     AssetImage('assets/imgs/intro/On-Boarding illustrations-04.png'),
                   ),
 ];
@@ -143,6 +138,8 @@ class _IntroPageState extends State<IntroPage> {
                     children: pages,
                   ),
                 ),
+
+                index != pages.length - 1 ? Container() :
                 Padding(
                   padding: EdgeInsets.all(40),
                   child: Container(
@@ -171,22 +168,22 @@ class _IntroPageState extends State<IntroPage> {
                     )
                   )
                 ),
-                Container(
-                  width: double.infinity,
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 20, left: 20),
-                    child: TextButton(
-                      "Back",
-                      iconLeft: true,
-                      onClick: () {
-                        controller.previousPage(
-                          curve: curve,
-                          duration: duration,
-                        );
-                      },
-                    ),
-                  )
-                )
+                //Container(
+                //  width: double.infinity,
+                //  child: Padding(
+                //    padding: EdgeInsets.only(bottom: 20, left: 20),
+                //    child: TextButton(
+                //      "Back",
+                //      iconLeft: true,
+                //      onClick: () {
+                //        controller.previousPage(
+                //          curve: curve,
+                //          duration: duration,
+                //        );
+                //      },
+                //    ),
+                //  )
+                //)
               ],
             )
           )
