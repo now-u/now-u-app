@@ -130,8 +130,10 @@ flutter:
           weight: 400
         - asset: assets/fonts/Nunito/Nunito-SemiBold.ttf
           weight: 500
-        - asset: assets/fonts/Nunito/Nunito-Black.ttf
+        - asset: assets/fonts/Nunito/Nunito-Bold.ttf
           weight: 600
+        - asset: assets/fonts/Nunito/Nunito-Black.ttf
+          weight: 800
     - family: Poppins
       fonts:
         - asset: assets/fonts/Poppins/Poppins-SemiBold.ttf

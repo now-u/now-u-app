@@ -155,6 +155,42 @@ class Home extends StatelessWidget {
                               ),
                             ),
 
+                            // Impact Section
+                            StoreConnector<AppState, ViewModel>(
+                              converter: (Store<AppState> store) => ViewModel.create(store),
+                              builder: (BuildContext context, ViewModel viewModel) {
+                                return Container(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: Column(
+                                      children: [
+                                        Stack(
+                                          children: [
+                                            Image.asset(),
+                                            BadgeIndicator(),
+                                            HomeTitle(
+                                              "My Impact",
+                                              infoTitle: "My Impact",
+                                              infoText: "At the end of each campaign you joined, we will ask you to answer a (non mandatory) survey to let us know how much you learnt, if you felt like you made a difference, and your overall thoughts on the campaigns.\n Then you will receive an impact report with infographics for the campaign with a full impact report with all our metrics and learnings.\n We are also working to bring some of these numbers to be displayed in the app soon :)",
+                                            ),
+                                          ]
+                                        ),
+                                        ImpactTile(
+                                          viewModel.userModel.user.getSelectedCampaigns().length,
+                                          "Campaigns Joined"
+                                        ),
+                                        SizedBox(height: 10),
+                                        ImpactTile(
+                                          viewModel.getActiveCompletedActions().length,
+                                          "Actions taken"
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }
+                            )
+
                           ],
                         )
                       )
@@ -351,7 +387,7 @@ class CampaignCarosel extends StatelessWidget {
         return Column(
           children: [
             Container(
-              height: 270,
+              height: 280,
               child: PageView.builder(
                   controller: _controller,
                   itemCount: viewModel.campaigns.getActiveCampaigns().length,
@@ -452,3 +488,32 @@ class HomeTitle extends StatelessWidget {
   }
 }
 
+class ImpactTile extends StatelessWidget {
+  final int number;
+  final String text;
+  ImpactTile(this.number, this.text);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        color: Colors.white,
+      ),
+      child: Row(
+        children: [
+          SizedBox(width: 20),
+          Text(
+            number.toString(),
+            style: Theme.of(context).primaryTextTheme.headline1,
+          ),
+          SizedBox(width: 20),
+          Text(
+            text,
+            style: Theme.of(context).primaryTextTheme.headline4,
+          ),
+
+        ],
+      ),
+    );
+  }
+}

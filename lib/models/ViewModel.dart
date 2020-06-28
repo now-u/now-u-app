@@ -29,6 +29,7 @@ class ViewModel {
 
   // Helper functions
   final Function() getActiveSelectedCampaings;
+  final Function() getActiveCompletedActions;
   final Function(
       {bool includeCompleted,
       bool includeRejected,
@@ -51,6 +52,7 @@ class ViewModel {
 
     // Helper functions
     this.getActiveSelectedCampaings,
+    this.getActiveCompletedActions,
     this.getActiveActions,
   });
 
@@ -96,6 +98,12 @@ class ViewModel {
     Campaigns _getActiveSelectedCampaigns() {
       return Campaigns(store.state.userState.user
           .filterSelectedCampaigns(store.state.campaigns.getActiveCampaigns()));
+    }
+    List<CampaignAction> _getActiveCompletedActions() {
+      return store.state.campaigns.getActions()
+                .where((a) => 
+                  store.state.userState.user.getCompletedActions()
+                    .contains(a.getId())).toList();
     }
 
     //List<Campaign> _getActiveUnselectedCampaigns() {
@@ -162,6 +170,7 @@ class ViewModel {
 
       // Helper Functions
       getActiveSelectedCampaings: _getActiveSelectedCampaigns,
+      getActiveCompletedActions: _getActiveCompletedActions,
       getActiveActions: _getActiveActions,
     );
   }

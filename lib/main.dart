@@ -168,40 +168,40 @@ class _AppState extends State<App> {
               headline1: TextStyle(
                   color: black,
                   fontSize: 36,
-                  fontWeight: FontWeight.w600 // Bold
+                  fontWeight: FontWeight.w800 // Black
                   ),
               headline2: TextStyle(
                   color: black,
                   fontSize: 30,
-                  fontWeight: FontWeight.w600 // Bold
+                  fontWeight: FontWeight.w800 // Bold
                   ),
               headline3: TextStyle(
                   color: black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500 // SemiBold
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600 // SemiBold
                   ),
               headline4: TextStyle(
                   color: black,
-                  fontSize: 17,
+                  fontSize: 18,
                   fontWeight: FontWeight.w400 // Regular
                   ),
               // Capitalize
               headline5: TextStyle(
                   color: black,
-                  fontSize: 14,
+                  fontSize: 16,
                   fontWeight: FontWeight.w400 // Regular
                   ),
 
               bodyText1: TextStyle(
                 color: black,
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: FontWeight.w400, // Regular
                 fontStyle: FontStyle.normal,
               ),
               // Italic
               bodyText2: TextStyle(
                 color: lightGrey,
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: FontWeight.w400, // Regular
                 fontStyle: FontStyle.italic,
               ),
