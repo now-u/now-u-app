@@ -1,3 +1,4 @@
+import 'package:app/pages/campaign/LearningCentre/LearningCentreAllPage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -13,7 +14,7 @@ import 'package:app/pages/action/ActionPage.dart';
 
 //import 'package:app/assets/dynamicLinks.dart';
 
-enum TabPage { Campaigns, Actions, Home, News, Menu }
+enum TabPage { Learning, Actions, Home, News, Menu }
 
 class TabsPage extends StatefulWidget {
   final TabPage currentPage;
@@ -74,9 +75,9 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
     // TODO add an enum so pages numbers can change
     List<Map> _pages = <Map>[
       {
-        'page': CampaignPage(),
-        'icon': Icon(CustomIcons.campaign),
-        'title': "Campaigns",
+        'page': Home(changePage),
+        'icon': Icon(Icons.home),
+        'title': "Home",
       },
       {
         'page': ActionPage(),
@@ -84,9 +85,9 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
         'title': "Actions",
       },
       {
-        'page': Home(changePage),
-        'icon': Icon(Icons.home),
-        'title': "Home",
+        'page': LearningCentreAllPage(),
+        'icon': Icon(CustomIcons.campaign),
+        'title': "Learning",
       },
       {
         'page': NewsPage(),

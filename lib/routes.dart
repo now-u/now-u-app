@@ -1,3 +1,4 @@
+import 'package:app/pages/campaign/CampaignPage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/assets/routes/customRoute.dart';
@@ -77,7 +78,7 @@ Function initRoutes = (RouteSettings settings) {
     case Routes.campaign:
       {
         return CustomRoute(
-            builder: (context) => TabsPage(currentPage: TabPage.Campaigns));
+            builder: (context) => CampaignPage());
       }
     case Routes.campaignInfo:
       {
@@ -88,7 +89,7 @@ Function initRoutes = (RouteSettings settings) {
                   ));
         }
         return CustomRoute(
-            builder: (context) => TabsPage(currentPage: TabPage.Campaigns));
+            builder: (context) => CampaignPage());
       }
     case Routes.actions:
       {
@@ -113,7 +114,7 @@ Function initRoutes = (RouteSettings settings) {
           );
         }
         return CustomRoute(
-            builder: (context) => TabsPage(currentPage: TabPage.Campaigns));
+            builder: (context) => TabsPage(currentPage: TabPage.Home));
       }
 
     // Beta

@@ -77,7 +77,7 @@ class _IntroPageState extends State<IntroPage> {
   void _goToNextPage() {
     Navigator.of(context)
         // This is very bad dont use MyHomePage need named route
-        .push(FadeRouteBuilder(page: TabsPage(currentPage: TabPage.Campaigns)))
+        .push(FadeRouteBuilder(page: TabsPage(currentPage: TabPage.Home)))
         .then((_) => setState(() => rect = null));
   }
 
