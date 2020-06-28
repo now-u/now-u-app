@@ -18,6 +18,7 @@ class Campaign {
   List<Organisation> campaignPartners;
   String videoLink;
   List<SDG> sdgs;
+  List<String> keyAims;
   
   Campaign({
     @required int id,
@@ -29,7 +30,8 @@ class Campaign {
     @required List<SDG> sdgs,
     List<Organisation> generalPartners,
     List<Organisation> campaignPartners,
-    this.videoLink,
+    String videoLink,
+    List<String> keyAims,
   }) {
     this.id = id; 
     this.title = title;
@@ -41,6 +43,7 @@ class Campaign {
     this.generalPartners = generalPartners ?? [];
     this.campaignPartners = campaignPartners ?? [];
     this.sdgs = sdgs ?? [];
+    this.keyAims = keyAims ?? [];
   }
 
   Campaign copyWith({
@@ -54,6 +57,7 @@ class Campaign {
     List<Organisation> campaignPartners,
     String videoLink,
     List<SDG> sdgs,
+    List<String> keyAims,
   }) {
     return Campaign(
       id: id ?? this.id,
@@ -66,6 +70,7 @@ class Campaign {
       campaignPartners: campaignPartners ?? this.campaignPartners,
       videoLink: videoLink ?? this.videoLink,
       sdgs: sdgs ?? this.sdgs,
+      keyAims: keyAims ?? this.keyAims,
     );
   }
 
@@ -98,6 +103,10 @@ class Campaign {
       json['sdgs'] == null ? <int>[] :  
       json['sdgs'].map((s) => getSDGfromNumber(s['id'])).toList().cast<SDG>();
     print("Got whole camapign");
+
+    keyAims = 
+      json['key_aims'] == null ? <String>[] :
+      json['key_aims'].map((a) => a['title']).toList().cast<String>();
   }
 
   Map toJson() => {
@@ -148,5 +157,8 @@ class Campaign {
   }
   List<SDG> getSDGs() {
     return sdgs;
+  }
+  List<String> getKeyAims(){
+    return keyAims;
   }
 }

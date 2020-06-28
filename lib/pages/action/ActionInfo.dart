@@ -210,7 +210,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                         Padding(
                           padding: EdgeInsets.only(top: 20, bottom: 10),
                           child: Container(
-                            color: Color.fromRGBO(255, 243, 230, 1),
+                            color: _action.getSuperTypeData()['iconBackgroundColor'],
                             child: Padding(
                               padding: const EdgeInsets.all(15.0),
                               child: Column(
@@ -290,15 +290,30 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                           }),
 
                           SizedBox(width: 10),
+
+                          !completed ? Container() :
+                          Container(
+                            height: 65,
+                            color: Color.fromRGBO(115, 159, 117, 1),
+                            child: Center(
+                              child: Text(
+                                "You completed this action",
+                                style: textStyleFrom(
+                                  Theme.of(context).primaryTextTheme.bodyText1,
+                                ),
+                              ),
+                            ),
+                          )
                         ]),
                     SizedBox(
-                      height: completed ? 55 : 70,
+                      height: completed ? 0 : 70,
                     ),
                   ],
                 ),
-                Positioned(
-                  bottom: 0, 
+                AnimatedPositioned(
+                  bottom: completed ? -100 : 0,
                   left: 0,
+                  duration: Duration(milliseconds: 300),
                   child: FlatButton(
                     padding: EdgeInsets.all(0),
                     child: Container(

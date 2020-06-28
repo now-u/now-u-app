@@ -334,6 +334,42 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                     ),
                   )),
             ),
+
+            campaign.getKeyAims() == [] ? Container() :
+            // Key aims
+            Padding(
+              padding: EdgeInsets.all(H_PADDING),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Our aim",
+                    style: Theme.of(context).primaryTextTheme.headline4,
+                  ),
+                  SizedBox(height: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: campaign.getKeyAims().map((t) {
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("• "),
+                          Expanded(
+                            child: Text(
+                              t,
+                              style: textStyleFrom(
+                                Theme.of(context).primaryTextTheme.bodyText1,
+                              ),
+                            ),
+                          )
+                        ],
+                      );
+                    }).toList()
+                  ),
+                ]
+              )
+            ),
+          
             SizedBox(height: 18),
 
             SectionTitle("What is this about?",
@@ -451,28 +487,6 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                     padding: H_PADDING, vpadding: 0),
             //SDGReel(campaign.getSDGs()),
             SDGList(campaign.getSDGs()),
-
-            // Buttons
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  DarkButton(
-                    "Learning centre",
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          CustomRoute(
-                              builder: (context) =>
-                                  LearningCentrePage(campaign.getId())));
-                    },
-                    inverted: true,
-                    fontSize: 14,
-                  ),
-                ],
-              ),
-            ),
 
             SizedBox(height: 20),
             joined

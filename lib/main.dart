@@ -137,7 +137,7 @@ class _AppState extends State<App> {
           navigatorObservers: [
             FirebaseAnalyticsObserver(analytics: analytics),
           ],
-          initialRoute: Routes.beta,
+          initialRoute: '/',
           onGenerateRoute: initRoutes,
           routes: {
             '/': (BuildContext context) => StoreBuilder<AppState>(
@@ -173,7 +173,9 @@ class _AppState extends State<App> {
               headline2: TextStyle(
                   color: black,
                   fontSize: 30,
-                  fontWeight: FontWeight.w800 // Bold
+                  fontWeight: FontWeight.w800,
+                  //letterSpacing: 24, // Bold
+                  //height: 34,
                   ),
               headline3: TextStyle(
                   color: black,
@@ -197,6 +199,7 @@ class _AppState extends State<App> {
                 fontSize: 16,
                 fontWeight: FontWeight.w400, // Regular
                 fontStyle: FontStyle.normal,
+                //height: 24,
               ),
               // Italic
               bodyText2: TextStyle(
@@ -205,7 +208,7 @@ class _AppState extends State<App> {
                 fontWeight: FontWeight.w400, // Regular
                 fontStyle: FontStyle.italic,
               ),
-
+              
               // Used on Dark Blue background
               headline6: TextStyle(
                 color: white,
