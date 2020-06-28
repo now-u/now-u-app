@@ -23,7 +23,7 @@ import 'package:app/assets/components/joinedIndicator.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/darkButton.dart';
-import 'package:app/assets/components/pointsNotifier.dart';
+import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/sectionTitle.dart';
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/components/organisationTile.dart';
@@ -204,6 +204,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: CustomAppBar(
           extraOnTap: () {},
           text: "Campaign",
@@ -411,13 +412,34 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
             //OrganisationReel(campaign.getCampaignPartners()),
 
             SizedBox(height: 10),
-            campaign.getGeneralPartners().isEmpty
-                ? Container()
-                : SectionTitle("Campaign Partners",
-                    padding: H_PADDING, vpadding: 0),
-            campaign.getGeneralPartners().isEmpty
-                ? Container()
-                : OrganisationReel(campaign.getGeneralPartners(), _controller),
+            //campaign.getGeneralPartners().isEmpty
+            //    ? Container()
+            //    : SectionTitle("Campaign Partners",
+            //        padding: H_PADDING, vpadding: 0),
+            //campaign.getGeneralPartners().isEmpty
+            //    ? Container()
+            //    : OrganisationReel(campaign.getGeneralPartners(), _controller),
+            Container(
+              color: Color.fromRGBO(247,248,252,1),
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SectionTitle("Campaign partners"),
+                    SizedBox(width: 10,),
+                    Wrap( 
+                      children: getOrganistaionTiles(campaign.getGeneralPartners()),
+                      spacing: 10,
+                      runSpacing: 10,
+                      crossAxisAlignment: WrapCrossAlignment.start,
+                      alignment: WrapAlignment.start,
+                    ),
+                  ],
+                )
+              )
+            ),
 
             SizedBox(height: 10),
 
@@ -537,7 +559,6 @@ class SDGList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 110,
         //child: Expanded(
         child: ListView.builder(
           shrinkWrap: true,
@@ -600,4 +621,31 @@ class SDGSelectionItem extends StatelessWidget {
           ],
         ));
   }
+}
+
+List<Widget> getOrganistaionTiles(List<Organisation> organisations) {
+  List<Widget> orgTiles = [];
+  for(final org in organisations) {
+    orgTiles.add(
+      CustomTile(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+          child: Container(
+            height: 30,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.network(org.getLogoLink()),
+                SizedBox(width: 5,),
+                Text(
+                  org.getName(),
+                )
+              ],
+            ),
+          ),
+        )
+      ),
+    );
+  }
+  return orgTiles;
 }
