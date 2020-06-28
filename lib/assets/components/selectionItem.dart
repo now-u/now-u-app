@@ -266,8 +266,8 @@ class ActionSelectionItem extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.all(5),
                   child: Container(
-                    width: 50,
-                    height: 50,
+                    width: 60,
+                    height: 60,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                         color: completed
@@ -361,8 +361,8 @@ class LearningResouceSelectionItem extends StatelessWidget {
 }
 
 class LeadingSelectionItem extends StatelessWidget {
-  final double defaultOuterHpadding = 10;
-  final double defaultInnerHpadding = 10;
+  final double defaultOuterHpadding = 5;
+  final double defaultInnerHpadding = 5;
   final double defaultIconWidth = 50;
 
   final double innerHpadding;
@@ -411,7 +411,7 @@ class LeadingSelectionItem extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               Container(
-                                height: 40,
+                                height: 45,
                                 width: MediaQuery.of(context).size.width -
                                         (outerHpadding ??
                                                 defaultOuterHpadding) *
@@ -427,9 +427,13 @@ class LeadingSelectionItem extends StatelessWidget {
                                   alignment: Alignment.centerLeft,
                                   child: Text(
                                     text,
-                                    style: Theme.of(context)
+                                    style: textStyleFrom(
+                                      Theme.of(context)
                                         .primaryTextTheme
                                         .bodyText1,
+                                      fontSize: 16,
+                                    ),
+
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),

@@ -24,7 +24,6 @@ import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/customTile.dart';
-import 'package:app/assets/components/sectionTitle.dart';
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/components/organisationTile.dart';
 import 'package:app/assets/components/textButton.dart';
@@ -342,10 +341,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Our aim",
-                    style: Theme.of(context).primaryTextTheme.headline4,
-                  ),
+                  SectionTitle("Our aims"),
                   SizedBox(height: 10),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -373,7 +369,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
             SizedBox(height: 18),
 
             SectionTitle("What is this about?",
-                padding: H_PADDING, vpadding: 0),
+                hPadding: H_PADDING),
             SizedBox(height: 10),
             Padding(
               padding: EdgeInsets.symmetric(
@@ -386,75 +382,9 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                 ),
               ),
             ),
-            SizedBox(height: 10),
-
-            // Actions
-            SectionTitle("What can I do?", padding: H_PADDING),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: H_PADDING,
-              ),
-              child: Container(
-                child: Text(
-                  "Complete our weekly actions to help us tackle this challenge.",
-                  style: Theme.of(context).primaryTextTheme.bodyText1,
-                ),
-              ),
-            ),
-            SizedBox(height: 10),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5),
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: 3,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: ActionSelectionItem(
-                      campaign: campaign,
-                      action: campaign.getActions()[index],
-                      extraOnTap: () {
-                        _controller.pause();
-                      },
-                    ),
-                  );
-                },
-              ),
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: H_PADDING, vertical: 10),
-                  child: TextButton(
-                    "See more actions",
-                    onClick: () {
-                      Navigator.of(context).pushNamed(Routes.actions);
-                    },
-                    iconRight: true,
-                  ),
-                ),
-              ],
-            ),
-
-            // Organisation
-            //SizedBox(height: 10),
-            //campaign.getCampaignPartners().isEmpty ? Container() :
-            //SectionTitle("Campaign Partners", padding: H_PADDING, vpadding: 0),
-            //campaign.getCampaignPartners().isEmpty ? Container() :
-            //OrganisationReel(campaign.getCampaignPartners()),
 
             SizedBox(height: 10),
-            //campaign.getGeneralPartners().isEmpty
-            //    ? Container()
-            //    : SectionTitle("Campaign Partners",
-            //        padding: H_PADDING, vpadding: 0),
-            //campaign.getGeneralPartners().isEmpty
-            //    ? Container()
-            //    : OrganisationReel(campaign.getGeneralPartners(), _controller),
+
             Container(
               color: Color.fromRGBO(247,248,252,1),
               child: Padding(
@@ -484,7 +414,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
             campaign.getSDGs().isEmpty
                 ? Container()
                 : SectionTitle("UN Sustainable Development Goals",
-                    padding: H_PADDING, vpadding: 0),
+                    hPadding: H_PADDING,),
             //SDGReel(campaign.getSDGs()),
             SDGList(campaign.getSDGs()),
 
@@ -662,4 +592,26 @@ List<Widget> getOrganistaionTiles(List<Organisation> organisations) {
     );
   }
   return orgTiles;
+}
+
+class SectionTitle extends StatelessWidget {
+  final String text;
+  final double hPadding;
+
+  SectionTitle(
+    this.text, 
+    {
+      this.hPadding,
+    }
+  );
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: hPadding ?? 0, vertical: 10),
+      child: Text(
+        text,
+        style: Theme.of(context).primaryTextTheme.headline4,
+      ),
+    );
+  }
 }

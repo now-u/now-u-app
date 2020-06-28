@@ -16,6 +16,7 @@ class CustomTextFormField extends StatelessWidget {
   final Function onSaved;
   final CustomFormFieldStyle style;
   final String hintText;
+  final TextCapitalization textCapitalization;
 
   CustomTextFormField({
     @required this.autofocus,
@@ -24,6 +25,7 @@ class CustomTextFormField extends StatelessWidget {
     @required this.onSaved,
     @required this.style,
     @required this.hintText,
+    this.textCapitalization,
   });
 
   @override
@@ -39,6 +41,7 @@ class CustomTextFormField extends StatelessWidget {
           Theme.of(context).primaryTextTheme.headline5,
           color: Colors.white,
         ),
+        textCapitalization: textCapitalization ?? TextCapitalization.none,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
           filled: true,

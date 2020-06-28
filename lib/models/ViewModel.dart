@@ -184,7 +184,7 @@ class UserViewModel {
   final SecureStorageService repository;
 
   final Function(String, String) login;
-  final Function(String) email;
+  final Function(String, String) email;
   final Function() skipLogin;
 
   UserViewModel({
@@ -209,9 +209,9 @@ class UserViewModel {
         login: (String email, String link) {
           store.dispatch(loginUser(email, link));
         },
-        email: (String email) {
+        email: (String email, String name) {
           print("Dispatching send email action | " + email);
-          store.dispatch(emailUser(email));
+          store.dispatch(emailUser(email, name));
         },
         skipLogin: () {
           store.dispatch(skipLoginAction());

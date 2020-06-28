@@ -25,6 +25,7 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
 //class LoginPageState extends State<LoginPage> {
   String _email;
+  String _name;
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _repositry = SecureStorageService();
@@ -68,7 +69,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
     final email = CustomTextFormField(
       style: CustomFormFieldStyle.Dark,
       keyboardType: TextInputType.emailAddress,
-      autofocus: true,
+      autofocus: false,
       validator: (value) {
         if (value.isEmpty) return "Email cannot be empty";
         if (!RegExp(
@@ -85,13 +86,30 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       },
       hintText: 'e.g. jane.doe@email.com',
     );
+    
+    final name = CustomTextFormField(
+      style: CustomFormFieldStyle.Dark,
+      keyboardType: TextInputType.text,
+      textCapitalization: TextCapitalization.words,
+      autofocus: false,
+      validator: (value) {
+        if (value.isEmpty) return "Name cannot be empty";
+        return null;
+      },
+      onSaved: (value) {
+        print("Saved");
+        _name = value;
+        _repositry.setName(value);
+      },
+      hintText: 'Jane Doe',
+    );
 
     Widget loginButton() {
       Future<bool> validateAndSave(UserViewModel model) async {
         final FormState form = _formKey.currentState;
         if (form.validate()) {
           form.save();
-          model.email(_email);
+          model.email(_email, _name);
           return true;
         }
         return false;
@@ -136,61 +154,89 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
           child: Padding(
               padding: EdgeInsets.only(left: 24, right: 24),
               child: SafeArea(
-                child: Column(
-                  //shrinkWrap: true,
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(top: 30, bottom: 10),
-                          child: Text(
-                            "Account Details",
-                            style: textStyleFrom(
-                              Theme.of(context).primaryTextTheme.headline3,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.6,
-                          child: Text(
-                            "Enter the email address that you would like to use to access now-u",
-                            textAlign: TextAlign.center,
-                            style: textStyleFrom(
-                              Theme.of(context).primaryTextTheme.headline5,
-                              color: Colors.white,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Your email address",
-                            style: textStyleFrom(
-                              Theme.of(context).primaryTextTheme.headline4,
-                              color: Colors.white,
-                            ),
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        email,
-                      ],
-                    ),
-                    loginButton(),
+                child: NotificationListener(
+                  onNotification: (OverscrollIndicatorNotification overscroll) {
+                    overscroll.disallowGlow();
+                  },
+                  child: ListView(
+                    children: [
+                      Column(
+                        //shrinkWrap: true,
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(top: 30, bottom: 10),
+                                child: Text(
+                                  "Account Details",
+                                  style: textStyleFrom(
+                                    Theme.of(context).primaryTextTheme.headline3,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                child: Text(
+                                  "Enter the email address that you would like to use to access now-u",
+                                  textAlign: TextAlign.center,
+                                  style: textStyleFrom(
+                                    Theme.of(context).primaryTextTheme.headline5,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
 
-                    // Uncomment to readd Skip button
-                    //skipButton(),
-                  ],
+                              SizedBox(height: 25),
+                            ],
+                          ),
+                          Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "What should we call you?",
+                                  style: textStyleFrom(
+                                    Theme.of(context).primaryTextTheme.headline4,
+                                    color: Colors.white,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                              SizedBox(height: 8),
+                              name,
+                              SizedBox(height: 15),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "Your email address",
+                                  style: textStyleFrom(
+                                    Theme.of(context).primaryTextTheme.headline4,
+                                    color: Colors.white,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                              SizedBox(height: 8),
+                              email,
+                              
+
+                              loginButton(),
+                            ],
+                          ),
+
+                          // Uncomment to readd Skip button
+                          //skipButton(),
+                        ],
+                      ),
+                    ]
+                  )
                 ),
               )));
     }

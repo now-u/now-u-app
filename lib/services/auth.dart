@@ -16,7 +16,7 @@ class AuthenticationService {
 
   //final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<void> sendSignInWithEmailLink(String email) async {
+  Future<void> sendSignInWithEmailLink(String email, String name) async {
     //return _auth.sendSignInWithEmailLink(
     //    email: email,
     //    url: "https://nowu.page.link",
@@ -35,6 +35,7 @@ class AuthenticationService {
       },
       body: jsonEncode(<String, String>{
         'email': email,
+        'full_name': name,
       }),
     )
         .then((http.Response response) {
