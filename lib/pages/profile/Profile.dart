@@ -2,6 +2,7 @@ import 'package:app/assets/StyleFrom.dart';
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:app/assets/icons/customIcons.dart';
 
 import 'package:app/assets/components/pageTitle.dart';
 import 'package:app/assets/components/customAppBar.dart';
@@ -61,39 +62,39 @@ class _ProfileState extends State<Profile> {
                 ProfileTile("Our Partners", FontAwesomeIcons.building),
             'page': Routes.parteners,
           },
-          {
-            'profileTile': ProfileTile("Campaigns", FontAwesomeIcons.book),
-            'page': Routes.campaign,
-          },
+          //{
+          //  'profileTile': ProfileTile("Campaigns", FontAwesomeIcons.book),
+          //  'page': Routes.campaign,
+          //},
           {
             'profileTile': ProfileTile(
-                "Propose an action or campaign", FontAwesomeIcons.bullhorn),
+                "Propose an action or campaign", CustomIcons.ic_suggestcamp),
             'link':
                 "https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform",
           },
           {
             'profileTile':
-                ProfileTile("Give feedback on the app", Icons.speaker_notes),
+                ProfileTile("Give feedback on the app", CustomIcons.ic_feedback),
             'link':
                 "https://docs.google.com/forms/d/e/1FAIpQLSflMOarmyXRv7DRbDQPWRayCpE5X4d8afOpQ1hjXfdvzbnzQQ/viewform",
           },
           {
             'profileTile':
-                ProfileTile("Rate us on App Store", FontAwesomeIcons.solidStar),
+                ProfileTile("Rate us on App Store", CustomIcons.ic_rateus),
             'link': ""
           },
           {
-            'profileTile': ProfileTile("FAQ", FontAwesomeIcons.newspaper),
+            'profileTile': ProfileTile("FAQ", CustomIcons.ic_faq),
             'page': Routes.faq,
           },
           {
             'profileTile': ProfileTile(
-                "Send us a message", FontAwesomeIcons.facebookMessenger),
+                "Send us a message", CustomIcons.ic_social_fb),
             'link': "http://m.me/nowufb"
           },
           {
             'profileTile':
-                ProfileTile("Send us an email", FontAwesomeIcons.solidEnvelope),
+                ProfileTile("Send us an email", CustomIcons.ic_email),
             'link': "mailto:hello@now-u.com?subject=Hi there"
           },
           {

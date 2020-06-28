@@ -29,7 +29,7 @@ class ProfileTile extends StatelessWidget {
                         padding: EdgeInsets.only(right: ICON_PADDING),
                         child: Icon(
                           iconData,
-                          size: 25,
+                          size: 30,
                           color: Theme.of(context).primaryColor,
                         )),
                     Text(text,

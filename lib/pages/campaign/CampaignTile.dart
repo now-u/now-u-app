@@ -179,10 +179,6 @@ class _CampaignTileState extends State<CampaignTile> {
                     ]))
                   ],
                 ),
-                TextButton(
-                  "See more",
-                  onClick: null,
-                ),
               ],
             ),
           ),

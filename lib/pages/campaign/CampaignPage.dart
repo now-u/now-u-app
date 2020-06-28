@@ -76,47 +76,51 @@ class _CampaignPageState extends State<CampaignPage> {
           child: ListView(
             children: <Widget>[
               PageHeader(
-                title: "Active Campaigns",
-                onTap: () {
-                  Navigator.of(context).pushNamed(Routes.learningAll);
-                },
-                icon: FontAwesomeIcons.book,
+                backButton: true,
+                title: "Join a campaign",
               ),
               Padding(
-                  padding: EdgeInsets.only(top: 10, right: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        child: Text(
-                          "Show joined campaigns only",
-                          style: textStyleFrom(
-                            Theme.of(context).primaryTextTheme.bodyText1,
-                            color: Color.fromRGBO(63, 61, 86, 1),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      CustomSwitch(
-                          value: onlyJoined,
-                          onChanged: (value) {
-                            setState(() {
-                              onlyJoined = value;
-                              if (value) {
-                                campaigns = viewModel
-                                    .getActiveSelectedCampaings()
-                                    .getActiveCampaigns();
-                              } else {
-                                campaigns =
-                                    viewModel.campaigns.getActiveCampaigns();
-                              }
-                            });
-                          },
-                          activeColor: Theme.of(context).primaryColor,
-                          inactiveColor: Color.fromRGBO(221, 221, 221, 1))
-                    ],
-                  )),
+                padding: EdgeInsets.all(15),
+                child: Text(
+                  "Choose one or more of our campaigns for this month that you wish to support",
+                  style: Theme.of(context).primaryTextTheme.bodyText1,
+                ),
+              ),
+              //Padding(
+              //    padding: EdgeInsets.only(top: 10, right: 10),
+              //    child: Row(
+              //      mainAxisAlignment: MainAxisAlignment.end,
+              //      crossAxisAlignment: CrossAxisAlignment.center,
+              //      children: <Widget>[
+              //        Container(
+              //          child: Text(
+              //            "Show joined campaigns only",
+              //            style: textStyleFrom(
+              //              Theme.of(context).primaryTextTheme.bodyText1,
+              //              color: Color.fromRGBO(63, 61, 86, 1),
+              //            ),
+              //          ),
+              //        ),
+              //        SizedBox(width: 10),
+              //        CustomSwitch(
+              //            value: onlyJoined,
+              //            onChanged: (value) {
+              //              setState(() {
+              //                onlyJoined = value;
+              //                if (value) {
+              //                  campaigns = viewModel
+              //                      .getActiveSelectedCampaings()
+              //                      .getActiveCampaigns();
+              //                } else {
+              //                  campaigns =
+              //                      viewModel.campaigns.getActiveCampaigns();
+              //                }
+              //              });
+              //            },
+              //            activeColor: Theme.of(context).primaryColor,
+              //            inactiveColor: Color.fromRGBO(221, 221, 221, 1))
+              //      ],
+              //    )),
               viewModel.getActiveSelectedCampaings().activeLength() == 0 &&
                       onlyJoined
                   ? Center(
