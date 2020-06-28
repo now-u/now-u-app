@@ -1,9 +1,12 @@
 import 'package:app/assets/StyleFrom.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'package:app/pages/news/NewsPage.dart';
 import 'package:app/pages/Tabs.dart';
 import 'package:app/pages/campaign/CampaignTile.dart';
+import 'package:intl/intl.dart';
+import 'package:app/assets/ClipShadowPath.dart';
 
 import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/components/darkButton.dart';
@@ -12,6 +15,7 @@ import 'package:app/assets/components/viewCampaigns.dart';
 
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/State.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -31,62 +35,92 @@ class Home extends StatelessWidget {
         Theme.of(context).primaryColor,
         opacity: 0.05,
       ),
-      body: Container(
-              child: ListView(
-                  children: <Widget>[
-                    ClipPath(
-                      child: Container(
-                        height: headerHeight,
-                        child: Stack(
-                          children: <Widget> [
-                            ActionProgressData(
-                              actionsHomeTileHeight: 170,
-                              actionsHomeTilePadding: 15,
-                              actionsHomeTileTextWidth: 0.5,
-                            ),
-                            Positioned(
-                              right: -20,
-                              //top: actionsHomeTilePadding,
-                              bottom: 10,
-                              child: Container(
-                                height: 170,
-                                width: MediaQuery.of(context).size.width * (0.5),
-                                child: Image(
-                                  image: AssetImage('assets/imgs/progress.png'),
-                                )
-                              )
-                            ),
-                          ],
-                        ),
-                        color: Theme.of(context).primaryColor
-                      ),
-                      clipper: BezierClipper(),
+      body: Stack(
+          children: [
+            // Header
+              Container(
+                height: headerHeight,
+                child: Stack(
+                  children: <Widget> [
+                    ActionProgressData(
+                      actionsHomeTileHeight: 170,
+                      actionsHomeTilePadding: 15,
+                      actionsHomeTileTextWidth: 0.5,
                     ),
-
-                    CampaignCarosel(),
-
-                    sectionTitle("Actions", context),
-                    HomeActionTile(changePage),
-
-                    HomeDividor(),
-                    sectionTitle("Highlights", context),
-                    Padding(
-                      padding: EdgeInsets.all(10),
+                    Positioned(
+                      right: -20,
+                      //top: actionsHomeTilePadding,
+                      bottom: 10,
                       child: Container(
-                        child: VideoOTDTile(),
-                      ),
+                        height: 170,
+                        width: MediaQuery.of(context).size.width * (0.5),
+                        child: Image(
+                          image: AssetImage('assets/imgs/progress.png'),
+                        )
+                      )
                     ),
-                    HomeButton(
-                      text: "All news",
-                      changePage: changePage,
-                      page: TabPage.News
-
-                    )
-                    
                   ],
-                  
+                ),
+                color: Theme.of(context).primaryColor
+              ),
+
+              DraggableScrollableSheet(
+                initialChildSize: 0.75,
+                minChildSize: 0.75,
+                builder: (context, controller) {
+                  return ListView(
+                    controller: controller,
+                    children: [
+                      ClipShadowPath( 
+                        shadow: Shadow(
+                          blurRadius: 5,
+                          color: Color.fromRGBO(121, 43, 2, 0.3),
+                          offset: Offset(0, -3),
+                        ),
+                        clipper: BezierTopClipper(),
+                        child: Container(
+                        color: Color.fromRGBO(247,248,252,1),
+                        child: ListView(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          children: <Widget>[
+                           
+                            SizedBox(height: 70),
+
+                            HomeTitle("${DateFormat("MMMM").format(DateTime.now())}'s +  campaigns"),
+
+                            CampaignCarosel(),
+
+                            sectionTitle("Actions", context),
+                            HomeActionTile(changePage),
+
+                            HomeDividor(),
+                            sectionTitle("Highlights", context),
+                            Padding(
+                              padding: EdgeInsets.all(10),
+                              child: Container(
+                                child: VideoOTDTile(),
+                              ),
+                            ),
+                            HomeButton(
+                              text: "All news",
+                              changePage: changePage,
+                              page: TabPage.News
+
+                            )
+                            
+                          ],
+                        )
+                      )
+                    )
+                    ]
                   )
-            ),
+                  ;
+                }
+              ),
+
+            ]
+      )
     );
   }
 }
@@ -201,6 +235,35 @@ class HomeDividor extends StatelessWidget {
   }
 }
 
+class BezierTopClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = new Path();
+    path.lineTo(0.0, 40);
+
+    var firstControlPoint = Offset(size.width / 4, 65);
+    var firstEndPoint = Offset(size.width / 2.25, 40);
+    path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
+        firstEndPoint.dx, firstEndPoint.dy);
+
+    var secondControlPoint =
+        Offset(size.width - (size.width / 3.25), 0);
+    var secondEndPoint = Offset(size.width, 35);
+    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
+        secondEndPoint.dx, secondEndPoint.dy);
+
+    path.lineTo(size.width, 20);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
 class BezierClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
@@ -258,3 +321,62 @@ class CampaignCarosel extends StatelessWidget {
     );
   }
 }
+
+class HomeTitle extends StatelessWidget {
+
+  final String title;
+  final String subtitle;
+  final String infoTitle;
+  final String infoText;
+
+
+  HomeTitle(
+    this.title,
+    {
+      this.subtitle,
+      this.infoText,
+      this.infoTitle,
+    }
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: Theme.of(context).primaryTextTheme.headline3,
+              ),
+              SizedBox(width: 7,),
+
+              infoText == null ? Container() :
+              Icon(
+                FontAwesomeIcons.questionCircle,
+                color: Theme.of(context).primaryColor,
+              ),
+            ]
+          ),
+
+          SizedBox(height: 10),
+
+          subtitle == null ? Container() :
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              subtitle,
+              style: Theme.of(context).primaryTextTheme.bodyText1,
+            ),
+          ),
+          
+        ],
+      ), 
+    );
+  }
+}
+
