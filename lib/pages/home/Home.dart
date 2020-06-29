@@ -30,8 +30,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 const double BUTTON_PADDING = 10;
 
-final double headerHeight = 250;
-
 class Home extends StatelessWidget {
   final Function changePage;
   Home(this.changePage);
@@ -46,7 +44,7 @@ class Home extends StatelessWidget {
       body: ScrollableSheetPage(
         header: 
               Container(
-                height: headerHeight,
+                height: MediaQuery.of(context).size.height * (1 - 0.6),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -99,7 +97,7 @@ class Home extends StatelessWidget {
                         //top: actionsHomeTilePadding,
                         bottom: 10,
                         child: Container(
-                          height: 210,
+                          height: MediaQuery.of(context).size.height * 0.3,
                           child: Image(
                             image: AssetImage('assets/imgs/graphics/ilstr_home_1@3x.png'),
                           )
@@ -124,10 +122,13 @@ class Home extends StatelessWidget {
                SizedBox(height: 15),
 
                Container(
+                width: double.infinity,
                  color: Color.fromRGBO(255,243,230,1),
                  child: Padding(
                    padding: EdgeInsets.symmetric(vertical: 10),
                    child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
                      children: [
                        HomeTitle(
                          "Take action now!",

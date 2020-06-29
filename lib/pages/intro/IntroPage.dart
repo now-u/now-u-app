@@ -87,6 +87,7 @@ class _IntroPageState extends State<IntroPage> {
           body: Container(
             color: Theme.of(context).primaryColorDark,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 SafeArea(child: Container(),),
                 Padding(

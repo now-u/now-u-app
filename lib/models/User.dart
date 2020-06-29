@@ -151,7 +151,7 @@ class User {
     fullName = json['full_name'];
     email = json['email'];
     print("Getting up to email");
-    dateOfBirth = DateTime.tryParse(json['date_of_birth']);
+    dateOfBirth = json['date_of_birth'] == null || json['date_of_birth'] == "" ? null : DateTime.tryParse(json['date_of_birth']);
     location = json['location'];
     monthlyDonationLimit = json['monthly_donation_limit'];
     homeOwner = json['home_owner'] ?? false;
@@ -237,7 +237,7 @@ class User {
         'id': id,
         'full_name': fullName,
         'email': email,
-        'date_of_birth': dateOfBirth.toIso8601String(),
+        'date_of_birth': dateOfBirth == null ? null : dateOfBirth.toIso8601String(),
         'location': location,
         'monthly_donation_limit': monthlyDonationLimit,
         'home_owner': homeOwner,

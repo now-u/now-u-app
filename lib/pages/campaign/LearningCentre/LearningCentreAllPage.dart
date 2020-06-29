@@ -17,7 +17,6 @@ import 'package:app/assets/components/customScrollableSheet.dart';
 
 const double CIRCLE_1_RADIUS = 150;
 const double CIRCLE_2_RADIUS = 250;
-const double HEADING_HEIGHT = 250;
 
 class LearningCentreAllPage extends StatelessWidget {
   @override
@@ -33,7 +32,7 @@ class LearningCentreAllPage extends StatelessWidget {
             header: 
               Container(
                 color: Color.fromRGBO(247,248,252,1),
-                height: HEADING_HEIGHT,
+                height: MediaQuery.of(context).size.height * (1-0.6),
                 child: Stack(
                   children: [
                     Positioned(
@@ -41,7 +40,7 @@ class LearningCentreAllPage extends StatelessWidget {
                       bottom: -10,
                       child: Image.asset(
                         "assets/imgs/graphics/ilstr_learning@3x.png",
-                        height: 220,
+                        height: MediaQuery.of(context).size.height * 0.3,
                       ),
                     ),
                     PageHeader(
