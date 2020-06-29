@@ -70,8 +70,7 @@ class LearningCentrePage extends StatelessWidget {
                           ),
                         ),
                         // BODY
-                        Expanded(
-                            child: ListView.builder(
+                        ListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: snapshot.data.getLearningTopics().length,
@@ -80,7 +79,7 @@ class LearningCentrePage extends StatelessWidget {
                               topic: snapshot.data.getLearningTopics()[index],
                             );
                           },
-                        )),
+                        ),
 
                         Row(
                           mainAxisSize: MainAxisSize.max,
