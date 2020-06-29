@@ -114,7 +114,7 @@ class _ActionPageState extends State<ActionPage> {
           var campaigns = store.state.userState.user.filterSelectedCampaigns(
               store.state.campaigns.getActiveCampaigns());
           if (campaigns.length != 0) {
-            campaign = store.state.campaigns.getActiveCampaigns()[0];
+            campaign = campaigns[0];
 
             // TODO make this not add all the actions -> only those that are not selected
             // actions.addAll(campaign.getActions());
@@ -125,7 +125,14 @@ class _ActionPageState extends State<ActionPage> {
         },
         onInitialBuild: (ViewModel model) {
           setState(() {
-            actions = getActions(campaign, selections, model);
+            if (model.getActiveSelectedCampaings().activeLength() == 0) {
+              campaign = null;
+              actions = [];
+            }
+            else {
+              campaign = model.getActiveSelectedCampaings().getActiveCampaigns()[0];
+              actions = getActions(campaign, selections, model);
+            }
           });
         },
         converter: (Store<AppState> store) => ViewModel.create(store),
@@ -289,6 +296,7 @@ class _ActionPageState extends State<ActionPage> {
                       child: campaign == null
                           ? ViewCampaigns()
                           : ListView(
+                              shrinkWrap: true,
                               children: [
                                 Row(
                                   children: [
@@ -402,7 +410,11 @@ class CampaignSelectionTile extends StatelessWidget {
   CampaignSelectionTile(this.campaign);
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pushNamed(Routes.campaignInfo, arguments: campaign.getId());
+      },
+      child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
         child: CustomTile(
             color: colorFrom(
@@ -440,7 +452,7 @@ class CampaignSelectionTile extends StatelessWidget {
                           fontWeight: FontWeight.w800,
                         ))),
               )
-            ])));
+            ]))));
   }
 }
 

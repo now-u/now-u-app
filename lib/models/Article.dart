@@ -138,7 +138,7 @@ class Article {
         print(campaigns.getActiveCampaigns());
         for (int i = 0; i < campaigns.activeLength(); i++) {
           if (campaigns.getActiveCampaigns()[i].getId() == linkedCampaign) {
-            return campaigns.getActiveCampaigns()[i].getTitle();
+            return campaigns.getActiveCampaigns()[i].getShortName();
           }
         }
       }

@@ -78,8 +78,23 @@ class _NewsListState extends State<NewsList> {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        PageHeader(
-          title: "News",
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: colorFrom(
+                  Colors.black, 
+                  opacity: 0.08,
+                ),
+                offset: Offset(0, 1),
+                blurRadius: 3,
+              ),
+            ]
+          ),
+          child: PageHeader(
+            title: "News",
+          ),
         ),
         Container(
             //color: Color.fromRGBO(247, 248, 252, 1),
@@ -90,6 +105,22 @@ class _NewsListState extends State<NewsList> {
                   converter: (Store<AppState> store) => ViewModel.create(store),
                   builder: (BuildContext context, ViewModel model) {
                     return Container(
+                        decoration: BoxDecoration(
+                          color: colorFrom(
+                            Colors.white,
+                            opacity: 0.6,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: colorFrom(
+                                Colors.black, 
+                                opacity: 0.08,
+                              ),
+                              offset: Offset(0, 1),
+                              blurRadius: 3,
+                            )
+                          ]
+                        ),
                         height: 60,
                         child: ListView.builder(
                             scrollDirection: Axis.horizontal,
@@ -107,7 +138,7 @@ class _NewsListState extends State<NewsList> {
                                               ? "general"
                                               : model.campaigns
                                                   .getActiveCampaigns()[index]
-                                                  .getTitle();
+                                                  .getShortName();
                                           print("Setting state 2");
                                           category = category == indexCategory
                                               ? null
@@ -134,10 +165,10 @@ class _NewsListState extends State<NewsList> {
                                                   model.campaigns
                                                       .getActiveCampaigns()[
                                                           index]
-                                                      .getTitle(),
+                                                      .getShortName(),
                                               getCategoryFromIndex( model.campaigns, index) == category,
                                               fontSize: 12,
-                                              borderRadius: 14,
+                                              borderRadius: 25,
                                             ),
                                         )
                                     ));
@@ -223,7 +254,21 @@ class NewsTile extends StatelessWidget {
           article.getFullArticleLink()
         );
       },
-      child: CustomTile(
+      child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+            boxShadow: [
+              BoxShadow(
+                color: colorFrom(
+                  Colors.black,
+                  opacity: 0.08,
+                ),
+                offset: Offset(0, 15),
+                blurRadius: 25
+              )
+            ]
+          ),
           child: Column(
             children: [
               Container(
@@ -243,7 +288,12 @@ class NewsTile extends StatelessWidget {
                   children: [
                     Text(
                       article.getTitle(),
-                      style: Theme.of(context).primaryTextTheme.headline3,
+                      style: textStyleFrom(
+                        Theme.of(context).primaryTextTheme.headline3,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        height: 0.97,
+                      ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -277,7 +327,11 @@ class NewsTile extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.all(5),
                     child: Text(
-                      article.getSource()
+                      article.getSource(),
+                      style: textStyleFrom(
+                        Theme.of(context).primaryTextTheme.bodyText1,
+                        color: Theme.of(context).primaryColor,
+                      ),
                     ),
                   ),
                 ),
@@ -292,5 +346,5 @@ class NewsTile extends StatelessWidget {
 String getCategoryFromIndex(Campaigns campaigns, int index) {
   return index == campaigns.activeLength()
       ? "general"
-      : campaigns.getActiveCampaigns()[index].getTitle();
+      : campaigns.getActiveCampaigns()[index].getShortName();
 }

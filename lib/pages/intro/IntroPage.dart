@@ -1,5 +1,6 @@
+import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/routes/customRoute.dart';
-import 'package:app/pages/Tabs.dart';
+import 'package:app/pages/campaign/CampaignPage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -72,125 +73,134 @@ class _IntroPageState extends State<IntroPage> {
   void _goToNextPage() {
     Navigator.of(context)
         // This is very bad dont use MyHomePage need named route
-        .push(FadeRouteBuilder(page: TabsPage(currentPage: TabPage.Home)))
+        .push(FadeRouteBuilder(page: CampaignPage()))
         .then((_) => setState(() => rect = null));
   }
 
-
+  
 
   @override
   Widget build(BuildContext context) {
-    return 
-    Stack(
-      children: <Widget> [
-        Scaffold(
-          body: Container(
-            color: Theme.of(context).primaryColorDark,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                SafeArea(child: Container(),),
-                Padding(
-                  padding: EdgeInsets.only(top: 20, bottom: 40),
-                  child:
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Container(
-                          width: 70
-                        ),
-                        Text("Let's get started", style: Theme.of(context).primaryTextTheme.headline6,),
-                        Container(
-                          width: 70,
-                          child: 
-                          RectGetter(
-                            key: rectGetterSkipKey,
-                            child: TextButton(
-                              "Skip",
-                              onClick: () {
-                                //Navigator.pushNamed(context, '/');
-                                _onTapSkip();
-                              }
-                            ),
-                          )
-                        ) 
-                      ],
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Stack(
+        children: <Widget> [
+          Scaffold(
+            body: Container(
+              color: Theme.of(context).primaryColorDark,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  SafeArea(child: Container(),),
+                  Padding(
+                    padding: EdgeInsets.only(top: 20, bottom: 20),
+                    child:
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          Container(
+                            width: 70,
+                            child: 
+                            RectGetter(
+                              key: rectGetterSkipKey,
+                              child: TextButton(
+                                "Skip",
+                                onClick: () {
+                                  //Navigator.pushNamed(context, '/');
+                                  _onTapSkip();
+                                }
+                              ),
+                            )
+                          ) 
+                        ],
+                      ),
+                  ),
+                  Expanded(
+                    child: PageView(
+                      //physics: NeverScrollableScrollPhysics(),
+                      onPageChanged: (index) {
+                        setState(() {
+                          this.index = index;
+                        }); 
+                      },
+                      controller: controller,
+                      children: pages,
                     ),
-                ),
-                SmoothPageIndicator(
-                  controller: controller,
-                  count: pages.length,
-                  effect: ExpandingDotsEffect(
-                    dotColor: Color.fromRGBO(221, 221, 221, 1),
-                    activeDotColor: Colors.orange,
-                    spacing: 14.0,
-                    radius: 18.0
                   ),
-                ),
-                Expanded(
-                  child: PageView(
-                    //physics: NeverScrollableScrollPhysics(),
-                    onPageChanged: (index) {
-                      setState(() {
-                        this.index = index;
-                      }); 
-                    },
-                    controller: controller,
-                    children: pages,
-                  ),
-                ),
 
-                index != pages.length - 1 ? Container() :
-                Padding(
-                  padding: EdgeInsets.all(40),
-                  child: Container(
-                    width: double.infinity,
-                    child: index != pages.length - 1 ? 
-                    DarkButton(
-                      "Next",
-                      onPressed: () {
-                        controller.nextPage(
-                          curve: curve,
-                          duration: duration,
-                        );
-                      }
-                    )
-                    :
-                    RectGetter(
-                      key: rectGetterGetStartedKey,
-                      child: DarkButton(
-                        "Get Started!",
-                        onPressed: _onTapGetStarted,
-                        //() {
-                        //  //Navigator.pushNamed(context, '/');
-                        //  _onTap();
-                        //}
+                  Padding(
+                    padding: EdgeInsets.all(40),
+                    child: Container(
+                      width: double.infinity,
+                      child: Container(
+                        height: 45,
+                        child: index != pages.length - 1 ? 
+                        Container()
+                        //DarkButton(
+                        //  "Next",
+                        //  onPressed: () {
+                        //    controller.nextPage(
+                        //      curve: curve,
+                        //      duration: duration,
+                        //    );
+                        //  }
+                        //)
+                        :
+                        RectGetter(
+                          key: rectGetterGetStartedKey,
+                          child: DarkButton(
+                            "Get Started!",
+                            onPressed: _onTapGetStarted,
+                            //() {
+                            //  //Navigator.pushNamed(context, '/');
+                            //  _onTap();
+                            //}
+                          ),
+                        )
                       ),
                     )
-                  )
-                ),
-                //Container(
-                //  width: double.infinity,
-                //  child: Padding(
-                //    padding: EdgeInsets.only(bottom: 20, left: 20),
-                //    child: TextButton(
-                //      "Back",
-                //      iconLeft: true,
-                //      onClick: () {
-                //        controller.previousPage(
-                //          curve: curve,
-                //          duration: duration,
-                //        );
-                //      },
-                //    ),
-                //  )
-                //)
-              ],
+                  ),
+
+                  SmoothPageIndicator(
+                    controller: controller,
+                    count: pages.length,
+                    effect: ExpandingDotsEffect(
+                      dotColor: colorFrom(
+                        Colors.white,
+                        opacity: 0.3,
+                      ),
+                      activeDotColor: Colors.orange,
+                      spacing: 8.0,
+                      dotHeight: 12,
+                      radius: 20.0
+                    ),
+                  ),
+
+                  SizedBox(height: 20,),
+                  //Container(
+                  //  width: double.infinity,
+                  //  child: Padding(
+                  //    padding: EdgeInsets.only(bottom: 20, left: 20),
+                  //    child: TextButton(
+                  //      "Back",
+                  //      iconLeft: true,
+                  //      onClick: () {
+                  //        controller.previousPage(
+                  //          curve: curve,
+                  //          duration: duration,
+                  //        );
+                  //      },
+                  //    ),
+                  //  )
+                  //)
+                ],
+              )
             )
-          )
-        ),
-        _ripple(),
-      ]
+          ),
+          _ripple(),
+        ]
+      )
     );
   }
 
@@ -243,7 +253,7 @@ class IntroPageSection extends StatelessWidget {
           )
         ),
         Container(
-          width: MediaQuery.of(context).size.width * 0.7,
+          width: MediaQuery.of(context).size.width * 0.9,
           child: Text(
             description,
             textAlign: TextAlign.center,

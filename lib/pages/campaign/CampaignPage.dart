@@ -72,81 +72,111 @@ class _CampaignPageState extends State<CampaignPage> {
         print(viewModel.campaigns.getActiveCampaigns().toList()[2]);
         //campaigns = viewModel.campaigns.getActiveCampaigns().toList();
         //user = viewModel.userModel.user;
-        return SafeArea(
-          child: ListView(
-            children: <Widget>[
-              PageHeader(
-                backButton: true,
-                title: "Join a campaign",
-              ),
-              Padding(
-                padding: EdgeInsets.all(15),
-                child: Text(
-                  "Choose one or more of our campaigns for this month that you wish to support",
-                  style: Theme.of(context).primaryTextTheme.bodyText1,
-                ),
-              ),
-              //Padding(
-              //    padding: EdgeInsets.only(top: 10, right: 10),
-              //    child: Row(
-              //      mainAxisAlignment: MainAxisAlignment.end,
-              //      crossAxisAlignment: CrossAxisAlignment.center,
-              //      children: <Widget>[
-              //        Container(
-              //          child: Text(
-              //            "Show joined campaigns only",
-              //            style: textStyleFrom(
-              //              Theme.of(context).primaryTextTheme.bodyText1,
-              //              color: Color.fromRGBO(63, 61, 86, 1),
-              //            ),
-              //          ),
-              //        ),
-              //        SizedBox(width: 10),
-              //        CustomSwitch(
-              //            value: onlyJoined,
-              //            onChanged: (value) {
-              //              setState(() {
-              //                onlyJoined = value;
-              //                if (value) {
-              //                  campaigns = viewModel
-              //                      .getActiveSelectedCampaings()
-              //                      .getActiveCampaigns();
-              //                } else {
-              //                  campaigns =
-              //                      viewModel.campaigns.getActiveCampaigns();
-              //                }
-              //              });
-              //            },
-              //            activeColor: Theme.of(context).primaryColor,
-              //            inactiveColor: Color.fromRGBO(221, 221, 221, 1))
-              //      ],
-              //    )),
-              viewModel.getActiveSelectedCampaings().activeLength() == 0 &&
-                      onlyJoined
-                  ? Center(
-                      child: Text("You havent selecetd any campaigns yet"),
-                    )
-                  : Container(),
-              Container(
-                child: ListView(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    children: <Widget>[
-                      ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
+        return Stack(
+          children: [
+            SafeArea(
+              child: ListView(
+                children: <Widget>[
+                  PageHeader(
+                    backButton: true,
+                    title: "Join a campaign",
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(15),
+                    child: Text(
+                      "Choose one or more of our campaigns for this month that you wish to support",
+                      style: Theme.of(context).primaryTextTheme.bodyText1,
+                    ),
+                  ),
+                  //Padding(
+                  //    padding: EdgeInsets.only(top: 10, right: 10),
+                  //    child: Row(
+                  //      mainAxisAlignment: MainAxisAlignment.end,
+                  //      crossAxisAlignment: CrossAxisAlignment.center,
+                  //      children: <Widget>[
+                  //        Container(
+                  //          child: Text(
+                  //            "Show joined campaigns only",
+                  //            style: textStyleFrom(
+                  //              Theme.of(context).primaryTextTheme.bodyText1,
+                  //              color: Color.fromRGBO(63, 61, 86, 1),
+                  //            ),
+                  //          ),
+                  //        ),
+                  //        SizedBox(width: 10),
+                  //        CustomSwitch(
+                  //            value: onlyJoined,
+                  //            onChanged: (value) {
+                  //              setState(() {
+                  //                onlyJoined = value;
+                  //                if (value) {
+                  //                  campaigns = viewModel
+                  //                      .getActiveSelectedCampaings()
+                  //                      .getActiveCampaigns();
+                  //                } else {
+                  //                  campaigns =
+                  //                      viewModel.campaigns.getActiveCampaigns();
+                  //                }
+                  //              });
+                  //            },
+                  //            activeColor: Theme.of(context).primaryColor,
+                  //            inactiveColor: Color.fromRGBO(221, 221, 221, 1))
+                  //      ],
+                  //    )),
+                  viewModel.getActiveSelectedCampaings().activeLength() == 0 &&
+                          onlyJoined
+                      ? Center(
+                          child: Text("You havent selecetd any campaigns yet"),
+                        )
+                      : Container(),
+                  Container(
+                    child: ListView(
                         shrinkWrap: true,
-                        itemCount: campaigns.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return CampaignTile(campaigns[index]);
-                        },
-                      ),
-                      SizedBox(
-                        height: 10,
-                      )
-                    ]),
+                        physics: NeverScrollableScrollPhysics(),
+                        children: <Widget>[
+                          ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: campaigns.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return CampaignTile(campaigns[index]);
+                            },
+                          ),
+                          SizedBox(
+                            height: 10,
+                          )
+                        ]),
+                  ),
+
+                  SizedBox(height: 60),
+                ],
               ),
-            ],
-          ),
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              child: FlatButton(
+                padding: EdgeInsets.all(0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 55,
+                  child: Center(
+                      child: Text(
+                    "Done",
+                    style: textStyleFrom(Theme.of(context).primaryTextTheme.button,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 17,
+                        color: Colors.white),
+                  )),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Routes.home);
+                },
+                color: Theme.of(context).primaryColor,
+              ),
+            )
+
+          ]
         );
       },
     ));

@@ -23,11 +23,11 @@ class SelectionPill extends StatelessWidget {
               boxShadow: [
                 customTileBoxShadow(false),
               ],
-              borderRadius: tileBorderRadius(),
+              borderRadius: borderRadius != null ? BorderRadius.all(Radius.circular(borderRadius)) : tileBorderRadius(),
             )
           : BoxDecoration(
               color: Color.fromRGBO(222,224,232,1),
-              borderRadius: tileBorderRadius(),
+              borderRadius: borderRadius != null ? BorderRadius.all(Radius.circular(borderRadius)) : tileBorderRadius(),
             ),
         child: Center(
           child: Padding(

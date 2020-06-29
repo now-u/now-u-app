@@ -84,7 +84,7 @@ class OraganisationInfoPage extends StatelessWidget {
 
                 getSocialMediaChildren(organisation).length == 0 ? Container() :
                 SectionTitle(
-                  "Follow us on social media",
+                  "Follow this partner on social media",
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,

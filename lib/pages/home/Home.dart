@@ -44,7 +44,7 @@ class Home extends StatelessWidget {
       body: ScrollableSheetPage(
         header: 
               Container(
-                height: MediaQuery.of(context).size.height * (1 - 0.6),
+                height: MediaQuery.of(context).size.height * (1 - 0.4),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -52,6 +52,7 @@ class Home extends StatelessWidget {
                     end: Alignment.bottomCenter,
                     colors: [
                       Theme.of(context).primaryColor,
+                      Theme.of(context).errorColor,
                       Theme.of(context).errorColor,
                     ]
                   )
@@ -88,6 +89,7 @@ class Home extends StatelessWidget {
                                         height: 0.95,
                                       )
                                     ),
+                                    SizedBox(height: MediaQuery.of(context).size.height * 0.2),
                                   ],
                                 ),
                         ),
@@ -95,7 +97,7 @@ class Home extends StatelessWidget {
                       Positioned(
                         right: -20,
                         //top: actionsHomeTilePadding,
-                        bottom: 10,
+                        bottom: MediaQuery.of(context).size.height * 0.2,
                         child: Container(
                           height: MediaQuery.of(context).size.height * 0.3,
                           child: Image(
@@ -112,27 +114,25 @@ class Home extends StatelessWidget {
               
                HomeTitle(
                  "${DateFormat("MMMM").format(DateTime.now())}'s campaigns",
-                 subtitle: "Our campaigns are always in partnership with trusted institutions. Here’s the ones for ${DateFormat("MMMM").format(DateTime.now())}:",
                  infoTitle: "Campaigns",
                  infoText: "We run 3 campaigns each month, with one additional campaign for our first month of July. We only select a few causes per month to focus the efforts of as many people as possible on each campaign.\n We aim to tackle a wide range of social and environmental issues and we would love to hear your suggestions for campaigns we could run!\n We select issues based on several factors, including their severity, the ability of our users to tackle them, and the timing of specific events with momentum that could lead to real change. The theme for our July campaigns is: issues exacerbated by the pandemic.\n Once a campaign is over, that of course does not mean the issue has been solved! Whilst we will move onto a new set of issues each month, we will continue to provide users with details of how to stay engaged with other causes, and return to core issues in future campaigns.",
                ),
 
                CampaignCarosel(),
 
-               SizedBox(height: 15),
-
                Container(
                 width: double.infinity,
                  color: Color.fromRGBO(255,243,230,1),
                  child: Padding(
-                   padding: EdgeInsets.symmetric(vertical: 10),
+                   padding: EdgeInsets.symmetric(vertical: 35, horizontal: 15),
                    child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
                      children: [
                        HomeTitle(
                          "Take action now!",
                          subtitle: "Find out what you can start doing to support your campaign:",
+                         textAlign: TextAlign.center,
                        ),
                        Padding(
                          padding: EdgeInsets.all(15),
@@ -152,12 +152,16 @@ class Home extends StatelessWidget {
 
                Container(
                  child: Padding(
-                   padding: EdgeInsets.all(10),
+                   padding: EdgeInsets.symmetric(vertical: 35, horizontal: 25),
                    child: Column(
                      children: [
                        Text(
                          "What cause do you want to support next?",
-                         style: Theme.of(context).primaryTextTheme.bodyText1,
+                         textAlign: TextAlign.center,
+                         style: textStyleFrom(
+                            Theme.of(context).primaryTextTheme.headline4,
+                            fontSize: 24,
+                          )
                        ),
 
                        Padding(
@@ -195,11 +199,13 @@ class Home extends StatelessWidget {
                                ),
                              ]
                            ),
+                           viewModel.userModel.user.getSelectedCampaigns() == null ? CircularProgressIndicator() : 
                            ImpactTile(
                              viewModel.userModel.user.getSelectedCampaigns().length,
                              "Campaigns Joined"
                            ),
                            SizedBox(height: 10),
+                           viewModel.getActiveCompletedActions() == null ? CircularProgressIndicator() : 
                            ImpactTile(
                              viewModel.getActiveCompletedActions().length,
                              "Actions taken"
@@ -239,7 +245,10 @@ class HomeActionTile extends StatelessWidget {
       child: StoreConnector<AppState, ViewModel>(
         converter: (Store<AppState> store) => ViewModel.create(store),
         builder: (BuildContext context, ViewModel viewModel) {
-          if (viewModel.getActiveSelectedCampaings().getActions().length == 0) {
+          if (viewModel.userModel.user.getSelectedCampaigns() == null) {
+            return CircularProgressIndicator();
+          }
+          else if (viewModel.getActiveSelectedCampaings().getActions().length == 0) {
             return Container(
               height: 200,
               child: ViewCampaigns(),
@@ -337,38 +346,43 @@ class CampaignCarosel extends StatelessWidget {
     return StoreConnector<AppState, ViewModel>(
       converter: (Store<AppState> store) => ViewModel.create(store),
       builder: (BuildContext context, ViewModel viewModel) {
-        return Column(
-          children: [
-            Container(
-              height: 280,
-              child: PageView.builder(
-                  controller: _controller,
-                  itemCount: viewModel.campaigns.getActiveCampaigns().length,
-                      // If all the active campaigns have been joined
-                  //itemCount: viewModel.campaigns.getActiveCampaigns().length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: CampaignTile(
-                        viewModel.campaigns.getActiveCampaigns()[index],
-                          // Used to only selected campaigns ==> remeber to change count
-                      //viewModel
-                      //  .userModel.user
-                      //  .filterSelectedCampaigns(viewModel.campaigns
-                      //      .getActiveCampaigns())[index],
-                        hOuterPadding: 4,
-                      ),
-                    );
-                  },
+        if (viewModel.campaigns.getActiveCampaigns() == null) {
+          return null;
+        } else {
+          return Column(
+            children: [
+              Container(
+                height: 280,
+                child: PageView.builder(
+                    controller: _controller,
+                    itemCount: viewModel.campaigns.getActiveCampaigns().length,
+                        // If all the active campaigns have been joined
+                    //itemCount: viewModel.campaigns.getActiveCampaigns().length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: CampaignTile(
+                          viewModel.campaigns.getActiveCampaigns()[index],
+                            // Used to only selected campaigns ==> remeber to change count
+                        //viewModel
+                        //  .userModel.user
+                        //  .filterSelectedCampaigns(viewModel.campaigns
+                        //      .getActiveCampaigns())[index],
+                          hOuterPadding: 4,
+                        ),
+                      );
+                    },
+                  ),
                 ),
-              ),
-              SmoothPageIndicator(
-                controller: _controller,
-                count: viewModel.campaigns.getActiveCampaigns().length,
-                effect: customSmoothPageInducatorEffect,
-              )
-          ]
-        );
+                SmoothPageIndicator(
+                  controller: _controller,
+                  count: viewModel.campaigns.getActiveCampaigns().length,
+                  effect: customSmoothPageInducatorEffect,
+                ),
+                SizedBox(height: 30),
+            ]
+          );
+        }
       }
     );
   }
@@ -380,6 +394,7 @@ class HomeTitle extends StatelessWidget {
   final String subtitle;
   final String infoTitle;
   final String infoText;
+  final TextAlign textAlign;
 
 
   HomeTitle(
@@ -388,6 +403,7 @@ class HomeTitle extends StatelessWidget {
       this.subtitle,
       this.infoText,
       this.infoTitle,
+      this.textAlign,
     }
   );
 
@@ -400,12 +416,13 @@ class HomeTitle extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(10),
             child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: textAlign == TextAlign.center ? MainAxisAlignment.center : MainAxisAlignment.start,
               children: [
                 Text(
                   title,
                   style: Theme.of(context).primaryTextTheme.headline3,
+                  textAlign: textAlign ?? TextAlign.start,
                 ),
                 SizedBox(width: 7,),
 
@@ -435,6 +452,7 @@ class HomeTitle extends StatelessWidget {
             child: Text(
               subtitle,
               style: Theme.of(context).primaryTextTheme.bodyText1,
+              textAlign: textAlign ?? TextAlign.start,
             ),
           ),
           
@@ -450,7 +468,11 @@ class ImpactTile extends StatelessWidget {
   ImpactTile(this.number, this.text);
   @override
   Widget build(BuildContext context) {
-    return CustomTile(
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+      ), 
       child: Row(
         children: [
           SizedBox(width: 20),

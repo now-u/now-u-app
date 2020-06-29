@@ -29,6 +29,7 @@ class SDG {
 }
 
 SDG getSDGfromNumber(int number) {
+  print("getting sdg $number");
   for (int i = 0; i < sdgs.length; i++) {
     if (sdgs[i].number == number) {
       return sdgs[i];

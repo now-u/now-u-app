@@ -29,16 +29,16 @@ class InfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: ListView(
         children: [
           PageHeader(
             title: args.getTitle(),
             backButton: true,
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             child: Text(
-              args.getBody(), 
+              args.getBody().replaceAll("\n", "\n\n"), 
               style: Theme.of(context).primaryTextTheme.bodyText1,
             )
           ),

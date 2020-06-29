@@ -9,6 +9,7 @@ import 'dart:convert';
 class Campaign {
   int id;
   String title;
+  String shortName;
   String description;
   int numberOfCampaingers;
   String headerImage;
@@ -23,6 +24,7 @@ class Campaign {
   Campaign({
     @required int id,
     @required String title,
+    @required String shortName,
     @required String description,
     @required int numberOfCampaigners,
     @required String headerImage,
@@ -35,6 +37,7 @@ class Campaign {
   }) {
     this.id = id; 
     this.title = title;
+    this.shortName = shortName;
     this.description = description;
     this.numberOfCampaingers = numberOfCampaigners;
     this.headerImage = headerImage;
@@ -49,6 +52,7 @@ class Campaign {
   Campaign copyWith({
     int id,
     String title,
+    String shortName,
     String description,
     int numberOfCampaingers,
     String headerImage,
@@ -62,6 +66,7 @@ class Campaign {
     return Campaign(
       id: id ?? this.id,
       title: title ?? this.title,
+      shortName: shortName ?? this.shortName,
       description: description ?? this.description,
       numberOfCampaigners: numberOfCampaingers ?? this.numberOfCampaingers,
       headerImage: headerImage ?? this.headerImage,
@@ -79,6 +84,7 @@ class Campaign {
     print(json);
     id = json['id'];
     title = json['title'];
+    shortName = json['short_name'];
     description = json['description_app'];
     numberOfCampaingers = json['number_of_campaigners'];
     headerImage = json['header_image'];
@@ -99,19 +105,23 @@ class Campaign {
     videoLink = json['video_link'];
     //sdgs = [];
     print("Gettingsdgs");
+    //sdgs = [];
     sdgs = 
-      json['sdgs'] == null ? <int>[] :  
+      json['sdgs'] == null ? <SDG>[] :  
       json['sdgs'].map((s) => getSDGfromNumber(s['id'])).toList().cast<SDG>();
     print("Got whole camapign");
 
     keyAims = 
       json['key_aims'] == null ? <String>[] :
       json['key_aims'].map((a) => a['title']).toList().cast<String>();
+
+    print("Got the campaign");
   }
 
   Map toJson() => {
     'id': id,
     'title': title,
+    'short_name': shortName,
     'description': description,
     'number_of_campaigners': numberOfCampaingers,
     'header_image': headerImage,
@@ -128,6 +138,9 @@ class Campaign {
   }
   String getTitle() {
     return title; 
+  }
+  String getShortName() {
+    return shortName; 
   }
   String getDescription() {
     // TODO function to remove escape characters

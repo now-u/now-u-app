@@ -138,6 +138,7 @@ class _AppState extends State<App> {
             FirebaseAnalyticsObserver(analytics: analytics),
           ],
           initialRoute: '/',
+          //initialRoute: Routes.intro,
           onGenerateRoute: initRoutes,
           routes: {
             '/': (BuildContext context) => StoreBuilder<AppState>(
@@ -185,7 +186,7 @@ class _AppState extends State<App> {
               headline4: TextStyle(
                   color: black,
                   fontSize: 18,
-                  fontWeight: FontWeight.w400 // Regular
+                  fontWeight: FontWeight.w500 // Regular
                   ),
               // Capitalize
               headline5: TextStyle(

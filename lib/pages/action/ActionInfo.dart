@@ -134,7 +134,14 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                     Routes.campaignInfo,
                                     arguments: _campaign.getId());
                               },
-                              child: Text("See the campaign"),
+                              child: Text("See the campaign",
+                                style: textStyleFrom(
+                                  Theme.of(context).primaryTextTheme.headline4,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Theme.of(context).primaryColorDark,
+                                ),
+                              ),
                             ),
                           ],
                         )),
@@ -153,14 +160,6 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                   Theme.of(context).primaryTextTheme.headline4),
                           SizedBox(height: 10),
                           Text(_action.getWhatDescription() ?? "",
-                              style:
-                                  Theme.of(context).primaryTextTheme.bodyText1),
-                          SizedBox(height: 30),
-                          Text("Why is this useful?",
-                              style:
-                                  Theme.of(context).primaryTextTheme.headline4),
-                          SizedBox(height: 10),
-                          Text(_action.getWhyDescription() ?? "",
                               style:
                                   Theme.of(context).primaryTextTheme.bodyText1),
                         ],
@@ -289,6 +288,26 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                             )
                           )
                         ),
+
+                    SizedBox(height: 30),
+
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: H_PADDING, vertical: 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text("Why is this useful?",
+                              style:
+                                  Theme.of(context).primaryTextTheme.headline4),
+                          SizedBox(height: 10),
+                          Text(_action.getWhyDescription() ?? "",
+                              style:
+                                  Theme.of(context).primaryTextTheme.bodyText1),
+                        ],
+                      ),
+                    ),
+
 
                     SizedBox(height: 20),
                     Row(
