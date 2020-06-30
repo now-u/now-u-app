@@ -528,7 +528,7 @@ class _SortScreenState extends State<SortScreen> {
                     ),
                   ),
                   Text(
-                    "Filter Actions",
+                    "Filter actions",
                     style: Theme.of(context).primaryTextTheme.headline4,
                   ),
                   SizedBox(width: 30)

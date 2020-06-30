@@ -30,7 +30,8 @@ void customLaunch(
                 children: <Widget>[
                   SizedBox(height: 20),
                   Text(
-                    title ?? "You're about to leave the app",
+                    title ?? "You're about to leave",
+                    textAlign: TextAlign.center,
                     style: textStyleFrom(
                       Theme.of(context).primaryTextTheme.headline2,
                     ),
@@ -39,7 +40,7 @@ void customLaunch(
                   Padding(
                     padding: EdgeInsets.all(5),
                     child: Text(
-                      description ?? "This link will take you out off the app. Are you sure you want to go?",
+                      description ?? "This link will take you out of the app. Are you sure you want to go?",
                       style: textStyleFrom(
                         Theme.of(context).primaryTextTheme.bodyText1,
                         color: Theme.of(context).primaryColorDark,
@@ -52,7 +53,7 @@ void customLaunch(
                     width: double.infinity,
                     child:
                       DarkButton(
-                        buttonText ?? "Yes lets go",
+                        buttonText ?? "Let's go",
                         onPressed: () {
                           launch(url);
                         }

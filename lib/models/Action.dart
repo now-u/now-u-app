@@ -66,7 +66,7 @@ Map campaignActionSuperTypeData = {
     'iconBackgroundColor': orangeO,
   },
   CampaignActionSuperType.RaiseMoney: {
-    'name': "Raise Money",
+    'name': "Raise money",
     'icon': CustomIcons.ic_raisemoney,
     'iconColor': yellow,
     'iconBackgroundColor': yellowO,

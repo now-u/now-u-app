@@ -81,7 +81,7 @@ class Home extends StatelessWidget {
                                     ),
                                     SizedBox(height: 17),
                                     Text(
-                                      "Ready to do some good for the world?",
+                                      "Ready to start making a difference?",
                                       style: textStyleFrom(
                                         Theme.of(context).primaryTextTheme.headline3,
                                         fontSize: 20,
@@ -137,7 +137,7 @@ class Home extends StatelessWidget {
                        Padding(
                          padding: EdgeInsets.all(15),
                          child: DarkButton(
-                           "See my Actions",
+                           "Go to actions",
                            onPressed: () {
                              Navigator.of(context).pushNamed(Routes.actions);
                            },
@@ -172,8 +172,8 @@ class Home extends StatelessWidget {
                              customLaunch(
                               context,
                               "https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform",
-                              description: "To suggest causes for a new campaign you need to fill up a form on Google Sheets",
-                              buttonText: "Go to online form"
+                              description: "To suggest causes for future campaigns, fill in this Google Form",
+                              buttonText: "Go"
                              );
 
                            },
@@ -208,7 +208,7 @@ class Home extends StatelessWidget {
                            viewModel.userModel.user.getSelectedCampaigns() == null ? CircularProgressIndicator() : 
                            ImpactTile(
                              viewModel.userModel.user.getSelectedCampaigns().length,
-                             "Campaigns Joined",
+                             "Campaigns joined",
                              route: Routes.campaign,
                            ),
                            SizedBox(height: 10),
@@ -220,7 +220,7 @@ class Home extends StatelessWidget {
                            SizedBox(height: 10),
                            ImpactTile(
                              viewModel.getActiveStarredActions().length,
-                             "Actions in todo list",
+                             "Actions in to-do list",
                              route: Routes.actions,
                            )
                          ],

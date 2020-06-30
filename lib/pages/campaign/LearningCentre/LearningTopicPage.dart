@@ -14,7 +14,7 @@ class LearningTopicPage extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(
         text: "",
-        backButtonText: "Learning",
+        backButtonText: "Back",
         context: context,
       ),
       body: Column(

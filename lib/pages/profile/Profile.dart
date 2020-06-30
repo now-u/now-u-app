@@ -8,7 +8,7 @@ import 'package:app/assets/components/pageTitle.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/routes/customLaunch.dart';
-import 'package:launch_review/launch_review.dart';
+import 'package:store_redirect/store_redirect.dart';
 
 import 'package:app/models/User.dart';
 import 'package:app/models/ViewModel.dart';
@@ -60,7 +60,7 @@ class _ProfileState extends State<Profile> {
           //},
           {
             'profileTile':
-                ProfileTile("Our Partners", FontAwesomeIcons.building),
+                ProfileTile("Our partners", FontAwesomeIcons.building),
             'page': Routes.parteners,
           },
           //{
@@ -81,8 +81,8 @@ class _ProfileState extends State<Profile> {
           },
           {
             'profileTile':
-                ProfileTile("Rate us on App Store", CustomIcons.ic_rateus),
-            'function': () {LaunchReview.launch();},
+                ProfileTile("Rate us the app store", CustomIcons.ic_rateus),
+            'function': () {StoreRedirect.redirect();}
           },
           {
             'profileTile': ProfileTile("FAQ", CustomIcons.ic_faq),
@@ -100,7 +100,7 @@ class _ProfileState extends State<Profile> {
           },
           {
             'profileTile':
-                ProfileTile("Privacy Policy", FontAwesomeIcons.fingerprint),
+                ProfileTile("Privacy policy", FontAwesomeIcons.fingerprint),
             'link':
                 "https://now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf"
           },

@@ -1,10 +1,12 @@
 import 'package:app/assets/StyleFrom.dart';
+import 'package:flutter/gestures.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/inputs.dart';
 import 'package:flutter/material.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:app/models/State.dart';
 import 'package:app/models/ViewModel.dart';
@@ -225,9 +227,37 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                               ),
                               SizedBox(height: 8),
                               email,
-                              
 
                               loginButton(),
+                               
+                              SizedBox (height: 10),
+
+                              RichText(
+                                text: TextSpan(children: [
+                                  TextSpan(
+                                      text:
+                                          "View our privacy policy ",
+                                      style: textStyleFrom(
+                                        Theme.of(context).primaryTextTheme.bodyText1,
+                                        color: Colors.white,
+                                      )
+                                  ),
+                                  TextSpan(
+                                      text: "here",
+                                      style: textStyleFrom(
+                                        Theme.of(context).primaryTextTheme.bodyText1,
+                                        color: Theme.of(context).buttonColor,
+                                      ),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {
+                                          launch("https://now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf");
+                                        }),
+                                  ]
+                                ),
+                              ),
+                            
+                              SizedBox (height: 10),
+
                             ],
                           ),
 

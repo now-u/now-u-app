@@ -135,7 +135,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                     arguments: _campaign.getId());
                               },
                               child: Container(
-                                height: 15,
+                                height: 20,
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 5),
                                   child: Text("See the campaign",
