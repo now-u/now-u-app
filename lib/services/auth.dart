@@ -3,16 +3,40 @@
 import 'package:app/models/User.dart';
 import 'package:app/models/Campaigns.dart';
 
+import 'package:app/main.dart';
+import 'package:app/routes.dart';
+
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class AuthError {
   static const unauthorized = "unauthorized";
+  static const internal = "internal";
+  static const unknown = "unknown";
 }
 
 class AuthenticationService {
   //final String domainPrefix = "https://now-u-api.herokuapp.com/api/v1/";
   final String domainPrefix = "https://api.now-u.com/api/v1/";
+
+  // Generic Reuqest
+  // Handle 401 errors
+  Future handleAuthRequestErrors(http.Response response) {
+    if (response.statusCode == 200) {
+      return null;
+    }
+    else if (response.statusCode == 401) {
+      // Generic reaction to someone being unauthorized is just send them to the login screen
+      Keys.navKey.currentState.pushNamed(Routes.login);
+      return Future.error(AuthError.unauthorized);
+    }
+    else if (response.statusCode == 500) {
+      // Generic reaction to someone being unauthorized is just send them to the login screen
+      Keys.navKey.currentState.pushNamed('/');
+      return Future.error(AuthError.internal);
+    }
+    return Future.error(AuthError.unknown);
+  }
 
   //final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -59,16 +83,19 @@ class AuthenticationService {
         'token': token,
       }),
     );
-    if (response.statusCode == 200) {
-      print("THE RESPONSE BODY IS");
-      print(response.body);
 
-      User u = await getUser(json.decode(response.body)['data']['token']);
-      return u;
+    Error e = await handleAuthRequestErrors(response);
+    if ( e != null ) {
+      print("There was an error");
+      print(response.headers);
+      return Future.error(e);
     }
-    print("There was an error");
-    print(response.headers);
-    return null;
+
+    print("THE RESPONSE BODY IS");
+    print(response.body);
+
+    User u = await getUser(json.decode(response.body)['data']['token']);
+    return u;
     //return _auth.signInWithEmailAndLink(email: email, link: link);
   }
 
@@ -81,6 +108,9 @@ class AuthenticationService {
         await http.get(domainPrefix + 'users/me', headers: <String, String>{
       'token': token,
     });
+    if (handleAuthRequestErrors(userResponse) != null) {
+      return handleAuthRequestErrors(userResponse);
+    }
     print("The returned user is:");
     print(userResponse.body);
     User u = User.fromJson(json.decode(userResponse.body)["data"]);
@@ -102,18 +132,19 @@ class AuthenticationService {
       },
       body: json.encode(user.getPostAttributes()),
     );
-    if (response.statusCode == 200) {
-      print("The new user deets are");
-      print(response.body);
-      User u = User.fromJson(json.decode(response.body));
-      return u;
+    if (handleAuthRequestErrors(response) != null) {
+      return handleAuthRequestErrors(response);
     }
-    if (response.statusCode == 401) {
-      return Future.error(AuthError.unauthorized);
-    } else {
-      print("There was an error updateing user details");
-      return null;
-    }
+    print("The new user deets are");
+    print(response.body);
+    User u = User.fromJson(json.decode(response.body));
+    return u;
+    //if (response.statusCode == 401) {
+    //  return Future.error(AuthError.unauthorized);
+    //} else {
+    //  print("There was an error updateing user details");
+    //  return null;
+    //}
   }
 
   Future<User> completeAction(String token, int actionId) async {
@@ -124,20 +155,22 @@ class AuthenticationService {
         'token': token,
       },
     );
-    if (response.statusCode == 200) {
-      print("The new deets after joining campaign are");
-      print(response.body);
-      User u = User.fromJson(json.decode(response.body)['data']);
-      return u;
-    } else if (response.statusCode == 401) {
-      return Future.error(AuthError.unauthorized);
-    } else {
-      print("There was an error updating user details");
-      print(response.body);
-      print("The token was ${token}");
-      print("The actionId was ${actionId.toString()}");
-      return null;
+    if (handleAuthRequestErrors(response) != null) {
+      return handleAuthRequestErrors(response);
     }
+    print("The new deets after joining campaign are");
+    print(response.body);
+    User u = User.fromJson(json.decode(response.body)['data']);
+    return u;
+    //else if (response.statusCode == 401) {
+    //  return Future.error(AuthError.unauthorized);
+    //} else {
+    //  print("There was an error updating user details");
+    //  print(response.body);
+    //  print("The token was ${token}");
+    //  print("The actionId was ${actionId.toString()}");
+    //  return null;
+    //}
   }
 
   Future<User> starAction(String token, int actionId) async {
@@ -148,21 +181,24 @@ class AuthenticationService {
         'token': token,
       },
     );
-    if (response.statusCode == 200) {
-      print("The new deets after staring action are");
-      print(response.body);
-      User u = User.fromJson(json.decode(response.body)['data']);
-      return u;
-    } else if (response.statusCode == 401) {
-      return Future.error(AuthError.unauthorized);
-    } else {
-      print("There was an error updating user details");
-      print(response.body);
-      print(response.statusCode);
-      print("The token was ${token}");
-      print("The actionId was ${actionId.toString()}");
-      return null;
+    if (handleAuthRequestErrors(response) != null) {
+      return handleAuthRequestErrors(response);
     }
+    //if (response.statusCode == 200) {
+    print("The new deets after staring action are");
+    print(response.body);
+    User u = User.fromJson(json.decode(response.body)['data']);
+    return u;
+    //} else if (response.statusCode == 401) {
+    //  return Future.error(AuthError.unauthorized);
+    //} else {
+    //  print("There was an error updating user details");
+    //  print(response.body);
+    //  print(response.statusCode);
+    //  print("The token was ${token}");
+    //  print("The actionId was ${actionId.toString()}");
+    //  return null;
+    //}
   }
 
   Future<User> removeActionStatus(String token, int actionId) async {
@@ -173,21 +209,24 @@ class AuthenticationService {
         'token': token,
       },
     );
-    if (response.statusCode == 200) {
-      print("The new deets after staring action are");
-      print(response.body);
-      User u = User.fromJson(json.decode(response.body)['data']);
-      return u;
-    } else if (response.statusCode == 401) {
-      return Future.error(AuthError.unauthorized);
-    } else {
-      print("There was an error updating user details");
-      print(response.body);
-      print(response.statusCode);
-      print("The token was ${token}");
-      print("The actionId was ${actionId.toString()}");
-      return null;
+    if (handleAuthRequestErrors(response) != null) {
+      return handleAuthRequestErrors(response);
     }
+    //if (response.statusCode == 200) {
+    print("The new deets after staring action are");
+    print(response.body);
+    User u = User.fromJson(json.decode(response.body)['data']);
+    return u;
+    //} else if (response.statusCode == 401) {
+    //  return Future.error(AuthError.unauthorized);
+    //} else {
+    //  print("There was an error updating user details");
+    //  print(response.body);
+    //  print(response.statusCode);
+    //  print("The token was ${token}");
+    //  print("The actionId was ${actionId.toString()}");
+    //  return null;
+    //}
   }
 
   Future<User> rejectAction(String token, int actionId, String reason) async {
@@ -200,20 +239,23 @@ class AuthenticationService {
       },
       body: json.encode(jsonBody),
     );
-    if (response.statusCode == 200) {
-      print("The new deets after joining campaign are");
-      print(response.body);
-      User u = User.fromJson(json.decode(response.body)['data']);
-      return u;
-    } else if (response.statusCode == 401) {
-      return Future.error(AuthError.unauthorized);
-    } else {
-      print("There was an error updating user details");
-      print(response.body);
-      print("The token was ${token}");
-      print("The actionId was ${actionId.toString()}");
-      return null;
+    if (handleAuthRequestErrors(response) != null) {
+      return handleAuthRequestErrors(response);
     }
+    //if (response.statusCode == 200) {
+    print("The new deets after joining campaign are");
+    print(response.body);
+    User u = User.fromJson(json.decode(response.body)['data']);
+    return u;
+    //} else if (response.statusCode == 401) {
+    //  return Future.error(AuthError.unauthorized);
+    //} else {
+    //  print("There was an error updating user details");
+    //  print(response.body);
+    //  print("The token was ${token}");
+    //  print("The actionId was ${actionId.toString()}");
+    //  return null;
+    //}
   }
 
   Future<User> joinCampaign(String token, int campaignId) async {
@@ -224,17 +266,20 @@ class AuthenticationService {
         'token': token,
       },
     );
-    if (response.statusCode == 200) {
-      print("The new deets after joining campaign are");
-      print(response.body);
-      User u = User.fromJson(json.decode(response.body)["data"]);
-      return u;
-    } else if (response.statusCode == 401) {
-      return Future.error(AuthError.unauthorized);
-    } else {
-      print("There was an error updateing user details");
-      return null;
+    if (handleAuthRequestErrors(response) != null) {
+      return handleAuthRequestErrors(response);
     }
+    //if (response.statusCode == 200) {
+    print("The new deets after joining campaign are");
+    print(response.body);
+    User u = User.fromJson(json.decode(response.body)["data"]);
+    return u;
+    //} else if (response.statusCode == 401) {
+    //  return Future.error(AuthError.unauthorized);
+    //} else {
+    //  print("There was an error updateing user details");
+    //  return null;
+    //}
   }
 
   Future<User> unjoinCampaign(String token, int campaignId) async {
@@ -245,16 +290,19 @@ class AuthenticationService {
         'token': token,
       },
     );
-    if (response.statusCode == 200) {
-      print("The new deets after joining campaign are");
-      print(response.body);
-      User u = User.fromJson(json.decode(response.body)["data"]);
-      return u;
-    } else if (response.statusCode == 401) {
-      return Future.error(AuthError.unauthorized);
-    } else {
-      print("There was an error updateing user details");
-      return null;
+    if (handleAuthRequestErrors(response) != null) {
+      return handleAuthRequestErrors(response);
     }
+    //if (response.statusCode == 200) {
+    print("The new deets after joining campaign are");
+    print(response.body);
+    User u = User.fromJson(json.decode(response.body)["data"]);
+    return u;
+    //} else if (response.statusCode == 401) {
+    //  return Future.error(AuthError.unauthorized);
+    //} else {
+    //  print("There was an error updateing user details");
+    //  return null;
+    //}
   }
 }
