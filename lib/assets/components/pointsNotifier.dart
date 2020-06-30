@@ -119,7 +119,7 @@ Flushbar pointsNotifier(int userPoints, int earnedPoints, int nextBadgePoints,
 
 Flushbar notifier(String title, String message, double progress, BuildContext context) {
   return Flushbar(
-      duration: Duration(seconds: 3),
+      duration: Duration(seconds: 5),
       flushbarPosition: FlushbarPosition.BOTTOM,
       borderRadius: 10,
       //backgroundColor: Colors.white,
@@ -187,18 +187,7 @@ Function gotBadgeNotifier({
   Badge badge,
   BuildContext context,
 }) {
-  showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (_) => AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(35),
-            ),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                FittedBox(
-                  //width: MediaQuery.of(context).size.width * 0.5,
+  showDialog( context: context, barrierDismissible: true, builder: (_) => AlertDialog( shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(35),), content: Column( mainAxisSize: MainAxisSize.min, children: <Widget>[ FittedBox( //width: MediaQuery.of(context).size.width * 0.5,
                   child: Text(
                     "Congratulations",
                     style: Theme.of(context).primaryTextTheme.headline2,

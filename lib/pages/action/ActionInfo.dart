@@ -134,14 +134,20 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                     Routes.campaignInfo,
                                     arguments: _campaign.getId());
                               },
-                              child: Text("See the campaign",
-                                style: textStyleFrom(
-                                  Theme.of(context).primaryTextTheme.headline4,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: Theme.of(context).primaryColorDark,
+                              child: Container(
+                                height: 15,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  child: Text("See the campaign",
+                                    style: textStyleFrom(
+                                      Theme.of(context).primaryTextTheme.headline4,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: Theme.of(context).primaryColorDark,
+                                    ),
+                                  ),
                                 ),
-                              ),
+                              )
                             ),
                           ],
                         )),
@@ -223,6 +229,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                     completed = true;
                                     viewModel.onCompleteAction(
                                         _action, context);
+                                    Navigator.of(context).pushNamed(Routes.actions);
                                   });
                                 }),
                               ),

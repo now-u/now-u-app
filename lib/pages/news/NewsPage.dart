@@ -5,6 +5,7 @@ import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/header.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/selectionPill.dart';
+import 'package:app/assets/routes/customLaunch.dart';
 
 import 'package:app/pages/news/ArticlePage.dart';
 
@@ -17,7 +18,6 @@ import 'package:app/models/Campaigns.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:intl/intl.dart';
 import 'package:redux/redux.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 final double PAGE_PADDING = 15;
@@ -250,7 +250,8 @@ class NewsTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        launch(
+        customLaunch(
+          context,
           article.getFullArticleLink()
         );
       },
@@ -283,40 +284,44 @@ class NewsTile extends StatelessWidget {
               // Titile
               Padding(
                 padding: EdgeInsets.all(12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start, 
-                  children: [
-                    Text(
-                      article.getTitle(),
-                      style: textStyleFrom(
-                        Theme.of(context).primaryTextTheme.headline3,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        height: 0.97,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start, 
+                    children: [
+                      Text(
+                        article.getTitle(),
+                        style: textStyleFrom(
+                          Theme.of(context).primaryTextTheme.headline3,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          height: 0.97,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      article.getSubtitle(),
-                      style: textStyleFrom(
-                        Theme.of(context).primaryTextTheme.headline5,
-                        color: Color.fromRGBO(109, 113,129, 1)
+                      SizedBox(height: 5),
+                      Text(
+                        article.getSubtitle(),
+                        style: textStyleFrom(
+                          Theme.of(context).primaryTextTheme.headline5,
+                          color: Color.fromRGBO(109, 113,129, 1)
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      DateFormat('d MMMM yyyy').format(article.getCreationTime()),
-                      style: textStyleFrom(
-                        Theme.of(context).primaryTextTheme.bodyText1,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
+                      SizedBox(height: 5),
+                      article.getReleaseDate() == null ? Container() :
+                      Text(
+                        DateFormat('d MMMM yyyy').format(article.getReleaseDate()),
+                        style: textStyleFrom(
+                          Theme.of(context).primaryTextTheme.bodyText1,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               // Source

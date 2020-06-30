@@ -30,6 +30,7 @@ class Article {
   int linkedAction;
   String videoLink;
   DateTime createdAt;
+  DateTime releasedAt;
   String source;
   
   String fullArticleLink;
@@ -48,6 +49,7 @@ class Article {
     this.linkedAction, 
     this.videoLink, 
     this.createdAt,
+    this.releasedAt,
     this.source,
     //this.type,
     this.isVideoOfTheDay,
@@ -60,6 +62,7 @@ class Article {
     body              = json['body'];
     headerImage       = json['header_image'];
     createdAt         = DateTime.parse(json['created_at']);
+    releasedAt        = json['release_date'] == null ? null : DateTime.parse(json['release_date']);
     linkedCampaign    = json['campaign_id'];
     linkedAction      = json['linked_action'];
     fullArticleLink   = json['full_article_link'];
@@ -76,6 +79,7 @@ class Article {
     'body': body,
     'header_image': headerImage,
     'created_at': headerImage,
+    'release_date': releasedAt,
     'campaign_id': createdAt.toIso8601String(),
     'linked_action': linkedAction,
     'full_article_link': fullArticleLink,
@@ -119,6 +123,9 @@ class Article {
   }
   DateTime getCreationTime() {
     return createdAt; 
+  }
+  DateTime getReleaseDate() {
+    return releasedAt; 
   }
   String getSource() {
     return source; 

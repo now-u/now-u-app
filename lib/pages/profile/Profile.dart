@@ -7,7 +7,8 @@ import 'package:app/assets/icons/customIcons.dart';
 import 'package:app/assets/components/pageTitle.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/customTile.dart';
-import 'package:app/assets/routes/customRoute.dart';
+import 'package:app/assets/routes/customLaunch.dart';
+import 'package:launch_review/launch_review.dart';
 
 import 'package:app/models/User.dart';
 import 'package:app/models/ViewModel.dart';
@@ -81,7 +82,7 @@ class _ProfileState extends State<Profile> {
           {
             'profileTile':
                 ProfileTile("Rate us on App Store", CustomIcons.ic_rateus),
-            'link': ""
+            'function': () {LaunchReview.launch();},
           },
           {
             'profileTile': ProfileTile("FAQ", CustomIcons.ic_faq),
@@ -133,8 +134,13 @@ class _ProfileState extends State<Profile> {
                             Navigator.pushNamed(
                                 context, profileTiles[index]["page"]);
                           } else if (profileTiles[index]["link"] != null) {
-                            launch(profileTiles[index]["link"]);
-                          } else {}
+                            customLaunch(
+                              context,
+                              profileTiles[index]["link"]
+                            );
+                          } else if (profileTiles[index]["function"] != null) {
+                            profileTiles[index]["function"]();
+                          }
                         }),
                         child: profileTiles[index]["profileTile"],
                       ),

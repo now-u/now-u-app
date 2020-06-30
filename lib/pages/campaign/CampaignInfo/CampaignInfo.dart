@@ -18,7 +18,7 @@ import 'package:app/services/api.dart';
 import 'package:app/locator.dart';
 import 'package:app/routes.dart';
 
-import 'package:app/assets/components/selectionItem.dart';
+import 'package:app/assets/icons/customIcons.dart';
 import 'package:app/assets/components/joinedIndicator.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/customAppBar.dart';
@@ -211,7 +211,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
           actions: [
             IconButton(
               icon: Icon(
-                FontAwesomeIcons.book,
+                CustomIcons.ic_learning,
                 color: Theme.of(context).primaryColor,
               ),
               onPressed: () {

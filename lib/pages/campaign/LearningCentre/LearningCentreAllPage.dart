@@ -44,7 +44,7 @@ class LearningCentreAllPage extends StatelessWidget {
                       ),
                     ),
                     PageHeader(
-                      title: "Learning",
+                      title: "Learning Hub",
                     )
                   ],
                 ),

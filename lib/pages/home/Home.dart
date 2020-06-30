@@ -18,6 +18,7 @@ import 'package:app/assets/components/customScrollableSheet.dart';
 import 'package:app/assets/components/progress.dart';
 import 'package:app/assets/components/viewCampaigns.dart';
 import 'package:app/assets/components/smoothPageIndicatorEffect.dart';
+import 'package:app/assets/routes/customLaunch.dart';
 
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/State.dart';
@@ -26,7 +27,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 const double BUTTON_PADDING = 10;
 
@@ -131,7 +131,7 @@ class Home extends StatelessWidget {
                      children: [
                        HomeTitle(
                          "Take action now!",
-                         subtitle: "Find out what you can start doing to support your campaign:",
+                         subtitle: "Find out what you can start doing to support your campaigns:",
                          textAlign: TextAlign.center,
                        ),
                        Padding(
@@ -169,7 +169,13 @@ class Home extends StatelessWidget {
                          child: DarkButton(
                            "Suggest a campaign",
                            onPressed: () {
-                             launch("https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform");
+                             customLaunch(
+                              context,
+                              "https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform",
+                              description: "To suggest causes for a new campaign you need to fill up a form on Google Sheets",
+                              buttonText: "Go to online form"
+                             );
+
                            },
                            inverted: true,
                          ),
@@ -202,17 +208,20 @@ class Home extends StatelessWidget {
                            viewModel.userModel.user.getSelectedCampaigns() == null ? CircularProgressIndicator() : 
                            ImpactTile(
                              viewModel.userModel.user.getSelectedCampaigns().length,
-                             "Campaigns Joined"
+                             "Campaigns Joined",
+                             route: Routes.campaign,
                            ),
                            SizedBox(height: 10),
                            ImpactTile(
                              viewModel.getActiveCompletedActions().length,
-                             "Actions taken"
+                             "Actions taken",
+                             route: Routes.actions,
                            ),
                            SizedBox(height: 10),
                            ImpactTile(
                              viewModel.getActiveStarredActions().length,
-                             "Actions in todo list"
+                             "Actions in todo list",
+                             route: Routes.actions,
                            )
                          ],
                        ),
@@ -469,28 +478,32 @@ class HomeTitle extends StatelessWidget {
 class ImpactTile extends StatelessWidget {
   final int number;
   final String text;
-  ImpactTile(this.number, this.text);
+  final String route;
+  ImpactTile(this.number, this.text, {this.route});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ), 
-      child: Row(
-        children: [
-          SizedBox(width: 20),
-          Text(
-            number.toString(),
-            style: Theme.of(context).primaryTextTheme.headline1,
-          ),
-          SizedBox(width: 20),
-          Text(
-            text,
-            style: Theme.of(context).primaryTextTheme.headline4,
-          ),
+    return GestureDetector(
+      onTap:() {if (route != null) {Navigator.of(context).pushNamed(route);}},
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ), 
+        child: Row(
+          children: [
+            SizedBox(width: 20),
+            Text(
+              number.toString(),
+              style: Theme.of(context).primaryTextTheme.headline1,
+            ),
+            SizedBox(width: 20),
+            Text(
+              text,
+              style: Theme.of(context).primaryTextTheme.headline4,
+            ),
 
-        ],
+          ],
+        ),
       ),
     );
   }

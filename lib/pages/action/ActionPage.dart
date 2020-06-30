@@ -159,7 +159,7 @@ class _ActionPageState extends State<ActionPage> {
                   SizedBox(height: 15),
 
                   Expanded(
-                    child: Image.asset('assets/imgs/graphics/ilstr_empty.png'),
+                    child: Image.asset('assets/imgs/graphics/ilstr_empty@3x.png'),
                   ),
 
                   Text(

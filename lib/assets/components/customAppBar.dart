@@ -17,6 +17,7 @@ AppBar CustomAppBar({
     backgroundColor: Colors.white,
     automaticallyImplyLeading: false,
     centerTitle: true,
+    elevation: 0,
     bottom: PreferredSize(
         preferredSize: Size(0, 30),
         child: Row(

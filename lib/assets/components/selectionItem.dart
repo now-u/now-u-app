@@ -15,6 +15,7 @@ import 'package:app/pages/campaign/LearningCentre/LearningCentrePage.dart';
 import 'package:app/pages/campaign/LearningCentre/LearningTopicPage.dart';
 
 import 'package:app/assets/routes/customRoute.dart';
+import 'package:app/assets/routes/customLaunch.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/StyleFrom.dart';
 
@@ -333,7 +334,10 @@ class LearningResouceSelectionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return LeadingSelectionItem(
       onTap: () {
-        launch(resource.getLink());
+        customLaunch(
+          context,
+          resource.getLink()
+        );
       },
       leading: Stack(children: <Widget>[
         Padding(

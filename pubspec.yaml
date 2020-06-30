@@ -31,6 +31,7 @@ dependencies:
   path_provider: ^1.6.9
   font_awesome_flutter: ^8.8.1
   url_launcher: ^5.4.2
+  launch_review: ^1.0.1
   #url_launcher: ^5.0.0
   android_intent: ^0.3.7+2
   dropdown_formfield: ^0.1.2
