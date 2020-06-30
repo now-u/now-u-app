@@ -18,6 +18,8 @@ import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/StyleFrom.dart';
 
+final Color CHEVRON_COLOR = Color.fromRGBO(109,113,129,1);
+
 class SelectionItem extends StatelessWidget {
   final String text;
   final GestureTapCallback onClick;
@@ -67,7 +69,7 @@ class SelectionItem extends StatelessWidget {
               Icons.chevron_left,
               size: 25,
               color: arrowColor == null
-                  ? Theme.of(context).primaryColor
+                  ? CHEVRON_COLOR
                   : arrowColor,
             ),
           ),

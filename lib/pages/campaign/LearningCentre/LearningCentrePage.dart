@@ -48,7 +48,7 @@ class LearningCentrePage extends StatelessWidget {
                                               CrossAxisAlignment.start,
                                           children: [
                                             TextButton(
-                                              "Menu",
+                                              "Back",
                                               onClick: () {
                                                 Navigator.of(context).pop();
                                               },

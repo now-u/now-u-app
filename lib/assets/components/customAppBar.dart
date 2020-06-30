@@ -1,3 +1,4 @@
+import 'package:app/assets/StyleFrom.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/assets/components/textButton.dart';
@@ -16,6 +17,24 @@ AppBar CustomAppBar({
     backgroundColor: Colors.white,
     automaticallyImplyLeading: false,
     centerTitle: true,
+    bottom: PreferredSize(
+        preferredSize: Size(0, 30),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(width: 15),
+            Padding(
+              padding: EdgeInsets.only(bottom: 5),
+              child: Text(
+                text,
+                style: textStyleFrom(
+                  Theme.of(context).primaryTextTheme.headline2,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     title: Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -38,16 +57,6 @@ AppBar CustomAppBar({
                       },
                     ),
                   ),
-          ),
-        ),
-        Text(
-          text,
-          style: TextStyle(
-            color: Theme.of(context).primaryTextTheme.headline4.color,
-            fontSize: Theme.of(context).primaryTextTheme.headline4.fontSize,
-            fontWeight: FontWeight.w500,
-            fontStyle: Theme.of(context).primaryTextTheme.headline4.fontStyle,
-            fontFamily: Theme.of(context).primaryTextTheme.headline4.fontFamily,
           ),
         ),
         Expanded(

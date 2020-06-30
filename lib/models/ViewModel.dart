@@ -30,6 +30,7 @@ class ViewModel {
   // Helper functions
   final Function() getActiveSelectedCampaings;
   final Function() getActiveCompletedActions;
+  final Function() getActiveStarredActions;
   final Function(
       {bool includeCompleted,
       bool includeRejected,
@@ -53,6 +54,7 @@ class ViewModel {
     // Helper functions
     this.getActiveSelectedCampaings,
     this.getActiveCompletedActions,
+    this.getActiveStarredActions,
     this.getActiveActions,
   });
 
@@ -103,6 +105,12 @@ class ViewModel {
       return store.state.campaigns.getActions()
                 .where((a) => 
                   store.state.userState.user.getCompletedActions()
+                    .contains(a.getId())).toList();
+    }
+    List<CampaignAction> _getActiveStarredAction() {
+      return store.state.campaigns.getActions()
+                .where((a) => 
+                  store.state.userState.user.getStarredActions()
                     .contains(a.getId())).toList();
     }
 
@@ -171,6 +179,7 @@ class ViewModel {
       // Helper Functions
       getActiveSelectedCampaings: _getActiveSelectedCampaigns,
       getActiveCompletedActions: _getActiveCompletedActions,
+      getActiveStarredActions: _getActiveStarredAction,
       getActiveActions: _getActiveActions,
     );
   }

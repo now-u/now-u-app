@@ -95,7 +95,7 @@ class _ProfileState extends State<Profile> {
           {
             'profileTile':
                 ProfileTile("Send us an email", CustomIcons.ic_email),
-            'link': "mailto:hello@now-u.com?subject=Hi there"
+            'link': "mailto:hello@now-u.com?subject=Hi"
           },
           {
             'profileTile':

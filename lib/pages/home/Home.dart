@@ -81,7 +81,7 @@ class Home extends StatelessWidget {
                                     ),
                                     SizedBox(height: 17),
                                     Text(
-                                      "Ready to do some good to the world?",
+                                      "Ready to do some good for the world?",
                                       style: textStyleFrom(
                                         Theme.of(context).primaryTextTheme.headline3,
                                         fontSize: 20,
@@ -193,9 +193,9 @@ class Home extends StatelessWidget {
                                //Image.asset(),
                                //BadgeIndicator(),
                                HomeTitle(
-                                 "My Impact",
+                                 "My impact",
                                  infoTitle: "My Impact",
-                                 infoText: "The impact of our campaigns is crucial. Our aim is to create campaigns that do as much good as possible, so we’re working hard to design ways to measure the impact that now-u users have through our campaigns.\n We will keep you updated on your personal progress in the app, and share regular now-u community progress updates on our blog, news feed and social media.\n At the end of each campaign you joined, we will give you a quick survey about your experience of the campaign. We will use this data, as well as a wide range of other metrics, to create impact reports to share with you and our charity partners.\n We will try to learn as much as possible from these impact assessments so that we can keep improving our campaigns and helping you do good!",
+                                 infoText: "The impact of our campaigns is crucial. Our aim is to create campaigns that do as much good as possible, so we’re working hard to design ways to measure the impact that now-u users have through our campaigns.\n We will keep you updated on your personal progress in the app, and share regular now-u community progress updates on our blog, news feed and social media.\n At the end of each campaign you joined, we will give you a quick survey about your experience of the campaign. We will use this data, as well as a wide range of other metrics, to create impact reports to share with you and our charity partners.\n We will try to learn as much as possible from these impact assessments so that we can keep improving our campaigns and helping you to do good!",
                                ),
                              ]
                            ),
@@ -205,10 +205,14 @@ class Home extends StatelessWidget {
                              "Campaigns Joined"
                            ),
                            SizedBox(height: 10),
-                           viewModel.getActiveCompletedActions() == null ? CircularProgressIndicator() : 
                            ImpactTile(
                              viewModel.getActiveCompletedActions().length,
                              "Actions taken"
+                           ),
+                           SizedBox(height: 10),
+                           ImpactTile(
+                             viewModel.getActiveStarredActions().length,
+                             "Actions in todo list"
                            )
                          ],
                        ),
@@ -245,7 +249,7 @@ class HomeActionTile extends StatelessWidget {
       child: StoreConnector<AppState, ViewModel>(
         converter: (Store<AppState> store) => ViewModel.create(store),
         builder: (BuildContext context, ViewModel viewModel) {
-          if (viewModel.userModel.user.getSelectedCampaigns() == null) {
+          if (viewModel.userModel.user.getSelectedCampaigns() == null || viewModel.getActiveSelectedCampaings().getActions() == null) {
             return CircularProgressIndicator();
           }
           else if (viewModel.getActiveSelectedCampaings().getActions().length == 0) {
@@ -347,7 +351,7 @@ class CampaignCarosel extends StatelessWidget {
       converter: (Store<AppState> store) => ViewModel.create(store),
       builder: (BuildContext context, ViewModel viewModel) {
         if (viewModel.campaigns.getActiveCampaigns() == null) {
-          return null;
+          return CircularProgressIndicator();
         } else {
           return Column(
             children: [

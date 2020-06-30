@@ -398,7 +398,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                     SectionTitle("Campaign partners"),
                     SizedBox(width: 10,),
                     Wrap( 
-                      children: getOrganistaionTiles(campaign.getGeneralPartners()),
+                      children: getOrganistaionTiles(campaign.getGeneralPartners(), context),
                       spacing: 10,
                       runSpacing: 10,
                       crossAxisAlignment: WrapCrossAlignment.start,
@@ -428,30 +428,32 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                       fontSize: 14,
                       onClick: () {
                         print("Unjoining campaign");
+                        setState(() {
+                          joined = false;
+                        });
                         model.onUnjoinCampaign(campaign);
-                        Navigator.of(context).pushNamed(Routes.campaign);
                       },
                     )
                   ])
                 : Container(),
-            SizedBox(height: 25)
+            SizedBox(height: joined ? 20 : 70 )
           ],
         ),
         AnimatedPositioned(
-          bottom: joined ? -50 : 0,
+          bottom: joined ? -75 : 0,
           duration: Duration(milliseconds: 500),
           left: 0,
           child: FlatButton(
             padding: EdgeInsets.all(0),
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: 45,
+              height: 70,
               child: Center(
                   child: Text(
                 "Join now",
                 style: textStyleFrom(Theme.of(context).primaryTextTheme.button,
                     fontWeight: FontWeight.w600,
-                    fontSize: 17,
+                    fontSize: 20,
                     color: Colors.white),
               )),
             ),
@@ -569,27 +571,32 @@ class SDGSelectionItem extends StatelessWidget {
   }
 }
 
-List<Widget> getOrganistaionTiles(List<Organisation> organisations) {
+List<Widget> getOrganistaionTiles(List<Organisation> organisations, BuildContext context) {
   List<Widget> orgTiles = [];
   for(final org in organisations) {
     orgTiles.add(
-      CustomTile(
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-          child: Container(
-            height: 30,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Image.network(org.getLogoLink()),
-                SizedBox(width: 5,),
-                Text(
-                  org.getName(),
-                )
-              ],
+      GestureDetector(
+        onTap: () {
+          Navigator.of(context).pushNamed(Routes.organisationPage, arguments: org);
+        },
+        child: CustomTile(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+            child: Container(
+              height: 30,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.network(org.getLogoLink()),
+                  SizedBox(width: 5,),
+                  Text(
+                    org.getName(),
+                  )
+                ],
+              ),
             ),
-          ),
-        )
+          )
+        ),
       ),
     );
   }

@@ -1,8 +1,10 @@
 import 'package:app/pages/campaign/CampaignPage.dart';
+import 'package:app/pages/other/OrganisationPage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/main.dart';
+import 'package:app/models/Organisation.dart';
 
 import 'package:app/pages/profile/profilePages/FAQPage.dart';
 import 'package:app/pages/profile/profilePages/ProfilePage.dart';
@@ -31,6 +33,8 @@ class Routes {
   static const profile = "profile";
   static const faq = "faq";
   static const parteners = "parteners";
+  static const organisationPage = "organisationPage";
+
   static const info = "info";
 
   // Learning
@@ -115,6 +119,19 @@ Function initRoutes = (RouteSettings settings) {
         }
         return CustomRoute(
             builder: (context) => TabsPage(currentPage: TabPage.Home));
+      }
+    // Other
+    case Routes.organisationPage:
+      {
+        if (args is Organisation) {
+          return CustomRoute(
+              builder: (context) => OraganisationInfoPage(
+                  args
+              )
+          );
+        }
+        return CustomRoute(
+            builder: (context) => PartnersPage());
       }
 
     // Beta

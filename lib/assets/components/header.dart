@@ -32,6 +32,7 @@ class PageHeader extends StatelessWidget {
                           Navigator.of(context).pop();
                         },
                         iconLeft: true,
+                        fontWeight: FontWeight.w400,
                       ))
                     )
                   : Container(height: 40,),

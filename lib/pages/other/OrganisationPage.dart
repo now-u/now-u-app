@@ -7,6 +7,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app/models/Organisation.dart';
 
+final double SECTION_TITLE_BOTTOM_PADDING = 8;
+final double BETWEEN_SECTION_PADDING = 12;
+
 class OraganisationInfoPage extends StatelessWidget {
   final Organisation organisation;
   OraganisationInfoPage(
@@ -48,11 +51,13 @@ class OraganisationInfoPage extends StatelessWidget {
                 SizedBox(height: 10),
                 SectionTitle(
                   "About",
+                  vpadding: SECTION_TITLE_BOTTOM_PADDING,
                 ),
                 Text(
                   organisation.getDescription(),
                 ),
-                SizedBox(height: 20),
+                
+                SizedBox(height: BETWEEN_SECTION_PADDING),
                
                 organisation.getGeographicReach() == null ? Container() :
                 Column(
@@ -60,6 +65,7 @@ class OraganisationInfoPage extends StatelessWidget {
                   children: [
                     SectionTitle(
                       "Geographic reach",
+                      vpadding: SECTION_TITLE_BOTTOM_PADDING,
                     ),
                     Text(
                       organisation.getGeographicReach(),
@@ -67,6 +73,7 @@ class OraganisationInfoPage extends StatelessWidget {
                   ]
                 ),
 
+                SizedBox(height: BETWEEN_SECTION_PADDING),
 
                 organisation.getOrganistaionType() == null ? Container() :
                 Column(
@@ -74,6 +81,7 @@ class OraganisationInfoPage extends StatelessWidget {
                   children: [
                     SectionTitle(
                       "Organisation type",
+                      vpadding: SECTION_TITLE_BOTTOM_PADDING,
                     ),
                     Text(
                       organisation.getOrganistaionType(),
@@ -81,10 +89,12 @@ class OraganisationInfoPage extends StatelessWidget {
                   ]
                 ),
 
+                SizedBox(height: BETWEEN_SECTION_PADDING),
 
                 getSocialMediaChildren(organisation).length == 0 ? Container() :
                 SectionTitle(
                   "Follow this partner on social media",
+                  vpadding: SECTION_TITLE_BOTTOM_PADDING
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -92,13 +102,13 @@ class OraganisationInfoPage extends StatelessWidget {
                   children: getSocialMediaChildren(organisation),
                 ),
                 getSocialMediaChildren(organisation).length == 0 ? Container() :
-                SizedBox(height: 15),
+
+                SizedBox(height: BETWEEN_SECTION_PADDING),
 
                 getExtraLinks(organisation).length == 0 ? Container() :
                 SectionTitle(
                   "Find out more",
                 ),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   mainAxisSize: MainAxisSize.max,

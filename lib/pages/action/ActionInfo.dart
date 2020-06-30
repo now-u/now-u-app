@@ -321,15 +321,16 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                             }
                           )
                           :
-                          TextButton("Hide this action", fontSize: 14,
-                              onClick: () {
-                            showDialog(
-                              context: context,
-                              barrierDismissible: true,
-                              builder: (_) =>
-                                  RejectDialogue(_action, viewModel),
-                            );
-                          }),
+                          Container(),
+                          //TextButton("Hide this action", fontSize: 14,
+                          //    onClick: () {
+                          //  showDialog(
+                          //    context: context,
+                          //    barrierDismissible: true,
+                          //    builder: (_) =>
+                          //        RejectDialogue(_action, viewModel),
+                          //  );
+                          //}),
 
                           SizedBox(width: 10),
 
@@ -372,7 +373,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                             color: Colors.white,
                             size: 30,
                           ),
-                          SizedBox(width: 20),
+                          SizedBox(width: 12),
                           completed ? 
                             Text(
                               "You completed this action",
@@ -384,7 +385,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                             )
                           : 
                             Text(
-                              starred ? "Remove from To-Dos" : "Add to my To-Dos",
+                              starred ? "Remove from To-Dos" : "Add to my to-do list",
                               style: textStyleFrom(
                                   Theme.of(context).primaryTextTheme.button,
                                   fontWeight: FontWeight.w600,
@@ -462,20 +463,20 @@ class _RejectDialougeState extends State<RejectDialogue> {
                     }),
               ),
               SizedBox(height: 20),
-              Align(
-                alignment: Alignment.center,
-                child: DarkButton(
-                  "Hide action",
-                  onPressed: selectedReason == ""
-                      ? null
-                      : () {
-                          widget.model
-                              .onRejectAction(widget.action, selectedReason);
-                          Navigator.of(context).pushNamed(Routes.actions);
-                        },
-                ),
-              ),
-              SizedBox(height: 20),
+              //Align(
+              //  alignment: Alignment.center,
+              //  child: DarkButton(
+              //    "Hide action",
+              //    onPressed: selectedReason == ""
+              //        ? null
+              //        : () {
+              //            widget.model
+              //                .onRejectAction(widget.action, selectedReason);
+              //            Navigator.of(context).pushNamed(Routes.actions);
+              //          },
+              //  ),
+              //),
+              //SizedBox(height: 20),
             ],
           ),
         ));

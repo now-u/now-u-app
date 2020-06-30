@@ -34,7 +34,7 @@ class AboutPage extends StatelessWidget {
          ),
          ListDividor(),
          SelectionItem(
-          text: "Propose an action or campaign",
+          text: "Propose a campaign",
           onClick: () {
             launch("https://docs.google.com/forms/d/1qv0DzXll02Szjh0SVmV-ysuYGQ2oPNS8-_qDZRYDbBA/edit");
           }
