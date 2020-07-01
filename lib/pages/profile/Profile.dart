@@ -81,7 +81,7 @@ class _ProfileState extends State<Profile> {
           },
           {
             'profileTile':
-                ProfileTile("Rate us the app store", CustomIcons.ic_rateus),
+                ProfileTile("Rate us on the app store", CustomIcons.ic_rateus),
             'function': () {StoreRedirect.redirect();}
           },
           {
