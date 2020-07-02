@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:app/assets/components/textButton.dart';
 
 AppBar CustomAppBar({
-  @required text,
+  text,
   @required context,
   String backButtonText,
   bool hasBackButton,
@@ -18,7 +18,7 @@ AppBar CustomAppBar({
     automaticallyImplyLeading: false,
     centerTitle: true,
     elevation: 0,
-    bottom: PreferredSize(
+    bottom: text == null ? null : PreferredSize(
         preferredSize: Size(0, 30),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
