@@ -13,7 +13,6 @@ class LearningTopicPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        text: "",
         backButtonText: "Back",
         context: context,
       ),
