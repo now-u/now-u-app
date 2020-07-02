@@ -92,6 +92,7 @@ class SecondaryButton extends StatelessWidget {
     return CustomTile(
       child:
         Container(
+          color: Colors.white,
           height: darkButtonStyleStyles[style]['height'],
           child: RaisedButton(
             color: Colors.white,
