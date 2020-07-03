@@ -7,6 +7,8 @@ import 'package:app/models/FAQ.dart';
 import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/textButton.dart';
+import 'package:app/assets/components/customScrollableSheet.dart';
+import 'package:app/assets/components/header.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -19,100 +21,45 @@ class FAQPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: <Widget>[
-        StoreConnector<AppState, ViewModel>(
+      body: ScrollableSheetPage(
+        header: 
+          Container(
+            color: Color.fromRGBO(247,248,252,1),
+            height: MediaQuery.of(context).size.height * (1-0.6),
+            child: Stack(
+              children: [
+                Positioned(
+                  right: -30,
+                  bottom: -10,
+                  child: Image.asset(
+                    "assets/imgs/graphics/ilstr_learning@3x.png",
+                    height: MediaQuery.of(context).size.height * 0.3,
+                  ),
+                ),
+                PageHeader(
+                  title: "Learning Hub",
+                )
+              ],
+            ),
+          ),
+        children: [
+          StoreConnector<AppState, ViewModel>(
           converter: (Store<AppState> store) => ViewModel.create(store),
           builder: (BuildContext context, ViewModel viewModel) {
             return FutureBuilder(
               future: viewModel.api.getFAQs(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
-                  return Expanded(
-                      child: ListView(
-                    children: [
-                      Container(
-                        color: Colors.white,
-                        height: HEADING_HEIGHT,
-                        child: Stack(
-                          children: [
-                            Positioned(
-                                top: -40,
-                                left: MediaQuery.of(context).size.width * 0.5 -
-                                    40,
-                                child: Container(
-                                  height: CIRCLE_1_RADIUS,
-                                  width: CIRCLE_1_RADIUS,
-                                  decoration: BoxDecoration(
-                                    color: colorFrom(
-                                      Theme.of(context).primaryColor,
-                                      opacity: 0.2,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        CIRCLE_1_RADIUS / 2),
-                                  ),
-                                )),
-                            Positioned(
-                                top: 120,
-                                left: -80,
-                                child: Container(
-                                  height: CIRCLE_2_RADIUS,
-                                  width: CIRCLE_2_RADIUS,
-                                  decoration: BoxDecoration(
-                                    color: colorFrom(
-                                      Theme.of(context).primaryColor,
-                                      opacity: 0.2,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        CIRCLE_2_RADIUS / 2),
-                                  ),
-                                )),
-                            Align(
-                              alignment: Alignment.bottomRight,
-                              child: Image.asset(
-                                "assets/imgs/learning.png",
-                                height: 180,
-                              ),
-                            ),
-                            SafeArea(
-                                child: Padding(
-                                    padding: EdgeInsets.all(10),
-                                    child: Align(
-                                      alignment: Alignment.topRight,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          TextButton(
-                                            "Menu",
-                                            onClick: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            iconLeft: true,
-                                          ),
-                                          SizedBox(height: 10),
-                                          Text(
-                                            "FAQs",
-                                            style: Theme.of(context)
-                                                .primaryTextTheme
-                                                .headline2,
-                                          )
-                                        ],
-                                      ),
-                                    ))),
-                          ],
+                  return Container(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return FAQTile(snapshot.data[index]);
+                          },
                         ),
-                      ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return FAQTile(snapshot.data[index]);
-                        },
-                      ),
-                    ],
-                  ));
+                  );
                   //return ListView.builder(
                   //  shrinkWrap: true,
                   //  itemBuilder: (BuildContext context, int index) {
@@ -121,7 +68,7 @@ class FAQPage extends StatelessWidget {
                   //  },
                   //);
                 } else {
-                  return Center(
+                  return Expanded(
                     child: CircularProgressIndicator(),
                   );
                 }
