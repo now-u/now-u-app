@@ -126,7 +126,7 @@ class _CampaignPageState extends State<CampaignPage> {
                   viewModel.getActiveSelectedCampaings().activeLength() == 0 &&
                           onlyJoined
                       ? Center(
-                          child: Text("You havent selecetd any campaigns yet"),
+                          child: Text("You havent selected any campaigns yet"),
                         )
                       : Container(),
                   Container(
