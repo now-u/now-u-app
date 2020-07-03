@@ -21,7 +21,7 @@ import 'package:app/assets/components/smoothPageIndicatorEffect.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-const double CAMPAIGN_SELECT_HEIGHT = 120;
+const double CAMPAIGN_SELECT_HEIGHT = 110;
 final _controller = PageController(
   initialPage: 0,
   viewportFraction: 0.93,
@@ -202,9 +202,9 @@ class _ActionPageState extends State<ActionPage> {
                     },
                     icon: Icons.filter_list,
                   ),
-                  SizedBox(height: 15),
 
-                  Column(
+                  Expanded(
+                    child: ListView(
                     children: [
                       // Campaign selection widget
                       Container(
@@ -239,13 +239,13 @@ class _ActionPageState extends State<ActionPage> {
                                           .pushNamed(Routes.campaign);
                                     },
                                     child: Padding(
-                                      padding: EdgeInsets.symmetric(vertical: 10),
+                                      padding: EdgeInsets.only(bottom: 10),
                                       child: AddCampaignTile(),
                                     )
                                   );
                                 }
                                 return Padding(
-                                  padding: EdgeInsets.symmetric(vertical:10),
+                                  padding: EdgeInsets.only(bottom:10),
                                   child: CampaignSelectionTile(viewModel
                                     .userModel.user
                                     .filterSelectedCampaigns(viewModel.campaigns
@@ -270,119 +270,124 @@ class _ActionPageState extends State<ActionPage> {
                                   }
                                 });
                               })),
-                      SmoothPageIndicator(
-                        controller: _controller,
-                        //count: viewModel.campaigns.getActiveCampaigns().length,
-                        count: viewModel
-                                    .getActiveSelectedCampaings()
-                                    .activeLength() ==
-                                viewModel.campaigns.getActiveCampaigns().length
-                            ? viewModel.userModel.user.getSelectedCampaigns().length
-                            : viewModel.userModel.user
-                                    .getSelectedCampaigns()
-                                    .length +
-                                1,
-                        effect: customSmoothPageInducatorEffect,
+                      Align(
+                        alignment: Alignment.center,
+                        child: SmoothPageIndicator(
+                          controller: _controller,
+                          //count: viewModel.campaigns.getActiveCampaigns().length,
+                          count: viewModel
+                                      .getActiveSelectedCampaings()
+                                      .activeLength() ==
+                                  viewModel.campaigns.getActiveCampaigns().length
+                              ? viewModel.userModel.user.getSelectedCampaigns().length
+                              : viewModel.userModel.user
+                                      .getSelectedCampaigns()
+                                      .length +
+                                  1,
+                          effect: customSmoothPageInducatorEffect,
+                        ),
                       ),
 
                       SizedBox(
                         height: 15,
                       ),
-                    ],
-                  ),
 
-                  // Actions List
-                  Expanded(
-                      child: campaign == null
-                          ? ViewCampaigns()
-                          : ListView(
-                              shrinkWrap: true,
-                              children: [
-                                Row(
+                      // Action list
+                      Container(
+                          child: campaign == null
+                              ? ViewCampaigns()
+                              : ListView(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
                                   children: [
-                                    ActiveDoneSelector(
-                                      "All",
-                                      () {
-                                        setState(() {
-                                          selections['extras']['starred'] =
-                                              true;
-                                          selections['extras']['todo'] = true;
-                                          selections['extras']['rejected'] =
-                                              false;
-                                          selections['extras']['completed'] =
-                                              false;
+                                    Row(
+                                      children: [
+                                        ActiveDoneSelector(
+                                          "All",
+                                          () {
+                                            setState(() {
+                                              selections['extras']['starred'] =
+                                                  true;
+                                              selections['extras']['todo'] = true;
+                                              selections['extras']['rejected'] =
+                                                  false;
+                                              selections['extras']['completed'] =
+                                                  false;
 
-                                          actions = getActions(
-                                              campaign, selections, viewModel);
-                                        });
-                                      },
-                                      selections['extras']['todo'] &&
-                                          selections['extras']['starred'] &&
-                                          !selections['extras']['rejected'] &&
-                                          !selections['extras']['completed'],
-                                    ),
-                                    ActiveDoneSelector(
-                                      "To do",
-                                      () {
-                                        setState(() {
-                                          selections['extras']['starred'] =
-                                              true;
-                                          selections['extras']['todo'] = false;
-                                          selections['extras']['rejected'] =
-                                              false;
-                                          selections['extras']['completed'] =
-                                              false;
+                                              actions = getActions(
+                                                  campaign, selections, viewModel);
+                                            });
+                                          },
+                                          selections['extras']['todo'] &&
+                                              selections['extras']['starred'] &&
+                                              !selections['extras']['rejected'] &&
+                                              !selections['extras']['completed'],
+                                        ),
+                                        ActiveDoneSelector(
+                                          "To do",
+                                          () {
+                                            setState(() {
+                                              selections['extras']['starred'] =
+                                                  true;
+                                              selections['extras']['todo'] = false;
+                                              selections['extras']['rejected'] =
+                                                  false;
+                                              selections['extras']['completed'] =
+                                                  false;
 
-                                          actions = getActions(
-                                              campaign, selections, viewModel);
-                                        });
-                                      },
-                                      !selections['extras']['todo'] &&
-                                          selections['extras']['starred'] &&
-                                          !selections['extras']['rejected'] &&
-                                          !selections['extras']['completed'],
-                                    ),
-                                    ActiveDoneSelector(
-                                      "Completed",
-                                      () {
-                                        setState(() {
-                                          selections['extras']['starred'] =
-                                              false;
-                                          selections['extras']['todo'] = false;
-                                          selections['extras']['rejected'] =
-                                              false;
-                                          selections['extras']['completed'] =
-                                              true;
+                                              actions = getActions(
+                                                  campaign, selections, viewModel);
+                                            });
+                                          },
+                                          !selections['extras']['todo'] &&
+                                              selections['extras']['starred'] &&
+                                              !selections['extras']['rejected'] &&
+                                              !selections['extras']['completed'],
+                                        ),
+                                        ActiveDoneSelector(
+                                          "Completed",
+                                          () {
+                                            setState(() {
+                                              selections['extras']['starred'] =
+                                                  false;
+                                              selections['extras']['todo'] = false;
+                                              selections['extras']['rejected'] =
+                                                  false;
+                                              selections['extras']['completed'] =
+                                                  true;
 
-                                          actions = getActions(
-                                              campaign, selections, viewModel);
-                                        });
-                                      },
-                                      !selections['extras']['todo'] &&
-                                          !selections['extras']['starred'] &&
-                                          !selections['extras']['rejected'] &&
-                                          selections['extras']['completed'],
+                                              actions = getActions(
+                                                  campaign, selections, viewModel);
+                                            });
+                                          },
+                                          !selections['extras']['todo'] &&
+                                              !selections['extras']['starred'] &&
+                                              !selections['extras']['rejected'] &&
+                                              selections['extras']['completed'],
+                                        ),
+                                      ],
                                     ),
+                                    ListView.builder(
+                                        shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemCount: actions.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 0),
+                                              child: ActionSelectionItem(
+                                                outerHpadding: 10,
+                                                campaign: campaign,
+                                                action: actions[index],
+                                                backgroundColor: Colors.white,
+                                              ));
+                                        }),
                                   ],
-                                ),
-                                ListView.builder(
-                                    shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemCount: actions.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 0),
-                                          child: ActionSelectionItem(
-                                            outerHpadding: 10,
-                                            campaign: campaign,
-                                            action: actions[index],
-                                            backgroundColor: Colors.white,
-                                          ));
-                                    }),
-                              ],
-                            ))
+                                ))
+                      ],
+                    )
+                  ),
                 ],
               ));
         });
