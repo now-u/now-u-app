@@ -64,6 +64,9 @@ class _CampaignPageState extends State<CampaignPage> {
       },
       converter: (Store<AppState> store) => ViewModel.create(store),
       builder: (BuildContext context, ViewModel viewModel) {
+        if (viewModel.loading) {
+          return CircularProgressIndicator();
+        }
         print("In page campaigns");
         print(viewModel.campaigns);
         print(viewModel.campaigns.getActiveCampaigns());

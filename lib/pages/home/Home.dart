@@ -60,6 +60,9 @@ class Home extends StatelessWidget {
                 child: StoreConnector<AppState, ViewModel>(
                   converter: (Store<AppState> store) => ViewModel.create(store),
                   builder: (BuildContext context, ViewModel viewModel) {
+                   if (viewModel.loading)  {
+                     return CircularProgressIndicator();
+                   }
                   return Stack(
                     children: <Widget> [
                       Padding(

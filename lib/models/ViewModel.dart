@@ -16,6 +16,7 @@ import 'package:app/redux/middleware.dart';
 class ViewModel {
   final Campaigns campaigns;
   final UserViewModel userModel;
+  final bool loading;
   //final User user;
   final Api api;
   final Function(Campaign, BuildContext) onJoinCampaign;
@@ -40,6 +41,7 @@ class ViewModel {
   ViewModel({
     this.campaigns,
     this.userModel,
+    this.loading,
     //this.user,
     this.api,
     this.onJoinCampaign,
@@ -168,6 +170,7 @@ class ViewModel {
     return ViewModel(
       campaigns: store.state.campaigns,
       userModel: UserViewModel.create(store),
+      loading: store.state.loading,
       //user: store.state.userState.user,
       api: store.state.api,
       onJoinCampaign: _onJoinCampaign,
