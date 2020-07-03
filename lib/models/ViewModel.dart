@@ -98,6 +98,9 @@ class ViewModel {
 
     // Helper Functions
     Campaigns _getActiveSelectedCampaigns() {
+      if (store.state.userState.user == null) {
+        return Campaigns([]);
+      }
       return Campaigns(store.state.userState.user
           .filterSelectedCampaigns(store.state.campaigns.getActiveCampaigns()));
     }

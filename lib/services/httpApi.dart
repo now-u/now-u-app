@@ -11,6 +11,11 @@ import 'package:app/models/Learning.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+class HttpError {
+  static const internal = "internal";
+  static const unknown = "unknown";
+}
+
 class HttpApi implements Api {
 
   //final String domainPrefix = "https://now-u-api.herokuapp.com/api/v1/";
