@@ -1,12 +1,14 @@
 import 'dart:io';
 
-import 'package:app/assets/routes/customIosRoute.dart';
 import 'package:app/pages/campaign/CampaignPage.dart';
 import 'package:app/pages/other/OrganisationPage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/models/Organisation.dart';
+import 'package:app/models/Campaign.dart';
+import 'package:app/models/Learning.dart';
+import 'package:app/models/Action.dart';
 
 import 'package:app/pages/profile/profilePages/FAQPage.dart';
 import 'package:app/pages/profile/profilePages/ProfilePage.dart';
@@ -17,6 +19,8 @@ import 'package:app/pages/other/BetaPage.dart';
 import 'package:app/pages/other/InfoPage.dart';
 import 'package:app/pages/Tabs.dart';
 import 'package:app/pages/campaign/LearningCentre/LearningCentreAllPage.dart';
+import 'package:app/pages/campaign/LearningCentre/LearningCentrePage.dart';
+import 'package:app/pages/campaign/LearningCentre/LearningTopicPage.dart';
 import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
 
 class Routes {
@@ -41,6 +45,8 @@ class Routes {
 
   // Learning
   static const learningAll = "learning";
+  static const learningSingle = "learningSingle";
+  static const learningTopic = "learningTopic";
 
   // Beta only
   static const beta = "beta";
@@ -89,6 +95,9 @@ Function initRoutes = (RouteSettings settings) {
         if (args is int) {
           return customRoute( builder: (context) => CampaignInfo( campaignId: args,));
         }
+        if (args is Campaign) {
+          return customRoute( builder: (context) => CampaignInfo( campaign: args,));
+        }
         return customRoute(builder: (context) => CampaignPage());
       }
     case Routes.actions:
@@ -99,6 +108,20 @@ Function initRoutes = (RouteSettings settings) {
     // Learning
     case Routes.learningAll:
       {
+        return customRoute(builder: (context) => LearningCentreAllPage());
+      }
+    case Routes.learningSingle:
+      {
+        if (args is int) {
+          return customRoute(builder: (context) => LearningCentrePage(args));
+        }
+        return customRoute(builder: (context) => LearningCentreAllPage());
+      }
+    case Routes.learningTopic:
+      {
+        if (args is LearningTopic) {
+          return customRoute( builder: (context) => LearningTopicPage(args));
+        }
         return customRoute(builder: (context) => LearningCentreAllPage());
       }
 

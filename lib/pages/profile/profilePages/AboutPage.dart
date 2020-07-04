@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:app/pages/profile/profilePages/FAQPage.dart';
 
+import 'package:app/routes.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/selectionItem.dart';
@@ -60,11 +61,9 @@ class AboutPage extends StatelessWidget {
          SelectionItem(
           text: "FAQ", 
           onClick: () {
-            Navigator.push(
+            Navigator.pushNamed(
               context, 
-              CustomRoute(
-                builder: (context) => FAQPage()
-              )
+              Routes.faq,
             );
           },
          ),

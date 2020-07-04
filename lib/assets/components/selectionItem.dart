@@ -9,6 +9,7 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/models/Learning.dart';
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/State.dart';
+import 'package:app/routes.dart';
 
 import 'package:app/pages/action/ActionInfo.dart';
 import 'package:app/pages/campaign/LearningCentre/LearningCentrePage.dart';
@@ -500,11 +501,7 @@ class LearningTopicSelectionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            CustomRoute(
-              builder: (context) => LearningTopicPage(topic),
-            ));
+        Navigator.of(context).pushNamed(Routes.learningTopic, arguments: topic);
       },
       child: Padding(
           padding: EdgeInsets.symmetric(
@@ -609,11 +606,7 @@ class LearningCentreCampaignSelectionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            CustomRoute(
-              builder: (context) => LearningCentrePage(campaign.getId()),
-            ));
+        Navigator.of(context).pushNamed(Routes.learningSingle, arguments: campaign.getId());
       },
       child: Padding(
           padding: EdgeInsets.symmetric(
