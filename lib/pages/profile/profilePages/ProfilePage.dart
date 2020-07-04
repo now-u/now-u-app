@@ -1,4 +1,3 @@
-import 'package:app/assets/routes/customRoute.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -6,8 +5,6 @@ import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/progress.dart';
 import 'package:app/assets/components/pointsNotifier.dart';
 import 'package:app/assets/StyleFrom.dart';
-
-import 'package:app/pages/profile/profilePages/DetailsPage.dart';
 
 import 'package:app/models/Badge.dart';
 import 'package:app/models/State.dart';
@@ -27,8 +24,8 @@ class ProfilePage extends StatelessWidget {
               color: Theme.of(context).primaryColor,
             ),
             onPressed: () {
-              Navigator.of(context)
-                  .push(CustomRoute(builder: (context) => DetailsPage()));
+              //Navigator.of(context)
+              //    .push(CustomRoute(builder: (context) => DetailsPage()));
             })
       ]),
       body: StoreConnector<AppState, ViewModel>(

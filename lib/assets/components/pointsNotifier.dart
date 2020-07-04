@@ -1,23 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flushbar/flushbar.dart';
 import 'dart:math';
 
-import 'package:app/assets/routes/customRoute.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app/models/Badge.dart';
-import 'package:app/models/Campaign.dart';
-import 'package:app/models/Action.dart';
-import 'package:app/models/ViewModel.dart';
-import 'package:app/models/Reward.dart';
-
-import 'package:app/pages/other/RewardComplete.dart';
-
-import 'package:app/routes.dart';
 
 import 'package:app/assets/StyleFrom.dart';
-import 'package:app/assets/components/progress.dart';
 
 List<String> actionSuccessTitle = [
   "Amazing work!",

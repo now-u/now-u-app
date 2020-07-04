@@ -3,12 +3,8 @@ import 'dart:io';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:android_intent/android_intent.dart';
 
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:rect_getter/rect_getter.dart';
-
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
-import 'package:app/assets/routes/customRoute.dart';
 
 import 'package:app/models/ViewModel.dart';
 
@@ -17,11 +13,18 @@ import 'package:app/routes.dart';
 
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
-class EmailSentPage extends StatefulWidget {
+class EmailSentPageArguments {
   final UserViewModel model;
   final String email;
+  EmailSentPageArguments({
+    @required this.model,
+    @required this.email,
+  });
+}
 
-  EmailSentPage(this.model, this.email);
+class EmailSentPage extends StatefulWidget {
+  final EmailSentPageArguments args;
+  EmailSentPage(this.args);
 
   @override
   _EmailSentPageState createState() => _EmailSentPageState();
@@ -63,10 +66,10 @@ class _EmailSentPageState extends State<EmailSentPage>
 
         if (deepLink != null && deepLink.path == "/loginMobile") {
           print(deepLink.queryParameters['token']);
-          widget.model.repository.getEmail().then((email) {
+          widget.args.model.repository.getEmail().then((email) {
             print("Stored email is");
             print(email);
-            widget.model.login(email, deepLink.queryParameters['token']);
+            widget.args.model.login(email, deepLink.queryParameters['token']);
           });
         }
       }, onError: (OnLinkErrorException e) async {
@@ -101,7 +104,7 @@ class _EmailSentPageState extends State<EmailSentPage>
                       //physics: NeverScrollableScrollPhysics(),
                       child: IntroPageSection(
                         "Check your email",
-                        "We have just sent an email to ${widget.email}",
+                        "We have just sent an email to ${widget.args.email}",
                         "It has a link that will sign you in to now-u and get you started",
                         AssetImage('assets/imgs/intro/il-mail@4x.png'),
                       ),

@@ -9,7 +9,6 @@ import 'package:app/pages/Tabs.dart';
 
 import 'package:app/assets/components/pageTitle.dart';
 import 'package:app/assets/components/darkButton.dart';
-import 'package:app/assets/routes/customRoute.dart';
 
 class SelectionComplete extends StatelessWidget {
 

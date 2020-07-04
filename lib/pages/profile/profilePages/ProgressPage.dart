@@ -1,10 +1,10 @@
-import 'package:app/assets/routes/customRoute.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/assets/components/pageTitle.dart';
 import 'package:app/assets/components/darkButton.dart';
 
 import 'package:app/pages/Tabs.dart';
+import 'package:app/routes.dart';
 
 import 'package:app/models/ViewModel.dart';
 
@@ -42,10 +42,7 @@ class ProgressPage extends StatelessWidget {
           DarkButton(
             "View Campaigns", 
             onPressed: () {
-              Navigator.push(
-                context,
-                CustomRoute(builder: (context) => TabsPage(currentPage: TabPage.Campaigns,))
-              );
+              Navigator.of(context).pushNamed(Routes.campaign);
             },
           ),
           Container(
@@ -63,10 +60,7 @@ class ProgressPage extends StatelessWidget {
           DarkButton(
             "Completed Campaigns", 
             onPressed: () {
-              Navigator.push(
-                context,
-                CustomRoute(builder: (context) => TabsPage(currentPage: TabPage.Campaigns,))
-              );
+              Navigator.of(context).pushNamed(Routes.campaign);
             },
           ),
           Padding(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
-import 'package:url_launcher/url_launcher.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -9,12 +8,10 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/models/Learning.dart';
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/State.dart';
+import 'package:app/routes.dart';
 
 import 'package:app/pages/action/ActionInfo.dart';
-import 'package:app/pages/campaign/LearningCentre/LearningCentrePage.dart';
-import 'package:app/pages/campaign/LearningCentre/LearningTopicPage.dart';
 
-import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/routes/customLaunch.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/StyleFrom.dart';
@@ -260,10 +257,7 @@ class ActionSelectionItem extends StatelessWidget {
                 if (extraOnTap != null) {
                   extraOnTap();
                 }
-                Navigator.push(
-                    context,
-                    CustomRoute(
-                        builder: (context) => ActionInfo(action, campaign)));
+                Navigator.of(context).pushNamed(Routes.actionInfo, arguments: ActionInfoArguments(campaign: campaign, action: action));
               },
               leading: Stack(children: <Widget>[
                 Padding(
@@ -500,11 +494,7 @@ class LearningTopicSelectionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            CustomRoute(
-              builder: (context) => LearningTopicPage(topic),
-            ));
+        Navigator.of(context).pushNamed(Routes.learningTopic, arguments: topic);
       },
       child: Padding(
           padding: EdgeInsets.symmetric(
@@ -609,11 +599,7 @@ class LearningCentreCampaignSelectionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            CustomRoute(
-              builder: (context) => LearningCentrePage(campaign.getId()),
-            ));
+        Navigator.of(context).pushNamed(Routes.learningSingle, arguments: campaign.getId());
       },
       child: Padding(
           padding: EdgeInsets.symmetric(
