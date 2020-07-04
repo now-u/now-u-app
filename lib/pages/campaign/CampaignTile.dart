@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:app/models/Campaign.dart';
-import 'package:app/models/User.dart';
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/State.dart';
 
-import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
-import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/components/joinedIndicator.dart';
 import 'package:app/assets/components/textButton.dart';
+import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/StyleFrom.dart';
+import 'package:app/routes.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -77,10 +76,7 @@ class _CampaignTileState extends State<CampaignTile> {
     //_user = widget.model.user;
 
     GestureTapCallback _onTapMoreInfo = () {
-      Navigator.push(
-          context,
-          CustomRoute(
-              builder: (context) => CampaignInfo(campaign: widget.campaign)));
+      Navigator.of(context).pushNamed(Routes.campaignInfo, arguments: widget.campaign);
     };
 
     var borderRadius = 20.0;
@@ -91,6 +87,7 @@ class _CampaignTileState extends State<CampaignTile> {
       onTap: _onTapMoreInfo,
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           // Image

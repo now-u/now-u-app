@@ -7,129 +7,78 @@ import 'package:app/models/FAQ.dart';
 import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/textButton.dart';
+import 'package:app/assets/components/customScrollableSheet.dart';
+import 'package:app/assets/components/header.dart';
+import 'package:app/assets/components/customTile.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 const double CIRCLE_1_RADIUS = 150;
 const double CIRCLE_2_RADIUS = 250;
-const double HEADING_HEIGHT = 250;
 
 class FAQPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: <Widget>[
-        StoreConnector<AppState, ViewModel>(
-          converter: (Store<AppState> store) => ViewModel.create(store),
-          builder: (BuildContext context, ViewModel viewModel) {
-            return FutureBuilder(
-              future: viewModel.api.getFAQs(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  return Expanded(
-                      child: ListView(
+      body: StoreConnector<AppState, ViewModel>(
+      converter: (Store<AppState> store) => ViewModel.create(store),
+      builder: (BuildContext context, ViewModel viewModel) {
+        return FutureBuilder(
+          future: viewModel.api.getFAQs(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return ScrollableSheetPage(
+              initialChildSize: 0.85,
+              minChildSize: 0.85,
+              shadow: BoxShadow(
+                color: Colors.transparent,
+              ),
+              scaffoldBackgroundColor: Color.fromRGBO(247,248,252,1),
+              sheetBackgroundColor: Colors.white,
+              header: 
+                Container(
+                  height: MediaQuery.of(context).size.height * (1-0.6),
+                  child: Stack(
                     children: [
-                      Container(
-                        color: Colors.white,
-                        height: HEADING_HEIGHT,
-                        child: Stack(
-                          children: [
-                            Positioned(
-                                top: -40,
-                                left: MediaQuery.of(context).size.width * 0.5 -
-                                    40,
-                                child: Container(
-                                  height: CIRCLE_1_RADIUS,
-                                  width: CIRCLE_1_RADIUS,
-                                  decoration: BoxDecoration(
-                                    color: colorFrom(
-                                      Theme.of(context).primaryColor,
-                                      opacity: 0.2,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        CIRCLE_1_RADIUS / 2),
-                                  ),
-                                )),
-                            Positioned(
-                                top: 120,
-                                left: -80,
-                                child: Container(
-                                  height: CIRCLE_2_RADIUS,
-                                  width: CIRCLE_2_RADIUS,
-                                  decoration: BoxDecoration(
-                                    color: colorFrom(
-                                      Theme.of(context).primaryColor,
-                                      opacity: 0.2,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        CIRCLE_2_RADIUS / 2),
-                                  ),
-                                )),
-                            Align(
-                              alignment: Alignment.bottomRight,
-                              child: Image.asset(
-                                "assets/imgs/learning.png",
-                                height: 180,
-                              ),
-                            ),
-                            SafeArea(
-                                child: Padding(
-                                    padding: EdgeInsets.all(10),
-                                    child: Align(
-                                      alignment: Alignment.topRight,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          TextButton(
-                                            "Menu",
-                                            onClick: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            iconLeft: true,
-                                          ),
-                                          SizedBox(height: 10),
-                                          Text(
-                                            "FAQs",
-                                            style: Theme.of(context)
-                                                .primaryTextTheme
-                                                .headline2,
-                                          )
-                                        ],
-                                      ),
-                                    ))),
-                          ],
+                      Positioned(
+                        right: -30,
+                        bottom: MediaQuery.of(context).size.height * (1 - 0.6) * 0.3,
+                        child: Image.asset(
+                          "assets/imgs/graphics/ilstr_FAQ.png",
+                          height: MediaQuery.of(context).size.height * 0.3,
                         ),
                       ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return FAQTile(snapshot.data[index]);
-                        },
-                      ),
+                      PageHeader(
+                        backButton: true,
+                        title: "FAQs",
+                      )
                     ],
-                  ));
-                  //return ListView.builder(
-                  //  shrinkWrap: true,
-                  //  itemBuilder: (BuildContext context, int index) {
-                  //    //return Text(snapshot.data[index].getQuestion());
-                  //    return Text(index.toString());
-                  //  },
-                  //);
-                } else {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              },
+                  ),
+                ),
+              children: [
+                Container(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return FAQTile(snapshot.data[index]);
+                    },
+                  ),
+                )
+              ]
             );
           },
-        )
-      ]),
+        );
+      },
+      ),
     );
   }
 }
@@ -153,23 +102,53 @@ class _FAQTileState extends State<FAQTile> {
   Widget build(BuildContext context) {
     print("FAQ question is ${widget.faq.getQuestion()}");
     print("FAQ answer is ${widget.faq.getAnswer()}");
-    return Container(
-      width: double.infinity,
-      child: Card(
-        child: Padding(
-          padding: EdgeInsets.all(5),
-          child: ExpansionTile(
-            title: Text(widget.faq.getQuestion()),
-            trailing: SizedBox(),
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selected = !selected;
+        });
+      },
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        child: Container(
+          width: double.infinity,
+          child: Column(
             children: [
-              Padding(
-                padding: EdgeInsets.all(5),
-                child: Text(widget.faq.getAnswer()),
-              )
-            ],
-          )
-        ),
-      )
+              CustomTile(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          widget.faq.getQuestion(),
+                          style: Theme.of(context).primaryTextTheme.headline4,
+                        ),
+                      ),
+                      Icon(
+                        FontAwesomeIcons.chevronDown,
+                        color: Color.fromRGBO(109,113,129, 1),
+                        size: 20,
+                      ),
+                    ],
+                  ),
+                )
+              ),
+              selected 
+                ? Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                    child: Text(
+                      widget.faq.getAnswer(),
+                      style: Theme.of(context).primaryTextTheme.bodyText1,
+                    )
+                  )
+                : Container(),
+            ]
+          ),
+        )
+      ),
     );
   }
 }

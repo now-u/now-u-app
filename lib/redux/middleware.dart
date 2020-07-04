@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-import 'package:app/assets/routes/customRoute.dart';
 import 'package:redux/redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -385,9 +384,7 @@ ThunkAction<AppState> emailUser(String email, String name) {
         print("Trying to send email");
         store.dispatch(SentAuthEmail(email));
         print("Trying to nav");
-        Keys.navKey.currentState.push(CustomRoute(
-            builder: (context) =>
-                EmailSentPage(UserViewModel.create(store), email)));
+        Keys.navKey.currentState.pushNamed(Routes.emailSent, arguments: EmailSentPageArguments(email: email, model: UserViewModel.create(store)));
       }, onError: (error) {
         store.dispatch(new LoginFailedAction());
       });
@@ -395,7 +392,7 @@ ThunkAction<AppState> emailUser(String email, String name) {
   };
 }
 
-ThunkAction loginUser(String email, String link) {
+ThunkAction loginUser(String email, String link,) {
   return (Store store) async {
     Future(() async {
       store.dispatch(StartLoadingUserAction());
@@ -449,19 +446,20 @@ ThunkAction initStore(Uri deepLink) {
               print("The path is the thing");
               print(deepLink.path);
               store.state.userState.repository.getEmail().then((email) {
-                store.state.userState.auth
-                    .signInWithEmailLink(
-                        email, deepLink.queryParameters['token'])
-                    .then((User r) {
-                  print("Signed in ish");
-                  //print(r.user.email);
-                  //print(r.user.hashCode)
-                  // TODO if new user
-                  // intro
-                  Keys.navKey.currentState.pushNamed(Routes.intro);
-                  // else home cause theyve already done the intro
-                  // Keys.navKey.currentState.pushNamed(Routes.home);
-                });
+                store.dispatch(loginUser(email, deepLink.queryParameters['token']));
+                //store.state.userState.auth
+                //    .signInWithEmailLink(
+                //        email, deepLink.queryParameters['token'])
+                //    .then((User r) {
+                //  print("Signed in ish");
+                //  //print(r.user.email);
+                //  //print(r.user.hashCode)
+                //  // TODO if new user
+                //  // intro
+                //  Keys.navKey.currentState.pushNamed(Routes.intro);
+                //  // else home cause theyve already done the intro
+                //  // Keys.navKey.currentState.pushNamed(Routes.home);
+                //});
               });
             } else {
               Keys.navKey.currentState.pushNamed(Routes.login);

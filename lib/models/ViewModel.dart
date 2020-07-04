@@ -16,6 +16,7 @@ import 'package:app/redux/middleware.dart';
 class ViewModel {
   final Campaigns campaigns;
   final UserViewModel userModel;
+  final bool loading;
   //final User user;
   final Api api;
   final Function(Campaign, BuildContext) onJoinCampaign;
@@ -31,6 +32,7 @@ class ViewModel {
   final Function() getActiveSelectedCampaings;
   final Function() getActiveCompletedActions;
   final Function() getActiveStarredActions;
+  final Function() getCampaignsWithSelctedFirst;
   final Function(
       {bool includeCompleted,
       bool includeRejected,
@@ -40,6 +42,7 @@ class ViewModel {
   ViewModel({
     this.campaigns,
     this.userModel,
+    this.loading,
     //this.user,
     this.api,
     this.onJoinCampaign,
@@ -56,6 +59,7 @@ class ViewModel {
     this.getActiveCompletedActions,
     this.getActiveStarredActions,
     this.getActiveActions,
+    this.getCampaignsWithSelctedFirst,
   });
 
   factory ViewModel.create(Store<AppState> store) {
@@ -98,8 +102,18 @@ class ViewModel {
 
     // Helper Functions
     Campaigns _getActiveSelectedCampaigns() {
+      if (store.state.userState.user == null) {
+        return Campaigns([]);
+      }
       return Campaigns(store.state.userState.user
           .filterSelectedCampaigns(store.state.campaigns.getActiveCampaigns()));
+    }
+    Campaigns _getActiveUnselectedCampaigns() {
+      if (store.state.userState.user == null) {
+        return store.state.campaigns;
+      }
+      return Campaigns(store.state.userState.user
+          .filterUnselectedCampaigns(store.state.campaigns.getActiveCampaigns()));
     }
     List<CampaignAction> _getActiveCompletedActions() {
       return store.state.campaigns.getActions()
@@ -112,6 +126,21 @@ class ViewModel {
                 .where((a) => 
                   store.state.userState.user.getStarredActions()
                     .contains(a.getId())).toList();
+    }
+
+    // Return avtive campaigns with selected first
+    // Also shuffles selected and unselected campaigns
+    Campaigns _getCampaignsWithSelectedFirst() {
+      List<Campaign> cs = [];
+      List<Campaign> selectedCs = _getActiveSelectedCampaigns().getActiveCampaigns();
+      selectedCs.shuffle();
+      List<Campaign> unselectedCs = _getActiveUnselectedCampaigns().getActiveCampaigns();
+      unselectedCs.shuffle();
+
+      cs.addAll(selectedCs);
+      cs.addAll(unselectedCs);
+
+      return Campaigns(cs);
     }
 
     //List<Campaign> _getActiveUnselectedCampaigns() {
@@ -165,6 +194,7 @@ class ViewModel {
     return ViewModel(
       campaigns: store.state.campaigns,
       userModel: UserViewModel.create(store),
+      loading: store.state.loading,
       //user: store.state.userState.user,
       api: store.state.api,
       onJoinCampaign: _onJoinCampaign,
@@ -181,6 +211,7 @@ class ViewModel {
       getActiveCompletedActions: _getActiveCompletedActions,
       getActiveStarredActions: _getActiveStarredAction,
       getActiveActions: _getActiveActions,
+      getCampaignsWithSelctedFirst: _getCampaignsWithSelectedFirst,
     );
   }
 }
