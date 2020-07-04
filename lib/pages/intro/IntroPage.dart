@@ -14,17 +14,17 @@ import 'package:app/main.dart';
 List<Widget> pages = <Widget>[
                   IntroPageSection(
                     "Join campaigns",
-                    "Every month, we’ll bring you 3 campaigns in partnership with charities. You can join as many as you like to start making a real difference to causes you care about",
+                    "We partner with charities to bring you targeted monthly campaigns, highlighting a range of social and environmental issues both locally and around the world. Join as many as you like!",
                     AssetImage('assets/imgs/intro/On-Boarding illustrations-01.png'),
                   ),
                   IntroPageSection(
                     "Take action",
-                    "Advocate, raise money, learn and get involved - choose your ways of doing good",
+                    "Whether you have five minutes in the morning, or want to dedicate more time to your chosen cause, discover effective and meaningful ways to take action!",
                     AssetImage('assets/imgs/intro/On-Boarding illustrations-02.png'),
                   ),
                   IntroPageSection(
                     "Create real impact",
-                    "Become part of the now-u community and see how our combined actions can help shape a better world",
+                    "Join a community of changemakers, connect with fellow campaign contributors, and see how your actions are making a difference.",
                     AssetImage('assets/imgs/intro/On-Boarding illustrations-04.png'),
                   ),
 ];

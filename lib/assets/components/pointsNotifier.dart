@@ -26,7 +26,7 @@ List<String> actionSuccessTitle = [
   "Keep it up!",
 ];
 List<String> actionSuccessMessages = [
-  "Every action you take is a small step towards driving real change. Thank you so much for being part of our community working together to make a difference!",
+  "Every action you take is a small step towards creating lasting and sustainable change. Thank you for being a part of the now-u community, working together to make a difference!",
 ];
 List<String> campaignSuccessTitle = [
   "Thank you!",

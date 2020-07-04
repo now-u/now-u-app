@@ -45,6 +45,8 @@ class LearningCentreAllPage extends StatelessWidget {
                     ),
                     PageHeader(
                       title: "Learning Hub",
+                      infoTitle: "Learning Hub",
+                      infoText: "Driving change starts with being informed.\n Our learning actions give you the fundamental knowledge to better understand the issue, why it’s so important, what’s being done to tackle it, and how you can help make a difference.\n In our Learning Hub, we provide short and informative answers to key questions about each campaign issue, as well as extra learning resources so you can dive deeper into the topic. Educate yourself on campaign topics to become an effective advocate for your cause, and help contribute new ideas for driving change.",
                     )
                   ],
                 ),
