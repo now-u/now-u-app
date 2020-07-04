@@ -21,6 +21,7 @@ class Routes {
   // Intro
   static const intro = "intro";
   static const login = "login";
+  static const loginIssues = "loginIssues";
 
   // Tab View Routes
   static const campaign = "campaign";
@@ -54,6 +55,10 @@ Function initRoutes = (RouteSettings settings) {
     case Routes.login:
       {
         return CustomRoute(builder: (context) => LoginPage());
+      }
+    case Routes.loginIssues:
+      {
+        return CustomRoute(builder: (context) => LoginPage(retry: true));
       }
     case Routes.intro:
       {
