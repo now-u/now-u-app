@@ -3,16 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Organisation.dart';
 import 'package:app/models/SDG.dart';
-import 'package:app/models/Badge.dart';
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/State.dart';
 
-import 'package:app/pages/campaign/LearningCentre/LearningCentrePage.dart';
 
 import 'package:app/services/api.dart';
 import 'package:app/locator.dart';
@@ -22,9 +19,7 @@ import 'package:app/assets/icons/customIcons.dart';
 import 'package:app/assets/components/joinedIndicator.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/customAppBar.dart';
-import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/customTile.dart';
-import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/components/organisationTile.dart';
 import 'package:app/assets/components/textButton.dart';
 

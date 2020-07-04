@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
-import 'package:url_launcher/url_launcher.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -12,10 +11,7 @@ import 'package:app/models/State.dart';
 import 'package:app/routes.dart';
 
 import 'package:app/pages/action/ActionInfo.dart';
-import 'package:app/pages/campaign/LearningCentre/LearningCentrePage.dart';
-import 'package:app/pages/campaign/LearningCentre/LearningTopicPage.dart';
 
-import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/routes/customLaunch.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/StyleFrom.dart';

@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:app/pages/profile/profilePages/FAQPage.dart';
-
 import 'package:app/routes.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/selectionItem.dart';
-import 'package:app/assets/routes/customRoute.dart';
 
 const double PADDING = 12;
 
