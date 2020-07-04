@@ -54,10 +54,10 @@ class Home extends StatelessWidget {
         StoreConnector<AppState, ViewModel>(
           converter: (Store<AppState> store) => ViewModel.create(store),
           builder: (BuildContext context, ViewModel viewModel) {
-            Campaigns campaigns = viewModel.getCampaignsWithSelctedFirst();  
            if (viewModel.loading)  {
              return CircularProgressIndicator();
            }
+          Campaigns campaigns = viewModel.getCampaignsWithSelctedFirst();  
            return 
               ScrollableSheetPage(
                 header: 
