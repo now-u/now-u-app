@@ -25,6 +25,7 @@ import 'package:wiredash/wiredash.dart';
 
 void main() {
   Crashlytics.instance.enableInDevMode = true;
+  FlutterError.onError = Crashlytics.instance.recordFlutterError;
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(statusBarColor: darkBlue),
