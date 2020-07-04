@@ -9,6 +9,7 @@ import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/components/joinedIndicator.dart';
 import 'package:app/assets/components/textButton.dart';
+import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/StyleFrom.dart';
 
 import 'package:redux/redux.dart';
@@ -91,6 +92,7 @@ class _CampaignTileState extends State<CampaignTile> {
       onTap: _onTapMoreInfo,
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           // Image

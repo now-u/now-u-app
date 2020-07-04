@@ -69,7 +69,7 @@ class _ProfileState extends State<Profile> {
           //},
           {
             'profileTile': ProfileTile(
-                "Propose an action or campaign", CustomIcons.ic_suggestcamp),
+                "Propose a campaign", CustomIcons.ic_suggestcamp),
             'link':
                 "https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform",
           },
