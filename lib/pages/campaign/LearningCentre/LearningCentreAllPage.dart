@@ -26,7 +26,7 @@ class LearningCentreAllPage extends StatelessWidget {
       converter: (Store<AppState> store) => ViewModel.create(store),
       builder: (BuildContext context, ViewModel viewModel) {
         return ScrollableSheetPage(
-            color: Colors.white,
+            sheetBackgroundColor: Colors.white,
             shadow: Shadow(color: Colors.transparent),
             // Header
             header: 
