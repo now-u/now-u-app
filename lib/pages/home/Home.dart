@@ -30,10 +30,18 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 const double BUTTON_PADDING = 10;
-
+const PageStorageKey campaignCarouselPageKey = PageStorageKey(1);
+  
 class Home extends StatelessWidget {
   final Function changePage;
   Home(this.changePage);
+  
+  final _controller = PageController(
+    initialPage: 0,
+    viewportFraction: 0.93,
+    keepPage: true,
+  );
+
   
   @override
   Widget build(BuildContext context) {
@@ -123,7 +131,7 @@ class Home extends StatelessWidget {
                          infoText: "We run 3 campaigns each month, with one additional campaign for our first month of July. We only select a few causes per month to focus the efforts of as many people as possible on each campaign.\n We aim to tackle a wide range of social and environmental issues and we would love to hear your suggestions for campaigns we could run!\n We select issues based on several factors, including their severity, the ability of our users to tackle them, and the timing of specific events with momentum that could lead to real change. The theme for our July campaigns is: issues exacerbated by the pandemic.\n Once a campaign is over, that of course does not mean the issue has been solved! Whilst we will move onto a new set of issues each month, we will continue to provide users with details of how to stay engaged with other causes, and return to core issues in future campaigns.",
                        ),
 
-                       CampaignCarosel(campaigns),
+                       CampaignCarosel(campaigns, _controller),
 
                        Container(
                         width: double.infinity,
@@ -256,12 +264,9 @@ Widget sectionTitle(String t, BuildContext context) {
 
 class CampaignCarosel extends StatelessWidget {
   final Campaigns cs;
+  final PageController controller;
 
-  CampaignCarosel (this.cs);
-  final _controller = PageController(
-    initialPage: 0,
-    viewportFraction: 0.93,
-  );
+  CampaignCarosel (this.cs, this.controller);
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -269,7 +274,8 @@ class CampaignCarosel extends StatelessWidget {
         Container(
           height: 280,
           child: PageView.builder(
-              controller: _controller,
+              key: campaignCarouselPageKey,
+              controller: controller,
               itemCount: cs.activeLength(),
                   // If all the active campaigns have been joined
               //itemCount: viewModel.campaigns.getActiveCampaigns().length,
@@ -290,7 +296,7 @@ class CampaignCarosel extends StatelessWidget {
             ),
           ),
           SmoothPageIndicator(
-            controller: _controller,
+            controller: controller,
             count: cs.activeLength(),
             effect: customSmoothPageInducatorEffect,
           ),
