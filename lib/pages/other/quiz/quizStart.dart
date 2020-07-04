@@ -31,10 +31,10 @@ class QuizStartPage extends StatelessWidget {
                    return DarkButton(
                      "Start Quiz",
                      onPressed: (){
-                        Navigator.push(
-                         context,
-                         CustomRoute(builder: (context) => QuizPage(snapshot.data))
-                        );
+                        //Navigator.push(
+                        // context,
+                        // CustomRoute(builder: (context) => QuizPage(snapshot.data))
+                        //);
                      }
                    );
                  }

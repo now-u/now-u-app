@@ -15,9 +15,11 @@ import 'package:app/pages/profile/profilePages/ProfilePage.dart';
 import 'package:app/pages/profile/profilePages/PartnersPage.dart';
 import 'package:app/pages/intro/IntroPage.dart';
 import 'package:app/pages/login/login.dart';
+import 'package:app/pages/login/emailSentPage.dart';
 import 'package:app/pages/other/BetaPage.dart';
 import 'package:app/pages/other/InfoPage.dart';
 import 'package:app/pages/Tabs.dart';
+import 'package:app/pages/action/ActionInfo.dart';
 import 'package:app/pages/campaign/LearningCentre/LearningCentreAllPage.dart';
 import 'package:app/pages/campaign/LearningCentre/LearningCentrePage.dart';
 import 'package:app/pages/campaign/LearningCentre/LearningTopicPage.dart';
@@ -27,12 +29,14 @@ class Routes {
   // Intro
   static const intro = "intro";
   static const login = "login";
+  static const emailSent = "emailSent";
 
   // Tab View Routes
   static const campaign = "campaign";
   static const actions = "actions";
   static const home = "home";
 
+  static const actionInfo = "actionInfo";
   static const campaignInfo = "campaignInfo";
 
   // Other
@@ -61,6 +65,13 @@ Function initRoutes = (RouteSettings settings) {
     // Into
     case Routes.login:
       {
+        return customRoute(builder: (context) => LoginPage());
+      }
+    case Routes.emailSent:
+      {
+        if (args is EmailSentPageArguments) {
+          return customRoute(builder: (context) => EmailSentPage(args));
+        }
         return customRoute(builder: (context) => LoginPage());
       }
     case Routes.intro:
@@ -102,6 +113,13 @@ Function initRoutes = (RouteSettings settings) {
       }
     case Routes.actions:
       {
+        return customRoute(builder: (context) => TabsPage(currentPage: TabPage.Actions));
+      }
+    case Routes.campaignInfo:
+      {
+        if (args is ActionInfoArguments) { 
+          return customRoute( builder: (context) => ActionInfo( args ));
+        }
         return customRoute(builder: (context) => TabsPage(currentPage: TabPage.Actions));
       }
 

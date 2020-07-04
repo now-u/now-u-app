@@ -385,9 +385,7 @@ ThunkAction<AppState> emailUser(String email, String name) {
         print("Trying to send email");
         store.dispatch(SentAuthEmail(email));
         print("Trying to nav");
-        Keys.navKey.currentState.push(CustomRoute(
-            builder: (context) =>
-                EmailSentPage(UserViewModel.create(store), email)));
+        Keys.navKey.currentState.pushNamed(Routes.emailSent, arguments: EmailSentPageArguments(email: email, model: UserViewModel.create(store)));
       }, onError: (error) {
         store.dispatch(new LoginFailedAction());
       });

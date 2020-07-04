@@ -2,9 +2,8 @@ import 'package:app/assets/StyleFrom.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/models/Organisation.dart';
-import 'package:app/pages/other/OrganisationPage.dart';
 
-import 'package:app/assets/routes/customRoute.dart';
+import 'package:app/routes.dart';
 
 class OrganisationTile extends StatelessWidget {
   final Organisation organisation;
@@ -20,10 +19,7 @@ class OrganisationTile extends StatelessWidget {
         if (extraOnTap != null) {
           extraOnTap();
         }
-        Navigator.push(
-          context, 
-          CustomRoute(builder: (context) => OraganisationInfoPage(organisation))
-        );
+        Navigator.of(context).pushNamed(Routes.organisationPage, arguments: organisation);
       },
       child: Container(
         width: 100,

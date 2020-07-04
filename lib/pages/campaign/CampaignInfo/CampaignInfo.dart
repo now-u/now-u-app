@@ -216,11 +216,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
               ),
               onPressed: () {
                 //_controller.dispose();
-                Navigator.push(
-                    context,
-                    CustomRoute(
-                        builder: (context) =>
-                            LearningCentrePage(campaign.getId())));
+                Navigator.of(context).pushNamed(Routes.learningSingle, arguments: campaign.getId());
               },
             )
           ]),

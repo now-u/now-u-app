@@ -27,8 +27,8 @@ class ProfilePage extends StatelessWidget {
               color: Theme.of(context).primaryColor,
             ),
             onPressed: () {
-              Navigator.of(context)
-                  .push(CustomRoute(builder: (context) => DetailsPage()));
+              //Navigator.of(context)
+              //    .push(CustomRoute(builder: (context) => DetailsPage()));
             })
       ]),
       body: StoreConnector<AppState, ViewModel>(

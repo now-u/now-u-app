@@ -29,12 +29,19 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 final double HEADER_HEIGHT = 200;
 final double H_PADDING = 10;
 
-class ActionInfo extends StatefulWidget {
+class ActionInfoArguments {
   final CampaignAction action;
-  // Action's parent campaign
   final Campaign campaign;
 
-  ActionInfo(this.action, this.campaign);
+  ActionInfoArguments({
+    @required this.action,
+    @required this.campaign,
+  });
+}
+
+class ActionInfo extends StatefulWidget {
+  ActionInfoArguments args;
+  ActionInfo(ActionInfoArguments args);
   @override
   _ActionInfoState createState() => _ActionInfoState();
 }
@@ -47,8 +54,8 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
   Campaign _campaign;
   @override
   void initState() {
-    _campaign = widget.campaign;
-    _action = widget.action;
+    _campaign = widget.args.campaign;
+    _action = widget.args.action;
     super.initState();
   }
 

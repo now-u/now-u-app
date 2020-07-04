@@ -261,10 +261,7 @@ class ActionSelectionItem extends StatelessWidget {
                 if (extraOnTap != null) {
                   extraOnTap();
                 }
-                Navigator.push(
-                    context,
-                    CustomRoute(
-                        builder: (context) => ActionInfo(action, campaign)));
+                Navigator.of(context).pushNamed(Routes.actionInfo, arguments: ActionInfoArguments(campaign: campaign, action: action));
               },
               leading: Stack(children: <Widget>[
                 Padding(
