@@ -26,6 +26,8 @@ final _controller = PageController(
   initialPage: 0,
   viewportFraction: 0.93,
 );
+const PageStorageKey campaignPageKey = PageStorageKey("campaingKey");
+
 final _animatedList = GlobalKey<AnimatedListState>();
 
 const curve = Curves.ease;
@@ -210,6 +212,7 @@ class _ActionPageState extends State<ActionPage> {
                       Container(
                           height: CAMPAIGN_SELECT_HEIGHT,
                           child: PageView.builder(
+                              key: campaignPageKey,
                               controller: _controller,
                               itemCount:
                                   // If all the active campaigns have been joined

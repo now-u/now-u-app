@@ -296,6 +296,7 @@ class CampaignCarosel extends StatelessWidget {
             ),
           ),
           SmoothPageIndicator(
+            key: campaignCarouselPageKey,
             controller: controller,
             count: cs.activeLength(),
             effect: customSmoothPageInducatorEffect,
