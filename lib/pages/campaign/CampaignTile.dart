@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:app/models/Campaign.dart';
-import 'package:app/models/User.dart';
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/State.dart';
 
-import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
-import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/components/joinedIndicator.dart';
-import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/routes.dart';
 

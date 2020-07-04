@@ -115,7 +115,7 @@ Function initRoutes = (RouteSettings settings) {
       {
         return customRoute(builder: (context) => TabsPage(currentPage: TabPage.Actions));
       }
-    case Routes.campaignInfo:
+    case Routes.actionInfo:
       {
         if (args is ActionInfoArguments) { 
           return customRoute( builder: (context) => ActionInfo( args ));

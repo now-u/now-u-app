@@ -3,17 +3,10 @@ import 'dart:io';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:android_intent/android_intent.dart';
 
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:rect_getter/rect_getter.dart';
-
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
-import 'package:app/assets/routes/customRoute.dart';
 
 import 'package:app/models/ViewModel.dart';
-
-import 'package:app/services/dynamicLinks.dart';
-import 'package:app/locator.dart';
 
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 

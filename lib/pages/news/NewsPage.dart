@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/header.dart';
 import 'package:app/assets/components/customTile.dart';
