@@ -30,6 +30,7 @@ class Routes {
   static const intro = "intro";
   static const login = "login";
   static const emailSent = "emailSent";
+  static const loginIssues = "loginIssues";
 
   // Tab View Routes
   static const campaign = "campaign";
@@ -73,6 +74,10 @@ Function initRoutes = (RouteSettings settings) {
           return customRoute(builder: (context) => EmailSentPage(args));
         }
         return customRoute(builder: (context) => LoginPage());
+      }
+    case Routes.loginIssues:
+      {
+        return customRoute(builder: (context) => LoginPage(retry: true));
       }
     case Routes.intro:
       {

@@ -356,6 +356,11 @@ class User {
         .where((c) => selectedCampaigns.contains(c.getId()))
         .toList();
   }
+  List<Campaign> filterUnselectedCampaigns(List<Campaign> campaigns) {
+    return campaigns
+        .where((c) => !selectedCampaigns.contains(c.getId()))
+        .toList();
+  }
 
   int getSelectedCampaignsLength() {
     if (selectedCampaigns == null)

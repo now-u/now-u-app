@@ -8,6 +8,9 @@ import 'package:app/assets/components/textButton.dart';
 
 import 'package:app/models/ViewModel.dart';
 
+import 'package:app/services/dynamicLinks.dart';
+import 'package:app/routes.dart';
+
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 class EmailSentPageArguments {
@@ -122,7 +125,7 @@ class _EmailSentPageState extends State<EmailSentPage>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         TextButton("I did not recieve an email", onClick: () {
-                          Navigator.of(context).pop();
+                          Navigator.of(context).pushNamed(Routes.loginIssues);
                         }),
                       ]),
                   SizedBox(height: 10),
