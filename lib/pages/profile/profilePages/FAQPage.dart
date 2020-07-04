@@ -21,62 +21,55 @@ class FAQPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ScrollableSheetPage(
-        header: 
-          Container(
-            color: Color.fromRGBO(247,248,252,1),
-            height: MediaQuery.of(context).size.height * (1-0.6),
-            child: Stack(
-              children: [
-                Positioned(
-                  right: -30,
-                  bottom: -10,
-                  child: Image.asset(
-                    "assets/imgs/graphics/ilstr_learning@3x.png",
-                    height: MediaQuery.of(context).size.height * 0.3,
+      body: StoreConnector<AppState, ViewModel>(
+      converter: (Store<AppState> store) => ViewModel.create(store),
+      builder: (BuildContext context, ViewModel viewModel) {
+        return FutureBuilder(
+          future: viewModel.api.getFAQs(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return ScrollableSheetPage(
+              header: 
+                Container(
+                  color: Color.fromRGBO(247,248,252,1),
+                  height: MediaQuery.of(context).size.height * (1-0.6),
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        right: -30,
+                        bottom: -10,
+                        child: Image.asset(
+                          "assets/imgs/graphics/ilstr_learning@3x.png",
+                          height: MediaQuery.of(context).size.height * 0.3,
+                        ),
+                      ),
+                      PageHeader(
+                        title: "Learning Hub",
+                      )
+                    ],
                   ),
                 ),
-                PageHeader(
-                  title: "Learning Hub",
+              children: [
+                Container(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return FAQTile(snapshot.data[index]);
+                    },
+                  ),
                 )
-              ],
-            ),
-          ),
-        children: [
-          StoreConnector<AppState, ViewModel>(
-          converter: (Store<AppState> store) => ViewModel.create(store),
-          builder: (BuildContext context, ViewModel viewModel) {
-            return FutureBuilder(
-              future: viewModel.api.getFAQs(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  return Container(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return FAQTile(snapshot.data[index]);
-                          },
-                        ),
-                  );
-                  //return ListView.builder(
-                  //  shrinkWrap: true,
-                  //  itemBuilder: (BuildContext context, int index) {
-                  //    //return Text(snapshot.data[index].getQuestion());
-                  //    return Text(index.toString());
-                  //  },
-                  //);
-                } else {
-                  return Expanded(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              },
+              ]
             );
           },
-        )
-      ]),
+        );
+      },
+      ),
     );
   }
 }
