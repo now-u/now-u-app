@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:app/assets/components/textButton.dart';
+import 'package:app/pages/other/InfoPage.dart';
+import 'package:app/routes.dart';
+
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PageHeader extends StatelessWidget {
   final Function onTap;
@@ -7,11 +11,17 @@ class PageHeader extends StatelessWidget {
   final IconData icon;
   final bool backButton;
   final double padding;
+
+  // For question mark button
+  final String infoTitle;
+  final String infoText;
+
   PageHeader(
-      {this.onTap, this.title, this.icon, this.backButton, this.padding});
+      {this.onTap, this.title, this.icon, this.backButton, this.padding, this.infoText, this.infoTitle});
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SafeArea(
           child: Row(
@@ -55,14 +65,43 @@ class PageHeader extends StatelessWidget {
             ],
           ),
         ),
-        Padding(
-          padding: EdgeInsets.only(left: padding == null ? 20 : padding + 10),
-          child: Container(
-            width: double.infinity,
-            child: Text(
-              title,
-              textAlign: TextAlign.left,
-              style: Theme.of(context).primaryTextTheme.headline2,
+        Container(
+          height: 60,
+          child: Padding(
+            padding: EdgeInsets.only(left: padding == null ? 20 : padding + 10),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  child: Text(
+                    title,
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context).primaryTextTheme.headline2,
+                  ),
+                ),
+                
+                SizedBox(width: 7,),
+
+                infoTitle != null && infoText != null 
+                  ? GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                          Routes.info,
+                          arguments: InfoPageArgumnets(
+                            title: infoTitle, 
+                            body: infoText,
+                          ),
+                        );
+                      },
+                      child: Icon(
+                        FontAwesomeIcons.questionCircle,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    )
+                  : Container(),
+
+              ]
             ),
           ),
         ),

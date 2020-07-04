@@ -108,12 +108,12 @@ class RewardCompletePage extends StatelessWidget {
             child: DarkButton(
               "Get Started!",
               onPressed: () {
-                Navigator.push(
-                    context,
-                    //CustomRoute(builder: (context) => App(currentIndex: 1,))
-                    CustomRoute(
-                        builder: (context) =>
-                            TabsPage(currentPage: TabPage.Home)));
+                //Navigator.push(
+                //    context,
+                //    //CustomRoute(builder: (context) => App(currentIndex: 1,))
+                //    CustomRoute(
+                //        builder: (context) =>
+                //            TabsPage(currentPage: TabPage.Home)));
               },
             ),
           ),

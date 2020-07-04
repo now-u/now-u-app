@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-import 'package:app/assets/routes/customRoute.dart';
 import 'package:redux/redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -385,9 +384,7 @@ ThunkAction<AppState> emailUser(String email, String name) {
         print("Trying to send email");
         store.dispatch(SentAuthEmail(email));
         print("Trying to nav");
-        Keys.navKey.currentState.push(CustomRoute(
-            builder: (context) =>
-                EmailSentPage(UserViewModel.create(store), email)));
+        Keys.navKey.currentState.pushNamed(Routes.emailSent, arguments: EmailSentPageArguments(email: email, model: UserViewModel.create(store)));
       }, onError: (error) {
         store.dispatch(new LoginFailedAction());
       });
