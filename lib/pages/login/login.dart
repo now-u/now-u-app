@@ -190,7 +190,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                                   children: [
                                   TextSpan(
                                       text:
-                                          "If you did not recieve the email please double check your spam and give us a few minutes to get it over to you, otherwise please try again. If the issue persists please email ",
+                                          "If you did not receive the email please double check your spam and give us a few minutes to get it over to you, otherwise please try again. If the issue persists please email ",
                                       style: textStyleFrom(
                                         Theme.of(context).primaryTextTheme.bodyText1,
                                         color: Colors.white,
@@ -378,7 +378,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                         Container(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: Text(
-                            "If you did recieve the email but the link is not working, please enter the manaul token from the email below",
+                            "If you did receive the email but the link is not working, please enter the manual token, from the email, below",
                             textAlign: TextAlign.center,
                             style: textStyleFrom(
                               Theme.of(context).primaryTextTheme.headline5,
