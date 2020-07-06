@@ -141,7 +141,7 @@ List<Widget> getSocialMediaChildren(Organisation org) {
     socialButtons.add(SocialMediaButton(org.getEmail(), FontAwesomeIcons.envelope));
   }
   if (org.getWebsite() != null) {
-    socialButtons.add(SocialMediaButton(org.getWebsite(), Icons.web));
+    socialButtons.add(SocialMediaButton(org.getWebsite(), Icons.language));
   }
   return socialButtons;
 }
