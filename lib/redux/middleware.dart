@@ -18,6 +18,7 @@ import 'package:app/models/Reward.dart';
 import 'package:app/redux/actions.dart';
 
 import 'package:app/services/auth.dart';
+import 'package:app/services/analytics.dart';
 
 import 'package:app/assets/components/pointsNotifier.dart';
 
@@ -73,9 +74,14 @@ void appStateMiddleware(
   if (action is InitaliseState) {}
 
   if (action is UnjoinCampaign) {
+    // TODO Here we are assuming the user is not attempting to unjoin a campaign that hasnt been joined (shouldnt be possible but probably worth checking
+
     User responseUser = await store.state.userState.auth.unjoinCampaign(
         store.state.userState.user.getToken(), action.campaign.getId());
     print("new user points ${responseUser.getPoints()}");
+
+    store.state.analytics.logCampaignStatusUpdate(action.campaign, CampaignStatus.leave);
+
     store.dispatch(UnjoinedCampaign(
       responseUser.getPoints(),
       responseUser.getSelectedCampaigns(),
@@ -181,6 +187,9 @@ ThunkAction<AppState> joinCampaign(Campaign campaign, BuildContext context) {
         points: responseUser.getPoints(),
         selectedCampaigns: responseUser.getSelectedCampaigns(),
       );
+    
+      store.state.analytics.logCampaignStatusUpdate(campaign, CampaignStatus.join);
+
       //viewModel.userModel.user.addSelectedCamaping(campaign.getId());
       int newPoints = newUser.getPoints();
       int oldPoints = store.state.userState.user.getPoints();
@@ -241,6 +250,8 @@ ThunkAction<AppState> starAction(CampaignAction action) {
           .catchError((error) {
         if (error == AuthError.unauthorized) onAuthError();
       });
+      
+      store.state.analytics.logActionStatusUpdate(action, ActionStatus.favourite);
 
       User newUser = store.state.userState.user.copyWith(
         starredActions: userResponse.getStarredActions(),
@@ -320,7 +331,7 @@ ThunkAction<AppState> completeAction(
         if (newlyCompletedActions[i] == action.getId()) {
           newUser.completeAction(action);
           print("Completed action");
-          store.state.analytics.logActionCompleted(action);
+          store.state.analytics.logActionStatusUpdate(action, ActionStatus.complete);
           print("Logged completion");
         } else {
           // TODO make it so if there are completed action is actually users the complete action function -- need to wait for /actions request
