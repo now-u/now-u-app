@@ -9,7 +9,6 @@ import 'package:app/assets/components/pageTitle.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/routes/customLaunch.dart';
-import 'package:store_redirect/store_redirect.dart';
 
 import 'package:app/models/User.dart';
 import 'package:app/models/ViewModel.dart';
