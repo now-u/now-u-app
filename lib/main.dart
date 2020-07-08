@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import 'package:app/pages/other/SplashScreen.dart';
@@ -11,6 +9,7 @@ import 'package:app/pages/other/SplashScreen.dart';
 
 import 'package:app/routes.dart';
 import 'package:app/locator.dart';
+import 'package:app/services/analytics.dart';
 import 'package:app/services/dynamicLinks.dart';
 
 import 'package:app/models/State.dart';
@@ -70,10 +69,6 @@ Color orange = Color.fromRGBO(255, 136, 0, 1);
 Color blue = Color.fromRGBO(1, 26, 67, 1);
 Color black = Colors.black;
 Color lightGrey = Color.fromRGBO(119, 119, 119, 1);
-
-// Analytics
-
-FirebaseAnalytics analytics = FirebaseAnalytics();
 
 // Accent Colours
 
@@ -136,7 +131,7 @@ class _AppState extends State<App> {
           title: 'Flutter Demo',
           navigatorKey: Keys.navKey,
           navigatorObservers: [
-            FirebaseAnalyticsObserver(analytics: analytics),
+            locator<Analytics>().getAnalyticsObserver(),
           ],
           initialRoute: '/',
           //initialRoute: Routes.intro,
