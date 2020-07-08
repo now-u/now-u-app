@@ -54,7 +54,7 @@ class Home extends StatelessWidget {
         StoreConnector<AppState, ViewModel>(
           converter: (Store<AppState> store) => ViewModel.create(store),
           builder: (BuildContext context, ViewModel viewModel) {
-           if (viewModel.loading)  {
+           if (viewModel.loading || viewModel.userModel.isLoading )  {
              return CircularProgressIndicator();
            }
           Campaigns campaigns = viewModel.getCampaignsWithSelctedFirst();  

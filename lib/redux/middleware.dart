@@ -30,8 +30,11 @@ import 'package:app/main.dart';
 Future<void> saveUserToPrefs(User u) async {
   print("Saving json to shared prefs");
   SharedPreferences preferences = await SharedPreferences.getInstance();
+  print("saved");
   var string = json.encode(u.toJson());
+  print("saved 2");
   await preferences.setString('user', string);
+  print("saved 3");
 }
 
 Future<void> saveCampaignsToPrefs(Campaigns cs) async {
@@ -311,12 +314,14 @@ ThunkAction<AppState> completeAction(
           .where((a) =>
               !store.state.userState.user.getCompletedActions().contains(a))
           .toList();
-      print("Doing fancy list thing");
 
       // Complete all those new actions for the user
       for (int i = 0; i < newlyCompletedActions.length; i++) {
         if (newlyCompletedActions[i] == action.getId()) {
           newUser.completeAction(action);
+          print("Completed action");
+          store.state.analytics.logActionCompleted(action);
+          print("Logged completion");
         } else {
           // TODO make it so if there are completed action is actually users the complete action function -- need to wait for /actions request
           //CampaignAction a = await store.state.api.getAction(action.action.getId());

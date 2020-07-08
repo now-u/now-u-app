@@ -248,6 +248,13 @@ class CampaignAction {
     time = json['time'].toDouble();
     type = campaignActionTypeFromString(json['type']);
   }
+  
+  Map toJson() => {
+    'id'   : id,
+    'title': title,
+    'type' : type,
+    'time' : time,
+  };
 
   int getId() {
     return id;
