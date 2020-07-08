@@ -13,6 +13,7 @@ AppState appStateReducer(AppState state, action) {
     userState: userStateReducer(state.userState, action),
     loading: loadingReducer(action) ?? state.loading,
     api: state.api,
+    analytics: state.analytics,
   );
 }
 

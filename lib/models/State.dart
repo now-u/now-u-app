@@ -9,6 +9,7 @@ import 'package:app/models/Campaigns.dart';
 import 'package:app/services/api.dart';
 import 'package:app/services/auth.dart';
 import 'package:app/services/storage.dart';
+import 'package:app/services/analytics.dart';
 import 'package:app/locator.dart';
 
 
@@ -17,6 +18,7 @@ class AppState {
   UserState userState;
   bool loading;
   Api api;
+  Analytics analytics;
   
   //final Rewards rewards;
 
@@ -25,6 +27,7 @@ class AppState {
     @required this.campaigns,
     @required this.loading,
     this.api,
+    this.analytics,
   });
 
   AppState.initialState() {
@@ -32,6 +35,7 @@ class AppState {
       campaigns = Campaigns.init();
       loading = true;
       api = locator<Api>();
+      analytics = locator<Analytics>();
   }
 
   //AppState.fromJson(Map json, AppState state)
