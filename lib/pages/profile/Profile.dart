@@ -1,5 +1,6 @@
 import 'package:app/assets/StyleFrom.dart';
 import 'package:flutter/material.dart';
+import 'dart:io';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app/assets/icons/customIcons.dart';
@@ -82,7 +83,11 @@ class _ProfileState extends State<Profile> {
           {
             'profileTile':
                 ProfileTile("Rate us on the app store", CustomIcons.ic_rateus),
-            'function': () {StoreRedirect.redirect();}
+            'link':
+              Platform.isIOS 
+                ? "https://apps.apple.com/us/app/now-u/id1516126639"
+                : "https://play.google.com/store/apps/details?id=com.nowu.app"
+            //'function': () {StoreRedirect.redirect();}
           },
           {
             'profileTile': ProfileTile("FAQ", CustomIcons.ic_faq),
