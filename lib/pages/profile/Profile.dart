@@ -60,7 +60,7 @@ class _ProfileState extends State<Profile> {
           //},
           {
             'profileTile':
-                ProfileTile("Our partners", FontAwesomeIcons.building),
+                ProfileTile("Our partners", CustomIcons.ic_partners),
             'page': Routes.parteners,
           },
           //{
@@ -100,7 +100,7 @@ class _ProfileState extends State<Profile> {
           },
           {
             'profileTile':
-                ProfileTile("Privacy policy", FontAwesomeIcons.fingerprint),
+                ProfileTile("Privacy policy", CustomIcons.ic_privacy),
             'link':
                 "https://now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf"
           },

@@ -25,6 +25,8 @@ class CustomIcons {
   static const _kFontFam = 'CustomIcons';
   static const _kFontPkg = null;
 
+  static const IconData ic_partners = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData ic_privacy = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_home = IconData(0xe810, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_actions = IconData(0xe811, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_learning = IconData(0xe812, fontFamily: _kFontFam, fontPackage: _kFontPkg);
@@ -69,5 +71,5 @@ class CustomIcons {
   static const IconData ic_todo_remove = IconData(0xe83b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_todo_add = IconData(0xe83c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_success = IconData(0xe83d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData tractor = IconData(0xf722, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+
 }
