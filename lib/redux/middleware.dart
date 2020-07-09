@@ -28,6 +28,8 @@ import 'package:app/pages/other/RewardComplete.dart';
 import 'package:app/routes.dart';
 import 'package:app/main.dart';
 
+// TODO move shared preferences to services
+
 Future<void> saveUserToPrefs(User u) async {
   print("Saving json to shared prefs");
   SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -63,7 +65,6 @@ Future<User> loadUserFromPrefs(User u) async {
     return u;
   }
   print("Returning null user is being returned");
-  // TODO this should be null
   return null;
 }
 
@@ -124,15 +125,26 @@ void appStateMiddleware(
   }
 
   if (action is GetCampaignsAction) {
-    await store.state.api.getCampaigns().then((Campaigns cs) {
-      print(cs.getActiveCampaigns());
-      store.dispatch(LoadedCampaignsAction(cs));
-    }, onError: (e, st) {
-      print(e);
-      // TODO lol whats going on here
-      return store.state.campaigns;
-      //loadCampaignsFromPrefs()
-    });
+    // If we dont have any campaign data, then try and get it from the cached data (if there is any) 
+    if (store.state.campaigns == null) {
+      // TODO implement this 
+      // Check if there is a cached version
+      // If yes load this first and then start loading the web version --> Set loading to false after the cached version is loaded or no --> probably no?
+
+      // Else load the webversion
+    }
+    // If we do have some then we are simply looking for an update, this should always come from the api
+    else {
+      await store.state.api.getCampaigns().then((Campaigns cs) {
+        print(cs.getActiveCampaigns());
+        store.dispatch(LoadedCampaignsAction(cs));
+      }, onError: (e, st) {
+        print(e);
+        // TODO lol whats going on here
+        return store.state.campaigns;
+        //loadCampaignsFromPrefs()
+      });
+    }
   }
 
   if (action is GetUserDataAction) {
