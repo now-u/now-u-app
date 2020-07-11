@@ -47,7 +47,7 @@ AppBar CustomAppBar({
             child: !hasBackButton
                 ? Container()
                 : Container(
-                    child: TextButton(
+                    child: CustomTextButton(
                       backButtonText ?? "Back",
                       iconLeft: true,
                       onClick: () {
