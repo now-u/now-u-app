@@ -128,10 +128,11 @@ void appStateMiddleware(
     // If we dont have any campaign data, then try and get it from the cached data (if there is any) 
     if (store.state.campaigns == null) {
       // Load from cache
+
        
 
       // If success then weve loaded 
-      store.dispatch(LoadedCampaignsAction(cs));
+      //store.dispatch(LoadedCampaignsAction(cs));
       // Save to cache
     }
 
