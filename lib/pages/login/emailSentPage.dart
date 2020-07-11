@@ -124,7 +124,7 @@ class _EmailSentPageState extends State<EmailSentPage>
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TextButton("I did not recieve an email", onClick: () {
+                        CustomTextButton("I did not recieve an email", onClick: () {
                           Navigator.of(context).pushNamed(Routes.loginIssues);
                         }),
                       ]),

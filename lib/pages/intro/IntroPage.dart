@@ -103,7 +103,7 @@ class _IntroPageState extends State<IntroPage> {
                             child: 
                             RectGetter(
                               key: rectGetterSkipKey,
-                              child: TextButton(
+                              child: CustomTextButton(
                                 "Skip",
                                 onClick: () {
                                   //Navigator.pushNamed(context, '/');
