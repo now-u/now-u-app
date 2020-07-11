@@ -47,7 +47,7 @@ class LearningCentrePage extends StatelessWidget {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            TextButton(
+                                            CustomTextButton(
                                               "Back",
                                               onClick: () {
                                                 Navigator.of(context).pop();
@@ -87,7 +87,7 @@ class LearningCentrePage extends StatelessWidget {
                           children: [
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 20),
-                              child: TextButton(
+                              child: CustomTextButton(
                                 "See campaign",
                                 onClick: () {
                                   Navigator.of(context).pushNamed(Routes.campaignInfo, arguments: campaignId);

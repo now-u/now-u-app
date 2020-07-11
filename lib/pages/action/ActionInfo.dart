@@ -328,7 +328,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           completed ?
-                          TextButton("Mark as not done", fontSize: 14,
+                          CustomTextButton("Mark as not done", fontSize: 14,
                             onClick: () {
                               viewModel.onRemoveActionStatus(_action);
                             }

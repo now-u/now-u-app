@@ -36,7 +36,7 @@ class PageHeader extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: padding ?? 10.0, vertical: 10.0),
-                      child: TextButton(
+                      child: CustomTextButton(
                         "Back",
                         onClick: () {
                           Navigator.of(context).pop();

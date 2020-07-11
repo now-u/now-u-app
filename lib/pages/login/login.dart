@@ -144,7 +144,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
           builder: (_, viewModel) {
             return Padding(
                 padding: EdgeInsets.symmetric(vertical: 16.0),
-                child: TextButton(
+                child: CustomTextButton(
                   "Skip",
                   onClick: () {
                     viewModel.skipLogin();
@@ -291,7 +291,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                                   Column(
                                     children: [
                                       SizedBox(height: 15),
-                                      TextButton(
+                                      CustomTextButton(
                                         "Having issues logging in?",
                                         onClick: () {
                                           Navigator.of(context).pushNamed(Routes.loginIssues);
