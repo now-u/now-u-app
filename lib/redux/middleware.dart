@@ -127,24 +127,22 @@ void appStateMiddleware(
   if (action is GetCampaignsAction) {
     // If we dont have any campaign data, then try and get it from the cached data (if there is any) 
     if (store.state.campaigns == null) {
-      // TODO implement this 
-      // Check if there is a cached version
-      // If yes load this first and then start loading the web version --> Set loading to false after the cached version is loaded or no --> probably no?
+      // Load from cache
+       
 
-      // Else load the webversion
+      // If success then weve loaded 
+      store.dispatch(LoadedCampaignsAction(cs));
+      // Save to cache
     }
-    // If we do have some then we are simply looking for an update, this should always come from the api
-    else {
-      await store.state.api.getCampaigns().then((Campaigns cs) {
-        print(cs.getActiveCampaigns());
-        store.dispatch(LoadedCampaignsAction(cs));
-      }, onError: (e, st) {
-        print(e);
-        // TODO lol whats going on here
-        return store.state.campaigns;
-        //loadCampaignsFromPrefs()
-      });
-    }
+
+    await store.state.api.getCampaigns().then((Campaigns cs) {
+      print(cs.getActiveCampaigns());
+      store.dispatch(LoadedCampaignsAction(cs));
+      // TODO then save to cache -- if this fails the oh well you know so say Loaded before
+    }, onError: (e, st) {
+      print(e);
+      return store.state.campaigns;
+    });
   }
 
   if (action is GetUserDataAction) {
