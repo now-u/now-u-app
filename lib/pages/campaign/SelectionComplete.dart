@@ -1,3 +1,4 @@
+import 'package:app/assets/routes/customRoute.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 
@@ -113,7 +114,7 @@ class SelectionComplete extends StatelessWidget {
                         Navigator.push(
                           context, 
                           //CustomRoute(builder: (context) => App(currentIndex: 1,))
-                          CustomRoute(builder: (context) => TabsPage(currentPage: TabPage.Home))
+                          customRoute(builder: (context) => TabsPage(currentPage: TabPage.Home))
                         );
                       },
                     ),
