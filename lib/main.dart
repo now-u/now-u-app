@@ -11,6 +11,7 @@ import 'package:app/routes.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/analytics.dart';
 import 'package:app/services/dynamicLinks.dart';
+import 'package:app/services/pushNotifications.dart';
 
 import 'package:app/models/State.dart';
 
@@ -108,6 +109,10 @@ class _AppState extends State<App> {
       initialState: AppState.initialState(),
       middleware: [appStateMiddleware, thunkMiddleware],
     );
+  
+    final PushNotificationsService _pushNotificationService =
+      locator<PushNotificationsService>();
+    _pushNotificationService.init();
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.white, //or set color with: Color(0xFF0000FF)

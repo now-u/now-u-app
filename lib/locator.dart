@@ -5,6 +5,7 @@ import 'package:app/services/dynamicLinks.dart';
 import 'package:app/services/auth.dart';
 import 'package:app/services/storage.dart';
 import 'package:app/services/analytics.dart';
+import 'package:app/services/pushNotifications.dart';
 
 import 'package:get_it/get_it.dart';
 
@@ -21,6 +22,7 @@ void setupLocator() {
   locator.registerLazySingleton<AuthenticationService>(() => AuthenticationService());
   locator.registerLazySingleton<SecureStorageService>(() => SecureStorageService());
   locator.registerLazySingleton<Analytics>(() => Analytics());
+  locator.registerLazySingleton(() => PushNotificationsService());
 }
 
 
