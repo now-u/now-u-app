@@ -2,9 +2,12 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:app/main.dart';
+import 'package:app/locator.dart';
+import 'package:app/services/navigation.dart';
 
 class PushNotificationsService {
   final FirebaseMessaging _fcm  = FirebaseMessaging();
+  final NavigationService _navigationService = locator<NavigationService>();
 
   Future init() async {
     if (Platform.isIOS) {
@@ -31,7 +34,7 @@ class PushNotificationsService {
     var view = notificationData['view'];
 
     if (view != null) {
-      Keys.navKey.currentState.pushNamed(view);
+      _navigationService.navigateTo(view);
     }
   }
 }

@@ -9,6 +9,9 @@ import 'package:app/routes.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import 'package:app/locator.dart';
+import 'package:app/services/navigation.dart';
+
 class AuthError {
   static const unauthorized = "unauthorized";
   static const internal = "internal";
@@ -18,6 +21,7 @@ class AuthError {
 class AuthenticationService {
   //final String domainPrefix = "https://now-u-api.herokuapp.com/api/v1/";
   final String domainPrefix = "https://api.now-u.com/api/v1/";
+  final NavigationService _navigationService = locator<NavigationService>();
 
   // Generic Reuqest
   // Handle 401 errors
@@ -27,12 +31,12 @@ class AuthenticationService {
     }
     else if (response.statusCode == 401) {
       // Generic reaction to someone being unauthorized is just send them to the login screen
-      Keys.navKey.currentState.pushNamed(Routes.login);
+      _navigationService.navigateTo(Routes.login);
       return Future.error(AuthError.unauthorized);
     }
     else if (response.statusCode == 500) {
       // Generic reaction to someone being unauthorized is just send them to the login screen
-      Keys.navKey.currentState.pushNamed('/');
+      _navigationService.navigateTo('/');
       return Future.error(AuthError.internal);
     }
     return Future.error(AuthError.unknown);

@@ -103,8 +103,10 @@ class ViewModel {
     // Helper Functions
     Campaigns _getActiveSelectedCampaigns() {
       if (store.state.userState.user == null) {
+        // TODO should we navigate to the login screen here?
         return Campaigns([]);
       }
+      // TODO Actually should replace this with a getter funciton (throughout) and then navigate to login if null -- oh but what if the user is just loading? Then we will be chucking users into the login screen like nobodys business
       return Campaigns(store.state.userState.user
           .filterSelectedCampaigns(store.state.campaigns.getActiveCampaigns()));
     }
@@ -223,6 +225,8 @@ class UserViewModel {
   final AuthenticationService auth;
   final SecureStorageService repository;
 
+  final Function () getUser;
+
   final Function(String, String) login;
   final Function(String, String) email;
   final Function() skipLogin;
@@ -234,6 +238,7 @@ class UserViewModel {
     this.login,
     this.email,
     this.auth,
+    this.getUser,
     this.repository,
     this.skipLogin,
   });
@@ -246,6 +251,12 @@ class UserViewModel {
         user: store.state.userState.user,
         auth: store.state.userState.auth,
         repository: store.state.userState.repository,
+        getUser: () {
+          if (store.state.userState.user == null) {
+            // TODO Deal with it
+          }
+          return store.state.userState.user;
+        },
         login: (String email, String link) {
           store.dispatch(loginUser(email, link));
         },
