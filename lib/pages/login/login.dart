@@ -29,6 +29,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   String _email;
   String _name;
   String _token;
+  bool _acceptedtc;
   final _formKey = GlobalKey<FormState>();
   final _tokenFormKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -107,6 +108,21 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         _repositry.setName(value);
       },
       hintText: 'Jane Doe',
+    );
+    
+    final acceptTandC = CustomCheckboxFormField(
+      //style: CustomFormFieldStyle.Dark,
+      //keyboardType: TextInputType.text,
+      //textCapitalization: TextCapitalization.words,
+      //autofocus: false,
+      validator: (value) {
+        if (!value) return "You must accept our terms and conditions";
+        return null;
+      },
+      onSaved: (value) {
+        print("Saved");
+        _acceptedtc = value;
+      },
     );
     
     Widget loginButton() {
@@ -253,6 +269,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                               ),
                               SizedBox(height: 8),
                               email,
+                              acceptTandC,
 
                               loginButton(),
 
