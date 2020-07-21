@@ -73,6 +73,7 @@ class LearningResource {
   double time;
   String link;
   String type;
+  DateTime createdAt;
 
   LearningResource.fromJson(Map json) {
     id = json['id'];
@@ -80,6 +81,7 @@ class LearningResource {
     time = json['time'];
     link = json['link'];
     type = json['type'];
+    createdAt = DateTime.parse(json['created_at']);
   }
 
   String getTitle() {
@@ -130,5 +132,9 @@ class LearningResource {
 
   String getTimeText() {
     return timeBrackets.firstWhere((b) => b['maxTime'] > time)['text'];
+  }
+  
+  bool isNew() {
+    return DateTime.now().difference(createdAt).compareTo(Duration(days: 2)) < 0;
   }
 }

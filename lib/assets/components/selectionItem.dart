@@ -253,6 +253,7 @@ class ActionSelectionItem extends StatelessWidget {
               innerHpadding: innerHpadding,
               outerHpadding: outerHpadding,
               iconWidth: iconWidth,
+              isNew: action.isNew(),
               onTap: () {
                 if (extraOnTap != null) {
                   extraOnTap();
@@ -283,22 +284,22 @@ class ActionSelectionItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                !(isNew ?? false)
-                    ? Container()
-                    : Positioned(
-                        right: 0,
-                        child: Container(
-                          padding: EdgeInsets.all(1),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          constraints: BoxConstraints(
-                            minWidth: 12,
-                            minHeight: 12,
-                          ),
-                        ),
-                      ),
+                //!(action.isNew())
+                //    ? Container()
+                //    : Positioned(
+                //        right: 0,
+                //        child: Container(
+                //          padding: EdgeInsets.all(1),
+                //          decoration: BoxDecoration(
+                //            color: Theme.of(context).primaryColor,
+                //            borderRadius: BorderRadius.circular(6),
+                //          ),
+                //          constraints: BoxConstraints(
+                //            minWidth: 12,
+                //            minHeight: 12,
+                //          ),
+                //        ),
+                //      ),
               ]),
               text: action.getTitle(),
               time: action.getTimeText(),
@@ -333,6 +334,7 @@ class LearningResouceSelectionItem extends StatelessWidget {
           resource.getLink()
         );
       },
+      isNew: resource.isNew(),
       leading: Stack(children: <Widget>[
         Padding(
           padding: EdgeInsets.all(5),
@@ -374,6 +376,8 @@ class LeadingSelectionItem extends StatelessWidget {
   final String time;
   final double extraOverflow;
   final Color backgroundColor;
+  final bool isNew;
+
 
   LeadingSelectionItem({
     this.iconWidth,
@@ -385,6 +389,7 @@ class LeadingSelectionItem extends StatelessWidget {
     this.time,
     this.extraOverflow,
     this.backgroundColor,
+    this.isNew,
   });
 
   @override
@@ -395,77 +400,105 @@ class LeadingSelectionItem extends StatelessWidget {
           padding: EdgeInsets.symmetric(
               vertical: 5, horizontal: outerHpadding ?? defaultOuterHpadding),
           child: CustomTile(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: innerHpadding ?? defaultInnerHpadding),
-                child: Row(children: <Widget>[
-                  leading,
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: SelectionItem(
-                        onClick: onTap,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                height: 45,
-                                width: MediaQuery.of(context).size.width -
-                                        (outerHpadding ??
-                                                defaultOuterHpadding) *
-                                            2 -
-                                        (innerHpadding ??
-                                                defaultInnerHpadding) *
-                                            2 -
-                                        (iconWidth ?? defaultIconWidth) -
-                                        10 -
-                                        extraOverflow ??
-                                    40,
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    text,
-                                    style: textStyleFrom(
-                                      Theme.of(context)
-                                        .primaryTextTheme
-                                        .bodyText1,
-                                      fontSize: 16,
-                                    ),
-
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ),
-                              Row(
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: innerHpadding ?? defaultInnerHpadding),
+                    child: Row(children: <Widget>[
+                      leading,
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: SelectionItem(
+                            onClick: onTap,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
-                                  Icon(
-                                    Icons.access_time,
-                                    size: 15,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                  SizedBox(
-                                    width: 2,
-                                  ),
-                                  Text(time,
-                                      style: textStyleFrom(
-                                        Theme.of(context)
+                                  Container(
+                                    height: 45,
+                                    width: MediaQuery.of(context).size.width -
+                                            (outerHpadding ??
+                                                    defaultOuterHpadding) *
+                                                2 -
+                                            (innerHpadding ??
+                                                    defaultInnerHpadding) *
+                                                2 -
+                                            (iconWidth ?? defaultIconWidth) -
+                                            10 -
+                                            extraOverflow ??
+                                        40,
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        text,
+                                        style: textStyleFrom(
+                                          Theme.of(context)
                                             .primaryTextTheme
                                             .bodyText1,
-                                        fontWeight: FontWeight.w600,
+                                          fontSize: 16,
+                                        ),
+
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Icon(
+                                        Icons.access_time,
+                                        size: 15,
                                         color: Theme.of(context).primaryColor,
-                                        fontSize: 11,
-                                      )),
-                                ],
-                              ),
-                            ])),
-                  )
-                ]),
-              ))),
+                                      ),
+                                      SizedBox(
+                                        width: 2,
+                                      ),
+                                      Text(time,
+                                          style: textStyleFrom(
+                                            Theme.of(context)
+                                                .primaryTextTheme
+                                                .bodyText1,
+                                            fontWeight: FontWeight.w600,
+                                            color: Theme.of(context).primaryColor,
+                                            fontSize: 11,
+                                          )),
+                                    ],
+                                  ),
+                                ])),
+                      )
+                    ]),
+                  ),
+                  isNew == true 
+                    ? Positioned(
+                        top: 0,
+                        right: 0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).errorColor,
+                            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8))
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                            child: Text(
+                              "New",
+                              style: textStyleFrom(
+                                Theme.of(context).primaryTextTheme.bodyText1,
+                                color: Colors.white,
+                              )
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container(),
+                ]
+              )
+            )
+          ),
     );
   }
 }
