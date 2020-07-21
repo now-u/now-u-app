@@ -21,6 +21,11 @@ class LearningCentre {
         .toList()
         .cast<LearningTopic>();
   }
+  
+  bool containsNew() {
+    var c = learningTopics.firstWhere((r) => r.containsNew(), orElse: () => null);
+    return c != null;
+  }
 }
 
 class LearningTopic {
@@ -57,6 +62,14 @@ class LearningTopic {
 
   List<LearningResource> getResources() {
     return resources;
+  }
+
+  bool containsNew() {
+    print("Checking contains");
+    print(resources);
+    var r = resources.firstWhere((LearningResource r) => r.isNew(), orElse: () => null);
+    print("Checked contains");
+    return r != null;
   }
 }
 
@@ -135,6 +148,8 @@ class LearningResource {
   }
   
   bool isNew() {
+    print("Checking is new");
+    print(createdAt);
     return DateTime.now().difference(createdAt).compareTo(Duration(days: 2)) < 0;
   }
 }

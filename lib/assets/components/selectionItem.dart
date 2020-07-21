@@ -489,6 +489,7 @@ class LeadingSelectionItem extends StatelessWidget {
                               style: textStyleFrom(
                                 Theme.of(context).primaryTextTheme.bodyText1,
                                 color: Colors.white,
+                                fontSize: 12,
                               )
                             ),
                           ),
@@ -535,50 +536,69 @@ class LearningTopicSelectionItem extends StatelessWidget {
           child: CustomTile(
               child: Padding(
                 padding: EdgeInsets.only(right: rightOuterPadding),
-                child: Row(mainAxisSize: MainAxisSize.max, children: <Widget>[
-                  ClipRRect(
-                    child: Container(
-                      width: imageWidth ?? defaultImageWidth,
-                      height: height ?? defaultHeight,
-                      child: Image.network(
-                        topic.getImageLink(),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Container(
-                    child: SelectionItem(
-                      onClick: null,
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                              height: height ?? defaultHeight,
-                              width: MediaQuery.of(context).size.width -
-                                  (hpadding ?? defaultHpadding) * 2 -
-                                  (imageWidth ?? defaultImageWidth) -
-                                  40 -
-                                  rightOuterPadding,
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  topic.getTitle(),
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .bodyText1,
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                          ]),
-                    ),
-                  )
-                ]),
-              ))),
+                child: Stack(
+                  children: [
+                   Row(mainAxisSize: MainAxisSize.max, children: <Widget>[
+                   ClipRRect(
+                     child: Container(
+                       width: imageWidth ?? defaultImageWidth,
+                       height: height ?? defaultHeight,
+                       child: Image.network(
+                         topic.getImageLink(),
+                         fit: BoxFit.cover,
+                       ),
+                     ),
+                   ),
+                   SizedBox(width: 10),
+                   Container(
+                     child: SelectionItem(
+                       onClick: null,
+                       child: Column(
+                           crossAxisAlignment: CrossAxisAlignment.start,
+                           mainAxisSize: MainAxisSize.max,
+                           mainAxisAlignment: MainAxisAlignment.start,
+                           children: <Widget>[
+                             Container(
+                               height: height ?? defaultHeight,
+                               width: MediaQuery.of(context).size.width -
+                                   (hpadding ?? defaultHpadding) * 2 -
+                                   (imageWidth ?? defaultImageWidth) -
+                                   40 -
+                                   rightOuterPadding,
+                               child: Align(
+                                 alignment: Alignment.centerLeft,
+                                 child: Text(
+                                   topic.getTitle(),
+                                   style: Theme.of(context)
+                                       .primaryTextTheme
+                                       .bodyText1,
+                                   maxLines: 3,
+                                   overflow: TextOverflow.ellipsis,
+                                 ),
+                               ),
+                             ),
+                           ]),
+                     ),
+                   )
+                  ] 
+                ),
+                Positioned(
+                  top: 10,
+                  right: 2,
+                  child: topic.containsNew() 
+                    ? Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(6)),
+                          color: Theme.of(context).errorColor,
+                        ),
+                        height: 12,
+                        width: 12,
+                      )
+                    : Container()
+                )
+              ]
+            )
+        ))),
     );
   }
 }
