@@ -6,6 +6,11 @@ import 'package:app/models/Action.dart';
 import 'package:time/time.dart';
 import 'dart:convert';
 
+List<String> stagingUsers = [
+  "james@now-u.com",
+  "dave@now-u.com"
+];
+
 List<int> rewardValues = [1, 5, 10, 25, 50, 100, 200];
 int pointsForJoiningCampaign = 10;
 int pointsForCompletingAction = 5;
@@ -653,6 +658,10 @@ class User {
     List<Reward> completedRewards = getPreviousRewards();
     List<Reward> nextRewards = getNextRewards();
     return completedRewards..addAll(nextRewards);
+  }
+
+  bool isStagingUser() {
+    return stagingUsers.contains(email);
   }
 }
 

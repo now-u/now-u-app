@@ -451,6 +451,9 @@ ThunkAction initStore(Uri deepLink) {
     Future(() async {
       print("We are initing");
       store.dispatch(GetUserDataAction()).then((dynamic u) {
+        if (store.state.userState.user != null && store.state.userState.user.isStagingUser()) {
+          store.state.api.switchToStagingBranch();
+        }
         store.dispatch(GetCampaignsAction()).then((dynamic r) {
           // A user id of -1 means the user is the placeholder and therefore does not exist, well get rid of this eventually and keep it as null, but for now useful as when we go to homepage after login we have the placeholder user
           if (store.state.userState.user == null ||
