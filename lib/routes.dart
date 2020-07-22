@@ -66,6 +66,9 @@ Function initRoutes = (RouteSettings settings) {
     // Into
     case Routes.login:
       {
+        if(args is LoginTypes) {
+          return customRoute(builder: (context) => LoginPage(retry: true, loginType: args), settings: settings);
+        }
         return customRoute(builder: (context) => LoginPage(), settings: settings);
       }
     case Routes.emailSent:
@@ -77,6 +80,9 @@ Function initRoutes = (RouteSettings settings) {
       }
     case Routes.loginIssues:
       {
+        if(args is LoginTypes) {
+          return customRoute(builder: (context) => LoginPage(retry: true, loginType: args), settings: settings);
+        }
         return customRoute(builder: (context) => LoginPage(retry: true), settings: settings);
       }
     case Routes.intro:

@@ -16,10 +16,15 @@ import 'package:app/routes.dart';
 import 'package:app/services/storage.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
+enum LoginTypes{
+  Login,
+  Signup
+}
+
 class LoginPage extends StatefulWidget {
   final bool retry;
-  final String deeplink;
-  LoginPage({this.deeplink, this.retry});
+  final LoginTypes loginType;
+  LoginPage({this.retry, this.loginType});
   @override
   LoginPageState createState() => new LoginPageState();
 }
@@ -38,10 +43,6 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    //if (widget.deeplink != null) {
-    //  _link = widget.deeplink;
-    //  _signInWithEmailAndLink();
-    //}
     WidgetsBinding.instance.addObserver(this);
   }
 
