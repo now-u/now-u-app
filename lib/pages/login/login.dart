@@ -10,8 +10,12 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:app/models/State.dart';
 import 'package:app/models/ViewModel.dart';
+import 'package:app/models/User.dart';
 import 'package:app/services/dynamicLinks.dart';
 import 'package:app/routes.dart';
+
+import 'package:app/locator.dart';
+import 'package:app/services/auth.dart';
 
 import 'package:app/services/storage.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -114,6 +118,9 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         final FormState form = _formKey.currentState;
         if (form.validate()) {
           form.save();
+          if (stagingUsers.contains(_email)) {
+            model.auth.switchToStagingBranch();
+          }
           model.email(_email, _name);
           return true;
         }

@@ -16,8 +16,13 @@ class AuthError {
 }
 
 class AuthenticationService {
-  //final String domainPrefix = "https://now-u-api.herokuapp.com/api/v1/";
-  final String domainPrefix = "https://api.now-u.com/api/v1/";
+
+  // This is not final as it can be changed
+  String domainPrefix = "https://api.now-u.com/api/v1/";
+
+  void switchToStagingBranch() {
+    domainPrefix = "https://stagingapi.now-u.com/api/v1/";
+  }
 
   // Generic Reuqest
   // Handle 401 errors
