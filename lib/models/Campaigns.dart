@@ -20,6 +20,10 @@ class Campaigns {
     return activeCampaigns; 
   }
   
+  List<Campaign> getPastCampaings() {
+    return activeCampaigns.where((c) => c.isPast()).toList(); 
+  }
+  
   List<Campaign> getSelectedActiveCampaigns(User u) {
     print("Getting asc");
     var asc = activeCampaigns.where((c) => u.getSelectedCampaigns().contains(c.getId())).toList(); 

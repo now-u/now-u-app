@@ -24,6 +24,7 @@ import 'package:app/pages/campaign/LearningCentre/LearningCentreAllPage.dart';
 import 'package:app/pages/campaign/LearningCentre/LearningCentrePage.dart';
 import 'package:app/pages/campaign/LearningCentre/LearningTopicPage.dart';
 import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
+import 'package:app/pages/campaign/AllCampaignsPage.dart';
 
 class Routes {
   // Intro
@@ -39,6 +40,9 @@ class Routes {
 
   static const actionInfo = "actionInfo";
   static const campaignInfo = "campaignInfo";
+ 
+  // All campaigns (including past)
+  static const allCampaigns = "allCampaigns";
 
   // Other
   static const profile = "profile";
@@ -115,6 +119,10 @@ Function initRoutes = (RouteSettings settings) {
           return customRoute( builder: (context) => CampaignInfo( campaign: args,), settings: settings);
         }
         return customRoute(builder: (context) => CampaignPage(), settings: settings);
+      }
+    case Routes.allCampaigns: 
+      {
+        return customRoute(builder: (context) => AllCampaignsPage(), settings: settings);
       }
     case Routes.actions:
       {

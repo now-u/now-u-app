@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:app/pages/campaign/CampaignTile.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
@@ -12,26 +11,10 @@ import 'package:app/models/State.dart';
 import 'package:app/routes.dart';
 
 import 'package:app/assets/components/header.dart';
-import 'package:app/assets/components/inputs.dart';
 import 'package:app/assets/StyleFrom.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-
-//class CampaignPage extends StatelessWidget {
-//
-//  CampaignPage();
-//  @override
-//  Widget build(BuildContext context) {
-//    return StoreConnector<AppState, ViewModel>(
-//        converter: (Store<AppState> store) => ViewModel.create(store),
-//        builder: (BuildContext context, ViewModel viewModel) {
-//          print("Before splash screen user is");
-//          return CampaignPageBody(viewModel);
-//        },
-//    );
-//  }
-//}
 
 class CampaignPage extends StatefulWidget {
   @override
