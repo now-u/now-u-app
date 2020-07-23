@@ -171,15 +171,15 @@ class _ProfileState extends State<Profile> {
                     SizedBox(height: 20),
 
                     // Dev Tools
-                    //GestureDetector(
-                    //  child: ProfileTile("Dev Tools", FontAwesomeIcons.code),
-                    //  onTap: () {
-                    //    Navigator.push(
-                    //        context,
-                    //        CustomRoute(
-                    //            builder: (context) => QuizStartPage(0)));
-                    //  },
-                    //),
+                    user.isStagingUser() 
+                      ? GestureDetector(
+                          child: ProfileTile("Dev Tools", FontAwesomeIcons.code),
+                          onTap: () {
+                            viewModel.api.toggleStagingApi();
+                            viewModel.onUpdateCampaings();
+                          }
+                        )
+                      : Container()
                   ],
                 )));
       },
