@@ -19,6 +19,7 @@ class ViewModel {
   final bool loading;
   //final User user;
   final Api api;
+  final Function() onUpdateCampaings;
   final Function(Campaign, BuildContext) onJoinCampaign;
   final Function(Campaign) onUnjoinCampaign;
   final Function(User) onUpdateUserDetails;
@@ -45,6 +46,7 @@ class ViewModel {
     this.loading,
     //this.user,
     this.api,
+    this.onUpdateCampaings,
     this.onJoinCampaign,
     this.onUnjoinCampaign,
     this.onCompleteAction,
@@ -63,6 +65,10 @@ class ViewModel {
   });
 
   factory ViewModel.create(Store<AppState> store) {
+    _onUpdateCampaigns() {
+      store.dispatch(GetCampaignsAction());
+    }
+
     _onJoinCampaign(Campaign campaign, BuildContext context) {
       store.dispatch(joinCampaign(campaign, context));
     }
@@ -195,8 +201,9 @@ class ViewModel {
       campaigns: store.state.campaigns,
       userModel: UserViewModel.create(store),
       loading: store.state.loading,
-      //user: store.state.userState.user,
       api: store.state.api,
+
+      onUpdateCampaings: _onUpdateCampaigns,
       onJoinCampaign: _onJoinCampaign,
       onUnjoinCampaign: _onUnjoinCampaign,
       onCompleteAction: _onCompleteAction,

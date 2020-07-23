@@ -175,7 +175,8 @@ class _ProfileState extends State<Profile> {
                       ? GestureDetector(
                           child: ProfileTile("Dev Tools", FontAwesomeIcons.code),
                           onTap: () {
-                            viewModel.api.switchToStagingBranch();
+                            viewModel.api.toggleStagingApi();
+                            viewModel.onUpdateCampaings();
                           }
                         )
                       : Container()
