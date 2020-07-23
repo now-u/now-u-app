@@ -35,9 +35,18 @@ class AllCampaignsPage extends StatelessWidget {
                     return CampaignTile(viewModel.campaigns.getActiveCampaigns()[index]);
                   },
                 ),
-
+                
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                  child: Container(
+                    height: 1,
+                    width: double.infinity,
+                    color: Color.fromRGBO(190, 193, 206, 1)
+                  ),
+                ),
+                
                 // Past
-                _titleBuilder("Old", context),
+                _titleBuilder("Previous", context),
                 FutureBuilder(
                   future: viewModel.api.getAllCampaigns(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -53,7 +62,9 @@ class AllCampaignsPage extends StatelessWidget {
                       },
                     );
                   },
-                )
+                ),
+
+                SizedBox(height: 20),
               ]
             )
           )
@@ -64,7 +75,7 @@ class AllCampaignsPage extends StatelessWidget {
 
   Widget _titleBuilder(String text, BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       child: Text(
         text,
         style: Theme.of(context).primaryTextTheme.headline3,

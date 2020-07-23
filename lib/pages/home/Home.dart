@@ -126,12 +126,20 @@ class Home extends StatelessWidget {
 
                        CampaignCarosel(campaigns, _controller),
 
-                       CustomTextButton(
-                        "See all Campaigns",
-                        onClick: () {
-                          Navigator.of(context).pushNamed(Routes.allCampaigns);
-                        },
+                       Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CustomTextButton(
+                            "See all campaigns",
+                            onClick: () {
+                              Navigator.of(context).pushNamed(Routes.allCampaigns);
+                            },
+                          ),
+                        ]
                        ),
+
+                       SizedBox(height: 20),
 
                        Container(
                         width: double.infinity,
