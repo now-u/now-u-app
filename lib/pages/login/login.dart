@@ -132,7 +132,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
               ),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  launch("share.now-u.com/legal/t&cs");
+                  launch("https://share.now-u.com/legal/t&cs");
                 }
             ),
           ]
@@ -317,8 +317,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                                       ),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {
-                                          print("CLICKED IT");
-                                          //launch("http://www.now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf");
+                                          launch("http://www.now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf");
                                         }),
                                   ]
                                 ),
@@ -449,6 +448,10 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                               ),
                               SizedBox(height: 8),
                               token,
+                          
+                              SizedBox(height:10),
+
+                              acceptTandC,
 
                               manualButton(),
                                
@@ -456,7 +459,6 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
 
                             ],
                           ),
-
                           // Uncomment to readd Skip button
                           //skipButton(),
                         ],
