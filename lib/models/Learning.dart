@@ -150,6 +150,6 @@ class LearningResource {
   bool isNew() {
     print("Checking is new");
     print(createdAt);
-    return DateTime.now().difference(createdAt).compareTo(Duration(days: 20)) < 0;
+    return DateTime.now().difference(createdAt).compareTo(Duration(days: 2)) < 0;
   }
 }
