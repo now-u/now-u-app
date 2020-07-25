@@ -10,16 +10,25 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:app/models/State.dart';
 import 'package:app/models/ViewModel.dart';
+import 'package:app/models/User.dart';
 import 'package:app/services/dynamicLinks.dart';
 import 'package:app/routes.dart';
+
+import 'package:app/locator.dart';
+import 'package:app/services/auth.dart';
 
 import 'package:app/services/storage.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
+enum LoginTypes{
+  Login,
+  Signup
+}
+
 class LoginPage extends StatefulWidget {
   final bool retry;
-  final String deeplink;
-  LoginPage({this.deeplink, this.retry});
+  final LoginTypes loginType;
+  LoginPage({this.retry, this.loginType});
   @override
   LoginPageState createState() => new LoginPageState();
 }
@@ -29,6 +38,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   String _email;
   String _name;
   String _token;
+  bool _acceptedtc;
   final _formKey = GlobalKey<FormState>();
   final _tokenFormKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -37,10 +47,6 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    //if (widget.deeplink != null) {
-    //  _link = widget.deeplink;
-    //  _signInWithEmailAndLink();
-    //}
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -109,11 +115,51 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       hintText: 'Jane Doe',
     );
     
+    final acceptTandC = CustomCheckboxFormField(
+      //style: CustomFormFieldStyle.Dark,
+      //keyboardType: TextInputType.text,
+      //textCapitalization: TextCapitalization.words,
+      //autofocus: false,
+      title: RichText(
+        text: TextSpan(
+          style: textStyleFrom(
+            Theme.of(context).primaryTextTheme.bodyText1,
+            color: Colors.white,
+          ),
+          children: [
+            TextSpan(text: "I agree to the user "),
+            TextSpan(
+              text: "Terms & Conditions",
+              style: textStyleFrom(
+                Theme.of(context).primaryTextTheme.bodyText1,
+                color: Theme.of(context).buttonColor,
+              ),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  launch("https://share.now-u.com/legal/terms_and_conditions.pdf");
+                }
+            ),
+          ]
+        ),
+      ),
+      validator: (value) {
+        if (!value) return "You must accept our terms and conditions";
+        return null;
+      },
+      onSaved: (value) {
+        print("Saved");
+        _acceptedtc = value;
+      },
+    );
+    
     Widget loginButton() {
       Future<bool> validateAndSave(UserViewModel model) async {
         final FormState form = _formKey.currentState;
         if (form.validate()) {
           form.save();
+          if (stagingUsers.contains(_email)) {
+            model.auth.switchToStagingBranch();
+          }
           model.email(_email, _name);
           return true;
         }
@@ -253,6 +299,8 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                               ),
                               SizedBox(height: 8),
                               email,
+                              SizedBox(height: 20),
+                              acceptTandC,
 
                               loginButton(),
 
@@ -276,7 +324,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                                       ),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {
-                                          launch("https://now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf");
+                                          launch("http://www.now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf");
                                         }),
                                   ]
                                 ),
@@ -407,6 +455,10 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                               ),
                               SizedBox(height: 8),
                               token,
+                          
+                              SizedBox(height:10),
+
+                              acceptTandC,
 
                               manualButton(),
                                
@@ -414,7 +466,6 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
 
                             ],
                           ),
-
                           // Uncomment to readd Skip button
                           //skipButton(),
                         ],
