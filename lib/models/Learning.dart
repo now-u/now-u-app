@@ -47,6 +47,10 @@ class LearningTopic {
         .toList()
         .cast<LearningResource>();
   }
+  
+  int getId() {
+    return id;
+  }
 
   String getTitle() {
     return title;
@@ -95,6 +99,10 @@ class LearningResource {
     link = json['link'];
     type = json['type'];
     createdAt = DateTime.parse(json['created_at']);
+  }
+
+  int getId() {
+    return id;
   }
 
   String getTitle() {

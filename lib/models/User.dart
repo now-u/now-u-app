@@ -2,9 +2,6 @@ import 'package:app/models/Reward.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
-import 'package:app/models/Action.dart';
-import 'package:time/time.dart';
-import 'dart:convert';
 
 List<String> stagingUsers = [
   "james@now-u.com",
@@ -34,6 +31,7 @@ class User {
       []; // Stores campaings where all actions have been completed (maybe we should do 80% of something)
   //List<int> completedRewards = [];
   List<int> completedActions = [];
+  List<int> completedLearningResources = [];
 
   // Key is rejected id
   // Map stores rejection time and rejection reason
@@ -63,6 +61,7 @@ class User {
       starredActions,
       completedRewards,
       completedActionsType,
+      completedLearningResources,
       points}) {
     this.id = id;
     this.fullName = fullName;
@@ -77,6 +76,8 @@ class User {
     this.rejectedActions = rejectedActions ?? [];
     this.starredActions = starredActions ?? [];
     //this.completedRewards = completedRewards ?? [];
+    
+    this.completedLearningResources = completedLearningResources ?? [];
 
     this.completedActionsType = completedActionsType ?? initCompletedAction();
 
@@ -100,6 +101,7 @@ class User {
     completedActions = [];
     rejectedActions = [];
     starredActions = [];
+    completedLearningResources = [];
     completedActionsType = initCompletedAction();
     token = null;
     points = 0;
@@ -124,6 +126,7 @@ class User {
     List<int> completedActions,
     List<int> rejectedActions,
     List<int> starredActions,
+    List<int> completedLearningResources,
     Map<CampaignActionType, int> completedActionsType,
     int points,
     String token,
@@ -142,6 +145,7 @@ class User {
       completedActions: completedActions ?? this.completedActions,
       rejectedActions: rejectedActions ?? this.rejectedActions,
       starredActions: starredActions ?? this.starredActions,
+      completedLearningResources: completedLearningResources ?? this.completedLearningResources,
       completedActionsType: completedActionsType ?? this.completedActionsType,
       points: points ?? this.points,
       token: token ?? this.token,
@@ -184,51 +188,11 @@ class User {
         json['favourited_actions'] == null || json['favourited_actions'].isEmpty
             ? <int>[]
             : json['favourited_actions'].cast<int>();
-    //selectedCampaigns =
-    //      json['selected_campaigns'] == null  || json['selected_campaigns'].isEmpty ? <int>[] :
-    //      (json['selected_campaigns']).map((c) {
-    //        if (c is int) {
-    //          // If we are dealing with a list of ints
-    //          return c;
-    //        }
-    //        // Else get the item from the map
-    //        return c['id'];
-    //      }).toList().cast<int>();
-    //      // Campaigns.fromJson(json['selected_campaigns']).getActiveCampaigns().map((c) => c.getId()).toList().cast<int>();
-    //print("Got the selected campaigns");
-    //completedCampaigns =
-    //      json['completed_campaigns'] == null  || json['completed_campaigns'].isEmpty ? <int>[] :
-    //      (json['completed_campaigns']).map((c) {
-    //        if (c is int) {
-    //          // If we are dealing with a list of ints
-    //          return c;
-    //        }
-    //        // Else get the item from the map
-    //        return c['id'];
-    //      }).toList().cast<int>();
-    //completedActions =
-    //      json['completed_actions'] == null  || json['completed_actions'].isEmpty ? <int>[] :
-    //      (json['completed_actions']).map((c) {
-    //        if (c is int) {
-    //          // If we are dealing with a list of ints
-    //          return c;
-    //        }
-    //        // Else get the item from the map
-    //        return c['id'];
-    //      }).toList().cast<int>();
-    //rejectedActions =
-    //      json['rejected_actions'] == null  || json['rejected_actions'].isEmpty ? <int>[] :
-    //      (json['rejected_actions']).map((c) {
-    //        if (c is int) {
-    //          // If we are dealing with a list of ints
-    //          return c;
-    //        }
-    //        // Else get the item from the map
-    //        return c['id'];
-    //      }).toList().cast<int>();
-    //completedRewards =
-    //    json['completed_rewards'] == null ? <int>[] :
-    //    json['completed_rewards'].cast<int>();
+    
+    completedLearningResources =
+        json['completed_learning_resources'] == null || json['completed_learning_resources'].isEmpty
+            ? <int>[]
+            : json['completed_learning_resources'].cast<int>();
 
     completedActionsType = json['completed_actions_type'] == null
         ? this.initCompletedAction()
@@ -251,6 +215,7 @@ class User {
         'completed_actions': completedActions,
         'rejected_actions': rejectedActions,
         'favourited_actions': starredActions,
+        'completed_learning_resources': completedLearningResources,
         //'completed_rewards': completedRewards,
         'completed_actions_type':
             campaignActionTypesEncode(completedActionsType),
@@ -392,6 +357,10 @@ class User {
 
   List<int> getStarredActions() {
     return starredActions;
+  }
+  
+  List<int> getCompletedLearningResources() {
+    return completedLearningResources;
   }
 
   void setName(String name) {

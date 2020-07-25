@@ -4,6 +4,7 @@ import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/User.dart';
+import 'package:app/models/Learning.dart';
 import 'package:app/services/api.dart';
 import 'package:app/services/auth.dart';
 import 'package:app/services/storage.dart';
@@ -25,6 +26,7 @@ class ViewModel {
   final Function(User) onUpdateUserDetails;
   final Function(CampaignAction, BuildContext) onCompleteAction;
   final Function(CampaignAction, String) onRejectAction;
+  final Function(LearningResource) onCompleteLearningResource;
   final Function(CampaignAction) onStarAction;
   final Function(CampaignAction) onRemoveActionStatus;
   final Function() onLogout;
@@ -53,6 +55,7 @@ class ViewModel {
     this.onRejectAction,
     this.onRemoveActionStatus,
     this.onStarAction,
+    this.onCompleteLearningResource,
     this.onUpdateUserDetails,
     this.onLogout,
 
@@ -95,6 +98,10 @@ class ViewModel {
 
     _onRemoveActionStatus(CampaignAction action) {
       store.dispatch(removeActionStatus(action));
+    }
+    
+    _onCompleteLearningResource(LearningResource resource) {
+      store.dispatch(completeLearningResource(resource));
     }
 
     _onUpdateUserDetails(User user) {
@@ -210,6 +217,7 @@ class ViewModel {
       onRejectAction: _onRejectAction,
       onRemoveActionStatus: _onRemoveActionStatus,
       onStarAction: _onStarAction,
+      onCompleteLearningResource: _onCompleteLearningResource,
       onUpdateUserDetails: _onUpdateUserDetails,
       onLogout: _onLogout,
 

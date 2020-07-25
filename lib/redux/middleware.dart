@@ -15,6 +15,7 @@ import 'package:app/models/ViewModel.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Badge.dart';
 import 'package:app/models/Reward.dart';
+import 'package:app/models/Learning.dart';
 import 'package:app/redux/actions.dart';
 
 import 'package:app/services/auth.dart';
@@ -492,6 +493,40 @@ ThunkAction initStore(Uri deepLink) {
     });
   };
 }
+
+ThunkAction<AppState> completeLearningResource(LearningResource resource) {
+  return (Store<AppState> store) async {
+    Future(() async {
+      print("Completing LearningResource");
+      if (store.state.userState.user
+          .getCompletedLearningResources()
+          .contains(resource.getId())) {
+        return;
+      }
+
+      // If not already complete/rejected/starred
+      User userResponse = await store.state.userState.auth
+          .completeLearningResource(
+        store.state.userState.user.getToken(),
+        resource.getId(),
+      )
+          .catchError((error) {
+        if (error == AuthError.unauthorized) onAuthError();
+      });
+      
+      store.state.analytics.logLearningResourceClicked(resource);
+      
+      User newUser = store.state.userState.user.copyWith(
+        completedLearningResources: userResponse.getCompletedLearningResources(),
+      );
+
+      saveUserToPrefs(newUser).then((_) {
+        store.dispatch(CompletedLearningResource(newUser));
+      });
+    });
+  };
+}
+
 
 void onAuthError() {
   Keys.navKey.currentState.pushNamed(Routes.login);

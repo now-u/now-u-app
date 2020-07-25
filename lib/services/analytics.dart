@@ -3,6 +3,7 @@ import 'package:firebase_analytics/observer.dart';
 
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
+import 'package:app/models/Learning.dart';
 
 class Analytics {
   final FirebaseAnalytics _analytics = FirebaseAnalytics();
@@ -29,6 +30,18 @@ class Analytics {
       parameters: <String, dynamic>{
         "id": campaign.getId(),
         "title": campaign.getTitle(),
+      }
+    );
+  }
+  
+  Future logLearningResourceClicked(LearningResource resource) async {
+    await _analytics.logEvent(
+      name: "learning_resource_clicked",
+      parameters: <String, dynamic>{
+        "id": resource.getId(),
+        "title": resource.getTitle(),
+        "time": resource.getTime(),
+        "type": resource.getType() 
       }
     );
   }

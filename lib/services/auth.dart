@@ -310,4 +310,18 @@ class AuthenticationService {
     //  return null;
     //}
   }
+  
+  Future<User> completeLearningResource(String token, int learningResourceId) async {
+    http.Response response = await http.post(
+      domainPrefix + 'users/me/learning_resources/$learningResourceId',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'token': token,
+      },
+    );
+    if (handleAuthRequestErrors(response) != null) {
+      return handleAuthRequestErrors(response);
+    }
+    return User.fromJson(json.decode(response.body)["data"]);
+  }
 }
