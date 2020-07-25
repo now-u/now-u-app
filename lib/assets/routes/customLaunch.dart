@@ -13,6 +13,7 @@ void customLaunch(
     String description,
     String buttonText, 
     String closeButtonText,
+    Function extraOnConfirmFunction,
   }
 ) {
   showDialog(

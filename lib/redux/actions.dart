@@ -2,6 +2,7 @@ import 'package:app/models/User.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
+import 'package:app/models/Learning.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 
 class InitaliseState {}
@@ -52,6 +53,16 @@ class StarredAction {
 class RemovedActionStatus {
   final User user;
   RemovedActionStatus(this.user);
+}
+
+class CompleteLearningResource {
+  final LearningResource resource;
+  CompleteLearningResource(this.resource);
+}
+
+class CompletedLearningResource {
+  final User user;
+  CompletedLearningResource(this.user);
 }
 
 class CreateNewUser {
