@@ -497,6 +497,7 @@ ThunkAction initStore(Uri deepLink) {
 ThunkAction<AppState> completeLearningResource(LearningResource resource) {
   return (Store<AppState> store) async {
     Future(() async {
+      print("Completing LearningResource");
       if (store.state.userState.user
           .getCompletedLearningResources()
           .contains(resource.getId())) {

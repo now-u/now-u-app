@@ -75,7 +75,7 @@ class LearningTopicPage extends StatelessWidget {
                       return Container(
                         child: LearningResouceSelectionItem(
                           resource: topic.getResources()[index],
-                          extraOnClick: viewModel.onCompleteLearningResource(topic.getResources()[index]),
+                          extraOnClick: () {viewModel.onCompleteLearningResource(topic.getResources()[index]);},
                           completed: viewModel.userModel.user.getCompletedLearningResources().contains(topic.getResources()[index].getId())
                         ),
                       );

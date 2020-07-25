@@ -226,6 +226,7 @@ class LearningResouceSelectionItem extends StatelessWidget {
       text: resource.getTitle(),
       time: resource.getTimeText(),
       extraOverflow: 40,
+      isCompleted: completed,
     );
   }
 }
@@ -245,6 +246,7 @@ class LeadingSelectionItem extends StatelessWidget {
   final double extraOverflow;
   final Color backgroundColor;
   final bool isNew;
+  final bool isCompleted;
 
 
   LeadingSelectionItem({
@@ -258,6 +260,7 @@ class LeadingSelectionItem extends StatelessWidget {
     this.extraOverflow,
     this.backgroundColor,
     this.isNew,
+    this.isCompleted,
   });
 
   @override
@@ -341,25 +344,34 @@ class LeadingSelectionItem extends StatelessWidget {
                       )
                     ]),
                   ),
-                  isNew == true 
+                  // Im checking here because the value could be null 
+                  isNew == true || isCompleted == true
                     ? Positioned(
                         top: 0,
                         right: 0,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Theme.of(context).errorColor,
+                            color: isNew ? Theme.of(context).errorColor : Color.fromRGBO(89,152,26, 1),
                             borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8))
                           ),
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                            child: Text(
-                              "New",
-                              style: textStyleFrom(
-                                Theme.of(context).primaryTextTheme.bodyText1,
-                                color: Colors.white,
-                                fontSize: 12,
-                              )
-                            ),
+                            child: 
+                              isNew 
+                                ? Text(
+                                    "New",
+                                    style: textStyleFrom(
+                                      Theme.of(context).primaryTextTheme.bodyText1,
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                    )
+                                  )
+                              // Otherwise is completed
+                                : Icon(
+                                    Icons.check,
+                                    color: Colors.white,
+                                    size: 12,
+                                  )
                           ),
                         ),
                       )
