@@ -219,34 +219,32 @@ class CampaignAction {
   String whyDescription;
   String link;
   CampaignActionType type;
+  DateTime createdAt;
+  DateTime releasedAt;
 
   CampaignAction({
-    @required int id,
-    @required String title,
-    @required String whatDescription,
-    @required String whyDescription,
-    @required String link,
-    @required CampaignActionType type,
-    @required double time,
-  }) {
-    this.id = id;
-    this.title = title;
-    this.whatDescription = whatDescription;
-    this.whyDescription = whyDescription;
-    this.link = link;
-    this.type = type;
-    this.time = time;
-  }
+    @required this.id,
+    @required this.title,
+    @required this.whatDescription,
+    @required this.whyDescription,
+    @required this.link,
+    @required this.type,
+    @required this.time,
+    this.createdAt,
+    this.releasedAt,
+  });
 
   CampaignAction.fromJson(Map json) {
     //print(json);
-    id = json['id'];
-    title = json['title'];
+    id              = json['id'];
+    title           = json['title'];
     whatDescription = json['what_description'];
-    whyDescription = json['why_description'];
-    link = json['link'];
-    time = json['time'].toDouble();
-    type = campaignActionTypeFromString(json['type']);
+    whyDescription  = json['why_description'];
+    link            = json['link'];
+    time            = json['time'].toDouble();
+    type            = campaignActionTypeFromString(json['type']);
+    createdAt       = DateTime.parse(json['created_at']);
+    releasedAt      = json['release_date'] == null ? null : DateTime.parse(json['release_date']);
   }
   
   Map toJson() => {
@@ -317,4 +315,15 @@ class CampaignAction {
     }
     return defaultCampaignActionTypeData;
   }
-}
+
+  bool isNew() {
+    if (releasedAt == null) {
+      print("Date time difference = " + DateTime.now().difference(createdAt).toString());
+      return DateTime.now().difference(createdAt).compareTo(Duration(days: 2)) < 0;
+    }
+    else {
+      print("Date time difference = " + DateTime.now().difference(releasedAt).toString());
+      return DateTime.now().difference(releasedAt).compareTo(Duration(days: 2)) < 0;
+    }
+  }
+} 

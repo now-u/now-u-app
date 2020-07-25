@@ -115,6 +115,7 @@ class ActionSelectionItem extends StatelessWidget {
               innerHpadding: innerHpadding,
               outerHpadding: outerHpadding,
               iconWidth: iconWidth,
+              isNew: action.isNew(),
               onTap: () {
                 if (extraOnTap != null) {
                   extraOnTap();
@@ -145,22 +146,22 @@ class ActionSelectionItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                !(isNew ?? false)
-                    ? Container()
-                    : Positioned(
-                        right: 0,
-                        child: Container(
-                          padding: EdgeInsets.all(1),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          constraints: BoxConstraints(
-                            minWidth: 12,
-                            minHeight: 12,
-                          ),
-                        ),
-                      ),
+                //!(action.isNew())
+                //    ? Container()
+                //    : Positioned(
+                //        right: 0,
+                //        child: Container(
+                //          padding: EdgeInsets.all(1),
+                //          decoration: BoxDecoration(
+                //            color: Theme.of(context).primaryColor,
+                //            borderRadius: BorderRadius.circular(6),
+                //          ),
+                //          constraints: BoxConstraints(
+                //            minWidth: 12,
+                //            minHeight: 12,
+                //          ),
+                //        ),
+                //      ),
               ]),
               text: action.getTitle(),
               time: action.getTimeText(),
@@ -201,6 +202,7 @@ class LearningResouceSelectionItem extends StatelessWidget {
           extraOnConfirmFunction: extraOnClick,
         );
       },
+      isNew: resource.isNew(),
       leading: Stack(children: <Widget>[
         Padding(
           padding: EdgeInsets.all(5),
@@ -242,6 +244,8 @@ class LeadingSelectionItem extends StatelessWidget {
   final String time;
   final double extraOverflow;
   final Color backgroundColor;
+  final bool isNew;
+
 
   LeadingSelectionItem({
     this.iconWidth,
@@ -253,6 +257,7 @@ class LeadingSelectionItem extends StatelessWidget {
     this.time,
     this.extraOverflow,
     this.backgroundColor,
+    this.isNew,
   });
 
   @override
@@ -263,77 +268,106 @@ class LeadingSelectionItem extends StatelessWidget {
           padding: EdgeInsets.symmetric(
               vertical: 5, horizontal: outerHpadding ?? defaultOuterHpadding),
           child: CustomTile(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: innerHpadding ?? defaultInnerHpadding),
-                child: Row(children: <Widget>[
-                  leading,
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: SelectionItem(
-                        onClick: onTap,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                height: 45,
-                                width: MediaQuery.of(context).size.width -
-                                        (outerHpadding ??
-                                                defaultOuterHpadding) *
-                                            2 -
-                                        (innerHpadding ??
-                                                defaultInnerHpadding) *
-                                            2 -
-                                        (iconWidth ?? defaultIconWidth) -
-                                        10 -
-                                        extraOverflow ??
-                                    40,
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    text,
-                                    style: textStyleFrom(
-                                      Theme.of(context)
-                                        .primaryTextTheme
-                                        .bodyText1,
-                                      fontSize: 16,
-                                    ),
-
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ),
-                              Row(
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: innerHpadding ?? defaultInnerHpadding),
+                    child: Row(children: <Widget>[
+                      leading,
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: SelectionItem(
+                            onClick: onTap,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
-                                  Icon(
-                                    Icons.access_time,
-                                    size: 15,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                  SizedBox(
-                                    width: 2,
-                                  ),
-                                  Text(time,
-                                      style: textStyleFrom(
-                                        Theme.of(context)
+                                  Container(
+                                    height: 45,
+                                    width: MediaQuery.of(context).size.width -
+                                            (outerHpadding ??
+                                                    defaultOuterHpadding) *
+                                                2 -
+                                            (innerHpadding ??
+                                                    defaultInnerHpadding) *
+                                                2 -
+                                            (iconWidth ?? defaultIconWidth) -
+                                            10 -
+                                            extraOverflow ??
+                                        40,
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        text,
+                                        style: textStyleFrom(
+                                          Theme.of(context)
                                             .primaryTextTheme
                                             .bodyText1,
-                                        fontWeight: FontWeight.w600,
+                                          fontSize: 16,
+                                        ),
+
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Icon(
+                                        Icons.access_time,
+                                        size: 15,
                                         color: Theme.of(context).primaryColor,
-                                        fontSize: 11,
-                                      )),
-                                ],
-                              ),
-                            ])),
-                  )
-                ]),
-              ))),
+                                      ),
+                                      SizedBox(
+                                        width: 2,
+                                      ),
+                                      Text(time,
+                                          style: textStyleFrom(
+                                            Theme.of(context)
+                                                .primaryTextTheme
+                                                .bodyText1,
+                                            fontWeight: FontWeight.w600,
+                                            color: Theme.of(context).primaryColor,
+                                            fontSize: 11,
+                                          )),
+                                    ],
+                                  ),
+                                ])),
+                      )
+                    ]),
+                  ),
+                  isNew == true 
+                    ? Positioned(
+                        top: 0,
+                        right: 0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).errorColor,
+                            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8))
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                            child: Text(
+                              "New",
+                              style: textStyleFrom(
+                                Theme.of(context).primaryTextTheme.bodyText1,
+                                color: Colors.white,
+                                fontSize: 12,
+                              )
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container(),
+                ]
+              )
+            )
+          ),
     );
   }
 }
@@ -360,60 +394,14 @@ class LearningTopicSelectionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(Routes.learningTopic, arguments: topic);
-      },
-      child: Padding(
-          padding: EdgeInsets.symmetric(
-              vertical: 5, horizontal: hpadding ?? defaultHpadding),
-          child: CustomTile(
-              child: Padding(
-                padding: EdgeInsets.only(right: rightOuterPadding),
-                child: Row(mainAxisSize: MainAxisSize.max, children: <Widget>[
-                  ClipRRect(
-                    child: Container(
-                      width: imageWidth ?? defaultImageWidth,
-                      height: height ?? defaultHeight,
-                      child: Image.network(
-                        topic.getImageLink(),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Container(
-                    child: SelectionItem(
-                      onClick: null,
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                              height: height ?? defaultHeight,
-                              width: MediaQuery.of(context).size.width -
-                                  (hpadding ?? defaultHpadding) * 2 -
-                                  (imageWidth ?? defaultImageWidth) -
-                                  40 -
-                                  rightOuterPadding,
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  topic.getTitle(),
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .bodyText1,
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                          ]),
-                    ),
-                  )
-                ]),
-              ))),
+    return ImageSelectionItem( 
+      text: topic.getTitle(),
+      imageUrl: topic.getImageLink(),
+      onTap: () {Navigator.of(context).pushNamed(Routes.learningTopic, arguments: topic);},
+      hpadding: hpadding,
+      imageWidth: imageWidth,
+      height: height,
+      hasNew: topic.containsNew(),
     );
   }
 }
@@ -442,12 +430,6 @@ class CheckboxSelectionItem extends StatelessWidget {
 }
 
 class LearningCentreCampaignSelectionItem extends StatelessWidget {
-  final double defaultImageWidth = 80;
-  final double defaultHpadding = 10;
-  final double defaultHeight = 80;
-  final double rightOuterPadding = 10;
-  final double borderRadius = 8;
-
   @required
   final Campaign campaign;
   final double hpadding;
@@ -465,61 +447,123 @@ class LearningCentreCampaignSelectionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return ImageSelectionItem( 
+      text: campaign.getTitle(),
+      imageUrl: campaign.getHeaderImage(),
+      onTap: () {Navigator.of(context).pushNamed(Routes.learningSingle, arguments: campaign.getId());},
+      hpadding: hpadding,
+      imageWidth: imageWidth,
+      height: height,
+      onWhiteBackground: onWhiteBackground,
+    );
+  }
+}
+
+class ImageSelectionItem extends StatelessWidget {
+  final double defaultImageWidth = 80;
+  final double defaultHpadding = 10;
+  final double defaultHeight = 80;
+  final double rightOuterPadding = 10;
+  final double borderRadius = 8;
+
+  @required
+  final double hpadding;
+  final double imageWidth;
+  final double height;
+  final bool onWhiteBackground;
+
+  final String text;
+  final String imageUrl;
+  final Function onTap;
+
+  final bool hasNew;
+
+  ImageSelectionItem({
+    this.text,
+    this.imageUrl,
+    this.onTap,
+
+    this.hasNew, 
+
+    this.hpadding,
+    this.imageWidth,
+    this.height,
+    this.onWhiteBackground,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(Routes.learningSingle, arguments: campaign.getId());
-      },
+      onTap: onTap,
       child: Padding(
           padding: EdgeInsets.symmetric(
               vertical: 5, horizontal: hpadding ?? defaultHpadding),
           child: CustomTile(
-              onWhiteBackground: onWhiteBackground ?? false,
               child: Padding(
                 padding: EdgeInsets.only(right: rightOuterPadding),
-                child: Row(mainAxisSize: MainAxisSize.max, children: <Widget>[
-                  ClipRRect(
-                    child: Container(
-                      width: imageWidth ?? defaultImageWidth,
-                      height: height ?? defaultHeight,
-                      child: Image.network(
-                        campaign.getHeaderImage(),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Container(
-                    child: SelectionItem(
-                      onClick: null,
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                              height: height ?? defaultHeight,
-                              width: MediaQuery.of(context).size.width -
-                                  (hpadding ?? defaultHpadding) * 2 -
-                                  (imageWidth ?? defaultImageWidth) -
-                                  40 -
-                                  rightOuterPadding,
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  campaign.getTitle(),
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .bodyText1,
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                          ]),
-                    ),
-                  )
-                ]),
-              ))),
+                child: Stack(
+                  children: [
+                   Row(mainAxisSize: MainAxisSize.max, children: <Widget>[
+                   ClipRRect(
+                     child: Container(
+                       width: imageWidth ?? defaultImageWidth,
+                       height: height ?? defaultHeight,
+                       child: Image.network(
+                         imageUrl,
+                         fit: BoxFit.cover,
+                       ),
+                     ),
+                   ),
+                   SizedBox(width: 10),
+                   Container(
+                     child: SelectionItem(
+                       onClick: null,
+                       child: Column(
+                           crossAxisAlignment: CrossAxisAlignment.start,
+                           mainAxisSize: MainAxisSize.max,
+                           mainAxisAlignment: MainAxisAlignment.start,
+                           children: <Widget>[
+                             Container(
+                               height: height ?? defaultHeight,
+                               width: MediaQuery.of(context).size.width -
+                                   (hpadding ?? defaultHpadding) * 2 -
+                                   (imageWidth ?? defaultImageWidth) -
+                                   40 -
+                                   rightOuterPadding,
+                               child: Align(
+                                 alignment: Alignment.centerLeft,
+                                 child: Text(
+                                   text,
+                                   style: Theme.of(context)
+                                       .primaryTextTheme
+                                       .bodyText1,
+                                   maxLines: 3,
+                                   overflow: TextOverflow.ellipsis,
+                                 ),
+                               ),
+                             ),
+                           ]),
+                     ),
+                   )
+                  ] 
+                ),
+                Positioned(
+                  top: 10,
+                  right: 2,
+                  child: hasNew ?? false
+                    ? Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(6)),
+                          color: Theme.of(context).errorColor,
+                        ),
+                        height: 12,
+                        width: 12,
+                      )
+                    : Container()
+                )
+              ]
+            )
+        ))),
     );
   }
 }
