@@ -174,4 +174,10 @@ class Campaign {
   List<String> getKeyAims(){
     return keyAims;
   }
+  String getShareLink() {
+    return "https://nowu.page.link/?link=https://now-u.com/campaigns/$id&apn=com.nowu.app&isi=1516126639&ibi=com.nowu.app&st=${Uri.encodeFull(title)}&si=$headerImage";
+  }
+  String getShareText() {
+    return "Check out the $title campaign on now-u! ${getShareLink()}";
+  }
 }
