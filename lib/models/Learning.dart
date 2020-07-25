@@ -21,6 +21,11 @@ class LearningCentre {
         .toList()
         .cast<LearningTopic>();
   }
+  
+  bool containsNew() {
+    var c = learningTopics.firstWhere((r) => r.containsNew(), orElse: () => null);
+    return c != null;
+  }
 }
 
 class LearningTopic {
@@ -58,6 +63,14 @@ class LearningTopic {
   List<LearningResource> getResources() {
     return resources;
   }
+
+  bool containsNew() {
+    print("Checking contains");
+    print(resources);
+    var r = resources.firstWhere((LearningResource r) => r.isNew(), orElse: () => null);
+    print("Checked contains");
+    return r != null;
+  }
 }
 
 enum LearningResourceType {
@@ -73,6 +86,7 @@ class LearningResource {
   double time;
   String link;
   String type;
+  DateTime createdAt;
 
   LearningResource.fromJson(Map json) {
     id = json['id'];
@@ -80,6 +94,7 @@ class LearningResource {
     time = json['time'];
     link = json['link'];
     type = json['type'];
+    createdAt = DateTime.parse(json['created_at']);
   }
 
   String getTitle() {
@@ -130,5 +145,11 @@ class LearningResource {
 
   String getTimeText() {
     return timeBrackets.firstWhere((b) => b['maxTime'] > time)['text'];
+  }
+  
+  bool isNew() {
+    print("Checking is new");
+    print(createdAt);
+    return DateTime.now().difference(createdAt).compareTo(Duration(days: 20)) < 0;
   }
 }
