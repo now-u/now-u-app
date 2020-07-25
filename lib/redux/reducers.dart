@@ -9,7 +9,7 @@ import 'package:redux/redux.dart';
 
 AppState appStateReducer(AppState state, action) {
   return AppState(
-    campaigns: state.campaigns,
+    campaigns: campaignsReducer(state.campaigns, action),
     userState: userStateReducer(state.userState, action),
     loading: loadingReducer(action) ?? state.loading,
     api: state.api,

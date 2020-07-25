@@ -18,8 +18,15 @@ class HttpError {
 
 class HttpApi implements Api {
 
-  //final String domainPrefix = "https://now-u-api.herokuapp.com/api/v1/";
-  final String domainPrefix = "https://api.now-u.com/api/v1/";
+  String domainPrefix = "https://api.now-u.com/api/v1/";
+  
+  void toggleStagingApi() {
+    if (domainPrefix.contains("staging")) {
+      domainPrefix = "https://api.now-u.com/api/v1/";
+    } else {
+      domainPrefix = "https://stagingapi.now-u.com/api/v1/";
+    }
+  }
 
   @override
   Future<Campaign> getCampaign(int id) async {
@@ -41,6 +48,7 @@ class HttpApi implements Api {
   Future<Campaigns> getCampaigns() async {
     print("Getting campaigns");
     print("ITS HAPPENING");
+    print(domainPrefix);
     var response = await http.get(domainPrefix + "campaigns");
     if (response.statusCode == 200) {
       print("200");
