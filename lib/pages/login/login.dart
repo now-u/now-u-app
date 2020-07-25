@@ -116,6 +116,28 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       //keyboardType: TextInputType.text,
       //textCapitalization: TextCapitalization.words,
       //autofocus: false,
+      title: RichText(
+        text: TextSpan(
+          style: textStyleFrom(
+            Theme.of(context).primaryTextTheme.bodyText1,
+            color: Colors.white,
+          ),
+          children: [
+            TextSpan(text: "I agree to the user "),
+            TextSpan(
+              text: "Terms & Conditions",
+              style: textStyleFrom(
+                Theme.of(context).primaryTextTheme.bodyText1,
+                color: Theme.of(context).buttonColor,
+              ),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  launch("share.now-u.com/legal/t&cs");
+                }
+            ),
+          ]
+        ),
+      ),
       validator: (value) {
         if (!value) return "You must accept our terms and conditions";
         return null;
@@ -270,6 +292,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                               ),
                               SizedBox(height: 8),
                               email,
+                              SizedBox(height: 20),
                               acceptTandC,
 
                               loginButton(),
@@ -294,7 +317,8 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                                       ),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {
-                                          launch("https://now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf");
+                                          print("CLICKED IT");
+                                          //launch("http://www.now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf");
                                         }),
                                   ]
                                 ),

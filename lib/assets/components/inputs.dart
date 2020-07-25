@@ -196,19 +196,35 @@ class CustomCheckboxFormField extends FormField<bool> {
             initialValue: initialValue,
             autovalidate: autovalidate,
             builder: (FormFieldState<bool> state) {
-              return CircularCheckBox(
-                //title: title,
-                value: state.value,
-                onChanged: state.didChange,
-                //subtitle: state.hasError
-                //    ? Builder(
-                //        builder: (BuildContext context) =>  Text(
-                //          state.errorText,
-                //          style: TextStyle(color: Theme.of(context).errorColor),
-                //        ),
-                //      )
-                //    : null,
-                //controlAffinity: ListTileControlAffinity.leading,
+              return 
+              Builder(
+                builder: (BuildContext context) => Column(
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        CircularCheckBox(
+                          value: state.value,
+                          onChanged: state.didChange,
+                          inactiveColor: Theme.of(context).primaryColor,
+                          activeColor: Theme.of(context).primaryColor,
+                        ),
+                        SizedBox(width: 3),
+                        Expanded(child: title),
+                      ],
+                    ),
+                    state.hasError
+                    ? Text(
+                        state.errorText,
+                        style: textStyleFrom(
+                          Theme.of(context).primaryTextTheme.bodyText1,
+                          color: Theme.of(context).errorColor,
+                          fontSize: 12 
+                        )
+                      )
+                    : Container(),
+                  ]
+                )
               );
             });
 }
