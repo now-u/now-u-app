@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:app/assets/StyleFrom.dart';
 
+import 'package:app/assets/components/circularCheckbox.dart';
+
 final double WIDTH = 60;
 final double HEIGHT = 30;
 
@@ -194,20 +196,19 @@ class CustomCheckboxFormField extends FormField<bool> {
             initialValue: initialValue,
             autovalidate: autovalidate,
             builder: (FormFieldState<bool> state) {
-              return CheckboxListTile(
-                dense: state.hasError,
-                title: title,
+              return CircularCheckBox(
+                //title: title,
                 value: state.value,
                 onChanged: state.didChange,
-                subtitle: state.hasError
-                    ? Builder(
-                        builder: (BuildContext context) =>  Text(
-                          state.errorText,
-                          style: TextStyle(color: Theme.of(context).errorColor),
-                        ),
-                      )
-                    : null,
-                controlAffinity: ListTileControlAffinity.leading,
+                //subtitle: state.hasError
+                //    ? Builder(
+                //        builder: (BuildContext context) =>  Text(
+                //          state.errorText,
+                //          style: TextStyle(color: Theme.of(context).errorColor),
+                //        ),
+                //      )
+                //    : null,
+                //controlAffinity: ListTileControlAffinity.leading,
               );
             });
 }
