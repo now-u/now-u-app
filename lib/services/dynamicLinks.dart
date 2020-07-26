@@ -38,12 +38,16 @@ class DynamicLinkService {
     final Uri deepLink = data?.link;
     if (deepLink != null) {
       print('_handleDeepLink | deeplink: $deepLink');
+      print('_handleDeepLink | deepLink path: ${deepLink.path}');
       switch (deepLink.path) {
         case "/loginMobile": {
           String email = await _storageProvider.getEmail();
           String token = deepLink.queryParameters['token'];
           EmailSentPageArguments args = EmailSentPageArguments(email: email, token: token);
           _navigationService.navigateTo(Routes.emailSent, arguments: args);
+          break;
+        }
+        case "/campaigns": {
         }
       }
     }
