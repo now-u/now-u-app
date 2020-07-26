@@ -71,9 +71,6 @@ class _EmailSentPageState extends State<EmailSentPage> {
                         padding: EdgeInsets.only(top: 20, bottom: 40),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //children: <Widget>[
-                          //  Text("Let's get started", style: Theme.of(context).primaryTextTheme.headline6,),
-                          //],
                         ),
                       ),
 
@@ -209,32 +206,7 @@ class FadeRouteBuilder<T> extends PageRouteBuilder<T> {
         );
 }
 
-class OrangePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // TODO SUUPER HACKY --> need to sort out state being parsed around and instead use store connector
-    Navigator.pushNamed(context, '/');
-    return Scaffold(
-      body: Container(
-        child: Center(child: Text('Now-U Home Page')),
-      ),
-    );
-  }
-}
-
 void openEmailApp(BuildContext context) {
-  //try{
-  //    AppAvailability.launchApp(Platform.isIOS ? "message://" : "com.google.android.gm").then((_) {
-  //            print("App Email launched!");
-  //          }).catchError((err) {
-  //            Scaffold.of(context).showSnackBar(SnackBar(
-  //                content: Text("App Email not found!")
-  //            ));
-  //            print(err);
-  //          });
-  //} catch(e) {
-  //  Scaffold.of(context).showSnackBar(SnackBar(content: Text("Email App not found!")));
-  //}
   if (Platform.isAndroid) {
     AndroidIntent intent = AndroidIntent(
       action: 'android.intent.action.MAIN',
@@ -246,18 +218,3 @@ void openEmailApp(BuildContext context) {
   }
 }
 
-//Future<void> _retrieveDynamicLink() async {
-//  final PendingDynamicLinkData data =
-//      await FirebaseDynamicLinks.instance.getInitialLink();
-
-//  final Uri deepLink = data?.link;
-//  print("THE LINK IS");
-//  print(deepLink.toString());
-
-//  if (deepLink.toString() != null) {
-//    print("The link is not null");
-//    _link = deepLink.toString();
-//    _signInWithEmailAndLink();
-//  }
-//  return deepLink.toString();
-//}
