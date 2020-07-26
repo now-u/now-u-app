@@ -3,7 +3,7 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 // The holy grail link https://nowu.page.link/?link=https://now-u.com/campaigns?id=1&apn=com.nowu.app
 
 class DynamicLinkService {
-  
+
   Future handleDynamicLinks() async {
     // 1. Get the initial dynamic link if the app is opened with a dynamic link
     final PendingDynamicLinkData data =
@@ -27,17 +27,6 @@ class DynamicLinkService {
     final Uri deepLink = data?.link;
     if (deepLink != null) {
       print('_handleDeepLink | deeplink: $deepLink');
-      //print(deepLink.path);
-      //print(deepLink.path == "/campaigns");
-
-      //if (deepLink.path == "/campaigns") {
-      //  String campaignId = deepLink.queryParameters['id'];
-      //  print("Campaign id is");
-      //  print(campaignId);
-      //  if (campaignId != null) {
-      //    onLink(0, subIndex: int.parse(campaignId));
-      //  }
-      //}
     }
     else {
       print("Deep link was null");

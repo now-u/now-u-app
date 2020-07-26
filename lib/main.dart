@@ -139,11 +139,7 @@ class _AppState extends State<App> {
           routes: {
             '/': (BuildContext context) => StoreBuilder<AppState>(
                   onInitialBuild: (store) {
-                    DynamicLinkService deepLinkService =
-                        locator<DynamicLinkService>();
-                    deepLinkService.getLink().then((Uri u) {
-                      store.dispatch(initStore(u));
-                    });
+                    store.dispatch(initStore());
                   },
                   builder: (BuildContext context, Store<AppState> store) =>
                       SplashScreen(),

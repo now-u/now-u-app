@@ -7,6 +7,9 @@ import 'package:redux/redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 
+import 'package:app/locator.dart';
+import 'package:app/services/dynamicLinks.dart';
+
 import 'package:app/models/State.dart';
 import 'package:app/models/User.dart';
 import 'package:app/models/Campaigns.dart';
@@ -440,13 +443,10 @@ ThunkAction skipLoginAction() {
   };
 }
 
-ThunkAction initStore(Uri deepLink) {
-  print("DEEP LINK IN INIT | " + deepLink.toString());
-  if (deepLink != null) {
-    print("DEEP LINK PATH | " + deepLink.path);
-    print("DEEP LINK PATH | " + deepLink.query);
-  }
+ThunkAction initStore() {
+  DynamicLinkService _dynamicLinkService = locator<DynamicLinkService>();
   return (Store store) async {
+    _dynamicLinkService.handleDynamicLinks();
     Future(() async {
       print("We are initing");
       store.dispatch(GetUserDataAction()).then((dynamic u) {
@@ -460,28 +460,7 @@ ThunkAction initStore(Uri deepLink) {
               store.state.userState.user.getToken() == "") {
             // Skip Login Screen
             //if (store.state.userState.user == null) {
-            if (deepLink != null && deepLink.path == "/loginMobile") {
-              print("The path is the thing");
-              print(deepLink.path);
-              store.state.userState.repository.getEmail().then((email) {
-                store.dispatch(loginUser(email, deepLink.queryParameters['token']));
-                //store.state.userState.auth
-                //    .signInWithEmailLink(
-                //        email, deepLink.queryParameters['token'])
-                //    .then((User r) {
-                //  print("Signed in ish");
-                //  //print(r.user.email);
-                //  //print(r.user.hashCode)
-                //  // TODO if new user
-                //  // intro
-                //  Keys.navKey.currentState.pushNamed(Routes.intro);
-                //  // else home cause theyve already done the intro
-                //  // Keys.navKey.currentState.pushNamed(Routes.home);
-                //});
-              });
-            } else {
-              Keys.navKey.currentState.pushNamed(Routes.login);
-            }
+            Keys.navKey.currentState.pushNamed(Routes.login);
           } else {
             // Go home
             print("Going home");

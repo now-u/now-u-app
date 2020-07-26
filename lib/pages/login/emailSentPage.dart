@@ -8,10 +8,7 @@ import 'package:app/assets/components/textButton.dart';
 
 import 'package:app/models/ViewModel.dart';
 
-import 'package:app/services/dynamicLinks.dart';
 import 'package:app/routes.dart';
-
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 class EmailSentPageArguments {
   final UserViewModel model;
@@ -52,30 +49,30 @@ class _EmailSentPageState extends State<EmailSentPage>
       //    widget.model.login(email, link.queryParameters['token']);
       //  });
       //});
-      FirebaseDynamicLinks.instance.onLink(
-          onSuccess: (PendingDynamicLinkData dynamicLink) async {
-        print("Have dynamic link");
-        print('dynamicLink: $dynamicLink');
-        final Uri deepLink = dynamicLink?.link;
-        print('deepLink: $deepLink');
-        print('deepLink.path: ${deepLink.path}');
-        print('token parameter: ${deepLink.queryParameters['token']}');
-        print('deepLink.query: ${deepLink.query}');
-        print('deepLink.pathSegments: ${deepLink.pathSegments}');
-        print('deepLink.queryParametersAll: ${deepLink.queryParametersAll}');
+      //FirebaseDynamicLinks.instance.onLink(
+      //    onSuccess: (PendingDynamicLinkData dynamicLink) async {
+      //  print("Have dynamic link");
+      //  print('dynamicLink: $dynamicLink');
+      //  final Uri deepLink = dynamicLink?.link;
+      //  print('deepLink: $deepLink');
+      //  print('deepLink.path: ${deepLink.path}');
+      //  print('token parameter: ${deepLink.queryParameters['token']}');
+      //  print('deepLink.query: ${deepLink.query}');
+      //  print('deepLink.pathSegments: ${deepLink.pathSegments}');
+      //  print('deepLink.queryParametersAll: ${deepLink.queryParametersAll}');
 
-        if (deepLink != null && deepLink.path == "/loginMobile") {
-          print(deepLink.queryParameters['token']);
-          widget.args.model.repository.getEmail().then((email) {
-            print("Stored email is");
-            print(email);
-            widget.args.model.login(email, deepLink.queryParameters['token']);
-          });
-        }
-      }, onError: (OnLinkErrorException e) async {
-        print('onLinkError');
-        print(e.message);
-      });
+      //  if (deepLink != null && deepLink.path == "/loginMobile") {
+      //    print(deepLink.queryParameters['token']);
+      //    widget.args.model.repository.getEmail().then((email) {
+      //      print("Stored email is");
+      //      print(email);
+      //      widget.args.model.login(email, deepLink.queryParameters['token']);
+      //    });
+      //  }
+      //}, onError: (OnLinkErrorException e) async {
+      //  print('onLinkError');
+      //  print(e.message);
+      //});
     }
   }
 
