@@ -49,7 +49,11 @@ class _EmailSentPageState extends State<EmailSentPage> {
    return StoreConnector<AppState, ViewModel>(
      onInitialBuild: (ViewModel viewModel) {
        if (token != null) {
-         viewModel.userModel.login(widget.args.email, token);
+         if (viewModel.userModel.user == null) {
+          viewModel.userModel.login(widget.args.email, token);
+         } else {
+           Navigator.of(context).pushNamed(Routes.home);
+         }
        }
      },
      converter: (Store<AppState> store) => ViewModel.create(store),
