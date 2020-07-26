@@ -11,6 +11,8 @@ import 'package:app/routes.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/analytics.dart';
 import 'package:app/services/dynamicLinks.dart';
+import 'package:app/services/pushNotifications.dart';
+import 'package:app/services/navigation.dart';
 
 import 'package:app/models/State.dart';
 
@@ -74,10 +76,6 @@ Color lightGrey = Color.fromRGBO(119, 119, 119, 1);
 
 //List<Widget> _pages = <Widget>[Campaigns(campaigns), Home(), Profile(_user)];
 
-class Keys {
-  static final navKey = new GlobalKey<NavigatorState>();
-}
-
 Future<Map> getSecrets() async {
   String data = await rootBundle.loadString('assets/json/secrets.json');
   Map jsondata = json.decode(data);
@@ -108,6 +106,10 @@ class _AppState extends State<App> {
       initialState: AppState.initialState(),
       middleware: [appStateMiddleware, thunkMiddleware],
     );
+  
+    final PushNotificationsService _pushNotificationService =
+      locator<PushNotificationsService>();
+    _pushNotificationService.init();
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.white, //or set color with: Color(0xFF0000FF)
@@ -127,9 +129,9 @@ class _AppState extends State<App> {
             //  secret: snapshot.data['wiredash_key'],
             //  navigatorKey: Keys.navKey,
             //  child:
-            MaterialApp(
+        MaterialApp(
           title: 'Flutter Demo',
-          navigatorKey: Keys.navKey,
+          navigatorKey: locator<NavigationService>().navigatorKey,
           navigatorObservers: [
             locator<Analytics>().getAnalyticsObserver(),
           ],
@@ -146,15 +148,7 @@ class _AppState extends State<App> {
                 ),
           },
           theme: ThemeData(
-            // This is the theme of your application.
-            //
-            // Try running your application with "flutter run". You'll see the
-            // application has a blue toolbar. Then, without quitting the app, try
-            // changing the primarySwatch below to Colors.green and then invoke
-            // "hot reload" (press "r" in the console where you ran "flutter run",
-            // or simply save your changes to "hot reload" in a Flutter IDE).
-            // Notice that the counter didn't reset back to zero; the application
-            // is not restarted.
+            // This is the theme of the application.
             applyElevationOverlayColor: true,
             fontFamily: 'Nunito',
             primaryTextTheme: TextTheme(

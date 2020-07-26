@@ -57,10 +57,12 @@ class _CampaignPageState extends State<CampaignPage> {
     // Needs to be in future so happens after render of this page or something like that
     //var _campaigns = widget.model.campaigns.map((Campaign c) => c).toList();
     return Scaffold(
-        body: StoreConnector<AppState, ViewModel>(
+      body: StoreConnector<AppState, ViewModel>(
       onInit: (Store<AppState> store) {
         campaigns = store.state.campaigns.getActiveCampaigns();
         user = store.state.userState.user;
+        // If there is no user then we need to go get one
+        // TODO can the app ever work without a user/ can we setup an anonymous user
       },
       converter: (Store<AppState> store) => ViewModel.create(store),
       builder: (BuildContext context, ViewModel viewModel) {
@@ -73,6 +75,10 @@ class _CampaignPageState extends State<CampaignPage> {
         print(viewModel.campaigns.getActiveCampaigns().toList()[0]);
         print(viewModel.campaigns.getActiveCampaigns().toList()[1]);
         print(viewModel.campaigns.getActiveCampaigns().toList()[2]);
+        if (user == null) {
+          Navigator.of(context).pushNamed('/');
+          
+        }
         //campaigns = viewModel.campaigns.getActiveCampaigns().toList();
         //user = viewModel.userModel.user;
         return Stack(
