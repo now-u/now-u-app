@@ -1,9 +1,20 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+
+import 'package:app/locator.dart';
+import 'package:app/services/navigation.dart';
+import 'package:app/services/storage.dart';
+
+import 'package:app/pages/login/emailSentPage.dart';
+
+import 'package:app/routes.dart';
     
 // The holy grail link https://nowu.page.link/?link=https://now-u.com/campaigns?id=1&apn=com.nowu.app
 
 class DynamicLinkService {
   
+  final NavigationService _navigationService = locator<NavigationService>();
+  final SecureStorageService _storageProvider = locator<SecureStorageService>();
+
   Future handleDynamicLinks() async {
     // 1. Get the initial dynamic link if the app is opened with a dynamic link
     final PendingDynamicLinkData data =
@@ -23,21 +34,22 @@ class DynamicLinkService {
     });
   }
 
-  void _handleDeepLink(PendingDynamicLinkData data) {
+  void _handleDeepLink(PendingDynamicLinkData data) async {
     final Uri deepLink = data?.link;
     if (deepLink != null) {
       print('_handleDeepLink | deeplink: $deepLink');
-      //print(deepLink.path);
-      //print(deepLink.path == "/campaigns");
-
-      //if (deepLink.path == "/campaigns") {
-      //  String campaignId = deepLink.queryParameters['id'];
-      //  print("Campaign id is");
-      //  print(campaignId);
-      //  if (campaignId != null) {
-      //    onLink(0, subIndex: int.parse(campaignId));
-      //  }
-      //}
+      print('_handleDeepLink | deepLink path: ${deepLink.path}');
+      switch (deepLink.path) {
+        case "/loginMobile": {
+          String email = await _storageProvider.getEmail();
+          String token = deepLink.queryParameters['token'];
+          EmailSentPageArguments args = EmailSentPageArguments(email: email, token: token);
+          _navigationService.navigateTo(Routes.emailSent, arguments: args);
+          break;
+        }
+        case "/campaigns": {
+        }
+      }
     }
     else {
       print("Deep link was null");

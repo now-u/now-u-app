@@ -7,6 +7,9 @@ import 'package:redux/redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 
+import 'package:app/locator.dart';
+import 'package:app/services/dynamicLinks.dart';
+
 import 'package:app/models/State.dart';
 import 'package:app/models/User.dart';
 import 'package:app/models/Campaigns.dart';
@@ -18,16 +21,22 @@ import 'package:app/models/Reward.dart';
 import 'package:app/models/Learning.dart';
 import 'package:app/redux/actions.dart';
 
+
+import 'package:app/locator.dart';
+import 'package:app/services/navigation.dart';
 import 'package:app/services/auth.dart';
 import 'package:app/services/analytics.dart';
 
 import 'package:app/assets/components/pointsNotifier.dart';
 
 import 'package:app/pages/login/emailSentPage.dart';
+import 'package:app/pages/login/login.dart';
 import 'package:app/pages/other/RewardComplete.dart';
 
 import 'package:app/routes.dart';
 import 'package:app/main.dart';
+
+final NavigationService _navigationService = locator<NavigationService>();
 
 Future<void> saveUserToPrefs(User u) async {
   print("Saving json to shared prefs");
@@ -69,7 +78,9 @@ Future<User> loadUserFromPrefs(User u) async {
 }
 
 void appStateMiddleware(
+
     Store<AppState> store, action, NextDispatcher next) async {
+
   next(action);
 
   if (action is InitaliseState) {}
@@ -164,7 +175,7 @@ void appStateMiddleware(
       token: "",
     );
     saveUserToPrefs(u).then((_) {
-      Keys.navKey.currentState.pushNamed(Routes.login);
+      _navigationService.navigateTo(Routes.login);
     });
   }
 }
@@ -400,7 +411,7 @@ ThunkAction<AppState> emailUser(String email, String name) {
         print("Trying to send email");
         store.dispatch(SentAuthEmail(email));
         print("Trying to nav");
-        Keys.navKey.currentState.pushNamed(Routes.emailSent, arguments: EmailSentPageArguments(email: email, model: UserViewModel.create(store)));
+        _navigationService.navigateTo(Routes.emailSent, arguments: EmailSentPageArguments(email: email));
       }, onError: (error) {
         store.dispatch(new LoginFailedAction());
       });
@@ -408,12 +419,12 @@ ThunkAction<AppState> emailUser(String email, String name) {
   };
 }
 
-ThunkAction loginUser(String email, String link,) {
+ThunkAction loginUser(String email, String token,) {
   return (Store store) async {
     Future(() async {
       store.dispatch(StartLoadingUserAction());
       User user =
-          await store.state.userState.auth.signInWithEmailLink(email, link);
+          await store.state.userState.auth.signInWithEmailLink(email, token);
 
       print("The loging response here is");
       print(user);
@@ -423,7 +434,11 @@ ThunkAction loginUser(String email, String link,) {
         print("New user is ");
         print(user.getName());
         print(user.getToken());
-        Keys.navKey.currentState.pushNamed(Routes.intro);
+        _navigationService.navigateTo(Routes.intro);
+      }
+    }).catchError((error) {
+      if(error == AuthError.unauthorized) {
+        _navigationService.navigateTo(Routes.login, arguments: LoginPageArguments(retry: true));
       }
     });
   };
@@ -435,19 +450,16 @@ ThunkAction skipLoginAction() {
       User u = User.empty();
       u.setToken(null);
       store.dispatch(CreateNewUser(u)).then((_) {
-        Keys.navKey.currentState.pushNamed(Routes.intro);
+        _navigationService.navigateTo(Routes.intro);
       });
     });
   };
 }
 
-ThunkAction initStore(Uri deepLink) {
-  print("DEEP LINK IN INIT | " + deepLink.toString());
-  if (deepLink != null) {
-    print("DEEP LINK PATH | " + deepLink.path);
-    print("DEEP LINK PATH | " + deepLink.query);
-  }
+ThunkAction initStore() {
+  DynamicLinkService _dynamicLinkService = locator<DynamicLinkService>();
   return (Store store) async {
+    _dynamicLinkService.handleDynamicLinks();
     Future(() async {
       print("We are initing");
       store.dispatch(GetUserDataAction()).then((dynamic u) {
@@ -455,38 +467,16 @@ ThunkAction initStore(Uri deepLink) {
           store.state.api.toggleStagingApi();
         }
         store.dispatch(GetCampaignsAction()).then((dynamic r) {
-          // A user id of -1 means the user is the placeholder and therefore does not exist, well get rid of this eventually and keep it as null, but for now useful as when we go to homepage after login we have the placeholder user
           if (store.state.userState.user == null ||
               store.state.userState.user.getToken() == null ||
               store.state.userState.user.getToken() == "") {
             // Skip Login Screen
             //if (store.state.userState.user == null) {
-            if (deepLink != null && deepLink.path == "/loginMobile") {
-              print("The path is the thing");
-              print(deepLink.path);
-              store.state.userState.repository.getEmail().then((email) {
-                store.dispatch(loginUser(email, deepLink.queryParameters['token']));
-                //store.state.userState.auth
-                //    .signInWithEmailLink(
-                //        email, deepLink.queryParameters['token'])
-                //    .then((User r) {
-                //  print("Signed in ish");
-                //  //print(r.user.email);
-                //  //print(r.user.hashCode)
-                //  // TODO if new user
-                //  // intro
-                //  Keys.navKey.currentState.pushNamed(Routes.intro);
-                //  // else home cause theyve already done the intro
-                //  // Keys.navKey.currentState.pushNamed(Routes.home);
-                //});
-              });
-            } else {
-              Keys.navKey.currentState.pushNamed(Routes.login);
-            }
+          _navigationService.navigateTo(Routes.login);
           } else {
             // Go home
             print("Going home");
-            Keys.navKey.currentState.pushNamed(Routes.home);
+            _navigationService.navigateTo(Routes.home);
           }
         });
       });
@@ -529,5 +519,5 @@ ThunkAction<AppState> completeLearningResource(LearningResource resource) {
 
 
 void onAuthError() {
-  Keys.navKey.currentState.pushNamed(Routes.login);
+  _navigationService.navigateTo(Routes.login);
 }

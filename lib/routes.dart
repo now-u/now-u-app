@@ -30,7 +30,6 @@ class Routes {
   static const intro = "intro";
   static const login = "login";
   static const emailSent = "emailSent";
-  static const loginIssues = "loginIssues";
 
   // Tab View Routes
   static const campaign = "campaign";
@@ -66,24 +65,17 @@ Function initRoutes = (RouteSettings settings) {
     // Into
     case Routes.login:
       {
-        if(args is LoginTypes) {
-          return customRoute(builder: (context) => LoginPage(retry: true, loginType: args), settings: settings);
+        if(args is LoginPageArguments) {
+          return customRoute(builder: (context) => LoginPage(args), settings: settings);
         }
-        return customRoute(builder: (context) => LoginPage(), settings: settings);
+        return customRoute(builder: (context) => LoginPage(LoginPageArguments()), settings: settings);
       }
     case Routes.emailSent:
       {
         if (args is EmailSentPageArguments) {
           return customRoute(builder: (context) => EmailSentPage(args), settings: settings);
         }
-        return customRoute(builder: (context) => LoginPage(), settings: settings);
-      }
-    case Routes.loginIssues:
-      {
-        if(args is LoginTypes) {
-          return customRoute(builder: (context) => LoginPage(retry: true, loginType: args), settings: settings);
-        }
-        return customRoute(builder: (context) => LoginPage(retry: true), settings: settings);
+        return customRoute(builder: (context) => LoginPage(LoginPageArguments()), settings: settings);
       }
     case Routes.intro:
       {

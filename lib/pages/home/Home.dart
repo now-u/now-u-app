@@ -4,19 +4,11 @@ import 'package:intl/intl.dart';
 
 import 'package:app/routes.dart';
 
-import 'package:app/pages/news/NewsPage.dart';
-import 'package:app/pages/Tabs.dart';
 import 'package:app/pages/campaign/CampaignTile.dart';
 import 'package:app/pages/other/InfoPage.dart';
-import 'package:intl/intl.dart';
-import 'package:app/assets/ClipShadowPath.dart';
 
-import 'package:app/assets/components/selectionItem.dart';
-import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/customScrollableSheet.dart';
-import 'package:app/assets/components/progress.dart';
-import 'package:app/assets/components/viewCampaigns.dart';
 import 'package:app/assets/components/smoothPageIndicatorEffect.dart';
 import 'package:app/assets/routes/customLaunch.dart';
 
