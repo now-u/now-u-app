@@ -2,7 +2,6 @@ import 'package:app/models/User.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
 
 class InitaliseState {}
 
@@ -78,9 +77,6 @@ class LoadedCampaignsAction {
 
   LoadedCampaignsAction(this.campaigns);
 }
-
-//class FetchInitState {}
-class GetDynamicLink {}
 
 class GetUserDataAction {}
 

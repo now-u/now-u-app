@@ -36,6 +36,7 @@ import 'package:app/routes.dart';
 import 'package:app/main.dart';
 
 final NavigationService _navigationService = locator<NavigationService>();
+final DynamicLinkService _dynamicLinkService = locator<DynamicLinkService>();
 
 Future<void> saveUserToPrefs(User u) async {
   print("Saving json to shared prefs");
@@ -150,8 +151,6 @@ void appStateMiddleware(
       store.dispatch(LoadedUserDataAction(user));
     });
   }
-
-  if (action is GetDynamicLink) {}
 
   if (action is RejectAction) {
     var responseUser = await store.state.userState.auth.rejectAction(
@@ -456,25 +455,23 @@ ThunkAction skipLoginAction() {
 }
 
 ThunkAction initStore() {
-  DynamicLinkService _dynamicLinkService = locator<DynamicLinkService>();
   return (Store store) async {
     _dynamicLinkService.handleDynamicLinks();
     Future(() async {
-      print("We are initing");
       store.dispatch(GetUserDataAction()).then((dynamic u) {
+        // If we are logging in as Dave or James then use the staging branch for auth
         if (store.state.userState.user != null && store.state.userState.user.isStagingUser()) {
           store.state.api.toggleStagingApi();
         }
         store.dispatch(GetCampaignsAction()).then((dynamic r) {
+          // If the user is not logged in
           if (store.state.userState.user == null ||
               store.state.userState.user.getToken() == null ||
               store.state.userState.user.getToken() == "") {
             // Skip Login Screen
-            //if (store.state.userState.user == null) {
-          _navigationService.navigateTo(Routes.login);
+            _navigationService.navigateTo(Routes.login);
+          // Otherwise they are logged in so they can go to the home page
           } else {
-            // Go home
-            print("Going home");
             _navigationService.navigateTo(Routes.home);
           }
         });

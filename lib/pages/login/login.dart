@@ -4,16 +4,11 @@ import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/inputs.dart';
 import 'package:flutter/material.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:app/models/State.dart';
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/User.dart';
-import 'package:app/routes.dart';
-
-import 'package:app/locator.dart';
-import 'package:app/services/auth.dart';
 
 import 'package:app/services/storage.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -104,10 +99,6 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
     );
     
     final acceptTandC = CustomCheckboxFormField(
-      //style: CustomFormFieldStyle.Dark,
-      //keyboardType: TextInputType.text,
-      //textCapitalization: TextCapitalization.words,
-      //autofocus: false,
       title: RichText(
         text: TextSpan(
           style: textStyleFrom(
@@ -484,22 +475,6 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       )
     );
   }
-
-  //Future<void> _retrieveDynamicLink() async {
-  //  final PendingDynamicLinkData data =
-  //      await FirebaseDynamicLinks.instance.getInitialLink();
-
-  //  final Uri deepLink = data?.link;
-  //  print("THE LINK IS");
-  //  print(deepLink.toString());
-
-  //  if (deepLink.toString() != null) {
-  //    print("The link is not null");
-  //    _link = deepLink.toString();
-  //    _signInWithEmailAndLink();
-  //  }
-  //  return deepLink.toString();
-  //}
 
   void _showDialog(String error) {
     showDialog(
