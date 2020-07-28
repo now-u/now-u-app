@@ -20,6 +20,8 @@ class Campaign {
   String videoLink;
   List<SDG> sdgs;
   List<String> keyAims;
+  DateTime startDate;
+  DateTime endDate;
   
   Campaign({
     @required int id,
@@ -34,6 +36,8 @@ class Campaign {
     List<Organisation> campaignPartners,
     String videoLink,
     List<String> keyAims,
+    DateTime startDate,
+    DateTime endDate,
   }) {
     this.id = id; 
     this.title = title;
@@ -47,6 +51,8 @@ class Campaign {
     this.campaignPartners = campaignPartners ?? [];
     this.sdgs = sdgs ?? [];
     this.keyAims = keyAims ?? [];
+    this.startDate = startDate;
+    this.endDate = endDate;
   }
 
   Campaign copyWith({
@@ -62,6 +68,8 @@ class Campaign {
     String videoLink,
     List<SDG> sdgs,
     List<String> keyAims,
+    DateTime startDate,
+    DateTime endDate,
   }) {
     return Campaign(
       id: id ?? this.id,
@@ -76,6 +84,8 @@ class Campaign {
       videoLink: videoLink ?? this.videoLink,
       sdgs: sdgs ?? this.sdgs,
       keyAims: keyAims ?? this.keyAims,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
     );
   }
 
@@ -116,6 +126,9 @@ class Campaign {
       json['key_aims'].map((a) => a['title']).toList().cast<String>();
 
     print("Got the campaign");
+    
+    startDate = json['start_date'] == null ? null : DateTime.parse(json['start_date']);
+    endDate = json['end_date'] == null ? null : DateTime.parse(json['end_date']);
   }
 
   Map toJson() => {
@@ -173,5 +186,12 @@ class Campaign {
   }
   List<String> getKeyAims(){
     return keyAims;
+  }
+
+  bool isPast() {
+    if (endDate == null) {
+      return false;
+    }
+    return DateTime.now().compareTo(endDate) > 0;
   }
 }

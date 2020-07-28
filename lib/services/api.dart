@@ -14,6 +14,7 @@ abstract class Api {
 
   Future<Campaign> getCampaign(int id);
   Future<Campaigns> getCampaigns();
+  Future<Campaigns> getAllCampaigns();
   Future<CampaignAction> getAction(int id);
 
   Future<List<Article>> getArticles();
