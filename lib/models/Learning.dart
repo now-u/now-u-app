@@ -91,6 +91,7 @@ class LearningResource {
   String link;
   String type;
   DateTime createdAt;
+  String source;
 
   LearningResource.fromJson(Map json) {
     id = json['id'];
@@ -99,6 +100,7 @@ class LearningResource {
     link = json['link'];
     type = json['type'];
     createdAt = DateTime.parse(json['created_at']);
+    source = json['source'];
   }
 
   int getId() {
@@ -153,6 +155,10 @@ class LearningResource {
 
   String getTimeText() {
     return timeBrackets.firstWhere((b) => b['maxTime'] > time)['text'];
+  }
+  
+  String getSource() {
+    return source;
   }
   
   bool isNew() {

@@ -224,7 +224,7 @@ class LearningResouceSelectionItem extends StatelessWidget {
         ),
       ]),
       text: resource.getTitle(),
-      time: resource.getTimeText(),
+      secondaryText: resource.getSource(),
       extraOverflow: 40,
       isCompleted: completed,
     );
@@ -243,6 +243,7 @@ class LeadingSelectionItem extends StatelessWidget {
   final Function onTap;
   final String text;
   final String time;
+  final String secondaryText;
   final double extraOverflow;
   final Color backgroundColor;
   final bool isNew;
@@ -257,6 +258,7 @@ class LeadingSelectionItem extends StatelessWidget {
     this.onTap,
     this.text,
     this.time,
+    this.secondaryText,
     this.extraOverflow,
     this.backgroundColor,
     this.isNew,
@@ -317,29 +319,41 @@ class LeadingSelectionItem extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      Icon(
-                                        Icons.access_time,
-                                        size: 15,
-                                        color: Theme.of(context).primaryColor,
+                                  time != null 
+                                    ? Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        Icon(
+                                          Icons.access_time,
+                                          size: 15,
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                        SizedBox(
+                                          width: 2,
+                                        ),
+                                        Text(time,
+                                            style: textStyleFrom(
+                                              Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .bodyText1,
+                                              fontWeight: FontWeight.w600,
+                                              color: Theme.of(context).primaryColor,
+                                              fontSize: 11,
+                                            )),
+                                        ],
+                                      )
+                                    : secondaryText == null ? Container() :
+                                    Text(secondaryText,
+                                        style: textStyleFrom(
+                                          Theme.of(context)
+                                              .primaryTextTheme
+                                              .bodyText1,
+                                          fontWeight: FontWeight.w600,
+                                          color: Theme.of(context).primaryColor,
+                                          fontSize: 11,
+                                        )
                                       ),
-                                      SizedBox(
-                                        width: 2,
-                                      ),
-                                      Text(time,
-                                          style: textStyleFrom(
-                                            Theme.of(context)
-                                                .primaryTextTheme
-                                                .bodyText1,
-                                            fontWeight: FontWeight.w600,
-                                            color: Theme.of(context).primaryColor,
-                                            fontSize: 11,
-                                          )),
-                                    ],
-                                  ),
                                 ])),
                       )
                     ]),

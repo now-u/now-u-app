@@ -187,7 +187,6 @@ class Campaign {
   List<String> getKeyAims(){
     return keyAims;
   }
-
   bool isPast() {
     if (endDate == null) {
       return false;
