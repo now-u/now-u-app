@@ -4,22 +4,30 @@ import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/inputs.dart';
 import 'package:flutter/material.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:app/models/State.dart';
 import 'package:app/models/ViewModel.dart';
-import 'package:app/services/dynamicLinks.dart';
-import 'package:app/routes.dart';
+import 'package:app/models/User.dart';
 
 import 'package:app/services/storage.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-class LoginPage extends StatefulWidget {
+enum LoginTypes{
+  Login,
+  Signup
+}
+
+class LoginPageArguments {
   final bool retry;
-  final String deeplink;
-  LoginPage({this.deeplink, this.retry});
+  final LoginTypes loginType;
+  LoginPageArguments({this.retry, this.loginType});
+}
+
+class LoginPage extends StatefulWidget {
+  final LoginPageArguments args;
+
+  LoginPage(this.args);
   @override
   LoginPageState createState() => new LoginPageState();
 }
@@ -29,6 +37,9 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   String _email;
   String _name;
   String _token;
+  bool _acceptedtc;
+
+  bool retry;
   final _formKey = GlobalKey<FormState>();
   final _tokenFormKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -36,34 +47,12 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
 
   @override
   void initState() {
+    retry = widget.args.retry;
     super.initState();
-    //if (widget.deeplink != null) {
-    //  _link = widget.deeplink;
-    //  _signInWithEmailAndLink();
-    //}
     WidgetsBinding.instance.addObserver(this);
   }
 
-  //@override
-  //void didChangeAppLifecycleState(AppLifecycleState state) {
-  //  if (state == AppLifecycleState.resumed) {
-  //    print("On resumed email is");
-  //    print(_email);
-  //    // TODO handle on resume
-  //    //_retrieveDynamicLink();
-  //    //DynamicLinkService deepLinkService = locator<DynamicLinkService>();
-  //    //deepLinkService.getLink().then((Uri link) {
-  //    //  print("Reconnect on email sent page");
-  //    //  print(link.toString());
-  //    //  model.repository.getEmail().then((email) {
-  //    //    print("Stored email is");
-  //    //    model.login(email, link.queryParameters['token']);
-  //    //  });
-  //    //});
-  //  }
-  //}
-
-  @override
+    @override
   Widget build(BuildContext context) {
     final snackBarEmailSent = SnackBar(content: Text('Email Sent!'));
     final snackBarEmailNotSent = SnackBar(
@@ -109,11 +98,47 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       hintText: 'Jane Doe',
     );
     
+    final acceptTandC = CustomCheckboxFormField(
+      title: RichText(
+        text: TextSpan(
+          style: textStyleFrom(
+            Theme.of(context).primaryTextTheme.bodyText1,
+            color: Colors.white,
+          ),
+          children: [
+            TextSpan(text: "I agree to the user "),
+            TextSpan(
+              text: "Terms & Conditions",
+              style: textStyleFrom(
+                Theme.of(context).primaryTextTheme.bodyText1,
+                color: Theme.of(context).buttonColor,
+              ),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  launch("https://share.now-u.com/legal/terms_and_conditions.pdf");
+                }
+            ),
+          ]
+        ),
+      ),
+      validator: (value) {
+        if (!value) return "You must accept our terms and conditions";
+        return null;
+      },
+      onSaved: (value) {
+        print("Saved");
+        _acceptedtc = value;
+      },
+    );
+    
     Widget loginButton() {
       Future<bool> validateAndSave(UserViewModel model) async {
         final FormState form = _formKey.currentState;
         if (form.validate()) {
           form.save();
+          if (stagingUsers.contains(_email)) {
+            model.auth.switchToStagingBranch();
+          }
           model.email(_email, _name);
           return true;
         }
@@ -144,7 +169,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
           builder: (_, viewModel) {
             return Padding(
                 padding: EdgeInsets.symmetric(vertical: 16.0),
-                child: TextButton(
+                child: CustomTextButton(
                   "Skip",
                   onClick: () {
                     viewModel.skipLogin();
@@ -180,7 +205,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width * 0.9,
-                          child: widget.retry ?? false
+                          child: retry ?? false
                            ?  RichText(
                                textAlign: TextAlign.center,
                                 text: TextSpan(
@@ -190,7 +215,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                                   children: [
                                   TextSpan(
                                       text:
-                                          "If you did not recieve the email please double check your spam and give us a few minutes to get it over to you, otherwise please try again. If the issue persists please email ",
+                                          "If you did not receive the email please double check your spam and give us a few minutes to get it over to you, otherwise please try again. If the issue persists please email ",
                                       style: textStyleFrom(
                                         Theme.of(context).primaryTextTheme.bodyText1,
                                         color: Colors.white,
@@ -253,6 +278,8 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                               ),
                               SizedBox(height: 8),
                               email,
+                              SizedBox(height: 20),
+                              acceptTandC,
 
                               loginButton(),
 
@@ -276,14 +303,14 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                                       ),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {
-                                          launch("https://now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf");
+                                          launch("http://www.now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf");
                                         }),
                                   ]
                                 ),
                               ),
 
                               // Manual entry section
-                              widget.retry ?? false ? Container() : 
+                              retry ?? false ? Container() : 
                               Row( 
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -291,10 +318,12 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                                   Column(
                                     children: [
                                       SizedBox(height: 15),
-                                      TextButton(
+                                      CustomTextButton(
                                         "Having issues logging in?",
                                         onClick: () {
-                                          Navigator.of(context).pushNamed(Routes.loginIssues);
+                                          setState(() {
+                                            retry = true;
+                                          });
                                         },
                                         fontSize: Theme.of(context).primaryTextTheme.bodyText1.fontSize,
                                         fontWeight: FontWeight.w600,
@@ -378,7 +407,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                         Container(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: Text(
-                            "If you did recieve the email but the link is not working, please enter the manaul token from the email below",
+                            "If you did receive the email but the link is not working, please enter the manual token, from the email, below",
                             textAlign: TextAlign.center,
                             style: textStyleFrom(
                               Theme.of(context).primaryTextTheme.headline5,
@@ -407,6 +436,10 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                               ),
                               SizedBox(height: 8),
                               token,
+                          
+                              SizedBox(height:10),
+
+                              acceptTandC,
 
                               manualButton(),
                                
@@ -414,7 +447,6 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
 
                             ],
                           ),
-
                           // Uncomment to readd Skip button
                           //skipButton(),
                         ],
@@ -434,7 +466,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
           child: ListView(
             children: [
               loginForm(),
-              widget.retry ?? false 
+              retry ?? false 
                 ? tokenForm()
                 : Container()
             ]
@@ -443,22 +475,6 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       )
     );
   }
-
-  //Future<void> _retrieveDynamicLink() async {
-  //  final PendingDynamicLinkData data =
-  //      await FirebaseDynamicLinks.instance.getInitialLink();
-
-  //  final Uri deepLink = data?.link;
-  //  print("THE LINK IS");
-  //  print(deepLink.toString());
-
-  //  if (deepLink.toString() != null) {
-  //    print("The link is not null");
-  //    _link = deepLink.toString();
-  //    _signInWithEmailAndLink();
-  //  }
-  //  return deepLink.toString();
-  //}
 
   void _showDialog(String error) {
     showDialog(

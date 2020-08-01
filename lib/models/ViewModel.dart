@@ -4,6 +4,7 @@ import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/User.dart';
+import 'package:app/models/Learning.dart';
 import 'package:app/services/api.dart';
 import 'package:app/services/auth.dart';
 import 'package:app/services/storage.dart';
@@ -19,11 +20,13 @@ class ViewModel {
   final bool loading;
   //final User user;
   final Api api;
+  final Function() onUpdateCampaings;
   final Function(Campaign, BuildContext) onJoinCampaign;
   final Function(Campaign) onUnjoinCampaign;
   final Function(User) onUpdateUserDetails;
   final Function(CampaignAction, BuildContext) onCompleteAction;
   final Function(CampaignAction, String) onRejectAction;
+  final Function(LearningResource) onCompleteLearningResource;
   final Function(CampaignAction) onStarAction;
   final Function(CampaignAction) onRemoveActionStatus;
   final Function() onLogout;
@@ -45,12 +48,14 @@ class ViewModel {
     this.loading,
     //this.user,
     this.api,
+    this.onUpdateCampaings,
     this.onJoinCampaign,
     this.onUnjoinCampaign,
     this.onCompleteAction,
     this.onRejectAction,
     this.onRemoveActionStatus,
     this.onStarAction,
+    this.onCompleteLearningResource,
     this.onUpdateUserDetails,
     this.onLogout,
 
@@ -63,6 +68,10 @@ class ViewModel {
   });
 
   factory ViewModel.create(Store<AppState> store) {
+    _onUpdateCampaigns() {
+      store.dispatch(GetCampaignsAction());
+    }
+
     _onJoinCampaign(Campaign campaign, BuildContext context) {
       store.dispatch(joinCampaign(campaign, context));
     }
@@ -90,6 +99,10 @@ class ViewModel {
     _onRemoveActionStatus(CampaignAction action) {
       store.dispatch(removeActionStatus(action));
     }
+    
+    _onCompleteLearningResource(LearningResource resource) {
+      store.dispatch(completeLearningResource(resource));
+    }
 
     _onUpdateUserDetails(User user) {
       print("_onUpdateUserDetails");
@@ -103,8 +116,10 @@ class ViewModel {
     // Helper Functions
     Campaigns _getActiveSelectedCampaigns() {
       if (store.state.userState.user == null) {
+        // TODO should we navigate to the login screen here?
         return Campaigns([]);
       }
+      // TODO Actually should replace this with a getter funciton (throughout) and then navigate to login if null -- oh but what if the user is just loading? Then we will be chucking users into the login screen like nobodys business
       return Campaigns(store.state.userState.user
           .filterSelectedCampaigns(store.state.campaigns.getActiveCampaigns()));
     }
@@ -195,14 +210,16 @@ class ViewModel {
       campaigns: store.state.campaigns,
       userModel: UserViewModel.create(store),
       loading: store.state.loading,
-      //user: store.state.userState.user,
       api: store.state.api,
+
+      onUpdateCampaings: _onUpdateCampaigns,
       onJoinCampaign: _onJoinCampaign,
       onUnjoinCampaign: _onUnjoinCampaign,
       onCompleteAction: _onCompleteAction,
       onRejectAction: _onRejectAction,
       onRemoveActionStatus: _onRemoveActionStatus,
       onStarAction: _onStarAction,
+      onCompleteLearningResource: _onCompleteLearningResource,
       onUpdateUserDetails: _onUpdateUserDetails,
       onLogout: _onLogout,
 
@@ -223,6 +240,8 @@ class UserViewModel {
   final AuthenticationService auth;
   final SecureStorageService repository;
 
+  final Function () getUser;
+
   final Function(String, String) login;
   final Function(String, String) email;
   final Function() skipLogin;
@@ -234,6 +253,7 @@ class UserViewModel {
     this.login,
     this.email,
     this.auth,
+    this.getUser,
     this.repository,
     this.skipLogin,
   });
@@ -246,6 +266,12 @@ class UserViewModel {
         user: store.state.userState.user,
         auth: store.state.userState.auth,
         repository: store.state.userState.repository,
+        getUser: () {
+          if (store.state.userState.user == null) {
+            // TODO Deal with it
+          }
+          return store.state.userState.user;
+        },
         login: (String email, String link) {
           store.dispatch(loginUser(email, link));
         },

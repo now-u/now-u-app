@@ -2,7 +2,7 @@ import 'package:app/models/User.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
+import 'package:app/models/Learning.dart';
 
 class InitaliseState {}
 
@@ -54,6 +54,16 @@ class RemovedActionStatus {
   RemovedActionStatus(this.user);
 }
 
+class CompleteLearningResource {
+  final LearningResource resource;
+  CompleteLearningResource(this.resource);
+}
+
+class CompletedLearningResource {
+  final User user;
+  CompletedLearningResource(this.user);
+}
+
 class CreateNewUser {
   final User user;
   CreateNewUser(this.user);
@@ -78,9 +88,6 @@ class LoadedCampaignsAction {
 
   LoadedCampaignsAction(this.campaigns);
 }
-
-//class FetchInitState {}
-class GetDynamicLink {}
 
 class GetUserDataAction {}
 

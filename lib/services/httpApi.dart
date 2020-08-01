@@ -18,8 +18,15 @@ class HttpError {
 
 class HttpApi implements Api {
 
-  //final String domainPrefix = "https://now-u-api.herokuapp.com/api/v1/";
-  final String domainPrefix = "https://api.now-u.com/api/v1/";
+  String domainPrefix = "https://api.now-u.com/api/v1/";
+  
+  void toggleStagingApi() {
+    if (domainPrefix.contains("staging")) {
+      domainPrefix = "https://api.now-u.com/api/v1/";
+    } else {
+      domainPrefix = "https://stagingapi.now-u.com/api/v1/";
+    }
+  }
 
   @override
   Future<Campaign> getCampaign(int id) async {
@@ -41,11 +48,28 @@ class HttpApi implements Api {
   Future<Campaigns> getCampaigns() async {
     print("Getting campaigns");
     print("ITS HAPPENING");
+    print(domainPrefix);
     var response = await http.get(domainPrefix + "campaigns");
     if (response.statusCode == 200) {
       print("200");
       Campaigns cs = Campaigns.fromJson(json.decode(response.body)['data']);
       print("We got some camps");
+      return cs;
+    }
+    else {
+      // TODO different error different reults
+      print("We got an error whilst doing the http request");
+      return Future.error("Error getting campaigns in http api", StackTrace.fromString("The stack trace is"));
+    }
+  }
+  
+  @override
+  Future<Campaigns> getAllCampaigns() async {
+    print("ITS HAPPENING");
+    var response = await http.get(domainPrefix + "campaigns" + "?old=true");
+    if (response.statusCode == 200) {
+      Campaigns cs = Campaigns.fromJson(json.decode(response.body)['data']);
+      print("We got all camps");
       return cs;
     }
     else {

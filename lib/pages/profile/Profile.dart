@@ -1,5 +1,6 @@
 import 'package:app/assets/StyleFrom.dart';
 import 'package:flutter/material.dart';
+import 'dart:io';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app/assets/icons/customIcons.dart';
@@ -8,7 +9,6 @@ import 'package:app/assets/components/pageTitle.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/routes/customLaunch.dart';
-import 'package:store_redirect/store_redirect.dart';
 
 import 'package:app/models/User.dart';
 import 'package:app/models/ViewModel.dart';
@@ -60,7 +60,7 @@ class _ProfileState extends State<Profile> {
           //},
           {
             'profileTile':
-                ProfileTile("Our partners", FontAwesomeIcons.building),
+                ProfileTile("Our partners", CustomIcons.ic_partners),
             'page': Routes.parteners,
           },
           //{
@@ -82,7 +82,11 @@ class _ProfileState extends State<Profile> {
           {
             'profileTile':
                 ProfileTile("Rate us on the app store", CustomIcons.ic_rateus),
-            'function': () {StoreRedirect.redirect();}
+            'link':
+              Platform.isIOS 
+                ? "https://apps.apple.com/us/app/now-u/id1516126639"
+                : "https://play.google.com/store/apps/details?id=com.nowu.app"
+            //'function': () {StoreRedirect.redirect();}
           },
           {
             'profileTile': ProfileTile("FAQ", CustomIcons.ic_faq),
@@ -100,7 +104,7 @@ class _ProfileState extends State<Profile> {
           },
           {
             'profileTile':
-                ProfileTile("Privacy policy", FontAwesomeIcons.fingerprint),
+                ProfileTile("Privacy policy", CustomIcons.ic_privacy),
             'link':
                 "https://now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf"
           },
@@ -167,15 +171,15 @@ class _ProfileState extends State<Profile> {
                     SizedBox(height: 20),
 
                     // Dev Tools
-                    //GestureDetector(
-                    //  child: ProfileTile("Dev Tools", FontAwesomeIcons.code),
-                    //  onTap: () {
-                    //    Navigator.push(
-                    //        context,
-                    //        CustomRoute(
-                    //            builder: (context) => QuizStartPage(0)));
-                    //  },
-                    //),
+                    user.isStagingUser() 
+                      ? GestureDetector(
+                          child: ProfileTile("Dev Tools", FontAwesomeIcons.code),
+                          onTap: () {
+                            viewModel.api.toggleStagingApi();
+                            viewModel.onUpdateCampaings();
+                          }
+                        )
+                      : Container()
                   ],
                 )));
       },

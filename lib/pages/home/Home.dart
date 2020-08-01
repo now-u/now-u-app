@@ -4,20 +4,13 @@ import 'package:intl/intl.dart';
 
 import 'package:app/routes.dart';
 
-import 'package:app/pages/news/NewsPage.dart';
-import 'package:app/pages/Tabs.dart';
 import 'package:app/pages/campaign/CampaignTile.dart';
 import 'package:app/pages/other/InfoPage.dart';
-import 'package:intl/intl.dart';
-import 'package:app/assets/ClipShadowPath.dart';
 
-import 'package:app/assets/components/selectionItem.dart';
-import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/customScrollableSheet.dart';
-import 'package:app/assets/components/progress.dart';
-import 'package:app/assets/components/viewCampaigns.dart';
 import 'package:app/assets/components/smoothPageIndicatorEffect.dart';
+import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/routes/customLaunch.dart';
 
 import 'package:app/models/ViewModel.dart';
@@ -54,7 +47,7 @@ class Home extends StatelessWidget {
         StoreConnector<AppState, ViewModel>(
           converter: (Store<AppState> store) => ViewModel.create(store),
           builder: (BuildContext context, ViewModel viewModel) {
-           if (viewModel.loading)  {
+           if (viewModel.loading || viewModel.userModel.isLoading )  {
              return CircularProgressIndicator();
            }
           Campaigns campaigns = viewModel.getCampaignsWithSelctedFirst();  
@@ -132,6 +125,21 @@ class Home extends StatelessWidget {
                        ),
 
                        CampaignCarosel(campaigns, _controller),
+
+                       Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CustomTextButton(
+                            "See all campaigns",
+                            onClick: () {
+                              Navigator.of(context).pushNamed(Routes.allCampaigns);
+                            },
+                          ),
+                        ]
+                       ),
+
+                       SizedBox(height: 20),
 
                        Container(
                         width: double.infinity,

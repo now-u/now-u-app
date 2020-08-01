@@ -414,7 +414,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
             SizedBox(height: 20),
             joined
                 ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    TextButton(
+                    CustomTextButton(
                       "I no longer want to be part of this campaign",
                       fontSize: 14,
                       onClick: () {

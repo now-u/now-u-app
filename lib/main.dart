@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import 'package:app/pages/other/SplashScreen.dart';
@@ -11,7 +9,10 @@ import 'package:app/pages/other/SplashScreen.dart';
 
 import 'package:app/routes.dart';
 import 'package:app/locator.dart';
+import 'package:app/services/analytics.dart';
 import 'package:app/services/dynamicLinks.dart';
+import 'package:app/services/pushNotifications.dart';
+import 'package:app/services/navigation.dart';
 
 import 'package:app/models/State.dart';
 
@@ -71,17 +72,9 @@ Color blue = Color.fromRGBO(1, 26, 67, 1);
 Color black = Colors.black;
 Color lightGrey = Color.fromRGBO(119, 119, 119, 1);
 
-// Analytics
-
-FirebaseAnalytics analytics = FirebaseAnalytics();
-
 // Accent Colours
 
 //List<Widget> _pages = <Widget>[Campaigns(campaigns), Home(), Profile(_user)];
-
-class Keys {
-  static final navKey = new GlobalKey<NavigatorState>();
-}
 
 Future<Map> getSecrets() async {
   String data = await rootBundle.loadString('assets/json/secrets.json');
@@ -113,6 +106,10 @@ class _AppState extends State<App> {
       initialState: AppState.initialState(),
       middleware: [appStateMiddleware, thunkMiddleware],
     );
+  
+    final PushNotificationsService _pushNotificationService =
+      locator<PushNotificationsService>();
+    _pushNotificationService.init();
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.white, //or set color with: Color(0xFF0000FF)
@@ -132,11 +129,11 @@ class _AppState extends State<App> {
             //  secret: snapshot.data['wiredash_key'],
             //  navigatorKey: Keys.navKey,
             //  child:
-            MaterialApp(
+        MaterialApp(
           title: 'Flutter Demo',
-          navigatorKey: Keys.navKey,
+          navigatorKey: locator<NavigationService>().navigatorKey,
           navigatorObservers: [
-            FirebaseAnalyticsObserver(analytics: analytics),
+            locator<Analytics>().getAnalyticsObserver(),
           ],
           initialRoute: '/',
           //initialRoute: Routes.intro,
@@ -144,26 +141,14 @@ class _AppState extends State<App> {
           routes: {
             '/': (BuildContext context) => StoreBuilder<AppState>(
                   onInitialBuild: (store) {
-                    DynamicLinkService deepLinkService =
-                        locator<DynamicLinkService>();
-                    deepLinkService.getLink().then((Uri u) {
-                      store.dispatch(initStore(u));
-                    });
+                    store.dispatch(initStore());
                   },
                   builder: (BuildContext context, Store<AppState> store) =>
                       SplashScreen(),
                 ),
           },
           theme: ThemeData(
-            // This is the theme of your application.
-            //
-            // Try running your application with "flutter run". You'll see the
-            // application has a blue toolbar. Then, without quitting the app, try
-            // changing the primarySwatch below to Colors.green and then invoke
-            // "hot reload" (press "r" in the console where you ran "flutter run",
-            // or simply save your changes to "hot reload" in a Flutter IDE).
-            // Notice that the counter didn't reset back to zero; the application
-            // is not restarted.
+            // This is the theme of the application.
             applyElevationOverlayColor: true,
             fontFamily: 'Nunito',
             primaryTextTheme: TextTheme(

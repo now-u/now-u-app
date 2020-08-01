@@ -67,7 +67,7 @@ class ArticlePage extends StatelessWidget {
                       return Padding(
                           padding:
                               EdgeInsets.symmetric(horizontal: 0, vertical: 5),
-                          child: TextButton(
+                          child: CustomTextButton(
                             article.getCategory(campaigns: viewModel.campaigns),
                             onClick: () {
                               // TODO link to news page with category search/filter

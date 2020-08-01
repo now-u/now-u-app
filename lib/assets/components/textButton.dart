@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class TextButton extends StatelessWidget {
+class CustomTextButton extends StatelessWidget {
   final String text;
   final Function onClick;
   final bool iconRight;
@@ -12,7 +12,7 @@ class TextButton extends StatelessWidget {
   // Handy to make text wrap  
   final double width;
 
-  TextButton(
+  CustomTextButton(
     this.text, 
     {
     @required this.onClick,
