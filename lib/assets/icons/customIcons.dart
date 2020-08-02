@@ -23,10 +23,11 @@ class CustomIcons {
   CustomIcons._();
 
   static const _kFontFam = 'CustomIcons';
+  static const _kFontFam2 = 'CustomIcons2';
   static const _kFontPkg = null;
 
   static const IconData ic_partners = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData ic_privacy = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  //static const IconData ic_privacy = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_home = IconData(0xe810, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_actions = IconData(0xe811, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_learning = IconData(0xe812, fontFamily: _kFontFam, fontPackage: _kFontPkg);
@@ -40,7 +41,7 @@ class CustomIcons {
   static const IconData ic_report = IconData(0xe81a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_story = IconData(0xe81b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_article = IconData(0xe81c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData ic_video = IconData(0xe81d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  //static const IconData ic_video = IconData(0xe81d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_raisemoney = IconData(0xe81e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_getinvolved = IconData(0xe820, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_getinformed = IconData(0xe821, fontFamily: _kFontFam, fontPackage: _kFontPkg);
@@ -71,5 +72,14 @@ class CustomIcons {
   static const IconData ic_todo_remove = IconData(0xe83b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_todo_add = IconData(0xe83c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_success = IconData(0xe83d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+
+  static const IconData ic_privacy = IconData(0xe800, fontFamily: _kFontFam2, fontPackage: _kFontPkg);
+  static const IconData ic_bullseye = IconData(0xe801, fontFamily: _kFontFam2, fontPackage: _kFontPkg);
+  static const IconData ic_summary = IconData(0xe802, fontFamily: _kFontFam2, fontPackage: _kFontPkg);
+  static const IconData ic_uk = IconData(0xe803, fontFamily: _kFontFam2, fontPackage: _kFontPkg);
+  static const IconData ic_tc = IconData(0xe804, fontFamily: _kFontFam2, fontPackage: _kFontPkg);
+  static const IconData ic_video = IconData(0xe805, fontFamily: _kFontFam2, fontPackage: _kFontPkg);
+  static const IconData ic_global = IconData(0xe806, fontFamily: _kFontFam2, fontPackage: _kFontPkg);
+  static const IconData ic_europe = IconData(0xe807, fontFamily: _kFontFam2, fontPackage: _kFontPkg);
 
 }
