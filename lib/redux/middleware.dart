@@ -21,8 +21,6 @@ import 'package:app/models/Reward.dart';
 import 'package:app/models/Learning.dart';
 import 'package:app/redux/actions.dart';
 
-
-import 'package:app/locator.dart';
 import 'package:app/services/navigation.dart';
 import 'package:app/services/auth.dart';
 import 'package:app/services/analytics.dart';
@@ -75,7 +73,7 @@ Future<User> loadUserFromPrefs(User u) async {
   }
   print("Returning null user is being returned");
   // TODO this should be null
-  return null;
+  return User.empty();
 }
 
 void appStateMiddleware(

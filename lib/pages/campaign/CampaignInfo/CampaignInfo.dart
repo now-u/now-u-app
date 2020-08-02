@@ -2,6 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:share/share.dart';
+
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import 'package:app/models/Campaign.dart';
@@ -375,7 +377,36 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
               ),
             ),
 
-            SizedBox(height: 10),
+            SizedBox(height: 20),
+
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 28),
+              child: Text(
+                "Know someone who would be happy to support this cause?",
+                textAlign: TextAlign.center,
+                style: textStyleFrom(
+                  Theme.of(context).primaryTextTheme.headline4,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            
+            SizedBox(height: 30),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomTextButton(
+                  "Share this campaign",
+                  onClick: () async {
+                    String text = await campaign.getShareText();
+                    Share.share(text);
+                  },
+                ),
+              ],
+            ),
+
+            SizedBox(height: 40),
             
             campaign.getGeneralPartners().length == 0 ? Container() :
             Container(
