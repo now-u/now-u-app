@@ -64,6 +64,22 @@ class HttpApi implements Api {
   }
   
   @override
+  Future<Campaigns> getAllCampaigns() async {
+    print("ITS HAPPENING");
+    var response = await http.get(domainPrefix + "campaigns" + "?old=true");
+    if (response.statusCode == 200) {
+      Campaigns cs = Campaigns.fromJson(json.decode(response.body)['data']);
+      print("We got all camps");
+      return cs;
+    }
+    else {
+      // TODO different error different reults
+      print("We got an error whilst doing the http request");
+      return Future.error("Error getting campaigns in http api", StackTrace.fromString("The stack trace is"));
+    }
+  }
+  
+  @override
   Future<CampaignAction> getAction(int id) async {
     print("Getting action");
     var response = await http.get(domainPrefix + "actions/${id}");

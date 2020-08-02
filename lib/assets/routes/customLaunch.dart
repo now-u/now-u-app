@@ -13,6 +13,7 @@ void customLaunch(
     String description,
     String buttonText, 
     String closeButtonText,
+    Function extraOnConfirmFunction,
   }
 ) {
   showDialog(
@@ -55,6 +56,9 @@ void customLaunch(
                       DarkButton(
                         buttonText ?? "Let's go",
                         onPressed: () {
+                          if (extraOnConfirmFunction != null) {
+                            extraOnConfirmFunction();
+                          }
                           launch(url);
                         }
                       ),

@@ -24,13 +24,13 @@ import 'package:app/pages/campaign/LearningCentre/LearningCentreAllPage.dart';
 import 'package:app/pages/campaign/LearningCentre/LearningCentrePage.dart';
 import 'package:app/pages/campaign/LearningCentre/LearningTopicPage.dart';
 import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
+import 'package:app/pages/campaign/AllCampaignsPage.dart';
 
 class Routes {
   // Intro
   static const intro = "intro";
   static const login = "login";
   static const emailSent = "emailSent";
-  static const loginIssues = "loginIssues";
 
   // Tab View Routes
   static const campaign = "campaign";
@@ -39,6 +39,9 @@ class Routes {
 
   static const actionInfo = "actionInfo";
   static const campaignInfo = "campaignInfo";
+ 
+  // All campaigns (including past)
+  static const allCampaigns = "allCampaigns";
 
   // Other
   static const profile = "profile";
@@ -66,24 +69,17 @@ Function initRoutes = (RouteSettings settings) {
     // Into
     case Routes.login:
       {
-        if(args is LoginTypes) {
-          return customRoute(builder: (context) => LoginPage(retry: true, loginType: args), settings: settings);
+        if(args is LoginPageArguments) {
+          return customRoute(builder: (context) => LoginPage(args), settings: settings);
         }
-        return customRoute(builder: (context) => LoginPage(), settings: settings);
+        return customRoute(builder: (context) => LoginPage(LoginPageArguments()), settings: settings);
       }
     case Routes.emailSent:
       {
         if (args is EmailSentPageArguments) {
           return customRoute(builder: (context) => EmailSentPage(args), settings: settings);
         }
-        return customRoute(builder: (context) => LoginPage(), settings: settings);
-      }
-    case Routes.loginIssues:
-      {
-        if(args is LoginTypes) {
-          return customRoute(builder: (context) => LoginPage(retry: true, loginType: args), settings: settings);
-        }
-        return customRoute(builder: (context) => LoginPage(retry: true), settings: settings);
+        return customRoute(builder: (context) => LoginPage(LoginPageArguments()), settings: settings);
       }
     case Routes.intro:
       {
@@ -121,6 +117,10 @@ Function initRoutes = (RouteSettings settings) {
           return customRoute( builder: (context) => CampaignInfo( campaign: args,), settings: settings);
         }
         return customRoute(builder: (context) => CampaignPage(), settings: settings);
+      }
+    case Routes.allCampaigns: 
+      {
+        return customRoute(builder: (context) => AllCampaignsPage(), settings: settings);
       }
     case Routes.actions:
       {

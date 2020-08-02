@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:app/pages/campaign/CampaignTile.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
@@ -12,26 +11,10 @@ import 'package:app/models/State.dart';
 import 'package:app/routes.dart';
 
 import 'package:app/assets/components/header.dart';
-import 'package:app/assets/components/inputs.dart';
 import 'package:app/assets/StyleFrom.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-
-//class CampaignPage extends StatelessWidget {
-//
-//  CampaignPage();
-//  @override
-//  Widget build(BuildContext context) {
-//    return StoreConnector<AppState, ViewModel>(
-//        converter: (Store<AppState> store) => ViewModel.create(store),
-//        builder: (BuildContext context, ViewModel viewModel) {
-//          print("Before splash screen user is");
-//          return CampaignPageBody(viewModel);
-//        },
-//    );
-//  }
-//}
 
 class CampaignPage extends StatefulWidget {
   @override
@@ -57,10 +40,12 @@ class _CampaignPageState extends State<CampaignPage> {
     // Needs to be in future so happens after render of this page or something like that
     //var _campaigns = widget.model.campaigns.map((Campaign c) => c).toList();
     return Scaffold(
-        body: StoreConnector<AppState, ViewModel>(
+      body: StoreConnector<AppState, ViewModel>(
       onInit: (Store<AppState> store) {
         campaigns = store.state.campaigns.getActiveCampaigns();
         user = store.state.userState.user;
+        // If there is no user then we need to go get one
+        // TODO can the app ever work without a user/ can we setup an anonymous user
       },
       converter: (Store<AppState> store) => ViewModel.create(store),
       builder: (BuildContext context, ViewModel viewModel) {
@@ -73,6 +58,10 @@ class _CampaignPageState extends State<CampaignPage> {
         print(viewModel.campaigns.getActiveCampaigns().toList()[0]);
         print(viewModel.campaigns.getActiveCampaigns().toList()[1]);
         print(viewModel.campaigns.getActiveCampaigns().toList()[2]);
+        if (user == null) {
+          Navigator.of(context).pushNamed('/');
+          
+        }
         //campaigns = viewModel.campaigns.getActiveCampaigns().toList();
         //user = viewModel.userModel.user;
         return Stack(

@@ -4,18 +4,11 @@ import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/inputs.dart';
 import 'package:flutter/material.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:app/models/State.dart';
 import 'package:app/models/ViewModel.dart';
 import 'package:app/models/User.dart';
-import 'package:app/services/dynamicLinks.dart';
-import 'package:app/routes.dart';
-
-import 'package:app/locator.dart';
-import 'package:app/services/auth.dart';
 
 import 'package:app/services/storage.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -25,10 +18,16 @@ enum LoginTypes{
   Signup
 }
 
-class LoginPage extends StatefulWidget {
+class LoginPageArguments {
   final bool retry;
   final LoginTypes loginType;
-  LoginPage({this.retry, this.loginType});
+  LoginPageArguments({this.retry, this.loginType});
+}
+
+class LoginPage extends StatefulWidget {
+  final LoginPageArguments args;
+
+  LoginPage(this.args);
   @override
   LoginPageState createState() => new LoginPageState();
 }
@@ -39,6 +38,8 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   String _name;
   String _token;
   bool _acceptedtc;
+
+  bool retry;
   final _formKey = GlobalKey<FormState>();
   final _tokenFormKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -46,30 +47,12 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
 
   @override
   void initState() {
+    retry = widget.args.retry;
     super.initState();
     WidgetsBinding.instance.addObserver(this);
   }
 
-  //@override
-  //void didChangeAppLifecycleState(AppLifecycleState state) {
-  //  if (state == AppLifecycleState.resumed) {
-  //    print("On resumed email is");
-  //    print(_email);
-  //    // TODO handle on resume
-  //    //_retrieveDynamicLink();
-  //    //DynamicLinkService deepLinkService = locator<DynamicLinkService>();
-  //    //deepLinkService.getLink().then((Uri link) {
-  //    //  print("Reconnect on email sent page");
-  //    //  print(link.toString());
-  //    //  model.repository.getEmail().then((email) {
-  //    //    print("Stored email is");
-  //    //    model.login(email, link.queryParameters['token']);
-  //    //  });
-  //    //});
-  //  }
-  //}
-
-  @override
+    @override
   Widget build(BuildContext context) {
     final snackBarEmailSent = SnackBar(content: Text('Email Sent!'));
     final snackBarEmailNotSent = SnackBar(
@@ -116,10 +99,6 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
     );
     
     final acceptTandC = CustomCheckboxFormField(
-      //style: CustomFormFieldStyle.Dark,
-      //keyboardType: TextInputType.text,
-      //textCapitalization: TextCapitalization.words,
-      //autofocus: false,
       title: RichText(
         text: TextSpan(
           style: textStyleFrom(
@@ -226,7 +205,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width * 0.9,
-                          child: widget.retry ?? false
+                          child: retry ?? false
                            ?  RichText(
                                textAlign: TextAlign.center,
                                 text: TextSpan(
@@ -331,7 +310,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                               ),
 
                               // Manual entry section
-                              widget.retry ?? false ? Container() : 
+                              retry ?? false ? Container() : 
                               Row( 
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -342,7 +321,9 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                                       CustomTextButton(
                                         "Having issues logging in?",
                                         onClick: () {
-                                          Navigator.of(context).pushNamed(Routes.loginIssues);
+                                          setState(() {
+                                            retry = true;
+                                          });
                                         },
                                         fontSize: Theme.of(context).primaryTextTheme.bodyText1.fontSize,
                                         fontWeight: FontWeight.w600,
@@ -485,7 +466,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
           child: ListView(
             children: [
               loginForm(),
-              widget.retry ?? false 
+              retry ?? false 
                 ? tokenForm()
                 : Container()
             ]
@@ -494,22 +475,6 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       )
     );
   }
-
-  //Future<void> _retrieveDynamicLink() async {
-  //  final PendingDynamicLinkData data =
-  //      await FirebaseDynamicLinks.instance.getInitialLink();
-
-  //  final Uri deepLink = data?.link;
-  //  print("THE LINK IS");
-  //  print(deepLink.toString());
-
-  //  if (deepLink.toString() != null) {
-  //    print("The link is not null");
-  //    _link = deepLink.toString();
-  //    _signInWithEmailAndLink();
-  //  }
-  //  return deepLink.toString();
-  //}
 
   void _showDialog(String error) {
     showDialog(

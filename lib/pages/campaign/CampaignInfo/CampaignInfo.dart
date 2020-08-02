@@ -398,8 +398,9 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
               children: [
                 CustomTextButton(
                   "Share this campaign",
-                  onClick: () {
-                    Share.share(campaign.getShareText());
+                  onClick: () async {
+                    String text = await campaign.getShareText();
+                    Share.share(text);
                   },
                 ),
               ],
