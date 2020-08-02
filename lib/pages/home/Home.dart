@@ -119,7 +119,7 @@ class Home extends StatelessWidget {
                       children: <Widget>[
                       
                        HomeTitle(
-                         "${DateFormat("MMMM").format(DateTime.now())}'s campaigns",
+                         "Current campaigns",
                          infoTitle: "Campaigns",
                          infoText: "The impact of our campaigns is crucial. Our aim is to create campaigns that are as effective and impactful as possible, and we are designing new ways to measure the impact of now-u’s community on our campaign issues.\n We will keep you updated on your personal progress in the app, and share regular community impact reports on our blog, news feed and social media!\n At the end of each campaign, you will receive a quick survey about your experience of the campaign. We will use this data, along with other app use metrics, to create campaign impact reports to share with you and our charity partners.\n We hope to learn from these impact assessments so that we can continue to improve our campaigns, and help you keep making a difference!",
                        ),
