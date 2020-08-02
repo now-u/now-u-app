@@ -150,6 +150,9 @@ flutter:
     - family: CustomIcons
       fonts:
         - asset: assets/fonts/Icons/CustomIcons.ttf
+    - family: CustomIcons2
+      fonts:
+        - asset: assets/fonts/Icons/CustomIcons2.ttf
 
   #   - family: Schyler
   #     fonts:
