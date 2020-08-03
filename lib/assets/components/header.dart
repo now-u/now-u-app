@@ -5,19 +5,22 @@ import 'package:app/routes.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../StyleFrom.dart';
+
 class PageHeader extends StatelessWidget {
   final Function onTap;
   final String title;
   final IconData icon;
   final bool backButton;
   final double padding;
-
+  // For Colour
+  final Color textColor;
   // For question mark button
   final String infoTitle;
   final String infoText;
 
   PageHeader(
-      {this.onTap, this.title, this.icon, this.backButton, this.padding, this.infoText, this.infoTitle});
+      {this.onTap, this.title, this.icon, this.backButton, this.padding, this.infoText, this.infoTitle,this.textColor});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -77,7 +80,10 @@ class PageHeader extends StatelessWidget {
                   child: Text(
                     title,
                     textAlign: TextAlign.left,
-                    style: Theme.of(context).primaryTextTheme.headline2,
+                    style:  textStyleFrom(
+                      Theme.of(context).primaryTextTheme.headline2,
+                      color:textColor,
+                    ),
                   ),
                 ),
                 

@@ -1,3 +1,4 @@
+import 'package:app/assets/components/darkButton.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -427,7 +428,16 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                     )
                   ])
                 : Container(),
-            SizedBox(height: joined ? 20 : 70 )
+            SizedBox(height: joined ? 20 : 70 ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: DarkButton(
+                "Actions of this Campaign",
+                onPressed: () {
+                  Navigator.pushNamed(context,"pastCampaignActionPage",arguments: campaign);
+                },
+              ),
+            ),
           ],
         ),
         AnimatedPositioned(
