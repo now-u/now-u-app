@@ -56,7 +56,9 @@ void customLaunch(
                       DarkButton(
                         buttonText ?? "Let's go",
                         onPressed: () {
-                          extraOnConfirmFunction();
+                          if (extraOnConfirmFunction != null) {
+                            extraOnConfirmFunction();
+                          }
                           launch(url);
                         }
                       ),
