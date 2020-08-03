@@ -45,7 +45,8 @@ class DynamicLinkService {
         String email = await _storageProvider.getEmail();
         String token = deepLink.queryParameters['token'];
         EmailSentPageArguments args = EmailSentPageArguments(email: email, token: token);
-        _navigationService.navigateTo(Routes.emailSent, arguments: args);
+        print("Navigating to emailSent");
+        _navigationService.navigateTo(Routes.loginLinkClicked, arguments: args);
       }
       if (RegExp('campaigns/[0-9]+').hasMatch(deepLink.path)) {
         String campaignNumberString = deepLink.path.substring(11);

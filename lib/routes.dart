@@ -31,6 +31,7 @@ class Routes {
   static const intro = "intro";
   static const login = "login";
   static const emailSent = "emailSent";
+  static const loginLinkClicked = "loginLinkClicked";
 
   // Tab View Routes
   static const campaign = "campaign";
@@ -75,6 +76,7 @@ Function initRoutes = (RouteSettings settings) {
         return customRoute(builder: (context) => LoginPage(LoginPageArguments()), settings: settings);
       }
     case Routes.emailSent:
+    case Routes.loginLinkClicked:
       {
         if (args is EmailSentPageArguments) {
           return customRoute(builder: (context) => EmailSentPage(args), settings: settings);
