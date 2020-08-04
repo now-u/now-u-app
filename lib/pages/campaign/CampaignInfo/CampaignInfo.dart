@@ -428,7 +428,6 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                     )
                   ])
                 : Container(),
-            SizedBox(height: joined ? 20 : 70 ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: DarkButton(
@@ -438,6 +437,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                 },
               ),
             ),
+            SizedBox(height: joined ? 20 : 70 ),
           ],
         ),
         AnimatedPositioned(

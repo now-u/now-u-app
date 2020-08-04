@@ -18,99 +18,73 @@ import '../../routes.dart';
 class PastCampaignActionPage extends StatefulWidget {
   Campaign campaign;
   PastCampaignActionPage(this.campaign);
-//  Campaigns campaigns; //already defining in the State
-//  PastCampaignActionPage({this.campaigns}) //i am going to use ModalRoute to take the arguements so constructor is not needed
   @override
   _PastCampaignActionPageState createState() => _PastCampaignActionPageState();
 }
 
-class _PastCampaignActionPageState extends State<PastCampaignActionPage> {
-  List<CampaignAction> actions2 = [];
-  Map data = {};
-  List<CampaignAction> actions = []; //used in ActionPage
-  Map<String, Map> selections = {
-    "times": {},
-    "campaigns": {},
-    "categories": {},
-    "extras": {
-      "todo": true,
-      "completed": true,
-      "rejected": false,
-      "starred": true,
-    }
-  };
-  initState() {
-    //complex actions here
-    for (int i = 0; i < timeBrackets.length; i++) {
-      selections['times'][timeBrackets[i]['text']] = false;
-    }
-    for (int i = 0; i < CampaignActionSuperType.values.length; i++) {
-      selections['categories'][CampaignActionSuperType.values[i]] = false;
-    }
-    super.initState();
-  }
+const double HEADER_HEIGHT = 140;
 
+class _PastCampaignActionPageState extends State<PastCampaignActionPage> {
+  
+  List<CampaignAction> actions = []; //used in ActionPage
+  
   @override
   Widget build(BuildContext context) {
-    Campaign campaign = widget.campaign;
-    actions = campaign.getActions();
+    actions = widget.campaign.getActions();
 
     return StoreConnector<AppState, ViewModel>(
         converter: (Store<AppState> store) => ViewModel.create(store),
         builder: (BuildContext context, ViewModel viewModel) {
           return SafeArea(
             child: Scaffold(
-//        backgroundColor: colorFrom(
-//          Theme.of(context).primaryColorDark,
-//          opacity: 0.9,
-//        ),
               backgroundColor: Colors.white,
               body: ListView(
                 shrinkWrap: true,
                 physics: BouncingScrollPhysics(),
                 children: [
-//                  Stack(
-//                    fit: StackFit.loose,
-//
-//                    children: <Widget>[
-//                      // Max Size
-//                     Image(
-//                       height: 120,
-//                       image: NetworkImage(campaign.getHeaderImage()),
-//                       fit: BoxFit.fill,
-//                     ),
-//                      Container(
-//                        height: 120,
-//                        decoration: BoxDecoration(
-//                          gradient: LinearGradient(
-//                            begin: Alignment.topCenter,
-//                            end:Alignment.bottomCenter,
-//                            colors: [Colors.black,Colors.white54],
-//                          ),
-//                        ),
-//                        child: Text("H"),
-//                      ),
-//                    ],
-//                  ),
-
-
-
-
-
+                  Container(
+                    child: Stack(
+                      children: [
+                        Container(
+                          height: HEADER_HEIGHT,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(widget.campaign.getHeaderImage()),
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        ),
+                        Container(
+                          height: HEADER_HEIGHT,
+                          color: colorFrom(
+                            Colors.black,
+                            opacity: 0.5,
+                          )
+                        ),
+                        PageHeader(
+                          title: widget.campaign.getTitle(),
+                          textColor: Colors.white,
+                          backButton: true,
+                          maxLines: 2,
+                        ),
+                      ],
+                    )
+                  ),
                   ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: actions.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 0),
-                            child: ActionSelectionItem(
-                              outerHpadding: 10,
-                              campaign: campaign,
-                              action: actions[index],
-                              backgroundColor: Colors.white,
-                            ));
-                      }),
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: actions.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 0),
+                          child: ActionSelectionItem(
+                            outerHpadding: 10,
+                            campaign: widget.campaign,
+                            action: actions[index],
+                            backgroundColor: Colors.white,
+                          ));
+                    }
+                  ),
                 ],
               ),
             ),

@@ -13,6 +13,7 @@ class PageHeader extends StatelessWidget {
   final IconData icon;
   final bool backButton;
   final double padding;
+  final int maxLines;
   // For Colour
   final Color textColor;
   // For question mark button
@@ -20,7 +21,7 @@ class PageHeader extends StatelessWidget {
   final String infoText;
 
   PageHeader(
-      {this.onTap, this.title, this.icon, this.backButton, this.padding, this.infoText, this.infoTitle,this.textColor});
+      {this.onTap, this.title, this.icon, this.backButton, this.padding, this.infoText, this.infoTitle,this.textColor, this.maxLines});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -69,20 +70,23 @@ class PageHeader extends StatelessWidget {
           ),
         ),
         Container(
-          height: 60,
           child: Padding(
             padding: EdgeInsets.only(left: padding == null ? 20 : padding + 10),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  child: Text(
-                    title,
-                    textAlign: TextAlign.left,
-                    style:  textStyleFrom(
-                      Theme.of(context).primaryTextTheme.headline2,
-                      color:textColor,
+                Expanded(
+                  child: Container(
+                    child: Text(
+                      title,
+                      textAlign: TextAlign.left,
+                      style:  textStyleFrom(
+                        Theme.of(context).primaryTextTheme.headline2,
+                        color:textColor,
+                      ),
+                      maxLines: maxLines,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),
