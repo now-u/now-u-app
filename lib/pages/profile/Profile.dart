@@ -59,14 +59,24 @@ class _ProfileState extends State<Profile> {
           //  'page': Routes.profile,
           //},
           {
+            'sectionHeading':  "The app"
+          },
+          {
             'profileTile':
                 ProfileTile("Our partners", CustomIcons.ic_partners),
             'page': Routes.parteners,
+          },
+          {
+            'profileTile': ProfileTile("FAQ", CustomIcons.ic_faq),
+            'page': Routes.faq,
           },
           //{
           //  'profileTile': ProfileTile("Campaigns", FontAwesomeIcons.book),
           //  'page': Routes.campaign,
           //},
+          {
+            'sectionHeading':  "Feedback"
+          },
           {
             'profileTile': ProfileTile(
                 "Propose a campaign", CustomIcons.ic_suggestcamp),
@@ -89,10 +99,6 @@ class _ProfileState extends State<Profile> {
             //'function': () {StoreRedirect.redirect();}
           },
           {
-            'profileTile': ProfileTile("FAQ", CustomIcons.ic_faq),
-            'page': Routes.faq,
-          },
-          {
             'profileTile': ProfileTile(
                 "Send us a message", CustomIcons.ic_social_fb),
             'link': "http://m.me/nowufb"
@@ -103,10 +109,17 @@ class _ProfileState extends State<Profile> {
             'link': "mailto:hello@now-u.com?subject=Hi"
           },
           {
+            'sectionHeading':  "Legal"
+          },
+          {
+            'profileTile':
+                ProfileTile("Terms & conditions", CustomIcons.ic_tc),
+            'link': "https://share.now-u.com/legal/now-u_users_Ts&Cs.pdf",
+          },
+          {
             'profileTile':
                 ProfileTile("Privacy policy", CustomIcons.ic_privacy),
-            'link':
-                "https://now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf"
+            'link': "https://share.now-u.com/legal/now-u_privacy_policy.pdf",
           },
         ];
         user = viewModel.userModel.user;
@@ -130,24 +143,39 @@ class _ProfileState extends State<Profile> {
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: profileTiles.length,
-                      itemBuilder: (context, index) => GestureDetector(
-                        onTap: () => setState(() {
-                          print("Tapping");
-                          if (profileTiles[index]["page"] != null) {
-                            print("Pushing page");
-                            Navigator.pushNamed(
-                                context, profileTiles[index]["page"]);
-                          } else if (profileTiles[index]["link"] != null) {
-                            customLaunch(
-                              context,
-                              profileTiles[index]["link"]
-                            );
-                          } else if (profileTiles[index]["function"] != null) {
-                            profileTiles[index]["function"]();
-                          }
-                        }),
-                        child: profileTiles[index]["profileTile"],
-                      ),
+                      itemBuilder: (context, index) {
+                        if (profileTiles[index]["sectionHeading"] != null) {
+                          return Padding(
+                            padding: EdgeInsets.only(left: 20, top: index == 0 ? 0 : 25, bottom: 5),
+                            child: Text(
+                              profileTiles[index]["sectionHeading"],
+                              style: textStyleFrom(
+                                Theme.of(context).primaryTextTheme.headline4
+                              ),
+                            )
+                          );
+                        } 
+                        else {
+                          return GestureDetector(
+                            onTap: () => setState(() {
+                              print("Tapping");
+                              if (profileTiles[index]["page"] != null) {
+                                print("Pushing page");
+                                Navigator.pushNamed(
+                                    context, profileTiles[index]["page"]);
+                              } else if (profileTiles[index]["link"] != null) {
+                                customLaunch(
+                                  context,
+                                  profileTiles[index]["link"]
+                                );
+                              } else if (profileTiles[index]["function"] != null) {
+                                profileTiles[index]["function"]();
+                              }
+                            }),
+                            child: profileTiles[index]["profileTile"],
+                          );
+                        }
+                      }
                     ),
                     SizedBox(height: 15),
                     Row(

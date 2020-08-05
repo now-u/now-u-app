@@ -4,7 +4,12 @@ import 'package:app/models/Action.dart';
 import 'package:app/models/Organisation.dart';
 import 'package:app/models/SDG.dart';
 
+import 'package:app/locator.dart';
+import 'package:app/services/dynamicLinks.dart';
+
 import 'dart:convert';
+
+final DynamicLinkService _dynamicLinkService = locator<DynamicLinkService>();
 
 class Campaign {
   int id;
@@ -188,6 +193,23 @@ class Campaign {
     return keyAims;
   }
 
+  // TODO on error use this function instead
+  //String getManualShareLink() {
+  //  return "https://nowu.page.link/?link=https://now-u.com/campaigns/$id&apn=com.nowu.app&isi=1516126639&ibi=com.nowu.app&st=${Uri.encodeFull(title)}&si=$headerImage";
+  //}
+
+  Future<String> getShareText() async {
+    Uri uri = await _dynamicLinkService.createDynamicLink(
+      linkPath: "campaigns/$id",
+      title: "$title",
+      description: "$description",
+      imageUrl: "$headerImage",
+    );
+    String shareLink = uri.toString();
+    //return "Check out the $title campaign on now-u! ${getShareLink()}";
+    return "Check out the $title campaign on now-u! $shareLink";
+  }
+  
   bool isPast() {
     if (endDate == null) {
       return false;
