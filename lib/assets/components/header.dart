@@ -76,20 +76,29 @@ class PageHeader extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Expanded(
-                  child: Container(
-                    child: Text(
-                      title,
-                      textAlign: TextAlign.left,
-                      style:  textStyleFrom(
-                        Theme.of(context).primaryTextTheme.headline2,
-                        color:textColor,
+                infoText == null && infoTitle == null && maxLines != null 
+                  ? Expanded(
+                      child: Text(
+                        title,
+                        textAlign: TextAlign.left,
+                        style:  textStyleFrom(
+                          Theme.of(context).primaryTextTheme.headline2,
+                          color:textColor,
+                        ),
+                        maxLines: maxLines,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: maxLines,
-                      overflow: TextOverflow.ellipsis,
+                    )
+                  : Container(
+                      child: Text(
+                        title,
+                        textAlign: TextAlign.left,
+                        style:  textStyleFrom(
+                          Theme.of(context).primaryTextTheme.headline2,
+                          color:textColor,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
                 
                 SizedBox(width: 7,),
 
