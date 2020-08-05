@@ -428,15 +428,15 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                     )
                   ])
                 : Container(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: DarkButton(
-                "Actions of this Campaign",
-                onPressed: () {
-                  Navigator.pushNamed(context,"pastCampaignActionPage",arguments: campaign);
-                },
-              ),
-            ),
+            //Padding(
+            //  padding: const EdgeInsets.all(8.0),
+            //  child: DarkButton(
+            //    "Actions of this Campaign",
+            //    onPressed: () {
+            //      Navigator.pushNamed(context,"pastCampaignActionPage",arguments: campaign);
+            //    },
+            //  ),
+            //),
             SizedBox(height: joined ? 20 : 70 ),
           ],
         ),
