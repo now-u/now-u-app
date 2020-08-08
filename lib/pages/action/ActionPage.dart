@@ -12,7 +12,7 @@ import 'package:app/models/State.dart';
 
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/selectionItem.dart';
-import 'package:app/assets/components/customTile.dart';
+import 'package:app/assets/components/campaignTile.dart';
 import 'package:app/assets/components/selectionPill.dart';
 import 'package:app/assets/components/header.dart';
 import 'package:app/assets/components/viewCampaigns.dart';
@@ -229,9 +229,7 @@ class _ActionPageState extends State<ActionPage> {
                                               .getSelectedCampaigns()
                                               .length +
                                           1,
-                              //itemCount: viewModel.campaigns.getActiveCampaigns().length,
                               itemBuilder: (BuildContext context, int index) {
-                                //return CampaignSelectionTile(viewModel.campaigns.getActiveCampaigns()[index]);
                                 if (index ==
                                     viewModel.userModel.user
                                         .getSelectedCampaigns()
@@ -252,7 +250,8 @@ class _ActionPageState extends State<ActionPage> {
                                   child: CampaignSelectionTile(viewModel
                                     .userModel.user
                                     .filterSelectedCampaigns(viewModel.campaigns
-                                        .getActiveCampaigns())[index]
+                                        .getActiveCampaigns())[index],
+                                    height: CAMPAIGN_SELECT_HEIGHT,
                                   ),
                                 );
                               },
@@ -410,57 +409,6 @@ class _ActionPageState extends State<ActionPage> {
       actions = getActions(campaign, selections, model);
       print("got new acitons");
     });
-  }
-}
-
-class CampaignSelectionTile extends StatelessWidget {
-  final Campaign campaign;
-  CampaignSelectionTile(this.campaign);
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(Routes.campaignInfo, arguments: campaign.getId());
-      },
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-        child: CustomTile(
-            color: colorFrom(
-              Theme.of(context).primaryColorDark,
-              opacity:0.05,
-            ),
-            child: Stack(children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  Container(
-                      height: CAMPAIGN_SELECT_HEIGHT,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(campaign.getHeaderImage()),
-                          fit: BoxFit.cover,
-                        ),
-                      )),
-                  Container(
-                      height: CAMPAIGN_SELECT_HEIGHT,
-                      color: colorFrom(
-                        Colors.black,
-                        opacity: 0.5,
-                      )),
-                ],
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: Container(
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    child: Text(campaign.getTitle(),
-                        textAlign: TextAlign.center,
-                        style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.headline4,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w800,
-                        ))),
-              )
-            ]))));
   }
 }
 

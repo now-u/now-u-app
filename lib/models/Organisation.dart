@@ -1,3 +1,5 @@
+import 'package:app/models/Campaign.dart';
+
 class Organisation {
   int id;
   String name;
@@ -8,6 +10,8 @@ class Organisation {
   String email;
   String website;
   String geographicReach;
+
+  List<Campaign> campaigns;
 
   String instagram;
   String facebook;
@@ -34,7 +38,12 @@ class Organisation {
     instagram = json['IG_link'];
     facebook = json['FB_link'];
     twitter = json['twitter_link'];
-
+    
+    campaigns = 
+      json['campaigns'] == null 
+        ? <Campaign>[]
+        : json['campaigns'].map((e) => Campaign.fromJson(e)).toList().cast<Campaign>();
+    
     extraText1 = json['extra_text_1'];
     extraLink1 = json['extra_link_1'];
     
@@ -110,8 +119,7 @@ class Organisation {
   String getExtraLink3() {
     return extraLink3;
   }
-
-  List<String> getContactInfo() {
-
+  List<Campaign> getCampaigns() {
+    return campaigns;
   }
 }

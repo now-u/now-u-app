@@ -4,12 +4,9 @@ import 'package:flutter/gestures.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/ViewModel.dart';
-import 'package:app/models/Reward.dart';
 import 'package:app/models/State.dart';
 import 'package:app/routes.dart';
 
-import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
-import 'package:app/pages/other/RewardComplete.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app/assets/StyleFrom.dart';
@@ -17,13 +14,11 @@ import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/customAppBar.dart';
-import 'package:app/assets/components/pointsNotifier.dart';
 import 'package:app/assets/icons/customIcons.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 final double HEADER_HEIGHT = 200;
 final double H_PADDING = 10;

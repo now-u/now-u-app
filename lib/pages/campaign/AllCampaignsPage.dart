@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:app/assets/components/header.dart';
-import 'package:app/pages/campaign/CampaignTile.dart';
+import 'package:app/assets/components/campaignTile.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
