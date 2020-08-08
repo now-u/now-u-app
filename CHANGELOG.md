@@ -48,32 +48,23 @@ principles).
 
 ### Unreleased
 
-
-
 ### Version 1.1.2
 
-#### Changes 
-
-#66 - Campaigns can now be shared from the campaigns page
-#78 - The more menu is now split into sections
+#66 [change]  Campaigns can now be shared from the campaigns page
+#78 [change]  The more menu is now split into sections
 
 ### Version 1.1.1
 
-#### Changes 
-
-#60 - Learning resources now display their source
-#75 - Past campaigns can now be viewd on the app
-#71 - Learning resources can now be completed by viewing the resource link
-#58 - New actions and now campaigns now have the 'new' tag 
-#63 - Users have to agree to terms and conditions before logging in
-#57 - Deveopers can now use the staging branch api
-Updated to flutter v1.2.0 (master)
-#39 - The menu icons have been updated
-#40 - The page route and campaign/action completion has been added to firebase
-      analytics
-
-#### Fixes
-
-#72 - Improved dynamic links service
-#46 - The app no longer crashed when clicking 'Rate the app' in the menu
+#60 [change]  Learning resources now display their source
+#75 [change]  Past campaigns can now be viewd on the app
+#71 [change]  Learning resources can now be completed by viewing the resource link
+#58 [change]  New actions and now campaigns now have the 'new' tag 
+#63 [change]  Users have to agree to terms and conditions before logging in
+#57 [change]  Deveopers can now use the staging branch api
+#   [upgrade] Updated to flutter v1.2.0 (master)
+#39 [change]  The menu icons have been updated
+#40 [change]  The page route and campaign/action completion has been added to firebase
+              analytics
+#72 [bug]     Improved dynamic links service
+#46 [bug]     The app no longer crashed when clicking 'Rate the app' in the menu
 
