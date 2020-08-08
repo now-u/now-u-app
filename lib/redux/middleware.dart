@@ -29,7 +29,6 @@ import 'package:app/assets/components/pointsNotifier.dart';
 
 import 'package:app/pages/login/emailSentPage.dart';
 import 'package:app/pages/login/login.dart';
-import 'package:app/pages/other/RewardComplete.dart';
 
 import 'package:app/routes.dart';
 import 'package:app/main.dart';
@@ -375,18 +374,6 @@ ThunkAction<AppState> completeAction(
             context: context,
           );
         } else {
-          // TODO fix this rewards notification part
-          // Rewards
-          //List<Reward> newlyCompletedRewards =
-          //    store.state.userState.user.newlyCompletedRewards(action);
-          // If you did get a new reward
-          //if (newlyCompletedRewards.length > 0) {
-          //  Navigator.push(
-          //      context,
-          //      CustomRoute(
-          //          builder: (context) =>
-          //              RewardCompletePage(newlyCompletedRewards)));
-          //} else {
           // Points Notifier
           pointsNotifier(newPoints, 5, getNextBadge(newPoints), context)
             ..show(context);

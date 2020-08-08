@@ -48,6 +48,8 @@ principles).
 
 ### Unreleased
 
+#85 [change]  The style of the organisation page has been updated.
+
 ### Version 1.1.2
 
 #66 [change]  Campaigns can now be shared from the campaigns page

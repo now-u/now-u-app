@@ -18,27 +18,33 @@ class CustomTile extends StatelessWidget {
   final bool onWhiteBackground;
   final Color color;
   final double borderRadius;
+  final Function onClick;
   CustomTile({
     this.child,
     this.onWhiteBackground,
     this.color,
     this.borderRadius,
+    this.onClick,
   });
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: color ?? Colors.white,
-        borderRadius: tileBorderRadius(borderRadius: borderRadius),
-        boxShadow: [
-          customTileBoxShadow(
-            onWhiteBackground ?? false
-          ),
-        ]
-      ),
-      child: ClipRRect(
-        borderRadius: tileBorderRadius(borderRadius: borderRadius),
-        child: child, 
+    return 
+    GestureDetector(
+      onTap: onClick,
+      child: Container(
+        decoration: BoxDecoration(
+          color: color ?? Colors.white,
+          borderRadius: tileBorderRadius(borderRadius: borderRadius),
+          boxShadow: [
+            customTileBoxShadow(
+              onWhiteBackground ?? false
+            ),
+          ]
+        ),
+        child: ClipRRect(
+          borderRadius: tileBorderRadius(borderRadius: borderRadius),
+          child: child, 
+        ),
       ),
     );
   }
