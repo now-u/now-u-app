@@ -84,6 +84,11 @@ List<CampaignAction> getActions(
   return tmpActions;
 }
 
+class ActionsPageArguments {
+  final Campaign campaign;
+  ActionsPageArguments(this.campaign);
+}
+
 class _ActionPageState extends State<ActionPage> {
   Campaign
       campaign; //makes a campaign but why , A) to iterate when it gets campaigns from store
