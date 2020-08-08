@@ -8,11 +8,10 @@ Fixes #<issue_number>
 
 ## Creator
 
-- [ ] The target branch is master
-- [ ] I have commented my code, particularly in hard-to-understand areas
+- [ ] The target branch is dev
 - [ ] I have updated the unreleased section of the change log
 - [ ] I have reviewed the 'files changed' tab on github to ensure all changes are as expected
-- [ ] I have added someone to review the pr and linked the relevant issue
+- [ ] I have added someone to review the pr
 
 ## Reviewer
 
