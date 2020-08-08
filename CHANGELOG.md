@@ -41,32 +41,34 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
 
 ## Whats the structure?
 
-#<issue_number> - Description of what has changed (following guiding
-principles).
+- #<issue_number> - Description of what has changed (following guiding
+  principles).
 
 ## The log
 
 ### Unreleased
 
-#85 [change]  The style of the organisation page has been updated.
+- #85 [change]  The style of the organisation page has been updated.
 
 ### Version 1.1.2
 
-#66 [change]  Campaigns can now be shared from the campaigns page
-#78 [change]  The more menu is now split into sections
+- #66 [change]  Campaigns can now be shared from the campaigns page
+- #78 [change]  The more menu is now split into sections
 
 ### Version 1.1.1
 
-#60 [change]  Learning resources now display their source
-#75 [change]  Past campaigns can now be viewd on the app
-#71 [change]  Learning resources can now be completed by viewing the resource link
-#58 [change]  New actions and now campaigns now have the 'new' tag 
-#63 [change]  Users have to agree to terms and conditions before logging in
-#57 [change]  Deveopers can now use the staging branch api
-#   [upgrade] Updated to flutter v1.2.0 (master)
-#39 [change]  The menu icons have been updated
-#40 [change]  The page route and campaign/action completion has been added to firebase
-              analytics
-#72 [bug]     Improved dynamic links service
-#46 [bug]     The app no longer crashed when clicking 'Rate the app' in the menu
+- #60 [change]  Learning resources now display their source
+- #75 [change]  Past campaigns can now be viewd on the app
+- #71 [change]  Learning resources can now be completed by viewing the resource
+  link
+- #58 [change]  New actions and now campaigns now have the 'new' tag 
+- #63 [change]  Users have to agree to terms and conditions before logging in
+- #57 [change]  Deveopers can now use the staging branch api
+- #   [upgrade] Updated to flutter v1.2.0 (master)
+- #39 [change]  The menu icons have been updated
+- #40 [change]  The page route and campaign/action completion has been added to
+  firebase analytics
+- #72 [bug]     Improved dynamic links service
+- #46 [bug]     The app no longer crashed when clicking 'Rate the app' in the
+  menu
 
