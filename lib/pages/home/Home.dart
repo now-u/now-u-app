@@ -1,10 +1,9 @@
 import 'package:app/assets/StyleFrom.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import 'package:app/routes.dart';
 
-import 'package:app/pages/campaign/CampaignTile.dart';
+import 'package:app/assets/components/campaignTile.dart';
 import 'package:app/pages/other/InfoPage.dart';
 
 import 'package:app/assets/components/darkButton.dart';
