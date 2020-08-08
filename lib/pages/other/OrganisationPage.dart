@@ -4,8 +4,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:app/assets/components/darkButton.dart';
+import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/campaignTile.dart';
+import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/routes/customLaunch.dart';
 
 import 'package:app/models/Organisation.dart';
@@ -219,11 +220,21 @@ class ExtraLinkButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(8),
-      child: DarkButton(
-        text,
-        onPressed: () {customLaunch(context, link);},
-        inverted: true,
-      ),
+      child: CustomTile(
+        child: Padding(
+          padding: EdgeInsets.all(10),
+          child: Text(
+            text,
+            style: textStyleFrom(
+              Theme.of(context).primaryTextTheme.headline5,
+              color: Theme.of(context).buttonColor,
+              fontWeight: FontWeight.w800,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        onClick: () {customLaunch(context, link);},
+      )
     );
   }
 }
