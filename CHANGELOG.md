@@ -64,7 +64,7 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
 - #58 [change]  New actions and now campaigns now have the 'new' tag 
 - #63 [change]  Users have to agree to terms and conditions before logging in
 - #57 [change]  Deveopers can now use the staging branch api
-- #   [upgrade] Updated to flutter v1.2.0 (master)
+- #NA [upgrade] Updated to flutter v1.2.0 (master)
 - #39 [change]  The menu icons have been updated
 - #40 [change]  The page route and campaign/action completion has been added to
   firebase analytics
