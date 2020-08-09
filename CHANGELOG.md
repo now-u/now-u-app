@@ -42,13 +42,14 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
 ## Whats the structure?
 
 - #<issue_number> - Description of what has changed (following guiding
-  principles).
+  principles)
 
 ## The log
 
 ### Unreleased
 
-- #85 [change]  The style of the organisation page has been updated.
+- #85 [change]  The style of the organisation page has been updated
+- #56 [change]  Web links now open within the app
 
 ### Version 1.1.2
 
