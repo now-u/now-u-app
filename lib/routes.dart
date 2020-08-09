@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:app/pages/campaign/CampaignPage.dart';
 import 'package:app/pages/other/OrganisationPage.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +6,6 @@ import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/models/Organisation.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Learning.dart';
-import 'package:app/models/Action.dart';
 
 import 'package:app/pages/profile/profilePages/FAQPage.dart';
 import 'package:app/pages/profile/profilePages/ProfilePage.dart';
@@ -16,8 +13,8 @@ import 'package:app/pages/profile/profilePages/PartnersPage.dart';
 import 'package:app/pages/intro/IntroPage.dart';
 import 'package:app/pages/login/login.dart';
 import 'package:app/pages/login/emailSentPage.dart';
-import 'package:app/pages/other/BetaPage.dart';
 import 'package:app/pages/other/InfoPage.dart';
+import 'package:app/pages/other/WebView.dart';
 import 'package:app/pages/Tabs.dart';
 import 'package:app/pages/action/ActionInfo.dart';
 import 'package:app/pages/campaign/LearningCentre/LearningCentreAllPage.dart';
@@ -49,17 +46,13 @@ class Routes {
   static const faq = "faq";
   static const parteners = "parteners";
   static const organisationPage = "organisationPage";
-
   static const info = "info";
+  static const webview = "webview";
 
   // Learning
   static const learningAll = "learning";
   static const learningSingle = "learningSingle";
   static const learningTopic = "learningTopic";
-
-  // Beta only
-  static const beta = "beta";
-//  static final authEmailSent = "authEmailSent";
 }
 
 Function initRoutes = (RouteSettings settings) {
@@ -174,9 +167,15 @@ Function initRoutes = (RouteSettings settings) {
       }
 
     // Beta
-    case Routes.beta:
+    case Routes.webview:
       {
-        return customRoute(builder: (context) => BetaPage(), settings: settings);
+        if (args is WebViewArgumnets) {
+          return customRoute(builder: (context) => WebViewPage(args), settings: settings);
+        }
+        if (args is String) {
+          return customRoute(builder: (context) => WebViewPage(WebViewArgumnets(args)), settings: settings);
+        }
+        return customRoute(builder: (context) => TabsPage(currentPage: TabPage.Home), settings: settings);
       }
 
     // TODO add a 404 page

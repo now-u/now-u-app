@@ -41,7 +41,7 @@ class CustomIcons {
   static const IconData ic_report = IconData(0xe81a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_story = IconData(0xe81b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_article = IconData(0xe81c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  //static const IconData ic_video = IconData(0xe81d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData ic_video = IconData(0xe81d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_raisemoney = IconData(0xe81e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_getinvolved = IconData(0xe820, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData ic_getinformed = IconData(0xe821, fontFamily: _kFontFam, fontPackage: _kFontPkg);
@@ -78,7 +78,7 @@ class CustomIcons {
   static const IconData ic_summary = IconData(0xe802, fontFamily: _kFontFam2, fontPackage: _kFontPkg);
   static const IconData ic_uk = IconData(0xe803, fontFamily: _kFontFam2, fontPackage: _kFontPkg);
   static const IconData ic_tc = IconData(0xe804, fontFamily: _kFontFam2, fontPackage: _kFontPkg);
-  static const IconData ic_video = IconData(0xe805, fontFamily: _kFontFam2, fontPackage: _kFontPkg);
+  //static const IconData ic_video = IconData(0xe805, fontFamily: _kFontFam2, fontPackage: _kFontPkg);
   static const IconData ic_global = IconData(0xe806, fontFamily: _kFontFam2, fontPackage: _kFontPkg);
   static const IconData ic_europe = IconData(0xe807, fontFamily: _kFontFam2, fontPackage: _kFontPkg);
 
