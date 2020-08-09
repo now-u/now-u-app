@@ -243,7 +243,7 @@ class UserViewModel {
   final Function () getUser;
 
   final Function(String, String) login;
-  final Function(String, String) email;
+  final Function(String, String, bool) email;
   final Function() skipLogin;
 
   UserViewModel({
@@ -275,9 +275,9 @@ class UserViewModel {
         login: (String email, String link) {
           store.dispatch(loginUser(email, link));
         },
-        email: (String email, String name) {
+        email: (String email, String name, bool acceptNewletter) {
           print("Dispatching send email action | " + email);
-          store.dispatch(emailUser(email, name));
+          store.dispatch(emailUser(email, name, acceptNewletter));
         },
         skipLogin: () {
           store.dispatch(skipLoginAction());

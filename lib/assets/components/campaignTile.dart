@@ -184,3 +184,58 @@ class _CampaignTileState extends State<CampaignTile> {
     );
   }
 }
+
+class CampaignSelectionTile extends StatelessWidget {
+  final double defaultHeight = 110;
+
+  final Campaign campaign;
+  final double height;
+  CampaignSelectionTile(this.campaign, {this.height});
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pushNamed(Routes.campaignInfo, arguments: campaign.getId());
+      },
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+        child: CustomTile(
+            color: colorFrom(
+              Theme.of(context).primaryColorDark,
+              opacity:0.05,
+            ),
+            child: Stack(children: <Widget>[
+              Stack(
+                children: <Widget>[
+                  Container(
+                      height: height ?? defaultHeight,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(campaign.getHeaderImage()),
+                          fit: BoxFit.cover,
+                        ),
+                      )),
+                  Container(
+                      height: height ?? defaultHeight,
+                      color: colorFrom(
+                        Colors.black,
+                        opacity: 0.5,
+                      )),
+                ],
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Container(
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    child: Text(campaign.getTitle(),
+                        textAlign: TextAlign.center,
+                        style: textStyleFrom(
+                          Theme.of(context).primaryTextTheme.headline4,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w800,
+                        ))),
+              )
+            ]))));
+  }
+}
+

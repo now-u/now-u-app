@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:app/pages/campaign/CampaignTile.dart';
-
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
 import 'package:app/models/ViewModel.dart';
@@ -11,6 +9,7 @@ import 'package:app/models/State.dart';
 import 'package:app/routes.dart';
 
 import 'package:app/assets/components/header.dart';
+import 'package:app/assets/components/campaignTile.dart';
 import 'package:app/assets/StyleFrom.dart';
 
 import 'package:redux/redux.dart';
@@ -44,8 +43,6 @@ class _CampaignPageState extends State<CampaignPage> {
       onInit: (Store<AppState> store) {
         campaigns = store.state.campaigns.getActiveCampaigns();
         user = store.state.userState.user;
-        // If there is no user then we need to go get one
-        // TODO can the app ever work without a user/ can we setup an anonymous user
       },
       converter: (Store<AppState> store) => ViewModel.create(store),
       builder: (BuildContext context, ViewModel viewModel) {
@@ -62,8 +59,6 @@ class _CampaignPageState extends State<CampaignPage> {
           Navigator.of(context).pushNamed('/');
           
         }
-        //campaigns = viewModel.campaigns.getActiveCampaigns().toList();
-        //user = viewModel.userModel.user;
         return Stack(
           children: [
             SafeArea(
@@ -80,41 +75,6 @@ class _CampaignPageState extends State<CampaignPage> {
                       style: Theme.of(context).primaryTextTheme.bodyText1,
                     ),
                   ),
-                  //Padding(
-                  //    padding: EdgeInsets.only(top: 10, right: 10),
-                  //    child: Row(
-                  //      mainAxisAlignment: MainAxisAlignment.end,
-                  //      crossAxisAlignment: CrossAxisAlignment.center,
-                  //      children: <Widget>[
-                  //        Container(
-                  //          child: Text(
-                  //            "Show joined campaigns only",
-                  //            style: textStyleFrom(
-                  //              Theme.of(context).primaryTextTheme.bodyText1,
-                  //              color: Color.fromRGBO(63, 61, 86, 1),
-                  //            ),
-                  //          ),
-                  //        ),
-                  //        SizedBox(width: 10),
-                  //        CustomSwitch(
-                  //            value: onlyJoined,
-                  //            onChanged: (value) {
-                  //              setState(() {
-                  //                onlyJoined = value;
-                  //                if (value) {
-                  //                  campaigns = viewModel
-                  //                      .getActiveSelectedCampaings()
-                  //                      .getActiveCampaigns();
-                  //                } else {
-                  //                  campaigns =
-                  //                      viewModel.campaigns.getActiveCampaigns();
-                  //                }
-                  //              });
-                  //            },
-                  //            activeColor: Theme.of(context).primaryColor,
-                  //            inactiveColor: Color.fromRGBO(221, 221, 221, 1))
-                  //      ],
-                  //    )),
                   viewModel.getActiveSelectedCampaings().activeLength() == 0 &&
                           onlyJoined
                       ? Center(

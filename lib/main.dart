@@ -5,12 +5,9 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import 'package:app/pages/other/SplashScreen.dart';
 
-//import 'package:app/assets/dynamicLinks.dart';
-
 import 'package:app/routes.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/analytics.dart';
-import 'package:app/services/dynamicLinks.dart';
 import 'package:app/services/pushNotifications.dart';
 import 'package:app/services/navigation.dart';
 
@@ -22,15 +19,11 @@ import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux_dev_tools/redux_dev_tools.dart';
 import 'package:redux_thunk/redux_thunk.dart';
-import 'package:wiredash/wiredash.dart';
 
 void main() {
   Crashlytics.instance.enableInDevMode = true;
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(statusBarColor: darkBlue),
-  );
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(App());
 }

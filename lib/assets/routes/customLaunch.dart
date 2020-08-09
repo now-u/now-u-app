@@ -1,11 +1,27 @@
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/darkButton.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:app/routes.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:url_launcher/url_launcher.dart';
+
 void customLaunch(
+  BuildContext context,
+  String url,
+  {
+    String title,
+    String description,
+    String buttonText, 
+    String closeButtonText,
+    Function extraOnConfirmFunction,
+  }
+) {
+  Navigator.of(context).pushNamed(Routes.webview, arguments: url);
+}
+
+void customLaunchExternal(
   BuildContext context,
   String url,
   {

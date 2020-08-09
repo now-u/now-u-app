@@ -29,7 +29,6 @@ import 'package:app/assets/components/pointsNotifier.dart';
 
 import 'package:app/pages/login/emailSentPage.dart';
 import 'package:app/pages/login/login.dart';
-import 'package:app/pages/other/RewardComplete.dart';
 
 import 'package:app/routes.dart';
 import 'package:app/main.dart';
@@ -375,18 +374,6 @@ ThunkAction<AppState> completeAction(
             context: context,
           );
         } else {
-          // TODO fix this rewards notification part
-          // Rewards
-          //List<Reward> newlyCompletedRewards =
-          //    store.state.userState.user.newlyCompletedRewards(action);
-          // If you did get a new reward
-          //if (newlyCompletedRewards.length > 0) {
-          //  Navigator.push(
-          //      context,
-          //      CustomRoute(
-          //          builder: (context) =>
-          //              RewardCompletePage(newlyCompletedRewards)));
-          //} else {
           // Points Notifier
           pointsNotifier(newPoints, 5, getNextBadge(newPoints), context)
             ..show(context);
@@ -398,12 +385,12 @@ ThunkAction<AppState> completeAction(
 }
 // Once we get the new user
 
-ThunkAction<AppState> emailUser(String email, String name) {
+ThunkAction<AppState> emailUser(String email, String name, bool acceptNewletter) {
   return (Store<AppState> store) async {
     Future(() async {
       print("In thunk action");
       print(store.state.userState.auth);
-      store.state.userState.auth.sendSignInWithEmailLink(email, name).then(
+      store.state.userState.auth.sendSignInWithEmailLink(email, name, acceptNewletter).then(
           (loginResponse) {
         print("Trying to send email");
         store.dispatch(SentAuthEmail(email));
