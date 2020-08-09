@@ -50,6 +50,8 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
 
 - #85 [change]  The style of the organisation page has been updated
 - #56 [change]  Web links now open within the app
+- #64 [change]  Users can now signup for the news letter during the signup
+  process
 
 ### Version 1.1.2
 
