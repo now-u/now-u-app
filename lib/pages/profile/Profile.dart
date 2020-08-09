@@ -200,12 +200,22 @@ class _ProfileState extends State<Profile> {
 
                     // Dev Tools
                     user.isStagingUser() 
-                      ? GestureDetector(
-                          child: ProfileTile("Dev Tools", FontAwesomeIcons.code),
-                          onTap: () {
-                            viewModel.api.toggleStagingApi();
-                            viewModel.onUpdateCampaings();
-                          }
+                      ? Column(
+                          children: [
+                            GestureDetector(
+                              child: ProfileTile("Dev Tools", FontAwesomeIcons.code),
+                              onTap: () {
+                                viewModel.api.toggleStagingApi();
+                                viewModel.onUpdateCampaings();
+                              }
+                            ),
+                            GestureDetector(
+                              child: ProfileTile("Log out", FontAwesomeIcons.code),
+                              onTap: () {
+                                viewModel.onLogout();
+                              }
+                            ),
+                          ]
                         )
                       : Container()
                   ],
