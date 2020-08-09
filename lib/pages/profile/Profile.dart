@@ -5,8 +5,6 @@ import 'dart:io';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app/assets/icons/customIcons.dart';
 
-import 'package:app/assets/components/pageTitle.dart';
-import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/routes/customLaunch.dart';
 
@@ -15,10 +13,7 @@ import 'package:app/models/ViewModel.dart';
 import 'package:app/models/State.dart';
 
 import 'package:app/pages/profile/ProfileTile.dart';
-import 'package:app/pages/Tabs.dart';
 import 'package:app/routes.dart';
-
-import 'package:app/pages/other/quiz/quizStart.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -95,18 +90,21 @@ class _ProfileState extends State<Profile> {
             'link':
               Platform.isIOS 
                 ? "https://apps.apple.com/us/app/now-u/id1516126639"
-                : "https://play.google.com/store/apps/details?id=com.nowu.app"
+                : "https://play.google.com/store/apps/details?id=com.nowu.app",
+            'external': true
             //'function': () {StoreRedirect.redirect();}
           },
           {
             'profileTile': ProfileTile(
                 "Send us a message", CustomIcons.ic_social_fb),
-            'link': "http://m.me/nowufb"
+            'link': "http://m.me/nowufb",
+            'external': true
           },
           {
             'profileTile':
                 ProfileTile("Send us an email", CustomIcons.ic_email),
-            'link': "mailto:hello@now-u.com?subject=Hi"
+            'link': "mailto:hello@now-u.com?subject=Hi",
+            'external': true
           },
           {
             'sectionHeading':  "Legal"
@@ -115,11 +113,13 @@ class _ProfileState extends State<Profile> {
             'profileTile':
                 ProfileTile("Terms & conditions", CustomIcons.ic_tc),
             'link': "https://share.now-u.com/legal/now-u_users_Ts&Cs.pdf",
+            'external': true
           },
           {
             'profileTile':
                 ProfileTile("Privacy policy", CustomIcons.ic_privacy),
             'link': "https://share.now-u.com/legal/now-u_privacy_policy.pdf",
+            'external': true
           },
         ];
         user = viewModel.userModel.user;
@@ -166,7 +166,8 @@ class _ProfileState extends State<Profile> {
                               } else if (profileTiles[index]["link"] != null) {
                                 customLaunch(
                                   context,
-                                  profileTiles[index]["link"]
+                                  profileTiles[index]["link"],
+                                  isExternal: profileTiles[index]['external'] ?? false
                                 );
                               } else if (profileTiles[index]["function"] != null) {
                                 profileTiles[index]["function"]();

@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/inputs.dart';
+import 'package:app/assets/routes/customLaunch.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -317,7 +318,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                                       ),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {
-                                          launch("http://www.now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf");
+                                          customLaunch(context, "http://www.now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf", isExternal: true);
                                         }),
                                   ]
                                 ),

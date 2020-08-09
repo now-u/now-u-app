@@ -16,9 +16,23 @@ void customLaunch(
     String buttonText, 
     String closeButtonText,
     Function extraOnConfirmFunction,
+    bool isExternal,
   }
 ) {
-  Navigator.of(context).pushNamed(Routes.webview, arguments: url);
+  if (isExternal ?? false) {
+    customLaunchExternal(
+      context,
+      url,
+      title: title,
+      description: description,
+      buttonText: buttonText,
+      closeButtonText: closeButtonText,
+      extraOnConfirmFunction: extraOnConfirmFunction,
+    );
+  }
+  else {
+    Navigator.of(context).pushNamed(Routes.webview, arguments: url);
+  }
 }
 
 void customLaunchExternal(
