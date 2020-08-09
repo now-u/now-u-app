@@ -49,32 +49,29 @@ class AuthenticationService {
 
   //final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<void> sendSignInWithEmailLink(String email, String name) async {
-    //return _auth.sendSignInWithEmailLink(
-    //    email: email,
-    //    url: "https://nowu.page.link",
-    //    androidInstallIfNotAvailable: true,
-    //    androidMinimumVersion: '21',
-    //    // TODO: replace name
-    //    androidPackageName: 'com.nowu.app',
-    //    handleCodeInApp: true,
-    //    // TODO: replace id
-    //    iOSBundleID: 'com.nowu.app');
-    http
+  Future<void> sendSignInWithEmailLink(String email, String name, bool acceptNewletter) async {
+    http.Response response = await http
         .post(
       domainPrefix + 'users',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, String>{
+      body: json.encode({
         'email': email,
         'full_name': name,
+        'newsletter_signup': acceptNewletter,
       }),
-    )
-        .then((http.Response response) {
-      print("THE RESPONSE BODY IS");
-      print(response.body);
-    });
+    );
+
+    print(acceptNewletter);
+    if (response == null) {
+      print("Response is null");
+    }
+    if (response.statusCode != 200) {
+      print("ERROR $response.statusCode");
+    }
+    print("THE RESPONSE BODY IS");
+    print(response.body);
   }
 
   Future<User> signInWithEmailLink(String email, String token) async {

@@ -385,12 +385,12 @@ ThunkAction<AppState> completeAction(
 }
 // Once we get the new user
 
-ThunkAction<AppState> emailUser(String email, String name) {
+ThunkAction<AppState> emailUser(String email, String name, bool acceptNewletter) {
   return (Store<AppState> store) async {
     Future(() async {
       print("In thunk action");
       print(store.state.userState.auth);
-      store.state.userState.auth.sendSignInWithEmailLink(email, name).then(
+      store.state.userState.auth.sendSignInWithEmailLink(email, name, acceptNewletter).then(
           (loginResponse) {
         print("Trying to send email");
         store.dispatch(SentAuthEmail(email));

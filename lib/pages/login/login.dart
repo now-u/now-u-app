@@ -37,7 +37,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   String _email;
   String _name;
   String _token;
-  bool _acceptedtc;
+  bool _newsletterSignup = false;
 
   bool retry;
   final _formKey = GlobalKey<FormState>();
@@ -125,9 +125,22 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         if (!value) return "You must accept our terms and conditions";
         return null;
       },
+    );
+    
+    final newsletterSignup = CustomCheckboxFormField(
+      title: RichText(
+        text: TextSpan(
+          style: textStyleFrom(
+            Theme.of(context).primaryTextTheme.bodyText1,
+            color: Colors.white,
+          ),
+          children: [
+            TextSpan(text: "I am happy to receive the now-u newsletter via email"),
+          ]
+        ),
+      ),
       onSaved: (value) {
-        print("Saved");
-        _acceptedtc = value;
+        _newsletterSignup = value;
       },
     );
     
@@ -139,7 +152,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
           if (stagingUsers.contains(_email)) {
             model.auth.switchToStagingBranch();
           }
-          model.email(_email, _name);
+          model.email(_email, _name, _newsletterSignup);
           return true;
         }
         return false;
@@ -280,6 +293,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                               email,
                               SizedBox(height: 20),
                               acceptTandC,
+                              newsletterSignup,
 
                               loginButton(),
 
