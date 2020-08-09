@@ -1,4 +1,4 @@
-<div style='text-align: center;'><img src='./public/favicons/favicon.png'/><h1>now-u-campaigns</h1></div>
+<div style='text-align: center;'><img src='https://github.com/now-u/now-u-campaigns/blob/dev/public/favicons/favicon.png'/><h1>now-u-app</h1></div>
 
 ## Welcome! :wave:
 
