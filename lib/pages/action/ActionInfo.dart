@@ -15,6 +15,7 @@ import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/icons/customIcons.dart';
+import 'package:app/assets/routes/customLaunch.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -191,7 +192,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                       child: DarkButton("Take action",
                           style: DarkButtonStyles.Large,
                           inverted: true, onPressed: () {
-                        launch(_action.getLink());
+                        customLaunch(context, _action.getLink());
                       }),
                     ),
 
