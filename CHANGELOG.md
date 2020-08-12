@@ -48,7 +48,9 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
 
 ### Unreleased
 
-- #56 [fix]     Action's 'take action' now open in webview and learning
+### Version 1.1.4
+
+- #91 [fix]     Action's 'take action' now open in webview and learning
   resouces are checked off when clicked
 
 ### Version 1.1.3
