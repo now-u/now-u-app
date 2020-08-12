@@ -31,6 +31,7 @@ void customLaunch(
     );
   }
   else {
+    if (extraOnConfirmFunction != null) extraOnConfirmFunction();
     Navigator.of(context).pushNamed(Routes.webview, arguments: url);
   }
 }
