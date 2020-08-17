@@ -51,6 +51,8 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
 - #94 [fix]     Fixed overflow issue (grey tiles) on actions page
 - #95 [fix]     Actions completed on the home page now show the correct 
   value
+- #98 [feature] Actions for past campaigns can now be viewed
+
 
 ### Version 1.1.4
 
