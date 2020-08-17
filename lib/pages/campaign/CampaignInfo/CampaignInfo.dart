@@ -381,7 +381,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
             SizedBox(height: 20),
 
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: CustomTile(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
@@ -393,7 +393,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                       SizedBox(height: 15,),
                       DarkButton("Take action", onPressed: (){
                         if (campaign.isPast()) {
-                          Navigator.of(context).pushNamed(Routes.actions);
+                          Navigator.of(context).pushNamed(Routes.pastCampaignActionPage, arguments: campaign);
                         }
                         else {
                           Navigator.of(context).pushNamed(Routes.actions);
