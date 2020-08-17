@@ -233,7 +233,7 @@ class Home extends StatelessWidget {
                                    ),
                                    SizedBox(height: 10),
                                    ImpactTile(
-                                     viewModel.getActiveCompletedActions().length,
+                                     viewModel.userModel.user.getCompletedActions().length,
                                      "Actions taken",
                                      route: Routes.actions,
                                    ),
