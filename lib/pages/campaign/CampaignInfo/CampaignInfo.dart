@@ -486,7 +486,22 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                     )
                   ])
                 : Container(),
-            SizedBox(height: joined ? 20 : 70 )
+            //Padding(
+            //  padding: const EdgeInsets.all(8.0),
+            //  child: DarkButton(
+            //    "Actions of this Campaign",
+            //    onPressed: () {
+            //      if (campaign.isPast()) {
+            //        Navigator.pushNamed(context,Routes.pastCampaignActionPage, arguments: campaign);
+            //      }
+            //      else {
+            //        // TODO make this link to specific action
+            //        Navigator.pushNamed(context,Routes.actions);
+            //      }
+            //    },
+            //  ),
+            //),
+            SizedBox(height: joined ? 20 : 70 ),
           ],
         ),
         AnimatedPositioned(
