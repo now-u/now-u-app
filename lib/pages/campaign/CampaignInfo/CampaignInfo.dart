@@ -1,3 +1,4 @@
+import 'package:app/assets/components/darkButton.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -380,6 +381,33 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
             SizedBox(height: 20),
 
             Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: CustomTile(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
+                  child: Column(
+                    children: <Widget>[
+                      Text("See what you can do to support this cause today!", 
+                        style: textStyleFrom(Theme.of(context).primaryTextTheme.headline4)
+                      ),
+                      SizedBox(height: 15,),
+                      DarkButton("Take action", onPressed: (){
+                        if (campaign.isPast()) {
+                          Navigator.of(context).pushNamed(Routes.pastCampaignActionPage, arguments: campaign);
+                        }
+                        else {
+                          Navigator.of(context).pushNamed(Routes.actions);
+                        }
+                      })
+                    ],
+                  ),
+                )
+              ),
+            ),
+
+            SizedBox(height: 20),
+
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 28),
               child: Text(
                 "Know someone who would be happy to support this cause?",
@@ -458,7 +486,22 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                     )
                   ])
                 : Container(),
-            SizedBox(height: joined ? 20 : 70 )
+            //Padding(
+            //  padding: const EdgeInsets.all(8.0),
+            //  child: DarkButton(
+            //    "Actions of this Campaign",
+            //    onPressed: () {
+            //      if (campaign.isPast()) {
+            //        Navigator.pushNamed(context,Routes.pastCampaignActionPage, arguments: campaign);
+            //      }
+            //      else {
+            //        // TODO make this link to specific action
+            //        Navigator.pushNamed(context,Routes.actions);
+            //      }
+            //    },
+            //  ),
+            //),
+            SizedBox(height: joined ? 20 : 70 ),
           ],
         ),
         AnimatedPositioned(

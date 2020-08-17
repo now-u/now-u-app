@@ -20,8 +20,9 @@ enum TabPage { Home, Actions, Learning, News, Menu }
 
 class TabsPage extends StatefulWidget {
   final TabPage currentPage;
+  final dynamic arguments;
 
-  TabsPage({this.currentPage});
+  TabsPage({this.currentPage, this.arguments});
 
   @override
   _TabsPageState createState() => _TabsPageState();

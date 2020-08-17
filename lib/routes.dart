@@ -1,4 +1,6 @@
+import 'package:app/models/Campaigns.dart';
 import 'package:app/pages/campaign/CampaignPage.dart';
+import 'package:app/pages/home/Home.dart';
 import 'package:app/pages/other/OrganisationPage.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +24,7 @@ import 'package:app/pages/campaign/LearningCentre/LearningCentrePage.dart';
 import 'package:app/pages/campaign/LearningCentre/LearningTopicPage.dart';
 import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
 import 'package:app/pages/campaign/AllCampaignsPage.dart';
+import 'package:app/pages/campaign/PastCampaignActionPage.dart';
 
 class Routes {
   // Intro
@@ -37,9 +40,10 @@ class Routes {
 
   static const actionInfo = "actionInfo";
   static const campaignInfo = "campaignInfo";
- 
+
   // All campaigns (including past)
   static const allCampaigns = "allCampaigns";
+  static const pastCampaignActionPage = "pastCampaignActionPage";
 
   // Other
   static const profile = "profile";
@@ -72,18 +76,21 @@ Function initRoutes = (RouteSettings settings) {
     case Routes.loginLinkClicked:
       {
         if (args is EmailSentPageArguments) {
-          return customRoute(builder: (context) => EmailSentPage(args), settings: settings);
+          return customRoute(
+              builder: (context) => EmailSentPage(args), settings: settings);
         }
         return customRoute(builder: (context) => LoginPage(LoginPageArguments()), settings: settings);
       }
     case Routes.intro:
       {
-        return customRoute(builder: (context) => IntroPage(), settings: settings);
+        return customRoute(
+            builder: (context) => IntroPage(), settings: settings);
       }
 
     case Routes.profile:
       {
-        return customRoute(builder: (context) => ProfilePage(), settings: settings);
+        return customRoute(
+            builder: (context) => ProfilePage(), settings: settings);
       }
     case Routes.faq:
       {
@@ -91,82 +98,128 @@ Function initRoutes = (RouteSettings settings) {
       }
     case Routes.parteners:
       {
-        return customRoute(builder: (context) => PartnersPage(), settings: settings);
+        return customRoute(
+            builder: (context) => PartnersPage(), settings: settings);
       }
 
     // Tab page
     case Routes.home:
       {
-        return customRoute( builder: (context) => TabsPage(currentPage: TabPage.Home), settings: settings);
+        return customRoute(
+            builder: (context) => TabsPage(currentPage: TabPage.Home),
+            settings: settings);
       }
     case Routes.campaign:
       {
-        return customRoute(builder: (context) => CampaignPage(), settings: settings);
+        return customRoute(
+            builder: (context) => CampaignPage(), settings: settings);
       }
     case Routes.campaignInfo:
       {
         if (args is int) {
-          return customRoute( builder: (context) => CampaignInfo( campaignId: args,), settings: settings);
+          return customRoute(
+              builder: (context) => CampaignInfo(
+                    campaignId: args,
+                  ),
+              settings: settings);
         }
         if (args is Campaign) {
-          return customRoute( builder: (context) => CampaignInfo( campaign: args,), settings: settings);
+          return customRoute(
+              builder: (context) => CampaignInfo(
+                    campaign: args,
+                  ),
+              settings: settings);
         }
-        return customRoute(builder: (context) => CampaignPage(), settings: settings);
+        return customRoute(
+            builder: (context) => CampaignPage(), settings: settings);
       }
-    case Routes.allCampaigns: 
+    case Routes.allCampaigns:
       {
-        return customRoute(builder: (context) => AllCampaignsPage(), settings: settings);
+        return customRoute(
+            builder: (context) => AllCampaignsPage(), settings: settings);
       }
     case Routes.actions:
       {
-        return customRoute(builder: (context) => TabsPage(currentPage: TabPage.Actions), settings: settings);
+        return customRoute(
+            builder: (context) => TabsPage(currentPage: TabPage.Actions),
+            settings: settings);
       }
     case Routes.actionInfo:
       {
-        if (args is ActionInfoArguments) { 
-          return customRoute( builder: (context) => ActionInfo( args ), settings: settings);
+        if (args is ActionInfoArguments) {
+          return customRoute(
+              builder: (context) => ActionInfo(args), settings: settings);
         }
-        return customRoute(builder: (context) => TabsPage(currentPage: TabPage.Actions), settings: settings);
+        return customRoute(
+            builder: (context) => TabsPage(currentPage: TabPage.Actions),
+            settings: settings);
+      }
+    //PastCampaignActionPage
+    case Routes.pastCampaignActionPage:
+      {
+        if (args is Campaign) {
+          return customRoute(
+            builder: (context) => PastCampaignActionPage(args),
+            settings: settings,
+          );
+        }
+        //what do i return here ? atleast for now ?
+        return customRoute(
+            builder: (context) => TabsPage(currentPage: TabPage.Home),
+            settings: settings);
       }
 
     // Learning
     case Routes.learningAll:
       {
-        return customRoute(builder: (context) => LearningCentreAllPage(), settings: settings);
+        return customRoute(
+            builder: (context) => LearningCentreAllPage(), settings: settings);
       }
     case Routes.learningSingle:
       {
         if (args is int) {
-          return customRoute(builder: (context) => LearningCentrePage(args), settings: settings);
+          return customRoute(
+              builder: (context) => LearningCentrePage(args),
+              settings: settings);
         }
-        return customRoute(builder: (context) => LearningCentreAllPage(), settings: settings);
+        return customRoute(
+            builder: (context) => LearningCentreAllPage(), settings: settings);
       }
     case Routes.learningTopic:
       {
         if (args is LearningTopic) {
-          return customRoute( builder: (context) => LearningTopicPage(args), settings: settings);
+          return customRoute(
+              builder: (context) => LearningTopicPage(args),
+              settings: settings);
         }
-        return customRoute(builder: (context) => LearningCentreAllPage(), settings: settings);
+        return customRoute(
+            builder: (context) => LearningCentreAllPage(), settings: settings);
       }
 
     // Other
     case Routes.info:
       {
         if (args is InfoPageArgumnets) {
-          return customRoute(builder: (context) => InfoPage(args), settings: settings);
+          return customRoute(
+              builder: (context) => InfoPage(args), settings: settings);
         }
-        return customRoute( builder: (context) => TabsPage(currentPage: TabPage.Home), settings: settings);
+        return customRoute(
+            builder: (context) => TabsPage(currentPage: TabPage.Home),
+            settings: settings);
       }
     // Other
     case Routes.organisationPage:
       {
         if (args is Organisation) {
-          return customRoute(builder: (context) => OraganisationInfoPage(args), settings: settings);
+          return customRoute(
+              builder: (context) => OraganisationInfoPage(args),
+              settings: settings);
         }
-        return customRoute(builder: (context) => PartnersPage(), settings: settings);
+        return customRoute(
+            builder: (context) => PartnersPage(), settings: settings);
       }
 
-    // Beta
+    // Webview
     case Routes.webview:
       {
         if (args is WebViewArgumnets) {
@@ -181,7 +234,9 @@ Function initRoutes = (RouteSettings settings) {
     // TODO add a 404 page
     default:
       {
-        return customRoute( builder: (context) => TabsPage(currentPage: TabPage.Home), settings: settings);
+        return customRoute(
+            builder: (context) => TabsPage(currentPage: TabPage.Home),
+            settings: settings);
       }
   }
 };
