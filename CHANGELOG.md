@@ -52,6 +52,7 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
 - #95 [fix]     Actions completed on the home page now show the correct 
   value
 - #98 [feature] Actions for past campaigns can now be viewed
+- #101 [feature] Past campaign feedback form added to more menu
 
 
 ### Version 1.1.4
