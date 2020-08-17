@@ -46,3 +46,9 @@ android/key.properties
 
 #secrets
 assets/json/secrets.json
+
+.gradle/
+gradle/
+gradlew
+gradlew.bat
+.gitignore
