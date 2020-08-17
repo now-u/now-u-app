@@ -222,9 +222,9 @@ class _ActionPageState extends State<ActionPage> {
                                           viewModel.campaigns
                                               .getActiveCampaigns()
                                               .length
-                                      ? viewModel.userModel.user
-                                          .getSelectedCampaigns()
-                                          .length
+                                      ? viewModel
+                                          .getActiveSelectedCampaings()
+                                          .activeLength()
                                       : viewModel.userModel.user
                                               .getSelectedCampaigns()
                                               .length +
@@ -281,7 +281,7 @@ class _ActionPageState extends State<ActionPage> {
                                       .getActiveSelectedCampaings()
                                       .activeLength() ==
                                   viewModel.campaigns.getActiveCampaigns().length
-                              ? viewModel.userModel.user.getSelectedCampaigns().length
+                              ? viewModel.getActiveSelectedCampaings().activeLength()
                               : viewModel.userModel.user
                                       .getSelectedCampaigns()
                                       .length +

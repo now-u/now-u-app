@@ -47,6 +47,7 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
 ## The log
 
 ### Unreleased
+- #94 [fix]     Fixed overflow issue (grey tiles) on actions page
 
 ### Version 1.1.4
 
