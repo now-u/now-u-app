@@ -1,3 +1,4 @@
+import 'package:app/assets/components/darkButton.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -374,6 +375,33 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                   campaign.getDescription(),
                   style: Theme.of(context).primaryTextTheme.bodyText1,
                 ),
+              ),
+            ),
+
+            SizedBox(height: 20),
+
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: CustomTile(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
+                  child: Column(
+                    children: <Widget>[
+                      Text("See what you can do to support this cause today!", 
+                        style: textStyleFrom(Theme.of(context).primaryTextTheme.headline4)
+                      ),
+                      SizedBox(height: 15,),
+                      DarkButton("Take action", onPressed: (){
+                        if (campaign.isPast()) {
+                          Navigator.of(context).pushNamed(Routes.actions);
+                        }
+                        else {
+                          Navigator.of(context).pushNamed(Routes.actions);
+                        }
+                      })
+                    ],
+                  ),
+                )
               ),
             ),
 
