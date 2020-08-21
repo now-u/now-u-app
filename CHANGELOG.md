@@ -48,6 +48,11 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
 
 ### Unreleased
 
+### Version 1.1.6
+
+- #NA [fix]     Fix ios incorrect supprorted version and ios push 
+                notifcation
+
 ### Version 1.1.5
 
 - #94 [fix]     Fixed overflow issue (grey tiles) on actions page
