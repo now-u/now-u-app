@@ -14,6 +14,9 @@ PODS:
   - Firebase/DynamicLinks (6.20.0):
     - Firebase/CoreOnly
     - FirebaseDynamicLinks (~> 4.0.7)
+  - Firebase/Messaging (6.20.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (~> 4.3.0)
   - firebase_analytics (0.0.1):
     - Firebase/Analytics (~> 6.0)
     - Firebase/Core
@@ -25,6 +28,10 @@ PODS:
     - Flutter
   - firebase_dynamic_links (0.1.0):
     - Firebase/DynamicLinks
+    - Flutter
+  - firebase_messaging (0.0.1):
+    - Firebase/Core
+    - Firebase/Messaging
     - Flutter
   - FirebaseAnalytics (6.3.1):
     - FirebaseCore (~> 6.6)
@@ -55,6 +62,20 @@ PODS:
     - FirebaseCore (~> 6.6)
     - GoogleUtilities/UserDefaults (~> 6.5)
     - PromisesObjC (~> 1.2)
+  - FirebaseInstanceID (4.3.2):
+    - FirebaseCore (~> 6.6)
+    - FirebaseInstallations (~> 1.0)
+    - GoogleUtilities/Environment (~> 6.5)
+    - GoogleUtilities/UserDefaults (~> 6.5)
+  - FirebaseMessaging (4.3.1):
+    - FirebaseAnalyticsInterop (~> 1.5)
+    - FirebaseCore (~> 6.6)
+    - FirebaseInstanceID (~> 4.3)
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.5)
+    - GoogleUtilities/Environment (~> 6.5)
+    - GoogleUtilities/Reachability (~> 6.5)
+    - GoogleUtilities/UserDefaults (~> 6.5)
+    - Protobuf (>= 3.9.2, ~> 3.9)
   - Flutter (1.0.0)
   - flutter_inappwebview (0.0.1):
     - Flutter
@@ -100,6 +121,7 @@ PODS:
   - "permission_handler (5.0.0+hotfix.6)":
     - Flutter
   - PromisesObjC (1.2.8)
+  - Protobuf (3.12.0)
   - share (0.0.1):
     - Flutter
   - shared_preferences (0.0.1):
@@ -108,13 +130,13 @@ PODS:
     - Flutter
   - shared_preferences_web (0.0.1):
     - Flutter
-  - store_redirect (0.0.1):
-    - Flutter
   - url_launcher (0.0.1):
     - Flutter
   - url_launcher_macos (0.0.1):
     - Flutter
   - url_launcher_web (0.0.1):
+    - Flutter
+  - webview_flutter (0.0.1):
     - Flutter
 
 DEPENDENCIES:
@@ -122,6 +144,7 @@ DEPENDENCIES:
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_crashlytics (from `.symlinks/plugins/firebase_crashlytics/ios`)
   - firebase_dynamic_links (from `.symlinks/plugins/firebase_dynamic_links/ios`)
+  - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `Flutter`)
   - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
@@ -132,10 +155,10 @@ DEPENDENCIES:
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - shared_preferences_macos (from `.symlinks/plugins/shared_preferences_macos/ios`)
   - shared_preferences_web (from `.symlinks/plugins/shared_preferences_web/ios`)
-  - store_redirect (from `.symlinks/plugins/store_redirect/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
   - url_launcher_macos (from `.symlinks/plugins/url_launcher_macos/ios`)
   - url_launcher_web (from `.symlinks/plugins/url_launcher_web/ios`)
+  - webview_flutter (from `.symlinks/plugins/webview_flutter/ios`)
 
 SPEC REPOS:
   trunk:
@@ -149,12 +172,15 @@ SPEC REPOS:
     - FirebaseCoreDiagnosticsInterop
     - FirebaseDynamicLinks
     - FirebaseInstallations
+    - FirebaseInstanceID
+    - FirebaseMessaging
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
     - GoogleUtilities
     - nanopb
     - PromisesObjC
+    - Protobuf
 
 EXTERNAL SOURCES:
   android_intent:
@@ -165,6 +191,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_crashlytics/ios"
   firebase_dynamic_links:
     :path: ".symlinks/plugins/firebase_dynamic_links/ios"
+  firebase_messaging:
+    :path: ".symlinks/plugins/firebase_messaging/ios"
   Flutter:
     :path: Flutter
   flutter_inappwebview:
@@ -185,14 +213,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_macos/ios"
   shared_preferences_web:
     :path: ".symlinks/plugins/shared_preferences_web/ios"
-  store_redirect:
-    :path: ".symlinks/plugins/store_redirect/ios"
   url_launcher:
     :path: ".symlinks/plugins/url_launcher/ios"
   url_launcher_macos:
     :path: ".symlinks/plugins/url_launcher_macos/ios"
   url_launcher_web:
     :path: ".symlinks/plugins/url_launcher_web/ios"
+  webview_flutter:
+    :path: ".symlinks/plugins/webview_flutter/ios"
 
 SPEC CHECKSUMS:
   android_intent: 367df2f1277a74e4a90e14a8ab3df3112d087052
@@ -202,6 +230,7 @@ SPEC CHECKSUMS:
   firebase_analytics: 71531c94f4457504e12bb60baa53bf283f59e67f
   firebase_crashlytics: bd8c58df07f107cb7e1a20cb190b9a468e0a69fd
   firebase_dynamic_links: c70e8764252b4f4f130fffe273e0bbd01e6b7aef
+  firebase_messaging: 21344b3b3a7d9d325d63a70e3750c0c798fe1e03
   FirebaseAnalytics: 572e467f3d977825266e8ccd52674aa3e6f47eac
   FirebaseAnalyticsInterop: 3f86269c38ae41f47afeb43ebf32a001f58fcdae
   FirebaseCore: ed0a24c758a57c2b88c5efa8e6a8195e868af589
@@ -209,6 +238,8 @@ SPEC CHECKSUMS:
   FirebaseCoreDiagnosticsInterop: 296e2c5f5314500a850ad0b83e9e7c10b011a850
   FirebaseDynamicLinks: 417dc6dbb6013233c77558290d73296f429656a6
   FirebaseInstallations: 575cd32f2aec0feeb0e44f5d0110a09e5e60b47b
+  FirebaseInstanceID: 7ee0d6777013bb952f377b41965bf132b6a075be
+  FirebaseMessaging: 828e66eb357a893e3cebd9ee0f6bc1941447cc94
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_inappwebview: 69dfbac46157b336ffbec19ca6dfd4638c7bf189
   flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
@@ -221,14 +252,15 @@ SPEC CHECKSUMS:
   path_provider_macos: f760a3c5b04357c380e2fddb6f9db6f3015897e0
   permission_handler: b7a0953389e699927c6217933754cdcd0fa2c5a7
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
+  Protobuf: 2793fcd0622a00b546c60e7cbbcc493e043e9bb9
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410
   shared_preferences: 430726339841afefe5142b9c1f50cb6bd7793e01
   shared_preferences_macos: f3f29b71ccbb56bf40c9dd6396c9acf15e214087
   shared_preferences_web: 141cce0c3ed1a1c5bf2a0e44f52d31eeb66e5ea9
-  store_redirect: 2977747cf81689a39bd62c248c2deacb7a0d131e
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
   url_launcher_macos: fd7894421cd39320dce5f292fc99ea9270b2a313
   url_launcher_web: e5527357f037c87560776e36436bf2b0288b965c
+  webview_flutter: d2b4d6c66968ad042ad94cbb791f5b72b4678a96
 
 PODFILE CHECKSUM: c34e2287a9ccaa606aeceab922830efb9a6ff69a
 
