@@ -12,6 +12,7 @@ class PageHeader extends StatelessWidget {
   final String title;
   final IconData icon;
   final bool backButton;
+  final String backButtonText;
   final double padding;
   final int maxLines;
   // For Colour
@@ -19,9 +20,11 @@ class PageHeader extends StatelessWidget {
   // For question mark button
   final String infoTitle;
   final String infoText;
+  final double fontSize;
+  final double extraInnerPadding;
 
   PageHeader(
-      {this.onTap, this.title, this.icon, this.backButton, this.padding, this.infoText, this.infoTitle,this.textColor, this.maxLines});
+      {this.onTap, this.title, this.icon, this.backButton, this.backButtonText, this.padding, this.infoText, this.infoTitle,this.textColor, this.maxLines, this.fontSize, this.extraInnerPadding});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -41,7 +44,7 @@ class PageHeader extends StatelessWidget {
                       padding: EdgeInsets.symmetric(
                           horizontal: padding ?? 10.0, vertical: 10.0),
                       child: CustomTextButton(
-                        "Back",
+                        backButtonText ?? "Back",
                         onClick: () {
                           Navigator.of(context).pop();
                         },
@@ -69,6 +72,7 @@ class PageHeader extends StatelessWidget {
             ],
           ),
         ),
+        SizedBox(height: extraInnerPadding ?? 0),
         Container(
           child: Padding(
             padding: EdgeInsets.only(left: padding == null ? 20 : padding + 10),
@@ -84,6 +88,7 @@ class PageHeader extends StatelessWidget {
                         style:  textStyleFrom(
                           Theme.of(context).primaryTextTheme.headline2,
                           color:textColor,
+                          fontSize: fontSize,
                         ),
                         maxLines: maxLines,
                         overflow: TextOverflow.ellipsis,
@@ -96,6 +101,7 @@ class PageHeader extends StatelessWidget {
                         style:  textStyleFrom(
                           Theme.of(context).primaryTextTheme.headline2,
                           color:textColor,
+                          fontSize: fontSize,
                         ),
                       ),
                     ),

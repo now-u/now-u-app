@@ -25,17 +25,100 @@ import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/organisationTile.dart';
 import 'package:app/assets/components/textButton.dart';
+import 'package:app/assets/components/header.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 const double H_PADDING = 20;
+final Api api = locator<Api>();
 
 class CampaignInfo extends StatelessWidget {
   final Campaign campaign;
   final int campaignId;
 
   CampaignInfo({this.campaign, this.campaignId})
+      : assert(campaign != null || campaignId != null);
+  
+  @override
+  Widget build(BuildContext context) {
+    if (campaign != null) {
+      return CampaignInfoBody(campaign);
+    }
+    return FutureBuilder(
+      future: api.getCampaign(campaignId),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (!snapshot.hasData) {
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+        return CampaignInfoBody(snapshot.data);
+      },
+    );
+  }
+}
+
+class CampaignInfoBody extends StatelessWidget {
+  final double _headerHeight = 200;
+
+  final Campaign _campaign;
+
+  CampaignInfoBody(this._campaign);
+   
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ListView(
+        children: [
+          Container(
+            child: Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(_campaign.getHeaderImage()),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Container(
+                    color: colorFrom(
+                      Colors.black,
+                      opacity: 0.5,
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: 20),
+                      child: Column(
+                        children: [
+                          PageHeader(
+                            title: _campaign.getTitle(),
+                            textColor: Colors.white,
+                            backButton: true,
+                            backButtonText: "",
+                            fontSize: Theme.of(context).primaryTextTheme.headline3.fontSize,
+                            extraInnerPadding: 20,
+                          ),
+                        ]
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ),
+        ],
+      )
+    );
+  }
+}
+
+class CampaignInfoOld extends StatelessWidget {
+  final Campaign campaign;
+  final int campaignId;
+
+  CampaignInfoOld({this.campaign, this.campaignId})
       : assert(campaign != null || campaignId != null);
 
   @override

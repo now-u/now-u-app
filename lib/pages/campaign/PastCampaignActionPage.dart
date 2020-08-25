@@ -1,19 +1,14 @@
 import 'package:app/assets/StyleFrom.dart';
-import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/header.dart';
 import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
-import 'package:app/models/Campaigns.dart';
 import 'package:app/models/State.dart';
 import 'package:app/models/ViewModel.dart';
-import 'package:app/pages/action/ActionPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-
-import '../../routes.dart';
 
 class PastCampaignActionPage extends StatefulWidget {
   Campaign campaign;
