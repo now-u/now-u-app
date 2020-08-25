@@ -2,11 +2,8 @@ import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/inputs.dart';
 import 'package:app/assets/components/textButton.dart';
-import 'package:app/assets/components/toggleButton.dart';
 import 'package:app/models/State.dart';
 import 'package:app/models/ViewModel.dart';
-import 'package:app/services/storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -26,12 +23,12 @@ class AccountDetailsPage extends StatelessWidget {
         converter: (Store<AppState> store) => ViewModel.create(store),
         builder: (BuildContext context, ViewModel viewModel) {
           return Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.fromLTRB(18, 0, 18, 0),
             child: ListView(
               children: <Widget>[
                 // TODO: Name
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 5),
+                  padding: const EdgeInsets.fromLTRB(0, 30, 0, 8),
                   child: Text(
                     "Name",
                     style: textStyleFrom(
@@ -47,7 +44,7 @@ class AccountDetailsPage extends StatelessWidget {
                 ),
                 // TODO: Age
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 5),
+                  padding: const EdgeInsets.fromLTRB(0, 28.5, 0, 8),
                   child: Text(
                     "Age",
                     style: textStyleFrom(
@@ -62,7 +59,7 @@ class AccountDetailsPage extends StatelessWidget {
                 ),
                 // TODO: Location
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 5),
+                  padding: const EdgeInsets.fromLTRB(0, 28.5, 0, 8),
                   child: Text(
                     "Location",
                     style: textStyleFrom(
@@ -77,7 +74,7 @@ class AccountDetailsPage extends StatelessWidget {
                 ),
                 // TODO: Email
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 5),
+                  padding: const EdgeInsets.fromLTRB(0, 28.5, 0, 8),
                   child: Text(
                     "Email",
                     style: textStyleFrom(
@@ -109,7 +106,7 @@ class AccountDetailsPage extends StatelessWidget {
                 ),
                 // TODO: Organisation Code
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 5),
+                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 8),
                   child: Text(
                     "Organisation code",
                     style: textStyleFrom(
@@ -118,7 +115,7 @@ class AccountDetailsPage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 21),
                   child: Text(
                     "If you work for one of our business partners, you can enter the organisation code below so they can see the actions you’ve taken.",
                     style: textStyleFrom(
@@ -132,10 +129,25 @@ class AccountDetailsPage extends StatelessWidget {
                 ),
                 // TODO: Ok button
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 21, 0, 0),
                   child: DarkButton("Ok"),
                 ),
                 // TODO: Delete account button
+                SizedBox(
+                  height: 82,
+                ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: SizedBox(),
+                    ),
+                    TextButton("Delete my account"),
+                    Expanded(
+                      child: SizedBox(),
+                    ),
+                  ],
+                ),
+                // TODO: Save Changes
               ],
             ),
           );
