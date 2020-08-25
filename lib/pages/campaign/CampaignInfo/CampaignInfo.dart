@@ -62,8 +62,6 @@ class CampaignInfo extends StatelessWidget {
 }
 
 class CampaignInfoBody extends StatelessWidget {
-  final double _headerHeight = 200;
-
   final Campaign _campaign;
 
   CampaignInfoBody(this._campaign);
@@ -71,45 +69,132 @@ class CampaignInfoBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: ListView(
         children: [
+
+          // Header
           Container(
-            child: Stack(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(_campaign.getHeaderImage()),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  child: Container(
-                    color: colorFrom(
-                      Colors.black,
-                      opacity: 0.5,
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: 20),
-                      child: Column(
-                        children: [
-                          PageHeader(
-                            title: _campaign.getTitle(),
-                            textColor: Colors.white,
-                            backButton: true,
-                            backButtonText: "",
-                            fontSize: Theme.of(context).primaryTextTheme.headline3.fontSize,
-                            extraInnerPadding: 20,
-                          ),
-                        ]
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(_campaign.getHeaderImage()),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Container(
+                color: colorFrom(
+                  Colors.black,
+                  opacity: 0.5,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 20),
+                  child: Column(
+                    children: [
+                      PageHeader(
+                        title: _campaign.getTitle(),
+                        textColor: Colors.white,
+                        backButton: true,
+                        backButtonText: "",
+                        maxLines: 4,
+                        fontSize: Theme.of(context).primaryTextTheme.headline3.fontSize,
+                        extraInnerPadding: 20,
                       ),
-                    ),
+                    ]
                   ),
                 ),
-              ],
-            )
+              ),
+            ),
           ),
+
+          SizedBox(height: 25),
+
+          // Body
+          Container(
+            color: Color.fromRGBO(247, 248, 252, 1),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 18),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: CustomTile(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Column(
+                          children: <Widget>[
+                            Text("See what you can do to support this cause today!", 
+                              style: textStyleFrom(Theme.of(context).primaryTextTheme.headline4),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 15,),
+                            DarkButton("Take action", onPressed: (){
+                              if (_campaign.isPast()) {
+                                Navigator.of(context).pushNamed(Routes.pastCampaignActionPage, arguments: _campaign);
+                              }
+                              else {
+                                Navigator.of(context).pushNamed(Routes.actions);
+                              }
+                            })
+                          ],
+                        ),
+                      )
+                    ),
+                  ),
+
+                  SizedBox(height: 25),
+
+                  // About
+                  Text(
+                    "About",
+                    style: Theme.of(context).primaryTextTheme.headline3,
+                  ),
+         
+                  // Stats
+                  StoreConnector<AppState, ViewModel>(
+                    converter: (Store<AppState> store) => ViewModel.create(store),
+                    builder: (BuildContext context, ViewModel viewModel) {
+                      return Column(
+                        children: [
+                          CampaignStat(text: "${_campaign.getNumberOfCampaigners()} people have joined", icon: CustomIcons.ic_partners),
+                          //CampaignStat(text: "Actions completed"),,
+                          CampaignStat(text: "Global reach", icon: CustomIcons.ic_global,),
+                        ],
+                      );
+                    }
+                  ),
+                ]
+              ),
+            ),
+          )
+
         ],
       )
+    );
+  }
+}
+
+class CampaignStat extends StatelessWidget {
+  final String text;
+  final IconData icon;
+
+  CampaignStat({
+    @required this.text,
+    @required this.icon,
+  });
+
+  @override 
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          icon
+        ),
+        SizedBox(width: 2,),
+        Text(
+          text
+        ) 
+      ],
     );
   }
 }

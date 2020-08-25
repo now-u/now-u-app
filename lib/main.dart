@@ -132,6 +132,7 @@ class _AppState extends State<App> {
           //initialRoute: Routes.intro,
           onGenerateRoute: initRoutes,
           routes: {
+            //TODO find betterer startup login
             '/': (BuildContext context) => StoreBuilder<AppState>(
                   onInitialBuild: (store) {
                     store.dispatch(initStore());
