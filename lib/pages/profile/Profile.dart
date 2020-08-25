@@ -52,12 +52,11 @@ class _ProfileState extends State<Profile> {
       converter: (Store<AppState> store) => ViewModel.create(store),
       builder: (BuildContext context, ViewModel viewModel) {
         var profileTiles = <Map>[
-          // Profile disabled for v1
-          //{
-          //  'profileTile':
-          //      ProfileTile("Profile", FontAwesomeIcons.solidUserCircle),
-          //  'page': Routes.profile,
-          //},
+          {
+            'profileTile':
+                ProfileTile("Edit account details", FontAwesomeIcons.pencilAlt),
+            'page': Routes.accountDetails,
+          },
           {
             'profileTile':
                 ProfileTile("Our partners", FontAwesomeIcons.building),
@@ -68,29 +67,31 @@ class _ProfileState extends State<Profile> {
           //  'page': Routes.campaign,
           //},
           {
-            'profileTile': ProfileTile(
-                "Propose a campaign", CustomIcons.ic_suggestcamp),
+            'profileTile':
+                ProfileTile("Propose a campaign", CustomIcons.ic_suggestcamp),
             'link':
                 "https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform",
           },
           {
-            'profileTile':
-                ProfileTile("Give feedback on the app", CustomIcons.ic_feedback),
+            'profileTile': ProfileTile(
+                "Give feedback on the app", CustomIcons.ic_feedback),
             'link':
                 "https://docs.google.com/forms/d/e/1FAIpQLSflMOarmyXRv7DRbDQPWRayCpE5X4d8afOpQ1hjXfdvzbnzQQ/viewform",
           },
           {
             'profileTile':
                 ProfileTile("Rate us on the app store", CustomIcons.ic_rateus),
-            'function': () {StoreRedirect.redirect();}
+            'function': () {
+              StoreRedirect.redirect();
+            }
           },
           {
             'profileTile': ProfileTile("FAQ", CustomIcons.ic_faq),
             'page': Routes.faq,
           },
           {
-            'profileTile': ProfileTile(
-                "Send us a message", CustomIcons.ic_social_fb),
+            'profileTile':
+                ProfileTile("Send us a message", CustomIcons.ic_social_fb),
             'link': "http://m.me/nowufb"
           },
           {
@@ -134,10 +135,7 @@ class _ProfileState extends State<Profile> {
                             Navigator.pushNamed(
                                 context, profileTiles[index]["page"]);
                           } else if (profileTiles[index]["link"] != null) {
-                            customLaunch(
-                              context,
-                              profileTiles[index]["link"]
-                            );
+                            customLaunch(context, profileTiles[index]["link"]);
                           } else if (profileTiles[index]["function"] != null) {
                             profileTiles[index]["function"]();
                           }
@@ -200,27 +198,25 @@ class SocialButton extends StatelessWidget {
           launch(link);
         },
         child: CustomTile(
-          borderRadius: size/2,
-          child: Container(
-            height: size,
-            width: size,
-            child: Padding(
-              padding: EdgeInsets.all(6),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(size / 2),
-                  color: Theme.of(context).primaryColor,
-                ),
-                child: Center(
-                  child: Icon(
-                    icon,
-                    color: Colors.white,
+            borderRadius: size / 2,
+            child: Container(
+              height: size,
+              width: size,
+              child: Padding(
+                padding: EdgeInsets.all(6),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(size / 2),
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  child: Center(
+                    child: Icon(
+                      icon,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
-            ),
-          )
-        )
-      );
+            )));
   }
 }

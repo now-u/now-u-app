@@ -1,0 +1,6 @@
+framework module android_intent {
+  umbrella header "android_intent-umbrella.h"
+
+  export *
+  module * { export * }
+}

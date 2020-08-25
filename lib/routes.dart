@@ -24,6 +24,7 @@ import 'package:app/pages/campaign/LearningCentre/LearningCentreAllPage.dart';
 import 'package:app/pages/campaign/LearningCentre/LearningCentrePage.dart';
 import 'package:app/pages/campaign/LearningCentre/LearningTopicPage.dart';
 import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
+import 'package:app/pages/profile/profilePages/AccountDetailsPage.dart';
 
 class Routes {
   // Intro
@@ -41,6 +42,7 @@ class Routes {
   static const campaignInfo = "campaignInfo";
 
   // Other
+  static const accountDetails = "accountDetails";
   static const profile = "profile";
   static const faq = "faq";
   static const parteners = "parteners";
@@ -96,11 +98,16 @@ Function initRoutes = (RouteSettings settings) {
       {
         return customRoute(builder: (context) => PartnersPage());
       }
+    case Routes.accountDetails:
+      {
+        return customRoute(builder: (context) => AccountDetailsPage());
+      }
 
     // Tab page
     case Routes.home:
       {
-        return customRoute( builder: (context) => TabsPage(currentPage: TabPage.Home));
+        return customRoute(
+            builder: (context) => TabsPage(currentPage: TabPage.Home));
       }
     case Routes.campaign:
       {
@@ -109,23 +116,31 @@ Function initRoutes = (RouteSettings settings) {
     case Routes.campaignInfo:
       {
         if (args is int) {
-          return customRoute( builder: (context) => CampaignInfo( campaignId: args,));
+          return customRoute(
+              builder: (context) => CampaignInfo(
+                    campaignId: args,
+                  ));
         }
         if (args is Campaign) {
-          return customRoute( builder: (context) => CampaignInfo( campaign: args,));
+          return customRoute(
+              builder: (context) => CampaignInfo(
+                    campaign: args,
+                  ));
         }
         return customRoute(builder: (context) => CampaignPage());
       }
     case Routes.actions:
       {
-        return customRoute(builder: (context) => TabsPage(currentPage: TabPage.Actions));
+        return customRoute(
+            builder: (context) => TabsPage(currentPage: TabPage.Actions));
       }
     case Routes.actionInfo:
       {
-        if (args is ActionInfoArguments) { 
-          return customRoute( builder: (context) => ActionInfo( args ));
+        if (args is ActionInfoArguments) {
+          return customRoute(builder: (context) => ActionInfo(args));
         }
-        return customRoute(builder: (context) => TabsPage(currentPage: TabPage.Actions));
+        return customRoute(
+            builder: (context) => TabsPage(currentPage: TabPage.Actions));
       }
 
     // Learning
@@ -143,7 +158,7 @@ Function initRoutes = (RouteSettings settings) {
     case Routes.learningTopic:
       {
         if (args is LearningTopic) {
-          return customRoute( builder: (context) => LearningTopicPage(args));
+          return customRoute(builder: (context) => LearningTopicPage(args));
         }
         return customRoute(builder: (context) => LearningCentreAllPage());
       }
@@ -154,7 +169,8 @@ Function initRoutes = (RouteSettings settings) {
         if (args is InfoPageArgumnets) {
           return customRoute(builder: (context) => InfoPage(args));
         }
-        return customRoute( builder: (context) => TabsPage(currentPage: TabPage.Home));
+        return customRoute(
+            builder: (context) => TabsPage(currentPage: TabPage.Home));
       }
     // Other
     case Routes.organisationPage:
@@ -174,7 +190,8 @@ Function initRoutes = (RouteSettings settings) {
     // TODO add a 404 page
     default:
       {
-        return customRoute( builder: (context) => TabsPage(currentPage: TabPage.Home));
+        return customRoute(
+            builder: (context) => TabsPage(currentPage: TabPage.Home));
       }
   }
 };
