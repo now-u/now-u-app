@@ -62,7 +62,7 @@ const MaterialColor whiteMaterial = const MaterialColor(
 Color white = Colors.white;
 Color orange = Color.fromRGBO(255, 136, 0, 1);
 Color blue = Color.fromRGBO(1, 26, 67, 1);
-Color black = Colors.black;
+Color black = Color.fromRGBO(55, 58, 74, 1);
 Color lightGrey = Color.fromRGBO(119, 119, 119, 1);
 
 // Accent Colours
