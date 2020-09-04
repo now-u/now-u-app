@@ -1,3 +1,4 @@
+import 'package:app/assets/components/campaignTile.dart';
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
@@ -5,7 +6,6 @@ import 'package:share/share.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/ViewModel.dart';
 
-import 'package:app/pages/campaign/CampaignTile.dart';
 import 'package:app/pages/Tabs.dart';
 
 import 'package:app/assets/components/pageTitle.dart';
