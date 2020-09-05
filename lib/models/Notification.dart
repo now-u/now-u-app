@@ -1,25 +1,40 @@
-class Notification {
-  String _title;
-  String _body;
-  String _image;
+import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter/material.dart';
+
+class InternalNotification {
+  String title;
+  String subtitle;
+  String body;
+  String image;
+
+  InternalNotification({this.title, this.body, this.image, this.subtitle});
   
-  Notification.fromJson(
+  InternalNotification.fromJson(
     Map json,
   ) {
-    _title = json["title"];
-    _body = json["body"];
-    _image = json["image"];
+    title = json["title"];
+    subtitle = json["subtitle"];
+    body = json["body"];
+    image = json["image"];
   }
 
   String getTitle() {
-    return _title;
+    return title;
+  }
+  
+  String getSubtitle() {
+    return subtitle;
   }
   
   String getBody() {
-    return _body;
+    return body;
   }
   
   String getImage() {
-    return _image;
+    return image;
+  }
+
+  Widget getBodyWidget() {
+    return MarkdownBody(data: body);
   }
 }

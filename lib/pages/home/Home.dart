@@ -1,4 +1,3 @@
-import 'package:app/assets/StyleFrom.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/routes.dart';
@@ -10,10 +9,12 @@ import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/customScrollableSheet.dart';
 import 'package:app/assets/components/smoothPageIndicatorEffect.dart';
 import 'package:app/assets/components/textButton.dart';
-import 'package:app/assets/components/customTile.dart';
+import 'package:app/assets/components/notifications.dart';
 import 'package:app/assets/routes/customLaunch.dart';
+import 'package:app/assets/StyleFrom.dart';
 
 import 'package:app/models/ViewModel.dart';
+import 'package:app/models/Notification.dart';
 import 'package:app/models/State.dart';
 import 'package:app/models/Campaigns.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -53,7 +54,18 @@ class Home extends StatelessWidget {
           Campaigns campaigns = viewModel.getCampaignsWithSelctedFirst();  
            return 
               ScrollableSheetPage(
-                header: HeaderWithNotifications(viewModel),
+                header: FutureBuilder(
+                  future: viewModel.userModel.auth.getNotifications(viewModel.userModel.user.getToken()),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      if (snapshot.data.length != 0) {
+                        return HeaderWithNotifications(viewModel.userModel.user.getName(), snapshot.data[0]);
+                      }
+                      return HeaderStyle1(viewModel);
+                    }
+                    return Center(child: CircularProgressIndicator());
+                  },
+                ),
                 children: <Widget>[
                 
                  HomeTitle(
@@ -432,8 +444,9 @@ class HeaderStyle1 extends StatelessWidget {
 }
 
 class HeaderWithNotifications extends StatelessWidget {
-  final ViewModel viewModel;
-  HeaderWithNotifications(this.viewModel);
+  final String name;
+  final InternalNotification notification;
+  HeaderWithNotifications(this.name, this.notification);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -445,7 +458,7 @@ class HeaderWithNotifications extends StatelessWidget {
         child: Stack(
           children: <Widget> [
             Padding(
-              padding: EdgeInsets.only(left: 15),
+              padding: EdgeInsets.symmetric(horizontal: 15),
               child: Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -453,7 +466,7 @@ class HeaderWithNotifications extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                          Text(
-                            "Welcome back, ${viewModel.userModel.user.getName()}",
+                            "Welcome back, $name",
                             style: textStyleFrom(
                               Theme.of(context).primaryTextTheme.headline4,
                               color: Colors.white,
@@ -462,79 +475,9 @@ class HeaderWithNotifications extends StatelessWidget {
                           ),
                           
                           SizedBox(height: 10),
-                          CustomTile(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
 
-                                // Icon
-                                Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context).primaryColor,
-                                      borderRadius: BorderRadius.all(Radius.circular(8.0))
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(8),
-                                      child: Icon(
-                                        Icons.notifications_active,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  )
-                                ),
+                          NotificationTile(notification),
 
-                                SizedBox(width: 2),
-
-                                // Text
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      SizedBox(height: 10),
-                                      Text(
-                                        "New campaign surveys availbale",
-                                        style: Theme.of(context).primaryTextTheme.headline4,
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                      ),
-                                      Text(
-                                        "Give feedback on our previous campaings",
-                                        style: textStyleFrom(
-                                          Theme.of(context).primaryTextTheme.bodyText1,
-                                          fontSize: 11,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-
-                                // Dismiss button
-                                Padding(
-                                  padding: EdgeInsets.all(8),
-                                  child: Container(
-                                    child: MaterialButton(
-                                      onPressed: () {},
-                                      elevation: 2.0,
-                                      minWidth: 0,
-                                      color: Color.fromRGBO(196,196,196,1),
-                                      child: Icon(
-                                        Icons.close,
-                                        color: Colors.white,
-                                      ),
-                                      padding: EdgeInsets.all(0),
-                                      shape: CircleBorder(),
-                                      height: 10,
-                                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          ),
                           SizedBox(height: MediaQuery.of(context).size.height * 0.2),
                         ],
                       ),

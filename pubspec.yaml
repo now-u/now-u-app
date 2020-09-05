@@ -46,6 +46,7 @@ dependencies:
   firebase_messaging: ^6.0.16
   firebase_dynamic_links: ^0.6.0
   intl: ^0.16.1 # Date formatting
+  flutter_markdown: ^0.4.4
 
   get_it: ^4.0.2
   get: ^2.7.1 # do things without context

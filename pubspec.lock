@@ -230,6 +230,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.7.5"
+  flutter_markdown:
+    dependency: "direct main"
+    description:
+      name: flutter_markdown
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.4"
   flutter_redux:
     dependency: "direct main"
     description:
@@ -709,4 +716,4 @@ packages:
     version: "7.0.0+3"
 sdks:
   dart: ">=2.9.0-18.0 <2.9.0"
-  flutter: ">=1.12.13+hotfix.5 <2.0.0"
+  flutter: ">=1.17.0 <2.0.0"

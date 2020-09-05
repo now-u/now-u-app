@@ -321,7 +321,7 @@ class AuthenticationService {
     return User.fromJson(json.decode(response.body)["data"]);
   }
   
-  Future<List<Notification>> getNotifications(String token) async {
+  Future<List<InternalNotification>> getNotifications(String token) async {
     http.Response response =
         await http.get(domainPrefix + 'users/me/notifications', headers: <String, String>{
       'token': token,
@@ -329,7 +329,7 @@ class AuthenticationService {
     if (handleAuthRequestErrors(response) != null) {
       return handleAuthRequestErrors(response);
     }
-    List<Notification> notifications = json.decode(response.body)['data'].map((e) => Notification.fromJson(e)).toList().cast<Notification>();
+    List<InternalNotification> notifications = json.decode(response.body)['data'].map((e) => InternalNotification.fromJson(e)).toList().cast<InternalNotification>();
     return notifications;
   }
 }
