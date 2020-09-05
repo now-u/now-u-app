@@ -10,6 +10,7 @@ import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/customScrollableSheet.dart';
 import 'package:app/assets/components/smoothPageIndicatorEffect.dart';
 import 'package:app/assets/components/textButton.dart';
+import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/routes/customLaunch.dart';
 
 import 'package:app/models/ViewModel.dart';
@@ -52,204 +53,142 @@ class Home extends StatelessWidget {
           Campaigns campaigns = viewModel.getCampaignsWithSelctedFirst();  
            return 
               ScrollableSheetPage(
-                header: 
-                      Container(
-                        height: MediaQuery.of(context).size.height * (1 - 0.4),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Theme.of(context).primaryColor,
-                              Theme.of(context).errorColor,
-                              Theme.of(context).errorColor,
-                            ]
-                          )
-                        ),
-                        child :Stack(
-                          children: <Widget> [
-                            Padding(
-                              padding: EdgeInsets.only(left: 15),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * 0.5,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                         Text(
-                                            "Hello\n${viewModel.userModel.user.getName()}",
-                                            style: textStyleFrom(
-                                              Theme.of(context).primaryTextTheme.headline2,
-                                              color: Colors.white,
-                                              height: 0.95,
-                                            ),
-                                          ),
-                                          SizedBox(height: 17),
-                                          Text(
-                                            "Ready to start making a difference?",
-                                            style: textStyleFrom(
-                                              Theme.of(context).primaryTextTheme.headline3,
-                                              fontSize: 20,
-                                              color: Colors.white,
-                                              height: 0.95,
-                                            )
-                                          ),
-                                          SizedBox(height: MediaQuery.of(context).size.height * 0.2),
-                                        ],
-                                      ),
-                              ),
-                            ),
-                            Positioned(
-                              right: -20,
-                              //top: actionsHomeTilePadding,
-                              bottom: MediaQuery.of(context).size.height * 0.2,
-                              child: Container(
-                                height: MediaQuery.of(context).size.height * 0.3,
-                                child: Image(
-                                  image: AssetImage('assets/imgs/graphics/ilstr_home_1@3x.png'),
-                                )
-                              )
-                            ),
-                          ],
-                        ),
-                      ),
-                      children: <Widget>[
-                      
-                       HomeTitle(
-                         "Current campaigns",
-                         infoTitle: "Campaigns",
-                         infoText: "The impact of our campaigns is crucial. Our aim is to create campaigns that are as effective and impactful as possible, and we are designing new ways to measure the impact of now-u’s community on our campaign issues.\n We will keep you updated on your personal progress in the app, and share regular community impact reports on our blog, news feed and social media!\n At the end of each campaign, you will receive a quick survey about your experience of the campaign. We will use this data, along with other app use metrics, to create campaign impact reports to share with you and our charity partners.\n We hope to learn from these impact assessments so that we can continue to improve our campaigns, and help you keep making a difference!",
-                       ),
+                header: HeaderWithNotifications(viewModel),
+                children: <Widget>[
+                
+                 HomeTitle(
+                   "Current campaigns",
+                   infoTitle: "Campaigns",
+                   infoText: "The impact of our campaigns is crucial. Our aim is to create campaigns that are as effective and impactful as possible, and we are designing new ways to measure the impact of now-u’s community on our campaign issues.\n We will keep you updated on your personal progress in the app, and share regular community impact reports on our blog, news feed and social media!\n At the end of each campaign, you will receive a quick survey about your experience of the campaign. We will use this data, along with other app use metrics, to create campaign impact reports to share with you and our charity partners.\n We hope to learn from these impact assessments so that we can continue to improve our campaigns, and help you keep making a difference!",
+                 ),
 
-                       CampaignCarosel(campaigns, _controller),
+                 CampaignCarosel(campaigns, _controller),
 
-                       Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CustomTextButton(
-                            "See all campaigns",
-                            onClick: () {
-                              Navigator.of(context).pushNamed(Routes.allCampaigns);
-                            },
-                          ),
-                        ]
-                       ),
+                 Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomTextButton(
+                      "See all campaigns",
+                      onClick: () {
+                        Navigator.of(context).pushNamed(Routes.allCampaigns);
+                      },
+                    ),
+                  ]
+                 ),
 
-                       SizedBox(height: 20),
+                 SizedBox(height: 20),
 
-                       Container(
-                        width: double.infinity,
-                         color: Color.fromRGBO(255,243,230,1),
-                         child: Padding(
-                           padding: EdgeInsets.symmetric(vertical: 35, horizontal: 15),
-                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                             children: [
-                               HomeTitle(
-                                 "Take action now!",
-                                 subtitle: "Find out what you can start doing to support your campaigns:",
-                                 textAlign: TextAlign.center,
-                               ),
-                               Padding(
-                                 padding: EdgeInsets.all(15),
-                                 child: DarkButton(
-                                   "Go to actions",
-                                   onPressed: () {
-                                     Navigator.of(context).pushNamed(Routes.actions);
-                                   },
-                                 )
-                               )
-                             ],
+                 Container(
+                  width: double.infinity,
+                   color: Color.fromRGBO(255,243,230,1),
+                   child: Padding(
+                     padding: EdgeInsets.symmetric(vertical: 35, horizontal: 15),
+                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                       children: [
+                         HomeTitle(
+                           "Take action now!",
+                           subtitle: "Find out what you can start doing to support your campaigns:",
+                           textAlign: TextAlign.center,
+                         ),
+                         Padding(
+                           padding: EdgeInsets.all(15),
+                           child: DarkButton(
+                             "Go to actions",
+                             onPressed: () {
+                               Navigator.of(context).pushNamed(Routes.actions);
+                             },
                            )
                          )
-                       ),
-                      
-                       SizedBox(height: 10),
+                       ],
+                     )
+                   )
+                 ),
+                
+                 SizedBox(height: 10),
 
-                       Container(
-                         child: Padding(
-                           padding: EdgeInsets.symmetric(vertical: 35, horizontal: 25),
-                           child: Column(
-                             children: [
-                               Text(
-                                 "What cause do you want to support next?",
-                                 textAlign: TextAlign.center,
-                                 style: textStyleFrom(
-                                    Theme.of(context).primaryTextTheme.headline4,
-                                    fontSize: 24,
-                                  )
-                               ),
+                 Container(
+                   child: Padding(
+                     padding: EdgeInsets.symmetric(vertical: 35, horizontal: 25),
+                     child: Column(
+                       children: [
+                         Text(
+                           "What cause do you want to support next?",
+                           textAlign: TextAlign.center,
+                           style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.headline4,
+                              fontSize: 24,
+                            )
+                         ),
 
-                               Padding(
-                                 padding: EdgeInsets.all(15),
-                                 child: DarkButton(
-                                   "Suggest a campaign",
-                                   onPressed: () {
-                                     customLaunch(
-                                      context,
-                                      "https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform",
-                                      description: "To suggest causes for future campaigns, fill in this Google Form",
-                                      buttonText: "Go"
-                                     );
+                         Padding(
+                           padding: EdgeInsets.all(15),
+                           child: DarkButton(
+                             "Suggest a campaign",
+                             onPressed: () {
+                               customLaunch(
+                                context,
+                                "https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform",
+                                description: "To suggest causes for future campaigns, fill in this Google Form",
+                                buttonText: "Go"
+                               );
 
-                                   },
-                                   inverted: true,
+                             },
+                             inverted: true,
+                           ),
+                         )
+                       ],
+                     )
+                   ),
+                 ),
+
+                 // Impact Section
+                 StoreConnector<AppState, ViewModel>(
+                   converter: (Store<AppState> store) => ViewModel.create(store),
+                   builder: (BuildContext context, ViewModel viewModel) {
+                     return Container(
+                       child: Padding(
+                         padding: EdgeInsets.all(10),
+                         child: Column(
+                           children: [
+                             Stack(
+                               children: [
+                                 //Image.asset(),
+                                 //BadgeIndicator(),
+                                 HomeTitle(
+                                   "My impact",
+                                   infoTitle: "My Impact",
+                                   infoText: "The impact of our campaigns is crucial. Our aim is to create campaigns that do as much good as possible, so we’re working hard to design ways to measure the impact that now-u users have through our campaigns.\n We will keep you updated on your personal progress in the app, and share regular now-u community progress updates on our blog, news feed and social media.\n At the end of each campaign you joined, we will give you a quick survey about your experience of the campaign. We will use this data, as well as a wide range of other metrics, to create impact reports to share with you and our charity partners.\n We will try to learn as much as possible from these impact assessments so that we can keep improving our campaigns and helping you to do good!",
                                  ),
-                               )
-                             ],
-                           )
+                               ]
+                             ),
+                             viewModel.userModel.user.getSelectedCampaigns() == null ? CircularProgressIndicator() : 
+                             ImpactTile(
+                               viewModel.userModel.user.getSelectedCampaigns().length,
+                               "Campaigns joined",
+                               route: Routes.campaign,
+                             ),
+                             SizedBox(height: 10),
+                             ImpactTile(
+                               viewModel.userModel.user.getCompletedActions().length,
+                               "Actions taken",
+                               route: Routes.actions,
+                             ),
+                             SizedBox(height: 10),
+                             ImpactTile(
+                               viewModel.getActiveStarredActions().length,
+                               "Actions in to-do list",
+                               route: Routes.actions,
+                             )
+                           ],
                          ),
                        ),
-
-                       // Impact Section
-                       StoreConnector<AppState, ViewModel>(
-                         converter: (Store<AppState> store) => ViewModel.create(store),
-                         builder: (BuildContext context, ViewModel viewModel) {
-                           return Container(
-                             child: Padding(
-                               padding: EdgeInsets.all(10),
-                               child: Column(
-                                 children: [
-                                   Stack(
-                                     children: [
-                                       //Image.asset(),
-                                       //BadgeIndicator(),
-                                       HomeTitle(
-                                         "My impact",
-                                         infoTitle: "My Impact",
-                                         infoText: "The impact of our campaigns is crucial. Our aim is to create campaigns that do as much good as possible, so we’re working hard to design ways to measure the impact that now-u users have through our campaigns.\n We will keep you updated on your personal progress in the app, and share regular now-u community progress updates on our blog, news feed and social media.\n At the end of each campaign you joined, we will give you a quick survey about your experience of the campaign. We will use this data, as well as a wide range of other metrics, to create impact reports to share with you and our charity partners.\n We will try to learn as much as possible from these impact assessments so that we can keep improving our campaigns and helping you to do good!",
-                                       ),
-                                     ]
-                                   ),
-                                   viewModel.userModel.user.getSelectedCampaigns() == null ? CircularProgressIndicator() : 
-                                   ImpactTile(
-                                     viewModel.userModel.user.getSelectedCampaigns().length,
-                                     "Campaigns joined",
-                                     route: Routes.campaign,
-                                   ),
-                                   SizedBox(height: 10),
-                                   ImpactTile(
-                                     viewModel.userModel.user.getCompletedActions().length,
-                                     "Actions taken",
-                                     route: Routes.actions,
-                                   ),
-                                   SizedBox(height: 10),
-                                   ImpactTile(
-                                     viewModel.getActiveStarredActions().length,
-                                     "Actions in to-do list",
-                                     route: Routes.actions,
-                                   )
-                                 ],
-                               ),
-                             ),
-                           );
-                         }
-                       )
-                    ]
+                     );
+                   }
+                 )
+                ]
 
               );
           }
@@ -420,4 +359,189 @@ class ImpactTile extends StatelessWidget {
       ),
     );
   }
+}
+
+class HeaderStyle1 extends StatelessWidget {
+  final ViewModel viewModel;
+  HeaderStyle1(this.viewModel);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: MediaQuery.of(context).size.height * (1 - 0.4),
+        width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Theme.of(context).primaryColor,
+              Theme.of(context).errorColor,
+              Theme.of(context).errorColor,
+            ]
+          )
+        ),
+        child :Stack(
+          children: <Widget> [
+            Padding(
+              padding: EdgeInsets.only(left: 15),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.5,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                         Text(
+                            "Hello\n${viewModel.userModel.user.getName()}",
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.headline2,
+                              color: Colors.white,
+                              height: 0.95,
+                            ),
+                          ),
+                          SizedBox(height: 17),
+                          Text(
+                            "Ready to start making a difference?",
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.headline3,
+                              fontSize: 20,
+                              color: Colors.white,
+                              height: 0.95,
+                            )
+                          ),
+                          SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+                        ],
+                      ),
+              ),
+            ),
+            Positioned(
+              right: -20,
+              //top: actionsHomeTilePadding,
+              bottom: MediaQuery.of(context).size.height * 0.2,
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.3,
+                child: Image(
+                  image: AssetImage('assets/imgs/graphics/ilstr_home_1@3x.png'),
+                )
+              )
+            ),
+          ],
+        ),
+      );
+    }
+}
+
+class HeaderWithNotifications extends StatelessWidget {
+  final ViewModel viewModel;
+  HeaderWithNotifications(this.viewModel);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: MediaQuery.of(context).size.height * (1 - 0.4),
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Theme.of(context).primaryColorDark,
+        ),
+        child: Stack(
+          children: <Widget> [
+            Padding(
+              padding: EdgeInsets.only(left: 15),
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                         Text(
+                            "Welcome back, ${viewModel.userModel.user.getName()}",
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.headline4,
+                              color: Colors.white,
+                              height: 0.95,
+                            ),
+                          ),
+                          
+                          SizedBox(height: 10),
+                          CustomTile(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+
+                                // Icon
+                                Padding(
+                                  padding: EdgeInsets.all(10),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context).primaryColor,
+                                      borderRadius: BorderRadius.all(Radius.circular(8.0))
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(8),
+                                      child: Icon(
+                                        Icons.notifications_active,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  )
+                                ),
+
+                                SizedBox(width: 2),
+
+                                // Text
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      SizedBox(height: 10),
+                                      Text(
+                                        "New campaign surveys availbale",
+                                        style: Theme.of(context).primaryTextTheme.headline4,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      ),
+                                      Text(
+                                        "Give feedback on our previous campaings",
+                                        style: textStyleFrom(
+                                          Theme.of(context).primaryTextTheme.bodyText1,
+                                          fontSize: 11,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+
+                                // Dismiss button
+                                Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Container(
+                                    child: MaterialButton(
+                                      onPressed: () {},
+                                      elevation: 2.0,
+                                      minWidth: 0,
+                                      color: Color.fromRGBO(196,196,196,1),
+                                      child: Icon(
+                                        Icons.close,
+                                        color: Colors.white,
+                                      ),
+                                      padding: EdgeInsets.all(0),
+                                      shape: CircleBorder(),
+                                      height: 10,
+                                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ),
+                          SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+                        ],
+                      ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
 }

@@ -1,7 +1,7 @@
 //import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:app/models/User.dart';
-import 'package:app/models/Campaigns.dart';
+import 'package:app/models/Notification.dart';
 
 import 'package:app/main.dart';
 import 'package:app/routes.dart';
@@ -319,5 +319,17 @@ class AuthenticationService {
       return handleAuthRequestErrors(response);
     }
     return User.fromJson(json.decode(response.body)["data"]);
+  }
+  
+  Future<List<Notification>> getNotifications(String token) async {
+    http.Response response =
+        await http.get(domainPrefix + 'users/me/notifications', headers: <String, String>{
+      'token': token,
+    });
+    if (handleAuthRequestErrors(response) != null) {
+      return handleAuthRequestErrors(response);
+    }
+    List<Notification> notifications = json.decode(response.body)['data'].map((e) => Notification.fromJson(e)).toList().cast<Notification>();
+    return notifications;
   }
 }
