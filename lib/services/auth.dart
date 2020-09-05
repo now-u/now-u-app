@@ -332,4 +332,14 @@ class AuthenticationService {
     List<InternalNotification> notifications = json.decode(response.body)['data'].map((e) => InternalNotification.fromJson(e)).toList().cast<InternalNotification>();
     return notifications;
   }
+  
+  Future dismissNotification(String token, int notificationId) async {
+    http.Response response =
+        await http.put(domainPrefix + 'users/me/notifications/$notificationId/dismiss', headers: <String, String>{
+      'token': token,
+    });
+    if (handleAuthRequestErrors(response) != null) {
+      return handleAuthRequestErrors(response);
+    }
+  }
 }

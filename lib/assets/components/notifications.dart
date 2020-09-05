@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/customTile.dart';
 
+import 'package:app/routes.dart';
+
 import 'package:app/models/Notification.dart';
 
 class NotificationTile extends StatelessWidget {
@@ -12,6 +14,7 @@ class NotificationTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomTile(
+      onClick: () {Navigator.of(context).pushNamed(Routes.notification, arguments: notification);},
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -51,7 +54,7 @@ class NotificationTile extends StatelessWidget {
                   maxLines: 1,
                 ),
                 Text(
-                  notification.getSubtitle(),
+                  notification.getSubtitle() ?? "",
                   style: textStyleFrom(
                     Theme.of(context).primaryTextTheme.bodyText1,
                     fontSize: 11,

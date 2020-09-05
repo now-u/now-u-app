@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/models/Organisation.dart';
+import 'package:app/models/Notification.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Learning.dart';
 
@@ -17,6 +18,7 @@ import 'package:app/pages/login/login.dart';
 import 'package:app/pages/login/emailSentPage.dart';
 import 'package:app/pages/other/InfoPage.dart';
 import 'package:app/pages/other/WebView.dart';
+import 'package:app/pages/other/NotificationPage.dart';
 import 'package:app/pages/Tabs.dart';
 import 'package:app/pages/action/ActionInfo.dart';
 import 'package:app/pages/campaign/LearningCentre/LearningCentreAllPage.dart';
@@ -52,6 +54,7 @@ class Routes {
   static const organisationPage = "organisationPage";
   static const info = "info";
   static const webview = "webview";
+  static const notification = "notification";
 
   // Learning
   static const learningAll = "learning";
@@ -229,6 +232,14 @@ Function initRoutes = (RouteSettings settings) {
           return customRoute(builder: (context) => WebViewPage(WebViewArgumnets(args)), settings: settings);
         }
         return customRoute(builder: (context) => TabsPage(currentPage: TabPage.Home), settings: settings);
+      }
+    
+    case Routes.notification:
+      {
+        if (args is InternalNotification) {
+          return customRoute(builder: (context) => NotificationPage(args), settings: settings);
+        }
+        break;
       }
 
     // TODO add a 404 page
