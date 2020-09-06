@@ -12,37 +12,112 @@ import 'package:http/http.dart' as http;
   
 class CampaignService {
   
-  String domainPrefix = "https://api.now-u.com/api/v1/";
-  
   final AuthenticationService _authenticationService = locator<AuthenticationService>();
+  
+  String domainPrefix = "https://api.now-u.com/api/v1/";
 
-  Future<Campaign> getCampaign(int id) async {
-    var response = await http.get(domainPrefix + "campaigns/1");
-    if (response.statusCode == 200) {
+  List<Campaign> _campaigns = [];
+  List<Campaign> get campaigns {
+    return _campaigns;
+  }
+    
+  List<Campaign> getActiveSelectedCampaigns() {
+    User user = _authenticationService.currentUser;
+    if (user == null) {
+      return [];
+    }
+    return user
+      .filterSelectedCampaigns(_campaigns);
+  }
+    
+  List<CampaignAction> getActiveActions(
+      {bool includeCompleted,
+      bool includeRejected,
+      bool onlySelectedCampaigns,
+      bool includeTodo, // Todo actions are unstarred and uncompleted
+      bool includeStarred}) {
+    
+    List<CampaignAction> actions = [];
+    for (Campaign campaign in _campaigns) {
+      actions.addAll(campaign.getActions());
+    }
+
+    User user = _authenticationService.currentUser;
+
+    if (user == null) {
+      return actions;
+    }
+
+    if (!(includeRejected ?? false)) {
+      actions.removeWhere((a) => user 
+          .getRejectedActions()
+          .contains(a.getId()));
+    }
+    
+    // If dont include todo actions then get rid of those todo
+    if (!(includeTodo ?? true)) {
+      actions.removeWhere((a) =>
+          !user
+              .getCompletedActions()
+              .contains(a.getId()) &&
+          !user
+              .getStarredActions()
+              .contains(a.getId()));
+    }
+    if (!(includeCompleted ?? false)) {
+      actions.removeWhere((a) => user
+          .getCompletedActions()
+          .contains(a.getId()));
+    }
+    if (!(includeStarred ?? true)) {
+      actions.removeWhere((a) =>
+          user.getStarredActions().contains(a.getId()));
+    }
+    if (onlySelectedCampaigns ?? false) {
+      // If action is not in the selected campaings then get rid
+      // TODO CHECK THIS
+      List<Campaign> activeSelectedCampaigns = getActiveSelectedCampaigns();
+      actions.removeWhere(
+          (action) { 
+            activeSelectedCampaigns.forEach((campaign) { 
+              if (campaign.getActions().contains(action)){
+                return false;
+              }
+            });
+            return true;
+          }
+      );
+    }
+    return actions;
+  }
+  
+
+  Future getCampaign(int id) async {
+    for (Campaign c in _campaigns) {
+      if (c.getId() == id) {
+        return c;
+      }
+    }
+
+    try {
+      var response = await http.get(domainPrefix + "campaigns/$id");
       Campaign c = Campaign.fromJson(json.decode(response.body)['data']);
       return c;
     }
-    else {
-      return Future.error("Error getting campaign in http api", StackTrace.fromString("The stack trace is"));
-    }
-  }
- 
-  Future<Campaigns> getCampaigns() async {
-
-    // Get campaings from api
-    var response = await http.get(domainPrefix + "campaigns");
-   
-    if (response.statusCode == 200) {
-
-      // Decode response into campaigns model
-      Campaigns cs = Campaigns.fromJson(json.decode(response.body)['data']);
-      return cs;
-    }
-    else {
-      return Future.error("Error getting campaigns in http api", StackTrace.fromString("The stack trace is"));
+    catch (e) {
+      return e.toString();
     }
   }
   
+  Future pullCampaings() async {
+    try {
+      var response = await http.get(domainPrefix + "campaigns");
+      Campaigns cs = Campaigns.fromJson(json.decode(response.body)['data']);
+      _campaigns = cs.getActiveCampaigns();
+    } catch(e) {
+    }
+  } 
+ 
   Future<Campaigns> getAllCampaigns() async {
     var response = await http.get(domainPrefix + "campaigns" + "?old=true");
     if (response.statusCode == 200) {

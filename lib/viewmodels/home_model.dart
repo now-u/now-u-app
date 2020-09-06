@@ -1,26 +1,24 @@
 import 'package:app/viewmodels/base_model.dart';
+import 'package:app/viewmodels/base_campaign_model.dart';
 
 import 'package:app/models/Campaign.dart';
-import 'package:app/models/Campaigns.dart';
 
 import 'package:app/locator.dart';
 import 'package:app/services/campaign_service.dart';
 
-class HomeViewModel extends BaseModel {
+class HomeViewModel extends BaseCampaignViewModel {
 
   final CampaignService _campaignsService = locator<CampaignService>();
   
-  List<Campaign> _campaigns = [];
-
-  List<Campaign> get campaigns => _campaigns;
+  List<Campaign> get campaigns => _campaignsService.campaigns;
 
   List<Campaign> get campaignsWithSelectedFirst {
     if (currentUser == null) {
-      return _campaigns;
+      return _campaignsService.campaigns;
     }
 
-    List<Campaign> selectedCs = currentUser.filterSelectedCampaigns(_campaigns);
-    List<Campaign> unselectedCs = currentUser.filterUnselectedCampaigns(campaigns);
+    List<Campaign> selectedCs = currentUser.filterSelectedCampaigns(_campaignsService.campaigns);
+    List<Campaign> unselectedCs = currentUser.filterUnselectedCampaigns(_campaignsService.campaigns);
     
     // Give some spice to your life
     selectedCs.shuffle();
@@ -34,24 +32,9 @@ class HomeViewModel extends BaseModel {
     return orderedCampaigns;
   }
 
-  // Pull the latest campaigns from the db
-  void pullCampaings() async {
-    setBusy(true);
-    Campaigns updatedCampaigns = await _campaignsService.getCampaigns().catchError(
-      (e) {
-        // DO SOMETHING TO INDICATE ERROR
-        setBusy(false);
-        return;
-      }
-    );
-    _campaigns = updatedCampaigns.getActiveCampaigns();
-    setBusy(false);
-    notifyListeners();
-  } 
-
   // getSelectedCampaigns
   List<Campaign> get selectedCampaigns {
-    return currentUser.filterSelectedCampaigns(_campaigns);
+    return currentUser.filterSelectedCampaigns(_campaignsService.campaigns);
   }
   int get numberOfJoinedCampaigns {
     return currentUser.getSelectedCampaigns().length;

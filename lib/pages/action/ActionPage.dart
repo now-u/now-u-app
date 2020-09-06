@@ -1,14 +1,11 @@
 import 'package:app/assets/components/darkButton.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'package:app/routes.dart';
 
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Action.dart';
-import 'package:app/models/ViewModel.dart';
-import 'package:app/models/State.dart';
 
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/selectionItem.dart';
@@ -18,8 +15,8 @@ import 'package:app/assets/components/header.dart';
 import 'package:app/assets/components/viewCampaigns.dart';
 import 'package:app/assets/components/smoothPageIndicatorEffect.dart';
 
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
+import 'package:stacked/stacked.dart';
+import 'package:app/viewmodels/action_model.dart';
 
 const double CAMPAIGN_SELECT_HEIGHT = 110;
 final _controller = PageController(
@@ -28,60 +25,12 @@ final _controller = PageController(
 );
 const PageStorageKey campaignPageKey = PageStorageKey("campaingKey");
 
-final _animatedList = GlobalKey<AnimatedListState>();
-
 const curve = Curves.ease;
 const duration = Duration(milliseconds: 500);
 
 class ActionPage extends StatefulWidget {
   @override
   _ActionPageState createState() => _ActionPageState();
-}
-
-bool hasSelected(Map sel) {
-  // If any of the values are true then at least one is selected
-  for (final value in sel.values) {
-    print("Checking value");
-    if (value) {
-      print("true value");
-      return true;
-    }
-  }
-  // Otherwise we dont care about this filter
-  return false;
-}
-
-List<CampaignAction> getActions(
-    Campaign campaign, Map<String, Map> selections, ViewModel model) {
-  List<CampaignAction> tmpActions = [];
-  if (campaign == null) {
-    return tmpActions;
-  }
-  //tmpActions.addAll(campaign.getActions());
-  bool includeCompleted = selections['extras']['completed'];
-  bool includeRejected = selections['extras']['rejected'];
-  bool includeToDo = selections['extras']['todo'];
-  bool includeStarred = selections['extras']['starred'];
-  // Get all the actions
-  tmpActions.addAll(model.getActiveActions(
-      includeCompleted: includeCompleted,
-      includeRejected: includeRejected,
-      includeTodo: includeToDo,
-      includeStarred: includeStarred));
-  // Filter them for the campaign
-  tmpActions.removeWhere((a) => !campaign.getActions().contains(a));
-  print("Got some temp ations");
-  if (hasSelected(selections['times'])) {
-    // Remove the ones with the wrong times
-    print("It has the thing");
-    tmpActions.removeWhere((a) => !selections['times'][a.getTimeText()]);
-  }
-  if (hasSelected(selections['categories'])) {
-    // Remove the ones with the wrong categories
-    tmpActions.removeWhere((a) => !selections['categories'][a.getSuperType()]);
-  }
-  print(tmpActions.length);
-  return tmpActions;
 }
 
 class _ActionPageState extends State<ActionPage> {
@@ -111,34 +60,34 @@ class _ActionPageState extends State<ActionPage> {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, ViewModel>(
-        onInit: (Store<AppState> store) {
-          var campaigns = store.state.userState.user.filterSelectedCampaigns(
-              store.state.campaigns.getActiveCampaigns());
-          if (campaigns.length != 0) {
-            campaign = campaigns[0];
-
-            // TODO make this not add all the actions -> only those that are not selected
-            // actions.addAll(campaign.getActions());
-          } else {
-            campaign = null;
-            actions = [];
-          }
-        },
-        onInitialBuild: (ViewModel model) {
+    return ViewModelBuilder<ActionViewModel>.reactive(
+      viewModelBuilder: () => ActionViewModel(),
+      onModelReady: (model) {
           setState(() {
-            if (model.getActiveSelectedCampaings().activeLength() == 0) {
+            if (model.selectedCampaigns.length == 0) {
               campaign = null;
               actions = [];
             }
             else {
-              campaign = model.getActiveSelectedCampaings().getActiveCampaigns()[0];
-              actions = getActions(campaign, selections, model);
+              campaign = model.selectedCampaigns[0];
+              actions = model.getActions(campaign, selections);
             }
           });
         },
-        converter: (Store<AppState> store) => ViewModel.create(store),
-        builder: (BuildContext context, ViewModel viewModel) {
+      builder: (context, model, child) {
+        //onInit: (Store<AppState> store) {
+        //  var campaigns = store.state.userState.user.filterSelectedCampaigns(
+        //      store.state.campaigns.getActiveCampaigns());
+        //  if (campaigns.length != 0) {
+        //    campaign = campaigns[0];
+
+        //    // TODO make this not add all the actions -> only those that are not selected
+        //    // actions.addAll(campaign.getActions());
+        //  } else {
+        //    campaign = null;
+        //    actions = [];
+        //  }
+        //},
           return Scaffold(
               backgroundColor: colorFrom(
                 Theme.of(context).primaryColorDark,
@@ -146,14 +95,14 @@ class _ActionPageState extends State<ActionPage> {
               ),
               body: 
 
-              viewModel.getActiveSelectedCampaings().getActiveCampaigns().length == 0 ?
+              model.selectedCampaigns.length == 0 ?
 
               Column(
                 children: [
                   PageHeader(
                     title: "Actions",
                     onTap: () {
-                      _navigateAndDisplaySelection(context, viewModel);
+                      _navigateAndDisplaySelection(context, model);
                     },
                     icon: Icons.filter_list,
                   ),
@@ -200,7 +149,7 @@ class _ActionPageState extends State<ActionPage> {
                   PageHeader(
                     title: "Actions",
                     onTap: () {
-                      _navigateAndDisplaySelection(context, viewModel);
+                      _navigateAndDisplaySelection(context, model);
                     },
                     icon: Icons.filter_list,
                   ),
@@ -216,22 +165,13 @@ class _ActionPageState extends State<ActionPage> {
                               controller: _controller,
                               itemCount:
                                   // If all the active campaigns have been joined
-                                  viewModel
-                                              .getActiveSelectedCampaings()
-                                              .activeLength() ==
-                                          viewModel.campaigns
-                                              .getActiveCampaigns()
-                                              .length
-                                      ? viewModel
-                                          .getActiveSelectedCampaings()
-                                          .activeLength()
-                                      : viewModel.userModel.user
-                                              .getSelectedCampaigns()
-                                              .length +
-                                          1,
+                                  model.selectedCampaigns.length == model.campaigns.length 
+                                    ? model.selectedCampaigns.length
+                                    : model.currentUser
+                                              .getSelectedCampaigns().length + 1,
                               itemBuilder: (BuildContext context, int index) {
                                 if (index ==
-                                    viewModel.userModel.user
+                                    model.currentUser
                                         .getSelectedCampaigns()
                                         .length) {
                                   return GestureDetector(
@@ -247,10 +187,10 @@ class _ActionPageState extends State<ActionPage> {
                                 }
                                 return Padding(
                                   padding: EdgeInsets.only(bottom:10),
-                                  child: CampaignSelectionTile(viewModel
-                                    .userModel.user
-                                    .filterSelectedCampaigns(viewModel.campaigns
-                                        .getActiveCampaigns())[index],
+                                  child: CampaignSelectionTile(model
+                                    .currentUser
+                                    .filterSelectedCampaigns(model.campaigns
+                                        )[index],
                                     height: CAMPAIGN_SELECT_HEIGHT,
                                   ),
                                 );
@@ -258,17 +198,17 @@ class _ActionPageState extends State<ActionPage> {
                               onPageChanged: (int pageIndex) {
                                 setState(() {
                                   if (pageIndex ==
-                                      viewModel.userModel.user
+                                      model.currentUser
                                           .getSelectedCampaigns()
                                           .length) {
                                     campaign = null;
                                     actions = [];
                                   } else {
-                                    campaign = viewModel.userModel.user
-                                        .filterSelectedCampaigns(viewModel.campaigns
-                                            .getActiveCampaigns())[pageIndex];
+                                    campaign = model.currentUser
+                                        .filterSelectedCampaigns(model.campaigns
+                                            )[pageIndex];
                                     actions =
-                                        getActions(campaign, selections, viewModel);
+                                        model.getActions(campaign, selections);
                                   }
                                 });
                               })),
@@ -277,15 +217,12 @@ class _ActionPageState extends State<ActionPage> {
                         child: SmoothPageIndicator(
                           controller: _controller,
                           //count: viewModel.campaigns.getActiveCampaigns().length,
-                          count: viewModel
-                                      .getActiveSelectedCampaings()
-                                      .activeLength() ==
-                                  viewModel.campaigns.getActiveCampaigns().length
-                              ? viewModel.getActiveSelectedCampaings().activeLength()
-                              : viewModel.userModel.user
+                          count: model.selectedCampaigns.length ==
+                                    model.campaigns.length
+                              ? model.selectedCampaigns.length
+                              : model.currentUser
                                       .getSelectedCampaigns()
-                                      .length +
-                                  1,
+                                      .length + 1,
                           effect: customSmoothPageInducatorEffect,
                         ),
                       ),
@@ -316,8 +253,8 @@ class _ActionPageState extends State<ActionPage> {
                                               selections['extras']['completed'] =
                                                   false;
 
-                                              actions = getActions(
-                                                  campaign, selections, viewModel);
+                                              actions = model.getActions(
+                                                  campaign, selections);
                                             });
                                           },
                                           selections['extras']['todo'] &&
@@ -337,8 +274,8 @@ class _ActionPageState extends State<ActionPage> {
                                               selections['extras']['completed'] =
                                                   false;
 
-                                              actions = getActions(
-                                                  campaign, selections, viewModel);
+                                              actions = model.getActions(
+                                                  campaign, selections);
                                             });
                                           },
                                           !selections['extras']['todo'] &&
@@ -358,8 +295,8 @@ class _ActionPageState extends State<ActionPage> {
                                               selections['extras']['completed'] =
                                                   true;
 
-                                              actions = getActions(
-                                                  campaign, selections, viewModel);
+                                              actions = model.getActions(
+                                                  campaign, selections);
                                             });
                                           },
                                           !selections['extras']['todo'] &&
@@ -395,7 +332,7 @@ class _ActionPageState extends State<ActionPage> {
         });
   }
 
-  _navigateAndDisplaySelection(BuildContext context, ViewModel model) async {
+  _navigateAndDisplaySelection(BuildContext context, ActionViewModel model) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
     final result = await Navigator.push(
@@ -406,7 +343,7 @@ class _ActionPageState extends State<ActionPage> {
     setState(() {
       selections = result ?? this.selections;
       print("Getting new acitons");
-      actions = getActions(campaign, selections, model);
+      actions = model.getActions(campaign, selections);
       print("got new acitons");
     });
   }
