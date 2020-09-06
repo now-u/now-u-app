@@ -10,12 +10,61 @@ class ActionViewModel extends BaseCampaignViewModel {
   
   final CampaignService _campaignsService = locator<CampaignService>();
   
-  List<CampaignAction> getActions(
-      Campaign campaign, Map<String, Map> selections) {
-    List<CampaignAction> tmpActions = [];
-    if (campaign == null) {
-      return tmpActions;
+  Map<String, Map> _selections = {
+    "times": {},
+    "campaigns": {},
+    "categories": {},
+    "extras": {
+      "todo": true,
+      "completed": false,
+      "rejected": false,
+      "starred": true,
     }
+  };
+  Map<String, Map> get selections => _selections;
+  void updateSelections(String key1, String key2, value) {
+    selections[key1][key2] = value;
+    notifyListeners();
+  }
+  set setSelections(Map<String, Map> selections) => _selections = selections ?? _selections;
+
+  List<CampaignAction> _actions = [];
+  List<CampaignAction> get actions => _actions;
+  
+  Campaign _campaign;
+  Campaign get campaign => _campaign;
+  set campaign(Campaign c) { 
+    _campaign = c;
+    getActions();
+  }
+  set campaignIndex(int index) {
+    if (index == currentUser.getSelectedCampaigns().length) {
+      _campaign = null;
+    } else {
+      _campaign = currentUser.filterSelectedCampaigns(_campaignsService.campaigns)[index];
+      getActions();
+    }
+  }
+
+  initSelections() {
+    _campaign = selectedCampaigns.length == 0 ? null : selectedCampaigns[0];
+    getActions();
+
+    for (int i = 0; i < timeBrackets.length; i++) {
+      _selections['times'][timeBrackets[i]['text']] = false;
+    }
+    for (int i = 0; i < CampaignActionSuperType.values.length; i++) {
+      _selections['categories'][CampaignActionSuperType.values[i]] = false;
+    }
+  }
+
+  void getActions() {
+
+    if (campaign == null) {
+      _actions = [];
+    }
+
+    List<CampaignAction> tmpActions = [];
     //tmpActions.addAll(campaign.getActions());
     bool includeCompleted = selections['extras']['completed'];
     bool includeRejected = selections['extras']['rejected'];
@@ -23,10 +72,11 @@ class ActionViewModel extends BaseCampaignViewModel {
     bool includeStarred = selections['extras']['starred'];
     // Get all the actions
     tmpActions.addAll(_campaignsService.getActiveActions(
-        includeCompleted: includeCompleted,
-        includeRejected: includeRejected,
-        includeTodo: includeToDo,
-        includeStarred: includeStarred));
+      includeCompleted: includeCompleted,
+      includeRejected: includeRejected,
+      includeTodo: includeToDo,
+      includeStarred: includeStarred)
+    );
     // Filter them for the campaign
     tmpActions.removeWhere((a) => !campaign.getActions().contains(a));
     if (hasSelected(selections['times'])) {
@@ -37,7 +87,9 @@ class ActionViewModel extends BaseCampaignViewModel {
       // Remove the ones with the wrong categories
       tmpActions.removeWhere((a) => !selections['categories'][a.getSuperType()]);
     }
-    return tmpActions;
+
+    _actions = tmpActions;
+    notifyListeners();
   }
 
   bool hasSelected(Map sel) {
@@ -51,6 +103,60 @@ class ActionViewModel extends BaseCampaignViewModel {
     }
     // Otherwise we dont care about this filter
     return false;
+  }
+
+  void setSelectedToAll() {
+    _selections['extras']['starred'] =
+        true;
+    _selections['extras']['todo'] = true;
+    _selections['extras']['rejected'] =
+        false;
+    _selections['extras']['completed'] =
+        false;
+
+    getActions();
+  }
+  bool selectionIsAll() {
+    return selections['extras']['todo'] &&
+        selections['extras']['starred'] &&
+        !selections['extras']['rejected'] &&
+        !selections['extras']['completed'];
+  }
+  
+  void setSelectedToTodo() {
+    selections['extras']['starred'] =
+        true;
+    selections['extras']['todo'] = false;
+    selections['extras']['rejected'] =
+        false;
+    selections['extras']['completed'] =
+        false;
+    
+    getActions();
+  }
+  bool selectionIsTodo() {
+    return !selections['extras']['todo'] &&
+      selections['extras']['starred'] &&
+      !selections['extras']['rejected'] &&
+      !selections['extras']['completed'];
+  }
+
+  void setSelectedToCompleted() {
+    selections['extras']['starred'] =
+        false;
+    selections['extras']['todo'] = false;
+    selections['extras']['rejected'] =
+        false;
+    selections['extras']['completed'] =
+        true;
+    
+    getActions();
+  }
+  bool isSelectionCompleted() {
+    return !selections['extras']['todo'] &&
+        !selections['extras']['starred'] &&
+        !selections['extras']['rejected'] &&
+        selections['extras']['completed'];
   }
    
 }
