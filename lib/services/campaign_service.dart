@@ -6,6 +6,7 @@ import 'package:app/services/auth.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Action.dart';
+import 'package:app/models/Learning.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -137,6 +138,22 @@ class CampaignService {
     }
     else {
       return Future.error("Error getting campaigns in http api", StackTrace.fromString("The stack trace is"));
+    }
+  }
+  
+  Future getLearningCentre(int campaignId) async {
+    try {
+      http.Response response = await http.get(domainPrefix + "campaigns/$campaignId/learning_topics");
+      if (response.statusCode == 200) {
+        List jsonData = json.decode(response.body)["data"] as List;
+        LearningCentre lc = LearningCentre.fromJson(jsonData);
+        return lc;
+      }
+      else {
+        return "Unknown error";
+      }
+    } catch (e) {
+      return e.toString();
     }
   }
 }
