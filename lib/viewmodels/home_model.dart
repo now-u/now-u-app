@@ -5,7 +5,6 @@ import 'package:app/models/Campaigns.dart';
 
 import 'package:app/locator.dart';
 import 'package:app/services/campaign_service.dart';
-import 'package:app/services/auth.dart';
 
 class HomeViewModel extends BaseModel {
 
@@ -16,6 +15,10 @@ class HomeViewModel extends BaseModel {
   List<Campaign> get campaigns => _campaigns;
 
   List<Campaign> get campaignsWithSelectedFirst {
+    if (currentUser == null) {
+      return _campaigns;
+    }
+
     List<Campaign> selectedCs = currentUser.filterSelectedCampaigns(_campaigns);
     List<Campaign> unselectedCs = currentUser.filterUnselectedCampaigns(campaigns);
     

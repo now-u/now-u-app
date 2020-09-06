@@ -7,10 +7,12 @@ import 'package:app/main.dart';
 import 'package:app/routes.dart';
 
 import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:app/locator.dart';
 import 'package:app/services/navigation.dart';
+import 'package:app/services/shared_preferences_service.dart';
 
 class AuthError {
   static const unauthorized = "unauthorized";
@@ -20,6 +22,7 @@ class AuthError {
 
 class AuthenticationService {
   final NavigationService _navigationService = locator<NavigationService>();
+  final SharedPreferencesService _sharedPreferencesService = locator<SharedPreferencesService>();
   
   User _currentUser;
   User get currentUser => _currentUser;
@@ -30,6 +33,21 @@ class AuthenticationService {
 
   void switchToStagingBranch() {
     domainPrefix = "https://stagingapi.now-u.com/api/v1/";
+  }
+
+  Future<bool> isUserLoggedIn() async {
+    User user = await _sharedPreferencesService.loadUserFromPrefs();
+    if (user != null) {
+      await _updateUser(user.getToken());
+    }
+    return _currentUser != null;
+  }
+
+  Future _updateUser(String token) async {
+    if (token != null) {
+      _currentUser = await getUser(token);
+      _sharedPreferencesService.saveUserToPrefs(_currentUser);
+    }
   }
   
   // Generic Reuqest
@@ -53,55 +71,52 @@ class AuthenticationService {
 
   //final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<void> sendSignInWithEmailLink(String email, String name, bool acceptNewletter) async {
-    http.Response response = await http
-        .post(
-      domainPrefix + 'users',
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: json.encode({
-        'email': email,
-        'full_name': name,
-        'newsletter_signup': acceptNewletter,
-      }),
-    );
-
-    print(acceptNewletter);
-    if (response == null) {
-      print("Response is null");
+  Future sendSignInWithEmailLink(String email, String name, bool acceptNewletter) async {
+    try { 
+      print("email | $email");
+      print("name | $name");
+      print("nl | $acceptNewletter");
+      await http
+          .post(
+        domainPrefix + 'users',
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: json.encode({
+          'email': email,
+          'full_name': name,
+          'newsletter_signup': acceptNewletter,
+        }),
+      );
+      return true;
+    } catch (e) {
+      if (e is PlatformException) {
+        return e.message;
+      }
+      return e.toString();
     }
-    if (response.statusCode != 200) {
-      print("ERROR $response.statusCode");
-    }
-    print("THE RESPONSE BODY IS");
-    print(response.body);
   }
 
-  Future<User> signInWithEmailLink(String email, String token) async {
-    // TODO handle errors
+  Future login(String email, String token) async {
+    try {
+      http.Response response = await http.post(
+        domainPrefix + 'users/login',
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'email': email,
+          'token': token,
+        }),
+      );
+      User user = await getUser(json.decode(response.body)['data']['token']);
 
-    print("The email is: " + email);
-    print("The token is: " + token);
-    http.Response response = await http.post(
-      domainPrefix + 'users/login',
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'email': email,
-        'token': token,
-      }),
-    );
-
-    if (response.statusCode == 401) return Future.error(AuthError.unauthorized);
-
-    print("THE RESPONSE BODY IS");
-    print(response.body);
-
-    User u = await getUser(json.decode(response.body)['data']['token']);
-    return u;
-    //return _auth.signInWithEmailAndLink(email: email, link: link);
+      await _updateUser(user.getToken());
+      return _currentUser != null;
+    }
+    catch(e) {
+      return e.message;
+    }
   }
 
   //Future<AuthResult> signInWithCredential(AuthCredential credential) async {
@@ -282,7 +297,7 @@ class AuthenticationService {
     //} else if (response.statusCode == 401) {
     //  return Future.error(AuthError.unauthorized);
     //} else {
-    //  print("There was an error updateing user details");
+    //  print("There was an error .tokenupdateing user details");
     //  return null;
     //}
   }

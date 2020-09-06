@@ -6,16 +6,14 @@ import 'package:android_intent/android_intent.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
 
+import 'package:app/viewmodels/login_model.dart';
+import 'package:stacked/stacked.dart';
+
 import 'package:app/models/ViewModel.dart';
 
 import 'package:app/routes.dart';
 
 import 'package:app/pages/login/login.dart';
-
-import 'package:app/models/ViewModel.dart';
-import 'package:app/models/State.dart';
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 
 class EmailSentPageArguments {
   final String email;
@@ -46,18 +44,18 @@ class _EmailSentPageState extends State<EmailSentPage> {
 
   @override
   Widget build(BuildContext context) {
-   return StoreConnector<AppState, ViewModel>(
-     onInitialBuild: (ViewModel viewModel) {
+    return ViewModelBuilder<LoginViewModel>.reactive(
+      viewModelBuilder: () => LoginViewModel(),
+      onModelReady: (model) { 
        if (token != null) {
-         if (viewModel.userModel.user == null || viewModel.userModel.user.token == null) {
-          viewModel.userModel.login(widget.args.email, token);
-         } else {
-           Navigator.of(context).pushNamed(Routes.home);
-         }
-       }
-     },
-     converter: (Store<AppState> store) => ViewModel.create(store),
-     builder: (BuildContext context, ViewModel viewModel) {
+         if (model.currentUser == null || model.currentUser.token == null) {
+            model.login(email: widget.args.email, token: token);
+          } else {
+            Navigator.of(context).pushNamed(Routes.home);
+          }
+        }
+      },
+      builder: (context, model, child) {
         return Stack(children: <Widget>[
           Scaffold(
               body: Container(

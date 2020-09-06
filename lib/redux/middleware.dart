@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 import 'package:redux/redux.dart';
@@ -14,10 +13,8 @@ import 'package:app/models/State.dart';
 import 'package:app/models/User.dart';
 import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Campaign.dart';
-import 'package:app/models/ViewModel.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Badge.dart';
-import 'package:app/models/Reward.dart';
 import 'package:app/models/Learning.dart';
 import 'package:app/redux/actions.dart';
 
@@ -31,7 +28,6 @@ import 'package:app/pages/login/emailSentPage.dart';
 import 'package:app/pages/login/login.dart';
 
 import 'package:app/routes.dart';
-import 'package:app/main.dart';
 
 final NavigationService _navigationService = locator<NavigationService>();
 final DynamicLinkService _dynamicLinkService = locator<DynamicLinkService>();

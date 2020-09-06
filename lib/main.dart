@@ -11,6 +11,8 @@ import 'package:app/services/analytics.dart';
 import 'package:app/services/pushNotifications.dart';
 import 'package:app/services/navigation.dart';
 
+import 'package:app/pages/other/startup_view.dart';
+
 import 'package:app/models/State.dart';
 
 import 'package:app/redux/reducers.dart';
@@ -84,7 +86,6 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   int deepLinkPageIndex = 1;
   Widget page;
-  Uri _deepLink;
   @override
   void initState() {
     // TODO: implement initState
@@ -94,40 +95,15 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    final DevToolsStore<AppState> store = DevToolsStore<AppState>(
-      appStateReducer,
-      initialState: AppState.initialState(),
-      middleware: [appStateMiddleware, thunkMiddleware],
-    );
-  
-    final PushNotificationsService _pushNotificationService =
-      locator<PushNotificationsService>();
-    _pushNotificationService.init();
-
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.white, //or set color with: Color(0xFF0000FF)
-    ));
-
-    return StoreProvider<AppState>(
-        store: store,
-        child: MaterialApp(
+        return MaterialApp(
           title: 'Flutter Demo',
           navigatorKey: locator<NavigationService>().navigatorKey,
           navigatorObservers: [
             locator<Analytics>().getAnalyticsObserver(),
           ],
-          initialRoute: '/',
+          home: StartUpView(),
           //initialRoute: Routes.intro,
           onGenerateRoute: initRoutes,
-          routes: {
-            '/': (BuildContext context) => StoreBuilder<AppState>(
-                  onInitialBuild: (store) {
-                    store.dispatch(initStore());
-                  },
-                  builder: (BuildContext context, Store<AppState> store) =>
-                      SplashScreen(),
-                ),
-          },
           theme: ThemeData(
             // This is the theme of the application.
             applyElevationOverlayColor: true,
@@ -204,6 +180,6 @@ class _AppState extends State<App> {
             buttonColor: orange,
             //textSelectionColor: white, // Text used on top of
           ),
-        ));
+        );
   }
 }

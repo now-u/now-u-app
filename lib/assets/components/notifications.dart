@@ -75,7 +75,7 @@ class NotificationTile extends StatelessWidget {
             child: Container(
               child: MaterialButton(
                 onPressed: () {
-                  _authenticationService.dismissNotification()
+                  //_authenticationService.dismissNotification(user);
                 },
                 elevation: 2.0,
                 minWidth: 0,
