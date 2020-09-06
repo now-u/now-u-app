@@ -7,6 +7,7 @@ import 'package:app/services/storage.dart';
 import 'package:app/services/analytics.dart';
 import 'package:app/services/pushNotifications.dart';
 import 'package:app/services/navigation.dart';
+import 'package:app/services/campaign_service.dart';
 
 import 'package:get_it/get_it.dart';
 
@@ -25,6 +26,7 @@ void setupLocator() {
   locator.registerLazySingleton<Analytics>(() => Analytics());
   locator.registerLazySingleton(() => PushNotificationsService());
   locator.registerLazySingleton(() => NavigationService());
+  locator.registerLazySingleton(() => CampaignService());
 }
 
 

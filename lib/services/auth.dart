@@ -19,6 +19,12 @@ class AuthError {
 }
 
 class AuthenticationService {
+  final NavigationService _navigationService = locator<NavigationService>();
+  
+  User _currentUser;
+  User get currentUser => _currentUser;
+
+
   // This is not final as it can be changed
   String domainPrefix = "https://api.now-u.com/api/v1/";
 
@@ -26,8 +32,6 @@ class AuthenticationService {
     domainPrefix = "https://stagingapi.now-u.com/api/v1/";
   }
   
-  final NavigationService _navigationService = locator<NavigationService>();
-
   // Generic Reuqest
   // Handle 401 errors
   Future handleAuthRequestErrors(http.Response response) {

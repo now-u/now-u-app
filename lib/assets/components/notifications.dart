@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/customTile.dart';
 
+import 'package:app/locator.dart';
+import 'package:app/services/auth.dart';
+
 import 'package:app/routes.dart';
 
 import 'package:app/models/Notification.dart';
+
+final AuthenticationService _authenticationService = locator<AuthenticationService>();
 
 class NotificationTile extends StatelessWidget {
   final InternalNotification notification;
@@ -69,7 +74,9 @@ class NotificationTile extends StatelessWidget {
             padding: EdgeInsets.all(8),
             child: Container(
               child: MaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  _authenticationService.dismissNotification()
+                },
                 elevation: 2.0,
                 minWidth: 0,
                 color: Color.fromRGBO(196,196,196,1),

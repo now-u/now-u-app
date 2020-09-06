@@ -110,19 +110,7 @@ class _AppState extends State<App> {
 
     return StoreProvider<AppState>(
         store: store,
-        child:
-            //FutureBuilder(
-            //  future: getSecrets(),
-            //  builder:(BuildContext context, AsyncSnapshot snapshot) {
-            //    if (!snapshot.hasData) {
-            //      return Container();
-            //    }
-            //return Wiredash(
-            //  projectId: snapshot.data['wiredash_project_id'],
-            //  secret: snapshot.data['wiredash_key'],
-            //  navigatorKey: Keys.navKey,
-            //  child:
-        MaterialApp(
+        child: MaterialApp(
           title: 'Flutter Demo',
           navigatorKey: locator<NavigationService>().navigatorKey,
           navigatorObservers: [
@@ -217,8 +205,5 @@ class _AppState extends State<App> {
             //textSelectionColor: white, // Text used on top of
           ),
         ));
-    //}
-    //),
-    //);
   }
 }

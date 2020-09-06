@@ -499,7 +499,6 @@ ThunkAction<AppState> completeLearningResource(LearningResource resource) {
   };
 }
 
-
 void onAuthError() {
   _navigationService.navigateTo(Routes.login);
 }

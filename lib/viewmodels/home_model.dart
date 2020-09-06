@@ -1,0 +1,65 @@
+import 'package:app/viewmodels/base_model.dart';
+
+import 'package:app/models/Campaign.dart';
+import 'package:app/models/Campaigns.dart';
+
+import 'package:app/locator.dart';
+import 'package:app/services/campaign_service.dart';
+import 'package:app/services/auth.dart';
+
+class HomeViewModel extends BaseModel {
+
+  final CampaignService _campaignsService = locator<CampaignService>();
+  
+  List<Campaign> _campaigns = [];
+
+  List<Campaign> get campaigns => _campaigns;
+
+  List<Campaign> get campaignsWithSelectedFirst {
+    List<Campaign> selectedCs = currentUser.filterSelectedCampaigns(_campaigns);
+    List<Campaign> unselectedCs = currentUser.filterUnselectedCampaigns(campaigns);
+    
+    // Give some spice to your life
+    selectedCs.shuffle();
+    unselectedCs.shuffle();
+
+    // Create the new ordered array
+    List<Campaign> orderedCampaigns = [];
+    orderedCampaigns.addAll(selectedCs);
+    orderedCampaigns.addAll(unselectedCs);
+
+    return orderedCampaigns;
+  }
+
+  // Pull the latest campaigns from the db
+  void pullCampaings() async {
+    setBusy(true);
+    Campaigns updatedCampaigns = await _campaignsService.getCampaigns().catchError(
+      (e) {
+        // DO SOMETHING TO INDICATE ERROR
+        setBusy(false);
+        return;
+      }
+    );
+    _campaigns = updatedCampaigns.getActiveCampaigns();
+    notifyListeners();
+  } 
+
+  // getSelectedCampaigns
+  List<Campaign> get selectedCampaigns {
+    return currentUser.filterSelectedCampaigns(_campaigns);
+  }
+  
+  // getCompletedActions
+  int get numberOfCompletedActions {
+    return currentUser.getCompletedActions().length;
+  }
+
+  // getActiveStarredActions
+  int get numberOfStarredActions {
+    return currentUser.getStarredActions().length;
+  }
+
+  // getNotifications
+
+}
