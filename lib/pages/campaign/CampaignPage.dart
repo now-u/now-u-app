@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
-import 'package:app/models/ViewModel.dart';
 import 'package:app/models/User.dart';
-import 'package:app/models/State.dart';
 
 import 'package:app/routes.dart';
 
@@ -12,26 +10,10 @@ import 'package:app/assets/components/header.dart';
 import 'package:app/assets/components/campaignTile.dart';
 import 'package:app/assets/StyleFrom.dart';
 
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
+import 'package:stacked/stacked.dart';
+import 'package:app/viewmodels/base_campaign_model.dart';
 
-class CampaignPage extends StatefulWidget {
-  @override
-  _CampaignPageState createState() => _CampaignPageState();
-}
-
-class _CampaignPageState extends State<CampaignPage> {
-  List<Campaign> campaigns;
-  Campaigns selectedCampaigns;
-  User user;
-  bool onlyJoined;
-
-  @override
-  void initState() {
-    campaigns = [];
-    onlyJoined = false;
-    super.initState();
-  }
+class CampaignPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -39,26 +21,10 @@ class _CampaignPageState extends State<CampaignPage> {
     // Needs to be in future so happens after render of this page or something like that
     //var _campaigns = widget.model.campaigns.map((Campaign c) => c).toList();
     return Scaffold(
-      body: StoreConnector<AppState, ViewModel>(
-      onInit: (Store<AppState> store) {
-        campaigns = store.state.campaigns.getActiveCampaigns();
-        user = store.state.userState.user;
-      },
-      converter: (Store<AppState> store) => ViewModel.create(store),
-      builder: (BuildContext context, ViewModel viewModel) {
-        if (viewModel.loading) {
-          return CircularProgressIndicator();
-        }
-        print("In page campaigns");
-        print(viewModel.campaigns);
-        print(viewModel.campaigns.getActiveCampaigns());
-        print(viewModel.campaigns.getActiveCampaigns().toList()[0]);
-        print(viewModel.campaigns.getActiveCampaigns().toList()[1]);
-        print(viewModel.campaigns.getActiveCampaigns().toList()[2]);
-        if (user == null) {
-          Navigator.of(context).pushNamed('/');
-          
-        }
+      body: ViewModelBuilder<BaseCampaignViewModel>.reactive(
+        viewModelBuilder: () => BaseCampaignViewModel(),
+        onModelReady: (model) => model.pullCampaings(),
+        builder: (context, model, child) {
         return Stack(
           children: [
             SafeArea(
@@ -75,12 +41,6 @@ class _CampaignPageState extends State<CampaignPage> {
                       style: Theme.of(context).primaryTextTheme.bodyText1,
                     ),
                   ),
-                  viewModel.getActiveSelectedCampaings().activeLength() == 0 &&
-                          onlyJoined
-                      ? Center(
-                          child: Text("You havent selecetd any campaigns yet"),
-                        )
-                      : Container(),
                   Container(
                     child: ListView(
                         shrinkWrap: true,
@@ -89,9 +49,9 @@ class _CampaignPageState extends State<CampaignPage> {
                           ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: campaigns.length,
+                            itemCount: model.campaigns.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return CampaignTile(campaigns[index]);
+                              return CampaignTile(model.campaigns[index]);
                             },
                           ),
                           SizedBox(

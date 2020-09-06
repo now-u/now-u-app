@@ -44,7 +44,7 @@ class NewsPage extends StatelessWidget {
                       ),
                       child: PageHeader(
                         title: "News",
-                      ),
+                      )
                     ),
                     Container(
                         //color: Color.fromRGBO(247, 248, 252, 1),

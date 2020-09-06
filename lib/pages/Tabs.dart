@@ -80,7 +80,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
         'title': "News",
       },
       {
-        'page': Profile(currentPage: _subIndex, changeTabPage: changePage),
+        'page': Profile(),
         'icon': Icon(CustomIcons.ic_more),
         'title': "More",
       },

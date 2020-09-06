@@ -64,7 +64,7 @@ class LoginViewModel extends BaseModel {
 
     if (result is bool) {
       if (result) {
-        _navigationService.navigateTo(Routes.home);
+        _navigationService.navigateTo(Routes.intro);
       } else {
         print("general signup failure");
         //await _dialogService.showDialog(

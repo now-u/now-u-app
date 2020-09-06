@@ -8,225 +8,196 @@ import 'package:app/assets/icons/customIcons.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/routes/customLaunch.dart';
 
-import 'package:app/models/User.dart';
-import 'package:app/models/ViewModel.dart';
-import 'package:app/models/State.dart';
-
 import 'package:app/pages/profile/ProfileTile.dart';
 import 'package:app/routes.dart';
 
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Profile extends StatefulWidget {
-  final int currentPage;
-  final Function changeTabPage;
-  Profile({
-    this.currentPage,
-    @required this.changeTabPage,
-  });
+import 'package:stacked/stacked.dart';
+import 'package:app/viewmodels/base_model.dart';
 
-  @override
-  _ProfileState createState() => _ProfileState();
-}
+final profileTiles = <Map>[
+  // Profile disabled for v1
+  //{
+  //  'profileTile':
+  //      ProfileTile("Profile", FontAwesomeIcons.solidUserCircle),
+  //  'page': Routes.profile,
+  //},
+  {
+    'sectionHeading':  "The app"
+  },
+  {
+    'profileTile':
+        ProfileTile("Our partners", CustomIcons.ic_partners),
+    'page': Routes.parteners,
+  },
+  {
+    'profileTile': ProfileTile("FAQ", CustomIcons.ic_faq),
+    'page': Routes.faq,
+  },
+  {
+    'sectionHeading':  "Feedback"
+  },
+  {
+    'profileTile': ProfileTile(
+        "Give past campaign feedback", CustomIcons.ic_feedback),
+    'link':
+        "https://docs.google.com/forms/d/e/1FAIpQLScg9a8pdP6P7GDKfyOCcJkU_i0C1m84T-M4muEUjfo8TmCSkw/viewform",
+  },
+  {
+    'profileTile': ProfileTile(
+        "Propose a campaign", CustomIcons.ic_suggestcamp),
+    'link':
+        "https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform",
+  },
+  {
+    'profileTile':
+        ProfileTile("Give feedback on the app", CustomIcons.ic_feedback),
+    'link':
+        "https://docs.google.com/forms/d/e/1FAIpQLSflMOarmyXRv7DRbDQPWRayCpE5X4d8afOpQ1hjXfdvzbnzQQ/viewform",
+  },
+  {
+    'profileTile':
+        ProfileTile("Rate us on the app store", CustomIcons.ic_rateus),
+    'link':
+      Platform.isIOS 
+        ? "https://apps.apple.com/us/app/now-u/id1516126639"
+        : "https://play.google.com/store/apps/details?id=com.nowu.app",
+    'external': true
+    //'function': () {StoreRedirect.redirect();}
+  },
+  {
+    'profileTile': ProfileTile(
+        "Send us a message", CustomIcons.ic_social_fb),
+    'link': "http://m.me/nowufb",
+    'external': true
+  },
+  {
+    'profileTile':
+        ProfileTile("Send us an email", CustomIcons.ic_email),
+    'link': "mailto:hello@now-.com?subject=Hi",
+    'external': true
+  },
+  {
+    'sectionHeading':  "Legal"
+  },
+  {
+    'profileTile':
+        ProfileTile("Terms & conditions", CustomIcons.ic_tc),
+    'link': "https://share.now-u.com/legal/now-u_users_Ts&Cs.pdf",
+    'external': true
+  },
+  {
+    'profileTile':
+        ProfileTile("Privacy policy", CustomIcons.ic_privacy),
+    'link': "https://share.now-u.com/legal/now-u_privacy_policy.pdf",
+    'external': true
+  },
+];
 
-class _ProfileState extends State<Profile> {
-  User user;
-  var _currentPage;
-  @override
-  void initState() {
-    print(widget.currentPage);
-    _currentPage = widget.currentPage ?? 0;
-    super.initState();
-  }
-
+class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, ViewModel>(
-      converter: (Store<AppState> store) => ViewModel.create(store),
-      builder: (BuildContext context, ViewModel viewModel) {
-        var profileTiles = <Map>[
-          // Profile disabled for v1
-          //{
-          //  'profileTile':
-          //      ProfileTile("Profile", FontAwesomeIcons.solidUserCircle),
-          //  'page': Routes.profile,
-          //},
-          {
-            'sectionHeading':  "The app"
-          },
-          {
-            'profileTile':
-                ProfileTile("Our partners", CustomIcons.ic_partners),
-            'page': Routes.parteners,
-          },
-          {
-            'profileTile': ProfileTile("FAQ", CustomIcons.ic_faq),
-            'page': Routes.faq,
-          },
-          //{
-          //  'profileTile': ProfileTile("Campaigns", FontAwesomeIcons.book),
-          //  'page': Routes.campaign,
-          //},
-          {
-            'sectionHeading':  "Feedback"
-          },
-          {
-            'profileTile': ProfileTile(
-                "Give past campaign feedback", CustomIcons.ic_feedback),
-            'link':
-                "https://docs.google.com/forms/d/e/1FAIpQLScg9a8pdP6P7GDKfyOCcJkU_i0C1m84T-M4muEUjfo8TmCSkw/viewform",
-          },
-          {
-            'profileTile': ProfileTile(
-                "Propose a campaign", CustomIcons.ic_suggestcamp),
-            'link':
-                "https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform",
-          },
-          {
-            'profileTile':
-                ProfileTile("Give feedback on the app", CustomIcons.ic_feedback),
-            'link':
-                "https://docs.google.com/forms/d/e/1FAIpQLSflMOarmyXRv7DRbDQPWRayCpE5X4d8afOpQ1hjXfdvzbnzQQ/viewform",
-          },
-          {
-            'profileTile':
-                ProfileTile("Rate us on the app store", CustomIcons.ic_rateus),
-            'link':
-              Platform.isIOS 
-                ? "https://apps.apple.com/us/app/now-u/id1516126639"
-                : "https://play.google.com/store/apps/details?id=com.nowu.app",
-            'external': true
-            //'function': () {StoreRedirect.redirect();}
-          },
-          {
-            'profileTile': ProfileTile(
-                "Send us a message", CustomIcons.ic_social_fb),
-            'link': "http://m.me/nowufb",
-            'external': true
-          },
-          {
-            'profileTile':
-                ProfileTile("Send us an email", CustomIcons.ic_email),
-            'link': "mailto:hello@now-u.com?subject=Hi",
-            'external': true
-          },
-          {
-            'sectionHeading':  "Legal"
-          },
-          {
-            'profileTile':
-                ProfileTile("Terms & conditions", CustomIcons.ic_tc),
-            'link': "https://share.now-u.com/legal/now-u_users_Ts&Cs.pdf",
-            'external': true
-          },
-          {
-            'profileTile':
-                ProfileTile("Privacy policy", CustomIcons.ic_privacy),
-            'link': "https://share.now-u.com/legal/now-u_privacy_policy.pdf",
-            'external': true
-          },
-        ];
-        user = viewModel.userModel.user;
-        return Scaffold(
-            body: Container(
-                color: Colors.white,
-                child: ListView(
-                  children: <Widget>[
-                    SizedBox(height: 45),
-                    Padding(
-                      padding: EdgeInsets.only(left: 15),
-                      child: Text(
-                        "More",
-                        style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.headline2,
+    return ViewModelBuilder<BaseModel>.reactive(
+        viewModelBuilder: () => BaseModel(),
+        builder: (context, model, child) {
+          return Scaffold(
+              body: Container(
+                  color: Colors.white,
+                  child: ListView(
+                    children: <Widget>[
+                      SizedBox(height: 45),
+                      Padding(
+                        padding: EdgeInsets.only(left: 15),
+                        child: Text(
+                          "More",
+                          style: textStyleFrom(
+                            Theme.of(context).primaryTextTheme.headline2,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 30),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: profileTiles.length,
-                      itemBuilder: (context, index) {
-                        if (profileTiles[index]["sectionHeading"] != null) {
-                          return Padding(
-                            padding: EdgeInsets.only(left: 20, top: index == 0 ? 0 : 25, bottom: 5),
-                            child: Text(
-                              profileTiles[index]["sectionHeading"],
-                              style: textStyleFrom(
-                                Theme.of(context).primaryTextTheme.headline4
-                              ),
-                            )
-                          );
-                        } 
-                        else {
-                          return GestureDetector(
-                            onTap: () => setState(() {
-                              print("Tapping");
-                              if (profileTiles[index]["page"] != null) {
-                                print("Pushing page");
-                                Navigator.pushNamed(
-                                    context, profileTiles[index]["page"]);
-                              } else if (profileTiles[index]["link"] != null) {
-                                customLaunch(
-                                  context,
-                                  profileTiles[index]["link"],
-                                  isExternal: profileTiles[index]['external'] ?? false
-                                );
-                              } else if (profileTiles[index]["function"] != null) {
-                                profileTiles[index]["function"]();
-                              }
-                            }),
-                            child: profileTiles[index]["profileTile"],
-                          );
+                      SizedBox(height: 30),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: profileTiles.length,
+                        itemBuilder: (context, index) {
+                          if (profileTiles[index]["sectionHeading"] != null) {
+                            return Padding(
+                              padding: EdgeInsets.only(left: 20, top: index == 0 ? 0 : 25, bottom: 5),
+                              child: Text(
+                                profileTiles[index]["sectionHeading"],
+                                style: textStyleFrom(
+                                  Theme.of(context).primaryTextTheme.headline4
+                                ),
+                              )
+                            );
+                          } 
+                          else {
+                            return GestureDetector(
+                              onTap: () {
+                                if (profileTiles[index]["page"] != null) {
+                                  Navigator.pushNamed(
+                                      context, profileTiles[index]["page"]);
+                                } else if (profileTiles[index]["link"] != null) {
+                                  customLaunch(
+                                    context,
+                                    profileTiles[index]["link"],
+                                    isExternal: profileTiles[index]['external'] ?? false
+                                  );
+                                } else if (profileTiles[index]["function"] != null) {
+                                  profileTiles[index]["function"]();
+                                }
+                              },
+                              child: profileTiles[index]["profileTile"],
+                            );
+                          }
                         }
-                      }
-                    ),
-                    SizedBox(height: 15),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        SocialButton(
-                          icon: FontAwesomeIcons.instagram,
-                          link: "https://www.instagram.com/now_u_app/",
-                        ),
-                        SocialButton(
-                          icon: FontAwesomeIcons.facebookF,
-                          link: "https://www.facebook.com/nowufb",
-                        ),
-                        SocialButton(
-                          icon: FontAwesomeIcons.twitter,
-                          link: "https://twitter.com/now_u_app",
-                        )
-                      ],
-                    ),
-                    SizedBox(height: 20),
+                      ),
+                      SizedBox(height: 15),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          SocialButton(
+                            icon: FontAwesomeIcons.instagram,
+                            link: "https://www.instagram.com/now_u_app/",
+                          ),
+                          SocialButton(
+                            icon: FontAwesomeIcons.facebookF,
+                            link: "https://www.facebook.com/nowufb",
+                          ),
+                          SocialButton(
+                            icon: FontAwesomeIcons.twitter,
+                            link: "https://twitter.com/now_u_app",
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 20),
 
-                    // Dev Tools
-                    user.isStagingUser() 
-                      ? Column(
-                          children: [
-                            GestureDetector(
-                              child: ProfileTile("Dev Tools", FontAwesomeIcons.code),
-                              onTap: () {
-                                viewModel.api.toggleStagingApi();
-                                viewModel.onUpdateCampaings();
-                              }
-                            ),
-                            GestureDetector(
-                              child: ProfileTile("Log out", FontAwesomeIcons.code),
-                              onTap: () {
-                                viewModel.onLogout();
-                              }
-                            ),
-                          ]
-                        )
-                      : Container()
-                  ],
-                )));
+                      // Dev Tools
+                      // TODO add this back in its super duper handy
+                      //model.currentUser.isStagingUser() 
+                      //  ? Column(
+                      //      children: [
+                      //        GestureDetector(
+                      //          child: ProfileTile("Dev Tools", FontAwesomeIcons.code),
+                      //          onTap: () {
+                      //            viewModel.api.toggleStagingApi();
+                      //            viewModel.onUpdateCampaings();
+                      //          }
+                      //        ),
+                      //        GestureDetector(
+                      //          child: ProfileTile("Log out", FontAwesomeIcons.code),
+                      //          onTap: () {
+                      //            viewModel.onLogout();
+                      //          }
+                      //        ),
+                      //      ]
+                      //    )
+                      //  : Container()
+                    ],
+                  )));
       },
     );
   }
