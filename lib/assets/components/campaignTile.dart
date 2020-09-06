@@ -63,21 +63,13 @@ class CampaignTile extends StatefulWidget {
 }
 
 class _CampaignTileState extends State<CampaignTile> {
-  @override
-  void initState() {
-    print("Initialising state");
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
-    //_user = widget.model.user;
-
     GestureTapCallback _onTapMoreInfo = () {
       Navigator.of(context).pushNamed(Routes.campaignInfo, arguments: widget.campaign);
     };
 
-    var borderRadius = 20.0;
     var hPadding = widget.hPadding ?? 15.0;
     var hOuterPadding = widget.hOuterPadding;
     return Tile(

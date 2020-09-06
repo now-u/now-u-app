@@ -95,9 +95,7 @@ class ActionViewModel extends BaseCampaignViewModel {
   bool hasSelected(Map sel) {
     // If any of the values are true then at least one is selected
     for (final value in sel.values) {
-      print("Checking value");
       if (value) {
-        print("true value");
         return true;
       }
     }

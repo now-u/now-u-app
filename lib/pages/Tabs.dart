@@ -1,14 +1,10 @@
 import 'package:app/pages/campaign/LearningCentre/LearningCentreAllPage.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app/assets/icons/customIcons.dart';
 
-import 'package:app/models/ViewModel.dart';
-
 import 'package:app/pages/home/Home.dart';
 import 'package:app/pages/profile/Profile.dart';
-import 'package:app/pages/campaign/CampaignPage.dart';
 import 'package:app/pages/news/NewsPage.dart';
 import 'package:app/pages/action/ActionPage.dart';
 
@@ -34,7 +30,6 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    print("initing state");
     currentPage = widget.currentPage;
     _subIndex = null;
     super.initState();
@@ -50,16 +45,6 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
     super.dispose();
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      print("Tabs resumed");
-      //handleDynamicLinks(
-      //  changePage
-      //);
-    }
-  }
-
   void changePage(TabPage page, {int subIndex}) {
     print("Changing page");
     print(page);
@@ -72,9 +57,6 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    //_currentIndex = widget.currentIndex;
-    //print("When drawing tabs view the current index is");
-    //print(_currentIndex);
     // TODO add an enum so pages numbers can change
     List<Map> _pages = <Map>[
       {
@@ -106,7 +88,6 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
     List<BottomNavigationBarItem> generateBottomNavBarItems() {
       List<BottomNavigationBarItem> items = [];
       for (int i = 0; i < _pages.length; i++) {
-        print("Doing thing" + i.toString());
         items.add(new BottomNavigationBarItem(
           activeIcon: ShaderMask(
             shaderCallback: (Rect bounds) {
@@ -141,7 +122,6 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
             iconSize: 25,
             unselectedLabelStyle: TextStyle(color: Color.fromRGBO(155,159,177,1), fontSize: 10),
             selectedLabelStyle: TextStyle(color: Colors.red, fontSize: 12),
-            //selectedItemColor: Theme.of(context).primaryColor,
             unselectedItemColor: Color.fromRGBO(155,159,177,1),
             items: generateBottomNavBarItems(),
             onTap: (index) {

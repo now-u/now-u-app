@@ -318,11 +318,9 @@ class CampaignAction {
 
   bool isNew() {
     if (releasedAt == null) {
-      print("Date time difference = " + DateTime.now().difference(createdAt).toString());
       return DateTime.now().difference(createdAt).compareTo(Duration(days: 2)) < 0;
     }
     else {
-      print("Date time difference = " + DateTime.now().difference(releasedAt).toString());
       return DateTime.now().difference(releasedAt).compareTo(Duration(days: 2)) < 0;
     }
   }
