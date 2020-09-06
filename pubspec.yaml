@@ -27,6 +27,9 @@ dependencies:
   redux: ^4.0.0
   flutter_redux: ^0.6.0
   redux_thunk: ^0.3.0
+  stacked: ^1.7.6
+
+
   shared_preferences: 0.5.6+3
   path_provider: ^1.6.9
   font_awesome_flutter: ^8.8.1
