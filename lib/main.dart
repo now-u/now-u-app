@@ -3,24 +3,12 @@ import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
-import 'package:app/pages/other/SplashScreen.dart';
-
 import 'package:app/routes.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/analytics.dart';
-import 'package:app/services/pushNotifications.dart';
 import 'package:app/services/navigation.dart';
 
 import 'package:app/pages/other/startup_view.dart';
-
-import 'package:app/models/State.dart';
-
-import 'package:app/redux/reducers.dart';
-import 'package:app/redux/middleware.dart';
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux_dev_tools/redux_dev_tools.dart';
-import 'package:redux_thunk/redux_thunk.dart';
 
 void main() {
   Crashlytics.instance.enableInDevMode = true;
@@ -64,7 +52,7 @@ const MaterialColor whiteMaterial = const MaterialColor(
 Color white = Colors.white;
 Color orange = Color.fromRGBO(255, 136, 0, 1);
 Color blue = Color.fromRGBO(1, 26, 67, 1);
-Color black = Colors.black;
+Color black = Color.fromRGBO(55, 58, 74, 1);
 Color lightGrey = Color.fromRGBO(119, 119, 119, 1);
 
 // Accent Colours

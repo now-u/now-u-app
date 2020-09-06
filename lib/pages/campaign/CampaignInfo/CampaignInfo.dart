@@ -25,17 +25,400 @@ import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/organisationTile.dart';
 import 'package:app/assets/components/textButton.dart';
+import 'package:app/assets/components/header.dart';
+import 'package:app/assets/routes/customLaunch.dart';
 
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 const double H_PADDING = 20;
+final Api api = locator<Api>();
 
 class CampaignInfo extends StatelessWidget {
   final Campaign campaign;
   final int campaignId;
 
   CampaignInfo({this.campaign, this.campaignId})
+      : assert(campaign != null || campaignId != null);
+  
+  @override
+  Widget build(BuildContext context) {
+    if (campaign != null) {
+      return CampaignInfoBody(campaign);
+    }
+    return FutureBuilder(
+      future: api.getCampaign(campaignId),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (!snapshot.hasData) {
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+        return CampaignInfoBody(snapshot.data);
+      },
+    );
+  }
+}
+
+class CampaignInfoBody extends StatelessWidget {
+  final Campaign _campaign;
+
+  CampaignInfoBody(this._campaign);
+   
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: ListView(
+        children: [
+
+          // Header
+          Container(
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(_campaign.getHeaderImage()),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Container(
+                color: colorFrom(
+                  Colors.black,
+                  opacity: 0.5,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 20),
+                  child: Column(
+                    children: [
+                      PageHeader(
+                        title: _campaign.getTitle(),
+                        textColor: Colors.white,
+                        backButton: true,
+                        backButtonText: "",
+                        maxLines: 4,
+                        fontSize: Theme.of(context).primaryTextTheme.headline3.fontSize,
+                        extraInnerPadding: 20,
+                      ),
+                    ]
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          // Body
+          Container(
+            color: Color.fromRGBO(247, 248, 252, 1),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 25),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: CustomTile(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Column(
+                          children: <Widget>[
+                            Text("See what you can do to support this cause today!", 
+                              style: textStyleFrom(Theme.of(context).primaryTextTheme.headline4),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 15,),
+                            DarkButton("Take action", onPressed: (){
+                              if (_campaign.isPast()) {
+                                Navigator.of(context).pushNamed(Routes.pastCampaignActionPage, arguments: _campaign);
+                              }
+                              else {
+                                Navigator.of(context).pushNamed(Routes.actions);
+                              }
+                            })
+                          ],
+                        ),
+                      )
+                    ),
+                  ),
+
+                  SizedBox(height: 25),
+
+                  // About
+                  Text(
+                    "About",
+                    style: Theme.of(context).primaryTextTheme.headline3,
+                  ),
+         
+                  SizedBox(height: 15),
+
+                  // Stats
+                  StoreConnector<AppState, ViewModel>(
+                    converter: (Store<AppState> store) => ViewModel.create(store),
+                    builder: (BuildContext context, ViewModel viewModel) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CampaignStat(text: "${_campaign.getNumberOfCampaigners()} people have joined", icon: CustomIcons.ic_partners),
+                          //CampaignStat(text: "Actions completed"),,
+                          CampaignStat(text: "Global reach", icon: Icons.people,),
+                        ],
+                      );
+                    }
+                  ),
+                  
+                  SizedBox(height: 25),
+
+                  // Buttons
+                  Column(
+                    children: [
+                      CampaignButton(
+                        text: "Watch the video", 
+                        icon: CustomIcons.ic_video, 
+                        onTap: () {
+                          //Navigator.of(context).pushNamed(Routes.videoPlayer);
+                        }
+                      ),
+                      CampaignButton(
+                        text: "Read summary", 
+                        icon: CustomIcons.ic_news, 
+                        onTap: () {
+                        }
+                      ),
+                      CampaignButton(
+                        text: "Go to learning hub", 
+                        icon: CustomIcons.ic_learning, 
+                        onTap: () {
+                          Navigator.of(context).pushNamed(Routes.learningSingle, arguments: _campaign.getId());
+                        }
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(height: 30),
+
+                  // Share 
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CustomTextButton(
+                        "Share this campaign",
+                        onClick: () async {
+                          String text = await _campaign.getShareText();
+                          Share.share(text);
+                        },
+                      ),
+                    ],
+                  ),
+                  
+                  SizedBox(height: 30),
+
+                ]
+              ),
+            ),
+          ),
+
+          // Goals
+          Container(
+            color: Colors.white,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
+                  SizedBox(height: 35,),
+                  
+                  Text(
+                    "Goals",
+                    style: Theme.of(context).primaryTextTheme.headline3,
+                  ),
+                  
+                  SizedBox(height: 20,),
+
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: _campaign.getKeyAims().map((aim) {
+                      return Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(CustomIcons.ic_bullseye),
+                              SizedBox(width: 15),
+                              Expanded(
+                                child: Text(
+                                  aim,
+                                  style: textStyleFrom(
+                                    Theme.of(context).primaryTextTheme.bodyText1,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(height: 15)
+                        ]
+                      );
+                    }).toList()
+                  ),
+                  
+                  SizedBox(height: 20),
+                ],
+              ),
+            )
+          ),
+
+          // Partners
+          _campaign.getGeneralPartners().length == 0 ? Container() :
+          Container(
+            color: Color.fromRGBO(247,248,252,1),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 35, horizontal: 18),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Campaign partners",
+                    style: Theme.of(context).primaryTextTheme.headline3,
+                  ),
+                  SizedBox(height: 20,),
+                  Wrap( 
+                    children: getOrganistaionTiles(_campaign.getGeneralPartners(), context),
+                    spacing: 10,
+                    runSpacing: 10,
+                    crossAxisAlignment: WrapCrossAlignment.start,
+                    alignment: WrapAlignment.start,
+                  ),
+                  SizedBox(height: 30,),
+                ],
+              )
+            )
+          ),
+
+          // SDGs
+          SizedBox(height: 30),
+
+          Container(
+            child: ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: _campaign.getSDGs().length,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: EdgeInsets.all(10),
+                  child: SDGSelectionItem(_campaign.getSDGs()[index]),
+                );
+              },
+              // )
+            )
+          ),
+  
+          SizedBox(height: 30),
+
+          // Find out more - SDGs
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "Find out more at:",
+                style: Theme.of(context).primaryTextTheme.bodyText1,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomTextButton(
+                    "sustainabledevelopment.un.org",
+                    onClick: () {customLaunch(context, "https://sustainabledevelopment.un.org");},
+                    fontSize: Theme.of(context).primaryTextTheme.bodyText1.fontSize,
+                  ),
+                ]
+              )
+            ],
+          ),
+
+          SizedBox(height: 50),
+        ],
+      )
+    );
+  }
+}
+
+class CampaignStat extends StatelessWidget {
+  final String text;
+  final IconData icon;
+
+  CampaignStat({
+    @required this.text,
+    @required this.icon,
+  });
+
+  @override 
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 5),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color: Theme.of(context).primaryTextTheme.bodyText1.color,
+          ),
+          SizedBox(width: 10,),
+          Text(
+            text
+          ) 
+        ],
+      ),
+    );
+  }
+}
+
+class CampaignButton extends StatelessWidget {
+  final String text;
+  final IconData icon;
+  final Function onTap;
+
+  CampaignButton({
+    @required this.text,
+    @required this.icon,
+    @required this.onTap,
+  });
+
+  @override 
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      child: CustomTile(
+        onClick: onTap,
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+          child: Row(
+            children: [
+              Icon(
+                icon, 
+                color: Theme.of(context).primaryTextTheme.bodyText1.color,
+              ),
+              SizedBox(width: 14,),
+              Text(
+                text,
+                style: textStyleFrom(
+                  Theme.of(context).primaryTextTheme.headline5
+                ),
+              )
+            ],
+          ),
+        )
+      ),
+    );
+  }
+}
+
+class CampaignInfoOld extends StatelessWidget {
+  final Campaign campaign;
+  final int campaignId;
+
+  CampaignInfoOld({this.campaign, this.campaignId})
       : assert(campaign != null || campaignId != null);
 
   @override
@@ -468,7 +851,7 @@ class _CampaignInfoContentState extends State<CampaignInfoContent> {
                 : SectionTitle("UN Sustainable Development Goals",
                     hPadding: H_PADDING,),
             //SDGReel(campaign.getSDGs()),
-            SDGList(campaign.getSDGs()),
+            //SDGList(campaign.getSDGs()),
 
             SizedBox(height: 20),
             joined
@@ -566,28 +949,6 @@ class OrganisationReel extends StatelessWidget {
   }
 }
 
-class SDGList extends StatelessWidget {
-  final List<SDG> sdgs;
-  SDGList(this.sdgs);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        //child: Expanded(
-        child: ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: sdgs.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding: EdgeInsets.all(10),
-              child: SDGSelectionItem(sdgs[index]),
-            );
-          },
-          // )
-        ));
-  }
-}
-
 class SDGSelectionItem extends StatelessWidget {
   final SDG sdg;
   SDGSelectionItem(this.sdg);
@@ -595,14 +956,14 @@ class SDGSelectionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          launch(sdg.getLink());
+          customLaunch(context, sdg.getLink());
         },
         child: Row(
           mainAxisSize: MainAxisSize.max,
           children: [
             Container(
-              height: 75,
-              width: 75,
+              height: 70,
+              width: 70,
               child: Padding(
                 padding: EdgeInsets.all(0),
                 child: Image.asset(
@@ -610,25 +971,24 @@ class SDGSelectionItem extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: 10),
+            SizedBox(width: 13),
             Expanded(
               child: RichText(
-                text: TextSpan(children: [
-                  TextSpan(
-                      text:
-                          "This campaign is working towards the United Nations Sustainable Development Goal ${sdg.getNumber()}. Find out more at ",
-                      style: Theme.of(context).primaryTextTheme.bodyText1),
-                  TextSpan(
-                      text: "sustainabledevelopment.un.org",
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "This campaign is working towards the United Nations ",
+                      style: Theme.of(context).primaryTextTheme.bodyText1
+                    ),
+                    TextSpan(
+                      text: "Sustainable Development Goal ${sdg.getNumber()}.",
                       style: textStyleFrom(
                         Theme.of(context).primaryTextTheme.bodyText1,
-                        color: Theme.of(context).buttonColor,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          launch("https://sustainabledevelopment.un.org");
-                        }),
-                ]),
+                        fontWeight: FontWeight.w600,
+                      )
+                    ),
+                  ]
+                ),
               ),
             ),
           ],
