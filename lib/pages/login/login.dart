@@ -7,9 +7,6 @@ import 'package:app/assets/routes/customLaunch.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:app/models/State.dart';
-import 'package:app/models/ViewModel.dart';
-import 'package:app/models/User.dart';
 import 'package:app/viewmodels/login_model.dart';
 
 import 'package:app/services/storage.dart';

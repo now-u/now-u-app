@@ -46,11 +46,8 @@ class Home extends StatelessWidget {
           viewModelBuilder: () => HomeViewModel(),
           onModelReady: (model) => model.pullCampaings(),
           builder: (context, model, child) {
-            if (model.busy)  {
-              return CircularProgressIndicator();
-            }
             List<Campaign> campaigns = model.campaignsWithSelectedFirst;  
-           return 
+            return 
               ScrollableSheetPage(
                 header: FutureBuilder(
                   future: model.getNotifications(),
@@ -71,8 +68,11 @@ class Home extends StatelessWidget {
                    infoTitle: "Campaigns",
                    infoText: "The impact of our campaigns is crucial. Our aim is to create campaigns that are as effective and impactful as possible, and we are designing new ways to measure the impact of now-u’s community on our campaign issues.\n We will keep you updated on your personal progress in the app, and share regular community impact reports on our blog, news feed and social media!\n At the end of each campaign, you will receive a quick survey about your experience of the campaign. We will use this data, along with other app use metrics, to create campaign impact reports to share with you and our charity partners.\n We hope to learn from these impact assessments so that we can continue to improve our campaigns, and help you keep making a difference!",
                  ),
+  
+                  model.campaigns == []
+                    ? Container(child: Center(child: CircularProgressIndicator()))
+                    : CampaignCarosel(campaigns, _controller),
 
-                 CampaignCarosel(campaigns, _controller),
 
                  Row(
                   mainAxisSize: MainAxisSize.max,
@@ -227,18 +227,11 @@ class CampaignCarosel extends StatelessWidget {
               key: campaignCarouselPageKey,
               controller: controller,
               itemCount: cs.length,
-                  // If all the active campaigns have been joined
-              //itemCount: viewModel.campaigns.getActiveCampaigns().length,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: CampaignTile(
                     cs[index],
-                      // Used to only selected campaigns ==> remeber to change count
-                  //viewModel
-                  //  .userModel.user
-                  //  .filterSelectedCampaigns(viewModel.campaigns
-                  //      .getActiveCampaigns())[index],
                     hOuterPadding: 4,
                   ),
                 );
