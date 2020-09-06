@@ -13,14 +13,12 @@ import 'package:app/assets/components/notifications.dart';
 import 'package:app/assets/routes/customLaunch.dart';
 import 'package:app/assets/StyleFrom.dart';
 
-import 'package:app/models/ViewModel.dart';
 import 'package:app/models/Notification.dart';
-import 'package:app/models/State.dart';
-import 'package:app/models/Campaigns.dart';
+import 'package:app/models/Campaign.dart';
+import 'package:app/viewmodels/home_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:stacked/stacked.dart';
 
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 const double BUTTON_PADDING = 10;
@@ -44,24 +42,24 @@ class Home extends StatelessWidget {
         Theme.of(context).primaryColor,
         opacity: 0.05,
       ),
-      body: 
-        StoreConnector<AppState, ViewModel>(
-          converter: (Store<AppState> store) => ViewModel.create(store),
-          builder: (BuildContext context, ViewModel viewModel) {
-           if (viewModel.loading || viewModel.userModel.isLoading )  {
-             return CircularProgressIndicator();
-           }
-          Campaigns campaigns = viewModel.getCampaignsWithSelctedFirst();  
+      body: ViewModelBuilder<HomeViewModel>.reactive(
+          viewModelBuilder: () => HomeViewModel(),
+          onModelReady: (model) => model.pullCampaings(),
+          builder: (context, model, child) {
+            if (model.busy)  {
+              return CircularProgressIndicator();
+            }
+            List<Campaign> campaigns = model.campaignsWithSelectedFirst;  
            return 
               ScrollableSheetPage(
                 header: FutureBuilder(
-                  future: viewModel.userModel.auth.getNotifications(viewModel.userModel.user.getToken()),
+                  future: model.getNotifications(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.hasData) {
                       if (snapshot.data.length != 0) {
-                        return HeaderWithNotifications(viewModel.userModel.user.getName(), snapshot.data[0]);
+                        return HeaderWithNotifications(model.currentUser.getName(), snapshot.data[0]);
                       }
-                      return HeaderStyle1(viewModel);
+                      return HeaderStyle1(model.currentUser.getName());
                     }
                     return Center(child: CircularProgressIndicator());
                   },
@@ -157,10 +155,7 @@ class Home extends StatelessWidget {
                  ),
 
                  // Impact Section
-                 StoreConnector<AppState, ViewModel>(
-                   converter: (Store<AppState> store) => ViewModel.create(store),
-                   builder: (BuildContext context, ViewModel viewModel) {
-                     return Container(
+                     Container(
                        child: Padding(
                          padding: EdgeInsets.all(10),
                          child: Column(
@@ -176,30 +171,27 @@ class Home extends StatelessWidget {
                                  ),
                                ]
                              ),
-                             viewModel.userModel.user.getSelectedCampaigns() == null ? CircularProgressIndicator() : 
                              ImpactTile(
-                               viewModel.userModel.user.getSelectedCampaigns().length,
+                               model.numberOfJoinedCampaigns,
                                "Campaigns joined",
                                route: Routes.campaign,
                              ),
                              SizedBox(height: 10),
                              ImpactTile(
-                               viewModel.userModel.user.getCompletedActions().length,
+                               model.numberOfCompletedActions,
                                "Actions taken",
                                route: Routes.actions,
                              ),
                              SizedBox(height: 10),
                              ImpactTile(
-                               viewModel.getActiveStarredActions().length,
+                               model.numberOfStarredActions,
                                "Actions in to-do list",
                                route: Routes.actions,
                              )
                            ],
                          ),
                        ),
-                     );
-                   }
-                 )
+                     )
                 ]
 
               );
@@ -221,7 +213,7 @@ Widget sectionTitle(String t, BuildContext context) {
 }
 
 class CampaignCarosel extends StatelessWidget {
-  final Campaigns cs;
+  final List<Campaign> cs;
   final PageController controller;
 
   CampaignCarosel (this.cs, this.controller);
@@ -234,14 +226,14 @@ class CampaignCarosel extends StatelessWidget {
           child: PageView.builder(
               key: campaignCarouselPageKey,
               controller: controller,
-              itemCount: cs.activeLength(),
+              itemCount: cs.length,
                   // If all the active campaigns have been joined
               //itemCount: viewModel.campaigns.getActiveCampaigns().length,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: CampaignTile(
-                    cs.getActiveCampaigns()[index],
+                    cs[index],
                       // Used to only selected campaigns ==> remeber to change count
                   //viewModel
                   //  .userModel.user
@@ -256,7 +248,7 @@ class CampaignCarosel extends StatelessWidget {
           SmoothPageIndicator(
             key: campaignCarouselPageKey,
             controller: controller,
-            count: cs.activeLength(),
+            count: cs.length,
             effect: customSmoothPageInducatorEffect,
           ),
           SizedBox(height: 30),
@@ -374,8 +366,8 @@ class ImpactTile extends StatelessWidget {
 }
 
 class HeaderStyle1 extends StatelessWidget {
-  final ViewModel viewModel;
-  HeaderStyle1(this.viewModel);
+  final String name;
+  HeaderStyle1(this.name);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -404,7 +396,7 @@ class HeaderStyle1 extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                          Text(
-                            "Hello\n${viewModel.userModel.user.getName()}",
+                            "Hello\n$name",
                             style: textStyleFrom(
                               Theme.of(context).primaryTextTheme.headline2,
                               color: Colors.white,

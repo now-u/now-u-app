@@ -45,12 +45,16 @@ class HomeViewModel extends BaseModel {
       }
     );
     _campaigns = updatedCampaigns.getActiveCampaigns();
+    setBusy(false);
     notifyListeners();
   } 
 
   // getSelectedCampaigns
   List<Campaign> get selectedCampaigns {
     return currentUser.filterSelectedCampaigns(_campaigns);
+  }
+  int get numberOfJoinedCampaigns {
+    return currentUser.getSelectedCampaigns().length;
   }
   
   // getCompletedActions
@@ -64,5 +68,7 @@ class HomeViewModel extends BaseModel {
   }
 
   // getNotifications
-
+  Future getNotifications() async {
+    return [];
+  }
 }

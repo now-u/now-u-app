@@ -79,20 +79,20 @@ void appStateMiddleware(
 
   if (action is InitaliseState) {}
 
-  if (action is UnjoinCampaign) {
-    // TODO Here we are assuming the user is not attempting to unjoin a campaign that hasnt been joined (shouldnt be possible but probably worth checking
+  //if (action is UnjoinCampaign) {
+  //  // TODO Here we are assuming the user is not attempting to unjoin a campaign that hasnt been joined (shouldnt be possible but probably worth checking
 
-    User responseUser = await store.state.userState.auth.unjoinCampaign(
-        store.state.userState.user.getToken(), action.campaign.getId());
-    print("new user points ${responseUser.getPoints()}");
+  //  User responseUser = await store.state.userState.auth.unjoinCampaign(
+  //      store.state.userState.user.getToken(), action.campaign.getId());
+  //  print("new user points ${responseUser.getPoints()}");
 
-    store.state.analytics.logCampaignStatusUpdate(action.campaign, CampaignStatus.leave);
+  //  store.state.analytics.logCampaignStatusUpdate(action.campaign, CampaignStatus.leave);
 
-    store.dispatch(UnjoinedCampaign(
-      responseUser.getPoints(),
-      responseUser.getSelectedCampaigns(),
-    ));
-  }
+  //  store.dispatch(UnjoinedCampaign(
+  //    responseUser.getPoints(),
+  //    responseUser.getSelectedCampaigns(),
+  //  ));
+  //}
   if (action is UnjoinedCampaign) {
     saveUserToPrefs(store.state.userState.user.copyWith(
       points: action.points,
@@ -146,20 +146,20 @@ void appStateMiddleware(
     });
   }
 
-  if (action is RejectAction) {
-    var responseUser = await store.state.userState.auth.rejectAction(
-        store.state.userState.user.getToken(),
-        action.action.getId(),
-        action.reason);
-    User newUser = store.state.userState.user.copyWith(
-      points: responseUser.getPoints(),
-      rejectedActions: responseUser.getRejectedActions(),
-    );
+  //if (action is RejectAction) {
+  //  var responseUser = await store.state.userState.auth.rejectAction(
+  //      store.state.userState.user.getToken(),
+  //      action.action.getId(),
+  //      action.reason);
+  //  User newUser = store.state.userState.user.copyWith(
+  //    points: responseUser.getPoints(),
+  //    rejectedActions: responseUser.getRejectedActions(),
+  //  );
 
-    saveUserToPrefs(newUser).then((_) {
-      store.dispatch(RejectedAction(newUser));
-    });
-  }
+  //  saveUserToPrefs(newUser).then((_) {
+  //    store.dispatch(RejectedAction(newUser));
+  //  });
+  //}
 
   if (action is Logout) {
     print("Updating user in shared pref with empty token");
@@ -173,122 +173,122 @@ void appStateMiddleware(
 }
 
 ThunkAction<AppState> joinCampaign(Campaign campaign, BuildContext context) {
-  return (Store<AppState> store) async {
-    Future(() async {
-      if (store.state.userState.user
-          .getSelectedCampaigns()
-          .contains(campaign.getId())) {
-        print("This campaigns has already been joined");
-        return;
-      }
-      User responseUser = await store.state.userState.auth.joinCampaign(
-          store.state.userState.user.getToken(), campaign.getId());
+  //return (Store<AppState> store) async {
+  //  Future(() async {
+  //    if (store.state.userState.user
+  //        .getSelectedCampaigns()
+  //        .contains(campaign.getId())) {
+  //      print("This campaigns has already been joined");
+  //      return;
+  //    }
+  //    User responseUser = await store.state.userState.auth.joinCampaign(
+  //        store.state.userState.user.getToken(), campaign.getId());
 
-      print("new user points ${responseUser.getPoints()}");
+  //    print("new user points ${responseUser.getPoints()}");
 
-      User newUser = store.state.userState.user.copyWith(
-        points: responseUser.getPoints(),
-        selectedCampaigns: responseUser.getSelectedCampaigns(),
-      );
-    
-      store.state.analytics.logCampaignStatusUpdate(campaign, CampaignStatus.join);
+  //    User newUser = store.state.userState.user.copyWith(
+  //      points: responseUser.getPoints(),
+  //      selectedCampaigns: responseUser.getSelectedCampaigns(),
+  //    );
+  //  
+  //    store.state.analytics.logCampaignStatusUpdate(campaign, CampaignStatus.join);
 
-      //viewModel.userModel.user.addSelectedCamaping(campaign.getId());
-      int newPoints = newUser.getPoints();
-      int oldPoints = store.state.userState.user.getPoints();
+  //    //viewModel.userModel.user.addSelectedCamaping(campaign.getId());
+  //    int newPoints = newUser.getPoints();
+  //    int oldPoints = store.state.userState.user.getPoints();
 
-      print("Points");
-      print(newPoints);
-      print(oldPoints);
+  //    print("Points");
+  //    print(newPoints);
+  //    print(oldPoints);
 
-      saveUserToPrefs(newUser).then((_) {
-        store.dispatch(JoinedCampaign(newUser));
-        // If the users new next badge is different to their current badge
-        // Then they must have earnt a new badge
-        if (getNextBadge(newPoints) > getNextBadge(oldPoints)) {
-          print("New badge");
-          // Do the new badge popup
-          // If you did get a new badge then show that popup
-          gotBadgeNotifier(
-            badge: getNextBadgeFromInt(oldPoints),
-            context: context,
-          );
-        } else {
-          pointsNotifier(newPoints, 10, getNextBadge(newPoints), context)
-            ..show(context);
-        }
-      });
-    });
-  };
+  //    saveUserToPrefs(newUser).then((_) {
+  //      store.dispatch(JoinedCampaign(newUser));
+  //      // If the users new next badge is different to their current badge
+  //      // Then they must have earnt a new badge
+  //      if (getNextBadge(newPoints) > getNextBadge(oldPoints)) {
+  //        print("New badge");
+  //        // Do the new badge popup
+  //        // If you did get a new badge then show that popup
+  //        gotBadgeNotifier(
+  //          badge: getNextBadgeFromInt(oldPoints),
+  //          context: context,
+  //        );
+  //      } else {
+  //        pointsNotifier(newPoints, 10, getNextBadge(newPoints), context)
+  //          ..show(context);
+  //      }
+  //    });
+  //  });
+  //};
 }
 
 ThunkAction<AppState> starAction(CampaignAction action) {
   return (Store<AppState> store) async {
-    Future(() async {
-      if (store.state.userState.user
-          .getStarredActions()
-          .contains(action.getId())) {
-        print("This action has already been starred");
-        return;
-      }
-      if (store.state.userState.user
-          .getCompletedActions()
-          .contains(action.getId())) {
-        print("This action has already been completed");
-        return;
-      }
-      if (store.state.userState.user
-          .getRejectedActions()
-          .contains(action.getId())) {
-        print("This action has already been rejected");
-        return;
-      }
+    //Future(() async {
+    //  if (store.state.userState.user
+    //      .getStarredActions()
+    //      .contains(action.getId())) {
+    //    print("This action has already been starred");
+    //    return;
+    //  }
+    //  if (store.state.userState.user
+    //      .getCompletedActions()
+    //      .contains(action.getId())) {
+    //    print("This action has already been completed");
+    //    return;
+    //  }
+    //  if (store.state.userState.user
+    //      .getRejectedActions()
+    //      .contains(action.getId())) {
+    //    print("This action has already been rejected");
+    //    return;
+    //  }
 
-      // If not already complete/rejected/starred
-      User userResponse = await store.state.userState.auth
-          .starAction(
-        store.state.userState.user.getToken(),
-        action.getId(),
-      )
-          .catchError((error) {
-        if (error == AuthError.unauthorized) onAuthError();
-      });
-      
-      store.state.analytics.logActionStatusUpdate(action, ActionStatus.favourite);
+    //  // If not already complete/rejected/starred
+    //  User userResponse = await store.state.userState.auth
+    //      .starAction(
+    //    store.state.userState.user.getToken(),
+    //    action.getId(),
+    //  )
+    //      .catchError((error) {
+    //    if (error == AuthError.unauthorized) onAuthError();
+    //  });
+    //  
+    //  store.state.analytics.logActionStatusUpdate(action, ActionStatus.favourite);
 
-      User newUser = store.state.userState.user.copyWith(
-        starredActions: userResponse.getStarredActions(),
-      );
+    //  User newUser = store.state.userState.user.copyWith(
+    //    starredActions: userResponse.getStarredActions(),
+    //  );
 
-      saveUserToPrefs(newUser).then((_) {
-        store.dispatch(StarredAction(newUser));
-      });
-    });
+    //  saveUserToPrefs(newUser).then((_) {
+    //    store.dispatch(StarredAction(newUser));
+    //  });
+    //});
   };
 }
 
 ThunkAction<AppState> removeActionStatus(CampaignAction action) {
   return (Store<AppState> store) async {
     Future(() async {
-      // If not already complete/rejected/starred
-      User userResponse = await store.state.userState.auth
-          .removeActionStatus(
-        store.state.userState.user.getToken(),
-        action.getId(),
-      )
-          .catchError((error) {
-        if (error == AuthError.unauthorized) onAuthError();
-      });
+      //// If not already complete/rejected/starred
+      //User userResponse = await store.state.userState.auth
+      //    .removeActionStatus(
+      //  store.state.userState.user.getToken(),
+      //  action.getId(),
+      //)
+      //    .catchError((error) {
+      //  if (error == AuthError.unauthorized) onAuthError();
+      //});
 
-      User newUser = store.state.userState.user.copyWith(
-        starredActions: userResponse.getStarredActions(),
-        rejectedActions: userResponse.getRejectedActions(),
-        completedActions: userResponse.getCompletedActions(),
-      );
+      //User newUser = store.state.userState.user.copyWith(
+      //  starredActions: userResponse.getStarredActions(),
+      //  rejectedActions: userResponse.getRejectedActions(),
+      //  completedActions: userResponse.getCompletedActions(),
+      //);
 
-      saveUserToPrefs(newUser).then((_) {
-        store.dispatch(RemovedActionStatus(newUser));
-      });
+      //saveUserToPrefs(newUser).then((_) {
+      //  store.dispatch(RemovedActionStatus(newUser));
+      //});
     });
   };
 }
@@ -299,49 +299,49 @@ ThunkAction<AppState> completeAction(
   return (Store<AppState> store) async {
     Future(() async {
       // If the action is already completed then dont do anything
-      if (store.state.userState.user
-          .getCompletedActions()
-          .contains(action.getId())) {
-        print("This action has already been completed");
-        return;
-      }
+      //if (store.state.userState.user
+      //    .getCompletedActions()
+      //    .contains(action.getId())) {
+      //  print("This action has already been completed");
+      //  return;
+      //}
 
-      // Else complete the action
-      // Make complete action request
-      User completeResponse = await store.state.userState.auth
-          .completeAction(
-        store.state.userState.user.getToken(),
-        action.getId(),
-      )
-          .catchError((error) {
-        if (error.obs == AuthError.unauthorized) onAuthError();
-      });
-      // Take the response and update the users points
-      print("new user points ${completeResponse.getPoints()}");
-      User newUser = store.state.userState.user.copyWith(
-        points: completeResponse.getPoints(),
-      );
-      print("Doing fancy list thing");
-      // Get all the actions that the user has now completed (that they hadnt completed before)
-      List<int> newlyCompletedActions = completeResponse
-          .getCompletedActions()
-          .where((a) =>
-              !store.state.userState.user.getCompletedActions().contains(a))
-          .toList();
+      //// Else complete the action
+      //// Make complete action request
+      //User completeResponse = await store.state.userState.auth
+      //    .completeAction(
+      //  store.state.userState.user.getToken(),
+      //  action.getId(),
+      //)
+      //    .catchError((error) {
+      //  if (error.obs == AuthError.unauthorized) onAuthError();
+      //});
+      //// Take the response and update the users points
+      //print("new user points ${completeResponse.getPoints()}");
+      //User newUser = store.state.userState.user.copyWith(
+      //  points: completeResponse.getPoints(),
+      //);
+      //print("Doing fancy list thing");
+      //// Get all the actions that the user has now completed (that they hadnt completed before)
+      //List<int> newlyCompletedActions = completeResponse
+      //    .getCompletedActions()
+      //    .where((a) =>
+      //        !store.state.userState.user.getCompletedActions().contains(a))
+      //    .toList();
 
-      // Complete all those new actions for the user
-      for (int i = 0; i < newlyCompletedActions.length; i++) {
-        if (newlyCompletedActions[i] == action.getId()) {
-          newUser.completeAction(action);
-          print("Completed action");
-          store.state.analytics.logActionStatusUpdate(action, ActionStatus.complete);
-          print("Logged completion");
-        } else {
-          // TODO make it so if there are completed action is actually users the complete action function -- need to wait for /actions request
-          //CampaignAction a = await store.state.api.getAction(action.action.getId());
-          //action.user.completeAction(a);
-        }
-      }
+      //// Complete all those new actions for the user
+      //for (int i = 0; i < newlyCompletedActions.length; i++) {
+      //  if (newlyCompletedActions[i] == action.getId()) {
+      //    newUser.completeAction(action);
+      //    print("Completed action");
+      //    store.state.analytics.logActionStatusUpdate(action, ActionStatus.complete);
+      //    print("Logged completion");
+      //  } else {
+      //    // TODO make it so if there are completed action is actually users the complete action function -- need to wait for /actions request
+      //    //CampaignAction a = await store.state.api.getAction(action.action.getId());
+      //    //action.user.completeAction(a);
+      //  }
+      //}
 
       // This is where you say "but James why do you not just copyWith completedCampaigns as the new completed campaigns"
       // And I would respond excellent question
@@ -350,32 +350,32 @@ ThunkAction<AppState> completeAction(
       // And I would respond no
       // TODO fix the above / just get the server to keep track of completed action type
 
-      int newPoints = newUser.getPoints();
-      int oldPoints = store.state.userState.user.getPoints();
+      //int newPoints = newUser.getPoints();
+      //int oldPoints = store.state.userState.user.getPoints();
 
-      print("Points");
-      print(newPoints);
-      print(oldPoints);
+      //print("Points");
+      //print(newPoints);
+      //print(oldPoints);
 
-      saveUserToPrefs(newUser).then((_) {
-        store.dispatch(CompletedAction(newUser));
-        // If the users new next badge is different to their current badge
-        // Then they must have earnt a new badge
-        if (getNextBadge(newPoints) > getNextBadge(oldPoints)) {
-          print("New badge");
-          // Do the new badge popup
-          // If you did get a new badge then show that popup
-          gotBadgeNotifier(
-            badge: getNextBadgeFromInt(oldPoints),
-            context: context,
-          );
-        } else {
-          // Points Notifier
-          pointsNotifier(newPoints, 5, getNextBadge(newPoints), context)
-            ..show(context);
-          //}
-        }
-      });
+      //saveUserToPrefs(newUser).then((_) {
+      //  store.dispatch(CompletedAction(newUser));
+      //  // If the users new next badge is different to their current badge
+      //  // Then they must have earnt a new badge
+      //  if (getNextBadge(newPoints) > getNextBadge(oldPoints)) {
+      //    print("New badge");
+      //    // Do the new badge popup
+      //    // If you did get a new badge then show that popup
+      //    gotBadgeNotifier(
+      //      badge: getNextBadgeFromInt(oldPoints),
+      //      context: context,
+      //    );
+      //  } else {
+      //    // Points Notifier
+      //    pointsNotifier(newPoints, 5, getNextBadge(newPoints), context)
+      //      ..show(context);
+      //    //}
+      //  }
+      //});
     });
   };
 }
@@ -465,32 +465,32 @@ ThunkAction initStore() {
 ThunkAction<AppState> completeLearningResource(LearningResource resource) {
   return (Store<AppState> store) async {
     Future(() async {
-      print("Completing LearningResource");
-      if (store.state.userState.user
-          .getCompletedLearningResources()
-          .contains(resource.getId())) {
-        return;
-      }
+      //print("Completing LearningResource");
+      //if (store.state.userState.user
+      //    .getCompletedLearningResources()
+      //    .contains(resource.getId())) {
+      //  return;
+      //}
 
-      // If not already complete/rejected/starred
-      User userResponse = await store.state.userState.auth
-          .completeLearningResource(
-        store.state.userState.user.getToken(),
-        resource.getId(),
-      )
-          .catchError((error) {
-        if (error == AuthError.unauthorized) onAuthError();
-      });
-      
-      store.state.analytics.logLearningResourceClicked(resource);
-      
-      User newUser = store.state.userState.user.copyWith(
-        completedLearningResources: userResponse.getCompletedLearningResources(),
-      );
+      //// If not already complete/rejected/starred
+      //User userResponse = await store.state.userState.auth
+      //    .completeLearningResource(
+      //  store.state.userState.user.getToken(),
+      //  resource.getId(),
+      //)
+      //    .catchError((error) {
+      //  if (error == AuthError.unauthorized) onAuthError();
+      //});
+      //
+      //store.state.analytics.logLearningResourceClicked(resource);
+      //
+      //User newUser = store.state.userState.user.copyWith(
+      //  completedLearningResources: userResponse.getCompletedLearningResources(),
+      //);
 
-      saveUserToPrefs(newUser).then((_) {
-        store.dispatch(CompletedLearningResource(newUser));
-      });
+      //saveUserToPrefs(newUser).then((_) {
+      //  store.dispatch(CompletedLearningResource(newUser));
+      //});
     });
   };
 }

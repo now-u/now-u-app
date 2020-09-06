@@ -69,8 +69,6 @@ class AuthenticationService {
     return Future.error(AuthError.unknown);
   }
 
-  //final FirebaseAuth _auth = FirebaseAuth.instance;
-
   Future sendSignInWithEmailLink(String email, String name, bool acceptNewletter) async {
     try { 
       print("email | $email");
@@ -119,10 +117,6 @@ class AuthenticationService {
     }
   }
 
-  //Future<AuthResult> signInWithCredential(AuthCredential credential) async {
-  //  return _auth.signInWithCredential(credential);
-  //}
-
   Future<User> getUser(String token) async {
     http.Response userResponse =
         await http.get(domainPrefix + 'users/me', headers: <String, String>{
@@ -131,19 +125,11 @@ class AuthenticationService {
     if (handleAuthRequestErrors(userResponse) != null) {
       return handleAuthRequestErrors(userResponse);
     }
-    print("The returned user is:");
-    print(userResponse.body);
     User u = User.fromJson(json.decode(userResponse.body)["data"]);
-    print("The returned user token is:");
-    print(u.getToken());
     return u;
   }
 
   Future<User> updateUserDetails(User user) async {
-    print("The user token is" + user.getToken());
-    print("User attribues are");
-    print(user.getAttributes());
-    print(json.encode(user.getPostAttributes()));
     http.Response response = await http.put(
       domainPrefix + 'users/me',
       headers: <String, String>{
@@ -155,191 +141,10 @@ class AuthenticationService {
     if (handleAuthRequestErrors(response) != null) {
       return handleAuthRequestErrors(response);
     }
-    print("The new user deets are");
-    print(response.body);
     User u = User.fromJson(json.decode(response.body));
     return u;
-    //if (response.statusCode == 401) {
-    //  return Future.error(AuthError.unauthorized);
-    //} else {
-    //  print("There was an error updateing user details");
-    //  return null;
-    //}
   }
 
-  Future<User> completeAction(String token, int actionId) async {
-    http.Response response = await http.post(
-      domainPrefix + 'users/me/actions/${actionId}/complete',
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'token': token,
-      },
-    );
-    if (handleAuthRequestErrors(response) != null) {
-      return handleAuthRequestErrors(response);
-    }
-    print("The new deets after joining campaign are");
-    print(response.body);
-    User u = User.fromJson(json.decode(response.body)['data']);
-    return u;
-    //else if (response.statusCode == 401) {
-    //  return Future.error(AuthError.unauthorized);
-    //} else {
-    //  print("There was an error updating user details");
-    //  print(response.body);
-    //  print("The token was ${token}");
-    //  print("The actionId was ${actionId.toString()}");
-    //  return null;
-    //}
-  }
-
-  Future<User> starAction(String token, int actionId) async {
-    http.Response response = await http.post(
-      domainPrefix + 'users/me/actions/${actionId}/favourite',
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'token': token,
-      },
-    );
-    if (handleAuthRequestErrors(response) != null) {
-      return handleAuthRequestErrors(response);
-    }
-    //if (response.statusCode == 200) {
-    print("The new deets after staring action are");
-    print(response.body);
-    User u = User.fromJson(json.decode(response.body)['data']);
-    return u;
-    //} else if (response.statusCode == 401) {
-    //  return Future.error(AuthError.unauthorized);
-    //} else {
-    //  print("There was an error updating user details");
-    //  print(response.body);
-    //  print(response.statusCode);
-    //  print("The token was ${token}");
-    //  print("The actionId was ${actionId.toString()}");
-    //  return null;
-    //}
-  }
-
-  Future<User> removeActionStatus(String token, int actionId) async {
-    http.Response response = await http.delete(
-      domainPrefix + 'users/me/actions/${actionId}',
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'token': token,
-      },
-    );
-    if (handleAuthRequestErrors(response) != null) {
-      return handleAuthRequestErrors(response);
-    }
-    //if (response.statusCode == 200) {
-    print("The new deets after staring action are");
-    print(response.body);
-    User u = User.fromJson(json.decode(response.body)['data']);
-    return u;
-    //} else if (response.statusCode == 401) {
-    //  return Future.error(AuthError.unauthorized);
-    //} else {
-    //  print("There was an error updating user details");
-    //  print(response.body);
-    //  print(response.statusCode);
-    //  print("The token was ${token}");
-    //  print("The actionId was ${actionId.toString()}");
-    //  return null;
-    //}
-  }
-
-  Future<User> rejectAction(String token, int actionId, String reason) async {
-    Map jsonBody = {'reason': reason};
-    http.Response response = await http.post(
-      domainPrefix + 'users/me/actions/${actionId}/reject',
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'token': token,
-      },
-      body: json.encode(jsonBody),
-    );
-    if (handleAuthRequestErrors(response) != null) {
-      return handleAuthRequestErrors(response);
-    }
-    //if (response.statusCode == 200) {
-    print("The new deets after joining campaign are");
-    print(response.body);
-    User u = User.fromJson(json.decode(response.body)['data']);
-    return u;
-    //} else if (response.statusCode == 401) {
-    //  return Future.error(AuthError.unauthorized);
-    //} else {
-    //  print("There was an error updating user details");
-    //  print(response.body);
-    //  print("The token was ${token}");
-    //  print("The actionId was ${actionId.toString()}");
-    //  return null;
-    //}
-  }
-
-  Future<User> joinCampaign(String token, int campaignId) async {
-    http.Response response = await http.post(
-      domainPrefix + 'users/me/campaigns/${campaignId}',
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'token': token,
-      },
-    );
-    if (handleAuthRequestErrors(response) != null) {
-      return handleAuthRequestErrors(response);
-    }
-    //if (response.statusCode == 200) {
-    print("The new deets after joining campaign are");
-    print(response.body);
-    User u = User.fromJson(json.decode(response.body)["data"]);
-    return u;
-    //} else if (response.statusCode == 401) {
-    //  return Future.error(AuthError.unauthorized);
-    //} else {
-    //  print("There was an error .tokenupdateing user details");
-    //  return null;
-    //}
-  }
-
-  Future<User> unjoinCampaign(String token, int campaignId) async {
-    http.Response response = await http.delete(
-      domainPrefix + 'users/me/campaigns/${campaignId}',
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'token': token,
-      },
-    );
-    if (handleAuthRequestErrors(response) != null) {
-      return handleAuthRequestErrors(response);
-    }
-    //if (response.statusCode == 200) {
-    print("The new deets after joining campaign are");
-    print(response.body);
-    User u = User.fromJson(json.decode(response.body)["data"]);
-    return u;
-    //} else if (response.statusCode == 401) {
-    //  return Future.error(AuthError.unauthorized);
-    //} else {
-    //  print("There was an error updateing user details");
-    //  return null;
-    //}
-  }
-  
-  Future<User> completeLearningResource(String token, int learningResourceId) async {
-    http.Response response = await http.post(
-      domainPrefix + 'users/me/learning_resources/$learningResourceId',
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'token': token,
-      },
-    );
-    if (handleAuthRequestErrors(response) != null) {
-      return handleAuthRequestErrors(response);
-    }
-    return User.fromJson(json.decode(response.body)["data"]);
-  }
-  
   Future<List<InternalNotification>> getNotifications(String token) async {
     http.Response response =
         await http.get(domainPrefix + 'users/me/notifications', headers: <String, String>{

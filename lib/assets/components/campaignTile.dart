@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 
 import 'package:app/models/Campaign.dart';
-import 'package:app/models/ViewModel.dart';
-import 'package:app/models/State.dart';
 
 import 'package:app/assets/components/joinedIndicator.dart';
-import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/routes.dart';
 
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
+import 'package:stacked/stacked.dart';
+import 'package:app/viewmodels/base_model.dart';
+
 
 class Tile extends StatelessWidget {
   final Widget child;
@@ -106,10 +104,10 @@ class _CampaignTileState extends State<CampaignTile> {
                 )),
               ),
             ),
-            StoreConnector<AppState, ViewModel>(
-                converter: (Store<AppState> store) => ViewModel.create(store),
-                builder: (BuildContext context, ViewModel viewModel) {
-                  bool selected = viewModel.userModel.user
+            ViewModelBuilder<BaseModel>.reactive(
+              viewModelBuilder: () => BaseModel(),
+              builder: (context, model, child) {
+                  bool selected = model.currentUser
                       .getSelectedCampaigns()
                       .contains(widget.campaign.getId());
                   if (selected) {
@@ -125,7 +123,8 @@ class _CampaignTileState extends State<CampaignTile> {
                   } else {
                     return Container();
                   }
-                })
+                }
+              )
           ]),
           SizedBox(height: 10),
           // Title
