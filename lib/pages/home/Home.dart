@@ -15,9 +15,10 @@ import 'package:app/assets/StyleFrom.dart';
 
 import 'package:app/models/Notification.dart';
 import 'package:app/models/Campaign.dart';
-import 'package:app/viewmodels/home_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:stacked/stacked.dart';
+import 'package:app/viewmodels/home_model.dart';
 
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 

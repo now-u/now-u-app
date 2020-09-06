@@ -5,7 +5,7 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/campaign_service.dart';
 
-class BaseCampaignViewModel extends BaseModel {
+mixin CampaignRO on BaseModel {
   final CampaignService _campaignsService = locator<CampaignService>();
   
   // Pull the latest campaigns from the db
@@ -43,5 +43,7 @@ class BaseCampaignViewModel extends BaseModel {
 
     return orderedCampaigns;
   }
+}
 
+class BaseCampaignViewModel extends BaseModel with CampaignRO {
 }
