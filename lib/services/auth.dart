@@ -166,4 +166,137 @@ class AuthenticationService {
       return handleAuthRequestErrors(response);
     }
   }
+ 
+  Future<bool> completeAction(int actionId) async {
+    try {
+      http.Response response = await http.post(
+        domainPrefix + 'users/me/actions/$actionId/complete',
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'token': currentUser.getToken(),
+        },
+      );
+      if (response.statusCode != 200) {
+        return false;
+      }
+      User u = User.fromJson(json.decode(response.body)['data']);
+
+      _currentUser.setPoints(u.getPoints());
+      _currentUser.setCompletedActions(u.getCompletedActions());
+
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> starAction(int actionId) async {
+    try {
+      http.Response response = await http.post(
+        domainPrefix + 'users/me/actions/$actionId/favourite',
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'token': currentUser.getToken(),
+        },
+      );
+      if (response.statusCode != 200) {
+        return false;
+      }
+      User u = User.fromJson(json.decode(response.body)['data']);
+      _currentUser = _currentUser.copyWith(
+        starredActions: u.starredActions,
+        points: u.points,
+      );
+      return true;
+    } catch (e) {
+      return false;
+    }
+
+  }
+
+  Future<bool> removeActionStatus(int actionId) async {
+    try {
+      http.Response response = await http.delete(
+        domainPrefix + 'users/me/actions/$actionId',
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'token': currentUser.getToken(),
+        },
+      );
+      if (response.statusCode != 200) {
+        return false;
+      }
+      User u = User.fromJson(json.decode(response.body)['data']);
+      //_currentUser.setPoints(u.getPoints());
+      _currentUser = _currentUser.copyWith(
+        starredActions: u.getStarredActions(),
+        rejectedActions: u.getRejectedActions(),
+        completedActions: u.getCompletedActions(),
+      );
+      return true;
+    } catch(e) {
+      return false;
+    }
+  }
+
+  Future<User> rejectAction(String token, int actionId, String reason) async {
+    Map jsonBody = {'reason': reason};
+    http.Response response = await http.post(
+      domainPrefix + 'users/me/actions/$actionId/reject',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'token': currentUser.getToken(),
+      },
+      body: json.encode(jsonBody),
+    );
+    if (handleAuthRequestErrors(response) != null) {
+      return handleAuthRequestErrors(response);
+    }
+    User u = User.fromJson(json.decode(response.body)['data']);
+    return u;
+  }
+
+  Future<User> joinCampaign(String token, int campaignId) async {
+    http.Response response = await http.post(
+      domainPrefix + 'users/me/campaigns/$campaignId',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'token': currentUser.getToken(),
+      },
+    );
+    if (handleAuthRequestErrors(response) != null) {
+      return handleAuthRequestErrors(response);
+    }
+    User u = User.fromJson(json.decode(response.body)["data"]);
+    return u;
+  }
+
+  Future<User> unjoinCampaign(String token, int campaignId) async {
+    http.Response response = await http.delete(
+      domainPrefix + 'users/me/campaigns/$campaignId',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'token': currentUser.getToken(),
+      },
+    );
+    if (handleAuthRequestErrors(response) != null) {
+      return handleAuthRequestErrors(response);
+    }
+    User u = User.fromJson(json.decode(response.body)["data"]);
+    return u;
+  }
+  
+  Future<User> completeLearningResource(String token, int learningResourceId) async {
+    http.Response response = await http.post(
+      domainPrefix + 'users/me/learning_resources/$learningResourceId',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'token': currentUser.getToken(),
+      },
+    );
+    if (handleAuthRequestErrors(response) != null) {
+      return handleAuthRequestErrors(response);
+    }
+    return User.fromJson(json.decode(response.body)["data"]);
+  }
 }

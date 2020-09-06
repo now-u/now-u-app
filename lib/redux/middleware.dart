@@ -14,15 +14,11 @@ import 'package:app/models/User.dart';
 import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Action.dart';
-import 'package:app/models/Badge.dart';
 import 'package:app/models/Learning.dart';
 import 'package:app/redux/actions.dart';
 
 import 'package:app/services/navigation.dart';
 import 'package:app/services/auth.dart';
-import 'package:app/services/analytics.dart';
-
-import 'package:app/assets/components/pointsNotifier.dart';
 
 import 'package:app/pages/login/emailSentPage.dart';
 import 'package:app/pages/login/login.dart';

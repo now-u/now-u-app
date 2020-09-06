@@ -3,8 +3,6 @@ import 'package:flutter/gestures.dart';
 
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
-import 'package:app/models/ViewModel.dart';
-import 'package:app/models/State.dart';
 import 'package:app/routes.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -17,9 +15,8 @@ import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/icons/customIcons.dart';
 import 'package:app/assets/routes/customLaunch.dart';
 
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:stacked/stacked.dart';
+import 'package:app/viewmodels/action_info_model.dart';
 
 final double HEADER_HEIGHT = 200;
 final double H_PADDING = 10;
@@ -35,7 +32,7 @@ class ActionInfoArguments {
 }
 
 class ActionInfo extends StatefulWidget {
-  ActionInfoArguments args;
+  final ActionInfoArguments args;
   ActionInfo(this.args);
   @override
   _ActionInfoState createState() => _ActionInfoState();
@@ -58,13 +55,13 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, ViewModel>(
-        converter: (Store<AppState> store) => ViewModel.create(store),
-        builder: (BuildContext context, ViewModel viewModel) {
-          bool completed = viewModel.userModel.user
+    return ViewModelBuilder<ActionInfoViewModel>.reactive(
+        viewModelBuilder: () => ActionInfoViewModel(),
+        builder: (context, model, child) {
+          bool completed = model.currentUser
               .getCompletedActions()
               .contains(_action.getId());
-          bool starred = viewModel.userModel.user
+          bool starred = model.currentUser
               .getStarredActions()
               .contains(_action.getId());
           return Scaffold(
@@ -229,9 +226,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                     inverted: true, onPressed: () {
                                   setState(() {
                                     completed = true;
-                                    viewModel.onCompleteAction(
-                                        _action, context);
-                                    Navigator.of(context).pushNamed(Routes.actions);
+                                    model.completeAction(_action.getId());
                                   });
                                 }),
                               ),
@@ -326,7 +321,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                           completed ?
                           CustomTextButton("Mark as not done", fontSize: 14,
                             onClick: () {
-                              viewModel.onRemoveActionStatus(_action);
+                              model.removeActionStatus(_action.getId());
                             }
                           )
                           :
@@ -406,8 +401,8 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                     ),
                     onPressed: () {
                       starred
-                          ? viewModel.onRemoveActionStatus(_action)
-                          : viewModel.onStarAction(_action);
+                          ? model.removeActionStatus(_action.getId())
+                          : model.starAction(_action.getId());
                       setState(() {
                         starred = !starred;
                       });
@@ -422,8 +417,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
 
 class RejectDialogue extends StatefulWidget {
   final CampaignAction action;
-  final ViewModel model;
-  RejectDialogue(this.action, this.model);
+  RejectDialogue(this.action);
   @override
   _RejectDialougeState createState() => _RejectDialougeState();
 }
