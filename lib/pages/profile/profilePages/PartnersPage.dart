@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/organisationTile.dart';
 
-import 'package:app/services/api.dart';
-import 'package:app/locator.dart';
+import 'package:stacked/stacked.dart';
+import 'package:app/viewmodels/partners_model.dart';
 
 class PartnersPage extends StatelessWidget {
-  final api = locator<Api>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,31 +16,27 @@ class PartnersPage extends StatelessWidget {
         context: context,
         backButtonText: "Menu",
       ),
-      body: FutureBuilder(
-        future: api.getPartners(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
+      body: ViewModelBuilder<PartnersViewModel>.reactive(
+          viewModelBuilder: () => PartnersViewModel(),
+          onModelReady: (model) => model.fetchPartners(),
+          builder: (context, model, child) {
             return GridView.builder(
               gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 childAspectRatio: 0.85,
               ),
-              itemCount: snapshot.data.length,
+              itemCount: model.parterns.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   height: 200,
                   child: Padding(
                     padding: EdgeInsets.all(8),
-                    child: OrganisationTile(snapshot.data[index]),
+                    child: OrganisationTile(model.parterns[index]),
                   )
                 );
               },
             );
           }
-          else {
-            return Center(child: CircularProgressIndicator());
-          }
-        },
       ),
     );
   }

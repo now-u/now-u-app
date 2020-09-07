@@ -11,8 +11,8 @@ import 'package:app/assets/components/customScrollableSheet.dart';
 import 'package:app/assets/components/header.dart';
 import 'package:app/assets/components/customTile.dart';
 
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
+import 'package:stacked/stacked.dart';
+import 'package:app/viewmodels/faq_model.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -23,17 +23,10 @@ class FAQPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StoreConnector<AppState, ViewModel>(
-      converter: (Store<AppState> store) => ViewModel.create(store),
-      builder: (BuildContext context, ViewModel viewModel) {
-        return FutureBuilder(
-          future: viewModel.api.getFAQs(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (!snapshot.hasData) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
+      body: ViewModelBuilder<FAQViewModel>.reactive(
+        viewModelBuilder: () => FAQViewModel(),
+        onModelReady: (model) => model.fetchFAQs(),
+        builder: (context, model, child) {
             return ScrollableSheetPage(
               initialChildSize: 0.85,
               minChildSize: 0.85,
@@ -67,16 +60,14 @@ class FAQPage extends StatelessWidget {
                   child: ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: snapshot.data.length,
+                    itemCount: model.faqs.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return FAQTile(snapshot.data[index]);
+                      return FAQTile(model.faqs[index]);
                     },
                   ),
                 )
               ]
             );
-          },
-        );
       },
       ),
     );
@@ -100,8 +91,6 @@ class _FAQTileState extends State<FAQTile> {
 
   @override
   Widget build(BuildContext context) {
-    print("FAQ question is ${widget.faq.getQuestion()}");
-    print("FAQ answer is ${widget.faq.getAnswer()}");
     return GestureDetector(
       onTap: () {
         setState(() {
