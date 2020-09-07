@@ -11,7 +11,7 @@ mixin CampaignRO on BaseModel {
   // Pull the latest campaigns from the db
   void pullCampaings() async {
     setBusy(true);
-    await _campaignsService.pullCampaings();
+    await _campaignsService.fetchCampaigns();
     setBusy(false);
     notifyListeners();
   }

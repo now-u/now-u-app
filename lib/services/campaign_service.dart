@@ -111,7 +111,7 @@ class CampaignService {
     }
   }
   
-  Future pullCampaings() async {
+  Future fetchCampaigns() async {
     try {
       var response = await http.get(domainPrefix + "campaigns");
       Campaigns cs = Campaigns.fromJson(json.decode(response.body)['data']);
@@ -120,11 +120,11 @@ class CampaignService {
     }
   } 
  
-  Future<Campaigns> getAllCampaigns() async {
+  Future<List<Campaign>> getPastCampaigns() async {
     var response = await http.get(domainPrefix + "campaigns" + "?old=true");
     if (response.statusCode == 200) {
       Campaigns cs = Campaigns.fromJson(json.decode(response.body)['data']);
-      return cs;
+      return cs.getActiveCampaigns();
     }
     else {
       return Future.error("Error getting campaigns in http api", StackTrace.fromString("The stack trace is"));
