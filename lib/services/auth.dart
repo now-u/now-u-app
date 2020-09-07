@@ -286,17 +286,26 @@ class AuthenticationService {
     return u;
   }
   
-  Future<User> completeLearningResource(String token, int learningResourceId) async {
-    http.Response response = await http.post(
-      domainPrefix + 'users/me/learning_resources/$learningResourceId',
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'token': currentUser.getToken(),
-      },
-    );
-    if (handleAuthRequestErrors(response) != null) {
-      return handleAuthRequestErrors(response);
+  Future<bool> completeLearningResource(int learningResourceId) async {
+    try {
+      http.Response response = await http.post(
+        domainPrefix + 'users/me/learning_resources/$learningResourceId',
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'token': currentUser.getToken(),
+        },
+      );
+      if (response.statusCode != 200) {
+        return false;
+      }
+      User u = User.fromJson(json.decode(response.body)['data']);
+      _currentUser = _currentUser.copyWith(
+          completedLearningResources: u.getCompletedLearningResources()
+      );
+      return true;
     }
-    return User.fromJson(json.decode(response.body)["data"]);
+    catch(e) {
+      return false;
+    }
   }
 }

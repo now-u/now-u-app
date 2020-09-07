@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/selectionItem.dart';
 
-import 'package:app/models/ViewModel.dart';
-import 'package:app/models/State.dart';
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
+import 'package:stacked/stacked.dart';
+import 'package:app/viewmodels/learning_topic_model.dart';
 
 import 'package:app/models/Learning.dart';
 
@@ -16,9 +14,9 @@ class LearningTopicPage extends StatelessWidget {
   LearningTopicPage(this.topic);
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, ViewModel>(
-      converter: (Store<AppState> store) => ViewModel.create(store),
-      builder: (BuildContext context, ViewModel viewModel) {
+    return ViewModelBuilder<LearningTopicViewModel>.reactive(
+      viewModelBuilder: () => LearningTopicViewModel(),
+      builder: (context, model, child) {
         return Scaffold(
           appBar: CustomAppBar(
             backButtonText: "Back",
@@ -75,8 +73,8 @@ class LearningTopicPage extends StatelessWidget {
                       return Container(
                         child: LearningResouceSelectionItem(
                           resource: topic.getResources()[index],
-                          extraOnClick: () {viewModel.onCompleteLearningResource(topic.getResources()[index]);},
-                          completed: viewModel.userModel.user.getCompletedLearningResources().contains(topic.getResources()[index].getId())
+                          extraOnClick: () {model.completeLearningResource(topic.getResources()[index].getId());},
+                          completed: model.learningResourceIsCompleted(topic.getResources()[index].getId())
                         ),
                       );
                     },
