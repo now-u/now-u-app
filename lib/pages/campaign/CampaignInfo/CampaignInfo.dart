@@ -43,8 +43,8 @@ class CampaignInfo extends StatelessWidget {
         }
       },
       builder: (context, model, child) {
-        if (campaign != null) {
-          return CampaignInfoBody(campaign);
+        if (model.campaign != null) {
+          return CampaignInfoBody(model.campaign);
         }
         else {
           return Scaffold(
