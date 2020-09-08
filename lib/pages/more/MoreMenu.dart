@@ -8,7 +8,7 @@ import 'package:app/assets/icons/customIcons.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/routes/customLaunch.dart';
 
-import 'package:app/pages/profile/ProfileTile.dart';
+import 'package:app/pages/more/ProfileTile.dart';
 import 'package:app/routes.dart';
 
 import 'package:url_launcher/url_launcher.dart';

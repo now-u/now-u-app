@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:app/models/State.dart';
-import 'package:app/models/ViewModel.dart';
 import 'package:app/models/FAQ.dart';
 
-import 'package:app/assets/components/selectionItem.dart';
-import 'package:app/assets/StyleFrom.dart';
-import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/customScrollableSheet.dart';
 import 'package:app/assets/components/header.dart';
 import 'package:app/assets/components/customTile.dart';

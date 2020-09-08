@@ -10,9 +10,8 @@ import 'package:app/models/Notification.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Learning.dart';
 
-import 'package:app/pages/profile/profilePages/FAQPage.dart';
-import 'package:app/pages/profile/profilePages/ProfilePage.dart';
-import 'package:app/pages/profile/profilePages/PartnersPage.dart';
+import 'package:app/pages/more/morePages/FAQPage.dart';
+import 'package:app/pages/more/morePages/PartnersPage.dart';
 import 'package:app/pages/intro/IntroPage.dart';
 import 'package:app/pages/login/login.dart';
 import 'package:app/pages/login/emailSentPage.dart';
@@ -90,11 +89,6 @@ Function initRoutes = (RouteSettings settings) {
             builder: (context) => IntroPage(), settings: settings);
       }
 
-    case Routes.profile:
-      {
-        return customRoute(
-            builder: (context) => ProfilePage(), settings: settings);
-      }
     case Routes.faq:
       {
         return customRoute(builder: (context) => FAQPage(), settings: settings);

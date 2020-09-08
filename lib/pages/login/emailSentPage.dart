@@ -9,8 +9,6 @@ import 'package:app/assets/components/textButton.dart';
 import 'package:app/viewmodels/login_model.dart';
 import 'package:stacked/stacked.dart';
 
-import 'package:app/models/ViewModel.dart';
-
 import 'package:app/routes.dart';
 
 import 'package:app/pages/login/login.dart';

@@ -13,8 +13,6 @@ import 'package:app/services/storage.dart';
 
 import 'package:stacked/stacked.dart';
 
-//import 'package:flutter_redux/flutter_redux.dart';
-
 enum LoginTypes{
   Login,
   Signup

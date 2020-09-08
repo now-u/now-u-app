@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:app/assets/icons/customIcons.dart';
 
 import 'package:app/pages/home/Home.dart';
-import 'package:app/pages/profile/Profile.dart';
+import 'package:app/pages/more/MoreMenu.dart';
 import 'package:app/pages/news/NewsPage.dart';
 import 'package:app/pages/action/ActionPage.dart';
 
