@@ -24,5 +24,5 @@ class SharedPreferencesService {
     }
     return null;
   }
-
+  
 }

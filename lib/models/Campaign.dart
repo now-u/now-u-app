@@ -7,8 +7,6 @@ import 'package:app/models/SDG.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/dynamicLinks.dart';
 
-import 'dart:convert';
-
 final DynamicLinkService _dynamicLinkService = locator<DynamicLinkService>();
 
 class Campaign {

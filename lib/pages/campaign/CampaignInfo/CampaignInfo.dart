@@ -9,8 +9,6 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/models/Organisation.dart';
 import 'package:app/models/SDG.dart';
 
-import 'package:app/services/api.dart';
-import 'package:app/locator.dart';
 import 'package:app/routes.dart';
 
 import 'package:app/assets/icons/customIcons.dart';
@@ -21,8 +19,10 @@ import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/header.dart';
 import 'package:app/assets/routes/customLaunch.dart';
 
+import 'package:stacked/stacked.dart';
+import 'package:app/viewmodels/campaign_info_model.dart';
+
 const double H_PADDING = 20;
-final Api api = locator<Api>();
 
 class CampaignInfo extends StatelessWidget {
   final Campaign campaign;
@@ -33,21 +33,27 @@ class CampaignInfo extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    if (campaign != null) {
-      return CampaignInfoBody(campaign);
-    }
-    return FutureBuilder(
-      future: api.getCampaign(campaignId),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (!snapshot.hasData) {
+    return ViewModelBuilder<CampaignInfoViewModel>.reactive(
+      viewModelBuilder: () => CampaignInfoViewModel(),
+      onModelReady: (model) {
+        if (campaign != null) {
+          model.setCampaign = campaign;
+        } else {
+          model.fetchCampaign(campaignId);
+        }
+      },
+      builder: (context, model, child) {
+        if (campaign != null) {
+          return CampaignInfoBody(campaign);
+        }
+        else {
           return Scaffold(
             body: Center(
               child: CircularProgressIndicator(),
             ),
           );
         }
-        return CampaignInfoBody(snapshot.data);
-      },
+      }
     );
   }
 }
