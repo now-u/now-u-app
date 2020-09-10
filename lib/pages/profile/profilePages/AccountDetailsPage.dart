@@ -105,6 +105,7 @@ class AccountDetailsPage extends StatelessWidget {
                   ],
                 ),
                 // TODO: Organisation Code
+                // TODO: CustomSwitch in inputs.dart
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 8),
                   child: Text(
