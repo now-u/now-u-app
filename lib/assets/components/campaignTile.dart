@@ -4,6 +4,7 @@ import 'package:app/models/Campaign.dart';
 
 import 'package:app/assets/components/joinedIndicator.dart';
 import 'package:app/assets/components/customTile.dart';
+import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/routes.dart';
 
@@ -138,41 +139,110 @@ class _CampaignTileState extends State<CampaignTile> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.people,
-                      size: 18,
-                    ),
-                    SizedBox(width: 2),
-                    RichText(
-                        text: TextSpan(children: [
-                      TextSpan(
-                        text:
-                            widget.campaign.getNumberOfCampaigners().toString(),
-                        style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.headline5,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromRGBO(63, 61, 86, 1),
-                        ),
-                      ),
-                      TextSpan(
-                        text: " campaigners",
-                        style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.headline5,
-                          fontWeight: FontWeight.w400,
-                          color: Color.fromRGBO(63, 61, 86, 1),
-                        ),
-                      ),
-                    ]))
-                  ],
-                ),
+                NumberOfCampaignersIndicator(widget.campaign.getNumberOfCampaigners())
               ],
             ),
           ),
         ],
       ),
     );
+  }
+}
+
+class CampaignTileWithJoinButtons extends StatelessWidget {
+  final bool isJoined;
+  final Function toggleJoin;
+  final Campaign campaign;
+  CampaignTileWithJoinButtons({
+    @required this.isJoined, 
+    @required this.toggleJoin, 
+    @required this.campaign
+  });
+  
+  @override
+  Widget build(BuildContext context) {
+    return CustomTile(
+      child: Column(
+        children: [
+          Container(
+            height: 200,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(campaign.getHeaderImage()),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              campaign.getTitle(),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: textStyleFrom(
+                Theme.of(context).primaryTextTheme.headline3,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          NumberOfCampaignersIndicator(campaign.getNumberOfCampaigners()),
+          Container(
+            color: Color.fromRGBO(247,248,252, 1),
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomTextButton(
+                    "Join",
+                    onClick: () {toggleJoin();},
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+}
+
+class NumberOfCampaignersIndicator extends StatelessWidget {
+  final int numberOfCampaigners;
+  NumberOfCampaignersIndicator(this.numberOfCampaigners);
+
+  @override
+  Widget build(BuildContext context) {
+     return Row(
+       children: <Widget>[
+         Icon(
+           Icons.people,
+           size: 18,
+         ),
+         SizedBox(width: 2),
+         RichText(
+             text: TextSpan(children: [
+           TextSpan(
+             text:
+                 numberOfCampaigners.toString(),
+             style: textStyleFrom(
+               Theme.of(context).primaryTextTheme.headline5,
+               fontWeight: FontWeight.w600,
+               color: Color.fromRGBO(63, 61, 86, 1),
+             ),
+           ),
+           TextSpan(
+             text: " campaigners",
+             style: textStyleFrom(
+               Theme.of(context).primaryTextTheme.headline5,
+               fontWeight: FontWeight.w400,
+               color: Color.fromRGBO(63, 61, 86, 1),
+             ),
+           ),
+         ]))
+       ],
+     );
   }
 }
 
@@ -229,4 +299,3 @@ class CampaignSelectionTile extends StatelessWidget {
             ]))));
   }
 }
-

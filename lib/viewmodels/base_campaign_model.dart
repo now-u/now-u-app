@@ -9,7 +9,7 @@ mixin CampaignRO on BaseModel {
   final CampaignService _campaignsService = locator<CampaignService>();
   
   // Pull the latest campaigns from the db
-  void pullCampaings() async {
+  void fetchCampaigns() async {
     setBusy(true);
     await _campaignsService.fetchCampaigns();
     setBusy(false);

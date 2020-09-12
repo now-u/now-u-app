@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:app/models/Campaign.dart';
-import 'package:app/models/Campaigns.dart';
-import 'package:app/models/User.dart';
-
 import 'package:app/routes.dart';
 
 import 'package:app/assets/components/header.dart';
@@ -23,7 +19,7 @@ class CampaignPage extends StatelessWidget {
     return Scaffold(
       body: ViewModelBuilder<BaseCampaignViewModel>.reactive(
         viewModelBuilder: () => BaseCampaignViewModel(),
-        onModelReady: (model) => model.pullCampaings(),
+        onModelReady: (model) => model.fetchCampaigns(),
         builder: (context, model, child) {
         return Stack(
           children: [

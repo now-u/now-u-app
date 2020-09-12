@@ -45,23 +45,18 @@ class Home extends StatelessWidget {
       ),
       body: ViewModelBuilder<HomeViewModel>.reactive(
           viewModelBuilder: () => HomeViewModel(),
-          onModelReady: (model) => model.pullCampaings(),
+          onModelReady: (model) => model.fetchAll(),
           builder: (context, model, child) {
             List<Campaign> campaigns = model.campaignsWithSelectedFirst;  
             return 
               ScrollableSheetPage(
-                header: FutureBuilder(
-                  future: model.getNotifications(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      if (snapshot.data.length != 0) {
-                        return HeaderWithNotifications(model.currentUser.getName(), snapshot.data[0]);
-                      }
-                      return HeaderStyle1(model.currentUser.getName());
-                    }
-                    return Center(child: CircularProgressIndicator());
-                  },
-                ),
+                header: model.notifications.length > 0 
+                  ? HeaderWithNotifications(
+                      name: model.currentUser.getName(),
+                      notification: model.notifications[0],
+                      dismissNotification: model.dismissNotification,
+                    )
+                  :  HeaderStyle1(model.currentUser.getName()),
                 children: <Widget>[
                 
                  HomeTitle(
@@ -432,7 +427,12 @@ class HeaderStyle1 extends StatelessWidget {
 class HeaderWithNotifications extends StatelessWidget {
   final String name;
   final InternalNotification notification;
-  HeaderWithNotifications(this.name, this.notification);
+  final Function dismissNotification;
+  HeaderWithNotifications({
+    @required this.name, 
+    @required this.notification, 
+    @required this.dismissNotification
+  });
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -462,7 +462,7 @@ class HeaderWithNotifications extends StatelessWidget {
                           
                           SizedBox(height: 10),
 
-                          NotificationTile(notification),
+                          NotificationTile(notification, dismissFunction: dismissNotification),
 
                           SizedBox(height: MediaQuery.of(context).size.height * 0.2),
                         ],

@@ -2,6 +2,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter/material.dart';
 
 class InternalNotification {
+  int id;
   String title;
   String subtitle;
   String body;
@@ -12,10 +13,15 @@ class InternalNotification {
   InternalNotification.fromJson(
     Map json,
   ) {
+    id = json["id"];
     title = json["title"];
     subtitle = json["subtitle"];
     body = json["body"];
     image = json["image"];
+  }
+  
+  int getId() {
+    return id;
   }
 
   String getTitle() {

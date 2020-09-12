@@ -1,9 +1,6 @@
-//import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:app/models/User.dart';
 import 'package:app/models/Notification.dart';
 
-import 'package:app/main.dart';
 import 'package:app/routes.dart';
 
 import 'dart:convert';

@@ -1,4 +1,4 @@
-import 'package:app/pages/campaign/LearningCentre/LearningCentreAllPage.dart';
+import 'package:app/pages/learning/LearningCentreAllPage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/assets/icons/customIcons.dart';

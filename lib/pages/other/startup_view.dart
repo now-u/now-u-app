@@ -21,6 +21,7 @@ class StartUpView extends StatelessWidget {
                 height: 100,
                 child: Image.asset('assets/imgs/logo.png'),
               ),
+              SizedBox(height: 25),
               CircularProgressIndicator(
                 strokeWidth: 3,
                 valueColor: AlwaysStoppedAnimation(

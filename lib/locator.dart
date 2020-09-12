@@ -8,14 +8,13 @@ import 'package:app/services/news_service.dart';
 import 'package:app/services/campaign_service.dart';
 import 'package:app/services/faq_service.dart';
 import 'package:app/services/shared_preferences_service.dart';
+import 'package:app/services/internal_notification_service.dart';
 
 import 'package:get_it/get_it.dart';
 
 /* This allows us to create a fake api if we wish */
 
 GetIt locator = GetIt.instance;
-
-const bool USE_FAKE_API = false;
 
 void setupLocator() {
   locator.registerLazySingleton(() => Analytics());
@@ -28,6 +27,5 @@ void setupLocator() {
   locator.registerLazySingleton(() => AuthenticationService());
   locator.registerLazySingleton(() => NewsService());
   locator.registerLazySingleton(() => FAQService());
+  locator.registerLazySingleton(() => InternalNotificationService());
 }
-
-

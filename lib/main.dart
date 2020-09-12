@@ -76,7 +76,6 @@ class _AppState extends State<App> {
   Widget page;
   @override
   void initState() {
-    // TODO: implement initState
     setupLocator();
     super.initState();
   }
