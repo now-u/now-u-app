@@ -1,6 +1,8 @@
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter/material.dart';
 
+import 'package:app/assets/StyleFrom.dart';
+
 class InternalNotification {
   int id;
   String title;
@@ -40,7 +42,25 @@ class InternalNotification {
     return image;
   }
 
-  Widget getBodyWidget() {
-    return MarkdownBody(data: body);
+  Widget getBodyWidget(context) {
+    return Markdown(
+      data: body,
+      styleSheet: MarkdownStyleSheet.fromTheme(
+        Theme.of(context)
+      ).copyWith(
+        p: textStyleFrom(
+          Theme.of(context).primaryTextTheme.bodyText1,
+          color: Colors.white,
+        ),
+        listBullet: textStyleFrom(
+          Theme.of(context).primaryTextTheme.bodyText1,
+          color: Colors.white,
+        ),
+        textAlign: WrapAlignment.center,
+        textScaleFactor: 1.2,
+      ),
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+    );
   }
 }

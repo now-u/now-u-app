@@ -1,5 +1,4 @@
 import 'package:app/models/User.dart';
-import 'package:app/models/Notification.dart';
 
 import 'package:app/routes.dart';
 
@@ -142,28 +141,6 @@ class AuthenticationService {
     return u;
   }
 
-  Future<List<InternalNotification>> getNotifications(String token) async {
-    http.Response response =
-        await http.get(domainPrefix + 'users/me/notifications', headers: <String, String>{
-      'token': token,
-    });
-    if (handleAuthRequestErrors(response) != null) {
-      return handleAuthRequestErrors(response);
-    }
-    List<InternalNotification> notifications = json.decode(response.body)['data'].map((e) => InternalNotification.fromJson(e)).toList().cast<InternalNotification>();
-    return notifications;
-  }
-  
-  Future dismissNotification(String token, int notificationId) async {
-    http.Response response =
-        await http.put(domainPrefix + 'users/me/notifications/$notificationId/dismiss', headers: <String, String>{
-      'token': token,
-    });
-    if (handleAuthRequestErrors(response) != null) {
-      return handleAuthRequestErrors(response);
-    }
-  }
- 
   Future<bool> completeAction(int actionId) async {
     try {
       http.Response response = await http.post(

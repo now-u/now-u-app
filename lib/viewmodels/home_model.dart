@@ -8,8 +8,7 @@ import 'package:app/models/Notification.dart';
 
 class HomeViewModel extends BaseModel with CampaignRO {
 
-  List<InternalNotification> _notifications = [];
-  List<InternalNotification> get notifications => _notifications;
+  List<InternalNotification> get notifications => _internalNotificationService.notifications;
 
   InternalNotificationService _internalNotificationService = locator<InternalNotificationService>();
 
@@ -35,8 +34,7 @@ class HomeViewModel extends BaseModel with CampaignRO {
   // getNotifications
   Future fetchNotifications() async {
     setBusy(true);
-    List<InternalNotification> notifications = await _internalNotificationService.getNotifications();
-    _notifications = notifications;
+    await _internalNotificationService.fetchNotifications();
     setBusy(false);
     notifyListeners();
   }
@@ -44,8 +42,7 @@ class HomeViewModel extends BaseModel with CampaignRO {
   Future dismissNotification(int id) async {
     bool success = await _internalNotificationService.dismissNotification(id);
     if (success) {
-      _notifications.removeWhere((InternalNotification n) => n.getId() == id);
+      notifyListeners();
     }
-    notifyListeners();
   }
 }

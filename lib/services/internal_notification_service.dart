@@ -10,9 +10,14 @@ class InternalNotificationService {
   
   final AuthenticationService _authenticationService = locator<AuthenticationService>();
   
+  List<InternalNotification> _notifications = [];
+  List<InternalNotification> get notifications {
+    return _notifications;
+  }
+
   String domainPrefix = "https://api.now-u.com/api/v1/";
 
-  Future<List<InternalNotification>> getNotifications() async {
+  Future fetchNotifications() async {
     try {
       http.Response response =
         await http.get(domainPrefix + 'users/me/notifications', headers: <String, String>{
@@ -21,11 +26,10 @@ class InternalNotificationService {
 
       List<InternalNotification> notifications = json.decode(response.body)['data'].map((e) => InternalNotification.fromJson(e)).toList().cast<InternalNotification>();
       
-      return notifications;
+      _notifications = notifications;
 
     } catch(e) {
       print("Error getting notifications");
-      return [];
     }
   }
   
@@ -40,6 +44,7 @@ class InternalNotificationService {
         print(response.statusCode);
         return false;
       }
+      _notifications.removeWhere((InternalNotification n) => n.getId() == notificationId);
       return true;
     } catch(e) {
       print("Error dismissing notifications");
