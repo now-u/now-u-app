@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:app/assets/StyleFrom.dart';
 
+import 'package:app/assets/components/circularCheckbox.dart';
+
 final double WIDTH = 60;
 final double HEIGHT = 30;
 
@@ -36,8 +38,7 @@ class CustomTextFormField extends StatelessWidget {
       onSaved: onSaved,
       style: textStyleFrom(
         Theme.of(context).primaryTextTheme.headline5,
-        // TODO: Create light theme for custom text field.
-        color: Colors.black,
+        color: style == CustomFormFieldStyle.Light ? Colors.black : Colors.white,
       ),
       textCapitalization: textCapitalization ?? TextCapitalization.none,
       decoration: InputDecoration(
@@ -175,4 +176,45 @@ class _CustomSwitchState extends State<CustomSwitch>
       ),
     );
   }
+}
+
+class CustomCheckboxFormField extends FormField<bool> {
+  CustomCheckboxFormField(
+      {Widget title,
+      FormFieldSetter<bool> onSaved,
+      FormFieldValidator<bool> validator,
+      bool initialValue = false,
+      bool autovalidate = false})
+      : super(
+            onSaved: onSaved,
+            validator: validator,
+            initialValue: initialValue,
+            autovalidate: autovalidate,
+            builder: (FormFieldState<bool> state) {
+              return Builder(
+                  builder: (BuildContext context) => Column(children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            CircularCheckBox(
+                              value: state.value,
+                              onChanged: state.didChange,
+                              inactiveColor: Theme.of(context).primaryColor,
+                              activeColor: Theme.of(context).primaryColor,
+                            ),
+                            SizedBox(width: 3),
+                            Expanded(child: title),
+                          ],
+                        ),
+                        state.hasError
+                            ? Text(state.errorText,
+                                style: textStyleFrom(
+                                    Theme.of(context)
+                                        .primaryTextTheme
+                                        .bodyText1,
+                                    color: Theme.of(context).errorColor,
+                                    fontSize: 12))
+                            : Container(),
+                      ]));
+            });
 }

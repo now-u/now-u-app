@@ -66,8 +66,7 @@ class _DetailScaffoldState extends State<DetailScaffold> {
     var edgeHeight = 32.0;
     var paddingTop = MediaQuery.of(context).padding.top;
 
-    var defaultOffset =
-        (paddingTop + widget.expandedHeight) - edgeHeight;
+    var defaultOffset = (paddingTop + widget.expandedHeight) - edgeHeight;
 
     var top = defaultOffset;
     var edgeSize = edgeHeight;
@@ -78,8 +77,7 @@ class _DetailScaffoldState extends State<DetailScaffold> {
 
       if (widget.hasPinnedAppBar) {
         // Hide edge to prevent overlapping the toolbar during scroll.
-        var breakpoint =
-            widget.expandedHeight - kToolbarHeight - edgeHeight;
+        var breakpoint = widget.expandedHeight - kToolbarHeight - edgeHeight;
 
         if (offset >= breakpoint) {
           edgeSize = edgeHeight - (offset - breakpoint);

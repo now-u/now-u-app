@@ -11,7 +11,7 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.9+20
+version: 1.1.6+30
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -24,27 +24,22 @@ dependencies:
   youtube_player_flutter: ^7.0.0+3
   share: ^0.6.3+6
 
-  redux: ^4.0.0
-  flutter_redux: ^0.6.0
-  redux_thunk: ^0.3.0
+  stacked: ^1.7.6
+
   shared_preferences: 0.5.6+3
   path_provider: ^1.6.9
   font_awesome_flutter: ^8.8.1
   url_launcher: ^5.4.2
-  #url_launcher: ^5.0.0
-  store_redirect: ^1.0.2
   android_intent: ^0.3.7+2
   dropdown_formfield: ^0.1.2
   tuple: ^1.0.3
   smooth_page_indicator: ^0.1.5
   rect_getter: ^0.1.0
-  #flutter_appavailability: ^0.0.21
   flushbar: ^1.10.4
   permission_handler: ^5.0.0+hotfix.6
   time: ^1.3.0
-  firebase_analytics: ^5.0.15
-  firebase_crashlytics: ^0.1.3+3
   intl: ^0.16.1 # Date formatting
+  flutter_markdown: ^0.4.4
 
   get_it: ^4.0.2
   get: ^2.7.1 # do things without context
@@ -53,22 +48,22 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
 
-  # Firebase
-  firebase_dynamic_links: ^0.5.1
-  #firebase_dynamic_links: 
-  #  git: 
-  #    url: git://github.com/FirebaseExtended/flutterfire.git
-  #    path: packages/firebase_dynamic_links
-
   flutter_secure_storage: ^3.2.1+1
-  wiredash: ^0.2.0
-
+  webview_flutter: ^0.3.22+1
+  
+  # Firebase
+  firebase_analytics: ^5.0.15
+  firebase_crashlytics: ^0.1.3+3
+  firebase_messaging: ^6.0.16
+  firebase_dynamic_links: ^0.6.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: "^0.7.0"
   flutter_redux_dev_tools: ^0.4.0
+  dartdoc: ^0.32.1
+
 
 flutter_icons:
   ios: true
@@ -148,6 +143,9 @@ flutter:
     - family: CustomIcons
       fonts:
         - asset: assets/fonts/Icons/CustomIcons.ttf
+    - family: CustomIcons2
+      fonts:
+        - asset: assets/fonts/Icons/CustomIcons2.ttf
 
   #   - family: Schyler
   #     fonts:

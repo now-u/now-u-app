@@ -2,7 +2,6 @@ import 'package:app/assets/StyleFrom.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Custom Icons
 import 'package:app/assets/icons/customIcons.dart';
@@ -219,24 +218,20 @@ class CampaignAction {
   String whyDescription;
   String link;
   CampaignActionType type;
+  DateTime createdAt;
+  DateTime releasedAt;
 
   CampaignAction({
-    @required int id,
-    @required String title,
-    @required String whatDescription,
-    @required String whyDescription,
-    @required String link,
-    @required CampaignActionType type,
-    @required double time,
-  }) {
-    this.id = id;
-    this.title = title;
-    this.whatDescription = whatDescription;
-    this.whyDescription = whyDescription;
-    this.link = link;
-    this.type = type;
-    this.time = time;
-  }
+    @required this.id,
+    @required this.title,
+    @required this.whatDescription,
+    @required this.whyDescription,
+    @required this.link,
+    @required this.type,
+    @required this.time,
+    this.createdAt,
+    this.releasedAt,
+  });
 
   CampaignAction.fromJson(Map json) {
     //print(json);
@@ -245,9 +240,20 @@ class CampaignAction {
     whatDescription = json['what_description'];
     whyDescription = json['why_description'];
     link = json['link'];
-    time = json['time'].toDouble();
+    time = json['time'] == null ? 5.0 : json['time'].toDouble();
     type = campaignActionTypeFromString(json['type']);
+    createdAt = DateTime.parse(json['created_at']);
+    releasedAt = json['release_date'] == null
+        ? null
+        : DateTime.parse(json['release_date']);
   }
+
+  Map toJson() => {
+        'id': id,
+        'title': title,
+        'type': type,
+        'time': time,
+      };
 
   int getId() {
     return id;
@@ -297,7 +303,7 @@ class CampaignAction {
   Map getActionIconMap() {
     if (campaignActionTypeData.containsKey(type)) {
       return {
-        'icon': 
+        'icon':
             campaignActionSuperTypeData[campaignActionTypeData[type]['type']]
                 ['icon'],
         'iconColor':
@@ -309,5 +315,17 @@ class CampaignAction {
       };
     }
     return defaultCampaignActionTypeData;
+  }
+
+  bool isNew() {
+    if (releasedAt == null) {
+      return DateTime.now().difference(createdAt).compareTo(Duration(days: 2)) <
+          0;
+    } else {
+      return DateTime.now()
+              .difference(releasedAt)
+              .compareTo(Duration(days: 2)) <
+          0;
+    }
   }
 }

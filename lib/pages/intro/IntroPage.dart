@@ -8,24 +8,22 @@ import 'package:rect_getter/rect_getter.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
 
-import 'package:app/main.dart';
-
 List<Widget> pages = <Widget>[
-                  IntroPageSection(
-                    "Join campaigns",
-                    "We partner with charities to bring you targeted monthly campaigns, highlighting a range of social and environmental issues both locally and around the world. Join as many as you like!",
-                    AssetImage('assets/imgs/intro/On-Boarding illustrations-01.png'),
-                  ),
-                  IntroPageSection(
-                    "Take action",
-                    "Whether you have five minutes in the morning, or want to dedicate more time to your chosen cause, discover effective and meaningful ways to take action!",
-                    AssetImage('assets/imgs/intro/On-Boarding illustrations-02.png'),
-                  ),
-                  IntroPageSection(
-                    "Create real impact",
-                    "Join a community of changemakers, connect with fellow campaign contributors, and see how your actions are making a difference.",
-                    AssetImage('assets/imgs/intro/On-Boarding illustrations-04.png'),
-                  ),
+  IntroPageSection(
+    "Join campaigns",
+    "We partner with charities to bring you targeted monthly campaigns, highlighting a range of social and environmental issues both locally and around the world. Join as many as you like!",
+    AssetImage('assets/imgs/intro/On-Boarding illustrations-01.png'),
+  ),
+  IntroPageSection(
+    "Take action",
+    "Whether you have five minutes in the morning, or want to dedicate more time to your chosen cause, discover effective and meaningful ways to take action!",
+    AssetImage('assets/imgs/intro/On-Boarding illustrations-02.png'),
+  ),
+  IntroPageSection(
+    "Create real impact",
+    "Join a community of changemakers, connect with fellow campaign contributors, and see how your actions are making a difference.",
+    AssetImage('assets/imgs/intro/On-Boarding illustrations-04.png'),
+  ),
 ];
 
 const curve = Curves.ease;
@@ -39,11 +37,10 @@ class IntroPage extends StatefulWidget {
 class _IntroPageState extends State<IntroPage> {
   static const initialIndex = 0;
   int index = initialIndex;
-  final controller = 
-    PageController(
-        initialPage: initialIndex,
-      viewportFraction: 1,
-    );
+  final controller = PageController(
+    initialPage: initialIndex,
+    viewportFraction: 1,
+  );
 
   // Animation Setup
   final Duration animationDuration = Duration(milliseconds: 500);
@@ -59,7 +56,8 @@ class _IntroPageState extends State<IntroPage> {
           rect = rect.inflate(1.3 * MediaQuery.of(context).size.longestSide));
       Future.delayed(animationDuration + delay, _goToNextPage);
     });
-  } 
+  }
+
   void _onTapGetStarted() async {
     setState(() => rect = RectGetter.getRectFromKey(rectGetterGetStartedKey));
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -67,7 +65,7 @@ class _IntroPageState extends State<IntroPage> {
           rect = rect.inflate(1.3 * MediaQuery.of(context).size.longestSide));
       Future.delayed(animationDuration + delay, _goToNextPage);
     });
-  } 
+  }
 
   void _goToNextPage() {
     Navigator.of(context)
@@ -76,131 +74,118 @@ class _IntroPageState extends State<IntroPage> {
         .then((_) => setState(() => rect = null));
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false,
-      child: Stack(
-        children: <Widget> [
+        onWillPop: () async => false,
+        child: Stack(children: <Widget>[
           Scaffold(
-            body: Container(
-              color: Theme.of(context).primaryColorDark,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  SafeArea(child: Container(),),
-                  Padding(
-                    padding: EdgeInsets.only(top: 20, bottom: 20),
-                    child:
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          Container(
-                            width: 70,
-                            child: 
-                            RectGetter(
-                              key: rectGetterSkipKey,
-                              child: TextButton(
-                                "Skip",
-                                onClick: () {
-                                  //Navigator.pushNamed(context, '/');
-                                  _onTapSkip();
-                                }
-                              ),
-                            )
-                          ) 
-                        ],
+              body: Container(
+                  color: Theme.of(context).primaryColorDark,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      SafeArea(
+                        child: Container(),
                       ),
-                  ),
-                  Expanded(
-                    child: PageView(
-                      //physics: NeverScrollableScrollPhysics(),
-                      onPageChanged: (index) {
-                        setState(() {
-                          this.index = index;
-                        }); 
-                      },
-                      controller: controller,
-                      children: pages,
-                    ),
-                  ),
-
-                  Padding(
-                    padding: EdgeInsets.all(40),
-                    child: Container(
-                      width: double.infinity,
-                      child: Container(
-                        height: 45,
-                        child: index != pages.length - 1 ? 
-                        Container()
-                        //DarkButton(
-                        //  "Next",
-                        //  onPressed: () {
-                        //    controller.nextPage(
-                        //      curve: curve,
-                        //      duration: duration,
-                        //    );
-                        //  }
-                        //)
-                        :
-                        RectGetter(
-                          key: rectGetterGetStartedKey,
-                          child: DarkButton(
-                            "Get Started!",
-                            onPressed: _onTapGetStarted,
-                            //() {
-                            //  //Navigator.pushNamed(context, '/');
-                            //  _onTap();
-                            //}
-                          ),
-                        )
+                      Padding(
+                        padding: EdgeInsets.only(top: 20, bottom: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            Container(
+                                width: 70,
+                                child: RectGetter(
+                                  key: rectGetterSkipKey,
+                                  child: CustomTextButton("Skip", onClick: () {
+                                    //Navigator.pushNamed(context, '/');
+                                    _onTapSkip();
+                                  }),
+                                ))
+                          ],
+                        ),
                       ),
-                    )
-                  ),
-
-                  SmoothPageIndicator(
-                    controller: controller,
-                    count: pages.length,
-                    effect: ExpandingDotsEffect(
-                      dotColor: colorFrom(
-                        Colors.white,
-                        opacity: 0.3,
+                      Expanded(
+                        child: PageView(
+                          //physics: NeverScrollableScrollPhysics(),
+                          onPageChanged: (index) {
+                            setState(() {
+                              this.index = index;
+                            });
+                          },
+                          controller: controller,
+                          children: pages,
+                        ),
                       ),
-                      activeDotColor: Colors.orange,
-                      spacing: 8.0,
-                      dotHeight: 12,
-                      radius: 20.0
-                    ),
-                  ),
 
-                  SizedBox(height: 20,),
-                  //Container(
-                  //  width: double.infinity,
-                  //  child: Padding(
-                  //    padding: EdgeInsets.only(bottom: 20, left: 20),
-                  //    child: TextButton(
-                  //      "Back",
-                  //      iconLeft: true,
-                  //      onClick: () {
-                  //        controller.previousPage(
-                  //          curve: curve,
-                  //          duration: duration,
-                  //        );
-                  //      },
-                  //    ),
-                  //  )
-                  //)
-                ],
-              )
-            )
-          ),
+                      Padding(
+                          padding: EdgeInsets.all(40),
+                          child: Container(
+                            width: double.infinity,
+                            child: Container(
+                                height: 45,
+                                child: index != pages.length - 1
+                                    ? Container()
+                                    //DarkButton(
+                                    //  "Next",
+                                    //  onPressed: () {
+                                    //    controller.nextPage(
+                                    //      curve: curve,
+                                    //      duration: duration,
+                                    //    );
+                                    //  }
+                                    //)
+                                    : RectGetter(
+                                        key: rectGetterGetStartedKey,
+                                        child: DarkButton(
+                                          "Get Started!",
+                                          onPressed: _onTapGetStarted,
+                                          //() {
+                                          //  //Navigator.pushNamed(context, '/');
+                                          //  _onTap();
+                                          //}
+                                        ),
+                                      )),
+                          )),
+
+                      SmoothPageIndicator(
+                        controller: controller,
+                        count: pages.length,
+                        effect: ExpandingDotsEffect(
+                            dotColor: colorFrom(
+                              Colors.white,
+                              opacity: 0.3,
+                            ),
+                            activeDotColor: Colors.orange,
+                            spacing: 8.0,
+                            dotHeight: 12,
+                            radius: 20.0),
+                      ),
+
+                      SizedBox(
+                        height: 20,
+                      ),
+                      //Container(
+                      //  width: double.infinity,
+                      //  child: Padding(
+                      //    padding: EdgeInsets.only(bottom: 20, left: 20),
+                      //    child: TextButton(
+                      //      "Back",
+                      //      iconLeft: true,
+                      //      onClick: () {
+                      //        controller.previousPage(
+                      //          curve: curve,
+                      //          duration: duration,
+                      //        );
+                      //      },
+                      //    ),
+                      //  )
+                      //)
+                    ],
+                  ))),
           _ripple(),
-        ]
-      )
-    );
+        ]));
   }
 
   Widget _ripple() {
@@ -211,7 +196,7 @@ class _IntroPageState extends State<IntroPage> {
       duration: animationDuration,
       left: rect.left,
       right: MediaQuery.of(context).size.width - rect.right,
-      top: rect.top, 
+      top: rect.top,
       bottom: MediaQuery.of(context).size.height - rect.bottom,
       child: Container(
         decoration: BoxDecoration(
@@ -222,7 +207,6 @@ class _IntroPageState extends State<IntroPage> {
     );
   }
 }
-
 
 class IntroPageSection extends StatelessWidget {
   final String title;
@@ -238,31 +222,27 @@ class IntroPageSection extends StatelessWidget {
         Expanded(
           child: Padding(
             padding: EdgeInsets.all(20),
-            child: Image(
-              image: image
-            ),
+            child: Image(image: image),
           ),
         ),
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: Theme.of(context).primaryTextTheme.headline1.fontSize,
-            fontWeight: Theme.of(context).primaryTextTheme.headline1.fontWeight,
-            color: Colors.white,
-          )
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width * 0.9,
-          child: Text(
-            description,
-            textAlign: TextAlign.center,
+        Text(title,
             style: TextStyle(
-              fontSize: Theme.of(context).primaryTextTheme.bodyText1.fontSize,
-              fontWeight: Theme.of(context).primaryTextTheme.bodyText1.fontWeight,
+              fontSize: Theme.of(context).primaryTextTheme.headline1.fontSize,
+              fontWeight:
+                  Theme.of(context).primaryTextTheme.headline1.fontWeight,
               color: Colors.white,
-            )
-          )
-        ) 
+            )),
+        Container(
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: Text(description,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize:
+                      Theme.of(context).primaryTextTheme.bodyText1.fontSize,
+                  fontWeight:
+                      Theme.of(context).primaryTextTheme.bodyText1.fontWeight,
+                  color: Colors.white,
+                )))
       ],
     );
   }

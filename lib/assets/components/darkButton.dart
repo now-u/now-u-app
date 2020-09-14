@@ -38,7 +38,8 @@ class DarkButton extends StatelessWidget {
   VoidCallback onPressed;
   String text;
   bool inverted;
-  bool rightArrow;
+  IconData rightIcon;
+  IconData leftIcon;
   DarkButtonStyles style;
   double fontSize;
 
@@ -46,12 +47,12 @@ class DarkButton extends StatelessWidget {
       {DarkButtonStyles style,
       @required VoidCallback onPressed,
       bool inverted,
-      bool rightArrow,
+      this.rightIcon,
+      this.leftIcon,
       double fontSize}) {
     this.onPressed = onPressed;
     this.text = text;
     this.inverted = inverted ?? false;
-    this.rightArrow = rightArrow ?? false;
     this.style = style ?? DarkButtonStyles.Large;
     this.fontSize = fontSize;
   }
@@ -61,12 +62,12 @@ class DarkButton extends StatelessWidget {
     return !inverted
         ? PrimaryButton(text,
             onPressed: onPressed,
-            rightArrow: rightArrow,
+            rightIcon: rightIcon,
             style: style,
             fontSize: fontSize)
         : SecondaryButton(text,
             onPressed: onPressed,
-            rightArrow: rightArrow,
+            rightIcon: rightIcon,
             style: style,
             fontSize: fontSize);
   }
@@ -75,14 +76,14 @@ class DarkButton extends StatelessWidget {
 class SecondaryButton extends StatelessWidget {
   VoidCallback onPressed;
   String text;
-  bool rightArrow;
+  IconData rightIcon;
   DarkButtonStyles style;
   double fontSize;
 
   SecondaryButton(
     this.text, {
     @required this.onPressed,
-    @required this.rightArrow,
+    @required this.rightIcon,
     @required this.style,
     @required this.fontSize,
   });
@@ -90,48 +91,46 @@ class SecondaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomTile(
-      child:
-        Container(
-          color: Colors.white,
-          height: darkButtonStyleStyles[style]['height'],
-          child: RaisedButton(
-            color: Colors.white,
-            onPressed: onPressed,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                  darkButtonStyleStyles[style]['borderRadius']),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: darkButtonStyleStyles[style]['vPadding'],
-                horizontal: darkButtonStyleStyles[style]['hPadding'],
-              ),
-              child: Text(
-                text,
-                style: textStyleFrom(
-                  Theme.of(context).primaryTextTheme.button,
-                  color: Theme.of(context).buttonColor,
-                  fontSize: fontSize ?? darkButtonStyleStyles[style]['fontSize'],
-                ),
-              ),
+        child: Container(
+      color: Colors.white,
+      height: darkButtonStyleStyles[style]['height'],
+      child: RaisedButton(
+        color: Colors.white,
+        onPressed: onPressed,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+              darkButtonStyleStyles[style]['borderRadius']),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: darkButtonStyleStyles[style]['vPadding'],
+            horizontal: darkButtonStyleStyles[style]['hPadding'],
+          ),
+          child: Text(
+            text,
+            style: textStyleFrom(
+              Theme.of(context).primaryTextTheme.button,
+              color: Theme.of(context).buttonColor,
+              fontSize: fontSize ?? darkButtonStyleStyles[style]['fontSize'],
             ),
           ),
-        )
-    );
+        ),
+      ),
+    ));
   }
 }
 
 class PrimaryButton extends StatelessWidget {
   VoidCallback onPressed;
   String text;
-  bool rightArrow;
+  IconData rightIcon;
   DarkButtonStyles style;
   double fontSize;
 
   PrimaryButton(
     this.text, {
     @required this.onPressed,
-    @required this.rightArrow,
+    @required this.rightIcon,
     @required this.style,
     @required this.fontSize,
   });
@@ -155,7 +154,7 @@ class PrimaryButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          !rightArrow
+          rightIcon == null
               ? Container()
               : Container(
                   width: 5,
@@ -174,10 +173,10 @@ class PrimaryButton extends StatelessWidget {
               ),
             ),
           ),
-          !rightArrow
+          rightIcon == null
               ? Container()
               : Icon(
-                  Icons.chevron_right,
+                  rightIcon,
                   size: 25,
                   color: Colors.white,
                 ),

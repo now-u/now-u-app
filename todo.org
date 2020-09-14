@@ -1,2 +1,0 @@
-* Things to do
-** TODO [#A] Do all the todos
