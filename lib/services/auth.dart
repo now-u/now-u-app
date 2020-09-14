@@ -244,7 +244,7 @@ class AuthenticationService {
       }
       User u = User.fromJson(json.decode(response.body)["data"]);
       _currentUser = _currentUser.copyWith(
-        selectedCampaigns: u.getCompletedActions(),
+        selectedCampaigns: u.getSelectedCampaigns(),
         points: u.getPoints(),
       );
       return true;
@@ -253,19 +253,27 @@ class AuthenticationService {
     }
   }
 
-  Future<User> unjoinCampaign(String token, int campaignId) async {
-    http.Response response = await http.delete(
-      domainPrefix + 'users/me/campaigns/$campaignId',
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'token': currentUser.getToken(),
-      },
-    );
-    if (handleAuthRequestErrors(response) != null) {
-      return handleAuthRequestErrors(response);
+  Future<bool> leaveCampaign(int campaignId) async {
+    try {
+      http.Response response = await http.delete(
+        domainPrefix + 'users/me/campaigns/$campaignId',
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'token': currentUser.getToken(),
+        },
+      );
+      if (response.statusCode != 200) {
+        return false;
+      }
+      User u = User.fromJson(json.decode(response.body)["data"]);
+      _currentUser = _currentUser.copyWith(
+        selectedCampaigns: u.getSelectedCampaigns(),
+        points: u.getPoints(),
+      );
+      return true;
+    } catch(e) {
+      return false;
     }
-    User u = User.fromJson(json.decode(response.body)["data"]);
-    return u;
   }
   
   Future<bool> completeLearningResource(int learningResourceId) async {

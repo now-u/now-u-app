@@ -107,7 +107,6 @@ class PageHeaderBackButton extends StatelessWidget {
   final bool backButton;
   final String backButtonText;
   final double padding;
-  // For Colour
 
   PageHeaderBackButton(
     {

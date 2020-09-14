@@ -17,8 +17,8 @@ class CampaignPage extends StatelessWidget {
     // Needs to be in future so happens after render of this page or something like that
     //var _campaigns = widget.model.campaigns.map((Campaign c) => c).toList();
     return Scaffold(
-      body: ViewModelBuilder<BaseCampaignViewModel>.reactive(
-        viewModelBuilder: () => BaseCampaignViewModel(),
+      body: ViewModelBuilder<BaseCampaignWriteViewModel>.reactive(
+        viewModelBuilder: () => BaseCampaignWriteViewModel(),
         onModelReady: (model) => model.fetchCampaigns(),
         builder: (context, model, child) {
         return Stack(
@@ -47,7 +47,12 @@ class CampaignPage extends StatelessWidget {
                             shrinkWrap: true,
                             itemCount: model.campaigns.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return CampaignTile(model.campaigns[index]);
+                              return CampaignTileWithJoinButtons(
+                                campaign: model.campaigns[index], 
+                                isJoined: model.isJoined(model.campaigns[index].getId()), 
+                                joinCampaign: model.joinCampaign,
+                                leaveCampaign: model.leaveCampaign,
+                              );
                             },
                           ),
                           SizedBox(

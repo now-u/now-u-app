@@ -113,31 +113,34 @@ class CampaignInfoBody extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 25),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: CustomTile(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: Column(
-                          children: <Widget>[
-                            Text("See what you can do to support this cause today!", 
-                              style: textStyleFrom(Theme.of(context).primaryTextTheme.headline4),
-                              textAlign: TextAlign.center,
-                            ),
-                            SizedBox(height: 15,),
-                            DarkButton("Take action", onPressed: (){
-                              if (_campaign.isPast()) {
-                                Navigator.of(context).pushNamed(Routes.pastCampaignActionPage, arguments: _campaign);
-                              }
-                              else {
-                                Navigator.of(context).pushNamed(Routes.actions);
-                              }
-                            })
-                          ],
-                        ),
-                      )
-                    ),
+                  CustomTile(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+                      child: Column(
+                        children: <Widget>[
+                          Text("See what you can do to support this cause today", 
+                            style: textStyleFrom(Theme.of(context).primaryTextTheme.headline3),
+                            textAlign: TextAlign.center,
+                          ),
+
+                          Container(
+                            height: 180,
+                            child: Image.network(_campaign.infographic),
+                          ),
+
+                          DarkButton("Take action", onPressed: (){
+                            if (_campaign.isPast()) {
+                              Navigator.of(context).pushNamed(Routes.pastCampaignActionPage, arguments: _campaign);
+                            }
+                            else {
+                              Navigator.of(context).pushNamed(Routes.actions);
+                            }
+                          })
+                        ],
+                      ),
+                    )
                   ),
+                  
 
                   SizedBox(height: 25),
 
@@ -153,9 +156,9 @@ class CampaignInfoBody extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      CampaignStat(text: "${_campaign.getNumberOfCampaigners()} people have joined", icon: CustomIcons.ic_partners),
+                      CampaignStat(text: "${_campaign.getNumberOfCampaigners()} people have joined", icon: Icons.people),
                       //CampaignStat(text: "Actions completed"),,
-                      CampaignStat(text: "Global reach", icon: Icons.people,),
+                      CampaignStat(text: "Global reach", icon: CustomIcons.ic_global,),
                     ],
                   ),
                   

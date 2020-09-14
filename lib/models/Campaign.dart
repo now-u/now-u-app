@@ -16,6 +16,8 @@ class Campaign {
   String description;
   int numberOfCampaingers;
   String headerImage;
+  String _infographic;
+  String get infographic => _infographic;
   bool isCampaignSelected;
   List<CampaignAction> actions;
   List<Organisation> generalPartners;
@@ -38,6 +40,7 @@ class Campaign {
     List<Organisation> generalPartners,
     List<Organisation> campaignPartners,
     String videoLink,
+    String infographic,
     List<String> keyAims,
     DateTime startDate,
     DateTime endDate,
@@ -56,41 +59,9 @@ class Campaign {
     this.keyAims = keyAims ?? [];
     this.startDate = startDate;
     this.endDate = endDate;
+    this._infographic = infographic;
   }
 
-  Campaign copyWith({
-    int id,
-    String title,
-    String shortName,
-    String description,
-    int numberOfCampaingers,
-    String headerImage,
-    List<CampaignAction> actions,
-    List<Organisation> generalPartners,
-    List<Organisation> campaignPartners,
-    String videoLink,
-    List<SDG> sdgs,
-    List<String> keyAims,
-    DateTime startDate,
-    DateTime endDate,
-  }) {
-    return Campaign(
-      id: id ?? this.id,
-      title: title ?? this.title,
-      shortName: shortName ?? this.shortName,
-      description: description ?? this.description,
-      numberOfCampaigners: numberOfCampaingers ?? this.numberOfCampaingers,
-      headerImage: headerImage ?? this.headerImage,
-      actions: actions ?? this.actions,
-      generalPartners: generalPartners ?? this.generalPartners,
-      campaignPartners: campaignPartners ?? this.campaignPartners,
-      videoLink: videoLink ?? this.videoLink,
-      sdgs: sdgs ?? this.sdgs,
-      keyAims: keyAims ?? this.keyAims,
-      startDate: startDate ?? this.startDate,
-      endDate: endDate ?? this.endDate,
-    );
-  }
 
   Campaign.fromJson(Map json) {
     print("Getting campaigns from json");
@@ -101,37 +72,27 @@ class Campaign {
     description = json['description_app'];
     numberOfCampaingers = json['number_of_campaigners'];
     headerImage = json['header_image'];
-    // TODO this proabably wont work
-    print("Getting action");
+    _infographic = json['infographic_url'];
+
     actions = (json['actions']) == null ? [] : (json['actions']).map((e) => CampaignAction.fromJson(e)).toList().cast<CampaignAction>();
-    print("GOT ACTIONS");
-    print("Getting ORGANISATIONS");
     campaignPartners = 
         json["campaign_partners"] == null ? [] :
         (json['campaign_partners']).map((e) => Organisation.fromJson(e)).toList().cast<Organisation>();
-    print("GOT ORGANISATIONS");
-    print("GETTING PARTNERS");
     generalPartners = 
         json['general_partners'] == null ? [] :
         (json['general_partners']).map((e) => Organisation.fromJson(e)).toList().cast<Organisation>();
-    print("GOT PARTNERS");
     videoLink = json['video_link'];
-    //sdgs = [];
-    print("Gettingsdgs");
-    //sdgs = [];
     sdgs = 
       json['sdgs'] == null ? <SDG>[] :  
       json['sdgs'].map((s) => getSDGfromNumber(s['id'])).toList().cast<SDG>();
-    print("Got whole camapign");
 
     keyAims = 
       json['key_aims'] == null ? <String>[] :
       json['key_aims'].map((a) => a['title']).toList().cast<String>();
 
-    print("Got the campaign");
-    
     startDate = json['start_date'] == null ? null : DateTime.parse(json['start_date']);
     endDate = json['end_date'] == null ? null : DateTime.parse(json['end_date']);
+
   }
 
   Map toJson() => {

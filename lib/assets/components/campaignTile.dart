@@ -5,6 +5,7 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/assets/components/joinedIndicator.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/textButton.dart';
+import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/routes.dart';
 
@@ -151,58 +152,89 @@ class _CampaignTileState extends State<CampaignTile> {
 
 class CampaignTileWithJoinButtons extends StatelessWidget {
   final bool isJoined;
-  final Function toggleJoin;
+  final Function joinCampaign;
+  final Function leaveCampaign;
   final Campaign campaign;
+  final double outerPadding;
+
   CampaignTileWithJoinButtons({
     @required this.isJoined, 
-    @required this.toggleJoin, 
-    @required this.campaign
+    @required this.joinCampaign, 
+    @required this.leaveCampaign, 
+    @required this.campaign,
+    this.outerPadding,
   });
   
   @override
   Widget build(BuildContext context) {
-    return CustomTile(
-      child: Column(
-        children: [
-          Container(
-            height: 200,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(campaign.getHeaderImage()),
-                fit: BoxFit.cover,
+    return Padding(
+      padding: EdgeInsets.all(outerPadding ?? 18),
+      child: CustomTile(
+        child: Column(
+          children: [
+            Container(
+              height: 100,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(campaign.getHeaderImage()),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child: Text(
-              campaign.getTitle(),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: textStyleFrom(
-                Theme.of(context).primaryTextTheme.headline3,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          NumberOfCampaignersIndicator(campaign.getNumberOfCampaigners()),
-          Container(
-            color: Color.fromRGBO(247,248,252, 1),
-            child: Padding(
-              padding: EdgeInsets.all(20),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: Column(
                 children: [
-                  CustomTextButton(
-                    "Join",
-                    onClick: () {toggleJoin();},
-                  )
-                ],
+                  Text(
+                    campaign.getTitle(),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: textStyleFrom(
+                      Theme.of(context).primaryTextTheme.headline3,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  NumberOfCampaignersIndicator(campaign.getNumberOfCampaigners()),
+                ]
               ),
             ),
-          )
-        ],
-      ),
+
+            Container(
+              color: Color.fromRGBO(247,248,252, 1),
+              child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomTextButton(
+                      "More info",
+                      onClick: () {},
+                      fontColor: Color.fromRGBO(109,113,129, 1),
+                    ),
+                    isJoined 
+                      ? DarkButton(
+                        "Joined",
+                        //inverted: true,
+                        onPressed: () {leaveCampaign(campaign.getId());},
+                        style: DarkButtonStyles.Small,
+                        rightIcon: Icons.check,
+                      )
+                      : DarkButton(
+                        "Join",
+                        //inverted: true,
+                        onPressed: () {joinCampaign(campaign.getId());},
+                        style: DarkButtonStyles.Medium,
+                        rightIcon: Icons.link,
+                        inverted: true,
+                      )
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      )
     );
   }
 

@@ -4,6 +4,7 @@ import 'package:app/models/Campaign.dart';
 
 import 'package:app/locator.dart';
 import 'package:app/services/campaign_service.dart';
+import 'package:app/services/auth.dart';
 
 mixin CampaignRO on BaseModel {
   final CampaignService _campaignsService = locator<CampaignService>();
@@ -45,5 +46,30 @@ mixin CampaignRO on BaseModel {
   }
 }
 
+mixin CampaignWrite on BaseModel {
+  final AuthenticationService _authenticationService = locator<AuthenticationService>();
+
+  Future joinCampaign(int id) async {
+    setBusy(true);
+    await _authenticationService.joinCampaign(id);
+    setBusy(false);
+    notifyListeners();
+  }
+  
+  Future leaveCampaign(int id) async {
+    setBusy(true);
+    await _authenticationService.leaveCampaign(id);
+    setBusy(false);
+    notifyListeners();
+  }
+
+  bool isJoined(int id) {
+    return _authenticationService.currentUser.getSelectedCampaigns().contains(id);
+  }
+}
+
 class BaseCampaignViewModel extends BaseModel with CampaignRO {
+}
+
+class BaseCampaignWriteViewModel extends BaseModel with CampaignRO, CampaignWrite {
 }
