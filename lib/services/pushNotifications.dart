@@ -5,7 +5,7 @@ import 'package:app/main.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/navigation.dart';
 
-class PushNotificationsService {
+class PushNotificationService {
   final FirebaseMessaging _fcm  = FirebaseMessaging();
   final NavigationService _navigationService = locator<NavigationService>();
 

@@ -2,7 +2,6 @@ import 'package:app/assets/StyleFrom.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Custom Icons
 import 'package:app/assets/icons/customIcons.dart';
@@ -241,7 +240,7 @@ class CampaignAction {
     whatDescription = json['what_description'];
     whyDescription  = json['why_description'];
     link            = json['link'];
-    time            = json['time'].toDouble();
+    time            = json['time'] == null ? 5.0 : json['time'].toDouble();
     type            = campaignActionTypeFromString(json['type']);
     createdAt       = DateTime.parse(json['created_at']);
     releasedAt      = json['release_date'] == null ? null : DateTime.parse(json['release_date']);
@@ -318,11 +317,9 @@ class CampaignAction {
 
   bool isNew() {
     if (releasedAt == null) {
-      print("Date time difference = " + DateTime.now().difference(createdAt).toString());
       return DateTime.now().difference(createdAt).compareTo(Duration(days: 2)) < 0;
     }
     else {
-      print("Date time difference = " + DateTime.now().difference(releasedAt).toString());
       return DateTime.now().difference(releasedAt).compareTo(Duration(days: 2)) < 0;
     }
   }

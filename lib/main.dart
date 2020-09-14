@@ -3,22 +3,12 @@ import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
-import 'package:app/pages/other/SplashScreen.dart';
-
 import 'package:app/routes.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/analytics.dart';
-import 'package:app/services/pushNotifications.dart';
 import 'package:app/services/navigation.dart';
 
-import 'package:app/models/State.dart';
-
-import 'package:app/redux/reducers.dart';
-import 'package:app/redux/middleware.dart';
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux_dev_tools/redux_dev_tools.dart';
-import 'package:redux_thunk/redux_thunk.dart';
+import 'package:app/pages/other/startup_view.dart';
 
 void main() {
   Crashlytics.instance.enableInDevMode = true;
@@ -62,7 +52,7 @@ const MaterialColor whiteMaterial = const MaterialColor(
 Color white = Colors.white;
 Color orange = Color.fromRGBO(255, 136, 0, 1);
 Color blue = Color.fromRGBO(1, 26, 67, 1);
-Color black = Colors.black;
+Color black = Color.fromRGBO(55, 58, 74, 1);
 Color lightGrey = Color.fromRGBO(119, 119, 119, 1);
 
 // Accent Colours
@@ -84,62 +74,23 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   int deepLinkPageIndex = 1;
   Widget page;
-  Uri _deepLink;
   @override
   void initState() {
-    // TODO: implement initState
     setupLocator();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final DevToolsStore<AppState> store = DevToolsStore<AppState>(
-      appStateReducer,
-      initialState: AppState.initialState(),
-      middleware: [appStateMiddleware, thunkMiddleware],
-    );
-  
-    final PushNotificationsService _pushNotificationService =
-      locator<PushNotificationsService>();
-    _pushNotificationService.init();
-
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.white, //or set color with: Color(0xFF0000FF)
-    ));
-
-    return StoreProvider<AppState>(
-        store: store,
-        child:
-            //FutureBuilder(
-            //  future: getSecrets(),
-            //  builder:(BuildContext context, AsyncSnapshot snapshot) {
-            //    if (!snapshot.hasData) {
-            //      return Container();
-            //    }
-            //return Wiredash(
-            //  projectId: snapshot.data['wiredash_project_id'],
-            //  secret: snapshot.data['wiredash_key'],
-            //  navigatorKey: Keys.navKey,
-            //  child:
-        MaterialApp(
+        return MaterialApp(
           title: 'Flutter Demo',
           navigatorKey: locator<NavigationService>().navigatorKey,
           navigatorObservers: [
             locator<Analytics>().getAnalyticsObserver(),
           ],
-          initialRoute: '/',
+          home: StartUpView(),
           //initialRoute: Routes.intro,
           onGenerateRoute: initRoutes,
-          routes: {
-            '/': (BuildContext context) => StoreBuilder<AppState>(
-                  onInitialBuild: (store) {
-                    store.dispatch(initStore());
-                  },
-                  builder: (BuildContext context, Store<AppState> store) =>
-                      SplashScreen(),
-                ),
-          },
           theme: ThemeData(
             // This is the theme of the application.
             applyElevationOverlayColor: true,
@@ -216,9 +167,6 @@ class _AppState extends State<App> {
             buttonColor: orange,
             //textSelectionColor: white, // Text used on top of
           ),
-        ));
-    //}
-    //),
-    //);
+        );
   }
 }

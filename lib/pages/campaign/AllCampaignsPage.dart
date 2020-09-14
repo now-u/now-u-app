@@ -3,17 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:app/assets/components/header.dart';
 import 'package:app/assets/components/campaignTile.dart';
 
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:app/models/ViewModel.dart';
-import 'package:app/models/State.dart';
+import 'package:stacked/stacked.dart';
+import 'package:app/viewmodels/campaigns_all_model.dart';
 
 class AllCampaignsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, ViewModel>(
-      converter: (Store<AppState> store) => ViewModel.create(store),
-      builder: (BuildContext context, ViewModel viewModel) {
+    return  ViewModelBuilder<CampaignsAllViewModel>.reactive(
+      viewModelBuilder: () => CampaignsAllViewModel(),
+      onModelReady: (model) => model.fetchAllCampaigns(),
+      builder: (context, model, child) {
         return Scaffold(
           body: SafeArea(
             child: ListView(
@@ -30,9 +29,9 @@ class AllCampaignsPage extends StatelessWidget {
                 ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: viewModel.campaigns.activeLength(),
+                  itemCount: model.currentCampaigns.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return CampaignTile(viewModel.campaigns.getActiveCampaigns()[index]);
+                    return CampaignTile(model.currentCampaigns[index]);
                   },
                 ),
                 
@@ -47,20 +46,12 @@ class AllCampaignsPage extends StatelessWidget {
                 
                 // Past
                 _titleBuilder("Previous", context),
-                FutureBuilder(
-                  future: viewModel.api.getAllCampaigns(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if(!snapshot.hasData) {
-                      return CircularProgressIndicator();
-                    }
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: snapshot.data.getPastCampaings().length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return CampaignTile(snapshot.data.getPastCampaings()[index]);
-                      },
-                    );
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: model.pastCampaigns.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return CampaignTile(model.pastCampaigns[index]);
                   },
                 ),
 

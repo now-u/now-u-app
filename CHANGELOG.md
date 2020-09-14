@@ -48,6 +48,13 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
 
 ### Unreleased
 
+- #110 [feature]  Campaign page design update
+- #111 [fix]      App no longer crashes if no action time provided 
+- #112 [feature]  The app now uses stacked instead of redux
+- #113 [feature]  An early version of internal notifications have been added
+- #114 [feature]  Campaign page campaign tiles have been updated. Campaigns can
+  now be joined directly from this page
+
 ### Version 1.1.6
 
 - #NA [fix]     Fix ios incorrect supprorted version and ios push 

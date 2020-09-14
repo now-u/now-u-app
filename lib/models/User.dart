@@ -395,6 +395,10 @@ class User {
   void setPoints(int points) {
     this.points = points;
   }
+  
+  void setCompletedActions(List<int> actions) {
+    this.completedActions = actions;
+  }
 
   void setToken(String token) {
     this.token = token;
