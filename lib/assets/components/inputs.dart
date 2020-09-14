@@ -19,12 +19,12 @@ class CustomTextFormField extends StatelessWidget {
 
   CustomTextFormField({
     @required this.autofocus,
-    @required this.keyboardType,
-    @required this.validator,
-    @required this.onSaved,
-    @required this.style,
     @required this.hintText,
     this.textCapitalization,
+    this.style,
+    this.keyboardType,
+    this.onSaved,
+    this.validator,
   });
 
   @override
