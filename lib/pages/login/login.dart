@@ -7,12 +7,11 @@ import 'package:app/assets/routes/customLaunch.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:app/models/State.dart';
-import 'package:app/models/ViewModel.dart';
-import 'package:app/models/User.dart';
+import 'package:app/viewmodels/login_model.dart';
 
 import 'package:app/services/storage.dart';
-import 'package:flutter_redux/flutter_redux.dart';
+
+import 'package:stacked/stacked.dart';
 
 enum LoginTypes{
   Login,
@@ -34,7 +33,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
-//class LoginPageState extends State<LoginPage> {
   String _email;
   String _name;
   String _token;
@@ -55,10 +53,6 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
 
     @override
   Widget build(BuildContext context) {
-    final snackBarEmailSent = SnackBar(content: Text('Email Sent!'));
-    final snackBarEmailNotSent = SnackBar(
-      content: Text('Email Not Sent. Error.'),
-    );
 
     final email = CustomTextFormField(
       style: CustomFormFieldStyle.Dark,
@@ -146,50 +140,32 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
     );
     
     Widget loginButton() {
-      Future<bool> validateAndSave(UserViewModel model) async {
+      Future<bool> validateAndSave(LoginViewModel model) async {
         final FormState form = _formKey.currentState;
         if (form.validate()) {
           form.save();
-          if (stagingUsers.contains(_email)) {
-            model.auth.switchToStagingBranch();
-          }
-          model.email(_email, _name, _newsletterSignup);
+          //if (stagingUsers.contains(_email)) {
+          //  model.switchToStagingBranch();
+          //}
+          model.email(email: _email, name: _name, newsletterSignup:_newsletterSignup);
           return true;
         }
         return false;
       }
 
-      return StoreConnector<AppState, UserViewModel>(
-          converter: (store) => UserViewModel.create(store),
-          builder: (_, viewModel) {
-            return Padding(
+      return ViewModelBuilder<LoginViewModel>.reactive(
+        viewModelBuilder: () => LoginViewModel(),
+        builder: (context, model, child) => Padding(
                 padding: EdgeInsets.symmetric(vertical: 16.0),
                 child: DarkButton(
                   "Next",
                   onPressed: () {
                     print("Button pressed");
-                    validateAndSave(viewModel);
+                    validateAndSave(model);
                   },
-                ));
-          },
-          onDidChange: (viewModel) {
-            print("view model did change in login");
-          });
-    }
-
-    Widget skipButton() {
-      return StoreConnector<AppState, UserViewModel>(
-          converter: (store) => UserViewModel.create(store),
-          builder: (_, viewModel) {
-            return Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-                child: CustomTextButton(
-                  "Skip",
-                  onClick: () {
-                    viewModel.skipLogin();
-                  },
-                ));
-          });
+                )
+              ) ,
+        );
     }
 
     Form loginForm() {
@@ -376,32 +352,29 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
     );
     
     Widget manualButton() {
-      Future<bool> validateAndSave(UserViewModel model) async {
+      Future<bool> validateAndSave(LoginViewModel model) async {
         final FormState form = _tokenFormKey.currentState;
         if (form.validate()) {
           form.save();
           String email = await _repositry.getEmail();
-          model.login(email, _token);
+          model.login(email: email, token: _token);
           return true;
         }
         return false;
       }
-      return StoreConnector<AppState, UserViewModel>(
-          converter: (store) => UserViewModel.create(store),
-          builder: (_, viewModel) {
-            return Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-                child: DarkButton(
-                  "Login",
-                  onPressed: () {
-                    print("Button pressed");
-                    validateAndSave(viewModel);
-                  },
-                ));
-          },
-          onDidChange: (viewModel) {
-            print("view model did change in login");
-          });
+      return ViewModelBuilder<LoginViewModel>.reactive(
+        viewModelBuilder: () => LoginViewModel(),
+        builder: (context, model, child) => Padding(
+          padding: EdgeInsets.symmetric(vertical: 16.0),
+          child: DarkButton(
+            "Login",
+            onPressed: () {
+              print("Button pressed");
+              validateAndSave(model);
+            },
+          )
+        ),
+      );
     }
     
     Form tokenForm() {

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 import 'package:app/models/Campaign.dart';
-import 'package:app/models/ViewModel.dart';
-import 'package:app/models/State.dart';
 
 import 'package:app/assets/components/joinedIndicator.dart';
-import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/customTile.dart';
+import 'package:app/assets/components/textButton.dart';
+import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/routes.dart';
 
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
+import 'package:stacked/stacked.dart';
+import 'package:app/viewmodels/base_model.dart';
+
 
 class Tile extends StatelessWidget {
   final Widget child;
@@ -65,21 +65,13 @@ class CampaignTile extends StatefulWidget {
 }
 
 class _CampaignTileState extends State<CampaignTile> {
-  @override
-  void initState() {
-    print("Initialising state");
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
-    //_user = widget.model.user;
-
     GestureTapCallback _onTapMoreInfo = () {
       Navigator.of(context).pushNamed(Routes.campaignInfo, arguments: widget.campaign);
     };
 
-    var borderRadius = 20.0;
     var hPadding = widget.hPadding ?? 15.0;
     var hOuterPadding = widget.hOuterPadding;
     return Tile(
@@ -106,10 +98,10 @@ class _CampaignTileState extends State<CampaignTile> {
                 )),
               ),
             ),
-            StoreConnector<AppState, ViewModel>(
-                converter: (Store<AppState> store) => ViewModel.create(store),
-                builder: (BuildContext context, ViewModel viewModel) {
-                  bool selected = viewModel.userModel.user
+            ViewModelBuilder<BaseModel>.reactive(
+              viewModelBuilder: () => BaseModel(),
+              builder: (context, model, child) {
+                  bool selected = model.currentUser
                       .getSelectedCampaigns()
                       .contains(widget.campaign.getId());
                   if (selected) {
@@ -125,7 +117,8 @@ class _CampaignTileState extends State<CampaignTile> {
                   } else {
                     return Container();
                   }
-                })
+                }
+              )
           ]),
           SizedBox(height: 10),
           // Title
@@ -147,41 +140,141 @@ class _CampaignTileState extends State<CampaignTile> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.people,
-                      size: 18,
-                    ),
-                    SizedBox(width: 2),
-                    RichText(
-                        text: TextSpan(children: [
-                      TextSpan(
-                        text:
-                            widget.campaign.getNumberOfCampaigners().toString(),
-                        style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.headline5,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromRGBO(63, 61, 86, 1),
-                        ),
-                      ),
-                      TextSpan(
-                        text: " campaigners",
-                        style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.headline5,
-                          fontWeight: FontWeight.w400,
-                          color: Color.fromRGBO(63, 61, 86, 1),
-                        ),
-                      ),
-                    ]))
-                  ],
-                ),
+                NumberOfCampaignersIndicator(widget.campaign.getNumberOfCampaigners())
               ],
             ),
           ),
         ],
       ),
     );
+  }
+}
+
+class CampaignTileWithJoinButtons extends StatelessWidget {
+  final bool isJoined;
+  final Function joinCampaign;
+  final Function leaveCampaign;
+  final Campaign campaign;
+  final double outerPadding;
+
+  CampaignTileWithJoinButtons({
+    @required this.isJoined, 
+    @required this.joinCampaign, 
+    @required this.leaveCampaign, 
+    @required this.campaign,
+    this.outerPadding,
+  });
+  
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(outerPadding ?? 18),
+      child: CustomTile(
+        child: Column(
+          children: [
+            Container(
+              height: 100,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(campaign.getHeaderImage()),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  Text(
+                    campaign.getTitle(),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: textStyleFrom(
+                      Theme.of(context).primaryTextTheme.headline3,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  NumberOfCampaignersIndicator(campaign.getNumberOfCampaigners()),
+                ]
+              ),
+            ),
+
+            Container(
+              color: Color.fromRGBO(247,248,252, 1),
+              child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomTextButton(
+                      "More info",
+                      onClick: () {},
+                      fontColor: Color.fromRGBO(109,113,129, 1),
+                    ),
+                    isJoined 
+                      ? DarkButton(
+                        "Joined",
+                        //inverted: true,
+                        onPressed: () {leaveCampaign(campaign.getId());},
+                        style: DarkButtonStyles.Small,
+                        rightIcon: Icons.check,
+                      )
+                      : DarkButton(
+                        "Join",
+                        //inverted: true,
+                        onPressed: () {joinCampaign(campaign.getId());},
+                        style: DarkButtonStyles.Medium,
+                        rightIcon: Icons.link,
+                        inverted: true,
+                      )
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      )
+    );
+  }
+
+}
+
+class NumberOfCampaignersIndicator extends StatelessWidget {
+  final int numberOfCampaigners;
+  NumberOfCampaignersIndicator(this.numberOfCampaigners);
+
+  @override
+  Widget build(BuildContext context) {
+     return Row(
+       children: <Widget>[
+         Icon(
+           Icons.people,
+           size: 18,
+         ),
+         SizedBox(width: 2),
+         RichText(
+             text: TextSpan(children: [
+           TextSpan(
+             text:
+                 numberOfCampaigners.toString(),
+             style: textStyleFrom(
+               Theme.of(context).primaryTextTheme.headline5,
+               fontWeight: FontWeight.w600,
+               color: Color.fromRGBO(63, 61, 86, 1),
+             ),
+           ),
+           TextSpan(
+             text: " campaigners",
+             style: textStyleFrom(
+               Theme.of(context).primaryTextTheme.headline5,
+               fontWeight: FontWeight.w400,
+               color: Color.fromRGBO(63, 61, 86, 1),
+             ),
+           ),
+         ]))
+       ],
+     );
   }
 }
 
@@ -238,4 +331,3 @@ class CampaignSelectionTile extends StatelessWidget {
             ]))));
   }
 }
-

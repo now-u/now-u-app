@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:app/models/Campaigns.dart';
+import 'package:app/models/Campaign.dart';
 
 enum ArticleType {
   News,
@@ -136,16 +136,16 @@ class Article {
   bool getIsVideoOfTheDay() {
     return isVideoOfTheDay;
   }
-  String getCategory({Campaigns campaigns}) {
+  String getCategory({List<Campaign> campaigns}) {
     print("Getting catergory");
     print(linkedCampaign);
     print(campaigns);
     if (linkedCampaign != null) {
       if (campaigns != null) {
-        print(campaigns.getActiveCampaigns());
-        for (int i = 0; i < campaigns.activeLength(); i++) {
-          if (campaigns.getActiveCampaigns()[i].getId() == linkedCampaign) {
-            return campaigns.getActiveCampaigns()[i].getShortName();
+        print(campaigns);
+        for (int i = 0; i < campaigns.length; i++) {
+          if (campaigns[i].getId() == linkedCampaign) {
+            return campaigns[i].getShortName();
           }
         }
       }

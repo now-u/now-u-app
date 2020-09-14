@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Learning.dart';
-import 'package:app/models/ViewModel.dart';
-import 'package:app/models/State.dart';
 import 'package:app/routes.dart';
+
+import 'package:app/viewmodels/base_model.dart';
+import 'package:stacked/stacked.dart';
 
 import 'package:app/pages/action/ActionInfo.dart';
 
@@ -104,10 +103,10 @@ class ActionSelectionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, ViewModel>(
-        converter: (Store<AppState> store) => ViewModel.create(store),
-        builder: (BuildContext context, ViewModel viewModel) {
-          bool completed = viewModel.userModel.user
+    return ViewModelBuilder<BaseModel>.reactive(
+        viewModelBuilder: () => BaseModel(),
+        builder: (context, model, child) {
+          bool completed = model.currentUser
               .getCompletedActions()
               .contains(action.getId());
           return LeadingSelectionItem(

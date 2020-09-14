@@ -1,28 +1,28 @@
-import 'package:app/models/Campaigns.dart';
 import 'package:app/pages/campaign/CampaignPage.dart';
-import 'package:app/pages/home/Home.dart';
 import 'package:app/pages/other/OrganisationPage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/models/Organisation.dart';
+import 'package:app/models/Notification.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Learning.dart';
 
-import 'package:app/pages/profile/profilePages/FAQPage.dart';
-import 'package:app/pages/profile/profilePages/ProfilePage.dart';
-import 'package:app/pages/profile/profilePages/PartnersPage.dart';
+import 'package:app/pages/more/morePages/FAQPage.dart';
+import 'package:app/pages/more/morePages/PartnersPage.dart';
 import 'package:app/pages/intro/IntroPage.dart';
 import 'package:app/pages/login/login.dart';
 import 'package:app/pages/login/emailSentPage.dart';
 import 'package:app/pages/other/InfoPage.dart';
 import 'package:app/pages/other/WebView.dart';
+import 'package:app/pages/other/NotificationPage.dart';
 import 'package:app/pages/Tabs.dart';
 import 'package:app/pages/action/ActionInfo.dart';
-import 'package:app/pages/campaign/LearningCentre/LearningCentreAllPage.dart';
-import 'package:app/pages/campaign/LearningCentre/LearningCentrePage.dart';
-import 'package:app/pages/campaign/LearningCentre/LearningTopicPage.dart';
+import 'package:app/pages/learning/LearningCentreAllPage.dart';
+import 'package:app/pages/learning/LearningCentrePage.dart';
+import 'package:app/pages/learning/LearningTopicPage.dart';
 import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
+import 'package:app/pages/campaign/CampaignInfo/CampaignDetails.dart';
 import 'package:app/pages/campaign/AllCampaignsPage.dart';
 import 'package:app/pages/campaign/PastCampaignActionPage.dart';
 
@@ -40,6 +40,7 @@ class Routes {
 
   static const actionInfo = "actionInfo";
   static const campaignInfo = "campaignInfo";
+  static const campaignDetails = "campaignDetails";
 
   // All campaigns (including past)
   static const allCampaigns = "allCampaigns";
@@ -52,6 +53,7 @@ class Routes {
   static const organisationPage = "organisationPage";
   static const info = "info";
   static const webview = "webview";
+  static const notification = "notification";
 
   // Learning
   static const learningAll = "learning";
@@ -87,11 +89,6 @@ Function initRoutes = (RouteSettings settings) {
             builder: (context) => IntroPage(), settings: settings);
       }
 
-    case Routes.profile:
-      {
-        return customRoute(
-            builder: (context) => ProfilePage(), settings: settings);
-      }
     case Routes.faq:
       {
         return customRoute(builder: (context) => FAQPage(), settings: settings);
@@ -129,6 +126,17 @@ Function initRoutes = (RouteSettings settings) {
                     campaign: args,
                   ),
               settings: settings);
+        }
+        return customRoute(
+            builder: (context) => CampaignPage(), settings: settings);
+      }
+    case Routes.campaignDetails:
+      {
+        if (args is Campaign) {
+          return customRoute(
+              builder: (context) => CampaignDetails(args),
+              settings: settings
+          );
         }
         return customRoute(
             builder: (context) => CampaignPage(), settings: settings);
@@ -229,6 +237,14 @@ Function initRoutes = (RouteSettings settings) {
           return customRoute(builder: (context) => WebViewPage(WebViewArgumnets(args)), settings: settings);
         }
         return customRoute(builder: (context) => TabsPage(currentPage: TabPage.Home), settings: settings);
+      }
+    
+    case Routes.notification:
+      {
+        if (args is InternalNotification) {
+          return customRoute(builder: (context) => NotificationPage(args), settings: settings);
+        }
+        break;
       }
 
     // TODO add a 404 page

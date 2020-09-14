@@ -7,6 +7,7 @@ class ScrollableSheetPage extends StatelessWidget {
   final List<Widget> children;
   final double initialChildSize;
   final double minChildSize;
+  final double maxChildSize;
   final Shadow shadow;
   final Color scaffoldBackgroundColor;
   final Color sheetBackgroundColor;
@@ -16,6 +17,7 @@ class ScrollableSheetPage extends StatelessWidget {
     @required this.children,
     this.initialChildSize,
     this.minChildSize,
+    this.maxChildSize,
     this.shadow,
     this.scaffoldBackgroundColor,
     this.sheetBackgroundColor,
@@ -32,10 +34,10 @@ class ScrollableSheetPage extends StatelessWidget {
           children: [
             // Header
             header,
-
             DraggableScrollableSheet(
               initialChildSize: initialChildSize ?? 0.72,
               minChildSize: minChildSize ?? 0.72,
+              maxChildSize: maxChildSize ?? 1,
               builder: (context, controller) {
                 return ListView(
                   controller: controller,
@@ -67,7 +69,7 @@ class ScrollableSheetPage extends StatelessWidget {
                   )
                   ]
                 );
-              }
+              },
             ),
 
             ]

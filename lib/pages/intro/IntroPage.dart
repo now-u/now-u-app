@@ -8,8 +8,6 @@ import 'package:rect_getter/rect_getter.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
 
-import 'package:app/main.dart';
-
 List<Widget> pages = <Widget>[
                   IntroPageSection(
                     "Join campaigns",

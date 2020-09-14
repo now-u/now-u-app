@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class CustomTextButton extends StatelessWidget {
   final String text;
   final Function onClick;
-  final bool iconRight;
-  final bool iconLeft;
+  final iconRight;
+  final iconLeft;
   final double fontSize;
   final Color fontColor;
   final FontWeight fontWeight;
@@ -15,13 +15,13 @@ class CustomTextButton extends StatelessWidget {
   CustomTextButton(
     this.text, 
     {
-    @required this.onClick,
-    this.iconRight,
-    this.iconLeft,
-    this.fontSize,
-    this.width,
-    this.fontColor,
-    this.fontWeight,
+      @required this.onClick,
+      this.iconRight,
+      this.iconLeft,
+      this.fontSize,
+      this.width,
+      this.fontColor,
+      this.fontWeight,
     }
 
   );

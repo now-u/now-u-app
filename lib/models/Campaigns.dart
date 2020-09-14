@@ -2,9 +2,6 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/User.dart';
 
-import 'package:app/services/api.dart';
-import 'package:app/locator.dart';
-
 import 'package:path_provider/path_provider.dart';
 import 'dart:async';
 import 'dart:io';
@@ -57,26 +54,6 @@ class Campaigns {
     return json.encode(this.activeCampaigns);
   }
 
-  Campaigns.init() {
-    print("Initalizing campaigns");
-    Api api = locator<Api>();
-    List<Campaign> camps;
-    api.getCampaigns().then((Campaigns cs) {
-      activeCampaigns = cs.getActiveCampaigns();
-      print("got campaigns");
-      print(activeCampaigns);
-    }, onError: (error) {
-      print("There was an error when getting campaigns");
-      readCampaingsFromAssets().then((String s) {
-        camps = (jsonDecode(s) as List)
-            .map((e) => Campaign.fromJson(e))
-            .toList()
-            .cast<Campaign>();
-        activeCampaigns = camps ?? <Campaign>[];
-      });
-    });
-  }
-
   Campaigns getCampaignsFromIds(List<int> ids) {
     List<Campaign> campaigns;
     for (int i = 0; i < activeCampaigns.length; i++) {
@@ -87,6 +64,8 @@ class Campaigns {
     return Campaigns(campaigns);
   }
 
+  // Redundant - used for local testing
+  // TODO if we still want this kind of thing it should be a service
   Future<String> readCampaingsFromAssets() async {
     String data = await rootBundle.loadString('assets/json/campaigns.json');
     return data;
