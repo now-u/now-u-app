@@ -8,7 +8,6 @@ import 'package:app/pages/more/MoreMenu.dart';
 import 'package:app/pages/news/NewsPage.dart';
 import 'package:app/pages/action/ActionPage.dart';
 
-
 //import 'package:app/assets/dynamicLinks.dart';
 
 // These must be in the corect order
@@ -120,9 +119,10 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
             type: BottomNavigationBarType.fixed,
             elevation: 3,
             iconSize: 25,
-            unselectedLabelStyle: TextStyle(color: Color.fromRGBO(155,159,177,1), fontSize: 10),
+            unselectedLabelStyle: TextStyle(
+                color: Color.fromRGBO(155, 159, 177, 1), fontSize: 10),
             selectedLabelStyle: TextStyle(color: Colors.red, fontSize: 12),
-            unselectedItemColor: Color.fromRGBO(155,159,177,1),
+            unselectedItemColor: Color.fromRGBO(155, 159, 177, 1),
             items: generateBottomNavBarItems(),
             onTap: (index) {
               setState(() {

@@ -91,34 +91,32 @@ class SecondaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomTile(
-      child:
-        Container(
-          color: Colors.white,
-          height: darkButtonStyleStyles[style]['height'],
-          child: RaisedButton(
-            color: Colors.white,
-            onPressed: onPressed,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                  darkButtonStyleStyles[style]['borderRadius']),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: darkButtonStyleStyles[style]['vPadding'],
-                horizontal: darkButtonStyleStyles[style]['hPadding'],
-              ),
-              child: Text(
-                text,
-                style: textStyleFrom(
-                  Theme.of(context).primaryTextTheme.button,
-                  color: Theme.of(context).buttonColor,
-                  fontSize: fontSize ?? darkButtonStyleStyles[style]['fontSize'],
-                ),
-              ),
+        child: Container(
+      color: Colors.white,
+      height: darkButtonStyleStyles[style]['height'],
+      child: RaisedButton(
+        color: Colors.white,
+        onPressed: onPressed,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+              darkButtonStyleStyles[style]['borderRadius']),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: darkButtonStyleStyles[style]['vPadding'],
+            horizontal: darkButtonStyleStyles[style]['hPadding'],
+          ),
+          child: Text(
+            text,
+            style: textStyleFrom(
+              Theme.of(context).primaryTextTheme.button,
+              color: Theme.of(context).buttonColor,
+              fontSize: fontSize ?? darkButtonStyleStyles[style]['fontSize'],
             ),
           ),
-        )
-    );
+        ),
+      ),
+    ));
   }
 }
 

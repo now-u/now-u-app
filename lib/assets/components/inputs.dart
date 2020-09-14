@@ -6,10 +6,7 @@ import 'package:app/assets/components/circularCheckbox.dart';
 final double WIDTH = 60;
 final double HEIGHT = 30;
 
-enum CustomFormFieldStyle {
-  Light,
-  Dark
-}
+enum CustomFormFieldStyle { Light, Dark }
 
 class CustomTextFormField extends StatelessWidget {
   final bool autofocus;
@@ -33,32 +30,30 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: TextFormField(
-        keyboardType: keyboardType ?? TextInputType.text,
-        textInputAction: TextInputAction.go,
-        autofocus: autofocus,
-        validator: validator,
-        onSaved: onSaved,
-        style: textStyleFrom(
-          Theme.of(context).primaryTextTheme.headline5,
-          color: Colors.white,
-        ),
-        textCapitalization: textCapitalization ?? TextCapitalization.none,
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
-          filled: true,
-          fillColor: Color.fromRGBO(221,221,221,0.2),
-
-          hintText: hintText,
-          hintStyle: TextStyle(
-            color: colorFrom(
-              Theme.of(context).primaryColor,
-              opacity: 0.5,
-            ),
+        child: TextFormField(
+      keyboardType: keyboardType ?? TextInputType.text,
+      textInputAction: TextInputAction.go,
+      autofocus: autofocus,
+      validator: validator,
+      onSaved: onSaved,
+      style: textStyleFrom(
+        Theme.of(context).primaryTextTheme.headline5,
+        color: Colors.white,
+      ),
+      textCapitalization: textCapitalization ?? TextCapitalization.none,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
+        filled: true,
+        fillColor: Color.fromRGBO(221, 221, 221, 0.2),
+        hintText: hintText,
+        hintStyle: TextStyle(
+          color: colorFrom(
+            Theme.of(context).primaryColor,
+            opacity: 0.5,
           ),
         ),
-      )
-    );
+      ),
+    ));
   }
 }
 
@@ -72,7 +67,7 @@ class CustomSwitch extends StatefulWidget {
 
   final String activeText = "On";
   final String inactiveText = "Off";
-  
+
   const CustomSwitch(
       {Key key,
       this.value,
@@ -157,7 +152,7 @@ class _CustomSwitchState extends State<CustomSwitch>
                   ),
                   _circleAnimation.value == Alignment.centerLeft
                       //? _getText(false)
-                      ? SizedBox(width: WIDTH - HEIGHT -5)
+                      ? SizedBox(width: WIDTH - HEIGHT - 5)
                       : Container(),
                 ],
               ),
@@ -196,35 +191,30 @@ class CustomCheckboxFormField extends FormField<bool> {
             initialValue: initialValue,
             autovalidate: autovalidate,
             builder: (FormFieldState<bool> state) {
-              return 
-              Builder(
-                builder: (BuildContext context) => Column(
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        CircularCheckBox(
-                          value: state.value,
-                          onChanged: state.didChange,
-                          inactiveColor: Theme.of(context).primaryColor,
-                          activeColor: Theme.of(context).primaryColor,
+              return Builder(
+                  builder: (BuildContext context) => Column(children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            CircularCheckBox(
+                              value: state.value,
+                              onChanged: state.didChange,
+                              inactiveColor: Theme.of(context).primaryColor,
+                              activeColor: Theme.of(context).primaryColor,
+                            ),
+                            SizedBox(width: 3),
+                            Expanded(child: title),
+                          ],
                         ),
-                        SizedBox(width: 3),
-                        Expanded(child: title),
-                      ],
-                    ),
-                    state.hasError
-                    ? Text(
-                        state.errorText,
-                        style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.bodyText1,
-                          color: Theme.of(context).errorColor,
-                          fontSize: 12 
-                        )
-                      )
-                    : Container(),
-                  ]
-                )
-              );
+                        state.hasError
+                            ? Text(state.errorText,
+                                style: textStyleFrom(
+                                    Theme.of(context)
+                                        .primaryTextTheme
+                                        .bodyText1,
+                                    color: Theme.of(context).errorColor,
+                                    fontSize: 12))
+                            : Container(),
+                      ]));
             });
 }

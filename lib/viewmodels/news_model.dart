@@ -11,12 +11,12 @@ class NewsViewModel extends BaseModel {
   final CampaignService _campaignService = locator<CampaignService>();
 
   String _category;
-  
+
   List<Article> _filteredArticles = [];
   List<Article> get filteredArticles => _filteredArticles;
 
   List<Campaign> get campaigns => _campaignService.campaigns;
-    
+
   bool _searching = false;
   bool get searching => _searching;
 
@@ -37,10 +37,8 @@ class NewsViewModel extends BaseModel {
         : _campaignService.campaigns[index].getShortName();
 
     // Retap to deselect
-    _category = _category == indexCategory
-        ? null
-        : indexCategory;
-    
+    _category = _category == indexCategory ? null : indexCategory;
+
     _filteredArticles.clear();
     print(_filteredArticles);
     _filteredArticles.addAll(_newsService.articles);
@@ -56,8 +54,7 @@ class NewsViewModel extends BaseModel {
   bool pillIsSelected(index) {
     return getCategoryFromIndex(index) == _category;
   }
-  
-  
+
   // Filter for string - this was used for search but should really be deleted now (but search may come back one day xD)
   void filterArticlesList(String query) {
     if (query.isNotEmpty) {
@@ -81,7 +78,7 @@ class NewsViewModel extends BaseModel {
 
   String getCategoryFromIndex(int index) {
     return index == campaigns.length
-      ? "general"
-      : campaigns[index].getShortName();
+        ? "general"
+        : campaigns[index].getShortName();
   }
 }

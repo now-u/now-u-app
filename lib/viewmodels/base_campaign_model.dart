@@ -1,4 +1,4 @@
-import 'package:app/viewmodels/base_model.dart'; 
+import 'package:app/viewmodels/base_model.dart';
 
 import 'package:app/models/Campaign.dart';
 
@@ -8,7 +8,7 @@ import 'package:app/services/auth.dart';
 
 mixin CampaignRO on BaseModel {
   final CampaignService _campaignsService = locator<CampaignService>();
-  
+
   // Pull the latest campaigns from the db
   void fetchCampaigns() async {
     setBusy(true);
@@ -16,12 +16,12 @@ mixin CampaignRO on BaseModel {
     setBusy(false);
     notifyListeners();
   }
-  
+
   // getSelectedCampaigns
   List<Campaign> get selectedCampaigns {
     return currentUser.filterSelectedCampaigns(_campaignsService.campaigns);
   }
-  
+
   // Get campaigns
   List<Campaign> get campaigns => _campaignsService.campaigns;
 
@@ -30,9 +30,11 @@ mixin CampaignRO on BaseModel {
       return _campaignsService.campaigns;
     }
 
-    List<Campaign> selectedCs = currentUser.filterSelectedCampaigns(_campaignsService.campaigns);
-    List<Campaign> unselectedCs = currentUser.filterUnselectedCampaigns(_campaignsService.campaigns);
-    
+    List<Campaign> selectedCs =
+        currentUser.filterSelectedCampaigns(_campaignsService.campaigns);
+    List<Campaign> unselectedCs =
+        currentUser.filterUnselectedCampaigns(_campaignsService.campaigns);
+
     // Give some spice to your life
     selectedCs.shuffle();
     unselectedCs.shuffle();
@@ -47,7 +49,8 @@ mixin CampaignRO on BaseModel {
 }
 
 mixin CampaignWrite on BaseModel {
-  final AuthenticationService _authenticationService = locator<AuthenticationService>();
+  final AuthenticationService _authenticationService =
+      locator<AuthenticationService>();
 
   Future joinCampaign(int id) async {
     setBusy(true);
@@ -55,7 +58,7 @@ mixin CampaignWrite on BaseModel {
     setBusy(false);
     notifyListeners();
   }
-  
+
   Future leaveCampaign(int id) async {
     setBusy(true);
     await _authenticationService.leaveCampaign(id);
@@ -64,12 +67,13 @@ mixin CampaignWrite on BaseModel {
   }
 
   bool isJoined(int id) {
-    return _authenticationService.currentUser.getSelectedCampaigns().contains(id);
+    return _authenticationService.currentUser
+        .getSelectedCampaigns()
+        .contains(id);
   }
 }
 
-class BaseCampaignViewModel extends BaseModel with CampaignRO {
-}
+class BaseCampaignViewModel extends BaseModel with CampaignRO {}
 
-class BaseCampaignWriteViewModel extends BaseModel with CampaignRO, CampaignWrite {
-}
+class BaseCampaignWriteViewModel extends BaseModel
+    with CampaignRO, CampaignWrite {}

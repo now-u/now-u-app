@@ -23,111 +23,100 @@ class NewsPage extends StatelessWidget {
             padding: EdgeInsets.all(0),
             // TODO do a test of a list of all articles
             child: ViewModelBuilder<NewsViewModel>.reactive(
-              viewModelBuilder: () => NewsViewModel(),
-              onModelReady: (model) => model.fetchArticles(),
-              builder: (context, model, child) {
-                return ListView(
-                  children: <Widget>[
+                viewModelBuilder: () => NewsViewModel(),
+                onModelReady: (model) => model.fetchArticles(),
+                builder: (context, model, child) {
+                  return ListView(children: <Widget>[
                     Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
+                        decoration:
+                            BoxDecoration(color: Colors.white, boxShadow: [
                           BoxShadow(
                             color: colorFrom(
-                              Colors.black, 
+                              Colors.black,
                               opacity: 0.08,
                             ),
                             offset: Offset(0, 1),
                             blurRadius: 3,
                           ),
-                        ]
-                      ),
-                      child: PageHeader(
-                        title: "News",
-                      )
-                    ),
+                        ]),
+                        child: PageHeader(
+                          title: "News",
+                        )),
                     Container(
                         //color: Color.fromRGBO(247, 248, 252, 1),
                         color: HEADER_COLOR,
-                        child: Column(children: <Widget>[
-
-                              Container(
+                        child: Column(
+                          children: <Widget>[
+                            Container(
                                 decoration: BoxDecoration(
-                                  color: colorFrom(
-                                    Colors.white,
-                                    opacity: 0.6,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: colorFrom(
-                                        Colors.black, 
-                                        opacity: 0.08,
-                                      ),
-                                      offset: Offset(0, 1),
-                                      blurRadius: 3,
-                                    )
-                                  ]
-                                ),
+                                    color: colorFrom(
+                                      Colors.white,
+                                      opacity: 0.6,
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: colorFrom(
+                                          Colors.black,
+                                          opacity: 0.08,
+                                        ),
+                                        offset: Offset(0, 1),
+                                        blurRadius: 3,
+                                      )
+                                    ]),
                                 height: 60,
                                 child: ListView.builder(
                                     scrollDirection: Axis.horizontal,
                                     itemCount: model.campaigns.length,
-                                    itemBuilder: (BuildContext context, int index) {
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
                                       return Padding(
                                           padding: EdgeInsets.all(5),
                                           child: GestureDetector(
                                               onTap: () {
                                                 model.onTapPill(index);
                                               },
-                                              child: 
-                                                  Padding(
-                                                    padding: EdgeInsets.symmetric(vertical: 5),
-                                                    child: SelectionPill(
-                                                      "#" +
-                                                          model.campaigns[index].getShortName(),
-                                                      model.pillIsSelected(index),
-                                                      fontSize: 12,
-                                                      borderRadius: 25,
-                                                    ),
-                                                )
-                                            ));
-                                }
-                              )
-                          ),
+                                              child: Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 5),
+                                                child: SelectionPill(
+                                                  "#" +
+                                                      model.campaigns[index]
+                                                          .getShortName(),
+                                                  model.pillIsSelected(index),
+                                                  fontSize: 12,
+                                                  borderRadius: 25,
+                                                ),
+                                              )));
+                                    })),
 
-                          SizedBox(
-                            height: PAGE_PADDING,
-                          ),
+                            SizedBox(
+                              height: PAGE_PADDING,
+                            ),
 
-                          SizedBox(height: 10),
+                            SizedBox(height: 10),
 
-                          // News aritcles
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: ClampingScrollPhysics(),
-                            itemCount: model.filteredArticles.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Padding(
-                                  padding: EdgeInsets.only(
-                                    left: PAGE_PADDING,
-                                    right: PAGE_PADDING,
-                                    bottom: 10,
-                                  ),
-                                  child: NewsTile(
-                                    article: model.filteredArticles[index])
-                                  );
-                            },
-                          ),
-                          SizedBox(width: 20),
-                        ],
-                      )
-                    ) 
-                  ]
-                );
-              }
-            )
-        )
-    );
+                            // News aritcles
+                            ListView.builder(
+                              shrinkWrap: true,
+                              physics: ClampingScrollPhysics(),
+                              itemCount: model.filteredArticles.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Padding(
+                                    padding: EdgeInsets.only(
+                                      left: PAGE_PADDING,
+                                      right: PAGE_PADDING,
+                                      bottom: 10,
+                                    ),
+                                    child: NewsTile(
+                                        article:
+                                            model.filteredArticles[index]));
+                              },
+                            ),
+                            SizedBox(width: 20),
+                          ],
+                        ))
+                  ]);
+                })));
   }
 }
 
@@ -140,37 +129,31 @@ class NewsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        customLaunch(
-          context,
-          article.getFullArticleLink()
-        );
-      },
-      child: Container(
+        onTap: () {
+          customLaunch(context, article.getFullArticleLink());
+        },
+        child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-            boxShadow: [
-              BoxShadow(
-                color: colorFrom(
-                  Colors.black,
-                  opacity: 0.08,
-                ),
-                offset: Offset(0, 15),
-                blurRadius: 25
-              )
-            ]
-          ),
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              boxShadow: [
+                BoxShadow(
+                    color: colorFrom(
+                      Colors.black,
+                      opacity: 0.08,
+                    ),
+                    offset: Offset(0, 15),
+                    blurRadius: 25)
+              ]),
           child: Column(
             children: [
               Container(
-                height: 160,
-                width: double.infinity,
-                child: Image.network(
-                  article.getHeaderImage(),
-                  fit: BoxFit.cover,
-                )
-              ),
+                  height: 160,
+                  width: double.infinity,
+                  child: Image.network(
+                    article.getHeaderImage(),
+                    fit: BoxFit.cover,
+                  )),
 
               // Titile
               Padding(
@@ -178,7 +161,7 @@ class NewsTile extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start, 
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         article.getTitle(),
@@ -195,47 +178,47 @@ class NewsTile extends StatelessWidget {
                       Text(
                         article.getSubtitle(),
                         style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.headline5,
-                          color: Color.fromRGBO(109, 113,129, 1)
-                        ),
+                            Theme.of(context).primaryTextTheme.headline5,
+                            color: Color.fromRGBO(109, 113, 129, 1)),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
                       SizedBox(height: 5),
-                      article.getReleaseDate() == null ? Container() :
-                      Text(
-                        DateFormat('d MMMM yyyy').format(article.getReleaseDate()),
-                        style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.bodyText1,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      article.getReleaseDate() == null
+                          ? Container()
+                          : Text(
+                              DateFormat('d MMMM yyyy')
+                                  .format(article.getReleaseDate()),
+                              style: textStyleFrom(
+                                Theme.of(context).primaryTextTheme.bodyText1,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                     ],
                   ),
                 ),
               ),
               // Source
-              article.getSource() == null ? Container() :
-              Container(
-                color: Color.fromRGBO(247,248,252,1),
-                child: Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(5),
-                    child: Text(
-                      article.getSource(),
-                      style: textStyleFrom(
-                        Theme.of(context).primaryTextTheme.bodyText1,
-                        color: Theme.of(context).primaryColor,
+              article.getSource() == null
+                  ? Container()
+                  : Container(
+                      color: Color.fromRGBO(247, 248, 252, 1),
+                      child: Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Text(
+                            article.getSource(),
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.bodyText1,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-              )
+                    )
             ],
           ),
-      )
-    );
+        ));
   }
 }
-

@@ -1,4 +1,4 @@
-import 'package:app/viewmodels/base_model.dart'; 
+import 'package:app/viewmodels/base_model.dart';
 
 import 'package:app/locator.dart';
 import 'package:app/services/faq_service.dart';
@@ -16,5 +16,4 @@ class FAQViewModel extends BaseModel {
     setBusy(false);
     notifyListeners();
   }
-
 }

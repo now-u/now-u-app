@@ -6,10 +6,9 @@ import 'package:app/services/campaign_service.dart';
 import 'package:app/models/Learning.dart';
 
 class LearningCenterViewModel extends BaseCampaignViewModel {
-  
   final CampaignService _campaignService = locator<CampaignService>();
-  
-  LearningCentre _learningCenter;  
+
+  LearningCentre _learningCenter;
   LearningCentre get learningCenter => _learningCenter;
   List<LearningTopic> get learningTopics {
     if (learningCenter == null) {

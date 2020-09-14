@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class FAQService {
-  
   String domainPrefix = "https://api.now-u.com/api/v1/";
 
   List<FAQ> _faqs = [];
@@ -18,10 +17,13 @@ class FAQService {
       if (response.statusCode != 200) {
         return false;
       }
-      _faqs = json.decode(response.body)['data'].map((e) => FAQ.fromJson(e)).toList().cast<FAQ>();
+      _faqs = json
+          .decode(response.body)['data']
+          .map((e) => FAQ.fromJson(e))
+          .toList()
+          .cast<FAQ>();
     } catch (e) {
       return e.toString();
     }
   }
-
 }

@@ -11,7 +11,7 @@ class InternalNotification {
   String image;
 
   InternalNotification({this.title, this.body, this.image, this.subtitle});
-  
+
   InternalNotification.fromJson(
     Map json,
   ) {
@@ -21,7 +21,7 @@ class InternalNotification {
     body = json["body"];
     image = json["image"];
   }
-  
+
   int getId() {
     return id;
   }
@@ -29,15 +29,15 @@ class InternalNotification {
   String getTitle() {
     return title;
   }
-  
+
   String getSubtitle() {
     return subtitle;
   }
-  
+
   String getBody() {
     return body;
   }
-  
+
   String getImage() {
     return image;
   }
@@ -45,9 +45,7 @@ class InternalNotification {
   Widget getBodyWidget(context) {
     return Markdown(
       data: body,
-      styleSheet: MarkdownStyleSheet.fromTheme(
-        Theme.of(context)
-      ).copyWith(
+      styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
         p: textStyleFrom(
           Theme.of(context).primaryTextTheme.bodyText1,
           color: Colors.white,

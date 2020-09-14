@@ -1,4 +1,4 @@
-import 'package:app/viewmodels/base_model.dart'; 
+import 'package:app/viewmodels/base_model.dart';
 
 import 'package:app/locator.dart';
 import 'package:app/services/campaign_service.dart';
@@ -11,6 +11,7 @@ class CampaignsAllViewModel extends BaseModel {
   List<Campaign> get currentCampaigns {
     return _campaignService.campaigns;
   }
+
   List<Campaign> get pastCampaigns => _pastCampaigns;
 
   Future fetchPastCampaigns() async {
@@ -19,7 +20,7 @@ class CampaignsAllViewModel extends BaseModel {
     setBusy(false);
     notifyListeners();
   }
-  
+
   Future fetchCurrentCampaigns() async {
     setBusy(true);
     await _campaignService.fetchCampaigns();
@@ -28,8 +29,7 @@ class CampaignsAllViewModel extends BaseModel {
   }
 
   void fetchAllCampaigns() async {
-    await fetchCurrentCampaigns(); 
-    await fetchPastCampaigns(); 
+    await fetchCurrentCampaigns();
+    await fetchPastCampaigns();
   }
-
 }

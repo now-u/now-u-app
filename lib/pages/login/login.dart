@@ -13,10 +13,7 @@ import 'package:app/services/storage.dart';
 
 import 'package:stacked/stacked.dart';
 
-enum LoginTypes{
-  Login,
-  Signup
-}
+enum LoginTypes { Login, Signup }
 
 class LoginPageArguments {
   final bool retry;
@@ -51,9 +48,8 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
   }
 
-    @override
+  @override
   Widget build(BuildContext context) {
-
     final email = CustomTextFormField(
       style: CustomFormFieldStyle.Dark,
       keyboardType: TextInputType.emailAddress,
@@ -75,7 +71,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       },
       hintText: 'e.g. jane.doe@email.com',
     );
-    
+
     final name = CustomTextFormField(
       style: CustomFormFieldStyle.Dark,
       keyboardType: TextInputType.text,
@@ -92,53 +88,52 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       },
       hintText: 'Jane Doe',
     );
-    
+
     final acceptTandC = CustomCheckboxFormField(
       title: RichText(
         text: TextSpan(
-          style: textStyleFrom(
-            Theme.of(context).primaryTextTheme.bodyText1,
-            color: Colors.white,
-          ),
-          children: [
-            TextSpan(text: "I agree to the user "),
-            TextSpan(
-              text: "Terms & Conditions",
-              style: textStyleFrom(
-                Theme.of(context).primaryTextTheme.bodyText1,
-                color: Theme.of(context).buttonColor,
-              ),
-              recognizer: TapGestureRecognizer()
-                ..onTap = () {
-                  launch("https://share.now-u.com/legal/terms_and_conditions.pdf");
-                }
+            style: textStyleFrom(
+              Theme.of(context).primaryTextTheme.bodyText1,
+              color: Colors.white,
             ),
-          ]
-        ),
+            children: [
+              TextSpan(text: "I agree to the user "),
+              TextSpan(
+                  text: "Terms & Conditions",
+                  style: textStyleFrom(
+                    Theme.of(context).primaryTextTheme.bodyText1,
+                    color: Theme.of(context).buttonColor,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      launch(
+                          "https://share.now-u.com/legal/terms_and_conditions.pdf");
+                    }),
+            ]),
       ),
       validator: (value) {
         if (!value) return "You must accept our terms and conditions";
         return null;
       },
     );
-    
+
     final newsletterSignup = CustomCheckboxFormField(
       title: RichText(
         text: TextSpan(
-          style: textStyleFrom(
-            Theme.of(context).primaryTextTheme.bodyText1,
-            color: Colors.white,
-          ),
-          children: [
-            TextSpan(text: "I am happy to receive the now-u newsletter via email"),
-          ]
-        ),
+            style: textStyleFrom(
+              Theme.of(context).primaryTextTheme.bodyText1,
+              color: Colors.white,
+            ),
+            children: [
+              TextSpan(
+                  text: "I am happy to receive the now-u newsletter via email"),
+            ]),
       ),
       onSaved: (value) {
         _newsletterSignup = value;
       },
     );
-    
+
     Widget loginButton() {
       Future<bool> validateAndSave(LoginViewModel model) async {
         final FormState form = _formKey.currentState;
@@ -147,7 +142,8 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
           //if (stagingUsers.contains(_email)) {
           //  model.switchToStagingBranch();
           //}
-          model.email(email: _email, name: _name, newsletterSignup:_newsletterSignup);
+          model.email(
+              email: _email, name: _name, newsletterSignup: _newsletterSignup);
           return true;
         }
         return false;
@@ -156,16 +152,15 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       return ViewModelBuilder<LoginViewModel>.reactive(
         viewModelBuilder: () => LoginViewModel(),
         builder: (context, model, child) => Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-                child: DarkButton(
-                  "Next",
-                  onPressed: () {
-                    print("Button pressed");
-                    validateAndSave(model);
-                  },
-                )
-              ) ,
-        );
+            padding: EdgeInsets.symmetric(vertical: 16.0),
+            child: DarkButton(
+              "Next",
+              onPressed: () {
+                print("Button pressed");
+                validateAndSave(model);
+              },
+            )),
+      );
     }
 
     Form loginForm() {
@@ -196,146 +191,153 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                         Container(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: retry ?? false
-                           ?  RichText(
-                               textAlign: TextAlign.center,
-                                text: TextSpan(
-                                  style: textStyleFrom(
-                                    Theme.of(context).primaryTextTheme.headline5,
-                                  ),
-                                  children: [
-                                  TextSpan(
-                                      text:
-                                          "If you did not receive the email please double check your spam and give us a few minutes to get it over to you, otherwise please try again. If the issue persists please email ",
+                              ? RichText(
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
                                       style: textStyleFrom(
-                                        Theme.of(context).primaryTextTheme.bodyText1,
-                                        color: Colors.white,
-                                      )
-                                  ),
-                                  TextSpan(
-                                      text: "support",
-                                      style: textStyleFrom(
-                                        Theme.of(context).primaryTextTheme.bodyText1,
-                                        color: Theme.of(context).buttonColor,
+                                        Theme.of(context)
+                                            .primaryTextTheme
+                                            .headline5,
                                       ),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          launch("mailto:support@now-u.com?subject=LoginIssue");
-                                        }),
-                                  ]
+                                      children: [
+                                        TextSpan(
+                                            text:
+                                                "If you did not receive the email please double check your spam and give us a few minutes to get it over to you, otherwise please try again. If the issue persists please email ",
+                                            style: textStyleFrom(
+                                              Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .bodyText1,
+                                              color: Colors.white,
+                                            )),
+                                        TextSpan(
+                                            text: "support",
+                                            style: textStyleFrom(
+                                              Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .bodyText1,
+                                              color:
+                                                  Theme.of(context).buttonColor,
+                                            ),
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () {
+                                                launch(
+                                                    "mailto:support@now-u.com?subject=LoginIssue");
+                                              }),
+                                      ]),
+                                )
+                              : Text(
+                                  "Enter the email address that you would like to use to access now-u",
+                                  textAlign: TextAlign.center,
+                                  style: textStyleFrom(
+                                    Theme.of(context)
+                                        .primaryTextTheme
+                                        .headline5,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                              ) 
-                            : Text(
-                                "Enter the email address that you would like to use to access now-u",
-                                textAlign: TextAlign.center,
-                                style: textStyleFrom(
-                                  Theme.of(context).primaryTextTheme.headline5,
-                                  color: Colors.white,
-                                ),
-                              ),
                         ),
-
                         SizedBox(height: 25),
                       ],
                     ),
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  "What should we call you?",
-                                  style: textStyleFrom(
-                                    Theme.of(context).primaryTextTheme.headline4,
-                                    color: Colors.white,
-                                  ),
-                                  textAlign: TextAlign.left,
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "What should we call you?",
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.headline4,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        name,
+                        SizedBox(height: 15),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Your email address",
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.headline4,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        email,
+                        SizedBox(height: 20),
+                        acceptTandC,
+                        newsletterSignup,
+
+                        loginButton(),
+
+                        SizedBox(height: 10),
+
+                        RichText(
+                          text: TextSpan(children: [
+                            TextSpan(
+                                text: "View our privacy policy ",
+                                style: textStyleFrom(
+                                  Theme.of(context).primaryTextTheme.bodyText1,
+                                  color: Colors.white,
+                                )),
+                            TextSpan(
+                                text: "here",
+                                style: textStyleFrom(
+                                  Theme.of(context).primaryTextTheme.bodyText1,
+                                  color: Theme.of(context).buttonColor,
                                 ),
-                              ),
-                              SizedBox(height: 8),
-                              name,
-                              SizedBox(height: 15),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  "Your email address",
-                                  style: textStyleFrom(
-                                    Theme.of(context).primaryTextTheme.headline4,
-                                    color: Colors.white,
-                                  ),
-                                  textAlign: TextAlign.left,
-                                ),
-                              ),
-                              SizedBox(height: 8),
-                              email,
-                              SizedBox(height: 20),
-                              acceptTandC,
-                              newsletterSignup,
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    customLaunch(context,
+                                        "http://www.now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf",
+                                        isExternal: true);
+                                  }),
+                          ]),
+                        ),
 
-                              loginButton(),
-
-                              SizedBox (height: 10),
-
-                              RichText(
-                                text: TextSpan(children: [
-                                  TextSpan(
-                                      text:
-                                          "View our privacy policy ",
-                                      style: textStyleFrom(
-                                        Theme.of(context).primaryTextTheme.bodyText1,
-                                        color: Colors.white,
-                                      )
-                                  ),
-                                  TextSpan(
-                                      text: "here",
-                                      style: textStyleFrom(
-                                        Theme.of(context).primaryTextTheme.bodyText1,
-                                        color: Theme.of(context).buttonColor,
-                                      ),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          customLaunch(context, "http://www.now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf", isExternal: true);
-                                        }),
-                                  ]
-                                ),
-                              ),
-
-                              // Manual entry section
-                              retry ?? false ? Container() : 
-                              Row( 
+                        // Manual entry section
+                        retry ?? false
+                            ? Container()
+                            : Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Column(
-                                    children: [
-                                      SizedBox(height: 15),
-                                      CustomTextButton(
-                                        "Having issues logging in?",
-                                        onClick: () {
-                                          setState(() {
-                                            retry = true;
-                                          });
-                                        },
-                                        fontSize: Theme.of(context).primaryTextTheme.bodyText1.fontSize,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ]
-                                  )
+                                  Column(children: [
+                                    SizedBox(height: 15),
+                                    CustomTextButton(
+                                      "Having issues logging in?",
+                                      onClick: () {
+                                        setState(() {
+                                          retry = true;
+                                        });
+                                      },
+                                      fontSize: Theme.of(context)
+                                          .primaryTextTheme
+                                          .bodyText1
+                                          .fontSize,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ])
                                 ],
                               ),
-                              
-                              SizedBox (height: 10),
 
-                            ],
-                          ),
+                        SizedBox(height: 10),
+                      ],
+                    ),
 
-                          // Uncomment to readd Skip button
-                          //skipButton(),
-                        ],
-                      ),
+                    // Uncomment to readd Skip button
+                    //skipButton(),
+                  ],
+                ),
               )));
     }
-    
+
     final token = CustomTextFormField(
       style: CustomFormFieldStyle.Dark,
       keyboardType: TextInputType.text,
@@ -350,7 +352,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       },
       hintText: '5jbNsPu7jdA9bUjN...',
     );
-    
+
     Widget manualButton() {
       Future<bool> validateAndSave(LoginViewModel model) async {
         final FormState form = _tokenFormKey.currentState;
@@ -362,21 +364,21 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         }
         return false;
       }
+
       return ViewModelBuilder<LoginViewModel>.reactive(
         viewModelBuilder: () => LoginViewModel(),
         builder: (context, model, child) => Padding(
-          padding: EdgeInsets.symmetric(vertical: 16.0),
-          child: DarkButton(
-            "Login",
-            onPressed: () {
-              print("Button pressed");
-              validateAndSave(model);
-            },
-          )
-        ),
+            padding: EdgeInsets.symmetric(vertical: 16.0),
+            child: DarkButton(
+              "Login",
+              onPressed: () {
+                print("Button pressed");
+                validateAndSave(model);
+              },
+            )),
       );
     }
-    
+
     Form tokenForm() {
       return Form(
           key: _tokenFormKey,
@@ -403,65 +405,53 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                             ),
                           ),
                         ),
-
                         SizedBox(height: 25),
                       ],
                     ),
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  "Manual Token",
-                                  style: textStyleFrom(
-                                    Theme.of(context).primaryTextTheme.headline4,
-                                    color: Colors.white,
-                                  ),
-                                  textAlign: TextAlign.left,
-                                ),
-                              ),
-                              SizedBox(height: 8),
-                              token,
-                          
-                              SizedBox(height:10),
-
-                              acceptTandC,
-
-                              manualButton(),
-                               
-                              SizedBox (height: 10),
-
-                            ],
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Manual Token",
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.headline4,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.left,
                           ),
-                          // Uncomment to readd Skip button
-                          //skipButton(),
-                        ],
-                      ),
+                        ),
+                        SizedBox(height: 8),
+                        token,
+                        SizedBox(height: 10),
+                        acceptTandC,
+                        manualButton(),
+                        SizedBox(height: 10),
+                      ],
+                    ),
+                    // Uncomment to readd Skip button
+                    //skipButton(),
+                  ],
+                ),
               )));
     }
 
     return WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
-        key: _scaffoldKey,
-        backgroundColor: Theme.of(context).primaryColorDark,
-        body: NotificationListener(
-          onNotification: (OverscrollIndicatorNotification overscroll) {
-            overscroll.disallowGlow();
-          },
-          child: ListView(
-            children: [
-              loginForm(),
-              retry ?? false 
-                ? tokenForm()
-                : Container()
-            ]
-          )
-        ),
-      )
-    );
+        onWillPop: () async => false,
+        child: Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: Theme.of(context).primaryColorDark,
+          body: NotificationListener(
+              onNotification: (OverscrollIndicatorNotification overscroll) {
+                overscroll.disallowGlow();
+              },
+              child: ListView(children: [
+                loginForm(),
+                retry ?? false ? tokenForm() : Container()
+              ])),
+        ));
   }
 
   void _showDialog(String error) {
