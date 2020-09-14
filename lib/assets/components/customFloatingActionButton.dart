@@ -12,32 +12,27 @@ class CustomFloatingActionButton extends StatelessWidget {
     _iconData = icon;
     _text = text;
   }
-  
 
-  @override 
-  Widget build (BuildContext context) {
-    if (_iconData == null){
+  @override
+  Widget build(BuildContext context) {
+    if (_iconData == null) {
       _icon = null;
-    } 
-    else{
+    } else {
       _icon = Icon(_iconData, size: 30);
     }
     return Padding(
-          padding:EdgeInsets.all(14) ,
-          child:      
-          FloatingActionButton.extended(
-              label: Padding(
-                    padding: EdgeInsets.fromLTRB(10, TB_PADDING, 20, TB_PADDING),
-                    child: Text(_text, style: Theme.of(context).primaryTextTheme.button),
-                  ),
-              icon: Padding(
-                  padding: EdgeInsets.fromLTRB(20, TB_PADDING, 0, TB_PADDING),
-                  child: _icon,
-                  ),
-              backgroundColor: Theme.of(context).primaryColorDark,
-            )
-          ,
-        );
-        
+      padding: EdgeInsets.all(14),
+      child: FloatingActionButton.extended(
+        label: Padding(
+          padding: EdgeInsets.fromLTRB(10, TB_PADDING, 20, TB_PADDING),
+          child: Text(_text, style: Theme.of(context).primaryTextTheme.button),
+        ),
+        icon: Padding(
+          padding: EdgeInsets.fromLTRB(20, TB_PADDING, 0, TB_PADDING),
+          child: _icon,
+        ),
+        backgroundColor: Theme.of(context).primaryColorDark,
+      ),
+    );
   }
 }

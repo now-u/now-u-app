@@ -8,7 +8,6 @@ import 'package:app/services/pushNotifications.dart';
 import 'package:app/viewmodels/base_model.dart';
 
 class StartUpViewModel extends BaseModel {
-
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   final NavigationService _navigationService = locator<NavigationService>();
@@ -18,7 +17,7 @@ class StartUpViewModel extends BaseModel {
 
   Future handleStartUpLogic() async {
     await _dynamicLinkService.handleDynamicLinks();
-    
+
     // Register for push notifications
     await _pushNotificationService.init();
 
@@ -30,4 +29,4 @@ class StartUpViewModel extends BaseModel {
       _navigationService.navigateTo(Routes.login);
     }
   }
-} 
+}

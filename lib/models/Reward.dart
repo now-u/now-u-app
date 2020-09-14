@@ -31,8 +31,8 @@ class Reward {
   final CampaignActionType actionType;
 
   Reward({
-    //@required this.id, 
-    String title, 
+    //@required this.id,
+    String title,
     @required this.successNumber,
     @required this.type,
     this.actionType, // This is required if type = CompletedTypedActionsNumber
@@ -43,10 +43,11 @@ class Reward {
   String generateTitle() {
     String endingPlural = successNumber > 1 ? "s" : "";
     if (type == RewardType.CompletedTypedActionsNumber) {
-      Tuple3<String,String,String> descPrePostFix= generateCampaingActionDesc(actionType);
+      Tuple3<String, String, String> descPrePostFix =
+          generateCampaingActionDesc(actionType);
       String pre = descPrePostFix.item1;
       String post = descPrePostFix.item3;
-      return (pre + " ${successNumber} " + post  + "${endingPlural}");
+      return (pre + " ${successNumber} " + post + "${endingPlural}");
     }
     if (type == RewardType.CompletedActionsNumber) {
       return "Complete ${successNumber} action${endingPlural}";
@@ -58,14 +59,21 @@ class Reward {
 
     return "";
   }
-  
+
   String generateCompletionText() {
     if (type == RewardType.CompletedTypedActionsNumber) {
-      Tuple3<String,String,String> descPrePostFix= generateCampaingActionDesc(actionType);
+      Tuple3<String, String, String> descPrePostFix =
+          generateCampaingActionDesc(actionType);
       String pre = descPrePostFix.item2;
       String post = descPrePostFix.item3;
       String endingPlural = successNumber > 1 ? "s" : "";
-      return ("You " + pre + " ${successNumber} " + post  + "${endingPlural}. " + motivationalPostfix[random.nextInt(motivationalPostfix.length)] + ".");
+      return ("You " +
+          pre +
+          " ${successNumber} " +
+          post +
+          "${endingPlural}. " +
+          motivationalPostfix[random.nextInt(motivationalPostfix.length)] +
+          ".");
     }
     return "";
   }
@@ -73,11 +81,12 @@ class Reward {
   String getTitle() {
     return title;
   }
+
   RewardType getType() {
     return type;
   }
+
   CampaignActionType getActionType() {
     return actionType;
   }
 }
-

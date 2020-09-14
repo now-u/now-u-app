@@ -9,10 +9,9 @@ import 'package:flutter/material.dart';
 const double HEADER_HEIGHT = 140;
 
 class PastCampaignActionPage extends StatelessWidget {
-  
   final Campaign campaign;
   PastCampaignActionPage(this.campaign);
-  
+
   @override
   Widget build(BuildContext context) {
     List<CampaignAction> actions = campaign.getActions();
@@ -24,53 +23,47 @@ class PastCampaignActionPage extends StatelessWidget {
           physics: BouncingScrollPhysics(),
           children: [
             Container(
-              child: Stack(
-                children: [
-                  Container(
+                child: Stack(
+              children: [
+                Container(
                     height: HEADER_HEIGHT,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(campaign.getHeaderImage()),
                         fit: BoxFit.cover,
                       ),
-                    )
-                  ),
-                  Container(
+                    )),
+                Container(
                     height: HEADER_HEIGHT,
                     color: colorFrom(
                       Colors.black,
                       opacity: 0.5,
-                    )
-                  ),
-                  PageHeader(
-                    title: campaign.getTitle(),
-                    textColor: Colors.white,
-                    backButton: true,
-                    maxLines: 2,
-                  ),
-                ],
-              )
-            ),
+                    )),
+                PageHeader(
+                  title: campaign.getTitle(),
+                  textColor: Colors.white,
+                  backButton: true,
+                  maxLines: 2,
+                ),
+              ],
+            )),
             ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: actions.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 0),
-                    child: ActionSelectionItem(
-                      outerHpadding: 10,
-                      campaign: campaign,
-                      action: actions[index],
-                      backgroundColor: Colors.white,
-                    ));
-              }
-            ),
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: actions.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 0),
+                      child: ActionSelectionItem(
+                        outerHpadding: 10,
+                        campaign: campaign,
+                        action: actions[index],
+                        backgroundColor: Colors.white,
+                      ));
+                }),
           ],
         ),
       ),
     );
   }
-
-
 }

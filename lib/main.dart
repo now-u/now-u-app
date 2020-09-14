@@ -82,91 +82,85 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-        return MaterialApp(
-          title: 'Flutter Demo',
-          navigatorKey: locator<NavigationService>().navigatorKey,
-          navigatorObservers: [
-            locator<Analytics>().getAnalyticsObserver(),
-          ],
-          home: StartUpView(),
-          //initialRoute: Routes.intro,
-          onGenerateRoute: initRoutes,
-          theme: ThemeData(
-            // This is the theme of the application.
-            applyElevationOverlayColor: true,
-            fontFamily: 'Nunito',
-            primaryTextTheme: TextTheme(
-              headline1: TextStyle(
-                  color: black,
-                  fontSize: 36,
-                  fontWeight: FontWeight.w800 // Black
-                  ),
-              headline2: TextStyle(
-                  color: black,
-                  fontSize: 30,
-                  fontWeight: FontWeight.w800,
-                  //letterSpacing: 24, // Bold
-                  //height: 34,
-                  ),
-              headline3: TextStyle(
-                  color: black,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600 // SemiBold
-                  ),
-              headline4: TextStyle(
-                  color: black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500 // Regular
-                  ),
-              // Capitalize
-              headline5: TextStyle(
-                  color: black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400 // Regular
-                  ),
-
-              bodyText1: TextStyle(
-                color: black,
-                fontSize: 16,
-                fontWeight: FontWeight.w400, // Regular
-                fontStyle: FontStyle.normal,
-                //height: 24,
+    return MaterialApp(
+      title: 'Flutter Demo',
+      navigatorKey: locator<NavigationService>().navigatorKey,
+      navigatorObservers: [
+        locator<Analytics>().getAnalyticsObserver(),
+      ],
+      home: StartUpView(),
+      //initialRoute: Routes.intro,
+      onGenerateRoute: initRoutes,
+      theme: ThemeData(
+        // This is the theme of the application.
+        applyElevationOverlayColor: true,
+        fontFamily: 'Nunito',
+        primaryTextTheme: TextTheme(
+          headline1: TextStyle(
+              color: black, fontSize: 36, fontWeight: FontWeight.w800 // Black
               ),
-              // Italic
-              bodyText2: TextStyle(
-                color: lightGrey,
-                fontSize: 16,
-                fontWeight: FontWeight.w400, // Regular
-                fontStyle: FontStyle.italic,
-              ),
-              
-              // Used on Dark Blue background
-              headline6: TextStyle(
-                color: white,
-                fontSize: 20,
-                fontWeight: FontWeight.w400, // Regular
-              ),
-              button: TextStyle(
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w500, // SemiBold
-                fontStyle: FontStyle.normal,
-              ),
-            ),
-
-            // Brand Colour
-            primaryColor: orange,
-            // Accent Colours
-            // Sunflower
-            accentColor: Color.fromRGBO(243, 183, 0, 1),
-            // Venetian Red --> Accent
-            errorColor: Color.fromRGBO(211, 0, 1, 1),
-            // Salomie
-            primaryColorLight: Color.fromRGBO(255, 220, 121, 1),
-            // Oxford Blue
-            primaryColorDark: blue,
-            buttonColor: orange,
-            //textSelectionColor: white, // Text used on top of
+          headline2: TextStyle(
+            color: black,
+            fontSize: 30,
+            fontWeight: FontWeight.w800,
+            //letterSpacing: 24, // Bold
+            //height: 34,
           ),
-        );
+          headline3: TextStyle(
+              color: black,
+              fontSize: 24,
+              fontWeight: FontWeight.w600 // SemiBold
+              ),
+          headline4: TextStyle(
+              color: black, fontSize: 18, fontWeight: FontWeight.w500 // Regular
+              ),
+          // Capitalize
+          headline5: TextStyle(
+              color: black, fontSize: 16, fontWeight: FontWeight.w400 // Regular
+              ),
+
+          bodyText1: TextStyle(
+            color: black,
+            fontSize: 16,
+            fontWeight: FontWeight.w400, // Regular
+            fontStyle: FontStyle.normal,
+            //height: 24,
+          ),
+          // Italic
+          bodyText2: TextStyle(
+            color: lightGrey,
+            fontSize: 16,
+            fontWeight: FontWeight.w400, // Regular
+            fontStyle: FontStyle.italic,
+          ),
+
+          // Used on Dark Blue background
+          headline6: TextStyle(
+            color: white,
+            fontSize: 20,
+            fontWeight: FontWeight.w400, // Regular
+          ),
+          button: TextStyle(
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w500, // SemiBold
+            fontStyle: FontStyle.normal,
+          ),
+        ),
+
+        // Brand Colour
+        primaryColor: orange,
+        // Accent Colours
+        // Sunflower
+        accentColor: Color.fromRGBO(243, 183, 0, 1),
+        // Venetian Red --> Accent
+        errorColor: Color.fromRGBO(211, 0, 1, 1),
+        // Salomie
+        primaryColorLight: Color.fromRGBO(255, 220, 121, 1),
+        // Oxford Blue
+        primaryColorDark: blue,
+        buttonColor: orange,
+        //textSelectionColor: white, // Text used on top of
+      ),
+    );
   }
 }

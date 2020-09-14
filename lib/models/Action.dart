@@ -235,23 +235,25 @@ class CampaignAction {
 
   CampaignAction.fromJson(Map json) {
     //print(json);
-    id              = json['id'];
-    title           = json['title'];
+    id = json['id'];
+    title = json['title'];
     whatDescription = json['what_description'];
-    whyDescription  = json['why_description'];
-    link            = json['link'];
-    time            = json['time'] == null ? 5.0 : json['time'].toDouble();
-    type            = campaignActionTypeFromString(json['type']);
-    createdAt       = DateTime.parse(json['created_at']);
-    releasedAt      = json['release_date'] == null ? null : DateTime.parse(json['release_date']);
+    whyDescription = json['why_description'];
+    link = json['link'];
+    time = json['time'] == null ? 5.0 : json['time'].toDouble();
+    type = campaignActionTypeFromString(json['type']);
+    createdAt = DateTime.parse(json['created_at']);
+    releasedAt = json['release_date'] == null
+        ? null
+        : DateTime.parse(json['release_date']);
   }
-  
+
   Map toJson() => {
-    'id'   : id,
-    'title': title,
-    'type' : type,
-    'time' : time,
-  };
+        'id': id,
+        'title': title,
+        'type': type,
+        'time': time,
+      };
 
   int getId() {
     return id;
@@ -301,7 +303,7 @@ class CampaignAction {
   Map getActionIconMap() {
     if (campaignActionTypeData.containsKey(type)) {
       return {
-        'icon': 
+        'icon':
             campaignActionSuperTypeData[campaignActionTypeData[type]['type']]
                 ['icon'],
         'iconColor':
@@ -317,10 +319,13 @@ class CampaignAction {
 
   bool isNew() {
     if (releasedAt == null) {
-      return DateTime.now().difference(createdAt).compareTo(Duration(days: 2)) < 0;
-    }
-    else {
-      return DateTime.now().difference(releasedAt).compareTo(Duration(days: 2)) < 0;
+      return DateTime.now().difference(createdAt).compareTo(Duration(days: 2)) <
+          0;
+    } else {
+      return DateTime.now()
+              .difference(releasedAt)
+              .compareTo(Duration(days: 2)) <
+          0;
     }
   }
-} 
+}

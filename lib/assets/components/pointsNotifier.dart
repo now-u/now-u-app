@@ -95,18 +95,27 @@ List<String> campaignSuccessMessages = [
 
 Flushbar pointsNotifier(int userPoints, int earnedPoints, int nextBadgePoints,
     BuildContext context) {
-      var rng = new Random();
-      int index = rng.nextInt(earnedPoints == 10 ? campaignSuccessTitle.length : actionSuccessTitle.length);
-      int index2 = rng.nextInt(earnedPoints == 10 ? campaignSuccessMessages.length : actionSuccessMessages.length);
+  var rng = new Random();
+  int index = rng.nextInt(earnedPoints == 10
+      ? campaignSuccessTitle.length
+      : actionSuccessTitle.length);
+  int index2 = rng.nextInt(earnedPoints == 10
+      ? campaignSuccessMessages.length
+      : actionSuccessMessages.length);
   return notifier(
       //"Congrats! You just earned ${earnedPoints} points! ${nextBadgePoints - (userPoints)} points till your next badge",
-      earnedPoints == 10 ? campaignSuccessTitle[index] : actionSuccessTitle[index],
-      earnedPoints == 10 ? campaignSuccessMessages[index2] : actionSuccessMessages[index2],
+      earnedPoints == 10
+          ? campaignSuccessTitle[index]
+          : actionSuccessTitle[index],
+      earnedPoints == 10
+          ? campaignSuccessMessages[index2]
+          : actionSuccessMessages[index2],
       userPoints / nextBadgePoints,
       context);
 }
 
-Flushbar notifier(String title, String message, double progress, BuildContext context) {
+Flushbar notifier(
+    String title, String message, double progress, BuildContext context) {
   return Flushbar(
       duration: Duration(seconds: 5),
       flushbarPosition: FlushbarPosition.BOTTOM,
@@ -176,7 +185,18 @@ Function gotBadgeNotifier({
   Badge badge,
   BuildContext context,
 }) {
-  showDialog( context: context, barrierDismissible: true, builder: (_) => AlertDialog( shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(35),), content: Column( mainAxisSize: MainAxisSize.min, children: <Widget>[ FittedBox( //width: MediaQuery.of(context).size.width * 0.5,
+  showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (_) => AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(35),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                FittedBox(
+                  //width: MediaQuery.of(context).size.width * 0.5,
                   child: Text(
                     "Congratulations",
                     style: Theme.of(context).primaryTextTheme.headline2,

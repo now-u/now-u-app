@@ -32,7 +32,8 @@ class LoginViewModel extends BaseModel {
     if (result is bool) {
       if (result) {
         print("Sucess navigating to emailsent page");
-        _navigationService.navigateTo(Routes.emailSent, arguments: EmailSentPageArguments(email: email));
+        _navigationService.navigateTo(Routes.emailSent,
+            arguments: EmailSentPageArguments(email: email));
       } else {
         print("general signup failure");
         //await _dialogService.showDialog(
@@ -48,7 +49,7 @@ class LoginViewModel extends BaseModel {
       //);
     }
   }
-  
+
   Future login({
     @required String email,
     @required String token,

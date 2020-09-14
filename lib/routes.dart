@@ -69,10 +69,13 @@ Function initRoutes = (RouteSettings settings) {
     // Into
     case Routes.login:
       {
-        if(args is LoginPageArguments) {
-          return customRoute(builder: (context) => LoginPage(args), settings: settings);
+        if (args is LoginPageArguments) {
+          return customRoute(
+              builder: (context) => LoginPage(args), settings: settings);
         }
-        return customRoute(builder: (context) => LoginPage(LoginPageArguments()), settings: settings);
+        return customRoute(
+            builder: (context) => LoginPage(LoginPageArguments()),
+            settings: settings);
       }
     case Routes.emailSent:
     case Routes.loginLinkClicked:
@@ -81,7 +84,9 @@ Function initRoutes = (RouteSettings settings) {
           return customRoute(
               builder: (context) => EmailSentPage(args), settings: settings);
         }
-        return customRoute(builder: (context) => LoginPage(LoginPageArguments()), settings: settings);
+        return customRoute(
+            builder: (context) => LoginPage(LoginPageArguments()),
+            settings: settings);
       }
     case Routes.intro:
       {
@@ -134,9 +139,7 @@ Function initRoutes = (RouteSettings settings) {
       {
         if (args is Campaign) {
           return customRoute(
-              builder: (context) => CampaignDetails(args),
-              settings: settings
-          );
+              builder: (context) => CampaignDetails(args), settings: settings);
         }
         return customRoute(
             builder: (context) => CampaignPage(), settings: settings);
@@ -231,18 +234,24 @@ Function initRoutes = (RouteSettings settings) {
     case Routes.webview:
       {
         if (args is WebViewArgumnets) {
-          return customRoute(builder: (context) => WebViewPage(args), settings: settings);
+          return customRoute(
+              builder: (context) => WebViewPage(args), settings: settings);
         }
         if (args is String) {
-          return customRoute(builder: (context) => WebViewPage(WebViewArgumnets(args)), settings: settings);
+          return customRoute(
+              builder: (context) => WebViewPage(WebViewArgumnets(args)),
+              settings: settings);
         }
-        return customRoute(builder: (context) => TabsPage(currentPage: TabPage.Home), settings: settings);
+        return customRoute(
+            builder: (context) => TabsPage(currentPage: TabPage.Home),
+            settings: settings);
       }
-    
+
     case Routes.notification:
       {
         if (args is InternalNotification) {
-          return customRoute(builder: (context) => NotificationPage(args), settings: settings);
+          return customRoute(
+              builder: (context) => NotificationPage(args), settings: settings);
         }
         break;
       }

@@ -27,7 +27,7 @@ class Campaign {
   List<String> keyAims;
   DateTime startDate;
   DateTime endDate;
-  
+
   Campaign({
     @required int id,
     @required String title,
@@ -45,7 +45,7 @@ class Campaign {
     DateTime startDate,
     DateTime endDate,
   }) {
-    this.id = id; 
+    this.id = id;
     this.title = title;
     this.shortName = shortName;
     this.description = description;
@@ -62,7 +62,6 @@ class Campaign {
     this._infographic = infographic;
   }
 
-
   Campaign.fromJson(Map json) {
     print("Getting campaigns from json");
     print(json);
@@ -74,81 +73,108 @@ class Campaign {
     headerImage = json['header_image'];
     _infographic = json['infographic_url'];
 
-    actions = (json['actions']) == null ? [] : (json['actions']).map((e) => CampaignAction.fromJson(e)).toList().cast<CampaignAction>();
-    campaignPartners = 
-        json["campaign_partners"] == null ? [] :
-        (json['campaign_partners']).map((e) => Organisation.fromJson(e)).toList().cast<Organisation>();
-    generalPartners = 
-        json['general_partners'] == null ? [] :
-        (json['general_partners']).map((e) => Organisation.fromJson(e)).toList().cast<Organisation>();
+    actions = (json['actions']) == null
+        ? []
+        : (json['actions'])
+            .map((e) => CampaignAction.fromJson(e))
+            .toList()
+            .cast<CampaignAction>();
+    campaignPartners = json["campaign_partners"] == null
+        ? []
+        : (json['campaign_partners'])
+            .map((e) => Organisation.fromJson(e))
+            .toList()
+            .cast<Organisation>();
+    generalPartners = json['general_partners'] == null
+        ? []
+        : (json['general_partners'])
+            .map((e) => Organisation.fromJson(e))
+            .toList()
+            .cast<Organisation>();
     videoLink = json['video_link'];
-    sdgs = 
-      json['sdgs'] == null ? <SDG>[] :  
-      json['sdgs'].map((s) => getSDGfromNumber(s['id'])).toList().cast<SDG>();
+    sdgs = json['sdgs'] == null
+        ? <SDG>[]
+        : json['sdgs']
+            .map((s) => getSDGfromNumber(s['id']))
+            .toList()
+            .cast<SDG>();
 
-    keyAims = 
-      json['key_aims'] == null ? <String>[] :
-      json['key_aims'].map((a) => a['title']).toList().cast<String>();
+    keyAims = json['key_aims'] == null
+        ? <String>[]
+        : json['key_aims'].map((a) => a['title']).toList().cast<String>();
 
-    startDate = json['start_date'] == null ? null : DateTime.parse(json['start_date']);
-    endDate = json['end_date'] == null ? null : DateTime.parse(json['end_date']);
-
+    startDate =
+        json['start_date'] == null ? null : DateTime.parse(json['start_date']);
+    endDate =
+        json['end_date'] == null ? null : DateTime.parse(json['end_date']);
   }
 
   Map toJson() => {
-    'id': id,
-    'title': title,
-    'short_name': shortName,
-    'description': description,
-    'number_of_campaigners': numberOfCampaingers,
-    'header_image': headerImage,
-    // TODO this proabably wont work
-    'actions': actions,
-    'general_partners': generalPartners,
-    'campaign_partners': campaignPartners,
-    'video_link': videoLink,
-    'sdgs': sdgs.map((s) => s.getNumber()),
-  };
+        'id': id,
+        'title': title,
+        'short_name': shortName,
+        'description': description,
+        'number_of_campaigners': numberOfCampaingers,
+        'header_image': headerImage,
+        // TODO this proabably wont work
+        'actions': actions,
+        'general_partners': generalPartners,
+        'campaign_partners': campaignPartners,
+        'video_link': videoLink,
+        'sdgs': sdgs.map((s) => s.getNumber()),
+      };
 
   int getId() {
-    return id; 
+    return id;
   }
+
   String getTitle() {
-    return title; 
+    return title;
   }
+
   String getShortName() {
-    return shortName; 
+    return shortName;
   }
+
   String getDescription() {
     // TODO function to remove escape characters
     var descriptionWithoutNs = description.replaceAll('\\n', '\n\n');
-    return descriptionWithoutNs; 
+    return descriptionWithoutNs;
   }
+
   int getNumberOfCampaigners() {
-    return numberOfCampaingers; 
+    return numberOfCampaingers;
   }
+
   String getHeaderImage() {
     return headerImage;
   }
+
   String getVideoLink() {
     return videoLink;
   }
+
   bool isSelected(List<int> selectedCampaings) {
     return selectedCampaings.contains(id);
   }
+
   List<CampaignAction> getActions() {
-    return actions; 
+    return actions;
   }
+
   List<Organisation> getCampaignPartners() {
-    return campaignPartners; 
+    return campaignPartners;
   }
+
   List<Organisation> getGeneralPartners() {
-    return generalPartners; 
+    return generalPartners;
   }
+
   List<SDG> getSDGs() {
     return sdgs;
   }
-  List<String> getKeyAims(){
+
+  List<String> getKeyAims() {
     return keyAims;
   }
 
@@ -168,7 +194,7 @@ class Campaign {
     //return "Check out the $title campaign on now-u! ${getShareLink()}";
     return "Check out the $title campaign on now-u! $shareLink";
   }
-  
+
   bool isPast() {
     if (endDate == null) {
       return false;

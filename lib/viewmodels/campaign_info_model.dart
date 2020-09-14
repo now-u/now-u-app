@@ -9,22 +9,20 @@ import 'package:app/services/navigation.dart';
 import 'package:app/models/Campaign.dart';
 
 class CampaignInfoViewModel extends BaseModel with CampaignWrite {
-
   final CampaignService _campaignService = locator<CampaignService>();
   final NavigationService _navigationService = locator<NavigationService>();
 
   Campaign _campaign;
   Campaign get campaign => _campaign;
   set setCampaign(Campaign campaign) => _campaign = campaign;
-  
+
   Future fetchCampaign(int campaignId) async {
     try {
       _campaign = await _campaignService.getCampaign(campaignId);
       notifyListeners();
-    } catch(e) {
+    } catch (e) {
       // Some error things (campaign 404)
       _navigationService.navigateTo(Routes.allCampaigns);
     }
   }
-
 }

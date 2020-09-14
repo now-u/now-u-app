@@ -7,15 +7,16 @@ import 'package:app/services/internal_notification_service.dart';
 import 'package:app/models/Notification.dart';
 
 class HomeViewModel extends BaseModel with CampaignRO {
+  List<InternalNotification> get notifications =>
+      _internalNotificationService.notifications;
 
-  List<InternalNotification> get notifications => _internalNotificationService.notifications;
-
-  InternalNotificationService _internalNotificationService = locator<InternalNotificationService>();
+  InternalNotificationService _internalNotificationService =
+      locator<InternalNotificationService>();
 
   int get numberOfJoinedCampaigns {
     return currentUser.getSelectedCampaigns().length;
   }
-  
+
   // getCompletedActions
   int get numberOfCompletedActions {
     return currentUser.getCompletedActions().length;

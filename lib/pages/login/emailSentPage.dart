@@ -31,7 +31,6 @@ class EmailSentPage extends StatefulWidget {
 }
 
 class _EmailSentPageState extends State<EmailSentPage> {
- 
   String token;
 
   @override
@@ -43,74 +42,74 @@ class _EmailSentPageState extends State<EmailSentPage> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<LoginViewModel>.reactive(
-      viewModelBuilder: () => LoginViewModel(),
-      onModelReady: (model) { 
-       if (token != null) {
-         if (model.currentUser == null || model.currentUser.token == null) {
-            model.login(email: widget.args.email, token: token);
-          } else {
-            Navigator.of(context).pushNamed(Routes.home);
+        viewModelBuilder: () => LoginViewModel(),
+        onModelReady: (model) {
+          if (token != null) {
+            if (model.currentUser == null || model.currentUser.token == null) {
+              model.login(email: widget.args.email, token: token);
+            } else {
+              Navigator.of(context).pushNamed(Routes.home);
+            }
           }
-        }
-      },
-      builder: (context, model, child) {
-        return Stack(children: <Widget>[
-          Scaffold(
-              body: Container(
-                  color: Theme.of(context).primaryColorDark,
-                  child: Column(
-                    children: <Widget>[
-                      SafeArea(
-                        child: Container(),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 20, bottom: 40),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        },
+        builder: (context, model, child) {
+          return Stack(children: <Widget>[
+            Scaffold(
+                body: Container(
+                    color: Theme.of(context).primaryColorDark,
+                    child: Column(
+                      children: <Widget>[
+                        SafeArea(
+                          child: Container(),
                         ),
-                      ),
-
-                      token == null ? Container() :
-                        Container(
-                          height: 40,
-                          child: CircularProgressIndicator() 
-                        ),
-
-                      Expanded(
-                        child: Container(
-                          //physics: NeverScrollableScrollPhysics(),
-                          child: IntroPageSection(
-                            "Check your email",
-                            "We have just sent an email to ${widget.args.email}",
-                            "It has a link that will sign you in to now-u and get you started",
-                            AssetImage('assets/imgs/intro/il-mail@4x.png'),
+                        Padding(
+                          padding: EdgeInsets.only(top: 20, bottom: 40),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           ),
                         ),
-                      ),
-                      SizedBox(height: 30),
-                      Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 40),
+                        token == null
+                            ? Container()
+                            : Container(
+                                height: 40, child: CircularProgressIndicator()),
+                        Expanded(
                           child: Container(
-                              width: double.infinity,
-                              child: DarkButton("Open Email", onPressed: () {
-                                // TODO open email
-                                openEmailApp(context);
-                              }))),
-                      SizedBox(height: 20),
-                      Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CustomTextButton("I did not recieve an email", onClick: () {
-                              Navigator.of(context).pushNamed(Routes.login, arguments: LoginPageArguments(retry: true,));
-                            }),
-                          ]),
-                      SizedBox(height: 10),
-                    ],
-                  ))),
-        ]);
-      }
-   );
+                            //physics: NeverScrollableScrollPhysics(),
+                            child: IntroPageSection(
+                              "Check your email",
+                              "We have just sent an email to ${widget.args.email}",
+                              "It has a link that will sign you in to now-u and get you started",
+                              AssetImage('assets/imgs/intro/il-mail@4x.png'),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 30),
+                        Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 40),
+                            child: Container(
+                                width: double.infinity,
+                                child: DarkButton("Open Email", onPressed: () {
+                                  // TODO open email
+                                  openEmailApp(context);
+                                }))),
+                        SizedBox(height: 20),
+                        Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CustomTextButton("I did not recieve an email",
+                                  onClick: () {
+                                Navigator.of(context).pushNamed(Routes.login,
+                                    arguments: LoginPageArguments(
+                                      retry: true,
+                                    ));
+                              }),
+                            ]),
+                        SizedBox(height: 10),
+                      ],
+                    ))),
+          ]);
+        });
   }
 }
 
@@ -213,4 +212,3 @@ void openEmailApp(BuildContext context) {
     launch("message://").catchError((e) {});
   }
 }
-

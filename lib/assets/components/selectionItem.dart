@@ -15,7 +15,7 @@ import 'package:app/assets/routes/customLaunch.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/StyleFrom.dart';
 
-final Color CHEVRON_COLOR = Color.fromRGBO(109,113,129,1);
+final Color CHEVRON_COLOR = Color.fromRGBO(109, 113, 129, 1);
 
 class SelectionItem extends StatelessWidget {
   final String text;
@@ -65,9 +65,7 @@ class SelectionItem extends StatelessWidget {
             child: Icon(
               Icons.chevron_left,
               size: 25,
-              color: arrowColor == null
-                  ? CHEVRON_COLOR
-                  : arrowColor,
+              color: arrowColor == null ? CHEVRON_COLOR : arrowColor,
             ),
           ),
         ],
@@ -106,9 +104,8 @@ class ActionSelectionItem extends StatelessWidget {
     return ViewModelBuilder<BaseModel>.reactive(
         viewModelBuilder: () => BaseModel(),
         builder: (context, model, child) {
-          bool completed = model.currentUser
-              .getCompletedActions()
-              .contains(action.getId());
+          bool completed =
+              model.currentUser.getCompletedActions().contains(action.getId());
           return LeadingSelectionItem(
               backgroundColor: backgroundColor,
               innerHpadding: innerHpadding,
@@ -119,7 +116,9 @@ class ActionSelectionItem extends StatelessWidget {
                 if (extraOnTap != null) {
                   extraOnTap();
                 }
-                Navigator.of(context).pushNamed(Routes.actionInfo, arguments: ActionInfoArguments(campaign: campaign, action: action));
+                Navigator.of(context).pushNamed(Routes.actionInfo,
+                    arguments: ActionInfoArguments(
+                        campaign: campaign, action: action));
               },
               leading: Stack(children: <Widget>[
                 Padding(
@@ -248,7 +247,6 @@ class LeadingSelectionItem extends StatelessWidget {
   final bool isNew;
   final bool isCompleted;
 
-
   LeadingSelectionItem({
     this.iconWidth,
     this.innerHpadding,
@@ -272,78 +270,76 @@ class LeadingSelectionItem extends StatelessWidget {
           padding: EdgeInsets.symmetric(
               vertical: 5, horizontal: outerHpadding ?? defaultOuterHpadding),
           child: CustomTile(
-              child: Stack(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: innerHpadding ?? defaultInnerHpadding),
-                    child: Row(children: <Widget>[
-                      leading,
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: SelectionItem(
-                            onClick: onTap,
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  Container(
-                                    height: 45,
-                                    width: MediaQuery.of(context).size.width -
-                                            (outerHpadding ??
-                                                    defaultOuterHpadding) *
-                                                2 -
-                                            (innerHpadding ??
-                                                    defaultInnerHpadding) *
-                                                2 -
-                                            (iconWidth ?? defaultIconWidth) -
-                                            10 -
-                                            extraOverflow ??
-                                        40,
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        text,
-                                        style: textStyleFrom(
-                                          Theme.of(context)
-                                            .primaryTextTheme
-                                            .bodyText1,
-                                          fontSize: 16,
-                                        ),
-
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
+              child: Stack(children: [
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: innerHpadding ?? defaultInnerHpadding),
+              child: Row(children: <Widget>[
+                leading,
+                SizedBox(width: 10),
+                Expanded(
+                  child: SelectionItem(
+                      onClick: onTap,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              height: 45,
+                              width: MediaQuery.of(context).size.width -
+                                      (outerHpadding ?? defaultOuterHpadding) *
+                                          2 -
+                                      (innerHpadding ?? defaultInnerHpadding) *
+                                          2 -
+                                      (iconWidth ?? defaultIconWidth) -
+                                      10 -
+                                      extraOverflow ??
+                                  40,
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  text,
+                                  style: textStyleFrom(
+                                    Theme.of(context)
+                                        .primaryTextTheme
+                                        .bodyText1,
+                                    fontSize: 16,
                                   ),
-                                  time != null 
-                                    ? Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.access_time,
-                                          size: 15,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                        SizedBox(
-                                          width: 2,
-                                        ),
-                                        Text(time,
-                                            style: textStyleFrom(
-                                              Theme.of(context)
-                                                  .primaryTextTheme
-                                                  .bodyText1,
-                                              fontWeight: FontWeight.w600,
-                                              color: Theme.of(context).primaryColor,
-                                              fontSize: 11,
-                                            )),
-                                        ],
-                                      )
-                                    : secondaryText == null ? Container() :
-                                    Text(secondaryText,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ),
+                            time != null
+                                ? Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Icon(
+                                        Icons.access_time,
+                                        size: 15,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                      SizedBox(
+                                        width: 2,
+                                      ),
+                                      Text(time,
+                                          style: textStyleFrom(
+                                            Theme.of(context)
+                                                .primaryTextTheme
+                                                .bodyText1,
+                                            fontWeight: FontWeight.w600,
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontSize: 11,
+                                          )),
+                                    ],
+                                  )
+                                : secondaryText == null
+                                    ? Container()
+                                    : Text(secondaryText,
                                         style: textStyleFrom(
                                           Theme.of(context)
                                               .primaryTextTheme
@@ -351,48 +347,45 @@ class LeadingSelectionItem extends StatelessWidget {
                                           fontWeight: FontWeight.w600,
                                           color: Theme.of(context).primaryColor,
                                           fontSize: 11,
-                                        )
-                                      ),
-                                ])),
-                      )
-                    ]),
-                  ),
-                  // Im checking here because the value could be null 
-                  isNew == true || isCompleted == true
-                    ? Positioned(
-                        top: 0,
-                        right: 0,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: isNew ? Theme.of(context).errorColor : Color.fromRGBO(89,152,26, 1),
-                            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8))
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                            child: 
-                              isNew 
-                                ? Text(
-                                    "New",
-                                    style: textStyleFrom(
-                                      Theme.of(context).primaryTextTheme.bodyText1,
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                    )
-                                  )
-                              // Otherwise is completed
-                                : Icon(
-                                    Icons.check,
+                                        )),
+                          ])),
+                )
+              ]),
+            ),
+            // Im checking here because the value could be null
+            isNew == true || isCompleted == true
+                ? Positioned(
+                    top: 0,
+                    right: 0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: isNew
+                              ? Theme.of(context).errorColor
+                              : Color.fromRGBO(89, 152, 26, 1),
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(8))),
+                      child: Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                          child: isNew
+                              ? Text("New",
+                                  style: textStyleFrom(
+                                    Theme.of(context)
+                                        .primaryTextTheme
+                                        .bodyText1,
                                     color: Colors.white,
-                                    size: 12,
-                                  )
-                          ),
-                        ),
-                      )
-                    : Container(),
-                ]
-              )
-            )
-          ),
+                                    fontSize: 12,
+                                  ))
+                              // Otherwise is completed
+                              : Icon(
+                                  Icons.check,
+                                  color: Colors.white,
+                                  size: 12,
+                                )),
+                    ),
+                  )
+                : Container(),
+          ]))),
     );
   }
 }
@@ -419,10 +412,12 @@ class LearningTopicSelectionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ImageSelectionItem( 
+    return ImageSelectionItem(
       text: topic.getTitle(),
       imageUrl: topic.getImageLink(),
-      onTap: () {Navigator.of(context).pushNamed(Routes.learningTopic, arguments: topic);},
+      onTap: () {
+        Navigator.of(context).pushNamed(Routes.learningTopic, arguments: topic);
+      },
       hpadding: hpadding,
       imageWidth: imageWidth,
       height: height,
@@ -472,10 +467,13 @@ class LearningCentreCampaignSelectionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ImageSelectionItem( 
+    return ImageSelectionItem(
       text: campaign.getTitle(),
       imageUrl: campaign.getHeaderImage(),
-      onTap: () {Navigator.of(context).pushNamed(Routes.learningSingle, arguments: campaign.getId());},
+      onTap: () {
+        Navigator.of(context)
+            .pushNamed(Routes.learningSingle, arguments: campaign.getId());
+      },
       hpadding: hpadding,
       imageWidth: imageWidth,
       height: height,
@@ -507,9 +505,7 @@ class ImageSelectionItem extends StatelessWidget {
     this.text,
     this.imageUrl,
     this.onTap,
-
-    this.hasNew, 
-
+    this.hasNew,
     this.hpadding,
     this.imageWidth,
     this.height,
@@ -525,70 +521,66 @@ class ImageSelectionItem extends StatelessWidget {
               vertical: 5, horizontal: hpadding ?? defaultHpadding),
           child: CustomTile(
               child: Padding(
-                padding: EdgeInsets.only(right: rightOuterPadding),
-                child: Stack(
-                  children: [
-                   Row(mainAxisSize: MainAxisSize.max, children: <Widget>[
-                   ClipRRect(
-                     child: Container(
-                       width: imageWidth ?? defaultImageWidth,
-                       height: height ?? defaultHeight,
-                       child: Image.network(
-                         imageUrl,
-                         fit: BoxFit.cover,
-                       ),
-                     ),
-                   ),
-                   SizedBox(width: 10),
-                   Container(
-                     child: SelectionItem(
-                       onClick: null,
-                       child: Column(
-                           crossAxisAlignment: CrossAxisAlignment.start,
-                           mainAxisSize: MainAxisSize.max,
-                           mainAxisAlignment: MainAxisAlignment.start,
-                           children: <Widget>[
-                             Container(
-                               height: height ?? defaultHeight,
-                               width: MediaQuery.of(context).size.width -
-                                   (hpadding ?? defaultHpadding) * 2 -
-                                   (imageWidth ?? defaultImageWidth) -
-                                   40 -
-                                   rightOuterPadding,
-                               child: Align(
-                                 alignment: Alignment.centerLeft,
-                                 child: Text(
-                                   text,
-                                   style: Theme.of(context)
-                                       .primaryTextTheme
-                                       .bodyText1,
-                                   maxLines: 3,
-                                   overflow: TextOverflow.ellipsis,
-                                 ),
-                               ),
-                             ),
-                           ]),
-                     ),
-                   )
-                  ] 
-                ),
-                Positioned(
-                  top: 10,
-                  right: 2,
-                  child: hasNew ?? false
-                    ? Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(6)),
-                          color: Theme.of(context).errorColor,
+                  padding: EdgeInsets.only(right: rightOuterPadding),
+                  child: Stack(children: [
+                    Row(mainAxisSize: MainAxisSize.max, children: <Widget>[
+                      ClipRRect(
+                        child: Container(
+                          width: imageWidth ?? defaultImageWidth,
+                          height: height ?? defaultHeight,
+                          child: Image.network(
+                            imageUrl,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                        height: 12,
-                        width: 12,
+                      ),
+                      SizedBox(width: 10),
+                      Container(
+                        child: SelectionItem(
+                          onClick: null,
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Container(
+                                  height: height ?? defaultHeight,
+                                  width: MediaQuery.of(context).size.width -
+                                      (hpadding ?? defaultHpadding) * 2 -
+                                      (imageWidth ?? defaultImageWidth) -
+                                      40 -
+                                      rightOuterPadding,
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      text,
+                                      style: Theme.of(context)
+                                          .primaryTextTheme
+                                          .bodyText1,
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ),
+                              ]),
+                        ),
                       )
-                    : Container()
-                )
-              ]
-            )
-        ))),
+                    ]),
+                    Positioned(
+                        top: 10,
+                        right: 2,
+                        child: hasNew ?? false
+                            ? Container(
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(6)),
+                                  color: Theme.of(context).errorColor,
+                                ),
+                                height: 12,
+                                width: 12,
+                              )
+                            : Container())
+                  ])))),
     );
   }
 }

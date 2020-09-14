@@ -11,7 +11,6 @@ class WebViewArgumnets {
 }
 
 class WebViewPage extends StatelessWidget {
-
   final WebViewArgumnets args;
   WebViewPage(this.args);
 

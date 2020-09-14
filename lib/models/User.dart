@@ -77,7 +77,7 @@ class User {
     this.rejectedActions = rejectedActions ?? [];
     this.starredActions = starredActions ?? [];
     //this.completedRewards = completedRewards ?? [];
-    
+
     this.completedLearningResources = completedLearningResources ?? [];
 
     this.completedActionsType = completedActionsType ?? initCompletedAction();
@@ -146,7 +146,8 @@ class User {
       completedActions: completedActions ?? this.completedActions,
       rejectedActions: rejectedActions ?? this.rejectedActions,
       starredActions: starredActions ?? this.starredActions,
-      completedLearningResources: completedLearningResources ?? this.completedLearningResources,
+      completedLearningResources:
+          completedLearningResources ?? this.completedLearningResources,
       completedActionsType: completedActionsType ?? this.completedActionsType,
       points: points ?? this.points,
       token: token ?? this.token,
@@ -191,11 +192,11 @@ class User {
         json['favourited_actions'] == null || json['favourited_actions'].isEmpty
             ? <int>[]
             : json['favourited_actions'].cast<int>();
-    
-    completedLearningResources =
-        json['completed_learning_resources'] == null || json['completed_learning_resources'].isEmpty
-            ? <int>[]
-            : json['completed_learning_resources'].cast<int>();
+
+    completedLearningResources = json['completed_learning_resources'] == null ||
+            json['completed_learning_resources'].isEmpty
+        ? <int>[]
+        : json['completed_learning_resources'].cast<int>();
 
     completedActionsType = json['completed_actions_type'] == null
         ? this.initCompletedAction()
@@ -363,7 +364,7 @@ class User {
   List<int> getStarredActions() {
     return starredActions;
   }
-  
+
   List<int> getCompletedLearningResources() {
     return completedLearningResources;
   }
@@ -395,7 +396,7 @@ class User {
   void setPoints(int points) {
     this.points = points;
   }
-  
+
   void setCompletedActions(List<int> actions) {
     this.completedActions = actions;
   }
