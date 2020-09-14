@@ -34,201 +34,209 @@ class ActionPage extends StatefulWidget {
 }
 
 class _ActionPageState extends State<ActionPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ViewModelBuilder<ActionViewModel>.reactive(
-        viewModelBuilder: () => ActionViewModel(),
-        onModelReady: (model) {
-          model.initSelections();
-        },
-        builder: (context, model, child) {
-          return Scaffold(
-            backgroundColor: colorFrom(
-              Theme.of(context).primaryColorDark,
-              opacity: 0.05,
-            ),
-            body: model.selectedCampaigns.length == 0 
-              ?  Column(
-                children: [
-                  PageHeader(
-                    title: "Actions",
-                    onTap: () {
-                      _navigateAndDisplaySelection(context, model);
-                    },
-                    icon: Icons.filter_list,
+        body: ViewModelBuilder<ActionViewModel>.reactive(
+            viewModelBuilder: () => ActionViewModel(),
+            onModelReady: (model) {
+              model.initSelections();
+            },
+            builder: (context, model, child) {
+              return Scaffold(
+                  backgroundColor: colorFrom(
+                    Theme.of(context).primaryColorDark,
+                    opacity: 0.05,
                   ),
-
-                  SizedBox(height: 15),
-
-                  Expanded(
-                    child: Image.asset('assets/imgs/graphics/ilstr_empty@3x.png'),
-                  ),
-
-                  Text(
-                    "No actions yet",
-                    style: textStyleFrom(
-                      Theme.of(context).primaryTextTheme.headline2,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 50),
-                    child: Text(
-                      "Join a campaign to see the actions you take to support it!",
-                      style: textStyleFrom(
-                        Theme.of(context).primaryTextTheme.bodyText1,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: DarkButton(
-                      "See campaigns",
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(Routes.campaign);
-                      },
-                    )
-                  )
-
-                ],
-              )
-
-              : Column(
-                children: <Widget>[
-                  PageHeader(
-                    title: "Actions",
-                    onTap: () {
-                      _navigateAndDisplaySelection(context, model);
-                    },
-                    icon: Icons.filter_list,
-                  ),
-
-                  Expanded(
-                    child: ListView(
-                    children: [
-                      // Campaign selection widget
-                      Container(
-                          height: CAMPAIGN_SELECT_HEIGHT,
-                          child: PageView.builder(
-                              key: campaignPageKey,
-                              controller: _controller,
-                              itemCount:
-                                  // If all the active campaigns have been joined
-                                  model.selectedCampaigns.length == model.campaigns.length 
-                                    ? model.selectedCampaigns.length
-                                    : model.currentUser
-                                              .getSelectedCampaigns().length + 1,
-                              itemBuilder: (BuildContext context, int index) {
-                                if (index ==
-                                    model.currentUser
-                                        .getSelectedCampaigns()
-                                        .length) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context)
-                                          .pushNamed(Routes.campaign);
-                                    },
-                                    child: Padding(
-                                      padding: EdgeInsets.only(bottom: 10),
-                                      child: AddCampaignTile(),
-                                    )
-                                  );
-                                }
-                                return Padding(
-                                  padding: EdgeInsets.only(bottom:10),
-                                  child: CampaignSelectionTile(model
-                                    .currentUser
-                                    .filterSelectedCampaigns(model.campaigns
-                                        )[index],
-                                    height: CAMPAIGN_SELECT_HEIGHT,
-                                  ),
-                                );
+                  body: model.selectedCampaigns.length == 0
+                      ? Column(
+                          children: [
+                            PageHeader(
+                              title: "Actions",
+                              onTap: () {
+                                _navigateAndDisplaySelection(context, model);
                               },
-                              onPageChanged: (int pageIndex) {
-                                model.campaignIndex = pageIndex;
-                              })),
-                      Align(
-                        alignment: Alignment.center,
-                        child: SmoothPageIndicator(
-                          controller: _controller,
-                          //count: viewModel.campaigns.getActiveCampaigns().length,
-                          count: model.selectedCampaigns.length ==
-                                    model.campaigns.length
-                              ? model.selectedCampaigns.length
-                              : model.currentUser
-                                      .getSelectedCampaigns()
-                                      .length + 1,
-                          effect: customSmoothPageInducatorEffect,
-                        ),
-                      ),
-
-                      SizedBox(
-                        height: 15,
-                      ),
-
-                      // Action list
-                      Container(
-                          child: model.campaign == null
-                              ? ViewCampaigns()
-                              : ListView(
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  children: [
-                                    Row(
-                                      children: [
-                                        ActiveDoneSelector(
-                                          "All",
-                                          () {
-                                            model.setSelectedToAll();
-                                          },
-                                          model.selectionIsAll()
-                                        ),
-                                        ActiveDoneSelector(
-                                          "To do",
-                                          () {
-                                            model.setSelectedToTodo();
-                                          },
-                                          model.selectionIsTodo(),
-                                        ),
-                                        ActiveDoneSelector(
-                                          "Completed",
-                                          () {
-                                            model.setSelectedToCompleted();
-                                          },
-                                          model.isSelectionCompleted(),
-                                        ),
-                                      ],
-                                    ),
-                                    ListView.builder(
-                                        shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(),
-                                        itemCount: model.actions.length,
+                              icon: Icons.filter_list,
+                            ),
+                            SizedBox(height: 15),
+                            Expanded(
+                              child: Image.asset(
+                                  'assets/imgs/graphics/ilstr_empty@3x.png'),
+                            ),
+                            Text(
+                              "No actions yet",
+                              style: textStyleFrom(
+                                Theme.of(context).primaryTextTheme.headline2,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 50),
+                              child: Text(
+                                "Join a campaign to see the actions you take to support it!",
+                                style: textStyleFrom(
+                                  Theme.of(context).primaryTextTheme.bodyText1,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            Padding(
+                                padding: EdgeInsets.symmetric(vertical: 20),
+                                child: DarkButton(
+                                  "See campaigns",
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .pushNamed(Routes.campaign);
+                                  },
+                                ))
+                          ],
+                        )
+                      : Column(
+                          children: <Widget>[
+                            PageHeader(
+                              title: "Actions",
+                              onTap: () {
+                                _navigateAndDisplaySelection(context, model);
+                              },
+                              icon: Icons.filter_list,
+                            ),
+                            Expanded(
+                                child: ListView(
+                              children: [
+                                // Campaign selection widget
+                                Container(
+                                    height: CAMPAIGN_SELECT_HEIGHT,
+                                    child: PageView.builder(
+                                        key: campaignPageKey,
+                                        controller: _controller,
+                                        itemCount:
+                                            // If all the active campaigns have been joined
+                                            model.selectedCampaigns.length ==
+                                                    model.campaigns.length
+                                                ? model.selectedCampaigns.length
+                                                : model.currentUser
+                                                        .getSelectedCampaigns()
+                                                        .length +
+                                                    1,
                                         itemBuilder:
                                             (BuildContext context, int index) {
+                                          if (index ==
+                                              model.currentUser
+                                                  .getSelectedCampaigns()
+                                                  .length) {
+                                            return GestureDetector(
+                                                onTap: () {
+                                                  Navigator.of(context)
+                                                      .pushNamed(
+                                                          Routes.campaign);
+                                                },
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                      bottom: 10),
+                                                  child: AddCampaignTile(),
+                                                ));
+                                          }
                                           return Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 0),
-                                              child: ActionSelectionItem(
-                                                outerHpadding: 10,
-                                                campaign: model.campaign,
-                                                action: model.actions[index],
-                                                backgroundColor: Colors.white,
-                                              ));
-                                        }),
-                                  ],
-                                ))
-                      ],
-                    )
-                  ),
-                ],
-              ));
-          })
-    );
+                                            padding:
+                                                EdgeInsets.only(bottom: 10),
+                                            child: CampaignSelectionTile(
+                                              model.currentUser
+                                                  .filterSelectedCampaigns(
+                                                      model.campaigns)[index],
+                                              height: CAMPAIGN_SELECT_HEIGHT,
+                                            ),
+                                          );
+                                        },
+                                        onPageChanged: (int pageIndex) {
+                                          model.campaignIndex = pageIndex;
+                                        })),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: SmoothPageIndicator(
+                                    controller: _controller,
+                                    //count: viewModel.campaigns.getActiveCampaigns().length,
+                                    count: model.selectedCampaigns.length ==
+                                            model.campaigns.length
+                                        ? model.selectedCampaigns.length
+                                        : model.currentUser
+                                                .getSelectedCampaigns()
+                                                .length +
+                                            1,
+                                    effect: customSmoothPageInducatorEffect,
+                                  ),
+                                ),
+
+                                SizedBox(
+                                  height: 15,
+                                ),
+
+                                // Action list
+                                Container(
+                                    child: model.campaign == null
+                                        ? ViewCampaigns()
+                                        : ListView(
+                                            shrinkWrap: true,
+                                            physics:
+                                                NeverScrollableScrollPhysics(),
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  ActiveDoneSelector("All", () {
+                                                    model.setSelectedToAll();
+                                                  }, model.selectionIsAll()),
+                                                  ActiveDoneSelector(
+                                                    "To do",
+                                                    () {
+                                                      model.setSelectedToTodo();
+                                                    },
+                                                    model.selectionIsTodo(),
+                                                  ),
+                                                  ActiveDoneSelector(
+                                                    "Completed",
+                                                    () {
+                                                      model
+                                                          .setSelectedToCompleted();
+                                                    },
+                                                    model
+                                                        .isSelectionCompleted(),
+                                                  ),
+                                                ],
+                                              ),
+                                              ListView.builder(
+                                                  shrinkWrap: true,
+                                                  physics:
+                                                      NeverScrollableScrollPhysics(),
+                                                  itemCount:
+                                                      model.actions.length,
+                                                  itemBuilder:
+                                                      (BuildContext context,
+                                                          int index) {
+                                                    return Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal: 0),
+                                                        child:
+                                                            ActionSelectionItem(
+                                                          outerHpadding: 10,
+                                                          campaign:
+                                                              model.campaign,
+                                                          action: model
+                                                              .actions[index],
+                                                          backgroundColor:
+                                                              Colors.white,
+                                                        ));
+                                                  }),
+                                            ],
+                                          ))
+                              ],
+                            )),
+                          ],
+                        ));
+            }));
   }
 
-  _navigateAndDisplaySelection(BuildContext context, ActionViewModel model) async {
+  _navigateAndDisplaySelection(
+      BuildContext context, ActionViewModel model) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
     final result = await Navigator.push(
@@ -475,11 +483,7 @@ class _ActiveDoneSelectorState extends State<ActiveDoneSelector> {
         onTap: widget.onClick,
         child: Padding(
           padding: EdgeInsets.only(left: 12, bottom: 10),
-          child: SelectionPill(
-            widget.text, 
-            widget.selected
-          ),
-        )
-    );
+          child: SelectionPill(widget.text, widget.selected),
+        ));
   }
 }

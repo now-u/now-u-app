@@ -12,7 +12,6 @@ import 'package:app/routes.dart';
 import 'package:stacked/stacked.dart';
 import 'package:app/viewmodels/base_model.dart';
 
-
 class Tile extends StatelessWidget {
   final Widget child;
   final double borderRadius;
@@ -53,23 +52,21 @@ class CampaignTile extends StatefulWidget {
   final double hOuterPadding;
 
   CampaignTile(
-    this.campaign,
-    {
-      this.hPadding,
-      this.hOuterPadding,
-    }
-  );
+    this.campaign, {
+    this.hPadding,
+    this.hOuterPadding,
+  });
 
   @override
   _CampaignTileState createState() => _CampaignTileState();
 }
 
 class _CampaignTileState extends State<CampaignTile> {
-
   @override
   Widget build(BuildContext context) {
     GestureTapCallback _onTapMoreInfo = () {
-      Navigator.of(context).pushNamed(Routes.campaignInfo, arguments: widget.campaign);
+      Navigator.of(context)
+          .pushNamed(Routes.campaignInfo, arguments: widget.campaign);
     };
 
     var hPadding = widget.hPadding ?? 15.0;
@@ -99,8 +96,8 @@ class _CampaignTileState extends State<CampaignTile> {
               ),
             ),
             ViewModelBuilder<BaseModel>.reactive(
-              viewModelBuilder: () => BaseModel(),
-              builder: (context, model, child) {
+                viewModelBuilder: () => BaseModel(),
+                builder: (context, model, child) {
                   bool selected = model.currentUser
                       .getSelectedCampaigns()
                       .contains(widget.campaign.getId());
@@ -117,8 +114,7 @@ class _CampaignTileState extends State<CampaignTile> {
                   } else {
                     return Container();
                   }
-                }
-              )
+                })
           ]),
           SizedBox(height: 10),
           // Title
@@ -140,7 +136,8 @@ class _CampaignTileState extends State<CampaignTile> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                NumberOfCampaignersIndicator(widget.campaign.getNumberOfCampaigners())
+                NumberOfCampaignersIndicator(
+                    widget.campaign.getNumberOfCampaigners())
               ],
             ),
           ),
@@ -158,33 +155,32 @@ class CampaignTileWithJoinButtons extends StatelessWidget {
   final double outerPadding;
 
   CampaignTileWithJoinButtons({
-    @required this.isJoined, 
-    @required this.joinCampaign, 
-    @required this.leaveCampaign, 
+    @required this.isJoined,
+    @required this.joinCampaign,
+    @required this.leaveCampaign,
     @required this.campaign,
     this.outerPadding,
   });
-  
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(outerPadding ?? 18),
-      child: CustomTile(
-        child: Column(
-          children: [
-            Container(
-              height: 100,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(campaign.getHeaderImage()),
-                  fit: BoxFit.cover,
+        padding: EdgeInsets.all(outerPadding ?? 18),
+        child: CustomTile(
+          child: Column(
+            children: [
+              Container(
+                height: 100,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(campaign.getHeaderImage()),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                children: [
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(children: [
                   Text(
                     campaign.getTitle(),
                     maxLines: 2,
@@ -194,50 +190,51 @@ class CampaignTileWithJoinButtons extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  NumberOfCampaignersIndicator(campaign.getNumberOfCampaigners()),
-                ]
+                  NumberOfCampaignersIndicator(
+                      campaign.getNumberOfCampaigners()),
+                ]),
               ),
-            ),
-
-            Container(
-              color: Color.fromRGBO(247,248,252, 1),
-              child: Padding(
-                padding: EdgeInsets.all(20),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomTextButton(
-                      "More info",
-                      onClick: () {},
-                      fontColor: Color.fromRGBO(109,113,129, 1),
-                    ),
-                    isJoined 
-                      ? DarkButton(
-                        "Joined",
-                        //inverted: true,
-                        onPressed: () {leaveCampaign(campaign.getId());},
-                        style: DarkButtonStyles.Small,
-                        rightIcon: Icons.check,
-                      )
-                      : DarkButton(
-                        "Join",
-                        //inverted: true,
-                        onPressed: () {joinCampaign(campaign.getId());},
-                        style: DarkButtonStyles.Medium,
-                        rightIcon: Icons.link,
-                        inverted: true,
-                      )
-                  ],
+              Container(
+                color: Color.fromRGBO(247, 248, 252, 1),
+                child: Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomTextButton(
+                        "More info",
+                        onClick: () {},
+                        fontColor: Color.fromRGBO(109, 113, 129, 1),
+                      ),
+                      isJoined
+                          ? DarkButton(
+                              "Joined",
+                              //inverted: true,
+                              onPressed: () {
+                                leaveCampaign(campaign.getId());
+                              },
+                              style: DarkButtonStyles.Small,
+                              rightIcon: Icons.check,
+                            )
+                          : DarkButton(
+                              "Join",
+                              //inverted: true,
+                              onPressed: () {
+                                joinCampaign(campaign.getId());
+                              },
+                              style: DarkButtonStyles.Medium,
+                              rightIcon: Icons.link,
+                              inverted: true,
+                            )
+                    ],
+                  ),
                 ),
-              ),
-            )
-          ],
-        ),
-      )
-    );
+              )
+            ],
+          ),
+        ));
   }
-
 }
 
 class NumberOfCampaignersIndicator extends StatelessWidget {
@@ -246,35 +243,34 @@ class NumberOfCampaignersIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     return Row(
-       children: <Widget>[
-         Icon(
-           Icons.people,
-           size: 18,
-         ),
-         SizedBox(width: 2),
-         RichText(
-             text: TextSpan(children: [
-           TextSpan(
-             text:
-                 numberOfCampaigners.toString(),
-             style: textStyleFrom(
-               Theme.of(context).primaryTextTheme.headline5,
-               fontWeight: FontWeight.w600,
-               color: Color.fromRGBO(63, 61, 86, 1),
-             ),
-           ),
-           TextSpan(
-             text: " campaigners",
-             style: textStyleFrom(
-               Theme.of(context).primaryTextTheme.headline5,
-               fontWeight: FontWeight.w400,
-               color: Color.fromRGBO(63, 61, 86, 1),
-             ),
-           ),
-         ]))
-       ],
-     );
+    return Row(
+      children: <Widget>[
+        Icon(
+          Icons.people,
+          size: 18,
+        ),
+        SizedBox(width: 2),
+        RichText(
+            text: TextSpan(children: [
+          TextSpan(
+            text: numberOfCampaigners.toString(),
+            style: textStyleFrom(
+              Theme.of(context).primaryTextTheme.headline5,
+              fontWeight: FontWeight.w600,
+              color: Color.fromRGBO(63, 61, 86, 1),
+            ),
+          ),
+          TextSpan(
+            text: " campaigners",
+            style: textStyleFrom(
+              Theme.of(context).primaryTextTheme.headline5,
+              fontWeight: FontWeight.w400,
+              color: Color.fromRGBO(63, 61, 86, 1),
+            ),
+          ),
+        ]))
+      ],
+    );
   }
 }
 
@@ -287,47 +283,48 @@ class CampaignSelectionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(Routes.campaignInfo, arguments: campaign.getId());
-      },
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-        child: CustomTile(
-            color: colorFrom(
-              Theme.of(context).primaryColorDark,
-              opacity:0.05,
-            ),
-            child: Stack(children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  Container(
-                      height: height ?? defaultHeight,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(campaign.getHeaderImage()),
-                          fit: BoxFit.cover,
-                        ),
-                      )),
-                  Container(
-                      height: height ?? defaultHeight,
-                      color: colorFrom(
-                        Colors.black,
-                        opacity: 0.5,
-                      )),
-                ],
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: Container(
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    child: Text(campaign.getTitle(),
-                        textAlign: TextAlign.center,
-                        style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.headline4,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w800,
-                        ))),
-              )
-            ]))));
+        onTap: () {
+          Navigator.of(context)
+              .pushNamed(Routes.campaignInfo, arguments: campaign.getId());
+        },
+        child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+            child: CustomTile(
+                color: colorFrom(
+                  Theme.of(context).primaryColorDark,
+                  opacity: 0.05,
+                ),
+                child: Stack(children: <Widget>[
+                  Stack(
+                    children: <Widget>[
+                      Container(
+                          height: height ?? defaultHeight,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(campaign.getHeaderImage()),
+                              fit: BoxFit.cover,
+                            ),
+                          )),
+                      Container(
+                          height: height ?? defaultHeight,
+                          color: colorFrom(
+                            Colors.black,
+                            opacity: 0.5,
+                          )),
+                    ],
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        child: Text(campaign.getTitle(),
+                            textAlign: TextAlign.center,
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.headline4,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w800,
+                            ))),
+                  )
+                ]))));
   }
 }

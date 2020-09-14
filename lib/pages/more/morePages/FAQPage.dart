@@ -22,34 +22,34 @@ class FAQPage extends StatelessWidget {
         viewModelBuilder: () => FAQViewModel(),
         onModelReady: (model) => model.fetchFAQs(),
         builder: (context, model, child) {
-            return ScrollableSheetPage(
+          return ScrollableSheetPage(
               initialChildSize: 0.85,
               minChildSize: 0.85,
               shadow: BoxShadow(
                 color: Colors.transparent,
               ),
-              scaffoldBackgroundColor: Color.fromRGBO(247,248,252,1),
+              scaffoldBackgroundColor: Color.fromRGBO(247, 248, 252, 1),
               sheetBackgroundColor: Colors.white,
-              header: 
-                Container(
-                  height: MediaQuery.of(context).size.height * (1-0.6),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        right: -30,
-                        bottom: MediaQuery.of(context).size.height * (1 - 0.6) * 0.3,
-                        child: Image.asset(
-                          "assets/imgs/graphics/ilstr_FAQ.png",
-                          height: MediaQuery.of(context).size.height * 0.3,
-                        ),
+              header: Container(
+                height: MediaQuery.of(context).size.height * (1 - 0.6),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      right: -30,
+                      bottom:
+                          MediaQuery.of(context).size.height * (1 - 0.6) * 0.3,
+                      child: Image.asset(
+                        "assets/imgs/graphics/ilstr_FAQ.png",
+                        height: MediaQuery.of(context).size.height * 0.3,
                       ),
-                      PageHeader(
-                        backButton: true,
-                        title: "FAQs",
-                      )
-                    ],
-                  ),
+                    ),
+                    PageHeader(
+                      backButton: true,
+                      title: "FAQs",
+                    )
+                  ],
                 ),
+              ),
               children: [
                 Container(
                   child: ListView.builder(
@@ -61,9 +61,8 @@ class FAQPage extends StatelessWidget {
                     },
                   ),
                 )
-              ]
-            );
-      },
+              ]);
+        },
       ),
     );
   }
@@ -93,46 +92,42 @@ class _FAQTileState extends State<FAQTile> {
         });
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        child: Container(
-          width: double.infinity,
-          child: Column(
-            children: [
+          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          child: Container(
+            width: double.infinity,
+            child: Column(children: [
               CustomTile(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          widget.faq.getQuestion(),
-                          style: Theme.of(context).primaryTextTheme.headline4,
-                        ),
+                  child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        widget.faq.getQuestion(),
+                        style: Theme.of(context).primaryTextTheme.headline4,
                       ),
-                      Icon(
-                        FontAwesomeIcons.chevronDown,
-                        color: Color.fromRGBO(109,113,129, 1),
-                        size: 20,
-                      ),
-                    ],
-                  ),
-                )
-              ),
-              selected 
-                ? Padding(
-                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                    child: Text(
-                      widget.faq.getAnswer(),
-                      style: Theme.of(context).primaryTextTheme.bodyText1,
-                    )
-                  )
-                : Container(),
-            ]
-          ),
-        )
-      ),
+                    ),
+                    Icon(
+                      FontAwesomeIcons.chevronDown,
+                      color: Color.fromRGBO(109, 113, 129, 1),
+                      size: 20,
+                    ),
+                  ],
+                ),
+              )),
+              selected
+                  ? Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                      child: Text(
+                        widget.faq.getAnswer(),
+                        style: Theme.of(context).primaryTextTheme.bodyText1,
+                      ))
+                  : Container(),
+            ]),
+          )),
     );
   }
 }

@@ -18,11 +18,11 @@ class AuthError {
 
 class AuthenticationService {
   final NavigationService _navigationService = locator<NavigationService>();
-  final SharedPreferencesService _sharedPreferencesService = locator<SharedPreferencesService>();
-  
+  final SharedPreferencesService _sharedPreferencesService =
+      locator<SharedPreferencesService>();
+
   User _currentUser;
   User get currentUser => _currentUser;
-
 
   // This is not final as it can be changed
   String domainPrefix = "https://api.now-u.com/api/v1/";
@@ -45,19 +45,17 @@ class AuthenticationService {
       _sharedPreferencesService.saveUserToPrefs(_currentUser);
     }
   }
-  
+
   // Generic Reuqest
   // Handle 401 errors
   Future handleAuthRequestErrors(http.Response response) {
     if (response.statusCode == 200) {
       return null;
-    }
-    else if (response.statusCode == 401) {
+    } else if (response.statusCode == 401) {
       // Generic reaction to someone being unauthorized is just send them to the login screen
       _navigationService.navigateTo(Routes.login);
       return Future.error(AuthError.unauthorized);
-    }
-    else if (response.statusCode == 500) {
+    } else if (response.statusCode == 500) {
       // Generic reaction to someone being unauthorized is just send them to the login screen
       _navigationService.navigateTo('/');
       return Future.error(AuthError.internal);
@@ -65,13 +63,13 @@ class AuthenticationService {
     return Future.error(AuthError.unknown);
   }
 
-  Future sendSignInWithEmailLink(String email, String name, bool acceptNewletter) async {
-    try { 
+  Future sendSignInWithEmailLink(
+      String email, String name, bool acceptNewletter) async {
+    try {
       print("email | $email");
       print("name | $name");
       print("nl | $acceptNewletter");
-      await http
-          .post(
+      await http.post(
         domainPrefix + 'users',
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -107,8 +105,7 @@ class AuthenticationService {
 
       await _updateUser(user.getToken());
       return _currentUser != null;
-    }
-    catch(e) {
+    } catch (e) {
       return e.message;
     }
   }
@@ -185,7 +182,6 @@ class AuthenticationService {
     } catch (e) {
       return false;
     }
-
   }
 
   Future<bool> removeActionStatus(int actionId) async {
@@ -208,7 +204,7 @@ class AuthenticationService {
         completedActions: u.getCompletedActions(),
       );
       return true;
-    } catch(e) {
+    } catch (e) {
       return false;
     }
   }
@@ -231,7 +227,7 @@ class AuthenticationService {
   }
 
   Future<bool> joinCampaign(int campaignId) async {
-    try{
+    try {
       http.Response response = await http.post(
         domainPrefix + 'users/me/campaigns/$campaignId',
         headers: <String, String>{
@@ -248,7 +244,7 @@ class AuthenticationService {
         points: u.getPoints(),
       );
       return true;
-    } catch(e) {
+    } catch (e) {
       return false;
     }
   }
@@ -271,11 +267,11 @@ class AuthenticationService {
         points: u.getPoints(),
       );
       return true;
-    } catch(e) {
+    } catch (e) {
       return false;
     }
   }
-  
+
   Future<bool> completeLearningResource(int learningResourceId) async {
     try {
       http.Response response = await http.post(
@@ -290,11 +286,9 @@ class AuthenticationService {
       }
       User u = User.fromJson(json.decode(response.body)['data']);
       _currentUser = _currentUser.copyWith(
-          completedLearningResources: u.getCompletedLearningResources()
-      );
+          completedLearningResources: u.getCompletedLearningResources());
       return true;
-    }
-    catch(e) {
+    } catch (e) {
       return false;
     }
   }

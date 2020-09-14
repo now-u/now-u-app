@@ -6,7 +6,7 @@ import 'package:app/locator.dart';
 import 'package:app/services/navigation.dart';
 
 class PushNotificationService {
-  final FirebaseMessaging _fcm  = FirebaseMessaging();
+  final FirebaseMessaging _fcm = FirebaseMessaging();
   final NavigationService _navigationService = locator<NavigationService>();
 
   Future init() async {

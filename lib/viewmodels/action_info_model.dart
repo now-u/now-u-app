@@ -6,12 +6,10 @@ import 'package:app/services/auth.dart';
 import 'package:app/services/navigation.dart';
 
 class ActionInfoViewModel extends BaseCampaignViewModel {
-
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
-  final NavigationService _navigationService =
-      locator<NavigationService>();
-  
+  final NavigationService _navigationService = locator<NavigationService>();
+
   Future completeAction(int id) async {
     setBusy(true);
     bool success = await _authenticationService.completeAction(id);
@@ -27,7 +25,7 @@ class ActionInfoViewModel extends BaseCampaignViewModel {
     setBusy(false);
     notifyListeners();
   }
-  
+
   Future starAction(int id) async {
     setBusy(true);
     await _authenticationService.starAction(id);

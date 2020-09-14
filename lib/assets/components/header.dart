@@ -24,7 +24,18 @@ class PageHeader extends StatelessWidget {
   final double extraInnerPadding;
 
   PageHeader(
-      {this.onTap, this.title, this.icon, this.backButton, this.backButtonText, this.padding, this.infoText, this.infoTitle,this.textColor, this.maxLines, this.fontSize, this.extraInnerPadding});
+      {this.onTap,
+      this.title,
+      this.icon,
+      this.backButton,
+      this.backButtonText,
+      this.padding,
+      this.infoText,
+      this.infoTitle,
+      this.textColor,
+      this.maxLines,
+      this.fontSize,
+      this.extraInnerPadding});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -42,64 +53,61 @@ class PageHeader extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.only(left: padding == null ? 20 : padding + 10),
             child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                infoText == null && infoTitle == null && maxLines != null 
-                  ? Expanded(
-                      child: Text(
-                        title,
-                        textAlign: TextAlign.left,
-                        style:  textStyleFrom(
-                          Theme.of(context).primaryTextTheme.headline2,
-                          color:textColor,
-                          fontSize: fontSize,
-                        ),
-                        maxLines: maxLines,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    )
-                  : Container(
-                      child: Text(
-                        title,
-                        textAlign: TextAlign.left,
-                        style:  textStyleFrom(
-                          Theme.of(context).primaryTextTheme.headline2,
-                          color:textColor,
-                          fontSize: fontSize,
-                        ),
-                      ),
-                    ),
-                
-                SizedBox(width: 7,),
-
-                infoTitle != null && infoText != null 
-                  ? GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed(
-                          Routes.info,
-                          arguments: InfoPageArgumnets(
-                            title: infoTitle, 
-                            body: infoText,
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  infoText == null && infoTitle == null && maxLines != null
+                      ? Expanded(
+                          child: Text(
+                            title,
+                            textAlign: TextAlign.left,
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.headline2,
+                              color: textColor,
+                              fontSize: fontSize,
+                            ),
+                            maxLines: maxLines,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        );
-                      },
-                      child: Icon(
-                        FontAwesomeIcons.questionCircle,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    )
-                  : Container(),
-
-              ]
-            ),
+                        )
+                      : Container(
+                          child: Text(
+                            title,
+                            textAlign: TextAlign.left,
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.headline2,
+                              color: textColor,
+                              fontSize: fontSize,
+                            ),
+                          ),
+                        ),
+                  SizedBox(
+                    width: 7,
+                  ),
+                  infoTitle != null && infoText != null
+                      ? GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushNamed(
+                              Routes.info,
+                              arguments: InfoPageArgumnets(
+                                title: infoTitle,
+                                body: infoText,
+                              ),
+                            );
+                          },
+                          child: Icon(
+                            FontAwesomeIcons.questionCircle,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        )
+                      : Container(),
+                ]),
           ),
         ),
       ],
     );
   }
 }
-
 
 class PageHeaderBackButton extends StatelessWidget {
   final Function onTap;
@@ -109,15 +117,12 @@ class PageHeaderBackButton extends StatelessWidget {
   final double padding;
 
   PageHeaderBackButton(
-    {
-      this.backButton, 
-      this.backButtonText, 
-      this.padding, 
-      this.icon, 
-      this.onTap
-    }
-  );
-        
+      {this.backButton,
+      this.backButtonText,
+      this.padding,
+      this.icon,
+      this.onTap});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -129,20 +134,21 @@ class PageHeaderBackButton extends StatelessWidget {
         children: [
           backButton ?? false
               ? Container(
-                height: 40,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: padding ?? 10.0, vertical: 10.0),
-                  child: CustomTextButton(
-                    backButtonText ?? "Back",
-                    onClick: () {
-                      Navigator.of(context).pop();
-                    },
-                    iconLeft: true,
-                    fontWeight: FontWeight.w400,
-                  ))
-                )
-              : Container(height: 40,),
+                  height: 40,
+                  child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: padding ?? 10.0, vertical: 10.0),
+                      child: CustomTextButton(
+                        backButtonText ?? "Back",
+                        onClick: () {
+                          Navigator.of(context).pop();
+                        },
+                        iconLeft: true,
+                        fontWeight: FontWeight.w400,
+                      )))
+              : Container(
+                  height: 40,
+                ),
           icon == null
               ? Container()
               : Align(
@@ -159,9 +165,8 @@ class PageHeaderBackButton extends StatelessWidget {
                     ),
                   ),
                 )
-          ],
-        ),
-      );
-    }
-
+        ],
+      ),
+    );
+  }
 }

@@ -55,8 +55,7 @@ class BezierTopClipper extends CustomClipper<Path> {
     path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
         firstEndPoint.dx, firstEndPoint.dy);
 
-    var secondControlPoint =
-        Offset(size.width - (size.width / 3.25), 0);
+    var secondControlPoint = Offset(size.width - (size.width / 3.25), 0);
     var secondEndPoint = Offset(size.width, 35);
     path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
         secondEndPoint.dx, secondEndPoint.dy);
@@ -100,4 +99,3 @@ class BezierClipper extends CustomClipper<Path> {
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
-

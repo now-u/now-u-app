@@ -7,7 +7,6 @@ import 'package:stacked/stacked.dart';
 import 'package:app/viewmodels/partners_model.dart';
 
 class PartnersPage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,17 +27,14 @@ class PartnersPage extends StatelessWidget {
               itemCount: model.parterns.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
-                  height: 200,
-                  child: Padding(
-                    padding: EdgeInsets.all(8),
-                    child: OrganisationTile(model.parterns[index]),
-                  )
-                );
+                    height: 200,
+                    child: Padding(
+                      padding: EdgeInsets.all(8),
+                      child: OrganisationTile(model.parterns[index]),
+                    ));
               },
             );
-          }
-      ),
+          }),
     );
   }
 }
-

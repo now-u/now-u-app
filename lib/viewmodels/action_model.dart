@@ -7,9 +7,8 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/models/Action.dart';
 
 class ActionViewModel extends BaseCampaignViewModel {
-  
   final CampaignService _campaignsService = locator<CampaignService>();
-  
+
   Map<String, Map> _selections = {
     "times": {},
     "campaigns": {},
@@ -26,22 +25,26 @@ class ActionViewModel extends BaseCampaignViewModel {
     selections[key1][key2] = value;
     notifyListeners();
   }
-  set setSelections(Map<String, Map> selections) => _selections = selections ?? _selections;
+
+  set setSelections(Map<String, Map> selections) =>
+      _selections = selections ?? _selections;
 
   List<CampaignAction> _actions = [];
   List<CampaignAction> get actions => _actions;
-  
+
   Campaign _campaign;
   Campaign get campaign => _campaign;
-  set campaign(Campaign c) { 
+  set campaign(Campaign c) {
     _campaign = c;
     getActions();
   }
+
   set campaignIndex(int index) {
     if (index == currentUser.getSelectedCampaigns().length) {
       _campaign = null;
     } else {
-      _campaign = currentUser.filterSelectedCampaigns(_campaignsService.campaigns)[index];
+      _campaign = currentUser
+          .filterSelectedCampaigns(_campaignsService.campaigns)[index];
       getActions();
     }
   }
@@ -59,7 +62,6 @@ class ActionViewModel extends BaseCampaignViewModel {
   }
 
   void getActions() {
-
     if (campaign == null) {
       _actions = [];
     }
@@ -72,11 +74,10 @@ class ActionViewModel extends BaseCampaignViewModel {
     bool includeStarred = selections['extras']['starred'];
     // Get all the actions
     tmpActions.addAll(_campaignsService.getActiveActions(
-      includeCompleted: includeCompleted,
-      includeRejected: includeRejected,
-      includeTodo: includeToDo,
-      includeStarred: includeStarred)
-    );
+        includeCompleted: includeCompleted,
+        includeRejected: includeRejected,
+        includeTodo: includeToDo,
+        includeStarred: includeStarred));
     // Filter them for the campaign
     tmpActions.removeWhere((a) => !campaign.getActions().contains(a));
     if (hasSelected(selections['times'])) {
@@ -85,7 +86,8 @@ class ActionViewModel extends BaseCampaignViewModel {
     }
     if (hasSelected(selections['categories'])) {
       // Remove the ones with the wrong categories
-      tmpActions.removeWhere((a) => !selections['categories'][a.getSuperType()]);
+      tmpActions
+          .removeWhere((a) => !selections['categories'][a.getSuperType()]);
     }
 
     _actions = tmpActions;
@@ -104,57 +106,50 @@ class ActionViewModel extends BaseCampaignViewModel {
   }
 
   void setSelectedToAll() {
-    _selections['extras']['starred'] =
-        true;
+    _selections['extras']['starred'] = true;
     _selections['extras']['todo'] = true;
-    _selections['extras']['rejected'] =
-        false;
-    _selections['extras']['completed'] =
-        false;
+    _selections['extras']['rejected'] = false;
+    _selections['extras']['completed'] = false;
 
     getActions();
   }
+
   bool selectionIsAll() {
     return selections['extras']['todo'] &&
         selections['extras']['starred'] &&
         !selections['extras']['rejected'] &&
         !selections['extras']['completed'];
   }
-  
+
   void setSelectedToTodo() {
-    selections['extras']['starred'] =
-        true;
+    selections['extras']['starred'] = true;
     selections['extras']['todo'] = false;
-    selections['extras']['rejected'] =
-        false;
-    selections['extras']['completed'] =
-        false;
-    
+    selections['extras']['rejected'] = false;
+    selections['extras']['completed'] = false;
+
     getActions();
   }
+
   bool selectionIsTodo() {
     return !selections['extras']['todo'] &&
-      selections['extras']['starred'] &&
-      !selections['extras']['rejected'] &&
-      !selections['extras']['completed'];
+        selections['extras']['starred'] &&
+        !selections['extras']['rejected'] &&
+        !selections['extras']['completed'];
   }
 
   void setSelectedToCompleted() {
-    selections['extras']['starred'] =
-        false;
+    selections['extras']['starred'] = false;
     selections['extras']['todo'] = false;
-    selections['extras']['rejected'] =
-        false;
-    selections['extras']['completed'] =
-        true;
-    
+    selections['extras']['rejected'] = false;
+    selections['extras']['completed'] = true;
+
     getActions();
   }
+
   bool isSelectionCompleted() {
     return !selections['extras']['todo'] &&
         !selections['extras']['starred'] &&
         !selections['extras']['rejected'] &&
         selections['extras']['completed'];
   }
-   
 }
