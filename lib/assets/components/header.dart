@@ -30,47 +30,12 @@ class PageHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SafeArea(
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: backButton ?? false
-                ? MainAxisAlignment.spaceBetween
-                : MainAxisAlignment.end,
-            children: [
-              backButton ?? false
-                  ? Container(
-                    height: 40,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: padding ?? 10.0, vertical: 10.0),
-                      child: CustomTextButton(
-                        backButtonText ?? "Back",
-                        onClick: () {
-                          Navigator.of(context).pop();
-                        },
-                        iconLeft: true,
-                        fontWeight: FontWeight.w400,
-                      ))
-                    )
-                  : Container(height: 40,),
-              icon == null
-                  ? Container()
-                  : Align(
-                      alignment: Alignment.centerRight,
-                      child: GestureDetector(
-                        onTap: onTap,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: padding ?? 10.0, vertical: 10.0),
-                          child: Icon(
-                            icon,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                      ),
-                    )
-            ],
-          ),
+        PageHeaderBackButton(
+          onTap: onTap,
+          backButton: backButton,
+          backButtonText: backButtonText,
+          icon: icon,
+          padding: padding,
         ),
         SizedBox(height: extraInnerPadding ?? 0),
         Container(
@@ -133,4 +98,71 @@ class PageHeader extends StatelessWidget {
       ],
     );
   }
+}
+
+
+class PageHeaderBackButton extends StatelessWidget {
+  final Function onTap;
+  final IconData icon;
+  final bool backButton;
+  final String backButtonText;
+  final double padding;
+  // For Colour
+
+  PageHeaderBackButton(
+    {
+      this.backButton, 
+      this.backButtonText, 
+      this.padding, 
+      this.icon, 
+      this.onTap
+    }
+  );
+        
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: backButton ?? false
+            ? MainAxisAlignment.spaceBetween
+            : MainAxisAlignment.end,
+        children: [
+          backButton ?? false
+              ? Container(
+                height: 40,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: padding ?? 10.0, vertical: 10.0),
+                  child: CustomTextButton(
+                    backButtonText ?? "Back",
+                    onClick: () {
+                      Navigator.of(context).pop();
+                    },
+                    iconLeft: true,
+                    fontWeight: FontWeight.w400,
+                  ))
+                )
+              : Container(height: 40,),
+          icon == null
+              ? Container()
+              : Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onTap: onTap,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: padding ?? 10.0, vertical: 10.0),
+                      child: Icon(
+                        icon,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
+                )
+          ],
+        ),
+      );
+    }
+
 }

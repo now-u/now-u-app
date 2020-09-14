@@ -1,6 +1,4 @@
-import 'package:app/models/Campaigns.dart';
 import 'package:app/pages/campaign/CampaignPage.dart';
-import 'package:app/pages/home/Home.dart';
 import 'package:app/pages/other/OrganisationPage.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +22,7 @@ import 'package:app/pages/learning/LearningCentreAllPage.dart';
 import 'package:app/pages/learning/LearningCentrePage.dart';
 import 'package:app/pages/learning/LearningTopicPage.dart';
 import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
+import 'package:app/pages/campaign/CampaignInfo/CampaignDetails.dart';
 import 'package:app/pages/campaign/AllCampaignsPage.dart';
 import 'package:app/pages/campaign/PastCampaignActionPage.dart';
 
@@ -41,6 +40,7 @@ class Routes {
 
   static const actionInfo = "actionInfo";
   static const campaignInfo = "campaignInfo";
+  static const campaignDetails = "campaignDetails";
 
   // All campaigns (including past)
   static const allCampaigns = "allCampaigns";
@@ -126,6 +126,17 @@ Function initRoutes = (RouteSettings settings) {
                     campaign: args,
                   ),
               settings: settings);
+        }
+        return customRoute(
+            builder: (context) => CampaignPage(), settings: settings);
+      }
+    case Routes.campaignDetails:
+      {
+        if (args is Campaign) {
+          return customRoute(
+              builder: (context) => CampaignDetails(args),
+              settings: settings
+          );
         }
         return customRoute(
             builder: (context) => CampaignPage(), settings: settings);

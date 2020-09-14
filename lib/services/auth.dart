@@ -230,19 +230,27 @@ class AuthenticationService {
     return u;
   }
 
-  Future<User> joinCampaign(String token, int campaignId) async {
-    http.Response response = await http.post(
-      domainPrefix + 'users/me/campaigns/$campaignId',
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'token': currentUser.getToken(),
-      },
-    );
-    if (handleAuthRequestErrors(response) != null) {
-      return handleAuthRequestErrors(response);
+  Future<bool> joinCampaign(int campaignId) async {
+    try{
+      http.Response response = await http.post(
+        domainPrefix + 'users/me/campaigns/$campaignId',
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'token': currentUser.getToken(),
+        },
+      );
+      if (response.statusCode != 200) {
+        return false;
+      }
+      User u = User.fromJson(json.decode(response.body)["data"]);
+      _currentUser = _currentUser.copyWith(
+        selectedCampaigns: u.getCompletedActions(),
+        points: u.getPoints(),
+      );
+      return true;
+    } catch(e) {
+      return false;
     }
-    User u = User.fromJson(json.decode(response.body)["data"]);
-    return u;
   }
 
   Future<User> unjoinCampaign(String token, int campaignId) async {

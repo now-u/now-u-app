@@ -168,13 +168,14 @@ class CampaignInfoBody extends StatelessWidget {
                         text: "Watch the video", 
                         icon: CustomIcons.ic_video, 
                         onTap: () {
-                          //Navigator.of(context).pushNamed(Routes.videoPlayer);
+                          customLaunch(context, _campaign.getVideoLink());
                         }
                       ),
                       CampaignButton(
                         text: "Read summary", 
                         icon: CustomIcons.ic_news, 
                         onTap: () {
+                          Navigator.of(context).pushNamed(Routes.campaignDetails, arguments: _campaign);
                         }
                       ),
                       CampaignButton(

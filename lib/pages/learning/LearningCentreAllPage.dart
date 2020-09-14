@@ -14,12 +14,15 @@ class LearningCentreAllPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: ViewModelBuilder<BaseCampaignViewModel>.reactive(
         viewModelBuilder: () => BaseCampaignViewModel(),
         builder: (context, model, child) {
           return ScrollableSheetPage(
               sheetBackgroundColor: Colors.white,
+              scaffoldBackgroundColor: Colors.white,
               shadow: Shadow(color: Colors.transparent),
+              maxChildSize: 0.72,
               // Header
               header: 
                 Container(
