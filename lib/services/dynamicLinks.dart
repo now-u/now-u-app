@@ -130,6 +130,7 @@ class DynamicLinkService {
         return false;
       }
       _handleDeepLink(deepLink);
+      return true;
     }, onError: (err) {
       // Handle exception by warning the user their action did not succeed
       print('D| $err');
