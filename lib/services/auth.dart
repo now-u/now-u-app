@@ -2,6 +2,7 @@ import 'package:app/models/User.dart';
 
 import 'package:app/routes.dart';
 
+import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -9,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:app/locator.dart';
 import 'package:app/services/navigation.dart';
 import 'package:app/services/shared_preferences_service.dart';
+import 'package:app/services/device_info_service.dart';
 
 class AuthError {
   static const unauthorized = "unauthorized";
@@ -20,6 +22,8 @@ class AuthenticationService {
   final NavigationService _navigationService = locator<NavigationService>();
   final SharedPreferencesService _sharedPreferencesService =
       locator<SharedPreferencesService>();
+  final DeviceInfoService _deviceInfoService =
+      locator<DeviceInfoService>();
 
   User _currentUser;
   User get currentUser => _currentUser;
@@ -69,6 +73,8 @@ class AuthenticationService {
       print("email | $email");
       print("name | $name");
       print("nl | $acceptNewletter");
+      print("operatingSystem | ${_deviceInfoService.osType}");
+      print("operatingSystemVersion | ${await _deviceInfoService.osVersion}");
       await http.post(
         domainPrefix + 'users',
         headers: <String, String>{
@@ -78,6 +84,8 @@ class AuthenticationService {
           'email': email,
           'full_name': name,
           'newsletter_signup': acceptNewletter,
+          'platform': _deviceInfoService.osType,
+          'platform_version': await _deviceInfoService.osVersion,
         }),
       );
       return true;
