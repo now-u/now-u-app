@@ -92,8 +92,10 @@ void customLaunchExternal(
                       width: double.infinity,
                       child:
                           DarkButton(closeButtonText ?? "Close", onPressed: () {
-                        Navigator.of(context).pop();
-                      }, inverted: true),
+                          Navigator.of(context).pop();
+                        }, 
+                      style: DarkButtonStyle.Secondary,
+                      ),
                     ),
                     SizedBox(height: 20),
                   ],

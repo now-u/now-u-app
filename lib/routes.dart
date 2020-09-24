@@ -13,6 +13,7 @@ import 'package:app/pages/more/morePages/PartnersPage.dart';
 import 'package:app/pages/intro/IntroPage.dart';
 import 'package:app/pages/login/login.dart';
 import 'package:app/pages/login/emailSentPage.dart';
+import 'package:app/pages/login/login_code_view.dart';
 import 'package:app/pages/other/InfoPage.dart';
 import 'package:app/pages/other/WebView.dart';
 import 'package:app/pages/other/NotificationPage.dart';
@@ -31,6 +32,7 @@ class Routes {
   static const intro = "intro";
   static const login = "login";
   static const emailSent = "emailSent";
+  static const loginCodeInput = "loginCodeInput";
   static const loginLinkClicked = "loginLinkClicked";
 
   // Tab View Routes
@@ -83,6 +85,16 @@ Function initRoutes = (RouteSettings settings) {
         if (args is EmailSentPageArguments) {
           return customRoute(
               builder: (context) => EmailSentPage(args), settings: settings);
+        }
+        return customRoute(
+            builder: (context) => LoginPage(LoginPageArguments()),
+            settings: settings);
+      }
+    case Routes.loginCodeInput:
+      {
+        if (args is String) {
+          return customRoute(
+              builder: (context) => LoginCodePage(args), settings: settings);
         }
         return customRoute(
             builder: (context) => LoginPage(LoginPageArguments()),

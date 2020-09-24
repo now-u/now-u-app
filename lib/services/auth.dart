@@ -29,7 +29,7 @@ class AuthenticationService {
   User get currentUser => _currentUser;
 
   // This is not final as it can be changed
-  String domainPrefix = "https://api.now-u.com/api/v1/";
+  String domainPrefix = "https://stagingapi.now-u.com/api/v1/";
 
   void switchToStagingBranch() {
     domainPrefix = "https://stagingapi.now-u.com/api/v1/";
@@ -84,8 +84,10 @@ class AuthenticationService {
           'email': email,
           'full_name': name,
           'newsletter_signup': acceptNewletter,
-          'platform': _deviceInfoService.osType,
-          'platform_version': await _deviceInfoService.osVersion,
+          //'platform': _deviceinfoservice.ostype,
+          //'platform_version': await _deviceinfoservice.osversion,
+          'platform': 'ios',
+          'version': '13',
         }),
       );
       return true;

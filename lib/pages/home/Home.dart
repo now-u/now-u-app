@@ -138,7 +138,7 @@ class Home extends StatelessWidget {
                                             "To suggest causes for future campaigns, fill in this Google Form",
                                         buttonText: "Go");
                                   },
-                                  inverted: true,
+                                  style: DarkButtonStyle.Secondary,
                                 ),
                               )
                             ],

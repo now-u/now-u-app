@@ -13,7 +13,7 @@ class LoginViewModel extends BaseModel {
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   final NavigationService _navigationService = locator<NavigationService>();
-
+ 
   Future email({
     @required String email,
     @required String name,
