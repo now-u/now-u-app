@@ -56,29 +56,17 @@ class LoginViewModel extends BaseModel {
   }) async {
     setBusy(true);
 
-    var result = await _authenticationService.login(
+    var errorMsg = await _authenticationService.login(
       email,
       token,
     );
 
     setBusy(false);
 
-    if (result is bool) {
-      if (result) {
-        _navigationService.navigateTo(Routes.intro);
-      } else {
-        print("general signup failure");
-        //await _dialogService.showDialog(
-        //  title: 'Sign Up Failure',
-        //  description: 'General sign up failure. Please try again later',
-        //);
-      }
+    if (errorMsg != null) {
+      print("Sign up failure: $errorMsg");
     } else {
-      print("Sign up failure");
-      //await _dialogService.showDialog(
-      //  title: 'Sign Up Failure',
-      //  description: result,
-      //);
+      _navigationService.navigateTo(Routes.intro);
     }
   }
 }

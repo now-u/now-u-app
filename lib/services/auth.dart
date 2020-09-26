@@ -29,7 +29,7 @@ class AuthenticationService {
   User get currentUser => _currentUser;
 
   // This is not final as it can be changed
-  String domainPrefix = "https://stagingapi.now-u.com/api/v1/";
+  String domainPrefix = "https://api.now-u.com/api/v1/";
 
   void switchToStagingBranch() {
     domainPrefix = "https://stagingapi.now-u.com/api/v1/";
@@ -84,10 +84,8 @@ class AuthenticationService {
           'email': email,
           'full_name': name,
           'newsletter_signup': acceptNewletter,
-          //'platform': _deviceinfoservice.ostype,
-          //'platform_version': await _deviceinfoservice.osversion,
-          'platform': 'ios',
-          'version': '13',
+          'platform': _deviceInfoService.osType,
+          'version': await _deviceInfoService.osVersion,
         }),
       );
       return true;
@@ -99,7 +97,7 @@ class AuthenticationService {
     }
   }
 
-  Future login(String email, String token) async {
+  Future<String> login(String email, String token) async {
     try {
       http.Response response = await http.post(
         domainPrefix + 'users/login',
@@ -114,7 +112,7 @@ class AuthenticationService {
       User user = await getUser(json.decode(response.body)['data']['token']);
 
       await _updateUser(user.getToken());
-      return _currentUser != null;
+      return null;
     } catch (e) {
       return e.message;
     }

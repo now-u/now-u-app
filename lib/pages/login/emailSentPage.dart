@@ -116,9 +116,8 @@ class _EmailSentPageState extends State<EmailSentPage> {
                               CustomTextButton("I didn't get my email",
                                   onClick: () {
                                 Navigator.of(context).pushNamed(Routes.login,
-                                    arguments: LoginPageArguments(
-                                      retry: true,
-                                    ));
+                                    arguments: LoginPageArguments(),
+                                );
                               },
                               fontSize: 14
                             ),
