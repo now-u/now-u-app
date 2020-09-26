@@ -42,9 +42,12 @@ class LoginCodePageState extends State<LoginCodePage> with WidgetsBindingObserve
     Widget loginButton() {
       Future<bool> validateAndSave(LoginViewModel model) async {
         final FormState form = _formKey.currentState;
+        print("Hello");
         if (form.validate()) {
           form.save();
-          model.login(email: widget.email, token: _token);
+          print("Hello 2");
+          model.login(email: widget.email, token: _token, isManul: true);
+          print("Hello 4");
           return true;
         }
         return false;
@@ -58,6 +61,7 @@ class LoginCodePageState extends State<LoginCodePage> with WidgetsBindingObserve
               "Log in",
               onPressed: () {
                 print("Button pressed");
+                print("Hello 3");
                 validateAndSave(model);
               },
             )),
@@ -131,17 +135,17 @@ class LoginCodePageState extends State<LoginCodePage> with WidgetsBindingObserve
                     // Uncomment to readd Skip button
                     //skipButton(),
                   ],
-                ),
-              )));
+                  ),
+                  )));
     }
 
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-          backgroundColor: Theme.of(context).primaryColorDark,
-          body: NotificationListener(
-              onNotification: (OverscrollIndicatorNotification overscroll) {
-                overscroll.disallowGlow();
+            backgroundColor: Theme.of(context).primaryColorDark,
+            body: NotificationListener(
+                onNotification: (OverscrollIndicatorNotification overscroll) {
+                  overscroll.disallowGlow();
               },
               child: ListView(children: [
                 loginForm(),

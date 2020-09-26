@@ -2,7 +2,6 @@ import 'package:app/models/User.dart';
 
 import 'package:app/routes.dart';
 
-import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -113,8 +112,9 @@ class AuthenticationService {
 
       await _updateUser(user.getToken());
       return null;
-    } catch (e) {
-      return e.message;
+    } on Error catch(e) {
+      print("Error ${e.toString()}");
+      return "An error has occured whilst logging in";
     }
   }
 
