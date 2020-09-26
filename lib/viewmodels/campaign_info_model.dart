@@ -14,6 +14,7 @@ class CampaignInfoViewModel extends BaseModel with CampaignWrite {
 
   Campaign _campaign;
   Campaign get campaign => _campaign;
+  bool get campaignIsJoined => currentUser.getSelectedCampaigns().contains(_campaign.getId());
   set setCampaign(Campaign campaign) => _campaign = campaign;
 
   Future fetchCampaign(int campaignId) async {
@@ -25,4 +26,5 @@ class CampaignInfoViewModel extends BaseModel with CampaignWrite {
       _navigationService.navigateTo(Routes.allCampaigns);
     }
   }
+
 }
