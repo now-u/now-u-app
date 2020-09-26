@@ -46,7 +46,7 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
 
 ## The log
 
-### Unreleased
+### Version 1.1.7
 
 - #110 [feature]  Campaign page design update
 - #111 [fix]      App no longer crashes if no action time provided 
