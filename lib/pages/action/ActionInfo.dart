@@ -191,10 +191,12 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                     Align(
                       alignment: Alignment.topCenter,
                       child: DarkButton("Take action",
-                          style: DarkButtonStyles.Large,
-                          inverted: true, onPressed: () {
-                        customLaunch(context, _action.getLink());
-                      }),
+                          size: DarkButtonSize.Large,
+                          style: DarkButtonStyle.Secondary,
+                          onPressed: () {
+                            customLaunch(context, _action.getLink());
+                          },
+                        ),
                     ),
 
                     !completed
@@ -226,8 +228,9 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                               Align(
                                 alignment: Alignment.topCenter,
                                 child: DarkButton("Mark as done",
-                                    style: DarkButtonStyles.Large,
-                                    inverted: true, onPressed: () {
+                                    size: DarkButtonSize.Large,
+                                    style: DarkButtonStyle.Secondary,
+                                    onPressed: () {
                                   setState(() {
                                     completed = true;
                                     model.completeAction(_action.getId());

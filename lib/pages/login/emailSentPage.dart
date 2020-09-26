@@ -72,17 +72,30 @@ class _EmailSentPageState extends State<EmailSentPage> {
                             ? Container()
                             : Container(
                                 height: 40, child: CircularProgressIndicator()),
-                        Expanded(
-                          child: Container(
-                            //physics: NeverScrollableScrollPhysics(),
-                            child: IntroPageSection(
-                              "Check your email",
-                              "We have just sent an email to ${widget.args.email}",
-                              "It has a link that will sign you in to now-u and get you started",
-                              AssetImage('assets/imgs/intro/il-mail@4x.png'),
-                            ),
+                        Flexible(
+                          child: Padding(
+                            padding: EdgeInsets.all(20),
+                            child: Image(image: AssetImage('assets/imgs/intro/il-mail@4x.png'),),
                           ),
                         ),
+                        Text("Check your email",
+                            style: TextStyle(
+                              fontSize:
+                                  Theme.of(context).primaryTextTheme.headline1.fontSize,
+                              fontWeight:
+                                  Theme.of(context).primaryTextTheme.headline1.fontWeight,
+                              color: Colors.white,
+                            )),
+                        //Expanded(
+                        //  child: Container(
+                        //    //physics: NeverScrollableScrollPhysics(),
+                        //    child: IntroPageSection(
+                        //      "Check your email",
+                        //      "We have just sent an email to ${widget.args.email}",
+                        //      AssetImage('assets/imgs/intro/il-mail@4x.png'),
+                        //    ),
+                        //  ),
+                        //),
                         SizedBox(height: 30),
                         Padding(
                             padding: EdgeInsets.symmetric(horizontal: 40),
@@ -91,21 +104,54 @@ class _EmailSentPageState extends State<EmailSentPage> {
                                 child: DarkButton("Open Email", onPressed: () {
                                   // TODO open email
                                   openEmailApp(context);
-                                }))),
+                                },
+                              ),
+                            ),
+                        ),
                         SizedBox(height: 20),
                         Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              CustomTextButton("I did not recieve an email",
+                              CustomTextButton("I didn't get my email",
                                   onClick: () {
                                 Navigator.of(context).pushNamed(Routes.login,
-                                    arguments: LoginPageArguments(
-                                      retry: true,
-                                    ));
-                              }),
+                                    arguments: LoginPageArguments(),
+                                );
+                              },
+                              fontSize: 14
+                            ),
                             ]),
+                        SizedBox(height: 20),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          child: Text("If the email link does not work, use the code we have emailed you.",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: Theme.of(context)
+                                    .primaryTextTheme
+                                    .bodyText1
+                                    .fontSize,
+                                fontWeight: Theme.of(context)
+                                    .primaryTextTheme
+                                    .bodyText1
+                                    .fontWeight,
+                                color: Colors.white,
+                      ))),
                         SizedBox(height: 10),
+                        Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 40),
+                            child: Container(
+                                width: double.infinity,
+                                child: DarkButton("Use secret code", onPressed: () {
+                                  // TODO open email
+                                  Navigator.of(context).pushNamed(Routes.loginCodeInput, arguments: widget.args.email);
+                                },
+                                style: DarkButtonStyle.Outline,
+                              ),
+                            ),
+                        ),
+                        SizedBox(height: 20),
                       ],
                     ))),
           ]);
@@ -115,12 +161,11 @@ class _EmailSentPageState extends State<EmailSentPage> {
 
 class IntroPageSection extends StatelessWidget {
   final String title;
-  final String description1;
-  final String description2;
+  final String description;
   final AssetImage image;
 
   IntroPageSection(
-      this.title, this.description1, this.description2, this.image);
+      this.title, this.description, this.image);
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +195,7 @@ class IntroPageSection extends StatelessWidget {
               ),
               Container(
                   width: MediaQuery.of(context).size.width * 0.6,
-                  child: Text(description2,
+                  child: Text(description,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: Theme.of(context)
@@ -163,24 +208,6 @@ class IntroPageSection extends StatelessWidget {
                             .fontWeight,
                         color: Colors.white,
                       ))),
-              SizedBox(
-                height: 5,
-              ),
-              Container(
-                  width: MediaQuery.of(context).size.width * 0.6,
-                  child: Text(description1,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: Theme.of(context)
-                            .primaryTextTheme
-                            .bodyText1
-                            .fontSize,
-                        fontWeight: Theme.of(context)
-                            .primaryTextTheme
-                            .bodyText1
-                            .fontWeight,
-                        color: Colors.white,
-                      )))
             ],
           ),
         ),

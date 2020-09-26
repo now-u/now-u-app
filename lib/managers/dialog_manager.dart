@@ -30,7 +30,7 @@ class _DialogManagerState extends State<DialogManager> {
     return widget.child;
   }
 
-  void _showDialog() {
+  void _showDialog(AlertRequest request) {
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -46,7 +46,7 @@ class _DialogManagerState extends State<DialogManager> {
               children: <Widget>[
                 SizedBox(height: 20),
                 Text(
-                  "Hello",
+                  request.title,
                   textAlign: TextAlign.center,
                   style: textStyleFrom(
                     Theme.of(context).primaryTextTheme.headline2,
@@ -56,7 +56,7 @@ class _DialogManagerState extends State<DialogManager> {
                 Padding(
                   padding: EdgeInsets.all(5),
                   child: Text(
-                    "Some text",
+                    request.description,
                     style: textStyleFrom(
                       Theme.of(context).primaryTextTheme.bodyText1,
                       color: Theme.of(context).primaryColorDark,
@@ -70,10 +70,9 @@ class _DialogManagerState extends State<DialogManager> {
                   width: double.infinity,
                   child:
                     DarkButton("Ok", onPressed: () {
-                        _dialogService.dialogComplete();
+                        _dialogService.dialogComplete(AlertResponse(confirmed: true));
                         Navigator.of(context).pop();
                       }, 
-                      inverted: true,
                     ),
                 ),
                 SizedBox(height: 20),

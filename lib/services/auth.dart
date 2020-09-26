@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:app/locator.dart';
 import 'package:app/services/navigation.dart';
 import 'package:app/services/shared_preferences_service.dart';
+import 'package:app/services/device_info_service.dart';
 
 class AuthError {
   static const unauthorized = "unauthorized";
@@ -20,6 +21,8 @@ class AuthenticationService {
   final NavigationService _navigationService = locator<NavigationService>();
   final SharedPreferencesService _sharedPreferencesService =
       locator<SharedPreferencesService>();
+  final DeviceInfoService _deviceInfoService =
+      locator<DeviceInfoService>();
 
   User _currentUser;
   User get currentUser => _currentUser;
@@ -69,6 +72,8 @@ class AuthenticationService {
       print("email | $email");
       print("name | $name");
       print("nl | $acceptNewletter");
+      print("operatingSystem | ${_deviceInfoService.osType}");
+      print("operatingSystemVersion | ${await _deviceInfoService.osVersion}");
       await http.post(
         domainPrefix + 'users',
         headers: <String, String>{
@@ -78,6 +83,8 @@ class AuthenticationService {
           'email': email,
           'full_name': name,
           'newsletter_signup': acceptNewletter,
+          'platform': _deviceInfoService.osType,
+          'version': await _deviceInfoService.osVersion,
         }),
       );
       return true;
@@ -89,7 +96,7 @@ class AuthenticationService {
     }
   }
 
-  Future login(String email, String token) async {
+  Future<String> login(String email, String token) async {
     try {
       http.Response response = await http.post(
         domainPrefix + 'users/login',
@@ -104,9 +111,10 @@ class AuthenticationService {
       User user = await getUser(json.decode(response.body)['data']['token']);
 
       await _updateUser(user.getToken());
-      return _currentUser != null;
-    } catch (e) {
-      return e.message;
+      return null;
+    } on Error catch(e) {
+      print("Error ${e.toString()}");
+      return "An error has occured whilst logging in";
     }
   }
 

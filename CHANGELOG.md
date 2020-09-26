@@ -54,6 +54,10 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
 - #113 [feature]  An early version of internal notifications have been added
 - #114 [feature]  Campaign page campaign tiles have been updated. Campaigns can
   now be joined directly from this page
+- #120 [feature]  A new popup service has been added to allow for more
+  information about error
+- #121 [feature]  Updated login flow allowing for token entry if email link is
+  not working 
 
 ### Version 1.1.6
 

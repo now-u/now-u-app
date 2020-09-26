@@ -16,9 +16,8 @@ import 'package:stacked/stacked.dart';
 enum LoginTypes { Login, Signup }
 
 class LoginPageArguments {
-  final bool retry;
   final LoginTypes loginType;
-  LoginPageArguments({this.retry, this.loginType});
+  LoginPageArguments({this.loginType});
 }
 
 class LoginPage extends StatefulWidget {
@@ -32,18 +31,14 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   String _email;
   String _name;
-  String _token;
   bool _newsletterSignup = false;
 
-  bool retry;
   final _formKey = GlobalKey<FormState>();
-  final _tokenFormKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _repositry = SecureStorageService();
 
   @override
   void initState() {
-    retry = widget.args.retry;
     super.initState();
     WidgetsBinding.instance.addObserver(this);
   }
@@ -190,51 +185,16 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width * 0.9,
-                          child: retry ?? false
-                              ? RichText(
-                                  textAlign: TextAlign.center,
-                                  text: TextSpan(
-                                      style: textStyleFrom(
-                                        Theme.of(context)
-                                            .primaryTextTheme
-                                            .headline5,
-                                      ),
-                                      children: [
-                                        TextSpan(
-                                            text:
-                                                "If you did not receive the email please double check your spam and give us a few minutes to get it over to you, otherwise please try again. If the issue persists please email ",
-                                            style: textStyleFrom(
-                                              Theme.of(context)
-                                                  .primaryTextTheme
-                                                  .bodyText1,
-                                              color: Colors.white,
-                                            )),
-                                        TextSpan(
-                                            text: "support",
-                                            style: textStyleFrom(
-                                              Theme.of(context)
-                                                  .primaryTextTheme
-                                                  .bodyText1,
-                                              color:
-                                                  Theme.of(context).buttonColor,
-                                            ),
-                                            recognizer: TapGestureRecognizer()
-                                              ..onTap = () {
-                                                launch(
-                                                    "mailto:support@now-u.com?subject=LoginIssue");
-                                              }),
-                                      ]),
-                                )
-                              : Text(
-                                  "Enter the email address that you would like to use to access now-u",
-                                  textAlign: TextAlign.center,
-                                  style: textStyleFrom(
-                                    Theme.of(context)
-                                        .primaryTextTheme
-                                        .headline5,
-                                    color: Colors.white,
-                                  ),
-                                ),
+                          child: Text(
+                              "Enter the email address that you would like to use to access now-u",
+                              textAlign: TextAlign.center,
+                              style: textStyleFrom(
+                                Theme.of(context)
+                                    .primaryTextTheme
+                                    .headline5,
+                                color: Colors.white,
+                              ),
+                            ),
                         ),
                         SizedBox(height: 25),
                       ],
@@ -301,136 +261,10 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                           ]),
                         ),
 
-                        // Manual entry section
-                        retry ?? false
-                            ? Container()
-                            : Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Column(children: [
-                                    SizedBox(height: 15),
-                                    CustomTextButton(
-                                      "Having issues logging in?",
-                                      onClick: () {
-                                        setState(() {
-                                          retry = true;
-                                        });
-                                      },
-                                      fontSize: Theme.of(context)
-                                          .primaryTextTheme
-                                          .bodyText1
-                                          .fontSize,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ])
-                                ],
-                              ),
-
                         SizedBox(height: 10),
                       ],
                     ),
 
-                    // Uncomment to readd Skip button
-                    //skipButton(),
-                  ],
-                ),
-              )));
-    }
-
-    final token = CustomTextFormField(
-      style: CustomFormFieldStyle.Dark,
-      keyboardType: TextInputType.text,
-      textCapitalization: TextCapitalization.words,
-      autofocus: false,
-      validator: (value) {
-        if (value.isEmpty) return "Token cannot be empty";
-        return null;
-      },
-      onSaved: (value) {
-        _token = value;
-      },
-      hintText: '5jbNsPu7jdA9bUjN...',
-    );
-
-    Widget manualButton() {
-      Future<bool> validateAndSave(LoginViewModel model) async {
-        final FormState form = _tokenFormKey.currentState;
-        if (form.validate()) {
-          form.save();
-          String email = await _repositry.getEmail();
-          model.login(email: email, token: _token);
-          return true;
-        }
-        return false;
-      }
-
-      return ViewModelBuilder<LoginViewModel>.reactive(
-        viewModelBuilder: () => LoginViewModel(),
-        builder: (context, model, child) => Padding(
-            padding: EdgeInsets.symmetric(vertical: 16.0),
-            child: DarkButton(
-              "Login",
-              onPressed: () {
-                print("Button pressed");
-                validateAndSave(model);
-              },
-            )),
-      );
-    }
-
-    Form tokenForm() {
-      return Form(
-          key: _tokenFormKey,
-          child: Padding(
-              padding: EdgeInsets.only(left: 24, right: 24),
-              child: SafeArea(
-                child: Column(
-                  //shrinkWrap: true,
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        SizedBox(height: 20),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.9,
-                          child: Text(
-                            "If you did receive the email but the link is not working, please enter the manual token, from the email, below",
-                            textAlign: TextAlign.center,
-                            style: textStyleFrom(
-                              Theme.of(context).primaryTextTheme.headline5,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 25),
-                      ],
-                    ),
-                    Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Manual Token",
-                            style: textStyleFrom(
-                              Theme.of(context).primaryTextTheme.headline4,
-                              color: Colors.white,
-                            ),
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                        SizedBox(height: 8),
-                        token,
-                        SizedBox(height: 10),
-                        acceptTandC,
-                        manualButton(),
-                        SizedBox(height: 10),
-                      ],
-                    ),
                     // Uncomment to readd Skip button
                     //skipButton(),
                   ],
@@ -449,28 +283,8 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
               },
               child: ListView(children: [
                 loginForm(),
-                retry ?? false ? tokenForm() : Container()
               ])),
         ));
   }
 
-  void _showDialog(String error) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: new Text("Error"),
-          content: new Text("Please Try Again.Error code: " + error),
-          actions: <Widget>[
-            new FlatButton(
-              child: new Text("Close"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 }
