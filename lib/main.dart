@@ -7,6 +7,7 @@ import 'package:app/routes.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/analytics.dart';
 import 'package:app/services/navigation.dart';
+import 'package:app/managers/dialog_manager.dart';
 
 import 'package:app/pages/other/startup_view.dart';
 
@@ -88,6 +89,14 @@ class _AppState extends State<App> {
       navigatorObservers: [
         locator<Analytics>().getAnalyticsObserver(),
       ],
+      builder: (context, widget) => Navigator(
+        onGenerateRoute: (settings) => MaterialPageRoute(
+              builder: (context) => DialogManager(
+                    child: widget
+                  )
+            ),
+
+      ),
       home: StartUpView(),
       //initialRoute: Routes.intro,
       onGenerateRoute: initRoutes,
