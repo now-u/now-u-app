@@ -2,6 +2,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/assets/StyleFrom.dart';
+import 'package:app/assets/routes/customLaunch.dart';
 
 class InternalNotification {
   int id;
@@ -45,6 +46,7 @@ class InternalNotification {
   Widget getBodyWidget(context) {
     return Markdown(
       data: body,
+      onTapLink: (String link) {customLaunch(context, link);},
       styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
         p: textStyleFrom(
           Theme.of(context).primaryTextTheme.bodyText1,

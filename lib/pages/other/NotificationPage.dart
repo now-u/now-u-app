@@ -19,10 +19,7 @@ class NotificationPage extends StatelessWidget {
         body: ViewModelBuilder<NotificationViewModel>.reactive(
             viewModelBuilder: () => NotificationViewModel(),
             builder: (context, model, child) {
-              return Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              return ListView(
                 children: [
                   // Back Button
                   SafeArea(
@@ -43,40 +40,33 @@ class NotificationPage extends StatelessWidget {
                   ),
 
                   // Main Stuff
-                  Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 200,
-                          child: Image.network(notification.getImage()),
-                        ),
-                        SizedBox(height: 60),
-                        Text(
-                          notification.getTitle(),
-                          style: textStyleFrom(
-                            Theme.of(context).primaryTextTheme.headline2,
-                            color: Colors.white,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Flexible(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            child: notification.getBodyWidget(context),
-                          ),
-                        ),
-                      ],
+                  Image.network(notification.getImage(), height: 150),
+                  SizedBox(height: 60),
+                  Text(
+                    notification.getTitle(),
+                    style: textStyleFrom(
+                      Theme.of(context).primaryTextTheme.headline2,
+                      color: Colors.white,
                     ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 10),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: notification.getBodyWidget(context),
                   ),
 
                   // Dismiss Button
-                  DarkButton(
-                    "Got it",
-                    onPressed: () {
-                      model.dismissNotification(notification.getId());
-                    },
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      DarkButton(
+                        "Got it",
+                        onPressed: () {
+                          model.dismissNotification(notification.getId());
+                        },
+                      ),
+                    ]
                   ),
                   SizedBox(height: 40),
                 ],
