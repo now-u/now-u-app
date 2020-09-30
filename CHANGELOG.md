@@ -46,6 +46,11 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
 
 ## The log
 
+### Version 1.1.8
+
+- #123 [fix]      Text links in internal notifcations are now clickable and the
+  text now longer overflows
+
 ### Version 1.1.7
 
 - #110 [feature]  Campaign page design update
