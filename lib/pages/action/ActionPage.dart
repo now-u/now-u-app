@@ -109,21 +109,10 @@ class _ActionPageState extends State<ActionPage> {
                                     child: PageView.builder(
                                         key: campaignPageKey,
                                         controller: _controller,
-                                        itemCount:
-                                            // If all the active campaigns have been joined
-                                            model.selectedCampaigns.length ==
-                                                    model.campaigns.length
-                                                ? model.selectedCampaigns.length
-                                                : model.currentUser
-                                                        .getSelectedCampaigns()
-                                                        .length +
-                                                    1,
+                                        itemCount: model.numberOfCampaignTies(),
                                         itemBuilder:
                                             (BuildContext context, int index) {
-                                          if (index ==
-                                              model.currentUser
-                                                  .getSelectedCampaigns()
-                                                  .length) {
+                                          if (index == model.selectedActiveCampaigns.length) {
                                             return GestureDetector(
                                                 onTap: () {
                                                   Navigator.of(context)
@@ -155,13 +144,7 @@ class _ActionPageState extends State<ActionPage> {
                                   child: SmoothPageIndicator(
                                     controller: _controller,
                                     //count: viewModel.campaigns.getActiveCampaigns().length,
-                                    count: model.selectedCampaigns.length ==
-                                            model.campaigns.length
-                                        ? model.selectedCampaigns.length
-                                        : model.currentUser
-                                                .getSelectedCampaigns()
-                                                .length +
-                                            1,
+                                    count: model.numberOfCampaignTies(),
                                     effect: customSmoothPageInducatorEffect,
                                   ),
                                 ),

@@ -39,6 +39,16 @@ class ActionViewModel extends BaseCampaignViewModel {
     getActions();
   }
 
+  int numberOfCampaignTies() {
+    if (selectedCampaigns.length == campaigns.length) {
+      return selectedCampaigns.length;
+    }
+    else {
+      return selectedActiveCampaigns.length + 1;
+    }
+  }
+
+
   set campaignIndex(int index) {
     if (index == currentUser.getSelectedCampaigns().length) {
       _campaign = null;
@@ -62,36 +72,38 @@ class ActionViewModel extends BaseCampaignViewModel {
   }
 
   void getActions() {
+    print("Calling get actions");
     if (campaign == null) {
       _actions = [];
     }
+    else {
+      List<CampaignAction> tmpActions = [];
+      //tmpActions.addAll(campaign.getActions());
+      bool includeCompleted = selections['extras']['completed'];
+      bool includeRejected = selections['extras']['rejected'];
+      bool includeToDo = selections['extras']['todo'];
+      bool includeStarred = selections['extras']['starred'];
+      // Get all the actions
+      tmpActions.addAll(_campaignsService.getActiveActions(
+          includeCompleted: includeCompleted,
+          includeRejected: includeRejected,
+          includeTodo: includeToDo,
+          includeStarred: includeStarred));
+      // Filter them for the campaign
+      tmpActions.removeWhere((a) => !campaign.getActions().contains(a));
+      if (hasSelected(selections['times'])) {
+        // Remove the ones with the wrong times
+        tmpActions.removeWhere((a) => !selections['times'][a.getTimeText()]);
+      }
+      if (hasSelected(selections['categories'])) {
+        // Remove the ones with the wrong categories
+        tmpActions
+            .removeWhere((a) => !selections['categories'][a.getSuperType()]);
+      }
 
-    List<CampaignAction> tmpActions = [];
-    //tmpActions.addAll(campaign.getActions());
-    bool includeCompleted = selections['extras']['completed'];
-    bool includeRejected = selections['extras']['rejected'];
-    bool includeToDo = selections['extras']['todo'];
-    bool includeStarred = selections['extras']['starred'];
-    // Get all the actions
-    tmpActions.addAll(_campaignsService.getActiveActions(
-        includeCompleted: includeCompleted,
-        includeRejected: includeRejected,
-        includeTodo: includeToDo,
-        includeStarred: includeStarred));
-    // Filter them for the campaign
-    tmpActions.removeWhere((a) => !campaign.getActions().contains(a));
-    if (hasSelected(selections['times'])) {
-      // Remove the ones with the wrong times
-      tmpActions.removeWhere((a) => !selections['times'][a.getTimeText()]);
+      _actions = tmpActions;
+      notifyListeners();
     }
-    if (hasSelected(selections['categories'])) {
-      // Remove the ones with the wrong categories
-      tmpActions
-          .removeWhere((a) => !selections['categories'][a.getSuperType()]);
-    }
-
-    _actions = tmpActions;
-    notifyListeners();
   }
 
   bool hasSelected(Map sel) {
