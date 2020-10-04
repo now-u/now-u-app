@@ -21,6 +21,10 @@ mixin CampaignRO on BaseModel {
   List<Campaign> get selectedCampaigns {
     return currentUser.filterSelectedCampaigns(_campaignsService.campaigns);
   }
+  
+  List<Campaign> get selectedActiveCampaigns {
+    return currentUser.filterSelectedCampaigns(_campaignsService.campaigns);
+  }
 
   // Get campaigns
   List<Campaign> get campaigns => _campaignsService.campaigns;
