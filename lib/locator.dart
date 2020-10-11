@@ -9,6 +9,8 @@ import 'package:app/services/campaign_service.dart';
 import 'package:app/services/faq_service.dart';
 import 'package:app/services/shared_preferences_service.dart';
 import 'package:app/services/internal_notification_service.dart';
+import 'package:app/services/device_info_service.dart';
+import 'package:app/services/dialog_service.dart';
 
 import 'package:get_it/get_it.dart';
 
@@ -28,4 +30,6 @@ void setupLocator() {
   locator.registerLazySingleton(() => NewsService());
   locator.registerLazySingleton(() => FAQService());
   locator.registerLazySingleton(() => InternalNotificationService());
+  locator.registerLazySingleton(() => DeviceInfoService());
+  locator.registerLazySingleton(() => DialogService());
 }

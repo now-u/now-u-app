@@ -6,7 +6,8 @@ import 'package:app/models/Campaigns.dart';
 List<String> stagingUsers = [
   "james@now-u.com",
   "dave@now-u.com",
-  "valusoutrik@gmail.com"
+  "valusoutrik@gmail.com",
+  "jamezy850@gmail.com"
 ];
 
 List<int> rewardValues = [1, 5, 10, 25, 50, 100, 200];

@@ -4,6 +4,7 @@ import 'base_model.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/auth.dart';
 import 'package:app/services/navigation.dart';
+import 'package:app/services/dialog_service.dart';
 
 import 'package:app/pages/login/emailSentPage.dart';
 
@@ -13,7 +14,8 @@ class LoginViewModel extends BaseModel {
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   final NavigationService _navigationService = locator<NavigationService>();
-
+  final DialogService _dialogService = locator<DialogService>();
+ 
   Future email({
     @required String email,
     @required String name,
@@ -31,54 +33,60 @@ class LoginViewModel extends BaseModel {
 
     if (result is bool) {
       if (result) {
-        print("Sucess navigating to emailsent page");
         _navigationService.navigateTo(Routes.emailSent,
             arguments: EmailSentPageArguments(email: email));
       } else {
-        print("general signup failure");
-        //await _dialogService.showDialog(
-        //  title: 'Sign Up Failure',
-        //  description: 'General sign up failure. Please try again later',
-        //);
+        await _dialogService.showDialog(
+            title: "Login error",
+            description: "There has been an error please try again"
+        );
       }
     } else {
-      print("Sign up failure");
-      //await _dialogService.showDialog(
-      //  title: 'Sign Up Failure',
-      //  description: result,
-      //);
+        await _dialogService.showDialog(
+            title: "Login error",
+            description: "There has been an error, please check you have access to the internet."
+        );
     }
   }
 
   Future login({
     @required String email,
     @required String token,
+    bool isManul,
   }) async {
     setBusy(true);
-
-    var result = await _authenticationService.login(
+    
+    var err = await _authenticationService.login(
       email,
       token,
     );
 
     setBusy(false);
 
-    if (result is bool) {
-      if (result) {
-        _navigationService.navigateTo(Routes.intro);
-      } else {
-        print("general signup failure");
-        //await _dialogService.showDialog(
-        //  title: 'Sign Up Failure',
-        //  description: 'General sign up failure. Please try again later',
-        //);
+    if (err != null) {
+      print("Sign up failure: $err");
+      
+      String errorMsg = "Login error please try again";
+      if (err == AuthError.tokenExpired) {
+        errorMsg = "Your token has expired, please restart the login process";
+        await _dialogService.showDialog(title: "Login error", description: errorMsg);
+        _navigationService.navigateTo(Routes.login);
+      }
+      else if (err == AuthError.unauthorized) {
+        if (isManul) {
+          errorMsg = "Incorrect token, please double check your token from the email";
+          await _dialogService.showDialog(title: "Login error", description: errorMsg);
+        }
+        else {
+          errorMsg = "Incorrect login link, please try again";
+          await _dialogService.showDialog(title: "Login error", description: errorMsg);
+        }
+      }
+      else { 
+        await _dialogService.showDialog(title: "Login error", description: errorMsg);
       }
     } else {
-      print("Sign up failure");
-      //await _dialogService.showDialog(
-      //  title: 'Sign Up Failure',
-      //  description: result,
-      //);
+      _navigationService.navigateTo(Routes.intro);
     }
   }
 }

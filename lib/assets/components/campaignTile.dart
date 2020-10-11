@@ -214,7 +214,7 @@ class CampaignTileWithJoinButtons extends StatelessWidget {
                               onPressed: () {
                                 leaveCampaign(campaign.getId());
                               },
-                              style: DarkButtonStyles.Small,
+                              size: DarkButtonSize.Small,
                               rightIcon: Icons.check,
                             )
                           : DarkButton(
@@ -223,9 +223,9 @@ class CampaignTileWithJoinButtons extends StatelessWidget {
                               onPressed: () {
                                 joinCampaign(campaign.getId());
                               },
-                              style: DarkButtonStyles.Medium,
+                              size: DarkButtonSize.Medium,
                               rightIcon: Icons.link,
-                              inverted: true,
+                              style: DarkButtonStyle.Secondary,
                             )
                     ],
                   ),

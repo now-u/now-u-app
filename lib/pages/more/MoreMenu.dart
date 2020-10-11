@@ -171,25 +171,26 @@ class Profile extends StatelessWidget {
 
                     // Dev Tools
                     // TODO add this back in its super duper handy
-                    //model.currentUser.isStagingUser()
-                    //  ? Column(
-                    //      children: [
-                    //        GestureDetector(
-                    //          child: ProfileTile("Dev Tools", FontAwesomeIcons.code),
-                    //          onTap: () {
-                    //            viewModel.api.toggleStagingApi();
-                    //            viewModel.onUpdateCampaings();
-                    //          }
-                    //        ),
-                    //        GestureDetector(
-                    //          child: ProfileTile("Log out", FontAwesomeIcons.code),
-                    //          onTap: () {
-                    //            viewModel.onLogout();
-                    //          }
-                    //        ),
-                    //      ]
-                    //    )
-                    //  : Container()
+                    model.currentUser.isStagingUser()
+                      ? Column(
+                          children: [
+                            GestureDetector(
+                              child: ProfileTile("Dev Tools", FontAwesomeIcons.code),
+                              onTap: () {
+                                //model.logout();
+                                //model.api.toggleStagingApi();
+                                //viewModel.onUpdateCampaings();
+                              }
+                            ),
+                            GestureDetector(
+                              child: ProfileTile("Log out", FontAwesomeIcons.code),
+                              onTap: () {
+                                model.logout();
+                              }
+                            ),
+                          ]
+                        )
+                      : Container()
                   ],
                 )));
       },
