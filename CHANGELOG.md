@@ -46,6 +46,10 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
 
 ## The log
 
+### Unreleased
+
+- #127 [feature]  Login popups added which notify users of error 
+
 ### Version 1.1.9 - Hot Fix
 
 - #125 [fix]      Fixed action page

@@ -15,6 +15,7 @@ class AuthError {
   static const unauthorized = "unauthorized";
   static const internal = "internal";
   static const unknown = "unknown";
+  static const tokenExpired = "tokenExpired";
 }
 
 class AuthenticationService {
@@ -26,6 +27,11 @@ class AuthenticationService {
 
   User _currentUser;
   User get currentUser => _currentUser;
+
+  bool logout() {
+    _currentUser = null;
+    return true;
+  }
 
   // This is not final as it can be changed
   String domainPrefix = "https://api.now-u.com/api/v1/";
@@ -108,13 +114,21 @@ class AuthenticationService {
           'token': token,
         }),
       );
+
+      if (response.statusCode == 401) {
+        return AuthError.unauthorized;
+      }
+      if (response.statusCode == 419) {
+        return AuthError.tokenExpired;
+      }
+      
       User user = await getUser(json.decode(response.body)['data']['token']);
 
       await _updateUser(user.getToken());
       return null;
     } on Error catch(e) {
       print("Error ${e.toString()}");
-      return "An error has occured whilst logging in";
+      return AuthError.unknown;  
     }
   }
 
