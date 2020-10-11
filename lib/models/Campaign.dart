@@ -14,7 +14,8 @@ class Campaign {
   String title;
   String shortName;
   String description;
-  int numberOfCampaingers;
+  int numberOfCampaigners;
+  int numberOfActionsCompleted;
   String headerImage;
   String _infographic;
   String get infographic => _infographic;
@@ -33,7 +34,8 @@ class Campaign {
     @required String title,
     @required String shortName,
     @required String description,
-    @required int numberOfCampaigners,
+    this.numberOfCampaigners,
+    this.numberOfActionsCompleted,
     @required String headerImage,
     @required List<CampaignAction> actions,
     @required List<SDG> sdgs,
@@ -49,7 +51,7 @@ class Campaign {
     this.title = title;
     this.shortName = shortName;
     this.description = description;
-    this.numberOfCampaingers = numberOfCampaigners;
+    this.numberOfCampaigners = numberOfCampaigners;
     this.headerImage = headerImage;
     this.actions = actions;
     this.videoLink = videoLink;
@@ -69,7 +71,8 @@ class Campaign {
     title = json['title'];
     shortName = json['short_name'];
     description = json['description_app'];
-    numberOfCampaingers = json['number_of_campaigners'];
+    numberOfCampaigners = json['number_of_campaigners'];
+    numberOfActionsCompleted = json['number_of_completed_actions'];
     headerImage = json['header_image'];
     _infographic = json['infographic_url'];
 
@@ -114,7 +117,8 @@ class Campaign {
         'title': title,
         'short_name': shortName,
         'description': description,
-        'number_of_campaigners': numberOfCampaingers,
+        'number_of_campaigners': numberOfCampaigners,
+        'number_of_completed_actions': numberOfActionsCompleted,
         'header_image': headerImage,
         // TODO this proabably wont work
         'actions': actions,
@@ -143,7 +147,11 @@ class Campaign {
   }
 
   int getNumberOfCampaigners() {
-    return numberOfCampaingers;
+    return numberOfCampaigners;
+  }
+  
+  int getNumberOfActionsCompleted() {
+    return numberOfActionsCompleted;
   }
 
   String getHeaderImage() {
