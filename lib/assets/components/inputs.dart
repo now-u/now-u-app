@@ -10,21 +10,27 @@ enum CustomFormFieldStyle { Light, Dark }
 
 class CustomTextFormField extends StatelessWidget {
   final bool autofocus;
+  final bool enabled;
   final TextInputType keyboardType;
   final Function validator;
   final Function onSaved;
+  final Function onChanged;
   final CustomFormFieldStyle style;
   final String hintText;
+  final String initialValue;
   final TextCapitalization textCapitalization;
 
   CustomTextFormField({
-    @required this.autofocus,
-    @required this.hintText,
+    this.autofocus,
+    this.hintText,
+    this.initialValue,
     this.textCapitalization,
     this.style,
     this.keyboardType,
     this.onSaved,
+    this.onChanged,
     this.validator,
+    this.enabled,
   });
 
   @override
@@ -33,9 +39,10 @@ class CustomTextFormField extends StatelessWidget {
         child: TextFormField(
       keyboardType: keyboardType ?? TextInputType.text,
       textInputAction: TextInputAction.go,
-      autofocus: autofocus,
+      autofocus: autofocus ?? false,
       validator: validator,
       onSaved: onSaved,
+      onChanged: onChanged,
       style: textStyleFrom(
         Theme.of(context).primaryTextTheme.headline5,
         color: style == CustomFormFieldStyle.Light ? Colors.black : Colors.white,
@@ -45,7 +52,7 @@ class CustomTextFormField extends StatelessWidget {
         contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
         filled: true,
         fillColor: Color.fromRGBO(221, 221, 221, 0.2),
-        hintText: hintText,
+        hintText: hintText ?? "",
         hintStyle: TextStyle(
           color: colorFrom(
             Theme.of(context).primaryColor,
@@ -53,6 +60,8 @@ class CustomTextFormField extends StatelessWidget {
           ),
         ),
       ),
+      initialValue: initialValue ?? "",
+      enabled: enabled ?? true,
     ));
   }
 }

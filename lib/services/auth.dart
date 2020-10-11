@@ -144,20 +144,30 @@ class AuthenticationService {
     return u;
   }
 
-  Future<User> updateUserDetails(User user) async {
-    http.Response response = await http.put(
-      domainPrefix + 'users/me',
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'token': user.getToken(),
-      },
-      body: json.encode(user.getPostAttributes()),
-    );
-    if (handleAuthRequestErrors(response) != null) {
-      return handleAuthRequestErrors(response);
+  Future<bool> updateUserDetails({
+    String name,
+  }) async {
+    try {
+      final Map<String, String> userDetials = {};
+      if (name != null) {
+        userDetials["full_name"] = name;
+      }
+      http.Response response = await http.put(
+        domainPrefix + 'users/me',
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'token': currentUser.getToken(),
+        },
+        body: jsonEncode(userDetials),
+      );
+      if (response.statusCode >= 300) {
+        return false;
+      }
+      User u = User.fromJson(json.decode(response.body));
+      currentUser.setName(u.getName());
+    } catch(e) {
+      return false;
     }
-    User u = User.fromJson(json.decode(response.body));
-    return u;
   }
 
   Future<bool> completeAction(int actionId) async {
