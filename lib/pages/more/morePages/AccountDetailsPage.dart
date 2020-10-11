@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/viewmodels/account_details_model.dart';
 
+// TODO move models into models
+import 'package:app/services/google_location_search_service.dart';
+
 import 'package:stacked/stacked.dart';
 
 class AccountDetailsPage extends StatelessWidget {
@@ -94,6 +97,40 @@ class AccountDetailsPage extends StatelessWidget {
                     //  hintText: 'No answer',
                     //  style: CustomFormFieldStyle.Light,
                     //),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 28.5, 0, 8),
+                      child: Text(
+                        "Location",
+                        style: textStyleFrom(
+                          Theme.of(context).primaryTextTheme.headline5,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+                        // generate a new token here
+                        final Suggestion result = await showSearch(
+                          context: context,
+                          delegate: AddressSearch(model.fetchSuggestions),
+                        );
+
+                        print("result");
+                        print(result);
+                        // This will change the text displayed in the TextField
+                        if (result != null) {
+                          final placeDetails = await model 
+                              .getPlaceDetails(result.placeId);
+                          print("We go em ${placeDetails.zipCode}");
+                        }
+                      },
+                      child: AbsorbPointer(
+                          child: CustomTextFormField(
+                              style: CustomFormFieldStyle.Light,
+                              controller: model.locationFieldController,
+                          ),
+                        )
+                    ),
                     // TODO: Email
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 28.5, 0, 8),
@@ -153,6 +190,9 @@ class AccountDetailsPage extends StatelessWidget {
                       autofocus: false,
                       hintText: 'Enter organisation code',
                       style: CustomFormFieldStyle.Light,
+                      onChanged: (String code) {
+                        model.orgCode = code;
+                      }
                     ),
                     // TODO: Ok button
                     Padding(
@@ -214,3 +254,68 @@ class AccountDetailsPage extends StatelessWidget {
   }
 }
 
+class AddressSearch extends SearchDelegate<Suggestion> {
+  Function fetchSuggestions;
+  AddressSearch(this.fetchSuggestions);
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        tooltip: 'Clear',
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      )
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      tooltip: 'Back',
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return null;
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return FutureBuilder(
+      future: query == ""
+          ? null
+          : fetchSuggestions(
+              query, Localizations.localeOf(context).languageCode),
+      builder: (context, snapshot) => query == ''
+          ? Container(
+              padding: EdgeInsets.all(16.0),
+              child: Text('Enter your address'),
+            )
+          : snapshot.hasData
+              ? ListView.builder(
+                  itemBuilder: (context, index) => ListTile(
+                    title:
+                        Text((snapshot.data[index] as Suggestion).description),
+                    onTap: () {
+                      close(context, snapshot.data[index] as Suggestion);
+                    },
+                  ),
+                  itemCount: snapshot.data.length,
+                )
+              : Container(child: Text('Loading...')),
+    );
+  }
+
+  @override
+  void showResults(BuildContext context) {
+  }
+
+}

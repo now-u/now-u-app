@@ -5,6 +5,7 @@ import 'package:app/services/auth.dart';
 import 'package:app/services/dynamicLinks.dart';
 import 'package:app/services/navigation.dart';
 import 'package:app/services/pushNotifications.dart';
+import 'package:app/services/remote_config_service.dart';
 import 'package:app/viewmodels/base_model.dart';
 
 class StartUpViewModel extends BaseModel {
@@ -14,12 +15,14 @@ class StartUpViewModel extends BaseModel {
   final PushNotificationService _pushNotificationService =
       locator<PushNotificationService>();
   final DynamicLinkService _dynamicLinkService = locator<DynamicLinkService>();
+  final RemoteConfigService _remoteConfigService = locator<RemoteConfigService>();
 
   Future handleStartUpLogic() async {
     await _dynamicLinkService.handleDynamicLinks();
 
     // Register for push notifications
     await _pushNotificationService.init();
+    await _remoteConfigService.init();
 
     var hasLoggedInUser = await _authenticationService.isUserLoggedIn();
 

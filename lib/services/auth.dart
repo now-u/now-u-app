@@ -147,6 +147,7 @@ class AuthenticationService {
   Future<bool> updateUserDetails({
     String name,
     DateTime dob,
+    String orgCode,
   }) async {
     try {
       final Map<String, String> userDetials = {};
@@ -155,6 +156,9 @@ class AuthenticationService {
       }
       if (dob != null) {
         userDetials["date_of_birth"] = dob.toString();
+      }
+      if (orgCode != null) {
+        userDetials["organisation_code"] = orgCode;
       }
       http.Response response = await http.put(
         domainPrefix + 'users/me',

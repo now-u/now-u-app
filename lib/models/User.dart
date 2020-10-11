@@ -45,6 +45,9 @@ class User {
 
   int points;
 
+  int _organisationId;
+  int get organisationId => _organisationId;
+
   String token;
 
   User(
@@ -64,7 +67,9 @@ class User {
       completedRewards,
       completedActionsType,
       completedLearningResources,
-      points}) {
+      points,
+      organisationId,
+    }) {
     this.id = id;
     this.fullName = fullName;
     this.email = email;
@@ -86,6 +91,7 @@ class User {
     this.points = points ?? 0;
 
     this.token = token;
+    _organisationId = organisationId;
   }
 
   // This will be removed real soon cause if the user token is null then we need to login again
@@ -132,6 +138,7 @@ class User {
     Map<CampaignActionType, int> completedActionsType,
     int points,
     String token,
+    int organisationId,
   }) {
     return User(
       id: id ?? this.id,
@@ -152,6 +159,7 @@ class User {
       completedActionsType: completedActionsType ?? this.completedActionsType,
       points: points ?? this.points,
       token: token ?? this.token,
+      organisationId: organisationId ?? _organisationId,
     );
   }
 
@@ -205,6 +213,7 @@ class User {
 
     points = json['points'] ?? 0;
     token = json['token'];
+    _organisationId = json['organisation_id'];
     print("Got new user");
   }
   Map toJson() => {
