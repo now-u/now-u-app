@@ -127,10 +127,12 @@ class CampaignInfoBody extends StatelessWidget {
                                       Theme.of(context).primaryTextTheme.headline3),
                                   textAlign: TextAlign.center,
                                 ),
+                                SizedBox(height: 8,),
                                 Container(
                                   height: 180,
                                   child: Image.network(_campaign.infographic),
                                 ),
+                                SizedBox(height: 12,),
                                 DarkButton("Take action", onPressed: () {
                                   if (_campaign.isPast()) {
                                     Navigator.of(context).pushNamed(
@@ -163,6 +165,10 @@ class CampaignInfoBody extends StatelessWidget {
                                       "${_campaign.getNumberOfCampaigners()} people have joined",
                                   icon: Icons.people),
                               //CampaignStat(text: "Actions completed"),,
+                              CampaignStat(
+                                text: "${_campaign.getNumberOfActionsCompleted()} actions completed by now-u users",
+                                icon: CustomIcons.ic_clipboard,
+                              ),
                               CampaignStat(
                                 text: "Global reach",
                                 icon: CustomIcons.ic_global,
@@ -343,7 +349,9 @@ class CampaignInfoBody extends StatelessWidget {
                   ],
                 ),
 
-                SizedBox(height: 50),
+                SizedBox(
+                  height: model.campaignIsJoined ? 50 : 100
+                ),
               ],
             ),
 
@@ -399,7 +407,10 @@ class CampaignStat extends StatelessWidget {
           SizedBox(
             width: 10,
           ),
-          Text(text)
+          Text(
+            text,
+            style: Theme.of(context).primaryTextTheme.bodyText1,
+          )
         ],
       ),
     );
