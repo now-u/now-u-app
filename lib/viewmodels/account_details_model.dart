@@ -13,13 +13,18 @@ class AccountDetailsViewModel extends BaseModel {
     _dob = dob;
     dobFieldController.text = dateToString(dob);
   }
-   
+  // The dob in the form or if null the current known dob
+  DateTime get latestDob => _dob ?? currentUser.getDateOfBirth();
+
   final AuthenticationService _authenticationService = locator<AuthenticationService>();
   final _formKey = GlobalKey<FormState>();
   GlobalKey get formKey => _formKey;
   final _dobFieldController = TextEditingController();
   TextEditingController get dobFieldController => _dobFieldController;
-
+  
+  void init() {
+    _dobFieldController.text = dateToString(currentUser.getDateOfBirth());
+  }
   
   bool save() {
     setBusy(true);
@@ -28,8 +33,9 @@ class AccountDetailsViewModel extends BaseModel {
     notifyListeners();
   }
 
-  String dateToString(DateTime date) {
-    if (date == null) return null;
-    return "${date.day}-${date.month}-${date.year}";
-  }
+}
+
+String dateToString(DateTime date) {
+  if (date == null) return null;
+  return "${date.day}-${date.month}-${date.year}";
 }

@@ -19,6 +19,7 @@ class CustomTextFormField extends StatelessWidget {
   final String hintText;
   final String initialValue;
   final TextCapitalization textCapitalization;
+  final TextEditingController controller; 
 
   CustomTextFormField({
     this.autofocus,
@@ -31,6 +32,7 @@ class CustomTextFormField extends StatelessWidget {
     this.onChanged,
     this.validator,
     this.enabled,
+    this.controller,
   });
 
   @override
@@ -60,8 +62,9 @@ class CustomTextFormField extends StatelessWidget {
           ),
         ),
       ),
-      initialValue: initialValue ?? "",
+      initialValue: initialValue,
       enabled: enabled ?? true,
+      controller: controller,
     ));
   }
 }

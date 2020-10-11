@@ -20,6 +20,7 @@ class AccountDetailsPage extends StatelessWidget {
       ),
       body: ViewModelBuilder<AccountDetailsViewModel>.reactive(
           viewModelBuilder: () => AccountDetailsViewModel(),
+          onModelReady: (model) => model.init(),
           builder: (context, model, child) {
             return Form(
               key: model.formKey,
@@ -60,14 +61,14 @@ class AccountDetailsPage extends StatelessWidget {
                     GestureDetector(
                     onTap: () => _datePicker(
                       context, 
-                      model.currentUser.getDateOfBirth(), 
+                      model.latestDob, 
                       (DateTime date) {
                         model.dob = date;
                       }
                     ),
                     child: AbsorbPointer(
-                        child: TextFormField(
-                            initialValue: model.dateToString(model.currentUser.getDateOfBirth()),
+                        child: CustomTextFormField(
+                            style: CustomFormFieldStyle.Light,
                             controller: model.dobFieldController,
                         ),
                       )
