@@ -56,23 +56,33 @@ class LoginViewModel extends BaseModel {
   }) async {
     setBusy(true);
     
-    print("Hello6");
-
-    var errorMsg = await _authenticationService.login(
+    var err = await _authenticationService.login(
       email,
       token,
     );
 
-    print("Hello5");
-
     setBusy(false);
 
-    if (errorMsg != null) {
-      print("Sign up failure: $errorMsg");
-      if(isManul == true) {
-        await _dialogService.showDialog(title: "Login error", description: "Login failed. Please double check your token.");
+    if (err != null) {
+      print("Sign up failure: $err");
+      
+      String errorMsg = "Login error please try again";
+      if (err == AuthError.tokenExpired) {
+        errorMsg = "Your token has expired, please restart the login process";
+        await _dialogService.showDialog(title: "Login error", description: errorMsg);
+        _navigationService.navigateTo(Routes.login);
       }
-      else {
+      else if (err == AuthError.unauthorized) {
+        if (isManul) {
+          errorMsg = "Incorrect token, please double check your token from the email";
+          await _dialogService.showDialog(title: "Login error", description: errorMsg);
+        }
+        else {
+          errorMsg = "Incorrect login link, please try again";
+          await _dialogService.showDialog(title: "Login error", description: errorMsg);
+        }
+      }
+      else { 
         await _dialogService.showDialog(title: "Login error", description: errorMsg);
       }
     } else {
