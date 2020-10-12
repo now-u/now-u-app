@@ -2,6 +2,7 @@ import 'package:app/models/Reward.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
+import 'package:app/models/Organisation.dart';
 
 List<String> stagingUsers = [
   "james@now-u.com",
@@ -45,8 +46,9 @@ class User {
 
   int points;
 
-  int _organisationId;
-  int get organisationId => _organisationId;
+  Organisation _organisation;
+  Organisation get organisation => _organisation;
+  set setOrganisation(Organisation org) => _organisation = org;
 
   String token;
 
@@ -68,7 +70,7 @@ class User {
       completedActionsType,
       completedLearningResources,
       points,
-      organisationId,
+      organisation,
     }) {
     this.id = id;
     this.fullName = fullName;
@@ -91,7 +93,7 @@ class User {
     this.points = points ?? 0;
 
     this.token = token;
-    _organisationId = organisationId;
+    _organisation = organisation;
   }
 
   // This will be removed real soon cause if the user token is null then we need to login again
@@ -138,7 +140,7 @@ class User {
     Map<CampaignActionType, int> completedActionsType,
     int points,
     String token,
-    int organisationId,
+    Organisation organisation,
   }) {
     return User(
       id: id ?? this.id,
@@ -159,7 +161,7 @@ class User {
       completedActionsType: completedActionsType ?? this.completedActionsType,
       points: points ?? this.points,
       token: token ?? this.token,
-      organisationId: organisationId ?? _organisationId,
+      organisation: organisation ?? _organisation,
     );
   }
 
@@ -213,7 +215,7 @@ class User {
 
     points = json['points'] ?? 0;
     token = json['token'];
-    _organisationId = json['organisation_id'];
+    _organisation = json['organisation'] == null ? null : Organisation.fromJson(json['organisation']);
     print("Got new user");
   }
   Map toJson() => {
@@ -362,7 +364,7 @@ class User {
   int getPoints() {
     return points;
   }
-
+  
   String getToken() {
     return token;
   }
@@ -410,7 +412,7 @@ class User {
   void setCompletedActions(List<int> actions) {
     this.completedActions = actions;
   }
-
+  
   void setToken(String token) {
     this.token = token;
   }

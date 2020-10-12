@@ -13,6 +13,7 @@ import 'package:app/services/device_info_service.dart';
 import 'package:app/services/dialog_service.dart';
 import 'package:app/services/google_location_search_service.dart';
 import 'package:app/services/remote_config_service.dart';
+import 'package:app/services/organisation_service.dart';
 
 import 'package:get_it/get_it.dart';
 
@@ -36,4 +37,5 @@ void setupLocator() {
   locator.registerLazySingleton(() => DialogService());
   locator.registerLazySingleton(() => GoogleLocationSearchService());
   locator.registerLazySingleton(() => RemoteConfigService());
+  locator.registerLazySingleton(() => OrganisationService());
 }

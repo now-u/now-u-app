@@ -171,9 +171,40 @@ class AuthenticationService {
       if (response.statusCode >= 300) {
         return false;
       }
-      User u = User.fromJson(json.decode(response.body));
+      print(response.body);
+      print(json.decode(response.body)['data']['organisation']);
+      User u = User.fromJson(json.decode(response.body)['data']);
       currentUser.setName(u.getName());
+      currentUser.setDateOfBirth(u.getDateOfBirth());
+      print("new user og is ${u.organisation}");
+      currentUser.setOrganisation = u.organisation;
+      return true;
     } catch(e) {
+      return false;
+    }
+  }
+  
+
+  Future<bool> leaveOrganisation() async {
+    try {
+      print("Leaving org");
+      http.Response response = await http.put(
+        domainPrefix + 'users/me/organisations',
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'token': currentUser.getToken(),
+        },
+      );
+      if (response.statusCode >= 300) {
+        print("Put organisation_code sjdfkljsdf");
+        return false;
+      }
+      print("Put organisation_code null");
+      User u = User.fromJson(json.decode(response.body));
+      currentUser.setOrganisation = u.organisation;
+      return true;
+    } catch(e) {
+      print("Error");
       return false;
     }
   }

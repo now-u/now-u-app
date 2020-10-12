@@ -7,7 +7,6 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Learning.dart';
-import 'package:app/models/Organisation.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -141,21 +140,6 @@ class CampaignService {
       }
     } catch (e) {
       return e.toString();
-    }
-  }
-
-  Future<List<Organisation>> getPartners() async {
-    var response = await http.get(domainPrefix + "organisations");
-    if (response.statusCode == 200) {
-      List<Organisation> c = json
-          .decode(response.body)['data']
-          .map((e) => Organisation.fromJson(e))
-          .toList()
-          .cast<Organisation>();
-      return c;
-    } else {
-      return Future.error("Error getting organisations in http api",
-          StackTrace.fromString("The stack trace is"));
     }
   }
 }

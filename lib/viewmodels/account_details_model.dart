@@ -1,14 +1,17 @@
+import 'package:app/models/Organisation.dart';
 import 'package:app/viewmodels/base_model.dart';
 
 import 'package:flutter/material.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/auth.dart';
 import 'package:app/services/google_location_search_service.dart';
+import 'package:app/services/organisation_service.dart';
 
 class AccountDetailsViewModel extends BaseModel {
   
   final AuthenticationService _authenticationService = locator<AuthenticationService>();
   final GoogleLocationSearchService _googleLocationSearchService = locator<GoogleLocationSearchService>();
+  final OrganisationService _organisationService = locator<OrganisationService>();
   
   String _name;
   set name(String name) => _name = name;
@@ -29,6 +32,8 @@ class AccountDetailsViewModel extends BaseModel {
   // The dob in the form or if null the current known dob
   DateTime get latestDob => _dob ?? currentUser.getDateOfBirth();
 
+  Organisation get userOrganisation => _authenticationService.currentUser.organisation;
+
   final _formKey = GlobalKey<FormState>();
   GlobalKey get formKey => _formKey;
   final _dobFieldController = TextEditingController();
@@ -41,9 +46,9 @@ class AccountDetailsViewModel extends BaseModel {
     _locationFieldController.text = currentUser.getLocation();
   }
   
-  void save() {
+  void save() async {
     setBusy(true);
-    _authenticationService.updateUserDetails(
+    await _authenticationService.updateUserDetails(
         name: _name, dob: _dob, orgCode: _orgCode
     ); 
     setBusy(false);
@@ -56,9 +61,15 @@ class AccountDetailsViewModel extends BaseModel {
   
   Future<List<Suggestion>> fetchSuggestions(String input, String lang) async {
     List suggestions = await _googleLocationSearchService.fetchSuggestions(input, lang);
-    print("Hello");
-    print(suggestions);
     return suggestions;
+  }
+
+  Future<bool> leaveOrganisation() async {
+    setBusy(true);
+    await _authenticationService.leaveOrganisation();
+    setBusy(false);
+    notifyListeners();
+    return true;
   }
 }
 
