@@ -49,6 +49,9 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
 ### Unreleased
 
 - #127 [feature]  Login popups added which notify users of error 
+- #129 [feature]  The number of actions completed by now-u users now shows on
+  each campaign page
+- #131 [fix]      Http links can now be viewed in the internal webview
 
 ### Version 1.1.9 - Hot Fix
 
