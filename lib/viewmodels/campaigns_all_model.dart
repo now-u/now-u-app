@@ -27,7 +27,11 @@ class CampaignsAllViewModel extends BaseModel {
     setBusy(false);
     notifyListeners();
   }
-
+  /// fetches campaigns even without the user being logged in
+  ///
+  /// It basically does two things
+  /// 1.Its tells the campaigns service to update the campaigns it has ( the service does this by getting the current campaigns from the api)
+  /// 2.And its updated the past campaigns stored in the view model by getting then from the campaign service
   void fetchAllCampaigns() async {
     await fetchCurrentCampaigns();
     await fetchPastCampaigns();
