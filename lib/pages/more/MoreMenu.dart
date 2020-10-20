@@ -25,6 +25,10 @@ final profileTiles = <Map>[
   //},
   {'sectionHeading': "The app"},
   {
+    'profileTile': ProfileTile("About Us",CustomIcons.ic_faq),
+    'link': "https://now-u.com/aboutus",
+  },
+  {
     'profileTile': ProfileTile("Our partners", CustomIcons.ic_partners),
     'page': Routes.parteners,
   },
@@ -82,7 +86,11 @@ final profileTiles = <Map>[
     'external': true
   },
 ];
-
+///The More page ![More Page](https://i.ibb.co/xDHyMPj/slack.png)
+///
+/// This Widget takes in the [profileTiles] and goes over it
+/// checking if the elements inside it is either sectionHeading
+/// or [ProfileTile]
 class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
