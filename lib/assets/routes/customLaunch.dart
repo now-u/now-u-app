@@ -7,6 +7,18 @@ import 'package:flutter/material.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
+
+final String INTERNAL_PREFIX = "internal:"
+
+
+void isInternalLink(String link) {
+  return link.startsWith(INTERNAL_PREFIX)
+}
+
+Map getInternalLinkParameters(String link) {
+
+}
+
 void customLaunch(
   BuildContext context,
   String url, {
@@ -17,7 +29,22 @@ void customLaunch(
   Function extraOnConfirmFunction,
   bool isExternal,
 }) {
-  if (isExternal ?? false) {
+  if (isInternalLink(url)) {
+    link = url.substring(INTERNAL_PREFIX.length)
+
+    if(url.contains('&')) {
+      parameters = getInternalLinkParameters(link)
+      route = link.split('&')[0]
+
+      if (parameters['id'] != null) {
+        Navigator.of(context).pushNamed(route, arguments: parameters['id']);
+      } else {
+        Navigator.of(context).pushNamed(route);
+      }
+    } else {
+      Navigator.of(context).pushNamed(link);
+    }
+  } else if (isExternal ?? false) {
     customLaunchExternal(
       context,
       url,
