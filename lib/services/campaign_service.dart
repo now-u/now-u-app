@@ -81,7 +81,13 @@ class CampaignService {
     return actions;
   }
 
+  
   Future getCampaign(int id) async {
+    if (_campaigns.)
+    return await fetchCampaign();
+  }
+
+  Future fetchCampaign(int id) async {
     for (Campaign c in _campaigns) {
       if (c.getId() == id) {
         return c;
