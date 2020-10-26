@@ -16,7 +16,16 @@ void isInternalLink(String link) {
 }
 
 Map getInternalLinkParameters(String link) {
-
+  Map parametersMap = {}
+  linkParameters = link.split('&')[1];
+  parameters = linkParameters.split('?');
+  for (const param in parameters) {
+    splitParameter = param.split('=');
+    key = splitParameter[0];
+    value = splitParameter[1];
+    parametersMap[key] = value;
+  }
+  return parametersMap;
 }
 
 void customLaunch(
@@ -30,11 +39,11 @@ void customLaunch(
   bool isExternal,
 }) {
   if (isInternalLink(url)) {
-    link = url.substring(INTERNAL_PREFIX.length)
+    link = url.substring(INTERNAL_PREFIX.length);
 
     if(url.contains('&')) {
-      parameters = getInternalLinkParameters(link)
-      route = link.split('&')[0]
+      parameters = getInternalLinkParameters(link);
+      route = link.split('&')[0];
 
       if (parameters['id'] != null) {
         Navigator.of(context).pushNamed(route, arguments: parameters['id']);
