@@ -3,14 +3,24 @@ import 'dart:async';
 class AlertRequest {
   final String title;
   final String description;
+  final List buttons;
 
-  AlertRequest({this.title, this.description});
+  AlertRequest({this.title, this.description, this.buttons});
 }
 
-
 class AlertResponse {
-  final bool confirmed;
-  AlertResponse({this.confirmed});
+  final dynamic response;
+  AlertResponse({this.response});
+}
+
+class DialogButton {
+  String text;
+  dynamic response; // If the button is clicked what should the dialog service return 
+  
+  DialogButton({
+    this.text,
+    this.response,
+  });
 }
 
 
@@ -25,9 +35,10 @@ class DialogService {
   Future showDialog({
     String title,
     String description,
+    List buttons,
   }) {
     _dialogCompleter = Completer<AlertResponse>();
-    _showDialogListener(AlertRequest(title: title, description: description));
+    _showDialogListener(AlertRequest(title: title, description: description, buttons: buttons));
     return _dialogCompleter.future;
   }
   

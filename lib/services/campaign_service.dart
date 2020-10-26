@@ -83,8 +83,11 @@ class CampaignService {
 
   
   Future getCampaign(int id) async {
-    if (_campaigns.)
-    return await fetchCampaign();
+    Campaign campaign = _campaigns.firstWhere((c) => c.getId() == id);
+    if (campaign != null) {
+      return campaign;
+    }
+    return await fetchCampaign(id);
   }
 
   Future fetchCampaign(int id) async {

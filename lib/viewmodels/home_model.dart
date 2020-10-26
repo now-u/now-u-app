@@ -7,11 +7,12 @@ import 'package:app/services/internal_notification_service.dart';
 import 'package:app/models/Notification.dart';
 
 class HomeViewModel extends BaseModel with CampaignRO {
+  final InternalNotificationService _internalNotificationService =
+      locator<InternalNotificationService>();
+  final NavigationService _navigationService = locator<NavigationService>();
+
   List<InternalNotification> get notifications =>
       _internalNotificationService.notifications;
-
-  InternalNotificationService _internalNotificationService =
-      locator<InternalNotificationService>();
 
   int get numberOfJoinedCampaigns {
     return currentUser.getSelectedCampaigns().length;
@@ -45,5 +46,13 @@ class HomeViewModel extends BaseModel with CampaignRO {
     if (success) {
       notifyListeners();
     }
+  }
+
+  void onPressCampaignButton() {
+    _navigationService.launchLink(
+      "https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform",
+      description: "To suggest causes for future campaigns, fill in this Google Form",
+      buttonText: "Go"
+    );
   }
 }
