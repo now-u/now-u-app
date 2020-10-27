@@ -9,19 +9,19 @@ void main() {
     final NavigationService _navigationService = locator<NavigationService>();
 
     group('isInternalLink tests -', () {  
+      void testIsInternalLink(String input, bool output) {
+        expect(_navigationService.isInternalLink(input), output);
+      }
       test('Valid internal link isInternalLink', () {
-        String link = "internal:home";
-        expect(_navigationService.isInternalLink(link), true);
+        testIsInternalLink("internal:home", true);
       });
       
       test('Valid internal link with parameters isInternalLink', () {
-        String link = "internal:home&1=2?2=4";
-        expect(_navigationService.isInternalLink(link), true);
+        testIsInternalLink("internal:home&1=2?2=4", true);
       });
       
       test('Http link is not internal link', () {
-        String link = "http://hello.com";
-        expect(_navigationService.isInternalLink(link), false);
+        testIsInternalLink("http://hello.com", false);
       });
     });
 
@@ -68,6 +68,5 @@ void main() {
         );
       });
     });
-
   });
 }
