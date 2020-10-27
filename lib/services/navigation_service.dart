@@ -11,6 +11,14 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/models/Action.dart';
 
 const String INTERNAL_PREFIX = "internal:";
+      
+const List ID_ROUTES = [
+  Routes.campaignInfo,
+  Routes.learningTopic,
+  Routes.learningSingle,
+  Routes.actionInfo
+];
+
 
 class NavigationService {
   final DialogService _dialogService =
@@ -75,14 +83,7 @@ class NavigationService {
       String route = getInternalLinkRoute(url);
       Map parameters = getInternalLinkParameters(url);
 
-      List idRoutes = [
-        Routes.campaignInfo,
-        Routes.learningTopic,
-        Routes.learningSingle,
-        Routes.actionInfo
-      ];
-
-      if (idRoutes.contains(route)) {
+      if (ID_ROUTES.contains(route)) {
         int id = int.tryParse(parameters['id']);
         
         if (route == Routes.campaignInfo || route == Routes.learningSingle) {
