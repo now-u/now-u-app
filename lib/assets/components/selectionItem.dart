@@ -15,7 +15,7 @@ import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/StyleFrom.dart';
 
 import 'package:app/locator.dart';
-import 'package:app/services/navigation.dart';
+import 'package:app/services/navigation_service.dart';
 
 final Color CHEVRON_COLOR = Color.fromRGBO(109, 113, 129, 1);
 final NavigationService _navigationService = locator<NavigationService>();

@@ -3,7 +3,7 @@ import 'package:app/locator.dart';
 import 'package:app/routes.dart';
 import 'package:app/services/auth.dart';
 import 'package:app/services/dynamicLinks.dart';
-import 'package:app/services/navigation.dart';
+import 'package:app/services/navigation_service.dart';
 import 'package:app/services/pushNotifications.dart';
 import 'package:app/viewmodels/base_model.dart';
 

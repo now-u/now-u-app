@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:app/locator.dart';
 import 'package:app/services/dialog_service.dart';
-import 'package:app/services/navigation.dart';
+import 'package:app/services/navigation_service.dart';
 
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/StyleFrom.dart';

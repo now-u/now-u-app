@@ -29,7 +29,11 @@ class NavigationService {
     return link.startsWith(INTERNAL_PREFIX);
   }
   
-  Map getInternalLinkParameters(String link) {
+  Map getInternalLinkParameters(String url) {
+    String link = url.substring(INTERNAL_PREFIX.length);
+    
+    if(!link.contains('&')) return null;
+
     Map parametersMap = {};
     String linkParameters = link.split('&')[1];
     List parameters = linkParameters.split('?');
@@ -43,6 +47,16 @@ class NavigationService {
   }
 
 
+  getInternalLinkRoute(String url) {
+    String link = url.substring(INTERNAL_PREFIX.length);
+    if(link.contains('&')) {
+      return link.split('&')[0];
+    } else {
+      return link;
+    }
+  }
+
+
   void launchLink(
     String url, {
     String title,
@@ -53,19 +67,17 @@ class NavigationService {
     bool isExternal,
   }) {
     if (isInternalLink(url)) {
-      String link = url.substring(INTERNAL_PREFIX.length);
-  
-      if(url.contains('&')) {
-        Map parameters = getInternalLinkParameters(link);
-        String route = link.split('&')[0];
-  
+      String route = getInternalLinkRoute(url);
+      Map parameters = getInternalLinkParameters(url);
+
+      if (parameters != null) {
         if (parameters['id'] != null) {
           navigateTo(route, arguments: parameters['id']);
-        } else {
+        } 
+        else {
           navigateTo(route);
         }
-      } else {
-        navigateTo(link);
+        navigateTo(route);
       }
     } else if (isExternal ?? false) {
       launchLinkExternal(

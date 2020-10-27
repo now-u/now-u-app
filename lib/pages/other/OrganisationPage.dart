@@ -11,7 +11,7 @@ import 'package:app/assets/StyleFrom.dart';
 import 'package:app/models/Organisation.dart';
 
 import 'package:app/locator.dart';
-import 'package:app/services/navigation.dart';
+import 'package:app/services/navigation_service.dart';
 
 final double SECTION_TITLE_BOTTOM_PADDING = 8;
 final double BETWEEN_SECTION_PADDING = 12;

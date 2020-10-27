@@ -5,7 +5,7 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/news_service.dart';
 import 'package:app/services/campaign_service.dart';
-import 'package:app/services/navigation.dart';
+import 'package:app/services/navigation_service.dart';
 
 class NewsViewModel extends BaseModel {
   final NewsService _newsService = locator<NewsService>();

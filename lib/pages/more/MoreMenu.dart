@@ -8,7 +8,7 @@ import 'package:app/assets/icons/customIcons.dart';
 import 'package:app/assets/components/customTile.dart';
 
 import 'package:app/locator.dart';
-import 'package:app/services/navigation.dart';
+import 'package:app/services/navigation_service.dart';
 
 import 'package:app/pages/more/ProfileTile.dart';
 import 'package:app/routes.dart';

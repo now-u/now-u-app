@@ -1,11 +1,8 @@
 import 'dart:async';
-import 'dart:io';
-
-import 'package:device_info/device_info.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 import 'package:app/locator.dart';
-import 'package:app/services/navigation.dart';
+import 'package:app/services/navigation_service.dart';
 import 'package:app/services/storage.dart';
 import 'package:app/services/device_info_service.dart';
 

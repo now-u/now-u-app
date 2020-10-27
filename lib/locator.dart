@@ -3,7 +3,7 @@ import 'package:app/services/auth.dart';
 import 'package:app/services/storage.dart';
 import 'package:app/services/analytics.dart';
 import 'package:app/services/pushNotifications.dart';
-import 'package:app/services/navigation.dart';
+import 'package:app/services/navigation_service.dart';
 import 'package:app/services/news_service.dart';
 import 'package:app/services/campaign_service.dart';
 import 'package:app/services/faq_service.dart';

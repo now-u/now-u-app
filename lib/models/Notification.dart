@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:app/assets/StyleFrom.dart';
 
 import 'package:app/locator.dart';
-import 'package:app/services/navigation.dart';
+import 'package:app/services/navigation_service.dart';
 
 final NavigationService _navigationService = locator<NavigationService>();
 
