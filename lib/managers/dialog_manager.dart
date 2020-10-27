@@ -78,9 +78,9 @@ class _DialogManagerState extends State<DialogManager> {
     );
   }
   
-  List _getButtons(List buttons) {
+  List<Widget> _getButtons(List buttons) {
     if (buttons == null) {
-      return [
+      return <Widget>[
         Container(
           width: double.infinity,
           child:
