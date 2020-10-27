@@ -3,15 +3,20 @@ import 'package:app/routes.dart';
 
 import 'package:app/locator.dart';
 import 'package:app/services/dialog_service.dart';
+import 'package:app/services/campaign_service.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:app/assets/components/darkButton.dart';
+import 'package:app/models/Campaign.dart';
+import 'package:app/models/Action.dart';
 
 const String INTERNAL_PREFIX = "internal:";
 
 class NavigationService {
   final DialogService _dialogService =
       locator<DialogService>();
+  
+  final CampaignService _campaignService = locator<CampaignService>();
 
   final GlobalKey<NavigatorState> navigatorKey =
       new GlobalKey<NavigatorState>();
@@ -57,7 +62,7 @@ class NavigationService {
   }
 
 
-  void launchLink(
+  void launchLink (
     String url, {
     String title,
     String description,
@@ -65,20 +70,41 @@ class NavigationService {
     String closeButtonText,
     Function extraOnConfirmFunction,
     bool isExternal,
-  }) {
+  }) async {
     if (isInternalLink(url)) {
       String route = getInternalLinkRoute(url);
       Map parameters = getInternalLinkParameters(url);
 
-      if (parameters != null) {
-        if (parameters['id'] != null) {
-          navigateTo(route, arguments: parameters['id']);
-        } 
-        else {
-          navigateTo(route);
+      List idRoutes = [
+        Routes.campaignInfo,
+        Routes.learningTopic,
+        Routes.learningSingle,
+        Routes.actionInfo
+      ];
+
+      if (idRoutes.contains(route)) {
+        int id = int.tryParse(parameters['id']);
+        
+        if (route == Routes.campaignInfo || route == Routes.learningSingle) {
+          navigateTo(route, arguments: id);
+          return;
         }
-        navigateTo(route);
+        
+        if (route == Routes.actionInfo) {
+          CampaignAction action = await _campaignService.getAction(id);
+          navigateTo(route, arguments: action);
+          return;
+        }
+        
+        if (route == Routes.learningTopic) {
+          CampaignAction action = await _campaignService.getAction(id);
+          navigateTo(route, arguments: action);
+          return;
+        }
       }
+      
+      navigateTo(route);
+
     } else if (isExternal ?? false) {
       launchLinkExternal(
         url,
