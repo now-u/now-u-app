@@ -3,6 +3,7 @@ import 'package:app/viewmodels/base_campaign_model.dart';
 
 import 'package:app/locator.dart';
 import 'package:app/services/internal_notification_service.dart';
+import 'package:app/services/navigation.dart';
 
 import 'package:app/models/Notification.dart';
 

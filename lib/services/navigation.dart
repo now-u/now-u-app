@@ -5,6 +5,7 @@ import 'package:app/locator.dart';
 import 'package:app/services/dialog_service.dart';
 
 import 'package:url_launcher/url_launcher.dart';
+import 'package:app/assets/components/darkButton.dart';
 
 const String INTERNAL_PREFIX = "internal:";
 
@@ -89,7 +90,7 @@ class NavigationService {
     String closeButtonText,
     Function extraOnConfirmFunction,
   }) async {
-    bool exit = await _dialogService.showDialog(
+    AlertResponse exit = await _dialogService.showDialog(
       title: title ?? "You're about to leave",
       description:  description ?? "This link will take you out of the app. Are you sure you want to go?",
       buttons: [
@@ -99,17 +100,16 @@ class NavigationService {
         ),
         DialogButton(
           text: "Close",
-          response: false
+          response: false,
+          style: DarkButtonStyle.Secondary,
         ),
       ]
     );
-    if (exit) {
+    if (exit.response) {
       if (extraOnConfirmFunction != null) {
         extraOnConfirmFunction();
       }
       launch(url);
-    } else {
-      goBack();
     }
   }
 }

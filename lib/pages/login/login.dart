@@ -1,9 +1,7 @@
 import 'package:app/assets/StyleFrom.dart';
 import 'package:flutter/gestures.dart';
 import 'package:app/assets/components/darkButton.dart';
-import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/inputs.dart';
-import 'package:app/assets/routes/customLaunch.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -238,27 +236,30 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
 
                         SizedBox(height: 10),
 
-                        RichText(
-                          text: TextSpan(children: [
-                            TextSpan(
-                                text: "View our privacy policy ",
-                                style: textStyleFrom(
-                                  Theme.of(context).primaryTextTheme.bodyText1,
-                                  color: Colors.white,
-                                )),
-                            TextSpan(
-                                text: "here",
-                                style: textStyleFrom(
-                                  Theme.of(context).primaryTextTheme.bodyText1,
-                                  color: Theme.of(context).buttonColor,
-                                ),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    customLaunch(context,
-                                        "http://www.now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf",
-                                        isExternal: true);
-                                  }),
-                          ]),
+                        ViewModelBuilder<LoginViewModel>.reactive(
+                          viewModelBuilder: () => LoginViewModel(),
+                          builder: (context, model, child) {
+                            return RichText(
+                              text: TextSpan(children: [
+                                TextSpan(
+                                    text: "View our privacy policy ",
+                                    style: textStyleFrom(
+                                      Theme.of(context).primaryTextTheme.bodyText1,
+                                      color: Colors.white,
+                                    )),
+                                TextSpan(
+                                    text: "here",
+                                    style: textStyleFrom(
+                                      Theme.of(context).primaryTextTheme.bodyText1,
+                                      color: Theme.of(context).buttonColor,
+                                    ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        model.launchTandCs();
+                                      }),
+                              ]),
+                            );
+                          }
                         ),
 
                         SizedBox(height: 10),

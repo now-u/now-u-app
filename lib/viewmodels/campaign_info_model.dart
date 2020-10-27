@@ -7,6 +7,7 @@ import 'package:app/services/campaign_service.dart';
 import 'package:app/services/navigation.dart';
 
 import 'package:app/models/Campaign.dart';
+import 'package:app/models/SDG.dart';
 
 class CampaignInfoViewModel extends BaseModel with CampaignWrite {
   final CampaignService _campaignService = locator<CampaignService>();
@@ -25,6 +26,20 @@ class CampaignInfoViewModel extends BaseModel with CampaignWrite {
       // Some error things (campaign 404)
       _navigationService.navigateTo(Routes.allCampaigns);
     }
+  }
+  
+  void openSDGGoals({SDG sdg}) {
+    if (sdg != null) {
+      _navigationService.launchLink(sdg.getLink());
+    } else {
+      _navigationService.launchLink(
+        "https://sustainabledevelopment.un.org"
+      );
+    }
+  }
+
+  void viewCampaignVideo(Campaign campaign) {
+    _navigationService.launchLink(campaign.getVideoLink());
   }
 
 }

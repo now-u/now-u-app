@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:app/assets/components/darkButton.dart';
 
 class AlertRequest {
   final String title;
@@ -16,10 +17,16 @@ class AlertResponse {
 class DialogButton {
   String text;
   dynamic response; // If the button is clicked what should the dialog service return 
+  DarkButtonStyle style;
+  //Function onClick; // This might be handy in the future
+  bool closeOnClick;
   
   DialogButton({
     this.text,
     this.response,
+    this.style,
+    this.closeOnClick,
+    //this.onClick,
   });
 }
 

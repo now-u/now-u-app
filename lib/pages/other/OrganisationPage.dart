@@ -7,19 +7,23 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/campaignTile.dart';
 import 'package:app/assets/StyleFrom.dart';
-import 'package:app/assets/routes/customLaunch.dart';
 
 import 'package:app/models/Organisation.dart';
 
+import 'package:app/locator.dart';
+import 'package:app/services/navigation.dart';
+
 final double SECTION_TITLE_BOTTOM_PADDING = 8;
 final double BETWEEN_SECTION_PADDING = 12;
+  
+final NavigationService _navigationService = locator<NavigationService>();
 
 class OraganisationInfoPage extends StatelessWidget {
   final Organisation organisation;
   OraganisationInfoPage(
     this.organisation,
   );
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -219,7 +223,7 @@ class ExtraLinkButton extends StatelessWidget {
             ),
           ),
           onClick: () {
-            customLaunch(context, link);
+            _navigationService.launchLink(link);
           },
         ));
   }

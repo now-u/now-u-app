@@ -89,4 +89,11 @@ class LoginViewModel extends BaseModel {
       _navigationService.navigateTo(Routes.intro);
     }
   }
+
+  void launchTandCs() {
+    _navigationService.launchLink(
+      "http://www.now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf",
+      isExternal: true,
+    );
+  }
 }

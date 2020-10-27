@@ -93,22 +93,27 @@ class _DialogManagerState extends State<DialogManager> {
       ];
     }
 
-    List buttonWidgets = [];
+    List<Widget> buttonWidgets = [];
     for (final DialogButton button in buttons) {
+      DarkButtonStyle buttonStyle = button.style != null ? button.style : DarkButtonStyle.Primary;
       buttonWidgets.add(
         Container(
           width: double.infinity,
           child:
-            DarkButton(button.text, onPressed: () {
+            DarkButton(
+              button.text, 
+              onPressed: () {
                 _dialogService.dialogComplete(AlertResponse(response: button.response));
-                if (button.onClick != null) {
-                  button.onClick();
-                } else {
-                  _navigationService.goBack();
+                if (button.closeOnClick != false) {
+                  Navigator.of(context).pop();
                 }
               }, 
+              style: buttonStyle,
             ),
         )
+      );
+      buttonWidgets.add(
+       SizedBox(height: 10)
       );
     }
     return buttonWidgets;
