@@ -6,6 +6,9 @@ const double ICON_PADDING = 22;
 const double ITEM_HORIZONTAL = 10;
 const double ITEM_VERTICAL = 15;
 
+/// A single Tile/row in the [Profile] class aka "More Menu"
+///
+/// This is how it looks ![image of Profile Tile](https://i.ibb.co/kBm5X5r/Inkedslack-LI.jpg)
 class ProfileTile extends StatelessWidget {
   final IconData iconData;
   final String text;
