@@ -87,22 +87,29 @@ class NavigationService {
         int id = int.tryParse(parameters['id']);
         
         if (route == Routes.campaignInfo || route == Routes.learningSingle) {
-          print("Routes is campaignInfo");
-          print("id is");
-          print(id);
           navigateTo(route, arguments: id);
           return;
         }
         
         if (route == Routes.actionInfo) {
-          CampaignAction action = await _campaignService.getAction(id);
-          navigateTo(route, arguments: action);
+          _campaignService.getAction(id).then(
+            (CampaignAction action) {
+              navigateTo(route, arguments: action);
+            }
+          ).catchError((e) {
+            _dialogService.showDialog(title: "Error", description: "Error navigating to route");
+          });
           return;
         }
         
         if (route == Routes.learningTopic) {
-          LearningTopic topic = await _campaignService.getLearningTopic(id);
-          navigateTo(route, arguments: topic);
+          _campaignService.getLearningTopic(id).then(
+            (LearningTopic topic) {
+              navigateTo(route, arguments: topic);
+            }
+          ).catchError((e) {
+            _dialogService.showDialog(title: "Error", description: "Error navigating to route");
+          });
           return;
         }
       }
