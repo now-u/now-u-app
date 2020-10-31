@@ -19,13 +19,8 @@ class CampaignInfoViewModel extends BaseModel with CampaignWrite {
   set setCampaign(Campaign campaign) => _campaign = campaign;
 
   Future fetchCampaign(int campaignId) async {
-    try {
-      _campaign = await _campaignService.getCampaign(campaignId);
-      notifyListeners();
-    } catch (e) {
-      // Some error things (campaign 404)
-      _navigationService.navigateTo(Routes.allCampaigns);
-    }
+    _campaign = await _campaignService.getCampaign(campaignId);
+    notifyListeners();
   }
   
   void openSDGGoals({SDG sdg}) {

@@ -35,6 +35,7 @@ class CampaignInfo extends StatelessWidget {
     return ViewModelBuilder<CampaignInfoViewModel>.reactive(
         viewModelBuilder: () => CampaignInfoViewModel(),
         onModelReady: (model) {
+          print("Model ready getting campaign");
           if (campaign != null) {
             model.setCampaign = campaign;
           } else {

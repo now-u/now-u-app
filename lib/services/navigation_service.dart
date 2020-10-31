@@ -87,6 +87,9 @@ class NavigationService {
         int id = int.tryParse(parameters['id']);
         
         if (route == Routes.campaignInfo || route == Routes.learningSingle) {
+          print("Routes is campaignInfo");
+          print("id is");
+          print(id);
           navigateTo(route, arguments: id);
           return;
         }

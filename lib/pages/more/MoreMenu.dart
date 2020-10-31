@@ -191,7 +191,7 @@ class Profile extends StatelessWidget {
                             GestureDetector(
                               child: ProfileTile("Navigate test", FontAwesomeIcons.code),
                               onTap: () {
-                                _navigationService.launchLink("internal:home");
+                                _navigationService.launchLink("internal:campaignInfo&id=1");
                               }
                             ),
                           ]
