@@ -19,7 +19,7 @@ class AuthError {
 }
 
 class AuthenticationService {
-  final NavigationService _navigationService = locator<NavigationService>();
+  //final NavigationService _navigationService = locator<NavigationService>();
   final SharedPreferencesService _sharedPreferencesService =
       locator<SharedPreferencesService>();
   final DeviceInfoService _deviceInfoService =
@@ -62,11 +62,11 @@ class AuthenticationService {
       return null;
     } else if (response.statusCode == 401) {
       // Generic reaction to someone being unauthorized is just send them to the login screen
-      _navigationService.navigateTo(Routes.login);
+      //_navigationService.navigateTo(Routes.login);
       return Future.error(AuthError.unauthorized);
     } else if (response.statusCode == 500) {
       // Generic reaction to someone being unauthorized is just send them to the login screen
-      _navigationService.navigateTo('/');
+      //_navigationService.navigateTo('/');
       return Future.error(AuthError.internal);
     }
     return Future.error(AuthError.unknown);

@@ -97,11 +97,11 @@ class NavigationService {
           return;
         }
         
-        //if (route == Routes.learningTopic) {
-        //  LearningTopic topic = await _campaignService.getLearningTopic(id);
-        //  navigateTo(route, arguments: topic);
-        //  return;
-        //}
+        if (route == Routes.learningTopic) {
+          LearningTopic topic = await _campaignService.getLearningTopic(id);
+          navigateTo(route, arguments: topic);
+          return;
+        }
       }
       
       navigateTo(route);
