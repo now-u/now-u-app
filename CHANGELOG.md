@@ -49,6 +49,7 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
 ### Unreleased
 
 - #127 [feature]  Login popups added which notify users of error 
+- #136 [feature]  Links can now be user to link to different pages of the app
 
 ### Version 1.1.9 - Hot Fix
 
