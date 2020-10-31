@@ -103,7 +103,10 @@ class CampaignService {
 
   Future fetchCampaigns() async {
     try {
-      var response = await http.get(domainPrefix + "campaigns");
+      var response = await http.get(
+        domainPrefix + "campaigns",
+        headers: <String, String> {'token': _authenticationService.currentUser.getToken()}
+      );
       Campaigns cs = Campaigns.fromJson(json.decode(response.body)['data']);
       _campaigns = cs.getActiveCampaigns();
     } catch (e) {}
