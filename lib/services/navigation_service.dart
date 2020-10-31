@@ -7,7 +7,7 @@ import 'package:app/services/campaign_service.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:app/assets/components/darkButton.dart';
-import 'package:app/models/Campaign.dart';
+import 'package:app/models/Learning.dart';
 import 'package:app/models/Action.dart';
 
 const String INTERNAL_PREFIX = "internal:";
@@ -97,11 +97,11 @@ class NavigationService {
           return;
         }
         
-        if (route == Routes.learningTopic) {
-          CampaignAction action = await _campaignService.getAction(id);
-          navigateTo(route, arguments: action);
-          return;
-        }
+        //if (route == Routes.learningTopic) {
+        //  LearningTopic topic = await _campaignService.getLearningTopic(id);
+        //  navigateTo(route, arguments: topic);
+        //  return;
+        //}
       }
       
       navigateTo(route);

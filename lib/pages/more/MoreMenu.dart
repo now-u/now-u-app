@@ -171,7 +171,6 @@ class Profile extends StatelessWidget {
                     SizedBox(height: 20),
 
                     // Dev Tools
-                    // TODO add this back in its super duper handy
                     model.currentUser.isStagingUser()
                       ? Column(
                           children: [
@@ -187,6 +186,12 @@ class Profile extends StatelessWidget {
                               child: ProfileTile("Log out", FontAwesomeIcons.code),
                               onTap: () {
                                 model.logout();
+                              }
+                            ),
+                            GestureDetector(
+                              child: ProfileTile("Navigate test", FontAwesomeIcons.code),
+                              onTap: () {
+                                _navigationService.launchLink("internal:home");
                               }
                             ),
                           ]

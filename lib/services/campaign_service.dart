@@ -96,7 +96,6 @@ class CampaignService {
         return c;
       }
     }
-
     try {
       var response = await http.get(domainPrefix + "campaigns/$id");
       Campaign c = Campaign.fromJson(json.decode(response.body)['data']);
@@ -136,6 +135,17 @@ class CampaignService {
           StackTrace.fromString("The stack trace is"));
     }
   }
+  
+  //Future<LearningTopic> getLearningTopic(int id) async {
+  //  var response = await http.get(domainPrefix + "learning_topics/$id");
+  //  if (response.statusCode == 200) {
+  //    LearningTopic topic =
+  //        LearningTopic.fromJson(json.decode(response.body)['data']);
+  //    return topic;
+  //  } else {
+  //    return Future.error("Error getting learning topic. Status code: ${response.statusCode}");
+  //  }
+  //}
 
   Future getLearningCentre(int campaignId) async {
     try {
