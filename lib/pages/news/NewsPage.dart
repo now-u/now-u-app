@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/header.dart';
 import 'package:app/assets/components/selectionPill.dart';
-import 'package:app/assets/routes/customLaunch.dart';
 
 import 'package:app/models/Article.dart';
 
@@ -109,7 +108,10 @@ class NewsPage extends StatelessWidget {
                                     ),
                                     child: NewsTile(
                                         article:
-                                            model.filteredArticles[index]));
+                                            model.filteredArticles[index],
+                                        model: model,
+                                      )
+                                    );
                               },
                             ),
                             SizedBox(width: 20),
@@ -123,14 +125,15 @@ class NewsPage extends StatelessWidget {
 class NewsTile extends StatelessWidget {
   final Article article;
   final double height = 80;
+  final NewsViewModel model;
 
-  NewsTile({@required this.article});
+  NewsTile({@required this.article, this.model});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          customLaunch(context, article.getFullArticleLink());
+          model.openArticle(article);
         },
         child: Container(
           decoration: BoxDecoration(

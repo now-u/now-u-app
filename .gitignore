@@ -52,3 +52,5 @@ gradle/
 gradlew
 gradlew.bat
 .gitignore
+
+pubspec.lock

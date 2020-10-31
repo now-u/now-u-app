@@ -10,7 +10,6 @@ import 'package:app/assets/components/customScrollableSheet.dart';
 import 'package:app/assets/components/smoothPageIndicatorEffect.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/notifications.dart';
-import 'package:app/assets/routes/customLaunch.dart';
 import 'package:app/assets/StyleFrom.dart';
 
 import 'package:app/models/Notification.dart';
@@ -131,13 +130,7 @@ class Home extends StatelessWidget {
                                 padding: EdgeInsets.all(15),
                                 child: DarkButton(
                                   "Suggest a campaign",
-                                  onPressed: () {
-                                    customLaunch(
-                                        context, "https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform",
-                                        description:
-                                            "To suggest causes for future campaigns, fill in this Google Form",
-                                        buttonText: "Go");
-                                  },
+                                  onPressed: model.onPressCampaignButton,
                                   style: DarkButtonStyle.Secondary,
                                 ),
                               )

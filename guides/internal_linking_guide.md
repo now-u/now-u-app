@@ -4,7 +4,7 @@ In order to be able to link to different sections of the app, we need to define 
 
 # The recipie for an internal link
 
-1. Start with "iternal:"
+1. Start with "internal:"
 2. Add a destination. All possible destination will be listen in this file: https://github.com/now-u/now-u-app/blob/dev/lib/routes.dart
 
 For example if you want to navigate home, first you need to find this line in the above file

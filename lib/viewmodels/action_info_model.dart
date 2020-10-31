@@ -3,7 +3,9 @@ import 'package:app/viewmodels/base_campaign_model.dart';
 import 'package:app/locator.dart';
 import 'package:app/routes.dart';
 import 'package:app/services/auth.dart';
-import 'package:app/services/navigation.dart';
+import 'package:app/services/navigation_service.dart';
+
+import 'package:app/models/Action.dart';
 
 class ActionInfoViewModel extends BaseCampaignViewModel {
   final AuthenticationService _authenticationService =
@@ -31,5 +33,9 @@ class ActionInfoViewModel extends BaseCampaignViewModel {
     await _authenticationService.starAction(id);
     setBusy(false);
     notifyListeners();
+  }
+
+  void launchAction(CampaignAction action) {
+    _navigationService.launchLink(action.getLink());
   }
 }

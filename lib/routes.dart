@@ -130,7 +130,12 @@ Function initRoutes = (RouteSettings settings) {
       }
     case Routes.campaignInfo:
       {
+        print("navigating to campaignInfo");
+        print(args);
+        print(args is int);
+        print(args is String);
         if (args is int) {
+          print("navigating to campaignInfo");
           return customRoute(
               builder: (context) => CampaignInfo(
                     campaignId: args,

@@ -51,6 +51,7 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
 - #127 [feature]  Login popups added which notify users of error 
 - #135 [feature]  Campaign researchers (user_role_id=3) can now see future and
   disabled campaigns 
+- #136 [feature]  Links can now be user to link to different pages of the app
 
 ### Version 1.1.9 - Hot Fix
 

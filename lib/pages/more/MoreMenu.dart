@@ -6,7 +6,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app/assets/icons/customIcons.dart';
 
 import 'package:app/assets/components/customTile.dart';
-import 'package:app/assets/routes/customLaunch.dart';
+
+import 'package:app/locator.dart';
+import 'package:app/services/navigation_service.dart';
 
 import 'package:app/pages/more/ProfileTile.dart';
 import 'package:app/routes.dart';
@@ -84,6 +86,9 @@ final profileTiles = <Map>[
 ];
 
 class Profile extends StatelessWidget {
+  
+  final NavigationService _navigationService = locator<NavigationService>();
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<BaseModel>.reactive(
@@ -130,8 +135,8 @@ class Profile extends StatelessWidget {
                                       context, profileTiles[index]["page"]);
                                 } else if (profileTiles[index]["link"] !=
                                     null) {
-                                  customLaunch(
-                                      context, profileTiles[index]["link"],
+                                  _navigationService.launchLink(
+                                      profileTiles[index]["link"],
                                       isExternal: profileTiles[index]
                                               ['external'] ??
                                           false);
@@ -166,7 +171,6 @@ class Profile extends StatelessWidget {
                     SizedBox(height: 20),
 
                     // Dev Tools
-                    // TODO add this back in its super duper handy
                     model.currentUser.isStagingUser()
                       ? Column(
                           children: [
@@ -182,6 +186,12 @@ class Profile extends StatelessWidget {
                               child: ProfileTile("Log out", FontAwesomeIcons.code),
                               onTap: () {
                                 model.logout();
+                              }
+                            ),
+                            GestureDetector(
+                              child: ProfileTile("Navigate test", FontAwesomeIcons.code),
+                              onTap: () {
+                                _navigationService.launchLink("internal:learningTopic&id=-1");
                               }
                             ),
                           ]
