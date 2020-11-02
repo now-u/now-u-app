@@ -28,6 +28,10 @@ const PageStorageKey campaignPageKey = PageStorageKey("campaingKey");
 const curve = Curves.ease;
 const duration = Duration(milliseconds: 500);
 
+/// Shows all possible actions that the user can take
+///
+/// It looks like this ![Action Page](https://i.ibb.co/ZMrZyNg/Screenshot-2020-11-02-19-12-22-724-com-nowu-app.jpg)
+/// The items that when you click open actions are called [ActionSelectionItems]
 class ActionPage extends StatefulWidget {
   @override
   _ActionPageState createState() => _ActionPageState();
@@ -50,6 +54,7 @@ class _ActionPageState extends State<ActionPage> {
                   ),
                   body: model.selectedCampaigns.length == 0
                       ? Column(
+                          // If there are no actions then show No Actions yet
                           children: [
                             PageHeader(
                               title: "Actions",
@@ -60,8 +65,7 @@ class _ActionPageState extends State<ActionPage> {
                             ),
                             SizedBox(height: 15),
                             Expanded(
-                              child: Image.asset(
-                                  'assets/imgs/graphics/ilstr_empty@3x.png'),
+                              child: Image.asset('assets/imgs/graphics/ilstr_empty@3x.png'),
                             ),
                             Text(
                               "No actions yet",
@@ -70,8 +74,7 @@ class _ActionPageState extends State<ActionPage> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 50),
+                              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 50),
                               child: Text(
                                 "Join a campaign to see the actions you take to support it!",
                                 style: textStyleFrom(
@@ -85,13 +88,13 @@ class _ActionPageState extends State<ActionPage> {
                                 child: DarkButton(
                                   "See campaigns",
                                   onPressed: () {
-                                    Navigator.of(context)
-                                        .pushNamed(Routes.campaign);
+                                    Navigator.of(context).pushNamed(Routes.campaign);
                                   },
                                 ))
                           ],
                         )
                       : Column(
+                          // If there are actions then show those actions
                           children: <Widget>[
                             PageHeader(
                               title: "Actions",
@@ -110,28 +113,22 @@ class _ActionPageState extends State<ActionPage> {
                                         key: campaignPageKey,
                                         controller: _controller,
                                         itemCount: model.numberOfCampaignTies(),
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
+                                        itemBuilder: (BuildContext context, int index) {
+                                          //this loops over all the actions
                                           if (index == model.selectedActiveCampaigns.length) {
                                             return GestureDetector(
                                                 onTap: () {
-                                                  Navigator.of(context)
-                                                      .pushNamed(
-                                                          Routes.campaign);
+                                                  Navigator.of(context).pushNamed(Routes.campaign);
                                                 },
                                                 child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                      bottom: 10),
+                                                  padding: EdgeInsets.only(bottom: 10),
                                                   child: AddCampaignTile(),
                                                 ));
                                           }
                                           return Padding(
-                                            padding:
-                                                EdgeInsets.only(bottom: 10),
+                                            padding: EdgeInsets.only(bottom: 10),
                                             child: CampaignSelectionTile(
-                                              model.currentUser
-                                                  .filterSelectedCampaigns(
-                                                      model.campaigns)[index],
+                                              model.currentUser.filterSelectedCampaigns(model.campaigns)[index],
                                               height: CAMPAIGN_SELECT_HEIGHT,
                                             ),
                                           );
@@ -159,8 +156,7 @@ class _ActionPageState extends State<ActionPage> {
                                         ? ViewCampaigns()
                                         : ListView(
                                             shrinkWrap: true,
-                                            physics:
-                                                NeverScrollableScrollPhysics(),
+                                            physics: NeverScrollableScrollPhysics(),
                                             children: [
                                               Row(
                                                 children: [
@@ -177,36 +173,24 @@ class _ActionPageState extends State<ActionPage> {
                                                   ActiveDoneSelector(
                                                     "Completed",
                                                     () {
-                                                      model
-                                                          .setSelectedToCompleted();
+                                                      model.setSelectedToCompleted();
                                                     },
-                                                    model
-                                                        .isSelectionCompleted(),
+                                                    model.isSelectionCompleted(),
                                                   ),
                                                 ],
                                               ),
                                               ListView.builder(
                                                   shrinkWrap: true,
-                                                  physics:
-                                                      NeverScrollableScrollPhysics(),
-                                                  itemCount:
-                                                      model.actions.length,
-                                                  itemBuilder:
-                                                      (BuildContext context,
-                                                          int index) {
+                                                  physics: NeverScrollableScrollPhysics(),
+                                                  itemCount: model.actions.length,
+                                                  itemBuilder: (BuildContext context, int index) {
                                                     return Padding(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal: 0),
-                                                        child:
-                                                            ActionSelectionItem(
+                                                        padding: EdgeInsets.symmetric(horizontal: 0),
+                                                        child: ActionSelectionItem(
                                                           outerHpadding: 10,
-                                                          campaign:
-                                                              model.campaign,
-                                                          action: model
-                                                              .actions[index],
-                                                          backgroundColor:
-                                                              Colors.white,
+                                                          campaign: model.campaign,
+                                                          action: model.actions[index],
+                                                          backgroundColor: Colors.white,
                                                         ));
                                                   }),
                                             ],
@@ -218,8 +202,7 @@ class _ActionPageState extends State<ActionPage> {
             }));
   }
 
-  _navigateAndDisplaySelection(
-      BuildContext context, ActionViewModel model) async {
+  _navigateAndDisplaySelection(BuildContext context, ActionViewModel model) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
     final result = await Navigator.push(
@@ -232,6 +215,9 @@ class _ActionPageState extends State<ActionPage> {
   }
 }
 
+/// Tile to let user propose a new campaign
+///
+/// It looks a bit like this ![AddCampaignTile inside ActionPage](https://i.ibb.co/t20qvDc/new.jpg)
 class AddCampaignTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -269,13 +255,16 @@ class AddCampaignTile extends StatelessWidget {
 
 class SortScreen extends StatefulWidget {
   final Map<String, Map> selections;
+
   SortScreen(this.selections);
+
   @override
   _SortScreenState createState() => _SortScreenState();
 }
 
 class _SortScreenState extends State<SortScreen> {
   Map<String, Map> selections;
+
   initState() {
     selections = widget.selections;
     super.initState();
@@ -319,8 +308,7 @@ class _SortScreenState extends State<SortScreen> {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: timeBrackets.length,
-                separatorBuilder: (BuildContext context, int index) =>
-                    ListDividor(),
+                separatorBuilder: (BuildContext context, int index) => ListDividor(),
                 itemBuilder: (BuildContext context, int index) {
                   return CheckboxListTile(
                       dense: true,
@@ -330,8 +318,7 @@ class _SortScreenState extends State<SortScreen> {
                       value: selections['times'][timeBrackets[index]['text']],
                       onChanged: (bool value) {
                         setState(() {
-                          selections['times'][timeBrackets[index]['text']] =
-                              value;
+                          selections['times'][timeBrackets[index]['text']] = value;
                         });
                       });
                   //return Text(timeBrackets[index]['text']);
@@ -344,18 +331,14 @@ class _SortScreenState extends State<SortScreen> {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: CampaignActionSuperType.values.length,
-                separatorBuilder: (BuildContext context, int index) =>
-                    ListDividor(),
+                separatorBuilder: (BuildContext context, int index) => ListDividor(),
                 itemBuilder: (BuildContext context, int index) {
                   return CheckboxSelectionItem(
-                      title: campaignActionSuperTypeData[
-                          CampaignActionSuperType.values[index]]['name'],
-                      value: selections['categories']
-                          [CampaignActionSuperType.values[index]],
+                      title: campaignActionSuperTypeData[CampaignActionSuperType.values[index]]['name'],
+                      value: selections['categories'][CampaignActionSuperType.values[index]],
                       onChanged: (bool value) {
                         setState(() {
-                          selections['categories']
-                              [CampaignActionSuperType.values[index]] = value;
+                          selections['categories'][CampaignActionSuperType.values[index]] = value;
                         });
                       });
                   //return Text(timeBrackets[index]['text']);
@@ -403,10 +386,7 @@ class _SortScreenState extends State<SortScreen> {
               child: Center(
                   child: Text(
                 "Apply",
-                style: textStyleFrom(Theme.of(context).primaryTextTheme.button,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 17,
-                    color: Colors.white),
+                style: textStyleFrom(Theme.of(context).primaryTextTheme.button, fontWeight: FontWeight.w600, fontSize: 17, color: Colors.white),
               )),
             ),
             onPressed: () {
@@ -422,7 +402,9 @@ class _SortScreenState extends State<SortScreen> {
 
 class SelectionTitle extends StatelessWidget {
   final String text;
+
   SelectionTitle(this.text);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -454,7 +436,9 @@ class ActiveDoneSelector extends StatefulWidget {
   String text;
   Function onClick;
   bool selected;
+
   ActiveDoneSelector(this.text, this.onClick, this.selected);
+
   @override
   _ActiveDoneSelectorState createState() => _ActiveDoneSelectorState();
 }
