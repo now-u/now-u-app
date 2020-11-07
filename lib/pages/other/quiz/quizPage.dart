@@ -3,98 +3,61 @@ import 'dart:async';
 
 import 'package:app/models/Quiz.dart';
 
-import 'package:app/pages/other/quiz/quizCompletePage.dart';
+import 'package:stacked/stacked.dart';
+import 'package:app/viewmodels/quiz_view_model.dart';
 
-import 'package:app/assets/routes/customRoute.dart';
-
-class QuizPage extends StatefulWidget {
+class QuizPage extends StatelessWidget{
   final Quiz quiz;
-
   QuizPage(this.quiz);
-
-  @override
-  _QuizPageState createState() => _QuizPageState();
-}
-
-class _QuizPageState extends State<QuizPage> {
-  Question currentQuestion;
-  int currentQuestionIndex;
-  int score;
-  int selectAnswerIndex;
-  bool isCompleted;
-
-  @override
-  void initState() {
-    score = 0;
-    currentQuestionIndex = 0;
-    currentQuestion = widget.quiz.getQuestions()[currentQuestionIndex];
-    isCompleted = false;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Question ${currentQuestion}"),
-      ),
-      body: isCompleted
-          ? CompletedQuizPage(score, widget.quiz.getQuestions().length)
-          : Column(
-              children: <Widget>[
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.4,
-                  child: Center(
-                    child: Text(currentQuestion.getQuestion()),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2),
-                      itemCount: 4,
-                      itemBuilder: (BuildContext context, int index) {
-                        Color c = (index == selectAnswerIndex)
-                            ? (currentQuestion.getAnswers()[index].isCorrect)
-                                ? Colors.green
-                                : Colors.red
-                            : Colors.grey;
-                        return AnswerTile(currentQuestion.getAnswers()[index],
-                            color: c, onClick: (answer) {
-                          print("Selected answer = " + (index).toString());
-                          setState(() {
-                            selectAnswerIndex = index;
-                            if (currentQuestion
-                                .getAnswers()[index]
-                                .getIsCorrect()) {
-                              print("Increasing score");
-                              score += 1;
-                            }
-                          });
-                          Timer(Duration(seconds: 1), () {
-                            currentQuestionIndex += 1;
-                            if (currentQuestionIndex >=
-                                widget.quiz.getQuestions().length) {
-                              setState(() {
-                                isCompleted = true;
-                              });
-                            } else {
-                              setState(() {
-                                selectAnswerIndex = null;
-                                currentQuestion = widget.quiz
-                                    .getQuestions()[currentQuestionIndex];
-                              });
-                            }
-                          });
-                        });
-                      },
+        body: ViewModelBuilder<QuizViewModel>.reactive(
+            viewModelBuilder: () => QuizViewModel(),
+            onModelReady: (model) {
+              print(quiz);
+              model.setQuiz = quiz;
+              print("Here we go");
+            },
+            builder: (context, model, child) {
+              return Column(
+                  children: <Widget>[
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      child: Center(
+                        child: Text(model.currentQuestion.question),
+                      ),
                     ),
-                  ),
-                )
-              ],
-            ),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: GridView.builder(
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2),
+                          itemCount: model.numberOfAnswers,
+                          itemBuilder: (BuildContext context, int index) {
+                            Color c = (index == model.selectedAnswerIndex)
+                                ? (model.selectedAnswerIsCorrect)
+                                    ? Colors.green
+                                    : Colors.red
+                                : Colors.grey;
+                            return AnswerTile(model.currentQuestion.answers[index],
+                                color: c, 
+                                onClick: (Answer answer) {
+                                  model.answerQuestion(answer, index);
+                                  Timer(Duration(seconds: 1), () {
+                                    model.nextQuestion();
+                                  });
+                                });
+                          },
+                        ),
+                      ),
+                    )
+                  ],
+                );
+          }
+        )
     );
   }
 }
@@ -118,7 +81,7 @@ class AnswerTile extends StatelessWidget {
               child: Container(
                   color: color,
                   child: Center(
-                    child: Text(answer.getAnswer()),
+                    child: Text(answer.answerText),
                   )),
             )));
   }

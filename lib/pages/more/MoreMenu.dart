@@ -202,6 +202,12 @@ class Profile extends StatelessWidget {
                                 _navigationService.launchLink("internal:learningTopic&id=-1");
                               }
                             ),
+                            GestureDetector(
+                              child: ProfileTile("Quiz", FontAwesomeIcons.code),
+                              onTap: () {
+                                _navigationService.launchLink("internal:quizPage&id=1");
+                              }
+                            ),
                           ]
                         )
                       : Container()

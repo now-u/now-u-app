@@ -3,10 +3,17 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 
 class Quiz {
-  int id;
-  String title;
-  String description;
-  List<Question> questions;
+  int _id;
+  int get id => _id;
+
+  String _title;
+  String get title => _title;
+
+  String _description;
+  String get description => _description;
+
+  List<Question> _questions;
+  List<Question> get questions => _questions;
 
   Quiz.fromJson(Map json) {
     print("Id is");
@@ -14,29 +21,49 @@ class Quiz {
     print("Title");
     print(json['title']);
 
-    id = json['id'];
-    title = json['title'];
-    description = json['description'];
-    print("questions");
-    print(json['questions']);
-    questions = (json['questions'])
+    _id = json['id'];
+    _title = json['title'];
+    _description = json['description'];
+    _questions = (json['questions'])
         .map((e) => Question.fromJson(e))
         .toList()
         .cast<Question>();
   }
+}
 
-  int getId() {
-    return id;
-  }
+class Question {
+  String _question;
+  String get question => _question;
+  
+  List<Answer> _answers;
+  List<Answer> get answers => _answers;
 
-  String getTitle() {
-    return title;
-  }
-
-  List<Question> getQuestions() {
-    return questions;
+  Question.fromJson(Map json) {
+    _question = json['question'];
+    _answers = (json['answers'])
+        .map((e) => Answer.fromJson(e))
+        .toList()
+        .cast<Answer>();
   }
 }
+
+class Answer {
+  String _answerImage;
+  String get answerImage => _answerImage;
+
+  String _answerText;
+  String get answerText => _answerText;
+
+  bool _isCorrect;
+  bool get isCorrect => _isCorrect;
+
+  Answer.fromJson(Map json) {
+    _answerImage = json['answer_image_url'];
+    _answerText = json['answer_text'];
+    _isCorrect = json['is_correct'];
+  }
+}
+
 
 Future<Quiz> readQuizFromAssets(int id) async {
   print("Getting quiz");
@@ -52,7 +79,7 @@ Future<Quiz> readQuizFromAssets(int id) async {
       .toList()
       .cast<Quiz>();
   print("Got quizes");
-  Quiz quiz = quizes.where((q) => q.getId() == id).first;
+  Quiz quiz = quizes.where((q) => q.id == id).first;
   print(quiz);
   return quiz;
   //rootBundle.loadString('assets/json/quiz.json').then(
@@ -68,41 +95,3 @@ Future<Quiz> readQuizFromAssets(int id) async {
   //);
 }
 
-class Question {
-  String question;
-  List<Answer> answers;
-
-  Question.fromJson(Map json) {
-    question = json['question'];
-    answers = (json['answers'])
-        .map((e) => Answer.fromJson(e))
-        .toList()
-        .cast<Answer>();
-  }
-
-  String getQuestion() {
-    return question;
-  }
-
-  List<Answer> getAnswers() {
-    return answers;
-  }
-}
-
-class Answer {
-  String answer;
-  bool isCorrect;
-
-  Answer.fromJson(Map json) {
-    answer = json['answer'];
-    isCorrect = json['isCorrect'];
-  }
-
-  String getAnswer() {
-    return answer;
-  }
-
-  bool getIsCorrect() {
-    return isCorrect;
-  }
-}

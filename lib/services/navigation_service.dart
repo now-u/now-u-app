@@ -4,11 +4,14 @@ import 'package:app/routes.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/dialog_service.dart';
 import 'package:app/services/campaign_service.dart';
+import 'package:app/services/quiz_service.dart';
+
+import 'package:app/models/Learning.dart';
+import 'package:app/models/Action.dart';
+import 'package:app/models/Quiz.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:app/assets/components/darkButton.dart';
-import 'package:app/models/Learning.dart';
-import 'package:app/models/Action.dart';
 
 const String INTERNAL_PREFIX = "internal:";
       
@@ -16,7 +19,9 @@ const List ID_ROUTES = [
   Routes.campaignInfo,
   Routes.learningTopic,
   Routes.learningSingle,
-  Routes.actionInfo
+  Routes.actionInfo,
+  Routes.quizPage,
+  Routes.quizStart,
 ];
 
 
@@ -25,6 +30,7 @@ class NavigationService {
       locator<DialogService>();
   
   final CampaignService _campaignService = locator<CampaignService>();
+  final QuizService _quizService = locator<QuizService>();
 
   final GlobalKey<NavigatorState> navigatorKey =
       new GlobalKey<NavigatorState>();
@@ -106,6 +112,17 @@ class NavigationService {
           _campaignService.getLearningTopic(id).then(
             (LearningTopic topic) {
               navigateTo(route, arguments: topic);
+            }
+          ).catchError((e) {
+            _dialogService.showDialog(title: "Error", description: "Error navigating to route");
+          });
+          return;
+        }
+
+        if (route == Routes.quizPage || route == Routes.quizStart) {
+          _quizService.getQuiz(id).then(
+            (Quiz quiz) {
+              navigateTo(route, arguments: quiz);
             }
           ).catchError((e) {
             _dialogService.showDialog(title: "Error", description: "Error navigating to route");

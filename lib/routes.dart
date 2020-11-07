@@ -7,6 +7,7 @@ import 'package:app/models/Organisation.dart';
 import 'package:app/models/Notification.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Learning.dart';
+import 'package:app/models/Quiz.dart';
 
 import 'package:app/pages/more/morePages/FAQPage.dart';
 import 'package:app/pages/more/morePages/PartnersPage.dart';
@@ -26,6 +27,9 @@ import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
 import 'package:app/pages/campaign/CampaignInfo/CampaignDetails.dart';
 import 'package:app/pages/campaign/AllCampaignsPage.dart';
 import 'package:app/pages/campaign/PastCampaignActionPage.dart';
+import 'package:app/pages/other/quiz/quizStart.dart'; 
+import 'package:app/pages/other/quiz/quizPage.dart'; 
+import 'package:app/pages/other/quiz/quizCompletePage.dart'; 
 
 class Routes {
   // Intro
@@ -56,6 +60,11 @@ class Routes {
   static const info = "info";
   static const webview = "webview";
   static const notification = "notification";
+
+  // Quiz
+  static const quizStart = "quizStart";
+  static const quizCompleted = "quizCompleted";
+  static const quizPage = "quizPage";
 
   // Learning
   static const learningAll = "learning";
@@ -269,6 +278,36 @@ Function initRoutes = (RouteSettings settings) {
         if (args is InternalNotification) {
           return customRoute(
               builder: (context) => NotificationPage(args), settings: settings);
+        }
+        break;
+      }
+
+    // Quiz
+    case Routes.quizStart:
+      {
+        if (args is int) {
+          return customRoute(
+              builder: (context) => QuizStartPage(args), settings: settings);
+        }
+        break;
+      }
+    
+    case Routes.quizPage:
+      {
+        print("Navigating in quizPage");
+        if (args is Quiz) {
+          print("Navigating in quizPage");
+          return customRoute(
+              builder: (context) => QuizPage(args), settings: settings);
+        }
+        break;
+      }
+    
+    case Routes.quizCompleted:
+      {
+        if (args is QuizCompletedPageArgumnets) {
+          return customRoute(
+              builder: (context) => QuizCompletedPage(args), settings: settings);
         }
         break;
       }
