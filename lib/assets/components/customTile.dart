@@ -11,9 +11,9 @@ BoxShadow customTileBoxShadow(bool onWhiteBackground) => BoxShadow(
       blurRadius: shadowBlurRadius,
     );
 
-BorderRadius tileBorderRadius({double borderRadius}) =>
-    BorderRadius.all(Radius.circular(borderRadius ?? 8));
+BorderRadius tileBorderRadius({double borderRadius}) => BorderRadius.all(Radius.circular(borderRadius ?? 8));
 
+/// a widget with our default shadow and border radius
 class CustomTile extends StatelessWidget {
   final Widget child;
   final bool onWhiteBackground;
@@ -32,12 +32,9 @@ class CustomTile extends StatelessWidget {
     return GestureDetector(
       onTap: onClick,
       child: Container(
-        decoration: BoxDecoration(
-            color: color ?? Colors.white,
-            borderRadius: tileBorderRadius(borderRadius: borderRadius),
-            boxShadow: [
-              customTileBoxShadow(onWhiteBackground ?? false),
-            ]),
+        decoration: BoxDecoration(color: color ?? Colors.white, borderRadius: tileBorderRadius(borderRadius: borderRadius), boxShadow: [
+          customTileBoxShadow(onWhiteBackground ?? false),
+        ]),
         child: ClipRRect(
           borderRadius: tileBorderRadius(borderRadius: borderRadius),
           child: child,
