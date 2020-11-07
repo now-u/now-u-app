@@ -31,6 +31,11 @@ class ActionInfoArguments {
   });
 }
 
+///This full page widget shows details about one action
+///
+/// When an user clicks on [ActionSelectionItem] ( which are the rows of
+/// [ActionPage] , the user will land on this widget , this page looks a bit like this
+/// ![ActionInfo](https://i.ibb.co/vZ6bTkD/IMG-20201103-072239.jpg)
 class ActionInfo extends StatefulWidget {
   final ActionInfoArguments args;
   ActionInfo(this.args);
@@ -58,10 +63,8 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
     return ViewModelBuilder<ActionInfoViewModel>.reactive(
         viewModelBuilder: () => ActionInfoViewModel(),
         builder: (context, model, child) {
-          bool completed =
-              model.currentUser.getCompletedActions().contains(_action.getId());
-          bool starred =
-              model.currentUser.getStarredActions().contains(_action.getId());
+          bool completed = model.currentUser.getCompletedActions().contains(_action.getId());
+          bool starred = model.currentUser.getStarredActions().contains(_action.getId());
           return Scaffold(
               appBar: CustomAppBar(
                 text: _action.getSuperTypeName(),
@@ -72,13 +75,16 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
               body: Stack(children: [
                 ListView(
                   children: [
+                    Hero(
+                      tag: _action.getId(),
+                      child: Material(
+                        child: Text(_action.getTitle()),
+                      ),
+                    ),
                     Container(
                       width: double.infinity,
                       color: _action.getSuperTypeData()['iconBackgroundColor'],
-                      child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 20),
-                          child: Text(_action.getTitle())),
+                      child: Padding(padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20), child: Text(_action.getTitle())),
                     ),
                     Container(
                       height: completed ? null : 10,
@@ -97,9 +103,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                 Text(
                                   "Done",
                                   style: textStyleFrom(
-                                    Theme.of(context)
-                                        .primaryTextTheme
-                                        .bodyText1,
+                                    Theme.of(context).primaryTextTheme.bodyText1,
                                     color: Colors.white,
                                   ),
                                 ),
@@ -118,8 +122,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                               children: [
                                 Icon(
                                   _action.getActionIconMap()['icon'],
-                                  color:
-                                      _action.getActionIconMap()['iconColor'],
+                                  color: _action.getActionIconMap()['iconColor'],
                                 ),
                                 SizedBox(width: 6),
                                 Icon(FontAwesomeIcons.clock, size: 12),
@@ -129,25 +132,19 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                             ),
                             GestureDetector(
                                 onTap: () {
-                                  Navigator.of(context).pushNamed(
-                                      Routes.campaignInfo,
-                                      arguments: _campaign.getId());
+                                  Navigator.of(context).pushNamed(Routes.campaignInfo, arguments: _campaign.getId());
                                 },
                                 child: Container(
                                   height: 20,
                                   child: Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 5),
+                                    padding: EdgeInsets.symmetric(horizontal: 5),
                                     child: Text(
                                       "See the campaign",
                                       style: textStyleFrom(
-                                        Theme.of(context)
-                                            .primaryTextTheme
-                                            .headline4,
+                                        Theme.of(context).primaryTextTheme.headline4,
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
-                                        color:
-                                            Theme.of(context).primaryColorDark,
+                                        color: Theme.of(context).primaryColorDark,
                                       ),
                                     ),
                                   ),
@@ -159,18 +156,13 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
 
                     // Text
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: H_PADDING, vertical: 0),
+                      padding: EdgeInsets.symmetric(horizontal: H_PADDING, vertical: 0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text("What should I do?",
-                              style:
-                                  Theme.of(context).primaryTextTheme.headline4),
+                          Text("What should I do?", style: Theme.of(context).primaryTextTheme.headline4),
                           SizedBox(height: 10),
-                          Text(_action.getWhatDescription() ?? "",
-                              style:
-                                  Theme.of(context).primaryTextTheme.bodyText1),
+                          Text(_action.getWhatDescription() ?? "", style: Theme.of(context).primaryTextTheme.bodyText1),
                         ],
                       ),
                     ),
@@ -190,13 +182,14 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                     ),
                     Align(
                       alignment: Alignment.topCenter,
-                      child: DarkButton("Take action",
-                          size: DarkButtonSize.Large,
-                          style: DarkButtonStyle.Secondary,
-                          onPressed: () {
-                            customLaunch(context, _action.getLink());
-                          },
-                        ),
+                      child: DarkButton(
+                        "Take action",
+                        size: DarkButtonSize.Large,
+                        style: DarkButtonStyle.Secondary,
+                        onPressed: () {
+                          customLaunch(context, _action.getLink());
+                        },
+                      ),
                     ),
 
                     !completed
@@ -206,8 +199,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                             children: [
                               //Dividor
                               Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 20),
+                                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                                   child: Container(
                                     width: double.infinity,
                                     color: Color.fromRGBO(222, 223, 232, 1),
@@ -220,17 +212,12 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                 padding: EdgeInsets.all(15),
                                 child: Text(
                                   "Then",
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .headline2,
+                                  style: Theme.of(context).primaryTextTheme.headline2,
                                 ),
                               )),
                               Align(
                                 alignment: Alignment.topCenter,
-                                child: DarkButton("Mark as done",
-                                    size: DarkButtonSize.Large,
-                                    style: DarkButtonStyle.Secondary,
-                                    onPressed: () {
+                                child: DarkButton("Mark as done", size: DarkButtonSize.Large, style: DarkButtonStyle.Secondary, onPressed: () {
                                   setState(() {
                                     completed = true;
                                     model.completeAction(_action.getId());
@@ -243,8 +230,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                         Padding(
                             padding: EdgeInsets.only(top: 20, bottom: 10),
                             child: Container(
-                                color: _action
-                                    .getSuperTypeData()['iconBackgroundColor'],
+                                color: _action.getSuperTypeData()['iconBackgroundColor'],
                                 child: Padding(
                                   padding: const EdgeInsets.all(15.0),
                                   child: Column(
@@ -252,42 +238,27 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                       Text(
                                         "Many small actions have a big impact",
                                         textAlign: TextAlign.center,
-                                        style: Theme.of(context)
-                                            .primaryTextTheme
-                                            .headline2,
+                                        style: Theme.of(context).primaryTextTheme.headline2,
                                       ),
                                       SizedBox(height: 10),
                                       RichText(
                                         textAlign: TextAlign.center,
                                         text: TextSpan(
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .bodyText1,
+                                          style: Theme.of(context).primaryTextTheme.bodyText1,
                                           children: [
                                             TextSpan(
-                                              text:
-                                                  "You have completed this action and contributed to the goals of the ",
+                                              text: "You have completed this action and contributed to the goals of the ",
                                             ),
                                             TextSpan(
                                                 text: _campaign.getTitle(),
                                                 style: textStyleFrom(
-                                                  Theme.of(context)
-                                                      .primaryTextTheme
-                                                      .bodyText1,
-                                                  color: Theme.of(context)
-                                                      .buttonColor,
+                                                  Theme.of(context).primaryTextTheme.bodyText1,
+                                                  color: Theme.of(context).buttonColor,
                                                 ),
-                                                recognizer:
-                                                    TapGestureRecognizer()
-                                                      ..onTap = () {
-                                                        Navigator.of(context)
-                                                            .pushNamed(
-                                                                Routes
-                                                                    .campaignInfo,
-                                                                arguments:
-                                                                    _campaign
-                                                                        .getId());
-                                                      }),
+                                                recognizer: TapGestureRecognizer()
+                                                  ..onTap = () {
+                                                    Navigator.of(context).pushNamed(Routes.campaignInfo, arguments: _campaign.getId());
+                                                  }),
                                             TextSpan(
                                               text: " campaign.",
                                             ),
@@ -295,9 +266,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                         ),
                                       ),
                                       SizedBox(height: 15),
-                                      Icon(FontAwesomeIcons.calendar,
-                                          color: Theme.of(context).primaryColor,
-                                          size: 60),
+                                      Icon(FontAwesomeIcons.calendar, color: Theme.of(context).primaryColor, size: 60),
                                       SizedBox(height: 20),
                                     ],
                                   ),
@@ -306,45 +275,36 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                     SizedBox(height: 30),
 
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: H_PADDING, vertical: 0),
+                      padding: EdgeInsets.symmetric(horizontal: H_PADDING, vertical: 0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text("Why is this useful?",
-                              style:
-                                  Theme.of(context).primaryTextTheme.headline4),
+                          Text("Why is this useful?", style: Theme.of(context).primaryTextTheme.headline4),
                           SizedBox(height: 10),
-                          Text(_action.getWhyDescription() ?? "",
-                              style:
-                                  Theme.of(context).primaryTextTheme.bodyText1),
+                          Text(_action.getWhyDescription() ?? "", style: Theme.of(context).primaryTextTheme.bodyText1),
                         ],
                       ),
                     ),
 
                     SizedBox(height: 20),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          completed
-                              ? CustomTextButton("Mark as not done",
-                                  fontSize: 14, onClick: () {
-                                  model.removeActionStatus(_action.getId());
-                                })
-                              : Container(),
-                          //TextButton("Hide this action", fontSize: 14,
-                          //    onClick: () {
-                          //  showDialog(
-                          //    context: context,
-                          //    barrierDismissible: true,
-                          //    builder: (_) =>
-                          //        RejectDialogue(_action, viewModel),
-                          //  );
-                          //}),
+                    Row(mainAxisAlignment: MainAxisAlignment.end, mainAxisSize: MainAxisSize.max, children: [
+                      completed
+                          ? CustomTextButton("Mark as not done", fontSize: 14, onClick: () {
+                              model.removeActionStatus(_action.getId());
+                            })
+                          : Container(),
+                      //TextButton("Hide this action", fontSize: 14,
+                      //    onClick: () {
+                      //  showDialog(
+                      //    context: context,
+                      //    barrierDismissible: true,
+                      //    builder: (_) =>
+                      //        RejectDialogue(_action, viewModel),
+                      //  );
+                      //}),
 
-                          SizedBox(width: 10),
-                        ]),
+                      SizedBox(width: 10),
+                    ]),
                     SizedBox(height: 15),
                     !completed
                         ? Container()
@@ -380,9 +340,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Icon(
-                            starred
-                                ? CustomIcons.ic_todo_remove
-                                : CustomIcons.ic_todo_add,
+                            starred ? CustomIcons.ic_todo_remove : CustomIcons.ic_todo_add,
                             color: Colors.white,
                             size: 30,
                           ),
@@ -390,36 +348,22 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                           completed
                               ? Text(
                                   "You completed this action",
-                                  style: textStyleFrom(
-                                      Theme.of(context).primaryTextTheme.button,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 17,
-                                      color: Colors.white),
+                                  style: textStyleFrom(Theme.of(context).primaryTextTheme.button, fontWeight: FontWeight.w600, fontSize: 17, color: Colors.white),
                                 )
                               : Text(
-                                  starred
-                                      ? "Remove from To-Dos"
-                                      : "Add to my to-do list",
-                                  style: textStyleFrom(
-                                      Theme.of(context).primaryTextTheme.button,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 17,
-                                      color: Colors.white),
+                                  starred ? "Remove from To-Dos" : "Add to my to-do list",
+                                  style: textStyleFrom(Theme.of(context).primaryTextTheme.button, fontWeight: FontWeight.w600, fontSize: 17, color: Colors.white),
                                 ),
                         ],
                       )),
                     ),
                     onPressed: () {
-                      starred
-                          ? model.removeActionStatus(_action.getId())
-                          : model.starAction(_action.getId());
+                      starred ? model.removeActionStatus(_action.getId()) : model.starAction(_action.getId());
                       setState(() {
                         starred = !starred;
                       });
                     },
-                    color: completed
-                        ? Color.fromRGBO(155, 159, 177, 1)
-                        : Theme.of(context).primaryColor,
+                    color: completed ? Color.fromRGBO(155, 159, 177, 1) : Theme.of(context).primaryColor,
                   ),
                 )
               ]));
@@ -460,8 +404,7 @@ class _RejectDialougeState extends State<RejectDialogue> {
                       Navigator.pop(context);
                     }),
               ),
-              Container(
-                  child: Text("Let us know why this action is not for you")),
+              Container(child: Text("Let us know why this action is not for you")),
               Container(
                 child: ListView.builder(
                     shrinkWrap: true,

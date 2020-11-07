@@ -8,20 +8,7 @@ import 'package:app/assets/icons/customIcons.dart';
 
 enum CampaignActionSuperType { GetInvolved, Learn, Advoacte, RaiseMoney }
 
-enum CampaignActionType {
-  Volunteer,
-  Donation,
-  Fundraise,
-  Awareness,
-  Petition,
-  Behaviour,
-  Contact,
-  Protest,
-  Connect,
-  Learn,
-  Quiz,
-  Other
-}
+enum CampaignActionType { Volunteer, Donation, Fundraise, Awareness, Petition, Behaviour, Contact, Protest, Connect, Learn, Quiz, Other }
 
 List<String> rejectionReasons = [
   "It requires too much effort",
@@ -195,21 +182,18 @@ CampaignActionType campaignActionTypeFromString(String s) {
   return t;
 }
 
-Tuple3<String, String, String> generateCampaingActionDesc(
-    CampaignActionType t) {
+Tuple3<String, String, String> generateCampaingActionDesc(CampaignActionType t) {
   print("Getting campaing aciton desc");
   if (campaignActionTypeData.containsKey(t)) {
     print("Found key");
     print(campaignActionTypeData[t]['name']);
     print("Looking for the thing");
-    return Tuple3(
-        campaignActionTypeData[t]['verb'],
-        campaignActionTypeData[t]['pastVerb'],
-        campaignActionTypeData[t]['displayName']);
+    return Tuple3(campaignActionTypeData[t]['verb'], campaignActionTypeData[t]['pastVerb'], campaignActionTypeData[t]['displayName']);
   }
   return Tuple3("Complete", "Completed", "special action");
 }
 
+/// Blueprint of actions
 class CampaignAction {
   int id;
   String title;
@@ -243,9 +227,7 @@ class CampaignAction {
     time = json['time'] == null ? 5.0 : json['time'].toDouble();
     type = campaignActionTypeFromString(json['type']);
     createdAt = DateTime.parse(json['created_at']);
-    releasedAt = json['release_date'] == null
-        ? null
-        : DateTime.parse(json['release_date']);
+    releasedAt = json['release_date'] == null ? null : DateTime.parse(json['release_date']);
   }
 
   Map toJson() => {
@@ -275,10 +257,17 @@ class CampaignAction {
     return link;
   }
 
+  ///Returns the actual time required to do an Action in minutes (Probably )
+  ///
+  /// ![getTime vs getTimeText](https://i.ibb.co/7QkhGf6/IMG-20201107-093713.jpg)
   double getTime() {
     return time;
   }
 
+  /// Gives How much Time is required in String
+  ///
+  /// if the time involved is something like 3 mins , the [getTimeText()] Returns "1-5mins"
+  /// If the time is something like 100 or 2000mins then this function returns "Long Term"
   String getTimeText() {
     return timeBrackets.firstWhere((b) => b['maxTime'] > time)['text'];
   }
@@ -295,23 +284,18 @@ class CampaignAction {
     return campaignActionSuperTypeData[campaignActionTypeData[type]['type']];
   }
 
+  ///Gives Strings like "Get Involved" , "Raise Money" , "Advocate" like shown here ![](https://i.ibb.co/BZQnvwD/image.png)
   String getSuperTypeName() {
-    return campaignActionSuperTypeData[campaignActionTypeData[type]['type']]
-        ['name'];
+    return campaignActionSuperTypeData[campaignActionTypeData[type]['type']]['name'];
   }
 
+  /// Returns information about Icon , Icon color , Icon Background , used in [ActionSelectionItem]
   Map getActionIconMap() {
     if (campaignActionTypeData.containsKey(type)) {
       return {
-        'icon':
-            campaignActionSuperTypeData[campaignActionTypeData[type]['type']]
-                ['icon'],
-        'iconColor':
-            campaignActionSuperTypeData[campaignActionTypeData[type]['type']]
-                ['iconColor'],
-        'iconBackgroundColor':
-            campaignActionSuperTypeData[campaignActionTypeData[type]['type']]
-                ['iconBackgroundColor'],
+        'icon': campaignActionSuperTypeData[campaignActionTypeData[type]['type']]['icon'],
+        'iconColor': campaignActionSuperTypeData[campaignActionTypeData[type]['type']]['iconColor'],
+        'iconBackgroundColor': campaignActionSuperTypeData[campaignActionTypeData[type]['type']]['iconBackgroundColor'],
       };
     }
     return defaultCampaignActionTypeData;
@@ -319,13 +303,9 @@ class CampaignAction {
 
   bool isNew() {
     if (releasedAt == null) {
-      return DateTime.now().difference(createdAt).compareTo(Duration(days: 2)) <
-          0;
+      return DateTime.now().difference(createdAt).compareTo(Duration(days: 2)) < 0;
     } else {
-      return DateTime.now()
-              .difference(releasedAt)
-              .compareTo(Duration(days: 2)) <
-          0;
+      return DateTime.now().difference(releasedAt).compareTo(Duration(days: 2)) < 0;
     }
   }
 }
