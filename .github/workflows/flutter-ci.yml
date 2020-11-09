@@ -11,7 +11,7 @@ on:
 # on: push    # Default will running for every branch.
     
 jobs:
-  build:
+  build-android:
     if: false
     # This job will run on ubuntu virtual machine
     runs-on: ubuntu-latest
@@ -42,7 +42,7 @@ jobs:
         path: build/app/outputs/apk/release/app-release.apk
 
 
-  build:
+  build-ios:
     runs-on: macos-latest
     steps:  
     - uses: actions/checkout@v1
