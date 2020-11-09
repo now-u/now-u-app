@@ -12,6 +12,7 @@ on:
     
 jobs:
   build:
+    if: false
     # This job will run on ubuntu virtual machine
     runs-on: ubuntu-latest
     steps:
@@ -39,3 +40,27 @@ jobs:
       with:
         name: release-apk
         path: build/app/outputs/apk/release/app-release.apk
+
+
+  build:
+    runs-on: macos-latest
+    steps:  
+    - uses: actions/checkout@v1
+    
+    # Setup the flutter environment.
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: 'stable' # 'dev', 'alpha', default to: 'stable'
+        # flutter-version: '1.12.x' # you can also specify exact version of flutter
+    
+    # Get flutter dependencies.
+    - run: flutter pub get
+    
+    # Build apk.
+    - run: flutter build ios
+    
+    # Upload generated apk to the artifacts.
+    - uses: actions/upload-artifact@v1
+      with:
+        name: release-ios
+        path: build/app/outputs/ios/release/app-release.ipa
