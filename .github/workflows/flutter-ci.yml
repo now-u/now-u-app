@@ -45,8 +45,19 @@ jobs:
   build-ios:
     runs-on: macos-latest
     steps:  
-    - uses: actions/checkout@v1
+    - name: Checkout repository
+      uses: actions/checkout@v1
     
+    - name: Install gpg
+      run: brew install gnupg
+
+    - name: Setup provisioning profile
+      env:
+        IOS_GPG_KEY_PROV: ${{ secrets.IOS_GPG_KEY_PROV }}
+        IOS_GPG_KEY_P12: ${{ secrets.IOS_GPG_KEY_P12 }}
+        IOS_P12_KEY: ${{ secrets.IOS_P12_KEY }}
+      run: ./.github/secrets/decrypt_secrets.sh
+
     # Setup the flutter environment.
     - uses: subosito/flutter-action@v1
       with:

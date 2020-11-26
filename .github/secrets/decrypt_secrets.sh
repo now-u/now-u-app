@@ -1,8 +1,8 @@
 #!/bin/sh
 set -eo pipefail
 
-gpg --quiet --batch --yes --decrypt --passphrase="$IOS_KEYS" --output ./.github/secrets/nowu.mobileprovision ./.github/secrets/nowu.mobileprovision.gpg
-gpg --quiet --batch --yes --decrypt --passphrase="$IOS_KEYS" --output ./.github/secrets/AppStore-Distribution.p12 ./.github/secrets/AppStore-Distribution.p12.gpg
+gpg --quiet --batch --yes --decrypt --passphrase="$IOS_GPG_KEY_PROV" --output ./.github/secrets/nowu.mobileprovision ./.github/secrets/nowu.mobileprovision.gpg
+gpg --quiet --batch --yes --decrypt --passphrase="$IOS_GPG_KEY_P12" --output ./.github/secrets/AppStore-Distribution.p12 ./.github/secrets/AppStore-Distribution.p12.gpg
 
 mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
 
