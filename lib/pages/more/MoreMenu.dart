@@ -9,6 +9,7 @@ import 'package:app/assets/components/customTile.dart';
 
 import 'package:app/locator.dart';
 import 'package:app/services/navigation_service.dart';
+import 'package:app/services/location_service.dart';
 
 import 'package:app/pages/more/ProfileTile.dart';
 import 'package:app/routes.dart';
@@ -96,6 +97,7 @@ final profileTiles = <Map>[
 class Profile extends StatelessWidget {
   
   final NavigationService _navigationService = locator<NavigationService>();
+  final LocationService _locationService = locator<LocationService>();
 
   @override
   Widget build(BuildContext context) {
@@ -200,6 +202,12 @@ class Profile extends StatelessWidget {
                               child: ProfileTile("Navigate test", FontAwesomeIcons.code),
                               onTap: () {
                                 _navigationService.launchLink("internal:learningTopic&id=-1");
+                              }
+                            ),
+                            GestureDetector(
+                              child: ProfileTile("Get Location", FontAwesomeIcons.code),
+                              onTap: () {
+                                _locationService.getCurrentAddress();
                               }
                             ),
                           ]
