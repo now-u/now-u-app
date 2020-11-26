@@ -12,7 +12,7 @@ on:
     
 jobs:
   build-android:
-    if: true
+    if: false
     # This job will run on ubuntu virtual machine
     runs-on: ubuntu-latest
     steps:
