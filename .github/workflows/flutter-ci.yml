@@ -79,10 +79,12 @@ jobs:
         ln -s ../Runner.app
         cd ..
         zip -0 -y -r app.ipa Payload 
-    - run: codesign --version
+    - run: |
+        codesign -f -s "Apple Distribution: Daniil Shumko (493V9KUDF8)" app.ipa
+        codesign -vv app.ipa
     
     # Upload generated apk to the artifacts.
     - uses: actions/upload-artifact@v1
       with:
         name: release-ios
-        path: build/ios/iphoneos
+        path: build/ios/iphoneos/app.ipa
