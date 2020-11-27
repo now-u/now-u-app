@@ -96,7 +96,6 @@ jobs:
         path: build/ios/iphoneos/app.ipa
 
     - name: Publishing app to TestFlight
-        if: success()
         env:
           APPLEID_USERNAME: ${{ secrets.APPLEID_USERNAME }}
           APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
