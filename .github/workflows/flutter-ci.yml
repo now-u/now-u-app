@@ -80,7 +80,8 @@ jobs:
         cd ..
         zip -0 -y -r app.ipa Payload 
     - run: |
-        codesign -f -s "Apple Distribution: Daniil Shumko (493V9KUDF8)" app.ipa
+        cd build/ios/iphoneos
+        codesign -f -s "A019BA4D787DD7F43F51DFFA53520CA327376967" app.ipa
         codesign -vv app.ipa
     
     # Upload generated apk to the artifacts.
