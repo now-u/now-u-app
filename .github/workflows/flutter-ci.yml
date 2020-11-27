@@ -67,25 +67,24 @@ jobs:
     
     # Get flutter dependencies.
     - run: flutter pub get
-    
-    # Build ios app without signing.
-    - run: flutter build ios --release --no-codesign --verbose
 
-    # Create ipa and sign it
     - run: |
-        cd build/ios/iphoneos
-        mkdir Payload
-        cd Payload
-        ln -s ../Runner.app
-        cd ..
-        zip -0 -y -r app.ipa Payload 
-    - run: |
-        cd build/ios/iphoneos
-        codesign -f -s "A019BA4D787DD7F43F51DFFA53520CA327376967" app.ipa
-        codesign -vv app.ipa
+        fastlane action sigh
     
-    # Upload generated apk to the artifacts.
-    - uses: actions/upload-artifact@v1
-      with:
-        name: release-ios
-        path: build/ios/iphoneos/app.ipa
+    # # Build ios app without signing.
+    # - run: flutter build ios --release --no-codesign
+
+    # # Create ipa and sign it
+    # - run: |
+    #     cd build/ios/iphoneos
+    #     mkdir Payload
+    #     cd Payload
+    #     ln -s ../Runner.app
+    #     cd ..
+    #     zip -0 -y -r app.ipa Payload 
+    
+    # # Upload generated apk to the artifacts.
+    # - uses: actions/upload-artifact@v1
+    #   with:
+    #     name: release-ios
+    #     path: build/ios/iphoneos/app.ipa
