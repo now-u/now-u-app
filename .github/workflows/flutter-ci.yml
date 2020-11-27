@@ -65,28 +65,40 @@ jobs:
         channel: 'dev' # 'dev', 'alpha', default to: 'stable'
         # flutter-version: '1.12.x' # you can also specify exact version of flutter
     
+    - name: Flutter doctor
+      run: flutter doctor
+
     # Get flutter dependencies.
     - run: flutter pub get
     
-    # Build ios app without signing.
-    - run: flutter build ios --release --no-codesign
+    - name: Build iOS app without signing
+      run: flutter build ios --release --no-codesign
 
-    # Create ipa and sign it
-    - run: |
+    - name: Creating IPA file
+      run: |
         cd build/ios/iphoneos
         mkdir Payload
-        cd Payload
-        ln -s ../Runner.app
-        cd ..
+        mv Runner.app Payload/
         zip -0 -y -r app.ipa Payload 
-    - run: |
+
+    - name: Sign IPA
+      run: |
         cd build/ios/iphoneos
         security unlock-keychain -p "" ~/Library/Keychains/build.keychain
-        codesign -f -s "A019BA4D787DD7F43F51DFFA53520CA327376967" -v app.ipa
+        codesign -f -s "${{ secrets.IOS_CERT_SHA1 }}" -v app.ipa
         codesign -vv app.ipa
-    
+
     # Upload generated apk to the artifacts.
-    - uses: actions/upload-artifact@v1
+    - name: Upload IPA artifact
+      uses: actions/upload-artifact@v1
       with:
         name: release-ios
         path: build/ios/iphoneos/app.ipa
+
+    - name: Publishing app to TestFlight
+        if: success()
+        env:
+          APPLEID_USERNAME: ${{ secrets.APPLEID_USERNAME }}
+          APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
+          IPA_PATH: "build/ios/iphoneos/app.ipa"
+        run: ./.github/scripts/publish_testflight.sh
