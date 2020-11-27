@@ -70,9 +70,19 @@ jobs:
     
     # Build ios app without signing.
     - run: flutter build ios --release --no-codesign --verbose
+
+    # Create ipa and sign it
+    - run: |
+        cd build/ios/iphoneos
+        mkdir Payload
+        cd Payload
+        ln -s ../Runner.app
+        cd ..
+        zip -0 -y -r app.ipa Payload 
+    - run: codesign --version
     
     # Upload generated apk to the artifacts.
     - uses: actions/upload-artifact@v1
       with:
         name: release-ios
-        path: build/ios
+        path: build/ios/iphoneos
