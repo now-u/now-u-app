@@ -60,9 +60,10 @@ class AccountDetailsViewModel extends BaseModel {
   }
 
   void delete() async {
+    print("Delete method from model fired");
     setBusy(true);
-    print("Delete method fired");
-    await _authenticationService.deleteUserAccount();
+//    await _authenticationService.deleteUserAccount();
+    logout();
     setBusy(false);
     notifyListeners();
   }
