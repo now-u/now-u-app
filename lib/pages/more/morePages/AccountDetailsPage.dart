@@ -1,6 +1,7 @@
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/inputs.dart';
+import 'package:app/pages/more/morePages/ConfirmationModal.dart';
 import 'package:flutter/material.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/viewmodels/account_details_model.dart';
@@ -219,7 +220,22 @@ class AccountDetailsPage extends StatelessWidget {
                         ),
                         CustomTextButton(
                           "Delete my account",
-                          onClick: model.delete,
+                          onClick: () {
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (context) => SingleChildScrollView(
+                                child: Container(
+                                  // This off sets content from keyboard if visible
+                                  padding: EdgeInsets.only(
+                                      bottom: MediaQuery.of(context)
+                                          .viewInsets
+                                          .bottom),
+                                  child: ConfirmationModal(),
+                                ),
+                              ),
+                            );
+                          },
                         ),
                         Expanded(
                           child: SizedBox(

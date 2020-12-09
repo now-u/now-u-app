@@ -185,23 +185,21 @@ class AuthenticationService {
   Future<bool> deleteUserAccount() async {
     try {
       print("Delete method from Authentication Service fired");
-      switchToStagingBranch(); // Changed to staging api here
-      String testingToken = "3ac4e8d88113";
-      http.Response response = await http.delete(
-        domainPrefix + 'users/me',
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-//          'token': currentUser.getToken(),
-          'token': testingToken,
-        },
-      );
-      if (response.statusCode != 200) {
-        print("Returned false, no error but status not 200");
-        return false;
-      }
-      print("Returned true, account should be deleted");
-      print(response.body);
-      print(response.statusCode);
+//      switchToStagingBranch(); // Changed to staging api
+//      String testingToken = "3ac4e8d88113";
+//      http.Response response = await http.delete(
+//        domainPrefix + 'users/me',
+//        headers: <String, String>{
+//          'Content-Type': 'application/json; charset=UTF-8',
+////          'token': currentUser.getToken(),
+//          'token': testingToken,
+//        },
+//      );
+//      if (response.statusCode != 200) {
+//        print("Returned false, no error but status not 200");
+//        return false;
+//      }
+//      print("Returned true, account should be deleted");
       return true;
     } catch (e) {
       print("Error");
