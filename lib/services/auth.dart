@@ -184,17 +184,17 @@ class AuthenticationService {
 
   Future<bool> deleteUserAccount() async {
     try {
-      print("Deleting user account");
-      http.Response response = await http.delete(
-        domainPrefix + 'users/me',
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'token': currentUser.getToken(),
-        },
-      );
-      if (response.statusCode != 200) {
-        return false;
-      }
+      print("Delete method from Authentication Service fired");
+//      http.Response response = await http.delete(
+//        domainPrefix + 'users/me',
+//        headers: <String, String>{
+//          'Content-Type': 'application/json; charset=UTF-8',
+//          'token': currentUser.getToken(),
+//        },
+//      );
+//      if (response.statusCode != 200) {
+//        return false;
+//      }
       return true;
     } catch (e) {
       print("Error");

@@ -6,6 +6,7 @@ import 'package:app/locator.dart';
 import 'package:app/services/auth.dart';
 import 'package:app/services/google_location_search_service.dart';
 import 'package:app/services/organisation_service.dart';
+import 'package:app/services/analytics.dart';
 
 class AccountDetailsViewModel extends BaseModel {
   final AuthenticationService _authenticationService =
@@ -14,6 +15,7 @@ class AccountDetailsViewModel extends BaseModel {
       locator<GoogleLocationSearchService>();
   final OrganisationService _organisationService =
       locator<OrganisationService>();
+  final Analytics _analyticsService = locator<Analytics>();
 
   String _name;
   set name(String name) => _name = name;
@@ -62,8 +64,9 @@ class AccountDetailsViewModel extends BaseModel {
   void delete() async {
     print("Delete method from model fired");
     setBusy(true);
-//    await _authenticationService.deleteUserAccount();
-    logout();
+    await _authenticationService.deleteUserAccount();
+    await _analyticsService.logUserAccountDeleted();
+//    logout();
     setBusy(false);
     notifyListeners();
   }

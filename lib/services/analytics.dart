@@ -4,12 +4,23 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Learning.dart';
+import 'package:app/models/User.dart';
 
 class Analytics {
   final FirebaseAnalytics _analytics = FirebaseAnalytics();
 
   FirebaseAnalyticsObserver getAnalyticsObserver() =>
       FirebaseAnalyticsObserver(analytics: _analytics);
+
+  Future logUserAccountDeleted() async {
+    print("Deleted account logged");
+//    await _analytics
+//    .logEvent(
+//        name: "User account deleted",
+//        parameters: <String, dynamic> {
+//          "time_deleted": new DateTime.now().toString(),
+//        });
+  }
 
   Future logActionStatusUpdate(CampaignAction action, String status) async {
     print("Logging action completed");
