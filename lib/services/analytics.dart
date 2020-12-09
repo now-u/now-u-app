@@ -14,12 +14,10 @@ class Analytics {
 
   Future logUserAccountDeleted() async {
     print("Deleted account logged");
-//    await _analytics
-//    .logEvent(
-//        name: "User account deleted",
-//        parameters: <String, dynamic> {
-//          "time_deleted": new DateTime.now().toString(),
-//        });
+    await _analytics
+        .logEvent(name: "User account deleted", parameters: <String, dynamic>{
+      "time_deleted": new DateTime.now().toString(),
+    });
   }
 
   Future logActionStatusUpdate(CampaignAction action, String status) async {
