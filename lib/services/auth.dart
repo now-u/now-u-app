@@ -22,8 +22,7 @@ class AuthenticationService {
   final NavigationService _navigationService = locator<NavigationService>();
   final SharedPreferencesService _sharedPreferencesService =
       locator<SharedPreferencesService>();
-  final DeviceInfoService _deviceInfoService =
-      locator<DeviceInfoService>();
+  final DeviceInfoService _deviceInfoService = locator<DeviceInfoService>();
 
   User _currentUser;
   User get currentUser => _currentUser;
@@ -121,14 +120,13 @@ class AuthenticationService {
       if (response.statusCode == 419) {
         return AuthError.tokenExpired;
       }
-      
+
       User user = await getUser(json.decode(response.body)['data']['token']);
 
-      await _updateUser(user.getToken());
       return null;
-    } on Error catch(e) {
+    } on Error catch (e) {
       print("Error ${e.toString()}");
-      return AuthError.unknown;  
+      return AuthError.unknown;
     }
   }
 
@@ -179,11 +177,20 @@ class AuthenticationService {
       print("new user og is ${u.organisation}");
       currentUser.setOrganisation = u.organisation;
       return true;
-    } catch(e) {
+    } catch (e) {
       return false;
     }
   }
-  
+
+  Future<bool> deleteUserAccount() async {
+    try {
+      print("auth method fired");
+      return true;
+    } catch (e) {
+      print("Error");
+      return false;
+    }
+  }
 
   Future<bool> leaveOrganisation() async {
     try {
@@ -203,7 +210,7 @@ class AuthenticationService {
       User u = User.fromJson(json.decode(response.body));
       currentUser.setOrganisation = u.organisation;
       return true;
-    } catch(e) {
+    } catch (e) {
       print("Error");
       return false;
     }

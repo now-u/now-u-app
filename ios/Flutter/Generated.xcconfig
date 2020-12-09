@@ -1,12 +1,14 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=/Users/tristanclarke/development/flutter
-FLUTTER_APPLICATION_PATH=/Users/tristanclarke/development/github.com/now-u/now-u-app
-FLUTTER_TARGET=/Users/tristanclarke/development/github.com/now-u/now-u-app/lib/main.dart
+FLUTTER_ROOT=/Users/piotrstanny/flutterdev/flutter
+FLUTTER_APPLICATION_PATH=/Users/piotrstanny/AndroidStudioProjects/now-u-app
+FLUTTER_TARGET=/Users/piotrstanny/AndroidStudioProjects/now-u-app/lib/main.dart
 FLUTTER_BUILD_DIR=build
 SYMROOT=${SOURCE_ROOT}/../build/ios
 OTHER_LDFLAGS=$(inherited) -framework Flutter
-FLUTTER_FRAMEWORK_DIR=/Users/tristanclarke/development/flutter/bin/cache/artifacts/engine/ios
-FLUTTER_BUILD_NAME=1.0.9
-FLUTTER_BUILD_NUMBER=20
+FLUTTER_BUILD_NAME=1.1.9
+FLUTTER_BUILD_NUMBER=33
+DART_DEFINES=flutter.inspector.structuredErrors%3Dtrue
+DART_OBFUSCATION=false
 TRACK_WIDGET_CREATION=true
-DART_DEFINES=flutter.inspector.structuredErrors=true
+TREE_SHAKE_ICONS=false
+PACKAGE_CONFIG=/Users/piotrstanny/AndroidStudioProjects/now-u-app/.dart_tool/package_config.json
