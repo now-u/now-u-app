@@ -3,7 +3,7 @@ import 'package:app/routes.dart';
 import 'base_model.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/auth.dart';
-import 'package:app/services/navigation.dart';
+import 'package:app/services/navigation_service.dart';
 import 'package:app/services/dialog_service.dart';
 
 import 'package:app/pages/login/emailSentPage.dart';
@@ -88,5 +88,12 @@ class LoginViewModel extends BaseModel {
     } else {
       _navigationService.navigateTo(Routes.intro);
     }
+  }
+
+  void launchTandCs() {
+    _navigationService.launchLink(
+      "http://www.now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf",
+      isExternal: true,
+    );
   }
 }

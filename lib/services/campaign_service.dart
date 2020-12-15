@@ -80,25 +80,32 @@ class CampaignService {
     return actions;
   }
 
+  
   Future getCampaign(int id) async {
-    for (Campaign c in _campaigns) {
-      if (c.getId() == id) {
-        return c;
-      }
+    Campaign campaign = _campaigns.firstWhere((c) => c.getId() == id, orElse: () => null);
+    if (campaign != null) {
+      return campaign;
     }
+    return await fetchCampaign(id);
+  }
 
+  Future fetchCampaign(int id) async {
     try {
       var response = await http.get(domainPrefix + "campaigns/$id");
       Campaign c = Campaign.fromJson(json.decode(response.body)['data']);
       return c;
     } catch (e) {
+      print(e.toString());
       return e.toString();
     }
   }
 
   Future fetchCampaigns() async {
     try {
-      var response = await http.get(domainPrefix + "campaigns");
+      var response = await http.get(
+        domainPrefix + "campaigns",
+        headers: <String, String> {'token': _authenticationService.currentUser.getToken()}
+      );
       Campaigns cs = Campaigns.fromJson(json.decode(response.body)['data']);
       _campaigns = cs.getActiveCampaigns();
     } catch (e) {}
@@ -124,6 +131,17 @@ class CampaignService {
     } else {
       return Future.error("Error getting campaigns in http api",
           StackTrace.fromString("The stack trace is"));
+    }
+  }
+  
+  Future<LearningTopic> getLearningTopic(int id) async {
+    var response = await http.get(domainPrefix + "learning_topics/$id");
+    if (response.statusCode == 200) {
+      LearningTopic topic =
+          LearningTopic.fromJson(json.decode(response.body)['data']);
+      return topic;
+    } else {
+      return Future.error("Error getting learning topic. Status code: ${response.statusCode}");
     }
   }
 

@@ -6,7 +6,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:app/routes.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/analytics.dart';
-import 'package:app/services/navigation.dart';
+import 'package:app/services/navigation_service.dart';
 import 'package:app/managers/dialog_manager.dart';
 
 import 'package:app/pages/other/startup_view.dart';

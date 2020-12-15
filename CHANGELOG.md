@@ -52,6 +52,10 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
 - #129 [feature]  The number of actions completed by now-u users now shows on
   each campaign page
 - #131 [fix]      Http links can now be viewed in the internal webview
+- #135 [feature]  Campaign researchers (user_role_id=3) can now see future and
+  disabled campaigns 
+- #136 [feature]  Links can now be user to link to different pages of the app
+- #82 [feature]   About us link added to more menu
 
 ### Version 1.1.9 - Hot Fix
 

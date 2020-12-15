@@ -11,11 +11,14 @@ import 'package:stacked/stacked.dart';
 
 import 'package:app/pages/action/ActionInfo.dart';
 
-import 'package:app/assets/routes/customLaunch.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/StyleFrom.dart';
 
+import 'package:app/locator.dart';
+import 'package:app/services/navigation_service.dart';
+
 final Color CHEVRON_COLOR = Color.fromRGBO(109, 113, 129, 1);
+final NavigationService _navigationService = locator<NavigationService>();
 
 class SelectionItem extends StatelessWidget {
   final String text;
@@ -194,8 +197,7 @@ class LearningResouceSelectionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return LeadingSelectionItem(
       onTap: () {
-        customLaunch(
-          context,
+        _navigationService.launchLink(
           resource.getLink(),
           extraOnConfirmFunction: extraOnClick,
         );

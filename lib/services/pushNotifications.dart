@@ -3,7 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:app/main.dart';
 import 'package:app/locator.dart';
-import 'package:app/services/navigation.dart';
+import 'package:app/services/navigation_service.dart';
 
 class PushNotificationService {
   final FirebaseMessaging _fcm = FirebaseMessaging();

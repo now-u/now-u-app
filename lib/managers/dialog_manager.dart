@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:app/locator.dart';
 import 'package:app/services/dialog_service.dart';
+import 'package:app/services/navigation_service.dart';
 
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/StyleFrom.dart';
@@ -17,7 +18,8 @@ class DialogManager extends StatefulWidget {
 
 class _DialogManagerState extends State<DialogManager> {
 
-  DialogService _dialogService = locator<DialogService>();
+  final DialogService _dialogService = locator<DialogService>();
+  final NavigationService _navigationService = locator<NavigationService>();
 
   @override
   void initState() {
@@ -66,14 +68,8 @@ class _DialogManagerState extends State<DialogManager> {
                 ),
                 SizedBox(height: 40),
                 SizedBox(height: 20),
-                Container(
-                  width: double.infinity,
-                  child:
-                    DarkButton("Ok", onPressed: () {
-                        _dialogService.dialogComplete(AlertResponse(confirmed: true));
-                        Navigator.of(context).pop();
-                      }, 
-                    ),
+                Column(
+                  children: _getButtons(request.buttons),
                 ),
                 SizedBox(height: 20),
               ],
@@ -81,5 +77,47 @@ class _DialogManagerState extends State<DialogManager> {
       ),
     );
   }
+  
+  List<Widget> _getButtons(List buttons) {
+    if (buttons == null) {
+      return <Widget>[
+        Container(
+          width: double.infinity,
+          child:
+            DarkButton("Ok", onPressed: () {
+                _dialogService.dialogComplete(AlertResponse(response: true));
+                Navigator.of(context).pop();
+              }, 
+            ),
+        )
+      ];
+    }
+
+    List<Widget> buttonWidgets = [];
+    for (final DialogButton button in buttons) {
+      DarkButtonStyle buttonStyle = button.style != null ? button.style : DarkButtonStyle.Primary;
+      buttonWidgets.add(
+        Container(
+          width: double.infinity,
+          child:
+            DarkButton(
+              button.text, 
+              onPressed: () {
+                _dialogService.dialogComplete(AlertResponse(response: button.response));
+                if (button.closeOnClick != false) {
+                  Navigator.of(context).pop();
+                }
+              }, 
+              style: buttonStyle,
+            ),
+        )
+      );
+      buttonWidgets.add(
+       SizedBox(height: 10)
+      );
+    }
+    return buttonWidgets;
+  }
+
 }
 
