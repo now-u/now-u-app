@@ -13,7 +13,6 @@ import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/icons/customIcons.dart';
-import 'package:app/assets/routes/customLaunch.dart';
 
 import 'package:stacked/stacked.dart';
 import 'package:app/viewmodels/action_info_model.dart';
@@ -194,7 +193,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                           size: DarkButtonSize.Large,
                           style: DarkButtonStyle.Secondary,
                           onPressed: () {
-                            customLaunch(context, _action.getLink());
+                            model.launchAction(_action);
                           },
                         ),
                     ),

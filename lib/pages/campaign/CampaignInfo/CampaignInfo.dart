@@ -17,7 +17,6 @@ import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/organisationTile.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/header.dart';
-import 'package:app/assets/routes/customLaunch.dart';
 
 import 'package:stacked/stacked.dart';
 import 'package:app/viewmodels/campaign_info_model.dart';
@@ -36,6 +35,7 @@ class CampaignInfo extends StatelessWidget {
     return ViewModelBuilder<CampaignInfoViewModel>.reactive(
         viewModelBuilder: () => CampaignInfoViewModel(),
         onModelReady: (model) {
+          print("Model ready getting campaign");
           if (campaign != null) {
             model.setCampaign = campaign;
           } else {
@@ -185,7 +185,7 @@ class CampaignInfoBody extends StatelessWidget {
                                   text: "Watch the video",
                                   icon: CustomIcons.ic_video,
                                   onTap: () {
-                                    customLaunch(context, _campaign.getVideoLink());
+                                    model.viewCampaignVideo(_campaign);
                                   }),
                               CampaignButton(
                                   text: "Read summary",
@@ -319,7 +319,7 @@ class CampaignInfoBody extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
                       padding: EdgeInsets.all(10),
-                      child: SDGSelectionItem(_campaign.getSDGs()[index]),
+                      child: SDGSelectionItem(_campaign.getSDGs()[index], model),
                     );
                   },
                   // )
@@ -339,8 +339,7 @@ class CampaignInfoBody extends StatelessWidget {
                       CustomTextButton(
                         "sustainabledevelopment.un.org",
                         onClick: () {
-                          customLaunch(
-                              context, "https://sustainabledevelopment.un.org");
+                          model.openSDGGoals();
                         },
                         fontSize:
                             Theme.of(context).primaryTextTheme.bodyText1.fontSize,
@@ -488,12 +487,13 @@ class OrganisationReel extends StatelessWidget {
 
 class SDGSelectionItem extends StatelessWidget {
   final SDG sdg;
-  SDGSelectionItem(this.sdg);
+  final CampaignInfoViewModel model;
+  SDGSelectionItem(this.sdg, this.model);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          customLaunch(context, sdg.getLink());
+          model.openSDGGoals(sdg: sdg);
         },
         child: Row(
           mainAxisSize: MainAxisSize.max,

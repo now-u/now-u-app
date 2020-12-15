@@ -5,10 +5,12 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/news_service.dart';
 import 'package:app/services/campaign_service.dart';
+import 'package:app/services/navigation_service.dart';
 
 class NewsViewModel extends BaseModel {
   final NewsService _newsService = locator<NewsService>();
   final CampaignService _campaignService = locator<CampaignService>();
+  final NavigationService _navigationService = locator<NavigationService>();
 
   String _category;
 
@@ -80,5 +82,9 @@ class NewsViewModel extends BaseModel {
     return index == campaigns.length
         ? "general"
         : campaigns[index].getShortName();
+  }
+
+  void openArticle(article) {
+    _navigationService.launchLink(article.getFullArticleLink());
   }
 }
