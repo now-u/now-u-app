@@ -2,6 +2,7 @@ import 'package:mockito/mockito.dart';
 
 import 'package:app/locator.dart';
 import 'package:app/services/navigation_service.dart';
+import 'package:app/services/dialog_service.dart';
 import 'package:app/services/auth.dart';
 
 class NavigationServiceMock extends Mock implements NavigationService {
@@ -9,9 +10,6 @@ class NavigationServiceMock extends Mock implements NavigationService {
     return route; 
   }
 }
-
-class MockAuthenticationService extends Mock implements AuthenticationService {}
-
 NavigationService getAndRegisterNavigationServiceMock() {
   _removeRegistrationIfExists<NavigationService>();
   var service = NavigationServiceMock();
@@ -19,10 +17,19 @@ NavigationService getAndRegisterNavigationServiceMock() {
   return service;
 }
 
-AuthenticationService mockAuthenticationService() {
+class MockAuthenticationService extends Mock implements AuthenticationService {}
+AuthenticationService setupMockAuthenticationService() {
   _removeRegistrationIfExists<AuthenticationService>();
   var service = MockAuthenticationService();
   locator.registerSingleton<AuthenticationService>(service);
+  return service;
+}
+
+class MockDialogService extends Mock implements DialogService {}
+DialogService setupMockDialogService() {
+  _removeRegistrationIfExists<DialogService>();
+  var service = MockDialogService();
+  locator.registerSingleton<DialogService>(service);
   return service;
 }
 

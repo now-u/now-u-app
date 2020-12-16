@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/auth.dart';
 import 'package:app/services/google_location_search_service.dart';
-import 'package:app/services/organisation_service.dart';
+import 'package:app/services/dialog_service.dart';
 import 'package:app/services/analytics.dart';
 
 class AccountDetailsViewModel extends BaseModel {
@@ -14,8 +14,8 @@ class AccountDetailsViewModel extends BaseModel {
   final GoogleLocationSearchService _googleLocationSearchService =
       locator<GoogleLocationSearchService>();
   final Analytics _analyticsService = locator<Analytics>();
-  final OrganisationService _organisationService =
-      locator<OrganisationService>();
+  final DialogService _dialogService = locator<DialogService>();
+  //final OrganisationService _organisationService = locator<OrganisationService>();
 
   String _name;
   set name(String name) => _name = name;
@@ -55,10 +55,16 @@ class AccountDetailsViewModel extends BaseModel {
 
   void save() async {
     setBusy(true);
-    await _authenticationService.updateUserDetails(
+    bool success = await _authenticationService.updateUserDetails(
         name: _name, dob: _dob, orgCode: _orgCode);
-    setBusy(false);
-    notifyListeners();
+    if (success) {
+      setBusy(false);
+      notifyListeners();
+    } else {
+      _dialogService.showDialog(title: "Error", description: "Sorry there has been an error whilst updating your details.");
+      setBusy(false);
+      notifyListeners();
+    }
   }
 
   void delete() async {
