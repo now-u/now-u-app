@@ -1,11 +1,7 @@
 name: Flutter tests
 
 # Run this workflow every time a new commit pushed to your repository
-on:
-  push:
-    branches: [dev]
-  pull_request: 
-    branches: [dev]
+on: pull_request
 
 jobs:
   test:
