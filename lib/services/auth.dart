@@ -74,11 +74,6 @@ class AuthenticationService {
   Future sendSignInWithEmailLink(
       String email, String name, bool acceptNewletter) async {
     try {
-      print("email | $email");
-      print("name | $name");
-      print("nl | $acceptNewletter");
-      print("operatingSystem | ${_deviceInfoService.osType}");
-      print("operatingSystemVersion | ${await _deviceInfoService.osVersion}");
       await http.post(
         domainPrefix + 'users',
         headers: <String, String>{
