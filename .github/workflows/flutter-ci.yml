@@ -3,10 +3,8 @@ name: Flutter CI
 # This workflow is triggered on pushes to the repository.
 
 on:
-  push:
-    branches: [dev]
-  pull_request: 
-    branches: [dev]
+  push: 
+    branches: [staging, master]
     
 # on: push    # Default will running for every branch.
     
