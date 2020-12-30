@@ -42,6 +42,14 @@ class NavigationService {
     return link.startsWith(INTERNAL_PREFIX);
   }
   
+  bool isPDF(String link) {
+    return link.endsWith(".pdf");
+  }
+  
+  bool isMailTo(String link) {
+    return link.startsWith("mailto:");
+  }
+  
   Map getInternalLinkParameters(String url) {
     String link = url.substring(INTERNAL_PREFIX.length);
     
@@ -70,7 +78,7 @@ class NavigationService {
   }
 
 
-  void launchLink (
+  Future launchLink (
     String url, {
     String title,
     String description,
@@ -116,7 +124,7 @@ class NavigationService {
       
       navigateTo(route);
 
-    } else if (isExternal ?? false) {
+    } else if ((isExternal ?? false) || isPDF(url) || isMailTo(url)){
       launchLinkExternal(
         url,
         title: title,
@@ -139,6 +147,7 @@ class NavigationService {
     String closeButtonText,
     Function extraOnConfirmFunction,
   }) async {
+
     AlertResponse exit = await _dialogService.showDialog(
       title: title ?? "You're about to leave",
       description:  description ?? "This link will take you out of the app. Are you sure you want to go?",
@@ -160,5 +169,9 @@ class NavigationService {
       }
       launch(url);
     }
+  }
+  
+  void launchPDF() {
+
   }
 }

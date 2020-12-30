@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/header.dart';
@@ -153,10 +154,15 @@ class NewsTile extends StatelessWidget {
               Container(
                   height: 160,
                   width: double.infinity,
-                  child: Image.network(
-                    article.getHeaderImage(),
+                  child: CachedNetworkImage(
+                    imageUrl: article.getHeaderImage(),
                     fit: BoxFit.cover,
-                  )),
+                    placeholder: (context, url) => Center(
+                      child: CircularProgressIndicator()
+                    ),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ),
+                ),
 
               // Titile
               Padding(
