@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:mockito/mockito.dart';
 
 import 'package:app/locator.dart';
@@ -5,16 +6,25 @@ import 'package:app/services/navigation_service.dart';
 import 'package:app/services/dialog_service.dart';
 import 'package:app/services/auth.dart';
 
-class NavigationServiceMock extends Mock implements NavigationService {
-  Future<dynamic> navigateTo(String route, {arguments}) async {
-    return route; 
+class MockNavigationService extends Mock implements NavigationService {}
+class FakeNavigationService extends Fake with NavigationService {
+  @override
+  Future<dynamic> navigateTo(String routeName, {arguments}) {
+    return Future.value(routeName);
   }
+  
 }
-NavigationService setupMockNavigationService() {
+NavigationService setupMockNavigationService({bool isFake}) {
   _removeRegistrationIfExists<NavigationService>();
-  var service = NavigationServiceMock();
-  locator.registerSingleton<NavigationService>(service);
-  return service;
+  if (isFake) {
+    var service = FakeNavigationService();
+    locator.registerSingleton<NavigationService>(service);
+    return service;
+  } else {
+    var service = MockNavigationService();
+    locator.registerSingleton<NavigationService>(service);
+    return service;
+  }
 }
 
 class MockAuthenticationService extends Mock implements AuthenticationService {}
@@ -47,15 +57,18 @@ DialogService setupMockDialogService() {
   _removeRegistrationIfExists<DialogService>();
   var service = MockDialogService();
   locator.registerSingleton<DialogService>(service);
- 
-  // Reset dependancies
-  locator.resetLazySingleton<NavigationService>();
   return service;
 }
 
 void _removeRegistrationIfExists<T>() {
   if (locator.isRegistered<T>()) {
     locator.unregister<T>();
+  }
+}
+
+void _resetRegistractionIfExists<T>() {
+  if (locator.isRegistered<T>()) {
+    locator.resetLazySingleton<T>();
   }
 }
 

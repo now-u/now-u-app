@@ -101,7 +101,6 @@ void main() {
     });
     
     group('isMailTo tests -', () {  
-      final NavigationService _navigationService = locator<NavigationService>();
       void testIsMailto(String input, bool output) {
         expect(_navigationService.isMailTo(input), output);
       }
@@ -118,10 +117,9 @@ void main() {
       });
     });
     
-    group('launchLink uses launchLinkExternal -', () {  
-      test('for PDF link', () async {
-        
-        print("Starting sad test");
+    group('launchLink uses launch package -', () {  
+      
+      void testCallToLaunch(String url, bool launch) async {
         final List<MethodCall> log = <MethodCall>[];
         MethodChannel channel = const MethodChannel('plugins.flutter.io/url_launcher');
         channel.setMockMethodCallHandler((MethodCall methodCall) async {
@@ -134,16 +132,36 @@ void main() {
                 anyNamed('title'), description:
                 anyNamed('description'))).thenAnswer((_) =>
             Future.value(AlertResponse(response: true)));
-
-        String url = "mailto:hello@hello.com";
+      
+        print("Creating mock service");
+        final NavigationService _mockNavigationService = setupMockNavigationService(isFake: true);
+        await _mockNavigationService.launchLink(url);
+        print("Launched link");
         
-        _navigationService = locator<NavigationService>();
-        await _navigationService.launchLink(url);
+        if (launch) {
+          expect(log.length, equals(1));
+          expect(log[0].arguments["url"], equals(url));
+        } else {
+          expect(log.length, equals(0));
+        }
 
+        channel.setMockMethodCallHandler(null);
+      }
 
-        // expect(log, equals(<MethodCall>[new MethodCall('launch', url)]));
-
-        // channel.setMockMethodCallHandler(null);
+      test('for PDF link', () async {
+        testCallToLaunch("https://share.now-u.com/legal/now-u_privacy_policy.pdf", true);
+      });
+      
+      test('for mailto link', () async {
+        testCallToLaunch("mailto:someone@yoursite.com?subject=Mail from Our Site", true);
+      });
+      
+      test('not for regular https link', () async {
+        testCallToLaunch("https://css-tricks.com/snippets/html/mailto-links/", false);
+      });
+      
+      test('not for internal link', () async {
+        testCallToLaunch("interal:home", false);
       });
     });
 
