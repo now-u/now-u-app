@@ -7,13 +7,14 @@ import 'package:app/services/dialog_service.dart';
 import 'package:app/services/auth.dart';
 
 class MockNavigationService extends Mock implements NavigationService {}
+
 class FakeNavigationService extends Fake with NavigationService {
   @override
   Future<dynamic> navigateTo(String routeName, {arguments}) {
     return Future.value(routeName);
   }
-  
 }
+
 NavigationService setupMockNavigationService({bool isFake}) {
   _removeRegistrationIfExists<NavigationService>();
   if (isFake) {
@@ -28,13 +29,14 @@ NavigationService setupMockNavigationService({bool isFake}) {
 }
 
 class MockAuthenticationService extends Mock implements AuthenticationService {}
+
 AuthenticationService setupMockAuthenticationService() {
   _removeRegistrationIfExists<AuthenticationService>();
   var service = MockAuthenticationService();
   locator.registerSingleton<AuthenticationService>(service);
   return service;
 }
-        
+
 class FakeDialogService extends Fake implements DialogService {
   @override
   Future showDialog({
@@ -45,6 +47,7 @@ class FakeDialogService extends Fake implements DialogService {
     return Future.value(AlertResponse(response: true));
   }
 }
+
 DialogService setupFakeDialogService() {
   _removeRegistrationIfExists<DialogService>();
   var service = FakeDialogService();
@@ -53,6 +56,7 @@ DialogService setupFakeDialogService() {
 }
 
 class MockDialogService extends Mock implements DialogService {}
+
 DialogService setupMockDialogService() {
   _removeRegistrationIfExists<DialogService>();
   var service = MockDialogService();

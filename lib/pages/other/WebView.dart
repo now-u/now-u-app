@@ -25,6 +25,9 @@ class WebViewPage extends StatelessWidget {
         child: WebView(
           javascriptMode: JavascriptMode.unrestricted,
           initialUrl: args.initialUrl,
+          onWebResourceError: (error) {
+            model.onWebError(initialUrl);
+          },
         ),
       ),
     );

@@ -189,13 +189,14 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                     ),
                     Align(
                       alignment: Alignment.topCenter,
-                      child: DarkButton("Take action",
-                          size: DarkButtonSize.Large,
-                          style: DarkButtonStyle.Secondary,
-                          onPressed: () {
-                            model.launchAction(_action);
-                          },
-                        ),
+                      child: DarkButton(
+                        "Take action",
+                        size: DarkButtonSize.Large,
+                        style: DarkButtonStyle.Secondary,
+                        onPressed: () {
+                          model.launchAction(_action);
+                        },
+                      ),
                     ),
 
                     !completed

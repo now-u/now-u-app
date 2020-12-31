@@ -61,38 +61,27 @@ class DarkButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (style == DarkButtonStyle.Primary) {
-        return PrimaryButton(
-            text,
-            onPressed: onPressed,
-            rightIcon: rightIcon,
-            size: size,
-            fontSize: fontSize
-        );
-    }
-    if (style == DarkButtonStyle.Outline) {
-        return OutlineButton(
-            text,
-            onPressed: onPressed,
-            size: size,
-            fontSize: fontSize
-        );
-    }
-    else if (style == DarkButtonStyle.Secondary) {
-        return SecondaryButton(text,
+      return PrimaryButton(text,
           onPressed: onPressed,
           rightIcon: rightIcon,
           size: size,
-          fontSize: fontSize
-        );
+          fontSize: fontSize);
     }
-    else {
-        return PrimaryButton(
-            text,
-            onPressed: onPressed,
-            rightIcon: rightIcon,
-            size: size,
-            fontSize: fontSize
-        );
+    if (style == DarkButtonStyle.Outline) {
+      return OutlineButton(text,
+          onPressed: onPressed, size: size, fontSize: fontSize);
+    } else if (style == DarkButtonStyle.Secondary) {
+      return SecondaryButton(text,
+          onPressed: onPressed,
+          rightIcon: rightIcon,
+          size: size,
+          fontSize: fontSize);
+    } else {
+      return PrimaryButton(text,
+          onPressed: onPressed,
+          rightIcon: rightIcon,
+          size: size,
+          fontSize: fontSize);
     }
   }
 }
@@ -209,7 +198,6 @@ class PrimaryButton extends StatelessWidget {
     );
   }
 }
-
 
 class OutlineButton extends StatelessWidget {
   VoidCallback onPressed;
