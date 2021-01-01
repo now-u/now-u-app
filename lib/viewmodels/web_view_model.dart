@@ -3,7 +3,7 @@ import 'package:app/viewmodels/base_model.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/navigation_service.dart';
 
-class HomeViewModel extends BaseModel {
+class WebViewViewModel extends BaseModel {
   final NavigationService _navigationService = locator<NavigationService>();
 
   void onWebError(String url) {
