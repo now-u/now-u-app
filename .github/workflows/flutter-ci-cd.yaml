@@ -79,11 +79,11 @@ jobs:
     - run: flutter pub get
     
     - name: Build iOS app without signing
-      run: ./.github/scripts/build_ios.sh
+      run: ../.github/scripts/build_ios.sh
       working-directory: 'ios/'
 
     - name: Creating IPA file
-      run: .github/scripts/create_ipa.sh
+      run: ../.github/scripts/create_ipa.sh
       working-directory: 'ios/'
 
     # Upload generated apk to the artifacts.
