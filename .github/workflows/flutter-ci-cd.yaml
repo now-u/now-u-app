@@ -36,7 +36,7 @@ jobs:
     - run: flutter pub get
     
     # Build apk and set the build number to the RUN ID from Github Actions
-    - run: flutter build apk --release --build-number "$GITHUB_RUN_NUMBER"
+    - run: flutter build apk --release
     
     # Upload generated apk to the artifacts.
     - uses: actions/upload-artifact@v1
