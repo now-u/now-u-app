@@ -34,7 +34,7 @@ jobs:
     # Get flutter dependencies.
     - run: flutter pub get
     
-    # Build apk and set the build number to the RUN ID from Github Actions
+    # Build apk
     - run: flutter build apk --release
     
     # Upload generated apk to the artifacts.
