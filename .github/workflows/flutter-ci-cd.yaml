@@ -13,7 +13,6 @@ on:
     
 jobs:
   android:
-    if: false
     # This job will run on ubuntu virtual machine
     runs-on: ubuntu-latest
     timeout-minutes: 30
