@@ -77,8 +77,11 @@ jobs:
 
     # Get flutter dependencies.
     - run: flutter pub get
-    - run: pod install
-      working-directory: 'ios/'
+
+    - run: flutter build ios --no-codesign
+
+    # - run: pod install
+    #   working-directory: 'ios/'
 
     - name: Build iOS app without signing
       run: ../.github/scripts/build_ios.sh
