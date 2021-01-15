@@ -80,10 +80,10 @@ jobs:
 
     - run: flutter build ios --no-codesign
 
-    # - run: pod install
-    #   working-directory: 'ios/'
+    - run: pod install
+      working-directory: 'ios/'
 
-    - name: Build iOS app without signing
+    - name: Build iOS app with signing
       run: ../.github/scripts/build_ios.sh
       working-directory: 'ios/'
 
