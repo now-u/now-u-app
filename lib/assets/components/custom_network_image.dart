@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class CustomNetworkImage extends StatelessWidget {
   final String url;
   final BoxFit fit;
   final double height;
 
+  final Function placeholder; 
+  final Function errorWidget; 
+  final Function progressIndicatorBuilder; 
+  final BaseCacheManager cacheManager;
+
   CustomNetworkImage(
     this.url,
     {
       this.fit,
-      this.height
+      this.height,
+      this.placeholder,
+      this.errorWidget,
+      this.progressIndicatorBuilder,
+      this.cacheManager,
     }
   );
 
@@ -22,10 +32,12 @@ class CustomNetworkImage extends StatelessWidget {
     }
     return CachedNetworkImage(
       imageUrl: url,
-      placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-      errorWidget: (context, url, error) => Center(child: Icon(Icons.error)),
+      placeholder: placeholder == null  && progressIndicatorBuilder == null ? (context, url) => Center(child: CircularProgressIndicator()) : placeholder,
+      errorWidget: errorWidget ?? (context, url, error) => Center(child: Icon(Icons.error)),
+      progressIndicatorBuilder: progressIndicatorBuilder,
       fit: fit,
       height: height,
+      cacheManager: cacheManager, 
     );
   }
 }
@@ -33,3 +45,4 @@ class CustomNetworkImage extends StatelessWidget {
 ImageProvider customNetworkImageProvider(String url) {
   return CachedNetworkImageProvider(url);
 }
+

@@ -1,59 +1,150 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import '../setup/helpers/image_helpers.dart';
 
-import 'package:app/assets/components/custom_network_image.dart';
+import '../setup/helpers/image_helpers.dart';
+import '../setup/fake_cache_manager.dart';
 
 void main() {
-  group("Custom network image should not crash - ", () {
+  FakeCacheManager cacheManager;
 
-    Future testImageDoesNotCrash(int statusCode, WidgetTester tester) async {
-      await provideMockedNetworkImages(() async {
-        await tester.pumpWidget(
-          MaterialApp(
-            home: CustomNetworkImage('https://example.com/image.png'),
-          ),
-        );
+  setUp(() {
+    cacheManager = FakeCacheManager();
+  });
 
-      }, statusCode: statusCode);
-    }
-    
-    Future testErrorIconDisplayed(int statusCode, WidgetTester tester, bool iconShown) async {
-      await provideMockedNetworkImages(() async {
-        await tester.pumpWidget(
-          CustomNetworkImage('https://example.com/image.png'),
-        );
-        await tester.pump(Duration(seconds: 1));
-        
-        var image = find.byType(CustomNetworkImage);
-        var icon = find.byType(CircularProgressIndicator);
-        
-        // Assert one icon shown
-        expect(image, findsOneWidget);
-        if (iconShown) {
-          expect(icon, findsOneWidget);
-        }
-        else {
-          expect(icon, findsNothing);
-        }
+  tearDown(() {
+    cacheManager = null;
+  });
 
-      }, statusCode: statusCode);
-    }
-    
-    testWidgets('200', (WidgetTester tester) async {
-      await testImageDoesNotCrash(200, tester);
-      await testErrorIconDisplayed(200, tester, false);
+  group("Custom network image tests - ", () {
+
+    // Tests taken from here
+    // https://github.com/Baseflow/flutter_cached_network_image/blob/develop/test/image_widget_test.dart    
+
+    // TODO Fix this test
+    // testWidgets('progress indicator called when success', (tester) async {
+    //   var imageUrl = '123';
+    //   // Create the widget by telling the tester to build it.
+    //   cacheManager.returns(imageUrl, kTransparentImage);
+    //   var progressShown = false;
+    //   var thrown = false;
+    //   await tester.pumpWidget(TestImageWidget(
+    //     imageUrl: imageUrl,
+    //     cacheManager: cacheManager,
+    //     onProgress: () => progressShown = true,
+    //     onError: () => thrown = true,
+    //   ));
+    //   await tester.pump();
+    //   expect(thrown, isFalse);
+    //   expect(progressShown, isTrue);
+    // });
+
+    testWidgets('placeholder called when fail', (tester) async {
+      var imageUrl = '1234';
+      // Create the widget by telling the tester to build it.
+      cacheManager.throwsNotFound(imageUrl);
+      var placeholderShown = false;
+      var thrown = false;
+      await tester.pumpWidget(TestImageWidget(
+        imageUrl: imageUrl,
+        cacheManager: cacheManager,
+        onPlaceHolder: () => placeholderShown = true,
+        onError: () => thrown = true,
+      ));
+      await tester.pumpAndSettle();
+      expect(thrown, isTrue);
+      expect(placeholderShown, isTrue);
     });
-    
-    testWidgets('404', (WidgetTester tester) async {
-      await testImageDoesNotCrash(404, tester);
-      await testErrorIconDisplayed(404, tester, true);
+
+    testWidgets('errorBuilder called when image fails', (tester) async {
+      var imageUrl = '12345';
+      cacheManager.throwsNotFound(imageUrl);
+      var thrown = false;
+      await tester.pumpWidget(TestImageWidget(
+        imageUrl: imageUrl,
+        cacheManager: cacheManager,
+        onError: () => thrown = true,
+      ));
+      await tester.pumpAndSettle();
+      expect(thrown, isTrue);
     });
-    
-    testWidgets('400', (WidgetTester tester) async {
-      await testImageDoesNotCrash(400, tester);
-      await testErrorIconDisplayed(400, tester, true);
+
+    // TODO Fix this test
+    // testWidgets("errorBuilder doesn't call when image doesn't fail",
+    //     (tester) async {
+    //   var imageUrl = '123456';
+    //   // Create the widget by telling the tester to build it.
+    //   cacheManager.returns(imageUrl, kTransparentImage);
+    //   var thrown = false;
+    //   await tester.pumpWidget(TestImageWidget(
+    //     imageUrl: imageUrl,
+    //     cacheManager: cacheManager,
+    //     onError: () => thrown = true,
+    //   ));
+    //   await tester.pumpAndSettle();
+    //   expect(thrown, isFalse);
+    // });
+
+    testWidgets('progress indicator called when success', (tester) async {
+      var imageUrl = '123';
+      // Create the widget by telling the tester to build it.
+      cacheManager.returns(imageUrl, kTransparentImage);
+      var progressShown = false;
+      var thrown = false;
+      await tester.pumpWidget(
+        TestImageWidget(
+          imageUrl: imageUrl,
+          cacheManager: cacheManager,
+          onProgress: () => progressShown = true,
+          onError: () => thrown = true,
+        )
+      );
+      await tester.pump();
+      expect(thrown, isFalse);
+      expect(progressShown, isTrue);
     });
+
+    testWidgets('placeholder called when fail', (tester) async {
+      var imageUrl = '1234';
+      // Create the widget by telling the tester to build it.
+      cacheManager.throwsNotFound(imageUrl);
+      var placeholderShown = false;
+      var thrown = false;
+      await tester.pumpWidget(TestImageWidget(
+        imageUrl: imageUrl,
+        cacheManager: cacheManager,
+        onPlaceHolder: () => placeholderShown = true,
+        onError: () => thrown = true,
+      ));
+      await tester.pumpAndSettle();
+      expect(thrown, isTrue);
+      expect(placeholderShown, isTrue);
+    });
+
+    testWidgets('progressIndicator called several times', (tester) async {
+      var imageUrl = '7891';
+      // Create the widget by telling the tester to build it.
+      var delay = Duration(milliseconds: 1);
+      var expectedResult = cacheManager.returns(
+        imageUrl,
+        kTransparentImage,
+        delayBetweenChunks: delay,
+      );
+      var progressIndicatorCalled = 0;
+      var thrown = false;
+      await tester.pumpWidget(TestImageWidget(
+        imageUrl: imageUrl,
+        cacheManager: cacheManager,
+        onProgress: () => progressIndicatorCalled++,
+        onError: () => thrown = true,
+      ));
+      for (var i = 0; i < expectedResult.chunks; i++) {
+        await tester.pump(delay);
+        await tester.idle();
+      }
+      expect(thrown, isFalse);
+      expect(progressIndicatorCalled, expectedResult.chunks + 1);
+    });
+
     
   });
 }

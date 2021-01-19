@@ -3,6 +3,7 @@ import 'package:mockito/mockito.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/navigation_service.dart';
 
+
 class NavigationServiceMock extends Mock implements NavigationService {
   Future<dynamic> navigateTo(String route, {arguments}) async {
     return route; 
