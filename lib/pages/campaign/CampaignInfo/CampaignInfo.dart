@@ -17,6 +17,7 @@ import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/organisationTile.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/header.dart';
+import 'package:app/assets/components/custom_network_image.dart';
 
 import 'package:stacked/stacked.dart';
 import 'package:app/viewmodels/campaign_info_model.dart';
@@ -76,7 +77,7 @@ class CampaignInfoBody extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(_campaign.getHeaderImage()),
+                        image: customNetworkImageProvider(_campaign.getHeaderImage()),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -130,7 +131,7 @@ class CampaignInfoBody extends StatelessWidget {
                                 SizedBox(height: 8,),
                                 Container(
                                   height: 180,
-                                  child: Image.network(_campaign.infographic),
+                                  child: CustomNetworkImage(_campaign.infographic),
                                 ),
                                 SizedBox(height: 12,),
                                 DarkButton("Take action", onPressed: () {
@@ -548,7 +549,7 @@ List<Widget> getOrganistaionTiles(
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Image.network(org.getLogoLink()),
+                CustomNetworkImage(org.getLogoLink()),
                 SizedBox(
                   width: 5,
                 ),

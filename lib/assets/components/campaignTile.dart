@@ -80,7 +80,7 @@ class _CampaignTileState extends State<CampaignTile> {
                 child: Container(
                     decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage(widget.campaign.getHeaderImage()),
+                    image: customNetworkImageProvider(widget.campaign.getHeaderImage()),
                     fit: BoxFit.cover,
                   ),
                   //borderRadius: BorderRadius.only(topLeft: Radius.circular(10))
@@ -159,7 +159,7 @@ class CampaignTileWithJoinButtons extends StatelessWidget {
                 height: 100,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage(campaign.getHeaderImage()),
+                    image: customNetworkImageProvider(campaign.getHeaderImage()),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -288,7 +288,7 @@ class CampaignSelectionTile extends StatelessWidget {
                           height: height ?? defaultHeight,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: NetworkImage(campaign.getHeaderImage()),
+                              image: customNetworkImageProvider(campaign.getHeaderImage()),
                               fit: BoxFit.cover,
                             ),
                           )),

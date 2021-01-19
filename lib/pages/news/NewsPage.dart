@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/header.dart';
 import 'package:app/assets/components/selectionPill.dart';
+import 'package:app/assets/components/custom_network_image.dart';
 
 import 'package:app/models/Article.dart';
 
@@ -153,7 +154,7 @@ class NewsTile extends StatelessWidget {
               Container(
                   height: 160,
                   width: double.infinity,
-                  child: Image.network(
+                  child: CustomNetworkImage(
                     article.getHeaderImage(),
                     fit: BoxFit.cover,
                   )),
