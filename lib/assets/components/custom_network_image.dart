@@ -42,7 +42,11 @@ class CustomNetworkImage extends StatelessWidget {
   }
 }
 
+// Where possible please use full fat CustomNetworkImage
 ImageProvider customNetworkImageProvider(String url) {
-  return CachedNetworkImageProvider(url);
+  if (url == null) {
+    return AssetImage('assets/imgs/plain-white-background.jpg');
+  }
+  return CachedNetworkImageProvider(url,);
 }
 
