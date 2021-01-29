@@ -75,15 +75,22 @@ class _EmailSentPageState extends State<EmailSentPage> {
                         Flexible(
                           child: Padding(
                             padding: EdgeInsets.all(20),
-                            child: Image(image: AssetImage('assets/imgs/intro/il-mail@4x.png'),),
+                            child: Image(
+                              image: AssetImage(
+                                  'assets/imgs/intro/il-mail@4x.png'),
+                            ),
                           ),
                         ),
                         Text("Check your email",
                             style: TextStyle(
-                              fontSize:
-                                  Theme.of(context).primaryTextTheme.headline1.fontSize,
-                              fontWeight:
-                                  Theme.of(context).primaryTextTheme.headline1.fontWeight,
+                              fontSize: Theme.of(context)
+                                  .primaryTextTheme
+                                  .headline1
+                                  .fontSize,
+                              fontWeight: Theme.of(context)
+                                  .primaryTextTheme
+                                  .headline1
+                                  .fontWeight,
                               color: Colors.white,
                             )),
                         //Expanded(
@@ -98,15 +105,17 @@ class _EmailSentPageState extends State<EmailSentPage> {
                         //),
                         SizedBox(height: 30),
                         Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 40),
-                            child: Container(
-                                width: double.infinity,
-                                child: DarkButton("Open Email", onPressed: () {
-                                  // TODO open email
-                                  openEmailApp(context);
-                                },
-                              ),
+                          padding: EdgeInsets.symmetric(horizontal: 40),
+                          child: Container(
+                            width: double.infinity,
+                            child: DarkButton(
+                              "Open Email",
+                              onPressed: () {
+                                // TODO open email
+                                openEmailApp(context);
+                              },
                             ),
+                          ),
                         ),
                         SizedBox(height: 20),
                         Row(
@@ -115,41 +124,45 @@ class _EmailSentPageState extends State<EmailSentPage> {
                             children: [
                               CustomTextButton("I didn't get my email",
                                   onClick: () {
-                                Navigator.of(context).pushNamed(Routes.login,
-                                    arguments: LoginPageArguments(),
+                                Navigator.of(context).pushNamed(
+                                  Routes.login,
+                                  arguments: LoginPageArguments(),
                                 );
-                              },
-                              fontSize: 14
-                            ),
+                              }, fontSize: 14),
                             ]),
                         SizedBox(height: 20),
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          child: Text("If the email link does not work, use the code we have emailed you.",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: Theme.of(context)
-                                    .primaryTextTheme
-                                    .bodyText1
-                                    .fontSize,
-                                fontWeight: Theme.of(context)
-                                    .primaryTextTheme
-                                    .bodyText1
-                                    .fontWeight,
-                                color: Colors.white,
-                      ))),
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            child: Text(
+                                "If the email link does not work, use the code we have emailed you.",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: Theme.of(context)
+                                      .primaryTextTheme
+                                      .bodyText1
+                                      .fontSize,
+                                  fontWeight: Theme.of(context)
+                                      .primaryTextTheme
+                                      .bodyText1
+                                      .fontWeight,
+                                  color: Colors.white,
+                                ))),
                         SizedBox(height: 10),
                         Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 40),
-                            child: Container(
-                                width: double.infinity,
-                                child: DarkButton("Use secret code", onPressed: () {
-                                  // TODO open email
-                                  Navigator.of(context).pushNamed(Routes.loginCodeInput, arguments: widget.args.email);
-                                },
-                                style: DarkButtonStyle.Outline,
-                              ),
+                          padding: EdgeInsets.symmetric(horizontal: 40),
+                          child: Container(
+                            width: double.infinity,
+                            child: DarkButton(
+                              "Use secret code",
+                              onPressed: () {
+                                // TODO open email
+                                Navigator.of(context).pushNamed(
+                                    Routes.loginCodeInput,
+                                    arguments: widget.args.email);
+                              },
+                              style: DarkButtonStyle.Outline,
                             ),
+                          ),
                         ),
                         SizedBox(height: 20),
                       ],
@@ -164,8 +177,7 @@ class IntroPageSection extends StatelessWidget {
   final String description;
   final AssetImage image;
 
-  IntroPageSection(
-      this.title, this.description, this.image);
+  IntroPageSection(this.title, this.description, this.image);
 
   @override
   Widget build(BuildContext context) {

@@ -4,6 +4,9 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 import 'package:app/assets/components/customAppBar.dart';
 
+import 'package:stacked/stacked.dart';
+import 'package:app/viewmodels/web_view_model.dart';
+
 class WebViewArgumnets {
   final String initialUrl;
 
@@ -22,10 +25,18 @@ class WebViewPage extends StatelessWidget {
         context: context,
       ),
       body: SafeArea(
-        child: WebView(
-          javascriptMode: JavascriptMode.unrestricted,
-          initialUrl: args.initialUrl,
-        ),
+        child: ViewModelBuilder<WebViewViewModel>.reactive(
+            viewModelBuilder: () => WebViewViewModel(),
+            builder: (context, model, child) {
+              return WebView(
+                javascriptMode: JavascriptMode.unrestricted,
+                initialUrl: args.initialUrl,
+                onWebResourceError: (error) {
+                  model.onWebError(args.initialUrl);
+                },
+              );
+            }
+          )
       ),
     );
   }

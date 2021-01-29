@@ -52,6 +52,8 @@ dependencies:
   webview_flutter: ^0.3.22+1
   uni_links: ^0.4.0
   device_info: ^0.4.2+7
+
+  cached_network_image: ^2.5.0
   
   # Firebase
   firebase_analytics: ^5.0.15

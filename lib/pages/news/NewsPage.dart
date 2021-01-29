@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/header.dart';
@@ -107,11 +108,9 @@ class NewsPage extends StatelessWidget {
                                       bottom: 10,
                                     ),
                                     child: NewsTile(
-                                        article:
-                                            model.filteredArticles[index],
-                                        model: model,
-                                      )
-                                    );
+                                      article: model.filteredArticles[index],
+                                      model: model,
+                                    ));
                               },
                             ),
                             SizedBox(width: 20),
@@ -151,12 +150,16 @@ class NewsTile extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                  height: 160,
-                  width: double.infinity,
-                  child: Image.network(
-                    article.getHeaderImage(),
-                    fit: BoxFit.cover,
-                  )),
+                height: 160,
+                width: double.infinity,
+                child: CachedNetworkImage(
+                  imageUrl: article.getHeaderImage(),
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) =>
+                      Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
+              ),
 
               // Titile
               Padding(

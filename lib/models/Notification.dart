@@ -50,7 +50,9 @@ class InternalNotification {
   Widget getBodyWidget(context) {
     return Markdown(
       data: body,
-      onTapLink: (String link) {_navigationService.launchLink(link);},
+      onTapLink: (String link) {
+        _navigationService.launchLink(link);
+      },
       styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
         p: textStyleFrom(
           Theme.of(context).primaryTextTheme.bodyText1,

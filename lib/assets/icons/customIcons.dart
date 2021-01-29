@@ -134,5 +134,6 @@ class CustomIcons {
       IconData(0xe806, fontFamily: _kFontFam2, fontPackage: _kFontPkg);
   static const IconData ic_europe =
       IconData(0xe807, fontFamily: _kFontFam2, fontPackage: _kFontPkg);
-  static const IconData ic_clipboard = IconData(0xe81e, fontFamily: _kFontFam3, fontPackage: _kFontPkg);
+  static const IconData ic_clipboard =
+      IconData(0xe81e, fontFamily: _kFontFam3, fontPackage: _kFontPkg);
 }

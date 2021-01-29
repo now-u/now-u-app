@@ -12,7 +12,7 @@ import 'package:app/routes.dart';
 
 import 'package:meta/meta.dart';
 import 'package:uni_links/uni_links.dart';
-    
+
 // The holy grail link https://nowu.page.link/?link=https://now-u.com/campaigns?id=1&apn=com.nowu.app
 
 class DynamicLinkService {
@@ -123,7 +123,7 @@ class DynamicLinkService {
 
     // Attach a listener to the stream
     _sub = getUriLinksStream().listen((Uri deepLink) {
-      if(deepLink == null) {
+      if (deepLink == null) {
         return false;
       }
       _handleDeepLink(deepLink);

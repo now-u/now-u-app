@@ -8,7 +8,6 @@ import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/StyleFrom.dart';
 
 class DialogManager extends StatefulWidget {
-  
   final Widget child;
   DialogManager({Key key, this.child}) : super(key: key);
 
@@ -17,7 +16,6 @@ class DialogManager extends StatefulWidget {
 }
 
 class _DialogManagerState extends State<DialogManager> {
-
   final DialogService _dialogService = locator<DialogService>();
   final NavigationService _navigationService = locator<NavigationService>();
 
@@ -26,7 +24,7 @@ class _DialogManagerState extends State<DialogManager> {
     super.initState();
     _dialogService.registerDialogListener(_showDialog);
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return widget.child;
@@ -77,47 +75,43 @@ class _DialogManagerState extends State<DialogManager> {
       ),
     );
   }
-  
+
   List<Widget> _getButtons(List buttons) {
     if (buttons == null) {
       return <Widget>[
         Container(
           width: double.infinity,
-          child:
-            DarkButton("Ok", onPressed: () {
-                _dialogService.dialogComplete(AlertResponse(response: true));
-                Navigator.of(context).pop();
-              }, 
-            ),
+          child: DarkButton(
+            "Ok",
+            onPressed: () {
+              _dialogService.dialogComplete(AlertResponse(response: true));
+              Navigator.of(context).pop();
+            },
+          ),
         )
       ];
     }
 
     List<Widget> buttonWidgets = [];
     for (final DialogButton button in buttons) {
-      DarkButtonStyle buttonStyle = button.style != null ? button.style : DarkButtonStyle.Primary;
-      buttonWidgets.add(
-        Container(
-          width: double.infinity,
-          child:
-            DarkButton(
-              button.text, 
-              onPressed: () {
-                _dialogService.dialogComplete(AlertResponse(response: button.response));
-                if (button.closeOnClick != false) {
-                  Navigator.of(context).pop();
-                }
-              }, 
-              style: buttonStyle,
-            ),
-        )
-      );
-      buttonWidgets.add(
-       SizedBox(height: 10)
-      );
+      DarkButtonStyle buttonStyle =
+          button.style != null ? button.style : DarkButtonStyle.Primary;
+      buttonWidgets.add(Container(
+        width: double.infinity,
+        child: DarkButton(
+          button.text,
+          onPressed: () {
+            _dialogService
+                .dialogComplete(AlertResponse(response: button.response));
+            if (button.closeOnClick != false) {
+              Navigator.of(context).pop();
+            }
+          },
+          style: buttonStyle,
+        ),
+      ));
+      buttonWidgets.add(SizedBox(height: 10));
     }
     return buttonWidgets;
   }
-
 }
-

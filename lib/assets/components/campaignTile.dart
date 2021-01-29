@@ -21,16 +21,24 @@ class Tile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(left: hPadding ?? 15, right: hPadding ?? 15, top: 16, bottom: 8),
+        padding: EdgeInsets.only(
+            left: hPadding ?? 15, right: hPadding ?? 15, top: 16, bottom: 8),
         child: Container(
           decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(borderRadius ?? 20)),
-              boxShadow: [BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.16), offset: Offset(0, 8), blurRadius: 6)]),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(borderRadius ?? 20)),
+              boxShadow: [
+                BoxShadow(
+                    color: Color.fromRGBO(0, 0, 0, 0.16),
+                    offset: Offset(0, 8),
+                    blurRadius: 6)
+              ]),
           child: GestureDetector(
             onTap: onTap,
             child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(borderRadius ?? 20)),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(borderRadius ?? 20)),
               child: child,
             ),
           ),
@@ -57,7 +65,8 @@ class _CampaignTileState extends State<CampaignTile> {
   @override
   Widget build(BuildContext context) {
     GestureTapCallback _onTapMoreInfo = () {
-      Navigator.of(context).pushNamed(Routes.campaignInfo, arguments: widget.campaign);
+      Navigator.of(context)
+          .pushNamed(Routes.campaignInfo, arguments: widget.campaign);
     };
 
     var hPadding = widget.hPadding ?? 15.0;
@@ -89,7 +98,9 @@ class _CampaignTileState extends State<CampaignTile> {
             ViewModelBuilder<BaseModel>.reactive(
                 viewModelBuilder: () => BaseModel(),
                 builder: (context, model, child) {
-                  bool selected = model.currentUser.getSelectedCampaigns().contains(widget.campaign.getId());
+                  bool selected = model.currentUser
+                      .getSelectedCampaigns()
+                      .contains(widget.campaign.getId());
                   if (selected) {
                     return Padding(
                         padding: EdgeInsets.all(12),
@@ -119,11 +130,15 @@ class _CampaignTileState extends State<CampaignTile> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 5, bottom: 10, left: hPadding, right: hPadding),
+            padding: EdgeInsets.only(
+                top: 5, bottom: 10, left: hPadding, right: hPadding),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[NumberOfCampaignersIndicator(widget.campaign.getNumberOfCampaigners())],
+              children: <Widget>[
+                NumberOfCampaignersIndicator(
+                    widget.campaign.getNumberOfCampaigners())
+              ],
             ),
           ),
         ],
@@ -175,7 +190,8 @@ class CampaignTileWithJoinButtons extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  NumberOfCampaignersIndicator(campaign.getNumberOfCampaigners()),
+                  NumberOfCampaignersIndicator(
+                      campaign.getNumberOfCampaigners()),
                 ]),
               ),
               Container(
@@ -271,7 +287,8 @@ class CampaignSelectionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(Routes.campaignInfo, arguments: campaign.getId());
+          Navigator.of(context)
+              .pushNamed(Routes.campaignInfo, arguments: campaign.getId());
         },
         child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
