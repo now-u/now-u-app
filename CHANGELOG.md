@@ -53,6 +53,8 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
   disabled campaigns 
 - #136 [feature]  Links can now be user to link to different pages of the app
 - #82 [feature]   About us link added to more menu
+- #148 [fix]      App no longer crashes on NetworkImage error
+- #144 [fix]      Fix for mailto links 
 
 ### Version 1.1.9 - Hot Fix
 

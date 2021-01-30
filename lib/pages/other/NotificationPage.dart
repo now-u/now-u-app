@@ -2,6 +2,7 @@ import 'package:app/assets/components/darkButton.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/assets/StyleFrom.dart';
+import 'package:app/assets/components/custom_network_image.dart';
 
 import 'package:app/models/Notification.dart';
 
@@ -40,7 +41,7 @@ class NotificationPage extends StatelessWidget {
                   ),
 
                   // Main Stuff
-                  Image.network(notification.getImage(), height: 150),
+                  CustomNetworkImage(notification.getImage(), height: 150),
                   SizedBox(height: 60),
                   Text(
                     notification.getTitle(),

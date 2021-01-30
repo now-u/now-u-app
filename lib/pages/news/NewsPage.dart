@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/header.dart';
 import 'package:app/assets/components/selectionPill.dart';
+import 'package:app/assets/components/custom_network_image.dart';
 
 import 'package:app/models/Article.dart';
 
@@ -150,16 +151,12 @@ class NewsTile extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                height: 160,
-                width: double.infinity,
-                child: CachedNetworkImage(
-                  imageUrl: article.getHeaderImage(),
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) =>
-                      Center(child: CircularProgressIndicator()),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                ),
-              ),
+                  height: 160,
+                  width: double.infinity,
+                  child: CustomNetworkImage(
+                    article.getHeaderImage(),
+                    fit: BoxFit.cover,
+                  )),
 
               // Titile
               Padding(

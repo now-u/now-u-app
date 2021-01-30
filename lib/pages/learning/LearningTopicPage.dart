@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/selectionItem.dart';
+import 'package:app/assets/components/custom_network_image.dart';
 
 import 'package:stacked/stacked.dart';
 import 'package:app/viewmodels/learning_topic_model.dart';
@@ -32,8 +33,10 @@ class LearningTopicPage extends StatelessWidget {
                     Container(
                       width: double.infinity,
                       height: 180,
-                      child: Image.network(topic.getImageLink(),
-                          fit: BoxFit.cover),
+                      child: CustomNetworkImage(
+                        topic.getImageLink(),
+                        fit: BoxFit.cover
+                      ),
                     ),
 
                     SizedBox(height: 20),

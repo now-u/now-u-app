@@ -17,6 +17,7 @@ import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/organisationTile.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/header.dart';
+import 'package:app/assets/components/custom_network_image.dart';
 
 import 'package:stacked/stacked.dart';
 import 'package:app/viewmodels/campaign_info_model.dart';
@@ -70,18 +71,13 @@ class CampaignInfoBody extends StatelessWidget {
           ListView(
             children: [
               // Header
-              Container(
-                child: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(_campaign.getHeaderImage()),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                Container(
                   child: Container(
-                    color: colorFrom(
-                      Colors.black,
-                      opacity: 0.5,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: customNetworkImageProvider(_campaign.getHeaderImage()),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                     child: Padding(
                       padding: EdgeInsets.only(bottom: 20),
@@ -98,59 +94,52 @@ class CampaignInfoBody extends StatelessWidget {
                               .fontSize,
                           extraInnerPadding: 20,
                         ),
-                      ]),
+                      ]
+                    ),
                     ),
                   ),
                 ),
-              ),
+                // Body
+                Container(
+                  color: Color.fromRGBO(247, 248, 252, 1),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 18),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 25),
+                          CustomTile(
+                              child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 30, horizontal: 10),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  "See what you can do to support this cause today",
+                                  style: textStyleFrom(
+                                      Theme.of(context).primaryTextTheme.headline3),
+                                  textAlign: TextAlign.center,
+                                ),
+                                SizedBox(height: 8,),
+                                Container(
+                                  height: 180,
+                                  child: CustomNetworkImage(_campaign.infographic),
+                                ),
+                                SizedBox(height: 12,),
+                                DarkButton("Take action", onPressed: () {
+                                  if (_campaign.isPast()) {
+                                    Navigator.of(context).pushNamed(
+                                        Routes.pastCampaignActionPage,
+                                        arguments: _campaign);
+                                  } else {
+                                    Navigator.of(context).pushNamed(Routes.actions);
+                                  }
+                                })
+                              ],
+                            ),
+                          )),
 
-              // Body
-              Container(
-                color: Color.fromRGBO(247, 248, 252, 1),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 18),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 25),
-                        CustomTile(
-                            child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 30, horizontal: 10),
-                          child: Column(
-                            children: <Widget>[
-                              Text(
-                                "See what you can do to support this cause today",
-                                style: textStyleFrom(Theme.of(context)
-                                    .primaryTextTheme
-                                    .headline3),
-                                textAlign: TextAlign.center,
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Container(
-                                height: 180,
-                                child: Image.network(_campaign.infographic),
-                              ),
-                              SizedBox(
-                                height: 12,
-                              ),
-                              DarkButton("Take action", onPressed: () {
-                                if (_campaign.isPast()) {
-                                  Navigator.of(context).pushNamed(
-                                      Routes.pastCampaignActionPage,
-                                      arguments: _campaign);
-                                } else {
-                                  Navigator.of(context)
-                                      .pushNamed(Routes.actions);
-                                }
-                              })
-                            ],
-                          ),
-                        )),
-
-                        SizedBox(height: 25),
+                          SizedBox(height: 25),
 
                         // About
                         Text(
@@ -228,7 +217,8 @@ class CampaignInfoBody extends StatelessWidget {
                         ),
 
                         SizedBox(height: 30),
-                      ]),
+                      ]
+                    ),
                 ),
               ),
 
@@ -550,7 +540,7 @@ List<Widget> getOrganistaionTiles(
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Image.network(org.getLogoLink()),
+                CustomNetworkImage(org.getLogoLink()),
                 SizedBox(
                   width: 5,
                 ),

@@ -13,6 +13,7 @@ import 'package:app/pages/action/ActionInfo.dart';
 
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/StyleFrom.dart';
+import 'package:app/assets/components/custom_network_image.dart';
 
 import 'package:app/locator.dart';
 import 'package:app/services/navigation_service.dart';
@@ -530,7 +531,7 @@ class ImageSelectionItem extends StatelessWidget {
                         child: Container(
                           width: imageWidth ?? defaultImageWidth,
                           height: height ?? defaultHeight,
-                          child: Image.network(
+                          child: CustomNetworkImage(
                             imageUrl,
                             fit: BoxFit.cover,
                           ),

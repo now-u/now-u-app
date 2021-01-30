@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/campaignTile.dart';
+import 'package:app/assets/components/custom_network_image.dart';
 import 'package:app/assets/StyleFrom.dart';
 
 import 'package:app/models/Organisation.dart';
@@ -47,7 +48,7 @@ class OraganisationInfoPage extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.all(10),
                   child:
-                      Center(child: Image.network(organisation.getLogoLink())),
+                      Center(child: CustomNetworkImage(organisation.getLogoLink())),
                 ),
               ),
               SizedBox(height: 10),
