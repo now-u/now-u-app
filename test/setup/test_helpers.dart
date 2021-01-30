@@ -5,20 +5,20 @@ import 'package:app/services/navigation_service.dart';
 import 'package:app/services/dialog_service.dart';
 import 'package:app/services/auth.dart';
 
-class NavigationServiceMock extends Mock implements NavigationService {
+class MockNavigationService extends Mock implements NavigationService {
   Future<dynamic> navigateTo(String route, {arguments}) async {
     return route; 
   }
 }
-NavigationService getAndRegisterNavigationServiceMock() {
+NavigationService getAndRegisterMockNavigationService() {
   _removeRegistrationIfExists<NavigationService>();
-  var service = NavigationServiceMock();
+  var service = MockNavigationService();
   locator.registerSingleton<NavigationService>(service);
   return service;
 }
 
 class MockAuthenticationService extends Mock implements AuthenticationService {}
-AuthenticationService setupMockAuthenticationService() {
+AuthenticationService getAndRegisterMockAuthentiactionService() {
   _removeRegistrationIfExists<AuthenticationService>();
   var service = MockAuthenticationService();
   locator.registerSingleton<AuthenticationService>(service);
@@ -26,7 +26,7 @@ AuthenticationService setupMockAuthenticationService() {
 }
 
 class MockDialogService extends Mock implements DialogService {}
-DialogService setupMockDialogService() {
+DialogService getAndRegisterMockDialogService() {
   _removeRegistrationIfExists<DialogService>();
   var service = MockDialogService();
   locator.registerSingleton<DialogService>(service);
