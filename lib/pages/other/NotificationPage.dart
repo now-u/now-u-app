@@ -58,17 +58,14 @@ class NotificationPage extends StatelessWidget {
                   ),
 
                   // Dismiss Button
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      DarkButton(
-                        "Got it",
-                        onPressed: () {
-                          model.dismissNotification(notification.getId());
-                        },
-                      ),
-                    ]
-                  ),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    DarkButton(
+                      "Got it",
+                      onPressed: () {
+                        model.dismissNotification(notification.getId());
+                      },
+                    ),
+                  ]),
                   SizedBox(height: 40),
                 ],
               );

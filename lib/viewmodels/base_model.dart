@@ -8,8 +8,7 @@ import 'package:flutter/widgets.dart';
 class BaseModel extends ChangeNotifier {
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
-  final NavigationService _navigationService =
-      locator<NavigationService>();
+  final NavigationService _navigationService = locator<NavigationService>();
 
   User get currentUser => _authenticationService.currentUser;
 

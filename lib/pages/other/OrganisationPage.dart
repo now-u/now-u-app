@@ -16,7 +16,7 @@ import 'package:app/services/navigation_service.dart';
 
 final double SECTION_TITLE_BOTTOM_PADDING = 8;
 final double BETWEEN_SECTION_PADDING = 12;
-  
+
 final NavigationService _navigationService = locator<NavigationService>();
 
 class OraganisationInfoPage extends StatelessWidget {
@@ -24,7 +24,7 @@ class OraganisationInfoPage extends StatelessWidget {
   OraganisationInfoPage(
     this.organisation,
   );
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

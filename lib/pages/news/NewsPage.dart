@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/header.dart';
@@ -108,11 +109,9 @@ class NewsPage extends StatelessWidget {
                                       bottom: 10,
                                     ),
                                     child: NewsTile(
-                                        article:
-                                            model.filteredArticles[index],
-                                        model: model,
-                                      )
-                                    );
+                                      article: model.filteredArticles[index],
+                                      model: model,
+                                    ));
                               },
                             ),
                             SizedBox(width: 20),

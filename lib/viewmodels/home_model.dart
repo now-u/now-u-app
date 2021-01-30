@@ -51,9 +51,9 @@ class HomeViewModel extends BaseModel with CampaignRO {
 
   void onPressCampaignButton() {
     _navigationService.launchLink(
-      "https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform",
-      description: "To suggest causes for future campaigns, fill in this Google Form",
-      buttonText: "Go"
-    );
+        "https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform",
+        description:
+            "To suggest causes for future campaigns, fill in this Google Form",
+        buttonText: "Go");
   }
 }

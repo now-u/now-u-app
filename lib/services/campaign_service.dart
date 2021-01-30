@@ -81,9 +81,9 @@ class CampaignService {
     return actions;
   }
 
-  
   Future getCampaign(int id) async {
-    Campaign campaign = _campaigns.firstWhere((c) => c.getId() == id, orElse: () => null);
+    Campaign campaign =
+        _campaigns.firstWhere((c) => c.getId() == id, orElse: () => null);
     if (campaign != null) {
       return campaign;
     }
@@ -103,10 +103,10 @@ class CampaignService {
 
   Future fetchCampaigns() async {
     try {
-      var response = await http.get(
-        domainPrefix + "campaigns",
-        headers: <String, String> {'token': _authenticationService.currentUser.getToken()}
-      );
+      var response = await http.get(domainPrefix + "campaigns",
+          headers: <String, String>{
+            'token': _authenticationService.currentUser.getToken()
+          });
       Campaigns cs = Campaigns.fromJson(json.decode(response.body)['data']);
       _campaigns = cs.getActiveCampaigns();
     } catch (e) {}
@@ -134,7 +134,7 @@ class CampaignService {
           StackTrace.fromString("The stack trace is"));
     }
   }
-  
+
   Future<LearningTopic> getLearningTopic(int id) async {
     var response = await http.get(domainPrefix + "learning_topics/$id");
     if (response.statusCode == 200) {
@@ -142,7 +142,8 @@ class CampaignService {
           LearningTopic.fromJson(json.decode(response.body)['data']);
       return topic;
     } else {
-      return Future.error("Error getting learning topic. Status code: ${response.statusCode}");
+      return Future.error(
+          "Error getting learning topic. Status code: ${response.statusCode}");
     }
   }
 

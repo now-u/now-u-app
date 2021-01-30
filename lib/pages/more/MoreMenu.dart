@@ -27,7 +27,7 @@ final profileTiles = <Map>[
   //},
   {'sectionHeading': "The app"},
   {
-    'profileTile': ProfileTile("About Us",CustomIcons.ic_faq),
+    'profileTile': ProfileTile("About Us", CustomIcons.ic_faq),
     'link': "https://now-u.com/aboutus",
   },
   {
@@ -88,13 +88,13 @@ final profileTiles = <Map>[
     'external': true
   },
 ];
+
 ///The More page ![More Page](https://i.ibb.co/xDHyMPj/slack.png)
 ///
 /// This Widget takes in the [profileTiles] and goes over it
 /// checking if the elements inside it is either sectionHeading
 /// or [ProfileTile]
 class Profile extends StatelessWidget {
-  
   final NavigationService _navigationService = locator<NavigationService>();
 
   @override
@@ -180,31 +180,30 @@ class Profile extends StatelessWidget {
 
                     // Dev Tools
                     model.currentUser.isStagingUser()
-                      ? Column(
-                          children: [
+                        ? Column(children: [
                             GestureDetector(
-                              child: ProfileTile("Dev Tools", FontAwesomeIcons.code),
-                              onTap: () {
-                                //model.logout();
-                                //model.api.toggleStagingApi();
-                                //viewModel.onUpdateCampaings();
-                              }
-                            ),
+                                child: ProfileTile(
+                                    "Dev Tools", FontAwesomeIcons.code),
+                                onTap: () {
+                                  //model.logout();
+                                  //model.api.toggleStagingApi();
+                                  //viewModel.onUpdateCampaings();
+                                }),
                             GestureDetector(
-                              child: ProfileTile("Log out", FontAwesomeIcons.code),
-                              onTap: () {
-                                model.logout();
-                              }
-                            ),
+                                child: ProfileTile(
+                                    "Log out", FontAwesomeIcons.code),
+                                onTap: () {
+                                  model.logout();
+                                }),
                             GestureDetector(
-                              child: ProfileTile("Navigate test", FontAwesomeIcons.code),
-                              onTap: () {
-                                _navigationService.launchLink("internal:learningTopic&id=-1");
-                              }
-                            ),
-                          ]
-                        )
-                      : Container()
+                                child: ProfileTile(
+                                    "Navigate test", FontAwesomeIcons.code),
+                                onTap: () {
+                                  _navigationService.launchLink(
+                                      "internal:learningTopic&id=-1");
+                                }),
+                          ])
+                        : Container()
                   ],
                 )));
       },

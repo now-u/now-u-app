@@ -149,7 +149,7 @@ class Campaign {
   int getNumberOfCampaigners() {
     return numberOfCampaigners;
   }
-  
+
   int getNumberOfActionsCompleted() {
     return numberOfActionsCompleted;
   }
