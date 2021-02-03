@@ -31,6 +31,6 @@
   },
   "static_framework": true,
   "pod_target_xcconfig": {
-    "GCC_PREPROCESSOR_DEFINITIONS": "LIBRARY_VERSION=\\@\\\"5.0.15\\\" LIBRARY_NAME=\\@\\\"flutter-fire-analytics\\\""
+    "GCC_PREPROCESSOR_DEFINITIONS": "LIBRARY_VERSION=\\@\\\"5.0.16\\\" LIBRARY_NAME=\\@\\\"flutter-fire-analytics\\\""
   }
 }

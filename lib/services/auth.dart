@@ -28,7 +28,9 @@ class AuthenticationService {
   User get currentUser => _currentUser;
 
   bool logout() {
-    _currentUser = null;
+    print("current user: " + _currentUser.toString());
+    _sharedPreferencesService.removeUserFromPrefs(_currentUser);
+//    _currentUser = null;
     return true;
   }
 
@@ -42,14 +44,20 @@ class AuthenticationService {
   Future<bool> isUserLoggedIn() async {
     User user = await _sharedPreferencesService.loadUserFromPrefs();
     if (user != null) {
+      print("Shared Prefs not empty");
       await _updateUser(user.getToken());
     }
+    print("Current user: " + _currentUser.toString());
     return _currentUser != null;
   }
 
   Future _updateUser(String token) async {
     if (token != null) {
+      print("in _updateUser method, _currentUser before getUser(): " +
+          _currentUser.toString());
       _currentUser = await getUser(token);
+      print("in _updateUser method, _currentUser after getUser(): " +
+          _currentUser.toString());
       _sharedPreferencesService.saveUserToPrefs(_currentUser);
     }
   }
@@ -116,7 +124,8 @@ class AuthenticationService {
         return AuthError.tokenExpired;
       }
 
-      User user = await getUser(json.decode(response.body)['data']['token']);
+      _currentUser = await getUser(json.decode(response.body)['data']['token']);
+      _sharedPreferencesService.saveUserToPrefs(_currentUser);
 
       return null;
     } on Error catch (e) {
