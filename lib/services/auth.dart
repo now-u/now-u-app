@@ -44,21 +44,21 @@ class AuthenticationService {
   Future<bool> isUserLoggedIn() async {
     User user = await _sharedPreferencesService.loadUserFromPrefs();
     if (user != null) {
-      print("Shared Prefs not empty");
+      print("[isUserLoggedIn()] - user from Prefs not null");
       await _updateUser(user.getToken());
     }
-    print("Current user: " + _currentUser.toString());
+    print("[isUserLoggedIn()] - _currentUser: " + _currentUser.toString());
     return _currentUser != null;
   }
 
   Future _updateUser(String token) async {
     if (token != null) {
-      print("in _updateUser method, _currentUser before getUser(): " +
+      print("[_updateUser()] - _currentUser BEFORE getUser(token): " +
           _currentUser.toString());
       _currentUser = await getUser(token);
-      print("in _updateUser method, _currentUser after getUser(): " +
+      print("[_updateUser()] - _currentUser AFTER getUser(token): " +
           _currentUser.toString());
-      _sharedPreferencesService.saveUserToPrefs(_currentUser);
+//      _sharedPreferencesService.saveUserToPrefs(_currentUser);  # Why is this here?
     }
   }
 

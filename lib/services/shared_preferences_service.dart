@@ -10,6 +10,7 @@ class SharedPreferencesService {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var string = json.encode(u.toJson());
     await preferences.setString('user', string);
+    print("[SharedPreferencesService] - user saved");
   }
 
   Future<void> removeUserFromPrefs(User u) async {
@@ -20,10 +21,10 @@ class SharedPreferencesService {
   }
 
   Future<User> loadUserFromPrefs() async {
-    print("loadUserFromPrefs running");
+    print("loadUserFromPrefs() running");
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var string = preferences.getString('user');
-    print("User string from prefs: " + string.toString());
+    print("[SharedPreferencesService] - user string:  " + string.toString());
 
     if (string != null) {
       Map map = json.decode(string);
