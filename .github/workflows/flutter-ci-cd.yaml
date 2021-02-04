@@ -35,7 +35,7 @@ jobs:
     - run: flutter pub get
     
     # Build apk
-    - run: flutter build apk --release -v
+    - run: flutter build apk --release --scan
     
     # Upload generated apk to the artifacts.
     - uses: actions/upload-artifact@v1
