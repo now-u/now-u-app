@@ -31,8 +31,8 @@ jobs:
         channel: 'stable' # 'dev', 'alpha', default to: 'stable'
         # flutter-version: '1.12.x' # you can also specify exact version of flutter
     
-    # Run flutter docotor.
-    - run: flutter docotor
+    # Run flutter doctor.
+    - run: flutter doctor
 
     # Get flutter dependencies.
     - run: flutter pub get
