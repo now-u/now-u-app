@@ -86,6 +86,9 @@ jobs:
     # Get flutter dependencies.
     - run: flutter pub get
 
+    # Precache to fix iOS pod install issue
+    - run: flutter precache
+
     - run: pod install
       working-directory: 'ios/'
 
