@@ -22,6 +22,6 @@ class BaseModel extends ChangeNotifier {
 
   void logout() {
     _authenticationService.logout();
-    _navigationService.navigateTo(Routes.home);
+    _navigationService.navigateTo(Routes.login);
   }
 }

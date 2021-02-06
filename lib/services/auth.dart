@@ -27,13 +27,6 @@ class AuthenticationService {
   User _currentUser;
   User get currentUser => _currentUser;
 
-  bool logout() {
-    print("current user: " + _currentUser.toString());
-    _sharedPreferencesService.removeUserFromPrefs(_currentUser);
-//    _currentUser = null;
-    return true;
-  }
-
   // This is not final as it can be changed
   String domainPrefix = "https://api.now-u.com/api/v1/";
 
@@ -44,20 +37,20 @@ class AuthenticationService {
   Future<bool> isUserLoggedIn() async {
     User user = await _sharedPreferencesService.loadUserFromPrefs();
     if (user != null) {
-      print("[isUserLoggedIn()] - user from Prefs not null");
+      print("[isUserLoggedIn()]: user from Prefs not null");
       await _updateUser(user.getToken());
     }
-    print("[isUserLoggedIn()] - _currentUser: " + _currentUser.toString());
+    print("[isUserLoggedIn()]: _currentUser: " + _currentUser.toString());
     return _currentUser != null;
   }
 
   Future _updateUser(String token) async {
     if (token != null) {
-      print("[_updateUser()] - _currentUser BEFORE getUser(token): " +
+      print("[_updateUser()]: _currentUser BEFORE getUser(token): " +
           _currentUser.toString());
       _currentUser = await getUser(token);
 
-      print("[_updateUser()] - _currentUser AFTER getUser(token): " +
+      print("[_updateUser()]: _currentUser AFTER getUser(token): " +
           _currentUser.toString());
       _sharedPreferencesService.saveUserToPrefs(_currentUser);
     }
@@ -134,6 +127,14 @@ class AuthenticationService {
     }
   }
 
+  bool logout() {
+    print("current user: " + _currentUser.toString());
+    _sharedPreferencesService.removeUserFromPrefs();
+    _currentUser = null;
+    print("current user: " + _currentUser.toString());
+    return true;
+  }
+
   Future<User> getUser(String token) async {
     http.Response userResponse =
         await http.get(domainPrefix + 'users/me', headers: <String, String>{
@@ -198,9 +199,10 @@ class AuthenticationService {
       if (response.statusCode != 200) {
         print("Returned false, no error but status not 200");
         return false;
+      } else {
+        print("Returned true, account should be deleted");
+        return true;
       }
-      print("Returned true, account should be deleted");
-      return true;
     } catch (e) {
       print("Error");
       return false;
