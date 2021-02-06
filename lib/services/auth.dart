@@ -56,9 +56,10 @@ class AuthenticationService {
       print("[_updateUser()] - _currentUser BEFORE getUser(token): " +
           _currentUser.toString());
       _currentUser = await getUser(token);
+
       print("[_updateUser()] - _currentUser AFTER getUser(token): " +
           _currentUser.toString());
-//      _sharedPreferencesService.saveUserToPrefs(_currentUser);  # Why is this here?
+      _sharedPreferencesService.saveUserToPrefs(_currentUser);
     }
   }
 
@@ -124,9 +125,8 @@ class AuthenticationService {
         return AuthError.tokenExpired;
       }
 
-      _currentUser = await getUser(json.decode(response.body)['data']['token']);
-      _sharedPreferencesService.saveUserToPrefs(_currentUser);
-
+      User user = await getUser(json.decode(response.body)['data']['token']);
+      _updateUser(user.getToken());
       return null;
     } on Error catch (e) {
       print("Error ${e.toString()}");
