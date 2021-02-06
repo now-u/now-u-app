@@ -13,7 +13,7 @@ class Analytics {
       FirebaseAnalyticsObserver(analytics: _analytics);
 
   Future logUserAccountDeleted() async {
-    print("Deleted account logged");
+    print("Deleted account logged in Analytics");
     await _analytics
         .logEvent(name: "User account deleted", parameters: <String, dynamic>{
       "time_deleted": new DateTime.now().toString(),

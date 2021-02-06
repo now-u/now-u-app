@@ -61,7 +61,10 @@ class AccountDetailsViewModel extends BaseModel {
       setBusy(false);
       notifyListeners();
     } else {
-      _dialogService.showDialog(title: "Error", description: "Sorry there has been an error whilst updating your details.");
+      _dialogService.showDialog(
+          title: "Error",
+          description:
+              "Sorry there has been an error whilst updating your details.");
       setBusy(false);
       notifyListeners();
     }
