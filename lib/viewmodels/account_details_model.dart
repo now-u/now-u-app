@@ -72,14 +72,42 @@ class AccountDetailsViewModel extends BaseModel {
 
   void delete() async {
     setBusy(true);
-    if (!await _authenticationService.deleteUserAccount()) {
-      _dialogService.showDialog(
-          title: "Error",
-          description:
-              "Sorry there has been an error whilst deleting your account. Try again now or later.");
-    } else {
-      await _analyticsService.logUserAccountDeleted();
-      logout();
+
+    String response = await _authenticationService.deleteUserAccount();
+    switch (response) {
+      case "success":
+        {
+          _dialogService.showDialog(
+              title: "All done!",
+              description: "Your account has now been deleted.");
+          await _analyticsService.logUserAccountDeleted();
+          logout();
+          break;
+        }
+      case "client error":
+        {
+          _dialogService.showDialog(
+              title: "Client Error",
+              description:
+                  "Sorry, something went wrong!\nTry restarting your app.");
+          break;
+        }
+      case "server error":
+        {
+          _dialogService.showDialog(
+              title: "Server Error",
+              description:
+                  "Sorry, there was a server problem.\nTry again later.");
+          break;
+        }
+      default:
+        {
+          _dialogService.showDialog(
+              title: "Error",
+              description:
+                  "Sorry, something went wrong!\nTry again now or later.");
+          break;
+        }
     }
     setBusy(false);
     notifyListeners();

@@ -187,7 +187,7 @@ class AuthenticationService {
     }
   }
 
-  Future<bool> deleteUserAccount() async {
+  Future<String> deleteUserAccount() async {
     try {
       http.Response response = await http.delete(
         domainPrefix + 'users/me',
@@ -196,16 +196,23 @@ class AuthenticationService {
           'token': currentUser.getToken(),
         },
       );
-      if (response.statusCode != 200) {
-        print("Returned false, no error but status not 200");
-        return false;
-      } else {
-        print("Returned true, account should be deleted");
-        return true;
+      if (response.statusCode >= 400 && response.statusCode < 500) {
+        print("Status code: " + response.statusCode.toString());
+        return "client error";
       }
+      if (response.statusCode >= 500 && response.statusCode < 600) {
+        print("Status code: " + response.statusCode.toString());
+        return "server error";
+      }
+      if (response.statusCode == 200) {
+        print("Status code: " + response.statusCode.toString());
+        return "success";
+      }
+      print("Status code: " + response.statusCode.toString());
+      return "unknown";
     } catch (e) {
-      print("Error");
-      return false;
+      print("Error caught: " + e);
+      return "unknown";
     }
   }
 
