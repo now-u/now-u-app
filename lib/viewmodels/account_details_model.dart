@@ -72,9 +72,15 @@ class AccountDetailsViewModel extends BaseModel {
 
   void delete() async {
     setBusy(true);
-    await _authenticationService.deleteUserAccount();
-    await _analyticsService.logUserAccountDeleted();
-    logout();
+    if (!await _authenticationService.deleteUserAccount()) {
+      _dialogService.showDialog(
+          title: "Error",
+          description:
+              "Sorry there has been an error whilst deleting your account. Try again now or later.");
+    } else {
+      await _analyticsService.logUserAccountDeleted();
+      logout();
+    }
     setBusy(false);
     notifyListeners();
   }
