@@ -24,6 +24,10 @@ jobs:
     - uses: actions/setup-java@v1
       with:
         java-version: '8.x'
+     
+    # Export key into key.jks file
+    - run: pwd 
+    - run: echo $KEY_JKS > key.jks
     
     # Setup the flutter environment.
     - uses: subosito/flutter-action@v1
@@ -34,7 +38,6 @@ jobs:
         KEY_JKS: ${{ secrets.ANDROID_KEY_JKS }}
         KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         ALIAS_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-        run: echo $KEY_JKS > key.jks
     
     # Run flutter doctor.
     - run: flutter doctor
