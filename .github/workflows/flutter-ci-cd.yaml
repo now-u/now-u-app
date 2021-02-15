@@ -35,6 +35,8 @@ jobs:
       with:
         channel: 'stable' # 'dev', 'alpha', default to: 'stable'
         # flutter-version: '1.12.x' # you can also specify exact version of flutter
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         # env:
         #   KEY_JKS: ${{ secrets.ANDROID_KEY_JKS }}
         #   KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
