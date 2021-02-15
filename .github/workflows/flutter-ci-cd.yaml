@@ -34,19 +34,19 @@ jobs:
         KEY_JKS: ${{ secrets.ANDROID_KEY_JKS }}
         KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         ALIAS_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: echo $KEY_JKS > android/key.jks && flutter pub get && flutter build apk --release --no-shrink
     
-    # Export key into key.jks file
-    - run: pwd 
-    - run: echo $KEY_JKS > android/key.jks
-    
-    # Run flutter doctor.
-    - run: flutter doctor
+    # # Export key into key.jks file
+    # - run: pwd 
+    # 
+    # # Run flutter doctor.
+    # - run: flutter doctor
 
-    # Get flutter dependencies.
-    - run: flutter pub get
-    
-    # Build apk
-    - run: flutter build apk --release -v --no-shrink 
+    # # Get flutter dependencies.
+    # - run: flutter pub get
+    # 
+    # # Build apk
+    # - run: flutter build apk --release -v --no-shrink 
     
     # Upload generated apk to the artifacts.
     - uses: actions/upload-artifact@v1
