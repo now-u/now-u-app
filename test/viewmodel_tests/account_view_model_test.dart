@@ -13,36 +13,46 @@ void main() {
       setupTestLocator();
     });
     DateTime now = DateTime.now();
-    
+
     test("Check save on update failure", () async {
       var mockDialogService = getAndRegisterMockDialogService();
-      when(mockDialogService.showDialog(title: "Error", description: "Sorry there has been an error whilst updating your details.")).thenAnswer((_) => Future.value(true));
+      when(mockDialogService.showDialog(
+              title: "Error",
+              description:
+                  "Sorry there has been an error whilst updating your details."))
+          .thenAnswer((_) => Future.value(true));
 
-      // Mock api to always return false i.e. error occured 
+      // Mock api to always return false i.e. error occured
       var mockAuth = getAndRegisterMockAuthentiactionService();
-      when(mockAuth.updateUserDetails(name: "jelgar", dob: now, orgCode: null)).thenAnswer((_) => Future.value(false));
-   
+      when(mockAuth.updateUserDetails(name: "jelgar", dob: now, orgCode: null))
+          .thenAnswer((_) => Future.value(false));
+
       var model = AccountDetailsViewModel();
       model.name = "jelgar";
       model.dob = now;
       model.save();
 
       // Verify that updateUserDetails function is called with correct parameters when we save
-      verify(mockAuth.updateUserDetails(name: "jelgar", dob: now, orgCode: null));
+      verify(
+          mockAuth.updateUserDetails(name: "jelgar", dob: now, orgCode: null));
       // expect(await mockAuth.updateUserDetails(name: "jelgar", dob: now), false);
 
       // But then since there was an error verify dialog was shown
-      verify(mockDialogService.showDialog(title: "Error", description: "Sorry there has been an error whilst updating your details."));
+      verify(mockDialogService.showDialog(
+          title: "Error",
+          description:
+              "Sorry there has been an error whilst updating your details."));
     });
-    
-    test("Check save on update success", () {
 
+    test("Check save on update success", () {
       DateTime now = DateTime.now();
 
       // Mock api to always return true
-      MockAuthenticationService mockAuth = getAndRegisterMockAuthentiactionService();
-      when(mockAuth.updateUserDetails(name: "jelgar", dob: now)).thenAnswer((_) => Future.value(true));
-      
+      MockAuthenticationService mockAuth =
+          getAndRegisterMockAuthentiactionService();
+      when(mockAuth.updateUserDetails(name: "jelgar", dob: now))
+          .thenAnswer((_) => Future.value(true));
+
       var model = AccountDetailsViewModel();
       model.name = "jelgar";
       model.dob = now;
@@ -50,6 +60,28 @@ void main() {
 
       // Verify that updateUserDetails function is called with correct parameters when we save
       verify(mockAuth.updateUserDetails(name: "jelgar", dob: now));
+    });
+
+    test("Check delete() account on case success", () {
+      // Mock api to always return "success" string
+      MockAuthenticationService mockAuth =
+          getAndRegisterMockAuthentiactionService();
+      when(mockAuth.deleteUserAccount()).thenAnswer((_) async => "success");
+//      expect(mockAuth.deleteUserAccount(), Future.value("success"));
+
+      MockDialogService mockDialog = getAndRegisterMockDialogService();
+      when(mockDialog.showDialog(
+              title: "All done!",
+              description: "Your account has now been deleted."))
+          .thenAnswer((_) => Future.value(true));
+
+      var model = AccountDetailsViewModel();
+      model.delete();
+
+//      mockAuth.deleteUserAccount();
+      verify(mockDialog.showDialog(
+          title: "All done!",
+          description: "Your account has now been deleted."));
     });
   });
 }
