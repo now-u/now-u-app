@@ -105,7 +105,7 @@ jobs:
     #   working-directory: 'ios/'
 
     # Prebuild
-    - run: flutter build ios
+    - run: flutter build ios --no-codesign
 
     - name: Build iOS app with signing
       run: ../.github/scripts/build_ios.sh
