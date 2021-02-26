@@ -126,7 +126,7 @@ jobs:
         path: ios/build/nowu.ipa
 
     - name: Publishing app to TestFlight
-      if: success()
+      if: false # success()
       env:
         APPLEID_USERNAME: ${{ secrets.APPLEID_USERNAME }}
         APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
