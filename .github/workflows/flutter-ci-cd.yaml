@@ -25,6 +25,25 @@ jobs:
     
     - uses: actions/checkout@v2
     
+    - name: Key base64 to file
+      id: write_file_key
+      uses: timheuer/base64-to-file@v1
+      with:
+        fileName: 'key.jks'
+        encodedString: ${{ secrets.KEY_JKS_BASE64 }}
+
+    - name: Key properties base64 to file
+      id: write_file_key_properties
+      uses: timheuer/base64-to-file@v1
+      with:
+        fileName: 'key.properties'
+        encodedString: ${{ secrets.KEY_PROPERTIES_BASE64 }}
+
+    - name: Move key.jks and key.properties to proper dir
+      run: |
+        mv ${{ steps.write_file_key.outputs.filePath }} ./android/app/
+        mv ${{ steps.write_file_key_properties.outputs.filePath }} ./android/
+
     # Setup Java environment in order to build the Android app.
     - uses: actions/setup-java@v1
       with:
