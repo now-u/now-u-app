@@ -85,7 +85,7 @@ jobs:
     - name: Upload to Play Store # Finish setting this up
       uses: r0adkll/upload-google-play@v1
       with:
-        serviceAccountJson: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
+        serviceAccountJsonPlainText: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
         packageName: com.nowu.app
         releaseFiles: /home/runner/work/now-u-app/now-u-app/build/app/outputs/apk/release/app-release.apk
         track: beta
