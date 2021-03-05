@@ -136,18 +136,20 @@ jobs:
     #   working-directory: 'ios/'
 
     # Prebuild
-    - run: flutter build ios --no-codesign
+    # - run: flutter build ios --no-codesign
 
-    - name: Build iOS app with signing
-      run: ../.github/scripts/build_ios.sh
-      working-directory: 'ios/'
+    # - name: Build iOS app with signing
+    #   run: ../.github/scripts/build_ios.sh
+    #   working-directory: 'ios/'
 
-    - name: Creating IPA file
-      run: ../.github/scripts/create_ipa.sh
-      working-directory: 'ios/'
+    # - name: Creating IPA file
+    #   run: ../.github/scripts/create_ipa.sh
+    #   working-directory: 'ios/'
 
-    # - name: Build IPA
-    #   run: flutter build ipa --export-options-plist=./ios/ExportOptions.plist
+    - name: Build IPA
+      run: |
+        security unlock-keychain -p "" ~/Library/Keychains/build.keychain
+        flutter build ipa --export-options-plist=./ios/ExportOptions.plist
 
     # Upload generated ipa to the artifacts.
     - name: Upload IPA artifact
