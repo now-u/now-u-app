@@ -148,7 +148,12 @@ jobs:
 
     - name: Build IPA
       run: |
+        echo "Unlock keychain"
         security unlock-keychain -p "" ~/Library/Keychains/build.keychain
+        
+        echo "Increase keychain unlock timeout"
+        security set-keychain-settings -lut 1800 ~/Library/Keychains/build.keychain
+
         flutter build ipa --export-options-plist=./ios/ExportOptions.plist
 
     # Upload generated ipa to the artifacts.
