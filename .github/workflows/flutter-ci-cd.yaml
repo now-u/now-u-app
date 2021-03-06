@@ -1,0 +1,173 @@
+name: Flutter CI CD
+
+# This workflow is triggered on pushes to the repository.
+
+on:
+  push: 
+    # branches: [staging, master]
+    branches: [staging]
+  # pull_request:
+  #  branches: [ dev ]
+  workflow_dispatch: # to manually run this workflow
+    
+# on: push    # Default will running for every branch.
+    
+jobs:
+  android:
+    # This job will run on ubuntu virtual machine
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+        KEY_JKS: ${{ secrets.ANDROID_KEY_JKS }}
+        KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        ALIAS_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        TEST_SECRET: ${{ secrets.TEST_SECRET }}
+    steps:
+    
+    - uses: actions/checkout@v2
+    
+    - name: Key base64 to file
+      id: write_file_key
+      uses: timheuer/base64-to-file@v1
+      with:
+        fileName: 'key.jks'
+        encodedString: ${{ secrets.KEY_JKS_BASE64 }}
+
+    - name: Key properties base64 to file
+      id: write_file_key_properties
+      uses: timheuer/base64-to-file@v1
+      with:
+        fileName: 'key.properties'
+        encodedString: ${{ secrets.KEY_PROPERTIES_BASE64 }}
+
+    - name: Move key.jks and key.properties to proper dir
+      run: |
+        mv ${{ steps.write_file_key.outputs.filePath }} ./android/app/
+        mv ${{ steps.write_file_key_properties.outputs.filePath }} ./android/
+
+    # Setup Java environment in order to build the Android app.
+    - uses: actions/setup-java@v1
+      with:
+        java-version: '8.x'
+     
+    # Setup the flutter environment.
+    - uses: subosito/flutter-action@v1.4.0
+      with:
+        channel: 'stable' # 'dev', 'alpha', default to: 'stable'
+        # flutter-version: '1.12.x' # you can also specify exact version of flutter
+      # env:
+        # ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+        # env:
+        #   KEY_JKS: ${{ secrets.ANDROID_KEY_JKS }}
+        #   KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        #   ALIAS_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        # run: echo $KEY_JKS > android/key.jks && flutter pub get && flutter build apk --release --no-shrink
+    
+    # Export key into key.jks file
+    # - run: pwd 
+    # - run: echo $TEST_SECRET 
+    # - run: echo $KEY_JKS > android/key.jks
+    
+    # Run flutter doctor.
+    - run: flutter doctor
+
+    # Get flutter dependencies.
+    - run: flutter pub get
+    
+    # Build apk
+    - run: flutter build apk --release -v --no-shrink 
+    
+    # Upload generated apk to the artifacts.
+    - uses: actions/upload-artifact@v1
+      with:
+        name: release-android
+        path: build/app/outputs/apk/release/app-release.apk
+
+    - name: Upload to Play Store # Finish setting this up
+      uses: r0adkll/upload-google-play@v1
+      with:
+        serviceAccountJsonPlainText: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
+        packageName: com.nowu.app
+        releaseFiles: /home/runner/work/now-u-app/now-u-app/build/app/outputs/apk/release/app-release.apk
+        track: beta
+        # inAppUpdatePriority: 2
+        # userFraction: 0.33
+        # whatsNewDirectory: distribution/whatsnew
+        # mappingFile: app/build/outputs/mapping/release/mapping.txt
+ 
+
+  ios:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:  
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    
+    - uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: 12.4
+
+    - name: Install gpg
+      run: brew install gnupg
+
+    - name: Setup provisioning profile
+      env:
+        IOS_GPG_KEY_PROV: ${{ secrets.IOS_GPG_KEY_PROV }}
+        IOS_GPG_KEY_P12: ${{ secrets.IOS_GPG_KEY_P12 }}
+        IOS_P12_KEY: ${{ secrets.IOS_P12_KEY }}
+      run: ./.github/secrets/decrypt_secrets.sh
+
+    # Setup the flutter environment.
+    - name: Flutter action
+      uses: subosito/flutter-action@v1.4.0
+      with:
+        channel: 'stable' # 'dev', 'alpha', default to: 'stable'
+        # flutter-version: '1.12.x' # you can also specify exact version of flutter
+    
+    - name: Flutter doctor
+      run: flutter doctor
+
+    # Get flutter dependencies.
+    - run: flutter pub get
+
+    # Precache to fix iOS pod install issue
+    # - run: flutter precache
+
+    # - run: pod install
+    #   working-directory: 'ios/'
+
+    # Prebuild
+    # - run: flutter build ios --no-codesign
+
+    # - name: Build iOS app with signing
+    #   run: ../.github/scripts/build_ios.sh
+    #   working-directory: 'ios/'
+
+    # - name: Creating IPA file
+    #   run: ../.github/scripts/create_ipa.sh
+    #   working-directory: 'ios/'
+
+    - name: Build IPA
+      run: |
+        echo "Unlock keychain"
+        security unlock-keychain -p "" ~/Library/Keychains/build.keychain
+        
+        echo "Increase keychain unlock timeout"
+        security set-keychain-settings -lut 1800 ~/Library/Keychains/build.keychain
+
+        flutter build ipa --export-options-plist=./ios/ExportOptions.plist
+
+    # Upload generated ipa to the artifacts.
+    - name: Upload IPA artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: release-ios
+        path: ./build/ios/ipa/nowu.ipa
+
+    - name: Publishing app to TestFlight
+      if: success()
+      env:
+        APPLEID_USERNAME: ${{ secrets.APPLEID_USERNAME }}
+        APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
+        IPA_PATH: ./build/ios/ipa/nowu.ipa
+      run: ./.github/scripts/publish_testflight.sh
