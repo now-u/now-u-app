@@ -1,28 +1,29 @@
-import 'package:app/models/Campaigns.dart';
 import 'package:app/pages/campaign/CampaignPage.dart';
-import 'package:app/pages/home/Home.dart';
 import 'package:app/pages/other/OrganisationPage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/models/Organisation.dart';
+import 'package:app/models/Notification.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Learning.dart';
 
-import 'package:app/pages/profile/profilePages/FAQPage.dart';
-import 'package:app/pages/profile/profilePages/ProfilePage.dart';
-import 'package:app/pages/profile/profilePages/PartnersPage.dart';
+import 'package:app/pages/more/morePages/FAQPage.dart';
+import 'package:app/pages/more/morePages/PartnersPage.dart';
 import 'package:app/pages/intro/IntroPage.dart';
 import 'package:app/pages/login/login.dart';
 import 'package:app/pages/login/emailSentPage.dart';
+import 'package:app/pages/login/login_code_view.dart';
 import 'package:app/pages/other/InfoPage.dart';
 import 'package:app/pages/other/WebView.dart';
+import 'package:app/pages/other/NotificationPage.dart';
 import 'package:app/pages/Tabs.dart';
 import 'package:app/pages/action/ActionInfo.dart';
-import 'package:app/pages/campaign/LearningCentre/LearningCentreAllPage.dart';
-import 'package:app/pages/campaign/LearningCentre/LearningCentrePage.dart';
-import 'package:app/pages/campaign/LearningCentre/LearningTopicPage.dart';
+import 'package:app/pages/learning/LearningCentreAllPage.dart';
+import 'package:app/pages/learning/LearningCentrePage.dart';
+import 'package:app/pages/learning/LearningTopicPage.dart';
 import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
+import 'package:app/pages/campaign/CampaignInfo/CampaignDetails.dart';
 import 'package:app/pages/campaign/AllCampaignsPage.dart';
 import 'package:app/pages/campaign/PastCampaignActionPage.dart';
 
@@ -31,6 +32,7 @@ class Routes {
   static const intro = "intro";
   static const login = "login";
   static const emailSent = "emailSent";
+  static const loginCodeInput = "loginCodeInput";
   static const loginLinkClicked = "loginLinkClicked";
 
   // Tab View Routes
@@ -40,6 +42,7 @@ class Routes {
 
   static const actionInfo = "actionInfo";
   static const campaignInfo = "campaignInfo";
+  static const campaignDetails = "campaignDetails";
 
   // All campaigns (including past)
   static const allCampaigns = "allCampaigns";
@@ -52,6 +55,7 @@ class Routes {
   static const organisationPage = "organisationPage";
   static const info = "info";
   static const webview = "webview";
+  static const notification = "notification";
 
   // Learning
   static const learningAll = "learning";
@@ -67,10 +71,13 @@ Function initRoutes = (RouteSettings settings) {
     // Into
     case Routes.login:
       {
-        if(args is LoginPageArguments) {
-          return customRoute(builder: (context) => LoginPage(args), settings: settings);
+        if (args is LoginPageArguments) {
+          return customRoute(
+              builder: (context) => LoginPage(args), settings: settings);
         }
-        return customRoute(builder: (context) => LoginPage(LoginPageArguments()), settings: settings);
+        return customRoute(
+            builder: (context) => LoginPage(LoginPageArguments()),
+            settings: settings);
       }
     case Routes.emailSent:
     case Routes.loginLinkClicked:
@@ -79,7 +86,19 @@ Function initRoutes = (RouteSettings settings) {
           return customRoute(
               builder: (context) => EmailSentPage(args), settings: settings);
         }
-        return customRoute(builder: (context) => LoginPage(LoginPageArguments()), settings: settings);
+        return customRoute(
+            builder: (context) => LoginPage(LoginPageArguments()),
+            settings: settings);
+      }
+    case Routes.loginCodeInput:
+      {
+        if (args is String) {
+          return customRoute(
+              builder: (context) => LoginCodePage(args), settings: settings);
+        }
+        return customRoute(
+            builder: (context) => LoginPage(LoginPageArguments()),
+            settings: settings);
       }
     case Routes.intro:
       {
@@ -87,11 +106,6 @@ Function initRoutes = (RouteSettings settings) {
             builder: (context) => IntroPage(), settings: settings);
       }
 
-    case Routes.profile:
-      {
-        return customRoute(
-            builder: (context) => ProfilePage(), settings: settings);
-      }
     case Routes.faq:
       {
         return customRoute(builder: (context) => FAQPage(), settings: settings);
@@ -116,7 +130,12 @@ Function initRoutes = (RouteSettings settings) {
       }
     case Routes.campaignInfo:
       {
+        print("navigating to campaignInfo");
+        print(args);
+        print(args is int);
+        print(args is String);
         if (args is int) {
+          print("navigating to campaignInfo");
           return customRoute(
               builder: (context) => CampaignInfo(
                     campaignId: args,
@@ -129,6 +148,15 @@ Function initRoutes = (RouteSettings settings) {
                     campaign: args,
                   ),
               settings: settings);
+        }
+        return customRoute(
+            builder: (context) => CampaignPage(), settings: settings);
+      }
+    case Routes.campaignDetails:
+      {
+        if (args is Campaign) {
+          return customRoute(
+              builder: (context) => CampaignDetails(args), settings: settings);
         }
         return customRoute(
             builder: (context) => CampaignPage(), settings: settings);
@@ -223,12 +251,26 @@ Function initRoutes = (RouteSettings settings) {
     case Routes.webview:
       {
         if (args is WebViewArgumnets) {
-          return customRoute(builder: (context) => WebViewPage(args), settings: settings);
+          return customRoute(
+              builder: (context) => WebViewPage(args), settings: settings);
         }
         if (args is String) {
-          return customRoute(builder: (context) => WebViewPage(WebViewArgumnets(args)), settings: settings);
+          return customRoute(
+              builder: (context) => WebViewPage(WebViewArgumnets(args)),
+              settings: settings);
         }
-        return customRoute(builder: (context) => TabsPage(currentPage: TabPage.Home), settings: settings);
+        return customRoute(
+            builder: (context) => TabsPage(currentPage: TabPage.Home),
+            settings: settings);
+      }
+
+    case Routes.notification:
+      {
+        if (args is InternalNotification) {
+          return customRoute(
+              builder: (context) => NotificationPage(args), settings: settings);
+        }
+        break;
       }
 
     // TODO add a 404 page

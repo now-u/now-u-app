@@ -6,16 +6,12 @@ import 'package:android_intent/android_intent.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
 
-import 'package:app/models/ViewModel.dart';
+import 'package:app/viewmodels/login_model.dart';
+import 'package:stacked/stacked.dart';
 
 import 'package:app/routes.dart';
 
 import 'package:app/pages/login/login.dart';
-
-import 'package:app/models/ViewModel.dart';
-import 'package:app/models/State.dart';
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 
 class EmailSentPageArguments {
   final String email;
@@ -35,7 +31,6 @@ class EmailSentPage extends StatefulWidget {
 }
 
 class _EmailSentPageState extends State<EmailSentPage> {
- 
   String token;
 
   @override
@@ -46,86 +41,143 @@ class _EmailSentPageState extends State<EmailSentPage> {
 
   @override
   Widget build(BuildContext context) {
-   return StoreConnector<AppState, ViewModel>(
-     onInitialBuild: (ViewModel viewModel) {
-       if (token != null) {
-         if (viewModel.userModel.user == null || viewModel.userModel.user.token == null) {
-          viewModel.userModel.login(widget.args.email, token);
-         } else {
-           Navigator.of(context).pushNamed(Routes.home);
-         }
-       }
-     },
-     converter: (Store<AppState> store) => ViewModel.create(store),
-     builder: (BuildContext context, ViewModel viewModel) {
-        return Stack(children: <Widget>[
-          Scaffold(
-              body: Container(
-                  color: Theme.of(context).primaryColorDark,
-                  child: Column(
-                    children: <Widget>[
-                      SafeArea(
-                        child: Container(),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 20, bottom: 40),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return ViewModelBuilder<LoginViewModel>.reactive(
+        viewModelBuilder: () => LoginViewModel(),
+        onModelReady: (model) {
+          if (token != null) {
+            if (model.currentUser == null || model.currentUser.token == null) {
+              model.login(email: widget.args.email, token: token);
+            } else {
+              Navigator.of(context).pushNamed(Routes.home);
+            }
+          }
+        },
+        builder: (context, model, child) {
+          return Stack(children: <Widget>[
+            Scaffold(
+                body: Container(
+                    color: Theme.of(context).primaryColorDark,
+                    child: Column(
+                      children: <Widget>[
+                        SafeArea(
+                          child: Container(),
                         ),
-                      ),
-
-                      token == null ? Container() :
-                        Container(
-                          height: 40,
-                          child: CircularProgressIndicator() 
-                        ),
-
-                      Expanded(
-                        child: Container(
-                          //physics: NeverScrollableScrollPhysics(),
-                          child: IntroPageSection(
-                            "Check your email",
-                            "We have just sent an email to ${widget.args.email}",
-                            "It has a link that will sign you in to now-u and get you started",
-                            AssetImage('assets/imgs/intro/il-mail@4x.png'),
+                        Padding(
+                          padding: EdgeInsets.only(top: 20, bottom: 40),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           ),
                         ),
-                      ),
-                      SizedBox(height: 30),
-                      Padding(
+                        token == null
+                            ? Container()
+                            : Container(
+                                height: 40, child: CircularProgressIndicator()),
+                        Flexible(
+                          child: Padding(
+                            padding: EdgeInsets.all(20),
+                            child: Image(
+                              image: AssetImage(
+                                  'assets/imgs/intro/il-mail@4x.png'),
+                            ),
+                          ),
+                        ),
+                        Text("Check your email",
+                            style: TextStyle(
+                              fontSize: Theme.of(context)
+                                  .primaryTextTheme
+                                  .headline1
+                                  .fontSize,
+                              fontWeight: Theme.of(context)
+                                  .primaryTextTheme
+                                  .headline1
+                                  .fontWeight,
+                              color: Colors.white,
+                            )),
+                        //Expanded(
+                        //  child: Container(
+                        //    //physics: NeverScrollableScrollPhysics(),
+                        //    child: IntroPageSection(
+                        //      "Check your email",
+                        //      "We have just sent an email to ${widget.args.email}",
+                        //      AssetImage('assets/imgs/intro/il-mail@4x.png'),
+                        //    ),
+                        //  ),
+                        //),
+                        SizedBox(height: 30),
+                        Padding(
                           padding: EdgeInsets.symmetric(horizontal: 40),
                           child: Container(
-                              width: double.infinity,
-                              child: DarkButton("Open Email", onPressed: () {
+                            width: double.infinity,
+                            child: DarkButton(
+                              "Open Email",
+                              onPressed: () {
                                 // TODO open email
                                 openEmailApp(context);
-                              }))),
-                      SizedBox(height: 20),
-                      Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CustomTextButton("I did not recieve an email", onClick: () {
-                              Navigator.of(context).pushNamed(Routes.login, arguments: LoginPageArguments(retry: true,));
-                            }),
-                          ]),
-                      SizedBox(height: 10),
-                    ],
-                  ))),
-        ]);
-      }
-   );
+                              },
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CustomTextButton("I didn't get my email",
+                                  onClick: () {
+                                Navigator.of(context).pushNamed(
+                                  Routes.login,
+                                  arguments: LoginPageArguments(),
+                                );
+                              }, fontSize: 14),
+                            ]),
+                        SizedBox(height: 20),
+                        Container(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            child: Text(
+                                "If the email link does not work, use the code we have emailed you.",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: Theme.of(context)
+                                      .primaryTextTheme
+                                      .bodyText1
+                                      .fontSize,
+                                  fontWeight: Theme.of(context)
+                                      .primaryTextTheme
+                                      .bodyText1
+                                      .fontWeight,
+                                  color: Colors.white,
+                                ))),
+                        SizedBox(height: 10),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 40),
+                          child: Container(
+                            width: double.infinity,
+                            child: DarkButton(
+                              "Use secret code",
+                              onPressed: () {
+                                // TODO open email
+                                Navigator.of(context).pushNamed(
+                                    Routes.loginCodeInput,
+                                    arguments: widget.args.email);
+                              },
+                              style: DarkButtonStyle.Outline,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                      ],
+                    ))),
+          ]);
+        });
   }
 }
 
 class IntroPageSection extends StatelessWidget {
   final String title;
-  final String description1;
-  final String description2;
+  final String description;
   final AssetImage image;
 
-  IntroPageSection(
-      this.title, this.description1, this.description2, this.image);
+  IntroPageSection(this.title, this.description, this.image);
 
   @override
   Widget build(BuildContext context) {
@@ -155,7 +207,7 @@ class IntroPageSection extends StatelessWidget {
               ),
               Container(
                   width: MediaQuery.of(context).size.width * 0.6,
-                  child: Text(description2,
+                  child: Text(description,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: Theme.of(context)
@@ -168,24 +220,6 @@ class IntroPageSection extends StatelessWidget {
                             .fontWeight,
                         color: Colors.white,
                       ))),
-              SizedBox(
-                height: 5,
-              ),
-              Container(
-                  width: MediaQuery.of(context).size.width * 0.6,
-                  child: Text(description1,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: Theme.of(context)
-                            .primaryTextTheme
-                            .bodyText1
-                            .fontSize,
-                        fontWeight: Theme.of(context)
-                            .primaryTextTheme
-                            .bodyText1
-                            .fontWeight,
-                        color: Colors.white,
-                      )))
             ],
           ),
         ),
@@ -217,4 +251,3 @@ void openEmailApp(BuildContext context) {
     launch("message://").catchError((e) {});
   }
 }
-

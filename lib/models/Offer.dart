@@ -5,22 +5,25 @@ class Offer {
   String _link;
 
   Offer({id, title, description, link}) {
-    _id = id; 
+    _id = id;
     _title = title;
     _description = description;
     _link = link;
   }
 
   int getId() {
-    return _id; 
+    return _id;
   }
+
   String getTitle() {
-    return _title; 
+    return _title;
   }
+
   String getDescription() {
-    return _description; 
+    return _description;
   }
+
   String getLink() {
-    return _link; 
+    return _link;
   }
 }

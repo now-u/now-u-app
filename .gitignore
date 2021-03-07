@@ -42,6 +42,7 @@ android/app/google-services.json
 
 #Key-store
 android/app/key.jks
+android/key.jks
 android/key.properties
 
 #secrets
@@ -52,3 +53,5 @@ gradle/
 gradlew
 gradlew.bat
 .gitignore
+
+pubspec.lock

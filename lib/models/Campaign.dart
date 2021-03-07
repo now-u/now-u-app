@@ -7,8 +7,6 @@ import 'package:app/models/SDG.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/dynamicLinks.dart';
 
-import 'dart:convert';
-
 final DynamicLinkService _dynamicLinkService = locator<DynamicLinkService>();
 
 class Campaign {
@@ -16,8 +14,11 @@ class Campaign {
   String title;
   String shortName;
   String description;
-  int numberOfCampaingers;
+  int numberOfCampaigners;
+  int numberOfActionsCompleted;
   String headerImage;
+  String _infographic;
+  String get infographic => _infographic;
   bool isCampaignSelected;
   List<CampaignAction> actions;
   List<Organisation> generalPartners;
@@ -27,28 +28,30 @@ class Campaign {
   List<String> keyAims;
   DateTime startDate;
   DateTime endDate;
-  
+
   Campaign({
     @required int id,
     @required String title,
     @required String shortName,
     @required String description,
-    @required int numberOfCampaigners,
+    this.numberOfCampaigners,
+    this.numberOfActionsCompleted,
     @required String headerImage,
     @required List<CampaignAction> actions,
     @required List<SDG> sdgs,
     List<Organisation> generalPartners,
     List<Organisation> campaignPartners,
     String videoLink,
+    String infographic,
     List<String> keyAims,
     DateTime startDate,
     DateTime endDate,
   }) {
-    this.id = id; 
+    this.id = id;
     this.title = title;
     this.shortName = shortName;
     this.description = description;
-    this.numberOfCampaingers = numberOfCampaigners;
+    this.numberOfCampaigners = numberOfCampaigners;
     this.headerImage = headerImage;
     this.actions = actions;
     this.videoLink = videoLink;
@@ -58,40 +61,7 @@ class Campaign {
     this.keyAims = keyAims ?? [];
     this.startDate = startDate;
     this.endDate = endDate;
-  }
-
-  Campaign copyWith({
-    int id,
-    String title,
-    String shortName,
-    String description,
-    int numberOfCampaingers,
-    String headerImage,
-    List<CampaignAction> actions,
-    List<Organisation> generalPartners,
-    List<Organisation> campaignPartners,
-    String videoLink,
-    List<SDG> sdgs,
-    List<String> keyAims,
-    DateTime startDate,
-    DateTime endDate,
-  }) {
-    return Campaign(
-      id: id ?? this.id,
-      title: title ?? this.title,
-      shortName: shortName ?? this.shortName,
-      description: description ?? this.description,
-      numberOfCampaigners: numberOfCampaingers ?? this.numberOfCampaingers,
-      headerImage: headerImage ?? this.headerImage,
-      actions: actions ?? this.actions,
-      generalPartners: generalPartners ?? this.generalPartners,
-      campaignPartners: campaignPartners ?? this.campaignPartners,
-      videoLink: videoLink ?? this.videoLink,
-      sdgs: sdgs ?? this.sdgs,
-      keyAims: keyAims ?? this.keyAims,
-      startDate: startDate ?? this.startDate,
-      endDate: endDate ?? this.endDate,
-    );
+    this._infographic = infographic;
   }
 
   Campaign.fromJson(Map json) {
@@ -101,95 +71,118 @@ class Campaign {
     title = json['title'];
     shortName = json['short_name'];
     description = json['description_app'];
-    numberOfCampaingers = json['number_of_campaigners'];
+    numberOfCampaigners = json['number_of_campaigners'];
+    numberOfActionsCompleted = json['number_of_completed_actions'];
     headerImage = json['header_image'];
-    // TODO this proabably wont work
-    print("Getting action");
-    actions = (json['actions']) == null ? [] : (json['actions']).map((e) => CampaignAction.fromJson(e)).toList().cast<CampaignAction>();
-    print("GOT ACTIONS");
-    print("Getting ORGANISATIONS");
-    campaignPartners = 
-        json["campaign_partners"] == null ? [] :
-        (json['campaign_partners']).map((e) => Organisation.fromJson(e)).toList().cast<Organisation>();
-    print("GOT ORGANISATIONS");
-    print("GETTING PARTNERS");
-    generalPartners = 
-        json['general_partners'] == null ? [] :
-        (json['general_partners']).map((e) => Organisation.fromJson(e)).toList().cast<Organisation>();
-    print("GOT PARTNERS");
+    _infographic = json['infographic_url'];
+
+    actions = (json['actions']) == null
+        ? []
+        : (json['actions'])
+            .map((e) => CampaignAction.fromJson(e))
+            .toList()
+            .cast<CampaignAction>();
+    campaignPartners = json["campaign_partners"] == null
+        ? []
+        : (json['campaign_partners'])
+            .map((e) => Organisation.fromJson(e))
+            .toList()
+            .cast<Organisation>();
+    generalPartners = json['general_partners'] == null
+        ? []
+        : (json['general_partners'])
+            .map((e) => Organisation.fromJson(e))
+            .toList()
+            .cast<Organisation>();
     videoLink = json['video_link'];
-    //sdgs = [];
-    print("Gettingsdgs");
-    //sdgs = [];
-    sdgs = 
-      json['sdgs'] == null ? <SDG>[] :  
-      json['sdgs'].map((s) => getSDGfromNumber(s['id'])).toList().cast<SDG>();
-    print("Got whole camapign");
+    sdgs = json['sdgs'] == null
+        ? <SDG>[]
+        : json['sdgs']
+            .map((s) => getSDGfromNumber(s['id']))
+            .toList()
+            .cast<SDG>();
 
-    keyAims = 
-      json['key_aims'] == null ? <String>[] :
-      json['key_aims'].map((a) => a['title']).toList().cast<String>();
+    keyAims = json['key_aims'] == null
+        ? <String>[]
+        : json['key_aims'].map((a) => a['title']).toList().cast<String>();
 
-    print("Got the campaign");
-    
-    startDate = json['start_date'] == null ? null : DateTime.parse(json['start_date']);
-    endDate = json['end_date'] == null ? null : DateTime.parse(json['end_date']);
+    startDate =
+        json['start_date'] == null ? null : DateTime.parse(json['start_date']);
+    endDate =
+        json['end_date'] == null ? null : DateTime.parse(json['end_date']);
   }
 
   Map toJson() => {
-    'id': id,
-    'title': title,
-    'short_name': shortName,
-    'description': description,
-    'number_of_campaigners': numberOfCampaingers,
-    'header_image': headerImage,
-    // TODO this proabably wont work
-    'actions': actions,
-    'general_partners': generalPartners,
-    'campaign_partners': campaignPartners,
-    'video_link': videoLink,
-    'sdgs': sdgs.map((s) => s.getNumber()),
-  };
+        'id': id,
+        'title': title,
+        'short_name': shortName,
+        'description': description,
+        'number_of_campaigners': numberOfCampaigners,
+        'number_of_completed_actions': numberOfActionsCompleted,
+        'header_image': headerImage,
+        // TODO this proabably wont work
+        'actions': actions,
+        'general_partners': generalPartners,
+        'campaign_partners': campaignPartners,
+        'video_link': videoLink,
+        'sdgs': sdgs.map((s) => s.getNumber()),
+      };
 
   int getId() {
-    return id; 
+    return id;
   }
+
   String getTitle() {
-    return title; 
+    return title;
   }
+
   String getShortName() {
-    return shortName; 
+    return shortName;
   }
+
   String getDescription() {
     // TODO function to remove escape characters
     var descriptionWithoutNs = description.replaceAll('\\n', '\n\n');
-    return descriptionWithoutNs; 
+    return descriptionWithoutNs;
   }
+
   int getNumberOfCampaigners() {
-    return numberOfCampaingers; 
+    return numberOfCampaigners;
   }
+
+  int getNumberOfActionsCompleted() {
+    return numberOfActionsCompleted;
+  }
+
   String getHeaderImage() {
     return headerImage;
   }
+
   String getVideoLink() {
     return videoLink;
   }
+
   bool isSelected(List<int> selectedCampaings) {
     return selectedCampaings.contains(id);
   }
+
   List<CampaignAction> getActions() {
-    return actions; 
+    return actions;
   }
+
   List<Organisation> getCampaignPartners() {
-    return campaignPartners; 
+    return campaignPartners;
   }
+
   List<Organisation> getGeneralPartners() {
-    return generalPartners; 
+    return generalPartners;
   }
+
   List<SDG> getSDGs() {
     return sdgs;
   }
-  List<String> getKeyAims(){
+
+  List<String> getKeyAims() {
     return keyAims;
   }
 
@@ -209,7 +202,7 @@ class Campaign {
     //return "Check out the $title campaign on now-u! ${getShareLink()}";
     return "Check out the $title campaign on now-u! $shareLink";
   }
-  
+
   bool isPast() {
     if (endDate == null) {
       return false;

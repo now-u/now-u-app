@@ -8,8 +8,7 @@ class VideoPlayer extends StatefulWidget {
 }
 
 class _VideoPlayerState extends State<VideoPlayer> {
-
-final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   YoutubePlayerController _controller;
   TextEditingController _idController;
   TextEditingController _seekToController;
@@ -70,47 +69,46 @@ final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return 
-          YoutubePlayer(
-            controller: _controller,
-            showVideoProgressIndicator: true,
-            progressIndicatorColor: Colors.blueAccent,
-            topActions: <Widget>[
-              SizedBox(width: 8.0),
-              Expanded(
-                child: Text(
-                  _controller.metadata.title,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18.0,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.settings,
-                  color: Colors.white,
-                  size: 25.0,
-                ),
-                onPressed: () {
-                  //_showSnackBar('Settings Tapped!');
-                },
-              ),
-            ],
-            onReady: () {
-              _isPlayerReady = true;
-            },
-            onEnded: (data) {
-              _controller.load(_ids[(_ids.indexOf(data.videoId) + 1) % _ids.length]);
-              _showSnackBar('Next Video Started!');
-            },
-          );
+    return YoutubePlayer(
+      controller: _controller,
+      showVideoProgressIndicator: true,
+      progressIndicatorColor: Colors.blueAccent,
+      topActions: <Widget>[
+        SizedBox(width: 8.0),
+        Expanded(
+          child: Text(
+            _controller.metadata.title,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18.0,
+            ),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+          ),
+        ),
+        IconButton(
+          icon: Icon(
+            Icons.settings,
+            color: Colors.white,
+            size: 25.0,
+          ),
+          onPressed: () {
+            //_showSnackBar('Settings Tapped!');
+          },
+        ),
+      ],
+      onReady: () {
+        _isPlayerReady = true;
+      },
+      onEnded: (data) {
+        _controller.load(_ids[(_ids.indexOf(data.videoId) + 1) % _ids.length]);
+        _showSnackBar('Next Video Started!');
+      },
+    );
   }
+
   void _showSnackBar(String message) {
     _scaffoldKey.currentState.showSnackBar(
       SnackBar(
@@ -132,5 +130,3 @@ final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
     );
   }
 }
-
-

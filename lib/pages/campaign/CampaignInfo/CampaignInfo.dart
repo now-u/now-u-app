@@ -1,7 +1,5 @@
 import 'package:app/assets/components/darkButton.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'package:share/share.dart';
 
@@ -10,24 +8,19 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Organisation.dart';
 import 'package:app/models/SDG.dart';
-import 'package:app/models/ViewModel.dart';
-import 'package:app/models/State.dart';
 
-
-import 'package:app/services/api.dart';
-import 'package:app/locator.dart';
 import 'package:app/routes.dart';
 
 import 'package:app/assets/icons/customIcons.dart';
-import 'package:app/assets/components/joinedIndicator.dart';
 import 'package:app/assets/StyleFrom.dart';
-import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/organisationTile.dart';
 import 'package:app/assets/components/textButton.dart';
+import 'package:app/assets/components/header.dart';
+import 'package:app/assets/components/custom_network_image.dart';
 
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
+import 'package:stacked/stacked.dart';
+import 'package:app/viewmodels/campaign_info_model.dart';
 
 const double H_PADDING = 20;
 
@@ -40,499 +33,417 @@ class CampaignInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, ViewModel>(
-        converter: (Store<AppState> store) => ViewModel.create(store),
-        builder: (BuildContext context, ViewModel viewModel) {
-          return CampaignModelInfo(
-              campaign: campaign, campaignId: campaignId, model: viewModel);
+    return ViewModelBuilder<CampaignInfoViewModel>.reactive(
+        viewModelBuilder: () => CampaignInfoViewModel(),
+        onModelReady: (model) {
+          print("Model ready getting campaign");
+          if (campaign != null) {
+            model.setCampaign = campaign;
+          } else {
+            model.fetchCampaign(campaignId);
+          }
+        },
+        builder: (context, model, child) {
+          if (model.campaign != null) {
+            return CampaignInfoBody(model.campaign, model);
+          } else {
+            return Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
         });
   }
 }
 
-class CampaignModelInfo extends StatefulWidget {
-  final Campaign campaign;
-  final int campaignId;
-  final ViewModel model;
+class CampaignInfoBody extends StatelessWidget {
+  final Campaign _campaign;
+  final CampaignInfoViewModel model;
 
-  CampaignModelInfo({@required this.model, this.campaign, this.campaignId})
-      : assert(campaign != null || campaignId != null);
-
-  @override
-  _CampaignInfoModelState createState() => _CampaignInfoModelState();
-}
-
-class _CampaignInfoModelState extends State<CampaignModelInfo>
-    with WidgetsBindingObserver {
-  Api api = locator<Api>();
-  Future<Campaign> futureCampaign;
-  Campaign campaign;
-
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    //setState(() { _notification = state });
-    print("The state is");
-    print(state);
-  }
-
-  @override
-  void dispose() {
-    print("Campaign info model state disposed");
-    super.dispose();
-  }
-
-  void initState() {
-    // if give campaing use that
-    if (widget.campaign != null) {
-      print("Campaign does not equal null");
-      this.campaign = widget.campaign;
-    }
-    // check if we already have the campaign id they want
-    else {
-      Campaign c = widget.model.campaigns.getActiveCampaigns().firstWhere(
-          (camp) => camp.getId() == widget.campaignId,
-          orElse: () => null);
-      // if so use that
-      if (c != null) {
-        print("We have the campaign");
-        this.campaign = c;
-      }
-      // otherwise have a look online
-      else {
-        print("Were gonna go have a look online");
-        //this.futureCampaign = api.getCampaign(widget.campaignId);
-        //// If that doesnt work then show the campaign not found page
-        //if (this.futureCampaign == null) {
-        //  // TODO implement campaign not found page
-        //}
-      }
-    }
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    print("Building Info Page");
-    print(this.campaign);
-    return this.campaign != null
-        ? CampaignInfoContent(
-            campaign: this.campaign,
-            model: widget.model,
-          )
-        : FutureBuilder<Campaign>(
-            //future: this.futureCampaign,
-            future: api.getCampaign(widget.campaignId),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasData) {
-                  print("has data!");
-                  return CampaignInfoContent(
-                      campaign: snapshot.data, model: widget.model);
-                } else if (snapshot.hasError) {
-                  // TODO implement campaign not found page
-                  print("There was an error with get campaign request");
-                  return null;
-                }
-              } else if (snapshot.connectionState == ConnectionState.none &&
-                  snapshot.data == null) {
-                print("ConnectionState is super none");
-              } else if (snapshot.connectionState == ConnectionState.none) {
-                print("ConnectionState is none");
-              } else if (snapshot.connectionState == ConnectionState.waiting) {
-                print("ConnectionState is waiting");
-              }
-              return Scaffold(
-                body: Center(child: CircularProgressIndicator()),
-              );
-            });
-  }
-}
-
-class CampaignInfoContent extends StatefulWidget {
-  final Campaign campaign;
-  final ViewModel model;
-  CampaignInfoContent({
-    @required this.campaign,
-    @required this.model,
-  });
-
-  @override
-  _CampaignInfoContentState createState() => _CampaignInfoContentState();
-}
-
-class _CampaignInfoContentState extends State<CampaignInfoContent> {
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
-  Campaign campaign;
-  ViewModel model;
-  double top;
-  double currentExtent;
-  bool joined;
-
-  //bool _isPlayerReady = false;
-  YoutubePlayerController _controller;
-
-  @override
-  initState() {
-    campaign = widget.campaign;
-    model = widget.model;
-    joined = widget.model.userModel.user
-        .getSelectedCampaigns()
-        .contains(campaign.getId());
-    top = 0.0;
-    _controller = YoutubePlayerController(
-      initialVideoId: YoutubePlayer.convertUrlToId(campaign.getVideoLink()),
-      flags: YoutubePlayerFlags(
-        autoPlay: false,
-        //autoPlay: !model.userModel.user
-        //    .getSelectedCampaigns()
-        //    .contains(campaign.getId()),
-        mute: false,
-      ),
-    );
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    print("Campaign info state disposed");
-    super.dispose();
-    _controller.dispose();
-  }
+  CampaignInfoBody(this._campaign, this.model);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: CustomAppBar(
-          extraOnTap: () {},
-          text: "Campaign",
-          context: context,
-          actions: [
-            IconButton(
-              icon: Icon(
-                CustomIcons.ic_learning,
-                color: Theme.of(context).primaryColor,
-              ),
-              onPressed: () {
-                //_controller.dispose();
-                Navigator.of(context).pushNamed(Routes.learningSingle, arguments: campaign.getId());
-              },
-            )
-          ]),
-      key: scaffoldKey,
-      body: Stack(children: [
-        ListView(
-          children: [
-            // Image header
-            Container(
-              height: 200,
-              // Youtube player
-              child: Padding(
-                  padding: EdgeInsets.all(0),
+        backgroundColor: Colors.white,
+        body: Stack(children: [
+          ListView(
+            children: [
+              // Header
+                Container(
                   child: Container(
-                    child: YoutubePlayerBuilder(
-                      player: YoutubePlayer(
-                        controller: _controller,
-                        showVideoProgressIndicator: true,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: customNetworkImageProvider(_campaign.getHeaderImage()),
+                        fit: BoxFit.cover,
                       ),
-                      builder: (context, player) {
-                        return Column(
-                          children: [
-                            player,
-                          ],
-                        );
-                      },
                     ),
-                    //child: Material(
-                    //child: VideoPlayer(),
-                    //),
-                  )),
-            ),
-
-            // Title section
-            Container(
-              color: Color.fromRGBO(222, 224, 232, 1),
-              child: Padding(
-                padding: EdgeInsets.all(15),
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Icon(
-                          Icons.people,
-                          color: Color.fromRGBO(69, 69, 69, 1),
-                          size: 16,
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: 20),
+                      child: Column(children: [
+                        PageHeader(
+                          title: _campaign.getTitle(),
+                          textColor: Colors.white,
+                          backButton: true,
+                          backButtonText: "",
+                          maxLines: 4,
+                          fontSize: Theme.of(context)
+                              .primaryTextTheme
+                              .headline3
+                              .fontSize,
+                          extraInnerPadding: 20,
                         ),
-                        SizedBox(width: 2),
-                        Text(
-                            campaign.getNumberOfCampaigners().toString() +
-                                " people have joined",
-                            style: textStyleFrom(
-                              Theme.of(context).primaryTextTheme.headline5,
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromRGBO(63, 61, 86, 1),
-                            ))
-                      ],
+                      ]
                     ),
-                  ],
-                ),
-              ),
-            ),
-
-            // Joined Indicator
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                (joined)
-                    ? Padding(
-                        padding: EdgeInsets.all(12),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: JoinedIndicator(),
-                        ))
-                    : Container(),
-              ],
-            ),
-
-            SizedBox(height: 18),
-            // Campaign
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: H_PADDING,
-              ),
-              child: Text(
-                "Campaign",
-                style: textStyleFrom(
-                  Theme.of(context).primaryTextTheme.bodyText1,
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            //Title
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: H_PADDING,
-              ),
-              child: Container(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: Text(
-                    campaign.getTitle(),
-                    style: textStyleFrom(
-                      Theme.of(context).primaryTextTheme.headline3,
-                      fontWeight: FontWeight.w600,
                     ),
-                  )),
-            ),
-
-            campaign.getKeyAims() == [] ? Container() :
-            // Key aims
-            Padding(
-              padding: EdgeInsets.all(H_PADDING),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SectionTitle("Our aims"),
-                  SizedBox(height: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: campaign.getKeyAims().map((t) {
-                      return Row(
+                  ),
+                ),
+                // Body
+                Container(
+                  color: Color.fromRGBO(247, 248, 252, 1),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 18),
+                    child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("• "),
-                          SizedBox(width: 3),
-                          Expanded(
-                            child: Text(
-                              t,
-                              style: textStyleFrom(
-                                Theme.of(context).primaryTextTheme.bodyText1,
-                              ),
+                          SizedBox(height: 25),
+                          CustomTile(
+                              child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 30, horizontal: 10),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  "See what you can do to support this cause today",
+                                  style: textStyleFrom(
+                                      Theme.of(context).primaryTextTheme.headline3),
+                                  textAlign: TextAlign.center,
+                                ),
+                                SizedBox(height: 8,),
+                                Container(
+                                  height: 180,
+                                  child: CustomNetworkImage(_campaign.infographic),
+                                ),
+                                SizedBox(height: 12,),
+                                DarkButton("Take action", onPressed: () {
+                                  if (_campaign.isPast()) {
+                                    Navigator.of(context).pushNamed(
+                                        Routes.pastCampaignActionPage,
+                                        arguments: _campaign);
+                                  } else {
+                                    Navigator.of(context).pushNamed(Routes.actions);
+                                  }
+                                })
+                              ],
                             ),
-                          )
-                        ],
-                      );
-                    }).toList()
-                  ),
-                ]
-              )
-            ),
-          
-            SizedBox(height: 18),
+                          )),
 
-            SectionTitle("What is this about?",
-                hPadding: H_PADDING),
-            SizedBox(height: 10),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: H_PADDING,
+                          SizedBox(height: 25),
+
+                        // About
+                        Text(
+                          "About",
+                          style: Theme.of(context).primaryTextTheme.headline3,
+                        ),
+
+                        SizedBox(height: 15),
+
+                        // Stats
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            CampaignStat(
+                                text:
+                                    "${_campaign.getNumberOfCampaigners()} people have joined",
+                                icon: Icons.people),
+                            //CampaignStat(text: "Actions completed"),,
+                            CampaignStat(
+                              text:
+                                  "${_campaign.getNumberOfActionsCompleted()} actions completed by now-u users",
+                              icon: CustomIcons.ic_clipboard,
+                            ),
+                            CampaignStat(
+                              text: "Global reach",
+                              icon: CustomIcons.ic_global,
+                            ),
+                          ],
+                        ),
+
+                        SizedBox(height: 25),
+
+                        // Buttons
+                        Column(
+                          children: [
+                            CampaignButton(
+                                text: "Watch the video",
+                                icon: CustomIcons.ic_video,
+                                onTap: () {
+                                  model.viewCampaignVideo(_campaign);
+                                }),
+                            CampaignButton(
+                                text: "Read summary",
+                                icon: CustomIcons.ic_news,
+                                onTap: () {
+                                  Navigator.of(context).pushNamed(
+                                      Routes.campaignDetails,
+                                      arguments: _campaign);
+                                }),
+                            CampaignButton(
+                                text: "Go to learning hub",
+                                icon: CustomIcons.ic_learning,
+                                onTap: () {
+                                  Navigator.of(context).pushNamed(
+                                      Routes.learningSingle,
+                                      arguments: _campaign.getId());
+                                }),
+                          ],
+                        ),
+
+                        SizedBox(height: 30),
+
+                        // Share
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CustomTextButton(
+                              "Share this campaign",
+                              onClick: () async {
+                                String text = await _campaign.getShareText();
+                                Share.share(text);
+                              },
+                            ),
+                          ],
+                        ),
+
+                        SizedBox(height: 30),
+                      ]
+                    ),
+                ),
               ),
+
+              // Goals
+              Container(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 18),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 35,
+                        ),
+                        Text(
+                          "Goals",
+                          style: Theme.of(context).primaryTextTheme.headline3,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: _campaign.getKeyAims().map((aim) {
+                              return Column(children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Icon(CustomIcons.ic_bullseye),
+                                    SizedBox(width: 15),
+                                    Expanded(
+                                      child: Text(
+                                        aim,
+                                        style: textStyleFrom(
+                                          Theme.of(context)
+                                              .primaryTextTheme
+                                              .bodyText1,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(height: 15)
+                              ]);
+                            }).toList()),
+                        SizedBox(height: 20),
+                      ],
+                    ),
+                  )),
+
+              // Partners
+              _campaign.getGeneralPartners().length == 0
+                  ? Container()
+                  : Container(
+                      color: Color.fromRGBO(247, 248, 252, 1),
+                      child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 35, horizontal: 18),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Campaign partners",
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .headline3,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Wrap(
+                                children: getOrganistaionTiles(
+                                    _campaign.getGeneralPartners(), context),
+                                spacing: 10,
+                                runSpacing: 10,
+                                crossAxisAlignment: WrapCrossAlignment.start,
+                                alignment: WrapAlignment.start,
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                            ],
+                          ))),
+
+              // SDGs
+              SizedBox(height: 30),
+
+              Container(
+                  child: ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: _campaign.getSDGs().length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: EdgeInsets.all(10),
+                    child: SDGSelectionItem(_campaign.getSDGs()[index], model),
+                  );
+                },
+                // )
+              )),
+
+              SizedBox(height: 30),
+
+              // Find out more - SDGs
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Find out more at:",
+                    style: Theme.of(context).primaryTextTheme.bodyText1,
+                  ),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    CustomTextButton(
+                      "sustainabledevelopment.un.org",
+                      onClick: () {
+                        model.openSDGGoals();
+                      },
+                      fontSize:
+                          Theme.of(context).primaryTextTheme.bodyText1.fontSize,
+                    ),
+                  ])
+                ],
+              ),
+
+              SizedBox(height: model.campaignIsJoined ? 50 : 100),
+            ],
+          ),
+          AnimatedPositioned(
+            bottom: model.campaignIsJoined ? -75 : 0,
+            duration: Duration(milliseconds: 500),
+            left: 0,
+            child: FlatButton(
+              padding: EdgeInsets.all(0),
               child: Container(
-                child: Text(
-                  campaign.getDescription(),
-                  style: Theme.of(context).primaryTextTheme.bodyText1,
-                ),
+                width: MediaQuery.of(context).size.width,
+                height: 70,
+                child: Center(
+                    child: Text(
+                  "Join now",
+                  style: textStyleFrom(
+                      Theme.of(context).primaryTextTheme.button,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20,
+                      color: Colors.white),
+                )),
               ),
+              onPressed: () {
+                model.joinCampaign(_campaign.getId());
+              },
+              color: Theme.of(context).primaryColor,
             ),
+          )
+        ]));
+  }
+}
 
-            SizedBox(height: 20),
+class CampaignStat extends StatelessWidget {
+  final String text;
+  final IconData icon;
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: CustomTile(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
-                  child: Column(
-                    children: <Widget>[
-                      Text("See what you can do to support this cause today!", 
-                        style: textStyleFrom(Theme.of(context).primaryTextTheme.headline4)
-                      ),
-                      SizedBox(height: 15,),
-                      DarkButton("Take action", onPressed: (){
-                        if (campaign.isPast()) {
-                          Navigator.of(context).pushNamed(Routes.pastCampaignActionPage, arguments: campaign);
-                        }
-                        else {
-                          Navigator.of(context).pushNamed(Routes.actions);
-                        }
-                      })
-                    ],
-                  ),
-                )
-              ),
-            ),
+  CampaignStat({
+    @required this.text,
+    @required this.icon,
+  });
 
-            SizedBox(height: 20),
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 5),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color: Theme.of(context).primaryTextTheme.bodyText1.color,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Text(
+            text,
+            style: Theme.of(context).primaryTextTheme.bodyText1,
+          )
+        ],
+      ),
+    );
+  }
+}
 
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 28),
-              child: Text(
-                "Know someone who would be happy to support this cause?",
-                textAlign: TextAlign.center,
-                style: textStyleFrom(
-                  Theme.of(context).primaryTextTheme.headline4,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            
-            SizedBox(height: 30),
+class CampaignButton extends StatelessWidget {
+  final String text;
+  final IconData icon;
+  final Function onTap;
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+  CampaignButton({
+    @required this.text,
+    @required this.icon,
+    @required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      child: CustomTile(
+          onClick: onTap,
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+            child: Row(
               children: [
-                CustomTextButton(
-                  "Share this campaign",
-                  onClick: () async {
-                    String text = await campaign.getShareText();
-                    Share.share(text);
-                  },
+                Icon(
+                  icon,
+                  color: Theme.of(context).primaryTextTheme.bodyText1.color,
                 ),
+                SizedBox(
+                  width: 14,
+                ),
+                Text(
+                  text,
+                  style: textStyleFrom(
+                      Theme.of(context).primaryTextTheme.headline5),
+                )
               ],
             ),
-
-            SizedBox(height: 40),
-            
-            campaign.getGeneralPartners().length == 0 ? Container() :
-            Container(
-              color: Color.fromRGBO(247,248,252,1),
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SectionTitle("Campaign partners"),
-                    SizedBox(width: 10,),
-                    Wrap( 
-                      children: getOrganistaionTiles(campaign.getGeneralPartners(), context),
-                      spacing: 10,
-                      runSpacing: 10,
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      alignment: WrapAlignment.start,
-                    ),
-                  ],
-                )
-              )
-            ),
-
-            SizedBox(height: 10),
-
-            // SDGs
-            SizedBox(height: 10),
-            campaign.getSDGs().isEmpty
-                ? Container()
-                : SectionTitle("UN Sustainable Development Goals",
-                    hPadding: H_PADDING,),
-            //SDGReel(campaign.getSDGs()),
-            SDGList(campaign.getSDGs()),
-
-            SizedBox(height: 20),
-            joined
-                ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    CustomTextButton(
-                      "I no longer want to be part of this campaign",
-                      fontSize: 14,
-                      onClick: () {
-                        print("Unjoining campaign");
-                        setState(() {
-                          joined = false;
-                        });
-                        model.onUnjoinCampaign(campaign);
-                      },
-                    )
-                  ])
-                : Container(),
-            //Padding(
-            //  padding: const EdgeInsets.all(8.0),
-            //  child: DarkButton(
-            //    "Actions of this Campaign",
-            //    onPressed: () {
-            //      if (campaign.isPast()) {
-            //        Navigator.pushNamed(context,Routes.pastCampaignActionPage, arguments: campaign);
-            //      }
-            //      else {
-            //        // TODO make this link to specific action
-            //        Navigator.pushNamed(context,Routes.actions);
-            //      }
-            //    },
-            //  ),
-            //),
-            SizedBox(height: joined ? 20 : 70 ),
-          ],
-        ),
-        AnimatedPositioned(
-          bottom: joined ? -75 : 0,
-          duration: Duration(milliseconds: 500),
-          left: 0,
-          child: FlatButton(
-            padding: EdgeInsets.all(0),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 70,
-              child: Center(
-                  child: Text(
-                "Join now",
-                style: textStyleFrom(Theme.of(context).primaryTextTheme.button,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20,
-                    color: Colors.white),
-              )),
-            ),
-            onPressed: () {
-              setState(() {
-                joined = true;
-              });
-              //joinCampaign(widget.model, context, campaign);
-              model.onJoinCampaign(campaign, context);
-            },
-            color: Theme.of(context).primaryColor,
-          ),
-        )
-      ]),
+          )),
     );
   }
 }
@@ -566,43 +477,22 @@ class OrganisationReel extends StatelessWidget {
   }
 }
 
-class SDGList extends StatelessWidget {
-  final List<SDG> sdgs;
-  SDGList(this.sdgs);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        //child: Expanded(
-        child: ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: sdgs.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding: EdgeInsets.all(10),
-              child: SDGSelectionItem(sdgs[index]),
-            );
-          },
-          // )
-        ));
-  }
-}
-
 class SDGSelectionItem extends StatelessWidget {
   final SDG sdg;
-  SDGSelectionItem(this.sdg);
+  final CampaignInfoViewModel model;
+  SDGSelectionItem(this.sdg, this.model);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          launch(sdg.getLink());
+          model.openSDGGoals(sdg: sdg);
         },
         child: Row(
           mainAxisSize: MainAxisSize.max,
           children: [
             Container(
-              height: 75,
-              width: 75,
+              height: 70,
+              width: 70,
               child: Padding(
                 padding: EdgeInsets.all(0),
                 child: Image.asset(
@@ -610,24 +500,20 @@ class SDGSelectionItem extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: 10),
+            SizedBox(width: 13),
             Expanded(
               child: RichText(
                 text: TextSpan(children: [
                   TextSpan(
                       text:
-                          "This campaign is working towards the United Nations Sustainable Development Goal ${sdg.getNumber()}. Find out more at ",
+                          "This campaign is working towards the United Nations ",
                       style: Theme.of(context).primaryTextTheme.bodyText1),
                   TextSpan(
-                      text: "sustainabledevelopment.un.org",
+                      text: "Sustainable Development Goal ${sdg.getNumber()}.",
                       style: textStyleFrom(
                         Theme.of(context).primaryTextTheme.bodyText1,
-                        color: Theme.of(context).buttonColor,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          launch("https://sustainabledevelopment.un.org");
-                        }),
+                        fontWeight: FontWeight.w600,
+                      )),
                 ]),
               ),
             ),
@@ -636,32 +522,35 @@ class SDGSelectionItem extends StatelessWidget {
   }
 }
 
-List<Widget> getOrganistaionTiles(List<Organisation> organisations, BuildContext context) {
+List<Widget> getOrganistaionTiles(
+    List<Organisation> organisations, BuildContext context) {
   List<Widget> orgTiles = [];
-  for(final org in organisations) {
+  for (final org in organisations) {
     orgTiles.add(
       GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(Routes.organisationPage, arguments: org);
+          Navigator.of(context)
+              .pushNamed(Routes.organisationPage, arguments: org);
         },
         child: CustomTile(
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-            child: Container(
-              height: 30,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Image.network(org.getLogoLink()),
-                  SizedBox(width: 5,),
-                  Text(
-                    org.getName(),
-                  )
-                ],
-              ),
+            child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+          child: Container(
+            height: 30,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CustomNetworkImage(org.getLogoLink()),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  org.getName(),
+                )
+              ],
             ),
-          )
-        ),
+          ),
+        )),
       ),
     );
   }
@@ -673,11 +562,9 @@ class SectionTitle extends StatelessWidget {
   final double hPadding;
 
   SectionTitle(
-    this.text, 
-    {
-      this.hPadding,
-    }
-  );
+    this.text, {
+    this.hPadding,
+  });
   @override
   Widget build(BuildContext context) {
     return Padding(

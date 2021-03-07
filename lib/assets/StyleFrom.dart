@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 
 TextStyle textStyleFrom(
-  TextStyle style,
-  {
-    FontWeight fontWeight,
-    String fontFamily,
-    FontStyle fontStyle,
-    double fontSize,
-    Color color,
-    double letterSpacing,
-    double height,
-  }
-) {
+  TextStyle style, {
+  FontWeight fontWeight,
+  String fontFamily,
+  FontStyle fontStyle,
+  double fontSize,
+  Color color,
+  double letterSpacing,
+  double height,
+}) {
   return TextStyle(
     fontStyle: fontStyle ?? style.fontStyle,
     fontWeight: fontWeight ?? style.fontWeight,
@@ -24,12 +22,9 @@ TextStyle textStyleFrom(
 }
 
 Color colorFrom(
-  Color color,
-  {
-    double opacity,
-  }
-) {
+  Color color, {
+  double opacity,
+}) {
   return Color.fromRGBO(
-    color.red, color.green, color.blue, opacity ?? color.opacity
-  );
+      color.red, color.green, color.blue, opacity ?? color.opacity);
 }

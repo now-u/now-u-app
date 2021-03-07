@@ -48,6 +48,38 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
 
 ### Unreleased
 
+### Version 1.2.0
+
+- #127 [feature]  Login popups added which notify users of error 
+- #135 [feature]  Campaign researchers (user_role_id=3) can now see future and
+  disabled campaigns 
+- #136 [feature]  Links can now be user to link to different pages of the app
+- #82 [feature]   About us link added to more menu
+- #148 [fix]      App no longer crashes on NetworkImage error
+- #144 [fix]      Fix for mailto links 
+
+### Version 1.1.9 - Hot Fix
+
+- #125 [fix]      Fixed action page
+
+### Version 1.1.8
+
+- #123 [fix]      Text links in internal notifcations are now clickable and the
+  text now longer overflows
+
+### Version 1.1.7
+
+- #110 [feature]  Campaign page design update
+- #111 [fix]      App no longer crashes if no action time provided 
+- #112 [feature]  The app now uses stacked instead of redux
+- #113 [feature]  An early version of internal notifications have been added
+- #114 [feature]  Campaign page campaign tiles have been updated. Campaigns can
+  now be joined directly from this page
+- #120 [feature]  A new popup service has been added to allow for more
+  information about error
+- #121 [feature]  Updated login flow allowing for token entry if email link is
+  not working 
+
 ### Version 1.1.6
 
 - #NA [fix]     Fix ios incorrect supprorted version and ios push 

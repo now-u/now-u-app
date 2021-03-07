@@ -21,9 +21,10 @@ class LearningCentre {
         .toList()
         .cast<LearningTopic>();
   }
-  
+
   bool containsNew() {
-    var c = learningTopics.firstWhere((r) => r.containsNew(), orElse: () => null);
+    var c =
+        learningTopics.firstWhere((r) => r.containsNew(), orElse: () => null);
     return c != null;
   }
 }
@@ -47,7 +48,7 @@ class LearningTopic {
         .toList()
         .cast<LearningResource>();
   }
-  
+
   int getId() {
     return id;
   }
@@ -71,7 +72,8 @@ class LearningTopic {
   bool containsNew() {
     print("Checking contains");
     print(resources);
-    var r = resources.firstWhere((LearningResource r) => r.isNew(), orElse: () => null);
+    var r = resources.firstWhere((LearningResource r) => r.isNew(),
+        orElse: () => null);
     print("Checked contains");
     return r != null;
   }
@@ -156,14 +158,15 @@ class LearningResource {
   String getTimeText() {
     return timeBrackets.firstWhere((b) => b['maxTime'] > time)['text'];
   }
-  
+
   String getSource() {
     return source;
   }
-  
+
   bool isNew() {
     print("Checking is new");
     print(createdAt);
-    return DateTime.now().difference(createdAt).compareTo(Duration(days: 2)) < 0;
+    return DateTime.now().difference(createdAt).compareTo(Duration(days: 2)) <
+        0;
   }
 }

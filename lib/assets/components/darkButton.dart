@@ -5,27 +5,28 @@ import 'package:flutter/material.dart';
 final double defaultBorderRadius = 8.0;
 final double defaultPadding = 14.0;
 
-enum DarkButtonStyles { Small, Medium, Large }
+enum DarkButtonSize { Small, Medium, Large }
+enum DarkButtonStyle { Primary, Secondary, Outline }
 
 Map darkButtonStyleStyles = {
-  DarkButtonStyles.Small: {
-    'style': DarkButtonStyles.Small,
+  DarkButtonSize.Small: {
+    'style': DarkButtonSize.Small,
     'height': 32.0,
     'borderRadius': 8.0,
     'fontSize': 14.0,
     'hPadding': 10.0,
     'vPadding': 8.0,
   },
-  DarkButtonStyles.Medium: {
-    'style': DarkButtonStyles.Medium,
+  DarkButtonSize.Medium: {
+    'style': DarkButtonSize.Medium,
     'height': 40.0,
     'borderRadius': 8.0,
     'fontSize': 17.0,
     'hPadding': 16.0,
     'vPadding': 8.0,
   },
-  DarkButtonStyles.Large: {
-    'style': DarkButtonStyles.Large,
+  DarkButtonSize.Large: {
+    'style': DarkButtonSize.Large,
     'height': 48.0,
     'borderRadius': 8.0,
     'fontSize': 17.0,
@@ -37,109 +38,120 @@ Map darkButtonStyleStyles = {
 class DarkButton extends StatelessWidget {
   VoidCallback onPressed;
   String text;
-  bool inverted;
-  bool rightArrow;
-  DarkButtonStyles style;
+  IconData rightIcon;
+  IconData leftIcon;
+  DarkButtonSize size;
   double fontSize;
+  DarkButtonStyle style;
 
   DarkButton(String text,
-      {DarkButtonStyles style,
+      {DarkButtonSize size,
       @required VoidCallback onPressed,
-      bool inverted,
-      bool rightArrow,
+      this.rightIcon,
+      this.leftIcon,
+      DarkButtonStyle style,
       double fontSize}) {
     this.onPressed = onPressed;
     this.text = text;
-    this.inverted = inverted ?? false;
-    this.rightArrow = rightArrow ?? false;
-    this.style = style ?? DarkButtonStyles.Large;
+    this.size = size ?? DarkButtonSize.Large;
     this.fontSize = fontSize;
+    this.style = style ?? DarkButtonStyle.Primary;
   }
 
   @override
   Widget build(BuildContext context) {
-    return !inverted
-        ? PrimaryButton(text,
-            onPressed: onPressed,
-            rightArrow: rightArrow,
-            style: style,
-            fontSize: fontSize)
-        : SecondaryButton(text,
-            onPressed: onPressed,
-            rightArrow: rightArrow,
-            style: style,
-            fontSize: fontSize);
+    if (style == DarkButtonStyle.Primary) {
+      return PrimaryButton(text,
+          onPressed: onPressed,
+          rightIcon: rightIcon,
+          size: size,
+          fontSize: fontSize);
+    }
+    if (style == DarkButtonStyle.Outline) {
+      return OutlineButton(text,
+          onPressed: onPressed, size: size, fontSize: fontSize);
+    } else if (style == DarkButtonStyle.Secondary) {
+      return SecondaryButton(text,
+          onPressed: onPressed,
+          rightIcon: rightIcon,
+          size: size,
+          fontSize: fontSize);
+    } else {
+      return PrimaryButton(text,
+          onPressed: onPressed,
+          rightIcon: rightIcon,
+          size: size,
+          fontSize: fontSize);
+    }
   }
 }
 
 class SecondaryButton extends StatelessWidget {
   VoidCallback onPressed;
   String text;
-  bool rightArrow;
-  DarkButtonStyles style;
+  IconData rightIcon;
+  DarkButtonSize size;
   double fontSize;
 
   SecondaryButton(
     this.text, {
     @required this.onPressed,
-    @required this.rightArrow,
-    @required this.style,
+    @required this.rightIcon,
+    @required this.size,
     @required this.fontSize,
   });
 
   @override
   Widget build(BuildContext context) {
     return CustomTile(
-      child:
-        Container(
-          color: Colors.white,
-          height: darkButtonStyleStyles[style]['height'],
-          child: RaisedButton(
-            color: Colors.white,
-            onPressed: onPressed,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                  darkButtonStyleStyles[style]['borderRadius']),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: darkButtonStyleStyles[style]['vPadding'],
-                horizontal: darkButtonStyleStyles[style]['hPadding'],
-              ),
-              child: Text(
-                text,
-                style: textStyleFrom(
-                  Theme.of(context).primaryTextTheme.button,
-                  color: Theme.of(context).buttonColor,
-                  fontSize: fontSize ?? darkButtonStyleStyles[style]['fontSize'],
-                ),
-              ),
+        child: Container(
+      color: Colors.white,
+      height: darkButtonStyleStyles[size]['height'],
+      child: RaisedButton(
+        color: Colors.white,
+        onPressed: onPressed,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+              darkButtonStyleStyles[size]['borderRadius']),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: darkButtonStyleStyles[size]['vPadding'],
+            horizontal: darkButtonStyleStyles[size]['hPadding'],
+          ),
+          child: Text(
+            text,
+            style: textStyleFrom(
+              Theme.of(context).primaryTextTheme.button,
+              color: Theme.of(context).buttonColor,
+              fontSize: fontSize ?? darkButtonStyleStyles[size]['fontSize'],
             ),
           ),
-        )
-    );
+        ),
+      ),
+    ));
   }
 }
 
 class PrimaryButton extends StatelessWidget {
   VoidCallback onPressed;
   String text;
-  bool rightArrow;
-  DarkButtonStyles style;
+  IconData rightIcon;
+  DarkButtonSize size;
   double fontSize;
 
   PrimaryButton(
     this.text, {
     @required this.onPressed,
-    @required this.rightArrow,
-    @required this.style,
+    @required this.rightIcon,
+    @required this.size,
     @required this.fontSize,
   });
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      height: darkButtonStyleStyles[style]['height'],
+      height: darkButtonStyleStyles[size]['height'],
       elevation: 0,
       color: Theme.of(context).buttonColor,
       disabledColor: colorFrom(
@@ -149,38 +161,91 @@ class PrimaryButton extends StatelessWidget {
       onPressed: onPressed,
       shape: RoundedRectangleBorder(
         borderRadius:
-            BorderRadius.circular(darkButtonStyleStyles[style]['borderRadius']),
+            BorderRadius.circular(darkButtonStyleStyles[size]['borderRadius']),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          !rightArrow
+          rightIcon == null
               ? Container()
               : Container(
                   width: 5,
                 ),
           Padding(
             padding: EdgeInsets.symmetric(
-              vertical: darkButtonStyleStyles[style]['vPadding'],
-              horizontal: darkButtonStyleStyles[style]['hPadding'],
+              vertical: darkButtonStyleStyles[size]['vPadding'],
+              horizontal: darkButtonStyleStyles[size]['hPadding'],
             ),
             child: Text(
               text,
               style: textStyleFrom(
                 Theme.of(context).primaryTextTheme.button,
                 color: Colors.white,
-                fontSize: fontSize ?? darkButtonStyleStyles[style]['fontSize'],
+                fontSize: fontSize ?? darkButtonStyleStyles[size]['fontSize'],
               ),
             ),
           ),
-          !rightArrow
+          rightIcon == null
               ? Container()
               : Icon(
-                  Icons.chevron_right,
+                  rightIcon,
                   size: 25,
                   color: Colors.white,
                 ),
+        ],
+      ),
+    );
+  }
+}
+
+class OutlineButton extends StatelessWidget {
+  VoidCallback onPressed;
+  String text;
+  DarkButtonSize size;
+  double fontSize;
+
+  OutlineButton(
+    this.text, {
+    @required this.onPressed,
+    @required this.size,
+    @required this.fontSize,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      height: darkButtonStyleStyles[size]['height'],
+      elevation: 0,
+      color: Colors.transparent,
+      onPressed: onPressed,
+      shape: RoundedRectangleBorder(
+        borderRadius:
+            BorderRadius.circular(darkButtonStyleStyles[size]['borderRadius']),
+        side: BorderSide(
+          color: Colors.white,
+          width: 1,
+          style: BorderStyle.solid,
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: darkButtonStyleStyles[size]['vPadding'],
+              horizontal: darkButtonStyleStyles[size]['hPadding'],
+            ),
+            child: Text(
+              text,
+              style: textStyleFrom(
+                Theme.of(context).primaryTextTheme.button,
+                color: Colors.white,
+                fontSize: fontSize ?? darkButtonStyleStyles[size]['fontSize'],
+              ),
+            ),
+          ),
         ],
       ),
     );
