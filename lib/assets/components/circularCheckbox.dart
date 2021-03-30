@@ -361,6 +361,7 @@ class _RenderCircularCheckBox extends RenderToggleable {
           vsync: vsync,
           hasFocus: hasFocus,
           hovering: hovering,
+          splashRadius: null
         );
 
   bool _oldValue;
