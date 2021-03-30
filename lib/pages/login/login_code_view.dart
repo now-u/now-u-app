@@ -149,6 +149,7 @@ class LoginCodePageState extends State<LoginCodePage>
           body: NotificationListener(
               onNotification: (OverscrollIndicatorNotification overscroll) {
                 overscroll.disallowGlow();
+                return null;
               },
               child: ListView(children: [
                 loginForm(),

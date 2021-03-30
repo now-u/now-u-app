@@ -20,7 +20,7 @@ class WebViewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: customAppBar(
         backButtonText: "Back",
         context: context,
       ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:app/assets/components/textButton.dart';
 
-AppBar CustomAppBar({
+AppBar customAppBar({
   text,
   @required context,
   String backButtonText,

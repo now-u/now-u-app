@@ -35,23 +35,29 @@ Map darkButtonStyleStyles = {
   },
 };
 
+// ignore: must_be_immutable
 class DarkButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final String text;
-  final IconData rightIcon;
-  final IconData leftIcon;
-  final DarkButtonSize size;
-  final double fontSize;
-  final DarkButtonStyle style;
+  VoidCallback onPressed;
+  String text;
+  IconData rightIcon;
+  IconData leftIcon;
+  DarkButtonSize size;
+  double fontSize;
+  DarkButtonStyle style;
 
-  DarkButton(
-       this.text,
-       {this.size,
-        @required this.onPressed,
-        this.rightIcon,
-        this.leftIcon,
-        this.style,
-        this.fontSize}); 
+  DarkButton(String text,
+      {DarkButtonSize size,
+      @required VoidCallback onPressed,
+      this.rightIcon,
+      this.leftIcon,
+      DarkButtonStyle style,
+      double fontSize}) {
+    this.onPressed = onPressed;
+    this.text = text;
+    this.size = size ?? DarkButtonSize.Large;
+    this.fontSize = fontSize;
+    this.style = style ?? DarkButtonStyle.Primary;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +87,7 @@ class DarkButton extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class SecondaryButton extends StatelessWidget {
   VoidCallback onPressed;
   String text;
@@ -102,13 +109,16 @@ class SecondaryButton extends StatelessWidget {
         child: Container(
       color: Colors.white,
       height: darkButtonStyleStyles[size]['height'],
-      child: RaisedButton(
-        color: Colors.white,
+      child: ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.white),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                    darkButtonStyleStyles[size]['borderRadius']),
+              ),
+            )),
         onPressed: onPressed,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-              darkButtonStyleStyles[size]['borderRadius']),
-        ),
         child: Padding(
           padding: EdgeInsets.symmetric(
             vertical: darkButtonStyleStyles[size]['vPadding'],
@@ -195,10 +205,10 @@ class PrimaryButton extends StatelessWidget {
 }
 
 class OutlineButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final String text;
-  final DarkButtonSize size;
-  final double fontSize;
+  VoidCallback onPressed;
+  String text;
+  DarkButtonSize size;
+  double fontSize;
 
   OutlineButton(
     this.text, {
