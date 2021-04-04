@@ -35,6 +35,7 @@ Map darkButtonStyleStyles = {
   },
 };
 
+// ignore: must_be_immutable
 class DarkButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
@@ -81,6 +82,7 @@ class DarkButton extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class SecondaryButton extends StatelessWidget {
   VoidCallback onPressed;
   String text;
@@ -102,13 +104,16 @@ class SecondaryButton extends StatelessWidget {
         child: Container(
       color: Colors.white,
       height: darkButtonStyleStyles[size]['height'],
-      child: RaisedButton(
-        color: Colors.white,
+      child: ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.white),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                    darkButtonStyleStyles[size]['borderRadius']),
+              ),
+            )),
         onPressed: onPressed,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-              darkButtonStyleStyles[size]['borderRadius']),
-        ),
         child: Padding(
           padding: EdgeInsets.symmetric(
             vertical: darkButtonStyleStyles[size]['vPadding'],

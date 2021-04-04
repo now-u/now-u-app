@@ -19,7 +19,7 @@ class LearningTopicPage extends StatelessWidget {
         viewModelBuilder: () => LearningTopicViewModel(),
         builder: (context, model, child) {
           return Scaffold(
-            appBar: CustomAppBar(
+            appBar: customAppBar(
               backButtonText: "Back",
               context: context,
             ),

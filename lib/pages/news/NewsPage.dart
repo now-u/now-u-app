@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/header.dart';
 import 'package:app/assets/components/selectionPill.dart';
@@ -12,8 +10,8 @@ import 'package:app/models/Article.dart';
 import 'package:stacked/stacked.dart';
 import 'package:app/viewmodels/news_model.dart';
 
-final double PAGE_PADDING = 15;
-final Color HEADER_COLOR = Color.fromRGBO(247, 248, 252, 1);
+final double pagePadding = 15;
+final Color headerColor = Color.fromRGBO(247, 248, 252, 1);
 
 class NewsPage extends StatelessWidget {
   @override
@@ -45,7 +43,7 @@ class NewsPage extends StatelessWidget {
                         )),
                     Container(
                         //color: Color.fromRGBO(247, 248, 252, 1),
-                        color: HEADER_COLOR,
+                        color: headerColor,
                         child: Column(
                           children: <Widget>[
                             Container(
@@ -91,7 +89,7 @@ class NewsPage extends StatelessWidget {
                                     })),
 
                             SizedBox(
-                              height: PAGE_PADDING,
+                              height: pagePadding,
                             ),
 
                             SizedBox(height: 10),
@@ -104,8 +102,8 @@ class NewsPage extends StatelessWidget {
                               itemBuilder: (BuildContext context, int index) {
                                 return Padding(
                                     padding: EdgeInsets.only(
-                                      left: PAGE_PADDING,
-                                      right: PAGE_PADDING,
+                                      left: pagePadding,
+                                      right: pagePadding,
                                       bottom: 10,
                                     ),
                                     child: NewsTile(

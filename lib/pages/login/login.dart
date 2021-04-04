@@ -278,6 +278,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
           body: NotificationListener(
               onNotification: (OverscrollIndicatorNotification overscroll) {
                 overscroll.disallowGlow();
+                return null;
               },
               child: ListView(children: [
                 loginForm(),
