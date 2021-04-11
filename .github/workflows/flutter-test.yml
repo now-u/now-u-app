@@ -24,7 +24,7 @@ jobs:
       - run: flutter pub get
       
       - name: Linting 
-        run: flutter format .
+      - run: flutter format .
 
       - name: Commit linting 
       - uses: EndBug/add-and-commit@v7.0.0
@@ -33,4 +33,4 @@ jobs:
           author_email: 41898282+github-actions[bot]@users.noreply.github.com
      
       - name: Run tests
-        run: flutter test
+      - run: flutter test
