@@ -33,10 +33,8 @@ class LearningTopicPage extends StatelessWidget {
                     Container(
                       width: double.infinity,
                       height: 180,
-                      child: CustomNetworkImage(
-                        topic.getImageLink(),
-                        fit: BoxFit.cover
-                      ),
+                      child: CustomNetworkImage(topic.getImageLink(),
+                          fit: BoxFit.cover),
                     ),
 
                     SizedBox(height: 20),

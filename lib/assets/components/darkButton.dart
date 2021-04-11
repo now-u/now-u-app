@@ -45,14 +45,13 @@ class DarkButton extends StatelessWidget {
   final double fontSize;
   final DarkButtonStyle style;
 
-  DarkButton(
-       this.text,
-       {this.size,
-        @required this.onPressed,
-        this.rightIcon,
-        this.leftIcon,
-        this.style,
-        this.fontSize}); 
+  DarkButton(this.text,
+      {this.size,
+      @required this.onPressed,
+      this.rightIcon,
+      this.leftIcon,
+      this.style,
+      this.fontSize});
 
   @override
   Widget build(BuildContext context) {

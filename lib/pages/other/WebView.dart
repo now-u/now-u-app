@@ -25,19 +25,17 @@ class WebViewPage extends StatelessWidget {
         context: context,
       ),
       body: SafeArea(
-        child: ViewModelBuilder<WebViewViewModel>.reactive(
-            viewModelBuilder: () => WebViewViewModel(),
-            builder: (context, model, child) {
-              return WebView(
-                javascriptMode: JavascriptMode.unrestricted,
-                initialUrl: args.initialUrl,
-                onWebResourceError: (error) {
-                  model.onWebError(args.initialUrl);
-                },
-              );
-            }
-          )
-      ),
+          child: ViewModelBuilder<WebViewViewModel>.reactive(
+              viewModelBuilder: () => WebViewViewModel(),
+              builder: (context, model, child) {
+                return WebView(
+                  javascriptMode: JavascriptMode.unrestricted,
+                  initialUrl: args.initialUrl,
+                  onWebResourceError: (error) {
+                    model.onWebError(args.initialUrl);
+                  },
+                );
+              })),
     );
   }
 }

@@ -71,75 +71,82 @@ class CampaignInfoBody extends StatelessWidget {
           ListView(
             children: [
               // Header
-                Container(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: customNetworkImageProvider(_campaign.getHeaderImage()),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: 20),
-                      child: Column(children: [
-                        PageHeader(
-                          title: _campaign.getTitle(),
-                          textColor: Colors.white,
-                          backButton: true,
-                          backButtonText: "",
-                          maxLines: 4,
-                          fontSize: Theme.of(context)
-                              .primaryTextTheme
-                              .headline3
-                              .fontSize,
-                          extraInnerPadding: 20,
-                        ),
-                      ]
-                    ),
+              Container(
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: customNetworkImageProvider(
+                          _campaign.getHeaderImage()),
+                      fit: BoxFit.cover,
                     ),
                   ),
-                ),
-                // Body
-                Container(
-                  color: Color.fromRGBO(247, 248, 252, 1),
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 18),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 25),
-                          CustomTile(
-                              child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 30, horizontal: 10),
-                            child: Column(
-                              children: <Widget>[
-                                Text(
-                                  "See what you can do to support this cause today",
-                                  style: textStyleFrom(
-                                      Theme.of(context).primaryTextTheme.headline3),
-                                  textAlign: TextAlign.center,
-                                ),
-                                SizedBox(height: 8,),
-                                Container(
-                                  height: 180,
-                                  child: CustomNetworkImage(_campaign.infographic),
-                                ),
-                                SizedBox(height: 12,),
-                                DarkButton("Take action", onPressed: () {
-                                  if (_campaign.isPast()) {
-                                    Navigator.of(context).pushNamed(
-                                        Routes.pastCampaignActionPage,
-                                        arguments: _campaign);
-                                  } else {
-                                    Navigator.of(context).pushNamed(Routes.actions);
-                                  }
-                                })
-                              ],
-                            ),
-                          )),
+                    padding: EdgeInsets.only(bottom: 20),
+                    child: Column(children: [
+                      PageHeader(
+                        title: _campaign.getTitle(),
+                        textColor: Colors.white,
+                        backButton: true,
+                        backButtonText: "",
+                        maxLines: 4,
+                        fontSize: Theme.of(context)
+                            .primaryTextTheme
+                            .headline3
+                            .fontSize,
+                        extraInnerPadding: 20,
+                      ),
+                    ]),
+                  ),
+                ),
+              ),
+              // Body
+              Container(
+                color: Color.fromRGBO(247, 248, 252, 1),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 18),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 25),
+                        CustomTile(
+                            child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 30, horizontal: 10),
+                          child: Column(
+                            children: <Widget>[
+                              Text(
+                                "See what you can do to support this cause today",
+                                style: textStyleFrom(Theme.of(context)
+                                    .primaryTextTheme
+                                    .headline3),
+                                textAlign: TextAlign.center,
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Container(
+                                height: 180,
+                                child:
+                                    CustomNetworkImage(_campaign.infographic),
+                              ),
+                              SizedBox(
+                                height: 12,
+                              ),
+                              DarkButton("Take action", onPressed: () {
+                                if (_campaign.isPast()) {
+                                  Navigator.of(context).pushNamed(
+                                      Routes.pastCampaignActionPage,
+                                      arguments: _campaign);
+                                } else {
+                                  Navigator.of(context)
+                                      .pushNamed(Routes.actions);
+                                }
+                              })
+                            ],
+                          ),
+                        )),
 
-                          SizedBox(height: 25),
+                        SizedBox(height: 25),
 
                         // About
                         Text(
@@ -217,8 +224,7 @@ class CampaignInfoBody extends StatelessWidget {
                         ),
 
                         SizedBox(height: 30),
-                      ]
-                    ),
+                      ]),
                 ),
               ),
 

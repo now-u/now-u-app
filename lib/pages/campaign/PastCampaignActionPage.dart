@@ -30,7 +30,8 @@ class PastCampaignActionPage extends StatelessWidget {
                     height: HEADER_HEIGHT,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: customNetworkImageProvider(campaign.getHeaderImage()),
+                        image: customNetworkImageProvider(
+                            campaign.getHeaderImage()),
                         fit: BoxFit.cover,
                       ),
                     )),
