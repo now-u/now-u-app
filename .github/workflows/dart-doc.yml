@@ -24,6 +24,14 @@ jobs:
           target_branch: docs 
           github_token: ${{ github.token }}
       
+      # Commit merge 
+      - name: Commit merge 
+        uses: EndBug/add-and-commit@v7.0.0
+        with:
+          branch: docs 
+          author_name: github-actions
+          author_email: 41898282+github-actions[bot]@users.noreply.github.com
+      
       # Checkout to docs branch
       - uses: actions/checkout@v2
         with:
@@ -45,6 +53,7 @@ jobs:
       - name: Commit docs 
         uses: EndBug/add-and-commit@v7.0.0
         with:
+          add: 'docs --force'
           branch: docs 
           author_name: github-actions
           author_email: 41898282+github-actions[bot]@users.noreply.github.com
