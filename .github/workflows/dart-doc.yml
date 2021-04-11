@@ -1,0 +1,35 @@
+name: Generate app documention
+
+on: 
+  push:
+    branches: [dev]
+
+  workflow_dispatch:
+
+jobs:
+  generate_docs:
+    name: Generate dart docs
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout to docs branch
+      - uses: actions/checkout@v2
+        ref: 'docs'
+     
+      # Fetch dependencies
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.0.1'
+          channel: 'stable'
+      - run: dart --version
+      - run: flutter --version
+      - run: flutter pub get
+
+      # Generate documention
+      - run: flutter pub run dartdoc 
+     
+      # Push up the docs
+      - name: Commit docs 
+        uses: EndBug/add-and-commit@v7.0.0
+        with:
+          author_name: github-actions
+          author_email: 41898282+github-actions[bot]@users.noreply.github.com
