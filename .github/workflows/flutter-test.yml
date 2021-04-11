@@ -7,6 +7,8 @@ jobs:
   test:
     name: Test on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    env:
+      CHANGELOG_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     strategy:
       matrix:
         os: [ubuntu-latest]
@@ -16,7 +18,19 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'dev'
+
       - run: dart --version
       - run: flutter --version
       - run: flutter pub get
-      - run: flutter test
+      
+      - name: Linting 
+        run: flutter format .
+
+      - name: Commit linting 
+      - uses: EndBug/add-and-commit@v7.0.0
+        with:
+          author_name: github-actions
+          author_email: 41898282+github-actions[bot]@users.noreply.github.com
+     
+      - name: Run tests
+        run: flutter test
