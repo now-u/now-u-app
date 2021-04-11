@@ -6,8 +6,9 @@ on:
 
   workflow_dispatch:
 
-# FOR TESTING ONLY
-on: pull_request
+  # FOR TESTING ONLY
+  pull_request:
+
 
 jobs:
   generate_docs:
