@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the readQuizFromAssets function from the Quiz library, for the Dart programming language.">
+  <title>readQuizFromAssets function - Quiz library - Dart API</title>
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../static-assets/github.css">
+  <link rel="stylesheet" href="../static-assets/styles.css">
+  <link rel="icon" href="../static-assets/favicon.png">
+
+</head>
+
+<body data-base-href="../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">app</a></li>
+    <li><a href="../models_Quiz/models_Quiz-library.html">Quiz</a></li>
+    <li class="self-crumb">readQuizFromAssets function</li>
+  </ol>
+  <div class="self-name">readQuizFromAssets</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div id="dartdoc-sidebar-left" class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+      <form class="search-sidebar" role="search">
+        <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+      </form>
+    </header>
+    
+    <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+      <li><a href="../index.html">app</a></li>
+      <li><a href="../models_Quiz/models_Quiz-library.html">Quiz</a></li>
+      <li class="self-crumb">readQuizFromAssets function</li>
+    </ol>
+    
+    <h5>Quiz library</h5>
+    <ol>
+      <li class="section-title"><a href="../models_Quiz/models_Quiz-library.html#classes">Classes</a></li>
+      <li><a href="../models_Quiz/Answer-class.html">Answer</a></li>
+      <li><a href="../models_Quiz/Question-class.html">Question</a></li>
+      <li><a href="../models_Quiz/Quiz-class.html">Quiz</a></li>
+    
+    
+    
+    
+    
+      <li class="section-title"><a href="../models_Quiz/models_Quiz-library.html#functions">Functions</a></li>
+      <li><a href="../models_Quiz/readQuizFromAssets.html">readQuizFromAssets</a></li>
+    
+    
+    
+    </ol>
+  </div><!--/.sidebar-offcanvas-left-->
+
+  <div id="dartdoc-main-content" class="col-xs-12 col-sm-9 col-md-8 main-content">
+      <div><h1><span class="kind-function">readQuizFromAssets</span> function  </h1></div>
+
+    <section class="multi-line-signature">
+        <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../models_Quiz/Quiz-class.html">Quiz</a></span>&gt;</span></span>
+                <span class="name ">readQuizFromAssets</span>
+(<wbr><ol class="parameter-list"><li><span class="parameter" id="readQuizFromAssets-param-id"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">id</span></span></li>
+</ol>)
+    </section>
+    
+    <section class="summary source-code" id="source">
+      <h2><span>Implementation</span></h2>
+      <pre class="language-dart"><code class="language-dart">Future&lt;Quiz&gt; readQuizFromAssets(int id) async {
+  print(&quot;Getting quiz&quot;);
+  var data = await rootBundle.loadString(&#39;assets&#47;json&#47;quiz.json&#39;);
+  print(&quot;Got string&quot;);
+  print(data);
+  List&lt;Quiz&gt; quizes = (jsonDecode(data) as List)
+      .map((q) {
+        print(&quot;The quiz&quot;);
+        print(q);
+        return Quiz.fromJson(q);
+      })
+      .toList()
+      .cast&lt;Quiz&gt;();
+  print(&quot;Got quizes&quot;);
+  Quiz quiz = quizes.where((q) =&gt; q.getId() == id).first;
+  print(quiz);
+  return quiz;
+  &#47;&#47;rootBundle.loadString(&#39;assets&#47;json&#47;quiz.json&#39;).then(
+  &#47;&#47;  (data) {
+  &#47;&#47;    print(&quot;The json string is &quot; + data);
+  &#47;&#47;    print(&quot;Decoding&quot;);
+  &#47;&#47;    List&lt;Quiz&gt; quizes = (jsonDecode(data) as List).map((q) =&gt; Quiz.fromJson(q)).toList().cast&lt;Quiz&gt;();
+  &#47;&#47;    &#47;&#47; TODO what happens when 0
+  &#47;&#47;    Quiz quiz = quizes.where((q) =&gt; q.getId() == id).first;
+  &#47;&#47;    print(quiz.getTitle());
+  &#47;&#47;    return quiz;
+  &#47;&#47;  }
+  &#47;&#47;);
+}</code></pre>
+    </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-right" class="col-xs-6 col-sm-6 col-md-2 sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    app
+      1.2.0+34
+  </span>
+
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="../static-assets/typeahead.bundle.min.js"></script>
+<script src="../static-assets/highlight.pack.js"></script>
+<script src="../static-assets/URI.js"></script>
+<script src="../static-assets/script.js"></script>
+
+
+</body>
+
+</html>
