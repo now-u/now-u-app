@@ -22,7 +22,7 @@ import 'package:get_it/get_it.dart';
 GetIt locator = GetIt.instance;
 
 void setupLocator() {
-  locator.registerLazySingleton(() => Analytics());
+  locator.registerLazySingleton(() => AnalyticsService());
   locator.registerLazySingleton(() => DynamicLinkService());
   locator.registerLazySingleton(() => PushNotificationService());
   locator.registerLazySingleton(() => NavigationService());

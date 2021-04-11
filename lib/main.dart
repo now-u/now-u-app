@@ -87,7 +87,7 @@ class _AppState extends State<App> {
       title: 'Flutter Demo',
       navigatorKey: locator<NavigationService>().navigatorKey,
       navigatorObservers: [
-        locator<Analytics>().getAnalyticsObserver(),
+        locator<AnalyticsService>().getAnalyticsObserver(),
       ],
       builder: (context, widget) => Navigator(
         onGenerateRoute: (settings) => MaterialPageRoute(

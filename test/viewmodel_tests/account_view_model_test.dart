@@ -48,10 +48,11 @@ void main() {
       DateTime now = DateTime.now();
 
       // Mock api to always return true
-      MockAuthenticationService mockAuth =
-          getAndRegisterMockAuthentiactionService();
+      MockAuthenticationService mockAuth = getAndRegisterMockAuthentiactionService();
       when(mockAuth.updateUserDetails(name: "jelgar", dob: now))
           .thenAnswer((_) => Future.value(true));
+      
+      var analytics = getAndRegisterMockAnalyticsService();
 
       var model = AccountDetailsViewModel();
       model.name = "jelgar";

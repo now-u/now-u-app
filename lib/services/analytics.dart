@@ -6,7 +6,7 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/models/Learning.dart';
 import 'package:app/models/User.dart';
 
-class Analytics {
+class AnalyticsService {
   final FirebaseAnalytics _analytics = FirebaseAnalytics();
 
   FirebaseAnalyticsObserver getAnalyticsObserver() =>

@@ -13,7 +13,7 @@ class AccountDetailsViewModel extends BaseModel {
       locator<AuthenticationService>();
   final GoogleLocationSearchService _googleLocationSearchService =
       locator<GoogleLocationSearchService>();
-  final Analytics _analyticsService = locator<Analytics>();
+  final AnalyticsService _analyticsService = locator<AnalyticsService>();
   final DialogService _dialogService = locator<DialogService>();
   //final OrganisationService _organisationService = locator<OrganisationService>();
 
