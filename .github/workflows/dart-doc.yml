@@ -11,6 +11,15 @@ jobs:
     name: Generate dart docs
     runs-on: ubuntu-latest
     steps:
+      # Merge in the changes that have been pushed to dev
+      - name: Merge dev -> docs
+        uses: devmasx/merge-branch@v1.3.1
+        with:
+          type: now
+          from_branch: dev 
+          target_branch: docs 
+          github_token: ${{ github.token }}
+      
       # Checkout to docs branch
       - uses: actions/checkout@v2
         ref: 'docs'
@@ -27,9 +36,10 @@ jobs:
       # Generate documention
       - run: flutter pub run dartdoc 
      
-      # Push up the docs
+      # Push up the docs to the docs branch
       - name: Commit docs 
         uses: EndBug/add-and-commit@v7.0.0
         with:
+          branch: docs 
           author_name: github-actions
           author_email: 41898282+github-actions[bot]@users.noreply.github.com
