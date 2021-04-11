@@ -53,7 +53,7 @@ jobs:
       - name: Commit docs 
         uses: EndBug/add-and-commit@v7.0.0
         with:
-          add: 'docs --force'
+          add: 'doc --force'
           branch: docs 
           message: 'Generated documention'
           author_name: github-actions
