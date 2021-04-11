@@ -16,9 +16,8 @@ void main() {
   });
 
   group("Custom network image tests - ", () {
-
     // Tests taken from here
-    // https://github.com/Baseflow/flutter_cached_network_image/blob/develop/test/image_widget_test.dart    
+    // https://github.com/Baseflow/flutter_cached_network_image/blob/develop/test/image_widget_test.dart
 
     // TODO Fix this test
     // testWidgets('progress indicator called when success', (tester) async {
@@ -90,14 +89,12 @@ void main() {
       cacheManager.returns(imageUrl, kTransparentImage);
       var progressShown = false;
       var thrown = false;
-      await tester.pumpWidget(
-        TestImageWidget(
-          imageUrl: imageUrl,
-          cacheManager: cacheManager,
-          onProgress: () => progressShown = true,
-          onError: () => thrown = true,
-        )
-      );
+      await tester.pumpWidget(TestImageWidget(
+        imageUrl: imageUrl,
+        cacheManager: cacheManager,
+        onProgress: () => progressShown = true,
+        onError: () => thrown = true,
+      ));
       await tester.pump();
       expect(thrown, isFalse);
       expect(progressShown, isTrue);
@@ -144,7 +141,5 @@ void main() {
       expect(thrown, isFalse);
       expect(progressIndicatorCalled, expectedResult.chunks + 1);
     });
-
-    
   });
 }
