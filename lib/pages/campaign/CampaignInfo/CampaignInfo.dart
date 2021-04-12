@@ -138,9 +138,7 @@ class CampaignInfoBody extends StatelessWidget {
                               ],
                             ),
                           )),
-
                           SizedBox(height: 25),
-
                         // About
                         Text(
                           "About",
@@ -331,7 +329,9 @@ class CampaignInfoBody extends StatelessWidget {
                     "Find out more at:",
                     style: Theme.of(context).primaryTextTheme.bodyText1,
                   ),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
                     CustomTextButton(
                       "sustainabledevelopment.un.org",
                       onClick: () {

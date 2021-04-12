@@ -40,7 +40,7 @@ AppBar customAppBar({
           ),
     title: Row(
       mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Expanded(
@@ -62,13 +62,13 @@ AppBar customAppBar({
                   ),
           ),
         ),
-        Expanded(
+       /*  Expanded(
           child: Container(
               //flex: 1,
               child: actions == null || actions.length == 0
                   ? Container()
                   : Align(
-                      alignment: Alignment.centerRight,
+                      alignment: Alignment.centerLeft,
                       child: actions.length == 1
                           ? actions[0]
                           : Row(
@@ -77,9 +77,9 @@ AppBar customAppBar({
                               children: actions,
                             ),
                     )),
-        ),
+        ), */
       ],
     ),
-    //actions: actions,
+    actions: actions,
   );
 }

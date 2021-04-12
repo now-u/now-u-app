@@ -149,11 +149,11 @@ class NavigationService {
             "This link will take you out of the app. Are you sure you want to go?",
         buttons: [
           DialogButton(
-            text: "Let's go",
+            text: buttonText ?? "Let's go",
             response: true,
           ),
           DialogButton(
-            text: "Close",
+            text: closeButtonText ?? "Close",
             response: false,
             style: DarkButtonStyle.Secondary,
           ),
