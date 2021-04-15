@@ -36,7 +36,6 @@ class _WebViewPageState extends State<WebViewPage> {
       appBar: customAppBar(
         backButtonText: "Back",
         context: context,
-<<<<<<< HEAD
         actions: <Widget>[
          TextButton(
            child: Icon(Icons.more_vert, color: Theme.of(context).primaryColor),
@@ -52,34 +51,6 @@ class _WebViewPageState extends State<WebViewPage> {
               
            }),
            ),
-=======
-        actions: [
-         Padding(
-           padding: const EdgeInsets.all(12.0),
-           child: DropdownButton<String>(
-             iconEnabledColor: Theme.of(context).primaryColor,
-             isDense: true,
-             items: <String>['Open'].map((String stringValue) {
-                 return DropdownMenuItem<String>(
-                   value: stringValue,
-                   child: CustomTextButton(
-              stringValue,
-              onClick: (){
-                NavigationService()
-                .launchLink(
-                  widget.args.initialUrl,
-                  isExternal: true,
-                  title: 'Open with an External Browser?',
-                  description: 'You are about to open this link with an external browser.',
-                  buttonText: 'Yes, Go Ahead',
-                  closeButtonText: 'Stay Here'
-                  );
-              }),
-              );
-             }).toList(),
-             onChanged: (_){},
-         ))
->>>>>>> dc7b318f8b4690031971e13c12fb08b034916b86
         ]
       ),
       body: SafeArea(
