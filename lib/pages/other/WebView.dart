@@ -9,6 +9,8 @@ import 'package:app/assets/components/customAppBar.dart';
 import 'package:stacked/stacked.dart';
 import 'package:app/viewmodels/web_view_model.dart';
 
+import '../../locator.dart';
+
 class WebViewArguments {
   final String initialUrl;
 
@@ -26,6 +28,7 @@ class WebViewPage extends StatefulWidget {
 
 class _WebViewPageState extends State<WebViewPage> {
 
+ final NavigationService _navigationService = locator<NavigationService>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,32 +36,21 @@ class _WebViewPageState extends State<WebViewPage> {
       appBar: customAppBar(
         backButtonText: "Back",
         context: context,
-        actions: [
-         Padding(
-           padding: const EdgeInsets.all(12.0),
-           child: DropdownButton<String>(
-             iconEnabledColor: Theme.of(context).primaryColor,
-             isDense: true,
-             items: <String>['Open'].map((String stringValue) {
-                 return DropdownMenuItem<String>(
-                   value: stringValue,
-                   child: CustomTextButton(
-              stringValue,
-              onClick: (){
-                NavigationService()
-                .launchLink(
-                  widget.args.initialUrl,
-                  isExternal: true,
-                  title: 'Open with an External Browser?',
-                  description: 'You are about to open this link with an external browser..',
-                  buttonText: 'Yes, Go Ahead',
-                  closeButtonText: 'Stay Here'
-                  );
-              }),
-              );
-             }).toList(),
-             onChanged: (_){},
-         ))
+        actions: <Widget>[
+         TextButton(
+           child: Icon(Icons.more_vert, color: Theme.of(context).primaryColor),
+           onPressed: ((){
+               _navigationService.launchLink(
+                widget.args.initialUrl,
+                isExternal: true,
+                title: 'Open with an External Browser?',
+                description: 'You are about to open this link with an external browser.',
+                buttonText: 'Yes, Go Ahead',
+                closeButtonText: 'Stay Here'
+                );
+              
+           }),
+           ),
         ]
       ),
       body: SafeArea(

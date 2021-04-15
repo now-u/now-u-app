@@ -62,22 +62,6 @@ AppBar customAppBar({
                   ),
           ),
         ),
-       /*  Expanded(
-          child: Container(
-              //flex: 1,
-              child: actions == null || actions.length == 0
-                  ? Container()
-                  : Align(
-                      alignment: Alignment.centerLeft,
-                      child: actions.length == 1
-                          ? actions[0]
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: actions,
-                            ),
-                    )),
-        ), */
       ],
     ),
     actions: actions,
