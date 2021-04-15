@@ -2,7 +2,7 @@
 
 Please include a brief summary of what the issue is and what has been done to solve it
 
-Fixes #<issue_number>
+Fixes #<issue_number> or trello link
 
 # Checklist:
 
@@ -21,4 +21,4 @@ Fixes #<issue_number>
 
 ## After pull
 
-- [ ] If appropriate I have closed the issue
+- [ ] If appropriate I have closed the issue/ moved the trello card
