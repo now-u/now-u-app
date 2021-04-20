@@ -81,42 +81,45 @@ class _CampaignTileState extends State<CampaignTile> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           // Image
-          Stack(children: <Widget>[
-            Container(
-              height: 120,
-              child: Padding(
-                padding: EdgeInsets.all(0),
-                child: Container(
-                    decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: customNetworkImageProvider(widget.campaign.getHeaderImage()),
-                    fit: BoxFit.cover,
-                  ),
-                  //borderRadius: BorderRadius.only(topLeft: Radius.circular(10))
-                )),
+          Expanded(
+            child: Stack(
+              children: <Widget>[
+              Container(
+                height: MediaQuery.of(context).size.height * 0.2,
+                child: Padding(
+                  padding: EdgeInsets.all(0),
+                  child: Container(
+                      decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: customNetworkImageProvider(widget.campaign.getHeaderImage()),
+                      fit: BoxFit.cover,
+                    ),
+                    //borderRadius: BorderRadius.only(topLeft: Radius.circular(10))
+                  )),
+                ),
               ),
-            ),
-            ViewModelBuilder<BaseModel>.reactive(
-                viewModelBuilder: () => BaseModel(),
-                builder: (context, model, child) {
-                  bool selected = model.currentUser
-                      .getSelectedCampaigns()
-                      .contains(widget.campaign.getId());
-                  if (selected) {
-                    return Padding(
-                        padding: EdgeInsets.all(12),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: JoinedIndicator(),
-                        ));
-                  } else {
-                    return Container();
-                  }
-                })
-          ]),
+              ViewModelBuilder<BaseModel>.reactive(
+                  viewModelBuilder: () => BaseModel(),
+                  builder: (context, model, child) {
+                    bool selected = model.currentUser
+                        .getSelectedCampaigns()
+                        .contains(widget.campaign.getId());
+                    if (selected) {
+                      return Padding(
+                          padding: EdgeInsets.all(12),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: JoinedIndicator(),
+                          ));
+                    } else {
+                      return Container();
+                    }
+                  })
+            ]),
+          ),
           SizedBox(height: 10),
           // Title
           Padding(
