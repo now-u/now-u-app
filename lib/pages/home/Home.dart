@@ -198,7 +198,8 @@ class CampaignCarosel extends StatelessWidget {
   CampaignCarosel(this.cs, this.controller);
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
+    return Column(
+      children: [
       Container(
         height: 280,
         child: PageView.builder(
