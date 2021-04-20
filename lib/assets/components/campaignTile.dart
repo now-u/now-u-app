@@ -126,7 +126,6 @@ class _CampaignTileState extends State<CampaignTile> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: hPadding),
             child: Text(
-             // ghsfchsdcvjsdvcmhdsgvcshdgvcjdhgvcnsdgvcjcsjhcsjyhsjyhsjasnhshscxjmsht smh',
               widget.campaign.getTitle(),
               textAlign: TextAlign.left,
               style: textStyleFrom(
