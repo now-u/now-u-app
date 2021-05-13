@@ -37,27 +37,21 @@ Map darkButtonStyleStyles = {
 
 // ignore: must_be_immutable
 class DarkButton extends StatelessWidget {
-  VoidCallback onPressed;
-  String text;
-  IconData rightIcon;
-  IconData leftIcon;
-  DarkButtonSize size;
-  double fontSize;
-  DarkButtonStyle style;
+  final VoidCallback onPressed;
+  final String text;
+  final IconData rightIcon;
+  final IconData leftIcon;
+  final DarkButtonSize size;
+  final double fontSize;
+  final DarkButtonStyle style;
 
-  DarkButton(String text,
-      {DarkButtonSize size,
-      @required VoidCallback onPressed,
+  DarkButton(this.text,
+      {this.size,
+      @required this.onPressed,
       this.rightIcon,
       this.leftIcon,
-      DarkButtonStyle style,
-      double fontSize}) {
-    this.onPressed = onPressed;
-    this.text = text;
-    this.size = size ?? DarkButtonSize.Large;
-    this.fontSize = fontSize;
-    this.style = style ?? DarkButtonStyle.Primary;
-  }
+      this.style,
+      this.fontSize});
 
   @override
   Widget build(BuildContext context) {
@@ -205,10 +199,10 @@ class PrimaryButton extends StatelessWidget {
 }
 
 class OutlineButton extends StatelessWidget {
-  VoidCallback onPressed;
-  String text;
-  DarkButtonSize size;
-  double fontSize;
+  final VoidCallback onPressed;
+  final String text;
+  final DarkButtonSize size;
+  final double fontSize;
 
   OutlineButton(
     this.text, {

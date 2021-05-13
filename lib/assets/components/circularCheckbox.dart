@@ -350,19 +350,18 @@ class _RenderCircularCheckBox extends RenderToggleable {
     @required TickerProvider vsync,
   })  : _oldValue = value,
         super(
-          value: value,
-          tristate: tristate,
-          activeColor: activeColor,
-          inactiveColor: inactiveColor,
-          focusColor: focusColor,
-          hoverColor: hoverColor,
-          onChanged: onChanged,
-          additionalConstraints: additionalConstraints,
-          vsync: vsync,
-          hasFocus: hasFocus,
-          hovering: hovering,
-          splashRadius: null
-        );
+            value: value,
+            tristate: tristate,
+            activeColor: activeColor,
+            inactiveColor: inactiveColor,
+            focusColor: focusColor,
+            hoverColor: hoverColor,
+            onChanged: onChanged,
+            additionalConstraints: additionalConstraints,
+            vsync: vsync,
+            hasFocus: hasFocus,
+            hovering: hovering,
+            splashRadius: null);
 
   bool _oldValue;
   Color checkColor;

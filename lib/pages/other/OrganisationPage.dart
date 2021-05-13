@@ -47,8 +47,8 @@ class OraganisationInfoPage extends StatelessWidget {
                 width: double.infinity,
                 child: Padding(
                   padding: EdgeInsets.all(10),
-                  child:
-                      Center(child: CustomNetworkImage(organisation.getLogoLink())),
+                  child: Center(
+                      child: CustomNetworkImage(organisation.getLogoLink())),
                 ),
               ),
               SizedBox(height: 10),
