@@ -132,7 +132,9 @@ class CampaignInfoBody extends StatelessWidget {
                               SizedBox(
                                 height: 12,
                               ),
-                              DarkButton("Take action", onPressed: () {
+                                 DarkButton(
+                                   "Take action", 
+                                   onPressed: () {
                                 if (_campaign.isPast()) {
                                   Navigator.of(context).pushNamed(
                                       Routes.pastCampaignActionPage,
@@ -140,8 +142,8 @@ class CampaignInfoBody extends StatelessWidget {
                                 } else {
                                   Navigator.of(context)
                                       .pushNamed(Routes.actions);
-                                }
-                              })
+                                } 
+                              })  
                             ],
                           ),
                         )),
