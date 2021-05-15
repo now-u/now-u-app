@@ -118,7 +118,7 @@
           ),
     title: Row(
       mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: &lt;Widget&gt;[
         Expanded(
@@ -140,25 +140,9 @@
                   ),
           ),
         ),
-        Expanded(
-          child: Container(
-              &#47;&#47;flex: 1,
-              child: actions == null || actions.length == 0
-                  ? Container()
-                  : Align(
-                      alignment: Alignment.centerRight,
-                      child: actions.length == 1
-                          ? actions[0]
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: actions,
-                            ),
-                    )),
-        ),
       ],
     ),
-    &#47;&#47;actions: actions,
+    actions: actions,
   );
 }</code></pre>
     </section>

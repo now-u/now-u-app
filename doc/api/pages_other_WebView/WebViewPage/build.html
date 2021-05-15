@@ -142,24 +142,33 @@ and</li>
       <h2><span>Implementation</span></h2>
       <pre class="language-dart"><code class="language-dart">@override
 Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: customAppBar(
-      backButtonText: &quot;Back&quot;,
-      context: context,
-    ),
-    body: SafeArea(
-        child: ViewModelBuilder&lt;WebViewViewModel&gt;.reactive(
-            viewModelBuilder: () =&gt; WebViewViewModel(),
-            builder: (context, model, child) {
-              return WebView(
+  return ViewModelBuilder&lt;WebViewViewModel&gt;.reactive(
+     viewModelBuilder: () =&gt; WebViewViewModel(args.initialUrl),
+     builder: (context, model, child) {
+       return Scaffold(
+         appBar: customAppBar(
+           context: context,
+           actions: &lt;Widget&gt;[
+           TextButton(
+            child: Icon(Icons.launch, color: Theme.of(context).primaryColor),
+             onPressed: ((){
+              model.launchExternal();
+             }),
+            ),
+           ]
+           ),
+           body: SafeArea(
+             child: WebView(
                 javascriptMode: JavascriptMode.unrestricted,
                 initialUrl: args.initialUrl,
                 onWebResourceError: (error) {
-                  model.onWebError(args.initialUrl);
+                  model.onWebError();
                 },
-              );
-            })),
-  );
+              ),
+             ),
+       );
+     }
+     );
 }</code></pre>
     </section>
 

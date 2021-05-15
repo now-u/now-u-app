@@ -209,7 +209,9 @@ Widget build(BuildContext context) {
                             SizedBox(
                               height: 12,
                             ),
-                            DarkButton(&quot;Take action&quot;, onPressed: () {
+                               DarkButton(
+                                 &quot;Take action&quot;,
+                                 onPressed: () {
                               if (_campaign.isPast()) {
                                 Navigator.of(context).pushNamed(
                                     Routes.pastCampaignActionPage,
@@ -414,7 +416,9 @@ Widget build(BuildContext context) {
                   &quot;Find out more at:&quot;,
                   style: Theme.of(context).primaryTextTheme.bodyText1,
                 ),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                   children: [
                   CustomTextButton(
                     &quot;sustainabledevelopment.un.org&quot;,
                     onClick: () {

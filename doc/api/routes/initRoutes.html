@@ -263,13 +263,13 @@
     &#47;&#47; Webview
     case Routes.webview:
       {
-        if (args is WebViewArgumnets) {
+        if (args is WebViewArguments) {
           return customRoute(
               builder: (context) =&gt; WebViewPage(args), settings: settings);
         }
         if (args is String) {
           return customRoute(
-              builder: (context) =&gt; WebViewPage(WebViewArgumnets(args)),
+              builder: (context) =&gt; WebViewPage(WebViewArguments(args)),
               settings: settings);
         }
         return customRoute(

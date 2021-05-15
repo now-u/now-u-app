@@ -121,11 +121,11 @@
           &quot;This link will take you out of the app. Are you sure you want to go?&quot;,
       buttons: [
         DialogButton(
-          text: &quot;Let&#39;s go&quot;,
+          text: buttonText ?? &quot;Let&#39;s go&quot;,
           response: true,
         ),
         DialogButton(
-          text: &quot;Close&quot;,
+          text: closeButtonText ?? &quot;Close&quot;,
           response: false,
           style: DarkButtonStyle.Secondary,
         ),

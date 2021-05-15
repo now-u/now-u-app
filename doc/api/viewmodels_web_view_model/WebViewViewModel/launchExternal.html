@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the onWebError method from the WebViewViewModel class, for the Dart programming language.">
-  <title>onWebError method - WebViewViewModel class - web_view_model library - Dart API</title>
+  <meta name="description" content="API docs for the launchExternal method from the WebViewViewModel class, for the Dart programming language.">
+  <title>launchExternal method - WebViewViewModel class - web_view_model library - Dart API</title>
 
   
   <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
@@ -27,9 +27,9 @@
     <li><a href="../../index.html">app</a></li>
     <li><a href="../../viewmodels_web_view_model/viewmodels_web_view_model-library.html">web_view_model</a></li>
     <li><a href="../../viewmodels_web_view_model/WebViewViewModel-class.html">WebViewViewModel</a></li>
-    <li class="self-crumb">onWebError method</li>
+    <li class="self-crumb">launchExternal method</li>
   </ol>
-  <div class="self-name">onWebError</div>
+  <div class="self-name">launchExternal</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -48,7 +48,7 @@
       <li><a href="../../index.html">app</a></li>
       <li><a href="../../viewmodels_web_view_model/viewmodels_web_view_model-library.html">web_view_model</a></li>
       <li><a href="../../viewmodels_web_view_model/WebViewViewModel-class.html">WebViewViewModel</a></li>
-      <li class="self-crumb">onWebError method</li>
+      <li class="self-crumb">launchExternal method</li>
     </ol>
     
     <h5>WebViewViewModel class</h5>
@@ -90,24 +90,26 @@
   </div><!--/.sidebar-offcanvas-->
 
   <div id="dartdoc-main-content" class="col-xs-12 col-sm-9 col-md-8 main-content">
-      <div><h1><span class="kind-method">onWebError</span> method </h1></div>
+      <div><h1><span class="kind-method">launchExternal</span> method </h1></div>
 
     <section class="multi-line-signature">
       <span class="returntype">void</span>
-            <span class="name ">onWebError</span>
+            <span class="name ">launchExternal</span>
 (<wbr>)
       
     </section>
     
     <section class="summary source-code" id="source">
       <h2><span>Implementation</span></h2>
-      <pre class="language-dart"><code class="language-dart">void onWebError() {
+      <pre class="language-dart"><code class="language-dart">void launchExternal() {
   _navigationService.launchLink(
-      initialUrl,
-      isExternal: true,
-      title: &quot;Web error&quot;,
-      description:
-          &quot;There has been an error loading the webpage would you like to try in your browser?&quot;);
+              initialUrl,
+              isExternal: true,
+              title: &#39;Open with an External Browser?&#39;,
+              description: &#39;You are about to open this link with an external browser.&#39;,
+              buttonText: &#39;Yes, Go Ahead&#39;,
+              closeButtonText: &#39;Stay Here&#39;
+              );
 }</code></pre>
     </section>
 
