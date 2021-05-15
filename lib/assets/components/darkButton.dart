@@ -46,7 +46,8 @@ class DarkButton extends StatelessWidget {
   final DarkButtonStyle style;
 
   DarkButton(this.text,
-      {this.size,
+      { 
+      this.size = DarkButtonSize.Medium,
       @required this.onPressed,
       this.rightIcon,
       this.leftIcon,
@@ -83,11 +84,11 @@ class DarkButton extends StatelessWidget {
 
 // ignore: must_be_immutable
 class SecondaryButton extends StatelessWidget {
-  VoidCallback onPressed;
-  String text;
-  IconData rightIcon;
-  DarkButtonSize size;
-  double fontSize;
+  final VoidCallback onPressed;
+  final String text;
+  final IconData rightIcon;
+  final DarkButtonSize size;
+  final double fontSize;
 
   SecondaryButton(
     this.text, {
@@ -133,11 +134,11 @@ class SecondaryButton extends StatelessWidget {
 }
 
 class PrimaryButton extends StatelessWidget {
-  VoidCallback onPressed;
-  String text;
-  IconData rightIcon;
-  DarkButtonSize size;
-  double fontSize;
+  final VoidCallback onPressed;
+  final String text;
+  final IconData rightIcon;
+  final DarkButtonSize size;
+  final double fontSize;
 
   PrimaryButton(
     this.text, {

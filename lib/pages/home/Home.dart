@@ -201,7 +201,7 @@ class CampaignCarosel extends StatelessWidget {
     return Column(
       children: [
       Container(
-        height: 280,
+        height: 280, //
         child: PageView.builder(
           key: campaignCarouselPageKey,
           controller: controller,
