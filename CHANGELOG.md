@@ -48,8 +48,9 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
 
 ### Unreleased
 
-### Version 1.2.0
+- #155 [feature] Drop down button is added to be opened on external browser
 
+### Version 1.2.0
 - #127 [feature]  Login popups added which notify users of error 
 - #135 [feature]  Campaign researchers (user_role_id=3) can now see future and
   disabled campaigns 
@@ -126,4 +127,3 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
 - #72 [bug]     Improved dynamic links service
 - #46 [bug]     The app no longer crashed when clicking 'Rate the app' in the
   menu
-
