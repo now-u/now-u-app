@@ -1,6 +1,0 @@
-framework module store_redirect {
-  umbrella header "store_redirect-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -14,6 +14,7 @@ import 'package:app/services/device_info_service.dart';
 class AuthError {
   static const unauthorized = "unauthorized";
   static const internal = "internal";
+  static const request = "request";
   static const unknown = "unknown";
   static const tokenExpired = "tokenExpired";
 }
@@ -22,16 +23,10 @@ class AuthenticationService {
   //final NavigationService _navigationService = locator<NavigationService>();
   final SharedPreferencesService _sharedPreferencesService =
       locator<SharedPreferencesService>();
-  final DeviceInfoService _deviceInfoService =
-      locator<DeviceInfoService>();
+  final DeviceInfoService _deviceInfoService = locator<DeviceInfoService>();
 
   User _currentUser;
   User get currentUser => _currentUser;
-
-  bool logout() {
-    _currentUser = null;
-    return true;
-  }
 
   // This is not final as it can be changed
   String domainPrefix = "https://api.now-u.com/api/v1/";
@@ -43,14 +38,21 @@ class AuthenticationService {
   Future<bool> isUserLoggedIn() async {
     User user = await _sharedPreferencesService.loadUserFromPrefs();
     if (user != null) {
+      print("[isUserLoggedIn()]: user from Prefs not null");
       await _updateUser(user.getToken());
     }
+    print("[isUserLoggedIn()]: _currentUser: " + _currentUser.toString());
     return _currentUser != null;
   }
 
   Future _updateUser(String token) async {
     if (token != null) {
+      print("[_updateUser()]: _currentUser BEFORE getUser(token): " +
+          _currentUser.toString());
       _currentUser = await getUser(token);
+
+      print("[_updateUser()]: _currentUser AFTER getUser(token): " +
+          _currentUser.toString());
       _sharedPreferencesService.saveUserToPrefs(_currentUser);
     }
   }
@@ -75,11 +77,6 @@ class AuthenticationService {
   Future sendSignInWithEmailLink(
       String email, String name, bool acceptNewletter) async {
     try {
-      print("email | $email");
-      print("name | $name");
-      print("nl | $acceptNewletter");
-      print("operatingSystem | ${_deviceInfoService.osType}");
-      print("operatingSystemVersion | ${await _deviceInfoService.osVersion}");
       await http.post(
         domainPrefix + 'users',
         headers: <String, String>{
@@ -121,15 +118,22 @@ class AuthenticationService {
       if (response.statusCode == 419) {
         return AuthError.tokenExpired;
       }
-      
-      User user = await getUser(json.decode(response.body)['data']['token']);
 
-      await _updateUser(user.getToken());
+      User user = await getUser(json.decode(response.body)['data']['token']);
+      _updateUser(user.getToken());
       return null;
-    } on Error catch(e) {
+    } on Error catch (e) {
       print("Error ${e.toString()}");
-      return AuthError.unknown;  
+      return AuthError.unknown;
     }
+  }
+
+  bool logout() {
+    print("current user: " + _currentUser.toString());
+    _sharedPreferencesService.removeUserFromPrefs();
+    _currentUser = null;
+    print("current user: " + _currentUser.toString());
+    return true;
   }
 
   Future<User> getUser(String token) async {
@@ -179,11 +183,34 @@ class AuthenticationService {
       print("new user og is ${u.organisation}");
       currentUser.setOrganisation = u.organisation;
       return true;
-    } catch(e) {
+    } catch (e) {
       return false;
     }
   }
-  
+
+  Future<String> deleteUserAccount() async {
+    try {
+      http.Response response = await http.delete(
+        domainPrefix + 'users/me',
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'token': currentUser.getToken(),
+        },
+      );
+      if (response.statusCode >= 400 && response.statusCode < 500) {
+        return AuthError.request;
+      }
+      if (response.statusCode >= 500 && response.statusCode < 600) {
+        return AuthError.internal;
+      }
+      if (response.statusCode == 200) {
+        return null;
+      }
+      return AuthError.unknown;
+    } catch (e) {
+      return AuthError.unknown;
+    }
+  }
 
   Future<bool> leaveOrganisation() async {
     try {
@@ -203,7 +230,7 @@ class AuthenticationService {
       User u = User.fromJson(json.decode(response.body));
       currentUser.setOrganisation = u.organisation;
       return true;
-    } catch(e) {
+    } catch (e) {
       print("Error");
       return false;
     }
