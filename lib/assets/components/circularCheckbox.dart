@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class CircularCheckBox extends StatefulWidget {
 
@@ -21,7 +22,6 @@ class CircularCheckBox extends StatefulWidget {
 class _CircularCheckboxState extends State<CircularCheckBox> {
   @override
   Widget build(BuildContext context) {
-    return Container();
-    // return Checkbox(value: true, onChanged: () {});
+    return Checkbox(value: widget.value, onChanged: widget.onChanged);
   }
 }

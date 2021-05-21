@@ -10,10 +10,7 @@ import 'package:app/viewmodels/account_details_model.dart';
 
 void main() {
   group("AccountDetailsViewModelTest - ", () {
-    setUpAll(() {
-      // setupTestLocator();
-    });
-    group("save tests", () {
+    group("save tests - ", () {
       test("Check save on update failure", () async {
         DateTime now = DateTime.now();
         getAndRegisterMockGoogleLocationSearchService();
@@ -71,7 +68,7 @@ void main() {
       });
     });
 
-    group("delete tests", () {
+    group("delete tests - ", () {
       
       void testDeleteUserAccountDialogs(String deleteUserAccountResponse, String dialogTitle, String dialogDescription) async {
         // Mock api to always return "success" string
