@@ -14,6 +14,7 @@ import 'package:app/services/device_info_service.dart';
 class AuthError {
   static const unauthorized = "unauthorized";
   static const internal = "internal";
+  static const request = "request";
   static const unknown = "unknown";
   static const tokenExpired = "tokenExpired";
 }
@@ -197,22 +198,17 @@ class AuthenticationService {
         },
       );
       if (response.statusCode >= 400 && response.statusCode < 500) {
-        print("Status code: " + response.statusCode.toString());
-        return "client error";
+        return AuthError.request;
       }
       if (response.statusCode >= 500 && response.statusCode < 600) {
-        print("Status code: " + response.statusCode.toString());
-        return "server error";
+        return AuthError.internal;
       }
       if (response.statusCode == 200) {
-        print("Status code: " + response.statusCode.toString());
-        return "success";
+        return null;
       }
-      print("Status code: " + response.statusCode.toString());
-      return "unknown";
+      return AuthError.unknown;
     } catch (e) {
-      print("Error caught: " + e);
-      return "unknown";
+      return AuthError.unknown;
     }
   }
 

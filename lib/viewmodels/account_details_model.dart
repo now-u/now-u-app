@@ -53,61 +53,64 @@ class AccountDetailsViewModel extends BaseModel {
     _locationFieldController.text = currentUser.getLocation();
   }
 
-  void save() async {
+  Future<void> save() async {
     setBusy(true);
     bool success = await _authenticationService.updateUserDetails(
         name: _name, dob: _dob, orgCode: _orgCode);
+
     if (success) {
+      print("Success");
       setBusy(false);
       notifyListeners();
     } else {
       _dialogService.showDialog(
           title: "Error",
           description:
-              "Sorry there has been an error whilst updating your details.");
+              "Sorry there has been an error whilst updating your details.",);
       setBusy(false);
       notifyListeners();
     }
   }
 
-  void delete() async {
+  Future<void> delete() async {
     setBusy(true);
 
-    String response = await _authenticationService.deleteUserAccount();
-    switch (response) {
-      case "success":
-        {
-          _dialogService.showDialog(
+    String error = await _authenticationService.deleteUserAccount();
+
+    if (error == null) {
+        _dialogService.showDialog(
               title: "All done!",
-              description: "Your account has now been deleted.");
+              description: "Your account has now been deleted.",);
           await _analyticsService.logUserAccountDeleted();
           logout();
-          break;
-        }
-      case "client error":
-        {
-          _dialogService.showDialog(
-              title: "Client Error",
-              description:
-                  "Sorry, something went wrong!\nTry restarting your app.");
-          break;
-        }
-      case "server error":
-        {
-          _dialogService.showDialog(
-              title: "Server Error",
-              description:
-                  "Sorry, there was a server problem.\nTry again later.");
-          break;
-        }
-      default:
-        {
-          _dialogService.showDialog(
-              title: "Error",
-              description:
-                  "Sorry, something went wrong!\nTry again now or later.");
-          break;
-        }
+    } 
+    else {
+      switch (error) {
+        case AuthError.request:
+          {
+            _dialogService.showDialog(
+                title: "Client Error",
+                description:
+                    "Sorry, something went wrong!\nTry restarting your app.");
+            break;
+          }
+        case AuthError.internal:
+          {
+            _dialogService.showDialog(
+                title: "Server Error",
+                description:
+                    "Sorry, there was a server problem.\nTry again later.");
+            break;
+          }
+        default:
+          {
+            _dialogService.showDialog(
+                title: "Error",
+                description:
+                    "Sorry, something went wrong!\nPlease try again.");
+            break;
+          }
+      }
     }
     setBusy(false);
     notifyListeners();

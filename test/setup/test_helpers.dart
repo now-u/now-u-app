@@ -5,6 +5,7 @@ import 'package:app/services/navigation_service.dart';
 import 'package:app/services/dialog_service.dart';
 import 'package:app/services/analytics.dart';
 import 'package:app/services/auth.dart';
+import 'package:app/services/google_location_search_service.dart';
 
 class MockNavigationService extends Mock implements NavigationService {
   Future<dynamic> navigateTo(String route, {arguments}) async {
@@ -15,16 +16,14 @@ NavigationService getAndRegisterMockNavigationService() {
   _removeRegistrationIfExists<NavigationService>();
   var service = MockNavigationService();
   locator.registerSingleton<NavigationService>(service);
-  locator.resetLazySingleton<NavigationService>();
   return service;
 }
-
+// 
 class MockAuthenticationService extends Mock implements AuthenticationService {}
 AuthenticationService getAndRegisterMockAuthentiactionService() {
-  _removeRegistrationIfExists<AuthenticationService>();
+   _removeRegistrationIfExists<AuthenticationService>();
   var service = MockAuthenticationService();
   locator.registerSingleton<AuthenticationService>(service);
-  locator.resetLazySingleton<AuthenticationService>();
   return service;
 }
 
@@ -33,7 +32,14 @@ DialogService getAndRegisterMockDialogService() {
   _removeRegistrationIfExists<DialogService>();
   var service = MockDialogService();
   locator.registerSingleton<DialogService>(service);
-  locator.resetLazySingleton<DialogService>();
+  return service;
+}
+
+class MockGoogleLocationSearchService extends Mock implements GoogleLocationSearchService {}
+GoogleLocationSearchService getAndRegisterMockGoogleLocationSearchService() {
+  _removeRegistrationIfExists<GoogleLocationSearchService>();
+  var service = MockGoogleLocationSearchService();
+  locator.registerSingleton<GoogleLocationSearchService>(service);
   return service;
 }
 
@@ -42,7 +48,6 @@ AnalyticsService getAndRegisterMockAnalyticsService() {
   _removeRegistrationIfExists<AnalyticsService>();
   var service = MockAnalyticsService();
   locator.registerSingleton<AnalyticsService>(service);
-  locator.resetLazySingleton<AnalyticsService>();
   return service;
 }
 
@@ -52,9 +57,8 @@ void _removeRegistrationIfExists<T>() {
   }
 }
 
-void setupTestLocator() {
-  setupLocator();
-  locator.allowReassignment = true;
-  // By default we want the navigation_service to be mocked
-  getAndRegisterMockNavigationService();
-}
+// void setupTestLocator() {
+//   print("Setting up thing");
+//   setupLocator();
+//   locator.allowReassignment = true;
+// }
