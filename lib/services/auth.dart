@@ -118,7 +118,7 @@ class AuthenticationService {
       if (response.statusCode == 419) {
         return AuthError.tokenExpired;
       }
-
+      
       User user = await getUser(json.decode(response.body)['data']['token']);
       _updateUser(user.getToken());
       return null;

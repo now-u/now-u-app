@@ -17,8 +17,8 @@ import 'package:app/assets/icons/customIcons.dart';
 import 'package:stacked/stacked.dart';
 import 'package:app/viewmodels/action_info_model.dart';
 
-final double HEADER_HEIGHT = 200;
-final double H_PADDING = 10;
+final double theHeaderHeight = 200;
+final double hPadding = 10;
 
 class ActionInfoArguments {
   final CampaignAction action;
@@ -62,7 +62,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
           bool starred =
               model.currentUser.getStarredActions().contains(_action.getId());
           return Scaffold(
-              appBar: CustomAppBar(
+              appBar: customAppBar(
                 text: _action.getSuperTypeName(),
                 backButtonText: "Actions",
                 context: context,
@@ -159,7 +159,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                     // Text
                     Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: H_PADDING, vertical: 0),
+                          horizontal: hPadding, vertical: 0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -189,13 +189,14 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                     ),
                     Align(
                       alignment: Alignment.topCenter,
-                      child: DarkButton("Take action",
-                          size: DarkButtonSize.Large,
-                          style: DarkButtonStyle.Secondary,
-                          onPressed: () {
-                            model.launchAction(_action);
-                          },
-                        ),
+                      child: DarkButton(
+                        "Take action",
+                        size: DarkButtonSize.Large,
+                        style: DarkButtonStyle.Secondary,
+                        onPressed: () {
+                          model.launchAction(_action);
+                        },
+                      ),
                     ),
 
                     !completed
@@ -306,7 +307,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
 
                     Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: H_PADDING, vertical: 0),
+                          horizontal: hPadding, vertical: 0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[

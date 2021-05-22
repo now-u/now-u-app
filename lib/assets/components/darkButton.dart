@@ -35,74 +35,60 @@ Map darkButtonStyleStyles = {
   },
 };
 
+// ignore: must_be_immutable
 class DarkButton extends StatelessWidget {
-  VoidCallback onPressed;
-  String text;
-  IconData rightIcon;
-  IconData leftIcon;
-  DarkButtonSize size;
-  double fontSize;
-  DarkButtonStyle style;
+  final VoidCallback onPressed;
+  final String text;
+  final IconData rightIcon;
+  final IconData leftIcon;
+  final DarkButtonSize size;
+  final double fontSize;
+  final DarkButtonStyle style;
 
-  DarkButton(String text,
-      {DarkButtonSize size,
-      @required VoidCallback onPressed,
+  DarkButton(this.text,
+      { 
+      this.size = DarkButtonSize.Medium,
+      @required this.onPressed,
       this.rightIcon,
       this.leftIcon,
-      DarkButtonStyle style,
-      double fontSize}) {
-    this.onPressed = onPressed;
-    this.text = text;
-    this.size = size ?? DarkButtonSize.Large;
-    this.fontSize = fontSize;
-    this.style = style ?? DarkButtonStyle.Primary;
-  }
+      this.style,
+      this.fontSize});
 
   @override
   Widget build(BuildContext context) {
     if (style == DarkButtonStyle.Primary) {
-        return PrimaryButton(
-            text,
-            onPressed: onPressed,
-            rightIcon: rightIcon,
-            size: size,
-            fontSize: fontSize
-        );
-    }
-    if (style == DarkButtonStyle.Outline) {
-        return OutlineButton(
-            text,
-            onPressed: onPressed,
-            size: size,
-            fontSize: fontSize
-        );
-    }
-    else if (style == DarkButtonStyle.Secondary) {
-        return SecondaryButton(text,
+      return PrimaryButton(text,
           onPressed: onPressed,
           rightIcon: rightIcon,
           size: size,
-          fontSize: fontSize
-        );
+          fontSize: fontSize);
     }
-    else {
-        return PrimaryButton(
-            text,
-            onPressed: onPressed,
-            rightIcon: rightIcon,
-            size: size,
-            fontSize: fontSize
-        );
+    if (style == DarkButtonStyle.Outline) {
+      return OutlineButton(text,
+          onPressed: onPressed, size: size, fontSize: fontSize);
+    } else if (style == DarkButtonStyle.Secondary) {
+      return SecondaryButton(text,
+          onPressed: onPressed,
+          rightIcon: rightIcon,
+          size: size,
+          fontSize: fontSize);
+    } else {
+      return PrimaryButton(text,
+          onPressed: onPressed,
+          rightIcon: rightIcon,
+          size: size,
+          fontSize: fontSize);
     }
   }
 }
 
+// ignore: must_be_immutable
 class SecondaryButton extends StatelessWidget {
-  VoidCallback onPressed;
-  String text;
-  IconData rightIcon;
-  DarkButtonSize size;
-  double fontSize;
+  final VoidCallback onPressed;
+  final String text;
+  final IconData rightIcon;
+  final DarkButtonSize size;
+  final double fontSize;
 
   SecondaryButton(
     this.text, {
@@ -118,13 +104,16 @@ class SecondaryButton extends StatelessWidget {
         child: Container(
       color: Colors.white,
       height: darkButtonStyleStyles[size]['height'],
-      child: RaisedButton(
-        color: Colors.white,
+      child: ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.white),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                    darkButtonStyleStyles[size]['borderRadius']),
+              ),
+            )),
         onPressed: onPressed,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-              darkButtonStyleStyles[size]['borderRadius']),
-        ),
         child: Padding(
           padding: EdgeInsets.symmetric(
             vertical: darkButtonStyleStyles[size]['vPadding'],
@@ -145,11 +134,11 @@ class SecondaryButton extends StatelessWidget {
 }
 
 class PrimaryButton extends StatelessWidget {
-  VoidCallback onPressed;
-  String text;
-  IconData rightIcon;
-  DarkButtonSize size;
-  double fontSize;
+  final VoidCallback onPressed;
+  final String text;
+  final IconData rightIcon;
+  final DarkButtonSize size;
+  final double fontSize;
 
   PrimaryButton(
     this.text, {
@@ -210,12 +199,11 @@ class PrimaryButton extends StatelessWidget {
   }
 }
 
-
 class OutlineButton extends StatelessWidget {
-  VoidCallback onPressed;
-  String text;
-  DarkButtonSize size;
-  double fontSize;
+  final VoidCallback onPressed;
+  final String text;
+  final DarkButtonSize size;
+  final double fontSize;
 
   OutlineButton(
     this.text, {

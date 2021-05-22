@@ -17,6 +17,7 @@ import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/organisationTile.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/header.dart';
+import 'package:app/assets/components/custom_network_image.dart';
 
 import 'package:stacked/stacked.dart';
 import 'package:app/viewmodels/campaign_info_model.dart';
@@ -66,321 +67,322 @@ class CampaignInfoBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body: Stack(
-          children: 
-          [
-            ListView(
-              children: [
-                // Header
-                Container(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(_campaign.getHeaderImage()),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: Container(
-                      color: colorFrom(
-                        Colors.black,
-                        opacity: 0.5,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(bottom: 20),
-                        child: Column(children: [
-                          PageHeader(
-                            title: _campaign.getTitle(),
-                            textColor: Colors.white,
-                            backButton: true,
-                            backButtonText: "",
-                            maxLines: 4,
-                            fontSize: Theme.of(context)
-                                .primaryTextTheme
-                                .headline3
-                                .fontSize,
-                            extraInnerPadding: 20,
-                          ),
-                        ]),
-                      ),
+        body: Stack(children: [
+          ListView(
+            children: [
+              // Header
+              Container(
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: customNetworkImageProvider(
+                          _campaign.getHeaderImage()),
+                      fit: BoxFit.cover,
                     ),
                   ),
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 20),
+                    child: Column(children: [
+                      PageHeader(
+                        title: _campaign.getTitle(),
+                        textColor: Colors.white,
+                        backButton: true,
+                        backButtonText: "",
+                        maxLines: 4,
+                        fontSize: Theme.of(context)
+                            .primaryTextTheme
+                            .headline3
+                            .fontSize,
+                        extraInnerPadding: 20,
+                      ),
+                    ]),
+                  ),
                 ),
+              ),
+              // Body
+              Container(
+                color: Color.fromRGBO(247, 248, 252, 1),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 18),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 25),
+                        CustomTile(
+                            child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 30, horizontal: 10),
+                          child: Column(
+                            children: <Widget>[
+                              Text(
+                                "See what you can do to support this cause today",
+                                style: textStyleFrom(Theme.of(context)
+                                    .primaryTextTheme
+                                    .headline3),
+                                textAlign: TextAlign.center,
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Container(
+                                height: 180,
+                                child:
+                                    CustomNetworkImage(_campaign.infographic),
+                              ),
+                              SizedBox(
+                                height: 12,
+                              ),
+                                 DarkButton(
+                                   "Take action", 
+                                   onPressed: () {
+                                if (_campaign.isPast()) {
+                                  Navigator.of(context).pushNamed(
+                                      Routes.pastCampaignActionPage,
+                                      arguments: _campaign);
+                                } else {
+                                  Navigator.of(context)
+                                      .pushNamed(Routes.actions);
+                                } 
+                              })  
+                            ],
+                          ),
+                        )),
 
-                // Body
-                Container(
-                  color: Color.fromRGBO(247, 248, 252, 1),
+                        SizedBox(height: 25),
+
+                        // About
+                        Text(
+                          "About",
+                          style: Theme.of(context).primaryTextTheme.headline3,
+                        ),
+
+                        SizedBox(height: 15),
+
+                        // Stats
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            CampaignStat(
+                                text:
+                                    "${_campaign.getNumberOfCampaigners()} people have joined",
+                                icon: Icons.people),
+                            //CampaignStat(text: "Actions completed"),,
+                            CampaignStat(
+                              text:
+                                  "${_campaign.getNumberOfActionsCompleted()} actions completed by now-u users",
+                              icon: CustomIcons.ic_clipboard,
+                            ),
+                            CampaignStat(
+                              text: "Global reach",
+                              icon: CustomIcons.ic_global,
+                            ),
+                          ],
+                        ),
+
+                        SizedBox(height: 25),
+
+                        // Buttons
+                        Column(
+                          children: [
+                            CampaignButton(
+                                text: "Watch the video",
+                                icon: CustomIcons.ic_video,
+                                onTap: () {
+                                  model.viewCampaignVideo(_campaign);
+                                }),
+                            CampaignButton(
+                                text: "Read summary",
+                                icon: CustomIcons.ic_news,
+                                onTap: () {
+                                  Navigator.of(context).pushNamed(
+                                      Routes.campaignDetails,
+                                      arguments: _campaign);
+                                }),
+                            CampaignButton(
+                                text: "Go to learning hub",
+                                icon: CustomIcons.ic_learning,
+                                onTap: () {
+                                  Navigator.of(context).pushNamed(
+                                      Routes.learningSingle,
+                                      arguments: _campaign.getId());
+                                }),
+                          ],
+                        ),
+
+                        SizedBox(height: 30),
+
+                        // Share
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CustomTextButton(
+                              "Share this campaign",
+                              onClick: () async {
+                                String text = await _campaign.getShareText();
+                                Share.share(text);
+                              },
+                            ),
+                          ],
+                        ),
+
+                        SizedBox(height: 30),
+                      ]),
+                ),
+              ),
+
+              // Goals
+              Container(
+                  color: Colors.white,
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 18),
                     child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 25),
-                          CustomTile(
-                              child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 30, horizontal: 10),
-                            child: Column(
-                              children: <Widget>[
-                                Text(
-                                  "See what you can do to support this cause today",
-                                  style: textStyleFrom(
-                                      Theme.of(context).primaryTextTheme.headline3),
-                                  textAlign: TextAlign.center,
-                                ),
-                                SizedBox(height: 8,),
-                                Container(
-                                  height: 180,
-                                  child: Image.network(_campaign.infographic),
-                                ),
-                                SizedBox(height: 12,),
-                                DarkButton("Take action", onPressed: () {
-                                  if (_campaign.isPast()) {
-                                    Navigator.of(context).pushNamed(
-                                        Routes.pastCampaignActionPage,
-                                        arguments: _campaign);
-                                  } else {
-                                    Navigator.of(context).pushNamed(Routes.actions);
-                                  }
-                                })
-                              ],
-                            ),
-                          )),
-
-                          SizedBox(height: 25),
-
-                          // About
-                          Text(
-                            "About",
-                            style: Theme.of(context).primaryTextTheme.headline3,
-                          ),
-
-                          SizedBox(height: 15),
-
-                          // Stats
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              CampaignStat(
-                                  text:
-                                      "${_campaign.getNumberOfCampaigners()} people have joined",
-                                  icon: Icons.people),
-                              //CampaignStat(text: "Actions completed"),,
-                              CampaignStat(
-                                text: "${_campaign.getNumberOfActionsCompleted()} actions completed by now-u users",
-                                icon: CustomIcons.ic_clipboard,
-                              ),
-                              CampaignStat(
-                                text: "Global reach",
-                                icon: CustomIcons.ic_global,
-                              ),
-                            ],
-                          ),
-
-                          SizedBox(height: 25),
-
-                          // Buttons
-                          Column(
-                            children: [
-                              CampaignButton(
-                                  text: "Watch the video",
-                                  icon: CustomIcons.ic_video,
-                                  onTap: () {
-                                    model.viewCampaignVideo(_campaign);
-                                  }),
-                              CampaignButton(
-                                  text: "Read summary",
-                                  icon: CustomIcons.ic_news,
-                                  onTap: () {
-                                    Navigator.of(context).pushNamed(
-                                        Routes.campaignDetails,
-                                        arguments: _campaign);
-                                  }),
-                              CampaignButton(
-                                  text: "Go to learning hub",
-                                  icon: CustomIcons.ic_learning,
-                                  onTap: () {
-                                    Navigator.of(context).pushNamed(
-                                        Routes.learningSingle,
-                                        arguments: _campaign.getId());
-                                  }),
-                            ],
-                          ),
-
-                          SizedBox(height: 30),
-
-                          // Share
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CustomTextButton(
-                                "Share this campaign",
-                                onClick: () async {
-                                  String text = await _campaign.getShareText();
-                                  Share.share(text);
-                                },
-                              ),
-                            ],
-                          ),
-
-                          SizedBox(height: 30),
-                        ]),
-                  ),
-                ),
-
-                // Goals
-                Container(
-                    color: Colors.white,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 18),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 35,
-                          ),
-                          Text(
-                            "Goals",
-                            style: Theme.of(context).primaryTextTheme.headline3,
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: _campaign.getKeyAims().map((aim) {
-                                return Column(children: [
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Icon(CustomIcons.ic_bullseye),
-                                      SizedBox(width: 15),
-                                      Expanded(
-                                        child: Text(
-                                          aim,
-                                          style: textStyleFrom(
-                                            Theme.of(context)
-                                                .primaryTextTheme
-                                                .bodyText1,
-                                          ),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 35,
+                        ),
+                        Text(
+                          "Goals",
+                          style: Theme.of(context).primaryTextTheme.headline3,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: _campaign.getKeyAims().map((aim) {
+                              return Column(children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Icon(CustomIcons.ic_bullseye),
+                                    SizedBox(width: 15),
+                                    Expanded(
+                                      child: Text(
+                                        aim,
+                                        style: textStyleFrom(
+                                          Theme.of(context)
+                                              .primaryTextTheme
+                                              .bodyText1,
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(height: 15)
-                                ]);
-                              }).toList()),
-                          SizedBox(height: 20),
-                        ],
-                      ),
-                    )),
-
-                // Partners
-                _campaign.getGeneralPartners().length == 0
-                    ? Container()
-                    : Container(
-                        color: Color.fromRGBO(247, 248, 252, 1),
-                        child: Padding(
-                            padding:
-                                EdgeInsets.symmetric(vertical: 35, horizontal: 18),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Campaign partners",
-                                  style:
-                                      Theme.of(context).primaryTextTheme.headline3,
+                                      ),
+                                    )
+                                  ],
                                 ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Wrap(
-                                  children: getOrganistaionTiles(
-                                      _campaign.getGeneralPartners(), context),
-                                  spacing: 10,
-                                  runSpacing: 10,
-                                  crossAxisAlignment: WrapCrossAlignment.start,
-                                  alignment: WrapAlignment.start,
-                                ),
-                                SizedBox(
-                                  height: 30,
-                                ),
-                              ],
-                            ))),
-
-                // SDGs
-                SizedBox(height: 30),
-
-                Container(
-                    child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: _campaign.getSDGs().length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: EdgeInsets.all(10),
-                      child: SDGSelectionItem(_campaign.getSDGs()[index], model),
-                    );
-                  },
-                  // )
-                )),
-
-                SizedBox(height: 30),
-
-                // Find out more - SDGs
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Find out more at:",
-                      style: Theme.of(context).primaryTextTheme.bodyText1,
+                                SizedBox(height: 15)
+                              ]);
+                            }).toList()),
+                        SizedBox(height: 20),
+                      ],
                     ),
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      CustomTextButton(
-                        "sustainabledevelopment.un.org",
-                        onClick: () {
-                          model.openSDGGoals();
-                        },
-                        fontSize:
-                            Theme.of(context).primaryTextTheme.bodyText1.fontSize,
-                      ),
-                    ])
-                  ],
-                ),
-
-                SizedBox(
-                  height: model.campaignIsJoined ? 50 : 100
-                ),
-              ],
-            ),
-
-            AnimatedPositioned(
-              bottom: model.campaignIsJoined ? -75 : 0,
-              duration: Duration(milliseconds: 500),
-              left: 0,
-              child: FlatButton(
-                padding: EdgeInsets.all(0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 70,
-                  child: Center(
-                      child: Text(
-                    "Join now",
-                    style: textStyleFrom(Theme.of(context).primaryTextTheme.button,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20,
-                        color: Colors.white),
                   )),
-                ),
-                onPressed: () {
-                  model.joinCampaign(_campaign.getId());
+
+              // Partners
+              _campaign.getGeneralPartners().length == 0
+                  ? Container()
+                  : Container(
+                      color: Color.fromRGBO(247, 248, 252, 1),
+                      child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 35, horizontal: 18),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Campaign partners",
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .headline3,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Wrap(
+                                children: getOrganistaionTiles(
+                                    _campaign.getGeneralPartners(), context),
+                                spacing: 10,
+                                runSpacing: 10,
+                                crossAxisAlignment: WrapCrossAlignment.start,
+                                alignment: WrapAlignment.start,
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                            ],
+                          ))),
+
+              // SDGs
+              SizedBox(height: 30),
+
+              Container(
+                  child: ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: _campaign.getSDGs().length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: EdgeInsets.all(10),
+                    child: SDGSelectionItem(_campaign.getSDGs()[index], model),
+                  );
                 },
-                color: Theme.of(context).primaryColor,
+                // )
+              )),
+
+              SizedBox(height: 30),
+
+              // Find out more - SDGs
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Find out more at:",
+                    style: Theme.of(context).primaryTextTheme.bodyText1,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
+                    CustomTextButton(
+                      "sustainabledevelopment.un.org",
+                      onClick: () {
+                        model.openSDGGoals();
+                      },
+                      fontSize:
+                          Theme.of(context).primaryTextTheme.bodyText1.fontSize,
+                    ),
+                  ])
+                ],
               ),
-            )
-          ]
-        )
-    );
+
+              SizedBox(height: model.campaignIsJoined ? 50 : 100),
+            ],
+          ),
+          AnimatedPositioned(
+            bottom: model.campaignIsJoined ? -75 : 0,
+            duration: Duration(milliseconds: 500),
+            left: 0,
+            child: FlatButton(
+              padding: EdgeInsets.all(0),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 70,
+                child: Center(
+                    child: Text(
+                  "Join now",
+                  style: textStyleFrom(
+                      Theme.of(context).primaryTextTheme.button,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20,
+                      color: Colors.white),
+                )),
+              ),
+              onPressed: () {
+                model.joinCampaign(_campaign.getId());
+              },
+              color: Theme.of(context).primaryColor,
+            ),
+          )
+        ]));
   }
 }
 
@@ -548,7 +550,7 @@ List<Widget> getOrganistaionTiles(
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Image.network(org.getLogoLink()),
+                CustomNetworkImage(org.getLogoLink()),
                 SizedBox(
                   width: 5,
                 ),

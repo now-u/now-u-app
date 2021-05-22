@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/campaignTile.dart';
+import 'package:app/assets/components/custom_network_image.dart';
 import 'package:app/assets/StyleFrom.dart';
 
 import 'package:app/models/Organisation.dart';
@@ -15,7 +16,7 @@ import 'package:app/services/navigation_service.dart';
 
 final double SECTION_TITLE_BOTTOM_PADDING = 8;
 final double BETWEEN_SECTION_PADDING = 12;
-  
+
 final NavigationService _navigationService = locator<NavigationService>();
 
 class OraganisationInfoPage extends StatelessWidget {
@@ -23,7 +24,7 @@ class OraganisationInfoPage extends StatelessWidget {
   OraganisationInfoPage(
     this.organisation,
   );
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,8 +47,8 @@ class OraganisationInfoPage extends StatelessWidget {
                 width: double.infinity,
                 child: Padding(
                   padding: EdgeInsets.all(10),
-                  child:
-                      Center(child: Image.network(organisation.getLogoLink())),
+                  child: Center(
+                      child: CustomNetworkImage(organisation.getLogoLink())),
                 ),
               ),
               SizedBox(height: 10),

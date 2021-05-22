@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:app/assets/components/textButton.dart';
 
-AppBar CustomAppBar({
+AppBar customAppBar({
   text,
   @required context,
   String backButtonText,
@@ -40,7 +40,7 @@ AppBar CustomAppBar({
           ),
     title: Row(
       mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Expanded(
@@ -62,24 +62,8 @@ AppBar CustomAppBar({
                   ),
           ),
         ),
-        Expanded(
-          child: Container(
-              //flex: 1,
-              child: actions == null || actions.length == 0
-                  ? Container()
-                  : Align(
-                      alignment: Alignment.centerRight,
-                      child: actions.length == 1
-                          ? actions[0]
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: actions,
-                            ),
-                    )),
-        ),
       ],
     ),
-    //actions: actions,
+    actions: actions,
   );
 }

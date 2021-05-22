@@ -16,11 +16,12 @@ class AlertResponse {
 
 class DialogButton {
   String text;
-  dynamic response; // If the button is clicked what should the dialog service return 
+  dynamic
+      response; // If the button is clicked what should the dialog service return
   DarkButtonStyle style;
   //Function onClick; // This might be handy in the future
   bool closeOnClick;
-  
+
   DialogButton({
     this.text,
     this.response,
@@ -29,7 +30,6 @@ class DialogButton {
     //this.onClick,
   });
 }
-
 
 class DialogService {
   Function(AlertRequest) _showDialogListener;
@@ -45,10 +45,11 @@ class DialogService {
     List buttons,
   }) {
     _dialogCompleter = Completer<AlertResponse>();
-    _showDialogListener(AlertRequest(title: title, description: description, buttons: buttons));
+    _showDialogListener(
+        AlertRequest(title: title, description: description, buttons: buttons));
     return _dialogCompleter.future;
   }
-  
+
   void dialogComplete(AlertResponse response) {
     if (_dialogCompleter != null) {
       _dialogCompleter.complete(response);

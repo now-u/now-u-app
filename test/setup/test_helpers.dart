@@ -3,6 +3,7 @@ import 'package:mockito/mockito.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/navigation_service.dart';
 import 'package:app/services/dialog_service.dart';
+
 import 'package:app/services/analytics.dart';
 import 'package:app/services/auth.dart';
 import 'package:app/services/google_location_search_service.dart';
@@ -18,7 +19,7 @@ NavigationService getAndRegisterMockNavigationService() {
   locator.registerSingleton<NavigationService>(service);
   return service;
 }
-// 
+ 
 class MockAuthenticationService extends Mock implements AuthenticationService {}
 AuthenticationService getAndRegisterMockAuthentiactionService() {
    _removeRegistrationIfExists<AuthenticationService>();
@@ -56,9 +57,3 @@ void _removeRegistrationIfExists<T>() {
     locator.unregister<T>();
   }
 }
-
-// void setupTestLocator() {
-//   print("Setting up thing");
-//   setupLocator();
-//   locator.allowReassignment = true;
-// }

@@ -32,6 +32,7 @@ class CustomFloatingActionButton extends StatelessWidget {
           child: _icon,
         ),
         backgroundColor: Theme.of(context).primaryColorDark,
+        onPressed: (() {}),
       ),
     );
   }

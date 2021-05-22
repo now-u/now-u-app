@@ -1,6 +1,7 @@
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/header.dart';
 import 'package:app/assets/components/selectionItem.dart';
+import 'package:app/assets/components/custom_network_image.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,7 +30,8 @@ class PastCampaignActionPage extends StatelessWidget {
                     height: HEADER_HEIGHT,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(campaign.getHeaderImage()),
+                        image: customNetworkImageProvider(
+                            campaign.getHeaderImage()),
                         fit: BoxFit.cover,
                       ),
                     )),

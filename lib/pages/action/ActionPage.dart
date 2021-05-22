@@ -65,7 +65,8 @@ class _ActionPageState extends State<ActionPage> {
                             ),
                             SizedBox(height: 15),
                             Expanded(
-                              child: Image.asset('assets/imgs/graphics/ilstr_empty@3x.png'),
+                              child: Image.asset(
+                                  'assets/imgs/graphics/ilstr_empty@3x.png'),
                             ),
                             Text(
                               "No actions yet",
@@ -74,7 +75,8 @@ class _ActionPageState extends State<ActionPage> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 50),
                               child: Text(
                                 "Join a campaign to see the actions you take to support it!",
                                 style: textStyleFrom(
@@ -88,7 +90,8 @@ class _ActionPageState extends State<ActionPage> {
                                 child: DarkButton(
                                   "See campaigns",
                                   onPressed: () {
-                                    Navigator.of(context).pushNamed(Routes.campaign);
+                                    Navigator.of(context)
+                                        .pushNamed(Routes.campaign);
                                   },
                                 ))
                           ],
@@ -113,22 +116,31 @@ class _ActionPageState extends State<ActionPage> {
                                         key: campaignPageKey,
                                         controller: _controller,
                                         itemCount: model.numberOfCampaignTies(),
-                                        itemBuilder: (BuildContext context, int index) {
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
                                           //this loops over all the actions
-                                          if (index == model.selectedActiveCampaigns.length) {
+                                          if (index ==
+                                              model.selectedActiveCampaigns
+                                                  .length) {
                                             return GestureDetector(
                                                 onTap: () {
-                                                  Navigator.of(context).pushNamed(Routes.campaign);
+                                                  Navigator.of(context)
+                                                      .pushNamed(
+                                                          Routes.campaign);
                                                 },
                                                 child: Padding(
-                                                  padding: EdgeInsets.only(bottom: 10),
+                                                  padding: EdgeInsets.only(
+                                                      bottom: 10),
                                                   child: AddCampaignTile(),
                                                 ));
                                           }
                                           return Padding(
-                                            padding: EdgeInsets.only(bottom: 10),
+                                            padding:
+                                                EdgeInsets.only(bottom: 10),
                                             child: CampaignSelectionTile(
-                                              model.currentUser.filterSelectedCampaigns(model.campaigns)[index],
+                                              model.currentUser
+                                                  .filterSelectedCampaigns(
+                                                      model.campaigns)[index],
                                               height: CAMPAIGN_SELECT_HEIGHT,
                                             ),
                                           );
@@ -156,7 +168,8 @@ class _ActionPageState extends State<ActionPage> {
                                         ? ViewCampaigns()
                                         : ListView(
                                             shrinkWrap: true,
-                                            physics: NeverScrollableScrollPhysics(),
+                                            physics:
+                                                NeverScrollableScrollPhysics(),
                                             children: [
                                               Row(
                                                 children: [
@@ -173,24 +186,36 @@ class _ActionPageState extends State<ActionPage> {
                                                   ActiveDoneSelector(
                                                     "Completed",
                                                     () {
-                                                      model.setSelectedToCompleted();
+                                                      model
+                                                          .setSelectedToCompleted();
                                                     },
-                                                    model.isSelectionCompleted(),
+                                                    model
+                                                        .isSelectionCompleted(),
                                                   ),
                                                 ],
                                               ),
                                               ListView.builder(
                                                   shrinkWrap: true,
-                                                  physics: NeverScrollableScrollPhysics(),
-                                                  itemCount: model.actions.length,
-                                                  itemBuilder: (BuildContext context, int index) {
+                                                  physics:
+                                                      NeverScrollableScrollPhysics(),
+                                                  itemCount:
+                                                      model.actions.length,
+                                                  itemBuilder:
+                                                      (BuildContext context,
+                                                          int index) {
                                                     return Padding(
-                                                        padding: EdgeInsets.symmetric(horizontal: 0),
-                                                        child: ActionSelectionItem(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal: 0),
+                                                        child:
+                                                            ActionSelectionItem(
                                                           outerHpadding: 10,
-                                                          campaign: model.campaign,
-                                                          action: model.actions[index],
-                                                          backgroundColor: Colors.white,
+                                                          campaign:
+                                                              model.campaign,
+                                                          action: model
+                                                              .actions[index],
+                                                          backgroundColor:
+                                                              Colors.white,
                                                         ));
                                                   }),
                                             ],
@@ -202,7 +227,8 @@ class _ActionPageState extends State<ActionPage> {
             }));
   }
 
-  _navigateAndDisplaySelection(BuildContext context, ActionViewModel model) async {
+  _navigateAndDisplaySelection(
+      BuildContext context, ActionViewModel model) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
     final result = await Navigator.push(
@@ -308,7 +334,8 @@ class _SortScreenState extends State<SortScreen> {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: timeBrackets.length,
-                separatorBuilder: (BuildContext context, int index) => ListDividor(),
+                separatorBuilder: (BuildContext context, int index) =>
+                    ListDividor(),
                 itemBuilder: (BuildContext context, int index) {
                   return CheckboxListTile(
                       dense: true,
@@ -318,7 +345,8 @@ class _SortScreenState extends State<SortScreen> {
                       value: selections['times'][timeBrackets[index]['text']],
                       onChanged: (bool value) {
                         setState(() {
-                          selections['times'][timeBrackets[index]['text']] = value;
+                          selections['times'][timeBrackets[index]['text']] =
+                              value;
                         });
                       });
                   //return Text(timeBrackets[index]['text']);
@@ -331,14 +359,18 @@ class _SortScreenState extends State<SortScreen> {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: CampaignActionSuperType.values.length,
-                separatorBuilder: (BuildContext context, int index) => ListDividor(),
+                separatorBuilder: (BuildContext context, int index) =>
+                    ListDividor(),
                 itemBuilder: (BuildContext context, int index) {
                   return CheckboxSelectionItem(
-                      title: campaignActionSuperTypeData[CampaignActionSuperType.values[index]]['name'],
-                      value: selections['categories'][CampaignActionSuperType.values[index]],
+                      title: campaignActionSuperTypeData[
+                          CampaignActionSuperType.values[index]]['name'],
+                      value: selections['categories']
+                          [CampaignActionSuperType.values[index]],
                       onChanged: (bool value) {
                         setState(() {
-                          selections['categories'][CampaignActionSuperType.values[index]] = value;
+                          selections['categories']
+                              [CampaignActionSuperType.values[index]] = value;
                         });
                       });
                   //return Text(timeBrackets[index]['text']);
@@ -386,7 +418,10 @@ class _SortScreenState extends State<SortScreen> {
               child: Center(
                   child: Text(
                 "Apply",
-                style: textStyleFrom(Theme.of(context).primaryTextTheme.button, fontWeight: FontWeight.w600, fontSize: 17, color: Colors.white),
+                style: textStyleFrom(Theme.of(context).primaryTextTheme.button,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 17,
+                    color: Colors.white),
               )),
             ),
             onPressed: () {

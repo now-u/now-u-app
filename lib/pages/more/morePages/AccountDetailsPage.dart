@@ -17,7 +17,7 @@ class AccountDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBar(
+      appBar: customAppBar(
         text: "Edit account details",
         context: context,
         backButtonText: "Menu",

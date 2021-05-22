@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:app/models/Organisation.dart';
 
+import 'package:app/assets/components/custom_network_image.dart';
+
 import 'package:app/routes.dart';
 
 class OrganisationTile extends StatelessWidget {
@@ -39,7 +41,7 @@ class OrganisationTile extends StatelessWidget {
                   Expanded(
                       //height: 80, width: 100,
                       //width: 20,
-                      child: Image.network(
+                      child: CustomNetworkImage(
                     organisation.getLogoLink(),
                     fit: BoxFit.contain,
                   )),

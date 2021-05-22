@@ -3,8 +3,8 @@ import 'package:app/assets/StyleFrom.dart';
 
 import 'package:app/assets/components/circularCheckbox.dart';
 
-final double WIDTH = 60;
-final double HEIGHT = 30;
+final double theWidth = 60;
+final double theHeight = 30;
 
 enum CustomFormFieldStyle { Light, Dark }
 
@@ -134,8 +134,8 @@ class _CustomSwitchState extends State<CustomSwitch>
             }
           },
           child: Container(
-            width: WIDTH,
-            height: HEIGHT,
+            width: theWidth,
+            height: theHeight,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20.0),
               color: _circleAnimation.value == Alignment.centerLeft
@@ -149,13 +149,13 @@ class _CustomSwitchState extends State<CustomSwitch>
                 children: <Widget>[
                   _circleAnimation.value == Alignment.centerRight
                       //? _getText(true)
-                      ? SizedBox(width: WIDTH - HEIGHT - 5)
+                      ? SizedBox(width: theWidth - theHeight - 5)
                       : Container(),
                   Align(
                     alignment: _circleAnimation.value,
                     child: Container(
-                      width: HEIGHT - 5,
-                      height: HEIGHT - 5,
+                      width: theHeight - 5,
+                      height: theHeight - 5,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.white,
@@ -164,7 +164,7 @@ class _CustomSwitchState extends State<CustomSwitch>
                   ),
                   _circleAnimation.value == Alignment.centerLeft
                       //? _getText(false)
-                      ? SizedBox(width: WIDTH - HEIGHT - 5)
+                      ? SizedBox(width: theWidth - theHeight - 5)
                       : Container(),
                 ],
               ),
@@ -201,7 +201,7 @@ class CustomCheckboxFormField extends FormField<bool> {
             onSaved: onSaved,
             validator: validator,
             initialValue: initialValue,
-            autovalidate: autovalidate,
+            autovalidateMode: AutovalidateMode.disabled,
             builder: (FormFieldState<bool> state) {
               return Builder(
                   builder: (BuildContext context) => Column(children: [

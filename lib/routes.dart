@@ -256,13 +256,13 @@ Function initRoutes = (RouteSettings settings) {
     // Webview
     case Routes.webview:
       {
-        if (args is WebViewArgumnets) {
+        if (args is WebViewArguments) {
           return customRoute(
               builder: (context) => WebViewPage(args), settings: settings);
         }
         if (args is String) {
           return customRoute(
-              builder: (context) => WebViewPage(WebViewArgumnets(args)),
+              builder: (context) => WebViewPage(WebViewArguments(args)),
               settings: settings);
         }
         return customRoute(

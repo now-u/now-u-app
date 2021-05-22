@@ -184,15 +184,13 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                         Container(
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: Text(
-                              "Enter the email address that you would like to use to access now-u",
-                              textAlign: TextAlign.center,
-                              style: textStyleFrom(
-                                Theme.of(context)
-                                    .primaryTextTheme
-                                    .headline5,
-                                color: Colors.white,
-                              ),
+                            "Enter the email address that you would like to use to access now-u",
+                            textAlign: TextAlign.center,
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.headline5,
+                              color: Colors.white,
                             ),
+                          ),
                         ),
                         SizedBox(height: 25),
                       ],
@@ -231,37 +229,36 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                         SizedBox(height: 20),
                         acceptTandC,
                         newsletterSignup,
-
                         loginButton(),
-
                         SizedBox(height: 10),
-
                         ViewModelBuilder<LoginViewModel>.reactive(
-                          viewModelBuilder: () => LoginViewModel(),
-                          builder: (context, model, child) {
-                            return RichText(
-                              text: TextSpan(children: [
-                                TextSpan(
-                                    text: "View our privacy policy ",
-                                    style: textStyleFrom(
-                                      Theme.of(context).primaryTextTheme.bodyText1,
-                                      color: Colors.white,
-                                    )),
-                                TextSpan(
-                                    text: "here",
-                                    style: textStyleFrom(
-                                      Theme.of(context).primaryTextTheme.bodyText1,
-                                      color: Theme.of(context).buttonColor,
-                                    ),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        model.launchTandCs();
-                                      }),
-                              ]),
-                            );
-                          }
-                        ),
-
+                            viewModelBuilder: () => LoginViewModel(),
+                            builder: (context, model, child) {
+                              return RichText(
+                                text: TextSpan(children: [
+                                  TextSpan(
+                                      text: "View our privacy policy ",
+                                      style: textStyleFrom(
+                                        Theme.of(context)
+                                            .primaryTextTheme
+                                            .bodyText1,
+                                        color: Colors.white,
+                                      )),
+                                  TextSpan(
+                                      text: "here",
+                                      style: textStyleFrom(
+                                        Theme.of(context)
+                                            .primaryTextTheme
+                                            .bodyText1,
+                                        color: Theme.of(context).buttonColor,
+                                      ),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {
+                                          model.launchTandCs();
+                                        }),
+                                ]),
+                              );
+                            }),
                         SizedBox(height: 10),
                       ],
                     ),
@@ -281,11 +278,11 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
           body: NotificationListener(
               onNotification: (OverscrollIndicatorNotification overscroll) {
                 overscroll.disallowGlow();
+                return null;
               },
               child: ListView(children: [
                 loginForm(),
               ])),
         ));
   }
-
 }

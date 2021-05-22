@@ -52,7 +52,8 @@ class CustomTextButton extends StatelessWidget {
                   fontSize: fontSize ?? 16,
                 ),
                 textAlign: TextAlign.center,
-              )),
+              ),
+              ),
           this.iconRight != null
               ? Icon(
                   Icons.chevron_right,

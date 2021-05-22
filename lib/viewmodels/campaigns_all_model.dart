@@ -27,6 +27,7 @@ class CampaignsAllViewModel extends BaseModel {
     setBusy(false);
     notifyListeners();
   }
+
   /// fetches campaigns even without the user being logged in
   ///
   /// It basically does two things

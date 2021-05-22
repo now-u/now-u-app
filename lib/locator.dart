@@ -22,9 +22,6 @@ import 'package:get_it/get_it.dart';
 GetIt locator = GetIt.instance;
 
 void setupLocator() {
-  locator.registerLazySingleton(() => AnalyticsService());
-  locator.registerLazySingleton(() => DynamicLinkService());
-  locator.registerLazySingleton(() => PushNotificationService());
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => CampaignService());
   locator.registerLazySingleton(() => SecureStorageService());
@@ -36,6 +33,12 @@ void setupLocator() {
   locator.registerLazySingleton(() => DeviceInfoService());
   locator.registerLazySingleton(() => DialogService());
   locator.registerLazySingleton(() => GoogleLocationSearchService());
-  locator.registerLazySingleton(() => RemoteConfigService());
   locator.registerLazySingleton(() => OrganisationService());
+  locator.registerLazySingleton(() => AnalyticsService());
+}
+
+void registerFirebaseServicesToLocator() {
+  locator.registerLazySingleton(() => PushNotificationService());
+  locator.registerLazySingleton(() => DynamicLinkService());
+  locator.registerLazySingleton(() => RemoteConfigService());
 }

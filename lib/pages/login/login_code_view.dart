@@ -8,7 +8,6 @@ import 'package:app/viewmodels/login_model.dart';
 
 import 'package:stacked/stacked.dart';
 
-
 class LoginCodePage extends StatefulWidget {
   final String email;
   LoginCodePage(this.email);
@@ -16,7 +15,8 @@ class LoginCodePage extends StatefulWidget {
   LoginCodePageState createState() => new LoginCodePageState();
 }
 
-class LoginCodePageState extends State<LoginCodePage> with WidgetsBindingObserver {
+class LoginCodePageState extends State<LoginCodePage>
+    with WidgetsBindingObserver {
   String _token;
 
   final _formKey = GlobalKey<FormState>();
@@ -89,16 +89,17 @@ class LoginCodePageState extends State<LoginCodePage> with WidgetsBindingObserve
                     SizedBox(height: 35),
 
                     Center(
-                      child: ClipRRect(
-                        child: Container(
-                          width: 65,
-                          child: Image.asset('assets/imgs/logo.png'),
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(3)),
-                      )
-                    ),
+                        child: ClipRRect(
+                      child: Container(
+                        width: 65,
+                        child: Image.asset('assets/imgs/logo.png'),
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(3)),
+                    )),
 
-                    SizedBox(height: 35,),
+                    SizedBox(
+                      height: 35,
+                    ),
                     Text(
                       "Type in your 6 digit code from the email to log into now-u",
                       style: textStyleFrom(
@@ -107,7 +108,9 @@ class LoginCodePageState extends State<LoginCodePage> with WidgetsBindingObserve
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 35,),
+                    SizedBox(
+                      height: 35,
+                    ),
                     Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -126,31 +129,31 @@ class LoginCodePageState extends State<LoginCodePage> with WidgetsBindingObserve
                         SizedBox(height: 8),
                         token,
                         loginButton(),
-
                       ],
                     ),
-                    SizedBox(height: 20,)
-
+                    SizedBox(
+                      height: 20,
+                    )
 
                     // Uncomment to readd Skip button
                     //skipButton(),
                   ],
-                  ),
-                  )));
+                ),
+              )));
     }
 
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-            backgroundColor: Theme.of(context).primaryColorDark,
-            body: NotificationListener(
-                onNotification: (OverscrollIndicatorNotification overscroll) {
-                  overscroll.disallowGlow();
+          backgroundColor: Theme.of(context).primaryColorDark,
+          body: NotificationListener(
+              onNotification: (OverscrollIndicatorNotification overscroll) {
+                overscroll.disallowGlow();
+                return null;
               },
               child: ListView(children: [
                 loginForm(),
               ])),
         ));
-
-    }
+  }
 }

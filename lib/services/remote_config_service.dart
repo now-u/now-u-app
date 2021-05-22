@@ -8,13 +8,12 @@ class RemoteConfigService {
   RemoteConfig remoteConfig;
 
   Future init() async {
-    remoteConfig = await RemoteConfig.instance;
-    await remoteConfig.fetch(expiration: Duration(seconds: 1));
-    await remoteConfig.activateFetched();
+    remoteConfig = RemoteConfig.instance;
+    await remoteConfig.fetch();
+    await remoteConfig.activate();
   }
 
   getValue(String key) {
     return remoteConfig.getValue(key).asString();
   }
-
 }

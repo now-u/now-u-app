@@ -10,7 +10,7 @@ class PartnersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: customAppBar(
         text: "Partners",
         context: context,
         backButtonText: "Menu",

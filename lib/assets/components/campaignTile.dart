@@ -6,6 +6,7 @@ import 'package:app/assets/components/joinedIndicator.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/darkButton.dart';
+import 'package:app/assets/components/custom_network_image.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/routes.dart';
 
@@ -21,16 +22,24 @@ class Tile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(left: hPadding ?? 15, right: hPadding ?? 15, top: 16, bottom: 8),
+        padding: EdgeInsets.only(
+            left: hPadding ?? 15, right: hPadding ?? 15, top: 16, bottom: 8),
         child: Container(
           decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(borderRadius ?? 20)),
-              boxShadow: [BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.16), offset: Offset(0, 8), blurRadius: 6)]),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(borderRadius ?? 20)),
+              boxShadow: [
+                BoxShadow(
+                    color: Color.fromRGBO(0, 0, 0, 0.16),
+                    offset: Offset(0, 8),
+                    blurRadius: 6)
+              ]),
           child: GestureDetector(
             onTap: onTap,
             child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(borderRadius ?? 20)),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(borderRadius ?? 20)),
               child: child,
             ),
           ),
@@ -57,7 +66,8 @@ class _CampaignTileState extends State<CampaignTile> {
   @override
   Widget build(BuildContext context) {
     GestureTapCallback _onTapMoreInfo = () {
-      Navigator.of(context).pushNamed(Routes.campaignInfo, arguments: widget.campaign);
+      Navigator.of(context)
+          .pushNamed(Routes.campaignInfo, arguments: widget.campaign);
     };
 
     var hPadding = widget.hPadding ?? 15.0;
@@ -71,40 +81,46 @@ class _CampaignTileState extends State<CampaignTile> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           // Image
-          Stack(children: <Widget>[
-            Container(
-              height: 120,
-              child: Padding(
-                padding: EdgeInsets.all(0),
-                child: Container(
-                    decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(widget.campaign.getHeaderImage()),
-                    fit: BoxFit.cover,
-                  ),
-                  //borderRadius: BorderRadius.only(topLeft: Radius.circular(10))
-                )),
+          Expanded(
+            child: Stack(
+              children: <Widget>[
+              Container(
+                height: MediaQuery.of(context).size.height * 0.3,
+                child: Padding(
+                  padding: EdgeInsets.all(0),
+                  child: Container(
+                      decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: customNetworkImageProvider(
+                          widget.campaign.getHeaderImage()),
+                      fit: BoxFit.cover,
+                    ),
+                    //borderRadius: BorderRadius.only(topLeft: Radius.circular(10))
+                  )),
+                ),
               ),
-            ),
-            ViewModelBuilder<BaseModel>.reactive(
-                viewModelBuilder: () => BaseModel(),
-                builder: (context, model, child) {
-                  bool selected = model.currentUser.getSelectedCampaigns().contains(widget.campaign.getId());
-                  if (selected) {
-                    return Padding(
-                        padding: EdgeInsets.all(12),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: JoinedIndicator(),
-                        ));
-                  } else {
-                    return Container();
-                  }
-                })
-          ]),
+              ViewModelBuilder<BaseModel>.reactive(
+                  viewModelBuilder: () => BaseModel(),
+                  builder: (context, model, child) {
+                    bool selected = model.currentUser
+                        .getSelectedCampaigns()
+                        .contains(widget.campaign.getId());
+                    if (selected) {
+                      return Padding(
+                          padding: EdgeInsets.all(12),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: JoinedIndicator(),
+                          ));
+                    } else {
+                      return Container();
+                    }
+                  })
+            ]),
+          ),
           SizedBox(height: 10),
           // Title
           Padding(
@@ -119,11 +135,15 @@ class _CampaignTileState extends State<CampaignTile> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 5, bottom: 10, left: hPadding, right: hPadding),
+            padding: EdgeInsets.only(
+                top: 5, bottom: 10, left: hPadding, right: hPadding),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[NumberOfCampaignersIndicator(widget.campaign.getNumberOfCampaigners())],
+              children: <Widget>[
+                NumberOfCampaignersIndicator(
+                    widget.campaign.getNumberOfCampaigners())
+              ],
             ),
           ),
         ],
@@ -158,7 +178,8 @@ class CampaignTileWithJoinButtons extends StatelessWidget {
                 height: 100,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage(campaign.getHeaderImage()),
+                    image:
+                        customNetworkImageProvider(campaign.getHeaderImage()),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -175,7 +196,8 @@ class CampaignTileWithJoinButtons extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  NumberOfCampaignersIndicator(campaign.getNumberOfCampaigners()),
+                  NumberOfCampaignersIndicator(
+                      campaign.getNumberOfCampaigners()),
                 ]),
               ),
               Container(
@@ -271,7 +293,8 @@ class CampaignSelectionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(Routes.campaignInfo, arguments: campaign.getId());
+          Navigator.of(context)
+              .pushNamed(Routes.campaignInfo, arguments: campaign.getId());
         },
         child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
@@ -287,7 +310,8 @@ class CampaignSelectionTile extends StatelessWidget {
                           height: height ?? defaultHeight,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: NetworkImage(campaign.getHeaderImage()),
+                              image: customNetworkImageProvider(
+                                  campaign.getHeaderImage()),
                               fit: BoxFit.cover,
                             ),
                           )),

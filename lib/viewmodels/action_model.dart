@@ -42,12 +42,10 @@ class ActionViewModel extends BaseCampaignViewModel {
   int numberOfCampaignTies() {
     if (selectedCampaigns.length == campaigns.length) {
       return selectedCampaigns.length;
-    }
-    else {
+    } else {
       return selectedActiveCampaigns.length + 1;
     }
   }
-
 
   set campaignIndex(int index) {
     if (index == currentUser.getSelectedCampaigns().length) {
@@ -75,8 +73,7 @@ class ActionViewModel extends BaseCampaignViewModel {
     print("Calling get actions");
     if (campaign == null) {
       _actions = [];
-    }
-    else {
+    } else {
       List<CampaignAction> tmpActions = [];
       //tmpActions.addAll(campaign.getActions());
       bool includeCompleted = selections['extras']['completed'];
