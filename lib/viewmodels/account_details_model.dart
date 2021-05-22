@@ -64,9 +64,10 @@ class AccountDetailsViewModel extends BaseModel {
       notifyListeners();
     } else {
       _dialogService.showDialog(
-          title: "Error",
-          description:
-              "Sorry there has been an error whilst updating your details.",);
+        title: "Error",
+        description:
+            "Sorry there has been an error whilst updating your details.",
+      );
       setBusy(false);
       notifyListeners();
     }
@@ -78,13 +79,13 @@ class AccountDetailsViewModel extends BaseModel {
     String error = await _authenticationService.deleteUserAccount();
 
     if (error == null) {
-        _dialogService.showDialog(
-              title: "All done!",
-              description: "Your account has now been deleted.",);
-          await _analyticsService.logUserAccountDeleted();
-          logout();
-    } 
-    else {
+      _dialogService.showDialog(
+        title: "All done!",
+        description: "Your account has now been deleted.",
+      );
+      await _analyticsService.logUserAccountDeleted();
+      logout();
+    } else {
       switch (error) {
         case AuthError.request:
           {
@@ -106,8 +107,7 @@ class AccountDetailsViewModel extends BaseModel {
           {
             _dialogService.showDialog(
                 title: "Error",
-                description:
-                    "Sorry, something went wrong!\nPlease try again.");
+                description: "Sorry, something went wrong!\nPlease try again.");
             break;
           }
       }

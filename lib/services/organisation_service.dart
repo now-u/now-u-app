@@ -3,9 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class OrganisationService {
-  
   String domainPrefix = "https://api.now-u.com/api/v1/";
- 
+
   // This gets all the partners (for now this is just all the organisations)
   Future<List<Organisation>> getPartners() async {
     try {
@@ -19,23 +18,23 @@ class OrganisationService {
         return c;
       }
       return [];
-    } catch(e) {
+    } catch (e) {
       return [];
     }
   }
-  
+
   Future<Organisation> getOrganisation(int id) async {
     try {
       print("Getting org");
       var response = await http.get(domainPrefix + "organisations/$id");
       if (response.statusCode == 200) {
-        Organisation org = Organisation.fromJson(json.decode(response.body)['data']);
+        Organisation org =
+            Organisation.fromJson(json.decode(response.body)['data']);
         return org;
       }
       return null;
-    } catch(e) {
+    } catch (e) {
       return null;
     }
   }
-
 }

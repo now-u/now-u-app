@@ -77,7 +77,7 @@ class _AppState extends State<App> {
   Widget page;
   @override
   void initState() {
-    // Initalise Fireabse app 
+    // Initalise Fireabse app
     setupLocator();
     super.initState();
   }

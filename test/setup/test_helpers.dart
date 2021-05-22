@@ -10,25 +10,28 @@ import 'package:app/services/google_location_search_service.dart';
 
 class MockNavigationService extends Mock implements NavigationService {
   Future<dynamic> navigateTo(String route, {arguments}) async {
-    return route; 
+    return route;
   }
 }
+
 NavigationService getAndRegisterMockNavigationService() {
   _removeRegistrationIfExists<NavigationService>();
   var service = MockNavigationService();
   locator.registerSingleton<NavigationService>(service);
   return service;
 }
- 
+
 class MockAuthenticationService extends Mock implements AuthenticationService {}
+
 AuthenticationService getAndRegisterMockAuthentiactionService() {
-   _removeRegistrationIfExists<AuthenticationService>();
+  _removeRegistrationIfExists<AuthenticationService>();
   var service = MockAuthenticationService();
   locator.registerSingleton<AuthenticationService>(service);
   return service;
 }
 
 class MockDialogService extends Mock implements DialogService {}
+
 DialogService getAndRegisterMockDialogService() {
   _removeRegistrationIfExists<DialogService>();
   var service = MockDialogService();
@@ -36,7 +39,9 @@ DialogService getAndRegisterMockDialogService() {
   return service;
 }
 
-class MockGoogleLocationSearchService extends Mock implements GoogleLocationSearchService {}
+class MockGoogleLocationSearchService extends Mock
+    implements GoogleLocationSearchService {}
+
 GoogleLocationSearchService getAndRegisterMockGoogleLocationSearchService() {
   _removeRegistrationIfExists<GoogleLocationSearchService>();
   var service = MockGoogleLocationSearchService();
@@ -45,6 +50,7 @@ GoogleLocationSearchService getAndRegisterMockGoogleLocationSearchService() {
 }
 
 class MockAnalyticsService extends Mock implements AnalyticsService {}
+
 AnalyticsService getAndRegisterMockAnalyticsService() {
   _removeRegistrationIfExists<AnalyticsService>();
   var service = MockAnalyticsService();

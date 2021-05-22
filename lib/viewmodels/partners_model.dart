@@ -6,7 +6,8 @@ import 'package:app/services/organisation_service.dart';
 import 'package:app/models/Organisation.dart';
 
 class PartnersViewModel extends BaseModel {
-  final OrganisationService _organisationService = locator<OrganisationService>();
+  final OrganisationService _organisationService =
+      locator<OrganisationService>();
   List<Organisation> _parterns = [];
   List<Organisation> get parterns => _parterns;
 

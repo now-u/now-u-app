@@ -11,15 +11,16 @@ import 'package:app/services/remote_config_service.dart';
 // https://github.com/yshean/google_places_flutter/blob/master/lib/place_service.dart
 
 class GoogleLocationSearchService {
-  
-  final RemoteConfigService _remoteConfigService = locator<RemoteConfigService>();
+  final RemoteConfigService _remoteConfigService =
+      locator<RemoteConfigService>();
 
   final client = Client();
   String _sessionToken = Uuid().v4();
   String get sessionToken => _sessionToken;
 
   Future<List<Suggestion>> fetchSuggestions(String input, String lang) async {
-    String _apiKey = _remoteConfigService.getValue(RemoteConfigKey.googlePlaceAPIKey);
+    String _apiKey =
+        _remoteConfigService.getValue(RemoteConfigKey.googlePlaceAPIKey);
 
     final request =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&language=$lang&key=$_apiKey&sessiontoken=$_sessionToken';
@@ -51,9 +52,9 @@ class GoogleLocationSearchService {
     }
   }
 
-
   Future<Place> getPlaceDetailFromId(String placeId) async {
-    String _apiKey = _remoteConfigService.getValue(RemoteConfigKey.googlePlaceAPIKey);
+    String _apiKey =
+        _remoteConfigService.getValue(RemoteConfigKey.googlePlaceAPIKey);
 
     final request =
         'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=address_component&key=$_apiKey&sessiontoken=$_sessionToken';
@@ -88,7 +89,7 @@ class GoogleLocationSearchService {
       throw Exception('Failed to fetch suggestion');
     }
   }
-} 
+}
 
 class Place {
   String streetNumber;
@@ -120,5 +121,3 @@ class Suggestion {
     return 'Suggestion(description: $description, placeId: $placeId)';
   }
 }
-
-

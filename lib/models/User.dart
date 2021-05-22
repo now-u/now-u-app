@@ -52,26 +52,26 @@ class User {
 
   String token;
 
-  User(
-      {id,
-      token,
-      fullName,
-      email,
-      dateOfBirth,
-      location,
-      monthlyDonationLimit,
-      homeOwner,
-      selectedCampaigns,
-      completedCampaigns,
-      completedActions,
-      rejectedActions,
-      starredActions,
-      completedRewards,
-      completedActionsType,
-      completedLearningResources,
-      points,
-      organisation,
-    }) {
+  User({
+    id,
+    token,
+    fullName,
+    email,
+    dateOfBirth,
+    location,
+    monthlyDonationLimit,
+    homeOwner,
+    selectedCampaigns,
+    completedCampaigns,
+    completedActions,
+    rejectedActions,
+    starredActions,
+    completedRewards,
+    completedActionsType,
+    completedLearningResources,
+    points,
+    organisation,
+  }) {
     this.id = id;
     this.fullName = fullName;
     this.email = email;
@@ -215,7 +215,9 @@ class User {
 
     points = json['points'] ?? 0;
     token = json['token'];
-    _organisation = json['organisation'] == null ? null : Organisation.fromJson(json['organisation']);
+    _organisation = json['organisation'] == null
+        ? null
+        : Organisation.fromJson(json['organisation']);
     print("Got new user");
   }
   Map toJson() => {
@@ -364,7 +366,7 @@ class User {
   int getPoints() {
     return points;
   }
-  
+
   String getToken() {
     return token;
   }
@@ -412,7 +414,7 @@ class User {
   void setCompletedActions(List<int> actions) {
     this.completedActions = actions;
   }
-  
+
   void setToken(String token) {
     this.token = token;
   }

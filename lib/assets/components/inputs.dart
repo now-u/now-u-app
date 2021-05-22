@@ -19,7 +19,7 @@ class CustomTextFormField extends StatelessWidget {
   final String hintText;
   final String initialValue;
   final TextCapitalization textCapitalization;
-  final TextEditingController controller; 
+  final TextEditingController controller;
 
   CustomTextFormField({
     this.autofocus,
@@ -47,7 +47,8 @@ class CustomTextFormField extends StatelessWidget {
       onChanged: onChanged,
       style: textStyleFrom(
         Theme.of(context).primaryTextTheme.headline5,
-        color: style == CustomFormFieldStyle.Light ? Colors.black : Colors.white,
+        color:
+            style == CustomFormFieldStyle.Light ? Colors.black : Colors.white,
       ),
       textCapitalization: textCapitalization ?? TextCapitalization.none,
       decoration: InputDecoration(
