@@ -11,6 +11,9 @@ import 'package:app/services/shared_preferences_service.dart';
 import 'package:app/services/internal_notification_service.dart';
 import 'package:app/services/device_info_service.dart';
 import 'package:app/services/dialog_service.dart';
+import 'package:app/services/google_location_search_service.dart';
+import 'package:app/services/remote_config_service.dart';
+import 'package:app/services/organisation_service.dart';
 
 import 'package:get_it/get_it.dart';
 
@@ -19,9 +22,6 @@ import 'package:get_it/get_it.dart';
 GetIt locator = GetIt.instance;
 
 void setupLocator() {
-  locator.registerLazySingleton(() => Analytics());
-  locator.registerLazySingleton(() => DynamicLinkService());
-  locator.registerLazySingleton(() => PushNotificationService());
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => CampaignService());
   locator.registerLazySingleton(() => SecureStorageService());
@@ -32,4 +32,13 @@ void setupLocator() {
   locator.registerLazySingleton(() => InternalNotificationService());
   locator.registerLazySingleton(() => DeviceInfoService());
   locator.registerLazySingleton(() => DialogService());
+  locator.registerLazySingleton(() => GoogleLocationSearchService());
+  locator.registerLazySingleton(() => OrganisationService());
+  locator.registerLazySingleton(() => AnalyticsService());
+}
+
+void registerFirebaseServicesToLocator() {
+  locator.registerLazySingleton(() => PushNotificationService());
+  locator.registerLazySingleton(() => DynamicLinkService());
+  locator.registerLazySingleton(() => RemoteConfigService());
 }

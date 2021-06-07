@@ -77,6 +77,7 @@ class _AppState extends State<App> {
   Widget page;
   @override
   void initState() {
+    // Initalise Fireabse app
     setupLocator();
     super.initState();
   }
@@ -87,7 +88,7 @@ class _AppState extends State<App> {
       title: 'Flutter Demo',
       navigatorKey: locator<NavigationService>().navigatorKey,
       navigatorObservers: [
-        locator<Analytics>().getAnalyticsObserver(),
+        locator<AnalyticsService>().getAnalyticsObserver(),
       ],
       builder: (context, widget) => Navigator(
         onGenerateRoute: (settings) => MaterialPageRoute(

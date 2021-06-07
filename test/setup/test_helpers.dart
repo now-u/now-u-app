@@ -1,66 +1,60 @@
-import 'package:flutter/services.dart';
 import 'package:mockito/mockito.dart';
 
 import 'package:app/locator.dart';
 import 'package:app/services/navigation_service.dart';
 import 'package:app/services/dialog_service.dart';
+
+import 'package:app/services/analytics.dart';
 import 'package:app/services/auth.dart';
+import 'package:app/services/google_location_search_service.dart';
 
-class MockNavigationService extends Mock implements NavigationService {}
-
-class FakeNavigationService extends Fake with NavigationService {
-  @override
-  Future<dynamic> navigateTo(String routeName, {arguments}) {
-    return Future.value(routeName);
+class MockNavigationService extends Mock implements NavigationService {
+  Future<dynamic> navigateTo(String route, {arguments}) async {
+    return route;
   }
 }
 
-NavigationService setupMockNavigationService({bool isFake}) {
+NavigationService getAndRegisterMockNavigationService() {
   _removeRegistrationIfExists<NavigationService>();
-  if (isFake) {
-    var service = FakeNavigationService();
-    locator.registerSingleton<NavigationService>(service);
-    return service;
-  } else {
-    var service = MockNavigationService();
-    locator.registerSingleton<NavigationService>(service);
-    return service;
-  }
+  var service = MockNavigationService();
+  locator.registerSingleton<NavigationService>(service);
+  return service;
 }
 
 class MockAuthenticationService extends Mock implements AuthenticationService {}
 
-AuthenticationService setupMockAuthenticationService() {
+AuthenticationService getAndRegisterMockAuthentiactionService() {
   _removeRegistrationIfExists<AuthenticationService>();
   var service = MockAuthenticationService();
   locator.registerSingleton<AuthenticationService>(service);
   return service;
 }
 
-class FakeDialogService extends Fake implements DialogService {
-  @override
-  Future showDialog({
-    String title,
-    String description,
-    List buttons,
-  }) {
-    return Future.value(AlertResponse(response: true));
-  }
-}
+class MockDialogService extends Mock implements DialogService {}
 
-DialogService setupFakeDialogService() {
+DialogService getAndRegisterMockDialogService() {
   _removeRegistrationIfExists<DialogService>();
-  var service = FakeDialogService();
+  var service = MockDialogService();
   locator.registerSingleton<DialogService>(service);
   return service;
 }
 
-class MockDialogService extends Mock implements DialogService {}
+class MockGoogleLocationSearchService extends Mock
+    implements GoogleLocationSearchService {}
 
-DialogService setupMockDialogService() {
-  _removeRegistrationIfExists<DialogService>();
-  var service = MockDialogService();
-  locator.registerSingleton<DialogService>(service);
+GoogleLocationSearchService getAndRegisterMockGoogleLocationSearchService() {
+  _removeRegistrationIfExists<GoogleLocationSearchService>();
+  var service = MockGoogleLocationSearchService();
+  locator.registerSingleton<GoogleLocationSearchService>(service);
+  return service;
+}
+
+class MockAnalyticsService extends Mock implements AnalyticsService {}
+
+AnalyticsService getAndRegisterMockAnalyticsService() {
+  _removeRegistrationIfExists<AnalyticsService>();
+  var service = MockAnalyticsService();
+  locator.registerSingleton<AnalyticsService>(service);
   return service;
 }
 
@@ -68,15 +62,4 @@ void _removeRegistrationIfExists<T>() {
   if (locator.isRegistered<T>()) {
     locator.unregister<T>();
   }
-}
-
-void _resetRegistractionIfExists<T>() {
-  if (locator.isRegistered<T>()) {
-    locator.resetLazySingleton<T>();
-  }
-}
-
-void setupTestLocator() {
-  setupLocator();
-  locator.allowReassignment = true;
 }

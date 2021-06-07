@@ -52,6 +52,9 @@ The above is taken from: https://keepachangelog.com/en/1.0.0/
 
 ### Version 1.2.0
 - #127 [feature]  Login popups added which notify users of error 
+- #129 [feature]  The number of actions completed by now-u users now shows on
+  each campaign page
+- #131 [fix]      Http links can now be viewed in the internal webview
 - #135 [feature]  Campaign researchers (user_role_id=3) can now see future and
   disabled campaigns 
 - #136 [feature]  Links can now be user to link to different pages of the app

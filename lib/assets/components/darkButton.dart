@@ -46,8 +46,7 @@ class DarkButton extends StatelessWidget {
   final DarkButtonStyle style;
 
   DarkButton(this.text,
-      { 
-      this.size = DarkButtonSize.Medium,
+      {this.size = DarkButtonSize.Medium,
       @required this.onPressed,
       this.rightIcon,
       this.leftIcon,

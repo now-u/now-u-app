@@ -23,6 +23,7 @@ import 'package:app/pages/learning/LearningCentreAllPage.dart';
 import 'package:app/pages/learning/LearningCentrePage.dart';
 import 'package:app/pages/learning/LearningTopicPage.dart';
 import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
+import 'package:app/pages/more/morePages/AccountDetailsPage.dart';
 import 'package:app/pages/campaign/CampaignInfo/CampaignDetails.dart';
 import 'package:app/pages/campaign/AllCampaignsPage.dart';
 import 'package:app/pages/campaign/PastCampaignActionPage.dart';
@@ -49,6 +50,7 @@ class Routes {
   static const pastCampaignActionPage = "pastCampaignActionPage";
 
   // Other
+  static const accountDetails = "accountDetails";
   static const profile = "profile";
   static const faq = "faq";
   static const parteners = "parteners";
@@ -114,6 +116,10 @@ Function initRoutes = (RouteSettings settings) {
       {
         return customRoute(
             builder: (context) => PartnersPage(), settings: settings);
+      }
+    case Routes.accountDetails:
+      {
+        return customRoute(builder: (context) => AccountDetailsPage());
       }
 
     // Tab page

@@ -132,9 +132,7 @@ class CampaignInfoBody extends StatelessWidget {
                               SizedBox(
                                 height: 12,
                               ),
-                                 DarkButton(
-                                   "Take action", 
-                                   onPressed: () {
+                              DarkButton("Take action", onPressed: () {
                                 if (_campaign.isPast()) {
                                   Navigator.of(context).pushNamed(
                                       Routes.pastCampaignActionPage,
@@ -142,8 +140,8 @@ class CampaignInfoBody extends StatelessWidget {
                                 } else {
                                   Navigator.of(context)
                                       .pushNamed(Routes.actions);
-                                } 
-                              })  
+                                }
+                              })
                             ],
                           ),
                         )),
@@ -339,9 +337,7 @@ class CampaignInfoBody extends StatelessWidget {
                     "Find out more at:",
                     style: Theme.of(context).primaryTextTheme.bodyText1,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                     children: [
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     CustomTextButton(
                       "sustainabledevelopment.un.org",
                       onClick: () {

@@ -1,0 +1,32 @@
+{
+  "name": "android_intent",
+  "version": "0.0.1",
+  "summary": "Android Intent Plugin for Flutter",
+  "description": "This plugin allows Flutter apps to launch arbitrary intents when the platform is Android.\nIf the plugin is invoked on iOS, it will crash your app.\nDownloaded by pub (not CocoaPods).",
+  "homepage": "https://github.com/flutter/plugins",
+  "license": {
+    "type": "BSD",
+    "file": "../LICENSE"
+  },
+  "authors": {
+    "Flutter Dev Team": "flutter-dev@googlegroups.com"
+  },
+  "source": {
+    "http": "https://github.com/flutter/plugins/tree/master/packages/android_intent"
+  },
+  "documentation_url": "https://pub.dev/packages/android_intent",
+  "source_files": "Classes/**/*",
+  "public_header_files": "Classes/**/*.h",
+  "dependencies": {
+    "Flutter": [
+
+    ]
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "pod_target_xcconfig": {
+    "DEFINES_MODULE": "YES",
+    "VALID_ARCHS[sdk=iphonesimulator*]": "x86_64"
+  }
+}
