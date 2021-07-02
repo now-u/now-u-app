@@ -42,12 +42,9 @@ class LoginCodePageState extends State<LoginCodePage>
     Widget loginButton() {
       Future<bool> validateAndSave(LoginViewModel model) async {
         final FormState form = _formKey.currentState;
-        print("Hello");
         if (form.validate()) {
           form.save();
-          print("Hello 2");
           model.login(email: widget.email, token: _token, isManul: true);
-          print("Hello 4");
           return true;
         }
         return false;
@@ -60,8 +57,6 @@ class LoginCodePageState extends State<LoginCodePage>
             child: DarkButton(
               "Log in",
               onPressed: () {
-                print("Button pressed");
-                print("Hello 3");
                 validateAndSave(model);
               },
             )),

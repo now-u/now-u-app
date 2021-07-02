@@ -5,6 +5,7 @@ import 'package:app/locator.dart';
 import 'package:app/services/auth.dart';
 import 'package:app/services/navigation_service.dart';
 import 'package:app/services/dialog_service.dart';
+import 'package:app/services/facebook_auth.dart';
 
 import 'package:app/pages/login/emailSentPage.dart';
 
@@ -15,6 +16,7 @@ class LoginViewModel extends BaseModel {
       locator<AuthenticationService>();
   final NavigationService _navigationService = locator<NavigationService>();
   final DialogService _dialogService = locator<DialogService>();
+  final SocialAuth _socialAuth = locator<SocialAuth>();
 
   Future email({
     @required String email,
@@ -89,6 +91,10 @@ class LoginViewModel extends BaseModel {
     } else {
       _navigationService.navigateTo(Routes.intro);
     }
+  }
+
+  void facebookLogin() {
+    _socialAuth.login();
   }
 
   void launchTandCs() {

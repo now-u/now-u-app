@@ -152,7 +152,23 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                 print("Button pressed");
                 validateAndSave(model);
               },
-            )),
+            ),
+          ),
+      );
+    }
+    
+    Widget facebookLoginButton() {
+      return ViewModelBuilder<LoginViewModel>.reactive(
+        viewModelBuilder: () => LoginViewModel(),
+        builder: (context, model, child) => Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.0),
+            child: DarkButton(
+              "F",
+              onPressed: () {
+                model.facebookLogin();
+              },
+            ),
+          ),
       );
     }
 
@@ -229,7 +245,10 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                         SizedBox(height: 20),
                         acceptTandC,
                         newsletterSignup,
+
                         loginButton(),
+                        facebookLoginButton(),
+
                         SizedBox(height: 10),
                         ViewModelBuilder<LoginViewModel>.reactive(
                             viewModelBuilder: () => LoginViewModel(),
