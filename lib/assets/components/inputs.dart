@@ -16,6 +16,8 @@ class CustomTextFormField extends StatelessWidget {
   final CustomFormFieldStyle style;
   final String hintText;
   final TextCapitalization textCapitalization;
+  final Color backgroundColor;
+  final Color hintTextColor;
 
   CustomTextFormField({
     @required this.autofocus,
@@ -24,6 +26,8 @@ class CustomTextFormField extends StatelessWidget {
     @required this.onSaved,
     @required this.style,
     @required this.hintText,
+    this.hintTextColor,
+    this.backgroundColor,
     this.textCapitalization,
   });
 
@@ -44,10 +48,10 @@ class CustomTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
         filled: true,
-        fillColor: Color.fromRGBO(221, 221, 221, 0.2),
+        fillColor: this.backgroundColor?? Color.fromRGBO(221, 221, 221, 0.2),
         hintText: hintText,
         hintStyle: TextStyle(
-          color: colorFrom(
+          color: hintTextColor?? colorFrom(
             Theme.of(context).primaryColor,
             opacity: 0.5,
           ),

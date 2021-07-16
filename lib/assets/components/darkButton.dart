@@ -46,8 +46,7 @@ class DarkButton extends StatelessWidget {
   final DarkButtonStyle style;
 
   DarkButton(this.text,
-      { 
-      this.size = DarkButtonSize.Medium,
+      {this.size = DarkButtonSize.Medium,
       @required this.onPressed,
       this.rightIcon,
       this.leftIcon,
@@ -247,6 +246,103 @@ class OutlineButton extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class CustomWidthButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  final String text;
+  final IconData rightIcon;
+  final DarkButtonSize size;
+  final double fontSize;
+  final double buttonWidth;
+  final Color backgroundColor;
+  final Color textColor;
+
+  CustomWidthButton(
+      this.text, {
+        @required this.onPressed,
+        this.rightIcon,
+        @required this.size,
+        @required this.fontSize,
+        @required this.buttonWidth,
+        this.backgroundColor,
+        this.textColor
+      });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: buttonWidth,
+      child: MaterialButton(
+        height: darkButtonStyleStyles[size]['height'],
+        minWidth: buttonWidth,
+        elevation: 0,
+        color: this.backgroundColor ?? Colors.white,
+        disabledColor: colorFrom(
+          Theme.of(context).primaryColor,
+          opacity: 0.5,
+        ),
+        onPressed: onPressed,
+        shape: RoundedRectangleBorder(
+          borderRadius:
+          BorderRadius.circular(darkButtonStyleStyles[size]['borderRadius']),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: darkButtonStyleStyles[size]['vPadding'],
+            horizontal: darkButtonStyleStyles[size]['hPadding'],
+          ),
+          child: Text(
+            text,
+            style: textStyleFrom(
+              Theme.of(context).primaryTextTheme.button,
+              color: textColor ?? Colors.white,
+              fontSize: fontSize ?? darkButtonStyleStyles[size]['fontSize'],
+            ),
+          ),
+        ),
+      )
+    );
+  }
+}
+
+
+class CustomIconButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  final IconData icon;
+  final DarkButtonSize size;
+  final double backgroundColor;
+
+  CustomIconButton({
+    @required this.onPressed,
+    @required this.icon,
+    @required this.size,
+    this.backgroundColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      height: darkButtonStyleStyles[size]['height'],
+      elevation: 0,
+      color: this.backgroundColor ?? Colors.white,
+      disabledColor: colorFrom(
+        Theme.of(context).primaryColor,
+        opacity: 0.5,
+      ),
+      onPressed: onPressed,
+      shape: RoundedRectangleBorder(
+        borderRadius:
+            BorderRadius.circular(darkButtonStyleStyles[size]['borderRadius']),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 15.0),
+      child: Icon(
+        icon,
+        size: 25,
+        color: Theme.of(context).primaryColor,
       ),
     );
   }

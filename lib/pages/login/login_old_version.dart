@@ -3,7 +3,6 @@ import 'package:flutter/gestures.dart';
 import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/inputs.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:app/viewmodels/login_model.dart';
@@ -16,7 +15,6 @@ enum LoginTypes { Login, Signup }
 
 class LoginPageArguments {
   final LoginTypes loginType;
-
   LoginPageArguments({this.loginType});
 }
 
@@ -24,7 +22,6 @@ class LoginPage extends StatefulWidget {
   final LoginPageArguments args;
 
   LoginPage(this.args);
-
   @override
   LoginPageState createState() => new LoginPageState();
 }
@@ -50,8 +47,6 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       style: CustomFormFieldStyle.Dark,
       keyboardType: TextInputType.emailAddress,
       textCapitalization: TextCapitalization.none,
-      backgroundColor: Colors.white,
-      hintTextColor: Colors.grey[400],
       autofocus: false,
       validator: (value) {
         if (value.isEmpty) return "Email cannot be empty";
@@ -74,8 +69,6 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       style: CustomFormFieldStyle.Dark,
       keyboardType: TextInputType.text,
       textCapitalization: TextCapitalization.words,
-      backgroundColor: Colors.white,
-      hintTextColor: Colors.grey[400],
       autofocus: false,
       validator: (value) {
         if (value.isEmpty) return "Name cannot be empty";
@@ -94,7 +87,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         text: TextSpan(
             style: textStyleFrom(
               Theme.of(context).primaryTextTheme.bodyText1,
-              color: Colors.black,
+              color: Colors.white,
             ),
             children: [
               TextSpan(text: "I agree to the user "),
@@ -122,10 +115,11 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         text: TextSpan(
             style: textStyleFrom(
               Theme.of(context).primaryTextTheme.bodyText1,
-              color: Colors.black,
+              color: Colors.white,
             ),
             children: [
-              TextSpan(text: "I am happy to receive the now-u newsletter"),
+              TextSpan(
+                  text: "I am happy to receive the now-u newsletter via email"),
             ]),
       ),
       onSaved: (value) {
@@ -133,7 +127,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       },
     );
 
-    Widget createAccountButton() {
+    Widget loginButton() {
       Future<bool> validateAndSave(LoginViewModel model) async {
         final FormState form = _formKey.currentState;
         if (form.validate()) {
@@ -152,16 +146,12 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         viewModelBuilder: () => LoginViewModel(),
         builder: (context, model, child) => Padding(
           padding: EdgeInsets.symmetric(vertical: 16.0),
-          child: CustomWidthButton(
-            'Create Account',
-            backgroundColor: Theme.of(context).primaryColor,
-            buttonWidth: 250.0,
+          child: DarkButton(
+            "Next",
             onPressed: () {
               print("Button pressed");
               validateAndSave(model);
             },
-            fontSize: 18.0,
-            size: DarkButtonSize.Large,
           ),
         ),
       );
@@ -172,17 +162,11 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         viewModelBuilder: () => LoginViewModel(),
         builder: (context, model, child) => Padding(
           padding: EdgeInsets.symmetric(vertical: 16.0),
-          child: CustomWidthButton(
-            'Skip',
-            backgroundColor: Colors.white,
-            textColor: Theme.of(context).primaryColor,
-            buttonWidth: 250.0,
+          child: DarkButton(
+            "F",
             onPressed: () {
-              print("Button pressed");
               model.facebookLogin();
             },
-            fontSize: 18.0,
-            size: DarkButtonSize.Large,
           ),
         ),
       );
@@ -203,36 +187,29 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                     Column(
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(top: 60, bottom: 10),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  "Sign up to now-u",
-                                  style: textStyleFrom(
-                                      Theme.of(context)
-                                          .primaryTextTheme
-                                          .headline3,
-                                      color: Color(0XFF011A43),
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 36.0),
-                                ),
-                              ),
-                              Expanded(child: SizedBox())
-                            ],
+                          padding: EdgeInsets.only(top: 30, bottom: 10),
+                          child: Text(
+                            "Account Details",
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.headline3,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: Text(
+                            "Enter the email address that you would like to use to access now-u",
+                            textAlign: TextAlign.center,
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.headline5,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 25),
                       ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 30.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          CustomIconButton(onPressed: (){}, icon: FontAwesomeIcons.google, size: DarkButtonSize.Small),
-                          CustomIconButton(onPressed: (){}, icon: FontAwesomeIcons.facebookF, size: DarkButtonSize.Small),
-                        ],
-                      ),
                     ),
                     Column(
                       mainAxisSize: MainAxisSize.max,
@@ -241,10 +218,10 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Name",
+                            "What should we call you?",
                             style: textStyleFrom(
-                              Theme.of(context).primaryTextTheme.headline5,
-                              color: Colors.black,
+                              Theme.of(context).primaryTextTheme.headline4,
+                              color: Colors.white,
                             ),
                             textAlign: TextAlign.left,
                           ),
@@ -255,10 +232,10 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Email",
+                            "Your email address",
                             style: textStyleFrom(
-                              Theme.of(context).primaryTextTheme.headline5,
-                              color: Colors.black,
+                              Theme.of(context).primaryTextTheme.headline4,
+                              color: Colors.white,
                             ),
                             textAlign: TextAlign.left,
                           ),
@@ -268,8 +245,10 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                         SizedBox(height: 20),
                         acceptTandC,
                         newsletterSignup,
-                        createAccountButton(),
+
+                        loginButton(),
                         facebookLoginButton(),
+
                         SizedBox(height: 10),
                         ViewModelBuilder<LoginViewModel>.reactive(
                             viewModelBuilder: () => LoginViewModel(),
@@ -282,7 +261,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                                         Theme.of(context)
                                             .primaryTextTheme
                                             .bodyText1,
-                                        color: Colors.black,
+                                        color: Colors.white,
                                       )),
                                   TextSpan(
                                       text: "here",
@@ -314,7 +293,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         onWillPop: () async => false,
         child: Scaffold(
           key: _scaffoldKey,
-          backgroundColor: Color(0XFFE5E5E5),
+          backgroundColor: Theme.of(context).primaryColorDark,
           body: NotificationListener(
               onNotification: (OverscrollIndicatorNotification overscroll) {
                 overscroll.disallowGlow();
