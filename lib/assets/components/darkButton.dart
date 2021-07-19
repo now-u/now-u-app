@@ -261,65 +261,65 @@ class CustomWidthButton extends StatelessWidget {
   final Color backgroundColor;
   final Color textColor;
 
-  CustomWidthButton(
-      this.text, {
-        @required this.onPressed,
-        this.rightIcon,
-        @required this.size,
-        @required this.fontSize,
-        @required this.buttonWidth,
-        this.backgroundColor,
-        this.textColor
-      });
+  CustomWidthButton(this.text,
+      {@required this.onPressed,
+      this.rightIcon,
+      @required this.size,
+      @required this.fontSize,
+      @required this.buttonWidth,
+      this.backgroundColor,
+      this.textColor});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: buttonWidth,
-      child: MaterialButton(
-        height: darkButtonStyleStyles[size]['height'],
-        minWidth: buttonWidth,
-        elevation: 0,
-        color: this.backgroundColor ?? Colors.white,
-        disabledColor: colorFrom(
-          Theme.of(context).primaryColor,
-          opacity: 0.5,
-        ),
-        onPressed: onPressed,
-        shape: RoundedRectangleBorder(
-          borderRadius:
-          BorderRadius.circular(darkButtonStyleStyles[size]['borderRadius']),
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: darkButtonStyleStyles[size]['vPadding'],
-            horizontal: darkButtonStyleStyles[size]['hPadding'],
+        width: buttonWidth,
+        child: MaterialButton(
+          height: darkButtonStyleStyles[size]['height'],
+          minWidth: buttonWidth,
+          elevation: 0,
+          color: this.backgroundColor ?? Colors.white,
+          disabledColor: colorFrom(
+            Theme.of(context).primaryColor,
+            opacity: 0.5,
           ),
-          child: Text(
-            text,
-            style: textStyleFrom(
-              Theme.of(context).primaryTextTheme.button,
-              color: textColor ?? Colors.white,
-              fontSize: fontSize ?? darkButtonStyleStyles[size]['fontSize'],
+          onPressed: onPressed,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+                darkButtonStyleStyles[size]['borderRadius']),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: darkButtonStyleStyles[size]['vPadding'],
+              horizontal: darkButtonStyleStyles[size]['hPadding'],
+            ),
+            child: Text(
+              text,
+              style: textStyleFrom(
+                Theme.of(context).primaryTextTheme.button,
+                color: textColor ?? Colors.white,
+                fontSize: fontSize ?? darkButtonStyleStyles[size]['fontSize'],
+              ),
             ),
           ),
-        ),
-      )
-    );
+        ));
   }
 }
-
 
 class CustomIconButton extends StatelessWidget {
   final VoidCallback onPressed;
   final IconData icon;
   final DarkButtonSize size;
-  final double backgroundColor;
+  final Color backgroundColor;
+  final Color iconColor;
+  final bool isCircularButton;
 
   CustomIconButton({
     @required this.onPressed,
     @required this.icon,
+    this.iconColor,
     @required this.size,
+    @required this.isCircularButton,
     this.backgroundColor,
   });
 
@@ -334,15 +334,20 @@ class CustomIconButton extends StatelessWidget {
         opacity: 0.5,
       ),
       onPressed: onPressed,
-      shape: RoundedRectangleBorder(
-        borderRadius:
-            BorderRadius.circular(darkButtonStyleStyles[size]['borderRadius']),
-      ),
-      padding: EdgeInsets.symmetric(horizontal: 60.0, vertical: 15.0),
-      child: Icon(
-        icon,
-        size: 25,
-        color: Theme.of(context).primaryColor,
+      shape: isCircularButton
+          ? CircleBorder()
+          : RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                  darkButtonStyleStyles[size]['borderRadius']),
+            ),
+      padding: isCircularButton? EdgeInsets.all(0) : EdgeInsets.symmetric(horizontal: 60.0, vertical: 15.0),
+      child: Padding(
+        padding: isCircularButton? const EdgeInsets.all(5) : EdgeInsets.all(0),
+        child: Icon(
+          icon,
+          size: isCircularButton? 15 : 25,
+          color: iconColor?? Theme.of(context).primaryColor,
+        ),
       ),
     );
   }

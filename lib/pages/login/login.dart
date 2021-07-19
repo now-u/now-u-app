@@ -1,6 +1,7 @@
 import 'package:app/assets/StyleFrom.dart';
 import 'package:flutter/gestures.dart';
 import 'package:app/assets/components/darkButton.dart';
+import 'package:app/assets/components/corner_clip_path.dart';
 import 'package:app/assets/components/inputs.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -46,31 +47,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    final email = CustomTextFormField(
-      style: CustomFormFieldStyle.Dark,
-      keyboardType: TextInputType.emailAddress,
-      textCapitalization: TextCapitalization.none,
-      backgroundColor: Colors.white,
-      hintTextColor: Colors.grey[400],
-      autofocus: false,
-      validator: (value) {
-        if (value.isEmpty) return "Email cannot be empty";
-        if (!RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9-]+\.[a-zA-Z-]+")
-            .hasMatch(value)) {
-          return "Email must be a valid email address";
-        }
-        return null;
-      },
-      onSaved: (value) {
-        print("Saved");
-        _email = value;
-        _repositry.setEmail(value);
-      },
-      hintText: 'e.g. jane.doe@email.com',
-    );
-
-    final name = CustomTextFormField(
+    final nameTextField = CustomTextFormField(
       style: CustomFormFieldStyle.Dark,
       keyboardType: TextInputType.text,
       textCapitalization: TextCapitalization.words,
@@ -87,6 +64,30 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         _repositry.setName(value);
       },
       hintText: 'Jane Doe',
+    );
+
+    final emailTextField = CustomTextFormField(
+      style: CustomFormFieldStyle.Dark,
+      keyboardType: TextInputType.emailAddress,
+      textCapitalization: TextCapitalization.none,
+      backgroundColor: Colors.white,
+      hintTextColor: Colors.grey[400],
+      autofocus: false,
+      validator: (value) {
+        if (value.isEmpty) return "Email cannot be empty";
+        if (!RegExp(
+                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9-]+\.[a-zA-Z-]+")
+            .hasMatch(value)) {
+          return "Email must be a valid email address";
+        }
+        return null;
+      },
+      onSaved: (value) {
+        print("Saved");
+        _email = value;
+        _repositry.setEmail(value);
+      },
+      hintText: 'e.g. jane.doe@email.com',
     );
 
     final acceptTandC = CustomCheckboxFormField(
@@ -167,7 +168,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       );
     }
 
-    Widget facebookLoginButton() {
+    Widget skipLoginButton() {
       return ViewModelBuilder<LoginViewModel>.reactive(
         viewModelBuilder: () => LoginViewModel(),
         builder: (context, model, child) => Padding(
@@ -191,123 +192,156 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
     Form loginForm() {
       return Form(
           key: _formKey,
-          child: Padding(
-              padding: EdgeInsets.only(left: 24, right: 24),
-              child: SafeArea(
-                child: Column(
-                  //shrinkWrap: true,
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Column(
+            child: Stack(
+              children: [
+                ClipPath(
+                clipper: BackgroundClipper(),
+                child: Container(
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              colors: [Colors.orange, Colors.deepOrangeAccent],
+                              begin: Alignment.bottomLeft,
+                              end: Alignment.topRight,
+                          )
+                      ),)
+                ),
+                Padding(
+                    padding: EdgeInsets.only(left: 24, right: 24),
+                    child: Column(
+                      //shrinkWrap: true,
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(top: 60, bottom: 10),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  "Sign up to now-u",
-                                  style: textStyleFrom(
-                                      Theme.of(context)
-                                          .primaryTextTheme
-                                          .headline3,
-                                      color: Color(0XFF011A43),
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 36.0),
-                                ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 60, bottom: 10),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      "Sign up to now-u",
+                                      style: textStyleFrom(
+                                          Theme.of(context)
+                                              .primaryTextTheme
+                                              .headline3,
+                                          color: Color(0XFF011A43),
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: 36.0),
+                                    ),
+                                  ),
+                                  Expanded(
+                                      child: Container(
+                                          child: Align(
+                                              alignment: Alignment.bottomLeft,
+                                              child: CustomIconButton(
+                                                onPressed: () {},
+                                                icon: FontAwesomeIcons.question,
+                                                size: DarkButtonSize.Small,
+                                                isCircularButton: true,
+                                                backgroundColor: Theme.of(context).primaryColor,
+                                                iconColor: Colors.white,
+                                              ))))
+                                ],
                               ),
-                              Expanded(child: SizedBox())
+                            ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 30.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              CustomIconButton(
+                                onPressed: () {},
+                                icon: FontAwesomeIcons.google,
+                                size: DarkButtonSize.Small,
+                                isCircularButton: false,
+                              ),
+                              CustomIconButton(
+                                onPressed: () {},
+                                icon: FontAwesomeIcons.facebookF,
+                                size: DarkButtonSize.Small,
+                                isCircularButton: false,
+                              ),
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 30.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          CustomIconButton(onPressed: (){}, icon: FontAwesomeIcons.google, size: DarkButtonSize.Small),
-                          CustomIconButton(onPressed: (){}, icon: FontAwesomeIcons.facebookF, size: DarkButtonSize.Small),
-                        ],
-                      ),
-                    ),
-                    Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Name",
-                            style: textStyleFrom(
-                              Theme.of(context).primaryTextTheme.headline5,
-                              color: Colors.black,
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Name",
+                                style: textStyleFrom(
+                                  Theme.of(context).primaryTextTheme.headline5,
+                                  color: Colors.black,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
                             ),
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                        SizedBox(height: 8),
-                        name,
-                        SizedBox(height: 15),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Email",
-                            style: textStyleFrom(
-                              Theme.of(context).primaryTextTheme.headline5,
-                              color: Colors.black,
+                            SizedBox(height: 8),
+                            nameTextField,
+                            SizedBox(height: 15),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Email",
+                                style: textStyleFrom(
+                                  Theme.of(context).primaryTextTheme.headline5,
+                                  color: Colors.black,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
                             ),
-                            textAlign: TextAlign.left,
-                          ),
+                            SizedBox(height: 8),
+                            emailTextField,
+                            SizedBox(height: 20),
+                            acceptTandC,
+                            newsletterSignup,
+                            createAccountButton(),
+                            skipLoginButton(),
+                            SizedBox(height: 10),
+                            ViewModelBuilder<LoginViewModel>.reactive(
+                                viewModelBuilder: () => LoginViewModel(),
+                                builder: (context, model, child) {
+                                  return RichText(
+                                    text: TextSpan(children: [
+                                      TextSpan(
+                                          text: "Already have an account? ",
+                                          style: textStyleFrom(
+                                            Theme.of(context)
+                                                .primaryTextTheme
+                                                .bodyText1,
+                                            color: Colors.black,
+                                          )),
+                                      TextSpan(
+                                          text: "Sign in",
+                                          style: textStyleFrom(
+                                            Theme.of(context)
+                                                .primaryTextTheme
+                                                .bodyText1,
+                                            color: Theme.of(context).buttonColor,
+                                          ),
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () {
+                                              model.launchTandCs();
+                                            }),
+                                    ]),
+                                  );
+                                }),
+                            SizedBox(height: 10),
+                          ],
                         ),
-                        SizedBox(height: 8),
-                        email,
-                        SizedBox(height: 20),
-                        acceptTandC,
-                        newsletterSignup,
-                        createAccountButton(),
-                        facebookLoginButton(),
-                        SizedBox(height: 10),
-                        ViewModelBuilder<LoginViewModel>.reactive(
-                            viewModelBuilder: () => LoginViewModel(),
-                            builder: (context, model, child) {
-                              return RichText(
-                                text: TextSpan(children: [
-                                  TextSpan(
-                                      text: "View our privacy policy ",
-                                      style: textStyleFrom(
-                                        Theme.of(context)
-                                            .primaryTextTheme
-                                            .bodyText1,
-                                        color: Colors.black,
-                                      )),
-                                  TextSpan(
-                                      text: "here",
-                                      style: textStyleFrom(
-                                        Theme.of(context)
-                                            .primaryTextTheme
-                                            .bodyText1,
-                                        color: Theme.of(context).buttonColor,
-                                      ),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          model.launchTandCs();
-                                        }),
-                                ]),
-                              );
-                            }),
-                        SizedBox(height: 10),
-                      ],
-                    ),
 
-                    // Uncomment to readd Skip button
-                    //skipButton(),
-                  ],
-                ),
-              )));
+                        // Uncomment to readd Skip button
+                        //skipButton(),
+                      ],
+                    )),
+              ],
+            ),
+          );
     }
 
     return WillPopScope(
@@ -326,3 +360,4 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         ));
   }
 }
+
