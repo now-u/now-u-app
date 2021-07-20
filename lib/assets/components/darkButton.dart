@@ -340,13 +340,15 @@ class CustomIconButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(
                   darkButtonStyleStyles[size]['borderRadius']),
             ),
-      padding: isCircularButton? EdgeInsets.all(0) : EdgeInsets.symmetric(horizontal: 60.0, vertical: 15.0),
+      padding: isCircularButton
+          ? EdgeInsets.all(0)
+          : EdgeInsets.symmetric(horizontal: 60.0, vertical: 15.0),
       child: Padding(
-        padding: isCircularButton? const EdgeInsets.all(5) : EdgeInsets.all(0),
+        padding: isCircularButton ? const EdgeInsets.all(5) : EdgeInsets.all(0),
         child: Icon(
           icon,
-          size: isCircularButton? 15 : 25,
-          color: iconColor?? Theme.of(context).primaryColor,
+          size: isCircularButton ? 15 : 25,
+          color: iconColor ?? Theme.of(context).primaryColor,
         ),
       ),
     );

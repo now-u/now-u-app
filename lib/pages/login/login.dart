@@ -191,157 +191,155 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
 
     Form loginForm() {
       return Form(
-          key: _formKey,
-            child: Stack(
-              children: [
-                ClipPath(
+        key: _formKey,
+        child: Stack(
+          children: [
+            ClipPath(
                 clipper: BackgroundClipper(),
                 child: Container(
-                      height: MediaQuery.of(context).size.height * 0.2,
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [Colors.orange, Colors.deepOrangeAccent],
-                              begin: Alignment.bottomLeft,
-                              end: Alignment.topRight,
-                          )
-                      ),)
-                ),
-                Padding(
-                    padding: EdgeInsets.only(left: 24, right: 24),
-                    child: Column(
-                      //shrinkWrap: true,
+                  height: MediaQuery.of(context).size.height * 0.2,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                    colors: [Colors.orange, Colors.deepOrangeAccent],
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.topRight,
+                  )),
+                )),
+            Padding(
+                padding: EdgeInsets.only(left: 24, right: 24),
+                child: Column(
+                  //shrinkWrap: true,
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(top: 60, bottom: 10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              "Sign up to now-u",
+                              style: textStyleFrom(
+                                  Theme.of(context).primaryTextTheme.headline3,
+                                  color: Color(0XFF011A43),
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 36.0),
+                            ),
+                          ),
+                          Expanded(
+                              child: Container(
+                                  child: Align(
+                                      alignment: Alignment.bottomLeft,
+                                      child: CustomIconButton(
+                                        onPressed: () {},
+                                        icon: FontAwesomeIcons.question,
+                                        size: DarkButtonSize.Small,
+                                        isCircularButton: true,
+                                        backgroundColor:
+                                            Theme.of(context).primaryColor,
+                                        iconColor: Colors.white,
+                                      ))))
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 30.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          CustomIconButton(
+                            onPressed: () {},
+                            icon: FontAwesomeIcons.google,
+                            size: DarkButtonSize.Small,
+                            isCircularButton: false,
+                          ),
+                          CustomIconButton(
+                            onPressed: () {},
+                            icon: FontAwesomeIcons.facebookF,
+                            size: DarkButtonSize.Small,
+                            isCircularButton: false,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(top: 60, bottom: 10),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "Sign up to now-u",
-                                      style: textStyleFrom(
-                                          Theme.of(context)
-                                              .primaryTextTheme
-                                              .headline3,
-                                          color: Color(0XFF011A43),
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: 36.0),
-                                    ),
-                                  ),
-                                  Expanded(
-                                      child: Container(
-                                          child: Align(
-                                              alignment: Alignment.bottomLeft,
-                                              child: CustomIconButton(
-                                                onPressed: () {},
-                                                icon: FontAwesomeIcons.question,
-                                                size: DarkButtonSize.Small,
-                                                isCircularButton: true,
-                                                backgroundColor: Theme.of(context).primaryColor,
-                                                iconColor: Colors.white,
-                                              ))))
-                                ],
-                              ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Name",
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.headline5,
+                              color: Colors.black,
                             ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 30.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              CustomIconButton(
-                                onPressed: () {},
-                                icon: FontAwesomeIcons.google,
-                                size: DarkButtonSize.Small,
-                                isCircularButton: false,
-                              ),
-                              CustomIconButton(
-                                onPressed: () {},
-                                icon: FontAwesomeIcons.facebookF,
-                                size: DarkButtonSize.Small,
-                                isCircularButton: false,
-                              ),
-                            ],
+                            textAlign: TextAlign.left,
                           ),
                         ),
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "Name",
-                                style: textStyleFrom(
-                                  Theme.of(context).primaryTextTheme.headline5,
-                                  color: Colors.black,
-                                ),
-                                textAlign: TextAlign.left,
-                              ),
+                        SizedBox(height: 8),
+                        nameTextField,
+                        SizedBox(height: 15),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Email",
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.headline5,
+                              color: Colors.black,
                             ),
-                            SizedBox(height: 8),
-                            nameTextField,
-                            SizedBox(height: 15),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "Email",
-                                style: textStyleFrom(
-                                  Theme.of(context).primaryTextTheme.headline5,
-                                  color: Colors.black,
-                                ),
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                            SizedBox(height: 8),
-                            emailTextField,
-                            SizedBox(height: 20),
-                            acceptTandC,
-                            newsletterSignup,
-                            createAccountButton(),
-                            skipLoginButton(),
-                            SizedBox(height: 10),
-                            ViewModelBuilder<LoginViewModel>.reactive(
-                                viewModelBuilder: () => LoginViewModel(),
-                                builder: (context, model, child) {
-                                  return RichText(
-                                    text: TextSpan(children: [
-                                      TextSpan(
-                                          text: "Already have an account? ",
-                                          style: textStyleFrom(
-                                            Theme.of(context)
-                                                .primaryTextTheme
-                                                .bodyText1,
-                                            color: Colors.black,
-                                          )),
-                                      TextSpan(
-                                          text: "Sign in",
-                                          style: textStyleFrom(
-                                            Theme.of(context)
-                                                .primaryTextTheme
-                                                .bodyText1,
-                                            color: Theme.of(context).buttonColor,
-                                          ),
-                                          recognizer: TapGestureRecognizer()
-                                            ..onTap = () {
-                                              model.launchTandCs();
-                                            }),
-                                    ]),
-                                  );
-                                }),
-                            SizedBox(height: 10),
-                          ],
+                            textAlign: TextAlign.left,
+                          ),
                         ),
-
-                        // Uncomment to readd Skip button
-                        //skipButton(),
+                        SizedBox(height: 8),
+                        emailTextField,
+                        SizedBox(height: 20),
+                        acceptTandC,
+                        newsletterSignup,
+                        createAccountButton(),
+                        skipLoginButton(),
+                        SizedBox(height: 10),
+                        ViewModelBuilder<LoginViewModel>.reactive(
+                            viewModelBuilder: () => LoginViewModel(),
+                            builder: (context, model, child) {
+                              return RichText(
+                                text: TextSpan(children: [
+                                  TextSpan(
+                                      text: "Already have an account? ",
+                                      style: textStyleFrom(
+                                        Theme.of(context)
+                                            .primaryTextTheme
+                                            .bodyText1,
+                                        color: Colors.black,
+                                      )),
+                                  TextSpan(
+                                      text: "Sign in",
+                                      style: textStyleFrom(
+                                        Theme.of(context)
+                                            .primaryTextTheme
+                                            .bodyText1,
+                                        color: Theme.of(context).buttonColor,
+                                      ),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {
+                                          model.launchTandCs();
+                                        }),
+                                ]),
+                              );
+                            }),
+                        SizedBox(height: 10),
                       ],
-                    )),
-              ],
-            ),
-          );
+                    ),
+
+                    // Uncomment to readd Skip button
+                    //skipButton(),
+                  ],
+                )),
+          ],
+        ),
+      );
     }
 
     return WillPopScope(
@@ -360,4 +358,3 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         ));
   }
 }
-

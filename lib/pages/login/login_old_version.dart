@@ -51,7 +51,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       validator: (value) {
         if (value.isEmpty) return "Email cannot be empty";
         if (!RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9-]+\.[a-zA-Z-]+")
+                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9-]+\.[a-zA-Z-]+")
             .hasMatch(value)) {
           return "Email must be a valid email address";
         }
@@ -245,10 +245,8 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                         SizedBox(height: 20),
                         acceptTandC,
                         newsletterSignup,
-
                         loginButton(),
                         facebookLoginButton(),
-
                         SizedBox(height: 10),
                         ViewModelBuilder<LoginViewModel>.reactive(
                             viewModelBuilder: () => LoginViewModel(),

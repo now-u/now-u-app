@@ -48,13 +48,14 @@ class CustomTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
         filled: true,
-        fillColor: this.backgroundColor?? Color.fromRGBO(221, 221, 221, 0.2),
+        fillColor: this.backgroundColor ?? Color.fromRGBO(221, 221, 221, 0.2),
         hintText: hintText,
         hintStyle: TextStyle(
-          color: hintTextColor?? colorFrom(
-            Theme.of(context).primaryColor,
-            opacity: 0.5,
-          ),
+          color: hintTextColor ??
+              colorFrom(
+                Theme.of(context).primaryColor,
+                opacity: 0.5,
+              ),
         ),
       ),
     ));
