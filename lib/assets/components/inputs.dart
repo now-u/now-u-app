@@ -42,7 +42,7 @@ class CustomTextFormField extends StatelessWidget {
       onSaved: onSaved,
       style: textStyleFrom(
         Theme.of(context).primaryTextTheme.headline5,
-        color: Colors.white,
+        color: Colors.grey
       ),
       textCapitalization: textCapitalization ?? TextCapitalization.none,
       decoration: InputDecoration(
