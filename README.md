@@ -24,9 +24,8 @@ Full setup guide - [Getting Started](https://github.com/now-u/now-u-app/wiki/Get
 TLDR guide:
 
 1. Install flutter (and get a device setup)
-2. Switch to the master channel
-3. Clone the repo
-4. Run it - `flutter run`
+2. Clone the repo
+3. Run it - `flutter run`
 
 ### Where to start? :information_desk_person:
 
