@@ -8,7 +8,8 @@ class WebViewViewModel extends BaseModel {
   WebViewViewModel(this.initialUrl);
 
   void onWebError() {
-    _navigationService.launchLink(initialUrl,
+    _navigationService.launchLink(
+        initialUrl,
         isExternal: true,
         title: "Web error",
         description:
@@ -16,12 +17,13 @@ class WebViewViewModel extends BaseModel {
   }
 
   void launchExternal() {
-    _navigationService.launchLink(initialUrl,
-        isExternal: true,
-        title: 'Open with an External Browser?',
-        description:
-            'You are about to open this link with an external browser.',
-        buttonText: 'Yes, Go Ahead',
-        closeButtonText: 'Stay Here');
+    _navigationService.launchLink(
+                initialUrl,
+                isExternal: true,
+                title: 'Open with an External Browser?',
+                description: 'You are about to open this link with an external browser.',
+                buttonText: 'Yes, Go Ahead',
+                closeButtonText: 'Stay Here'
+                );
   }
 }

@@ -38,21 +38,22 @@ class CustomTextButton extends StatelessWidget {
                 )
               : Container(),
           Container(
-            width: width,
-            child: Text(
-              text,
-              style: TextStyle(
-                color: fontColor ?? Theme.of(context).buttonColor,
-                fontFamily:
-                    Theme.of(context).primaryTextTheme.button.fontFamily,
-                fontWeight: fontWeight ??
-                    Theme.of(context).primaryTextTheme.button.fontWeight,
-                fontStyle: Theme.of(context).primaryTextTheme.button.fontStyle,
-                fontSize: fontSize ?? 16,
+              width: width,
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: fontColor ?? Theme.of(context).buttonColor,
+                  fontFamily:
+                      Theme.of(context).primaryTextTheme.button.fontFamily,
+                  fontWeight: fontWeight ??
+                      Theme.of(context).primaryTextTheme.button.fontWeight,
+                  fontStyle:
+                      Theme.of(context).primaryTextTheme.button.fontStyle,
+                  fontSize: fontSize ?? 16,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-          ),
+              ),
           this.iconRight != null
               ? Icon(
                   Icons.chevron_right,

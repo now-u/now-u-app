@@ -16,13 +16,12 @@ class StartUpViewModel extends BaseModel {
   Future handleStartUpLogic() async {
     await Firebase.initializeApp();
 
-    final DynamicLinkService _dynamicLinkService =
-        locator<DynamicLinkService>();
+    final DynamicLinkService _dynamicLinkService = locator<DynamicLinkService>();
     await _dynamicLinkService.handleDynamicLinks();
 
     // Register for push notifications
     final PushNotificationService _pushNotificationService =
-        locator<PushNotificationService>();
+      locator<PushNotificationService>();
     await _pushNotificationService.init();
 
     var hasLoggedInUser = await _authenticationService.isUserLoggedIn();

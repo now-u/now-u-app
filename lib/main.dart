@@ -121,7 +121,7 @@ class _AppState extends State<App> {
               ),
           // Capitalize
           headline5: TextStyle(
-              color: black, fontSize: 14, fontWeight: FontWeight.w700 // Regular
+              color: black, fontSize: 16, fontWeight: FontWeight.w400 // Regular
               ),
 
           bodyText1: TextStyle(
