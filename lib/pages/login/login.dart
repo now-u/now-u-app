@@ -47,30 +47,6 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-
-    final emailTextField = CustomTextFormField(
-      style: CustomFormFieldStyle.Dark,
-      keyboardType: TextInputType.emailAddress,
-      textCapitalization: TextCapitalization.none,
-      backgroundColor: Colors.white,
-      hintTextColor: Colors.grey[400],
-      autofocus: false,
-      validator: (value) {
-        if (value.isEmpty) return "Email cannot be empty";
-        if (!RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9-]+\.[a-zA-Z-]+")
-            .hasMatch(value)) {
-          return "Email must be a valid email address";
-        }
-        return null;
-      },
-      onSaved: (value) {
-        _email = value;
-        _repositry.setEmail(value);
-      },
-      hintText: 'e.g. jane.doe@email.com',
-    );
-
     final nameTextField = CustomTextFormField(
       style: CustomFormFieldStyle.Dark,
       keyboardType: TextInputType.text,
@@ -83,10 +59,35 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         return null;
       },
       onSaved: (value) {
+        print("Saved");
         _name = value;
         _repositry.setName(value);
       },
       hintText: 'Jane Doe',
+    );
+
+    final emailTextField = CustomTextFormField(
+      style: CustomFormFieldStyle.Dark,
+      keyboardType: TextInputType.emailAddress,
+      textCapitalization: TextCapitalization.none,
+      backgroundColor: Colors.white,
+      hintTextColor: Colors.grey[400],
+      autofocus: false,
+      validator: (value) {
+        if (value.isEmpty) return "Email cannot be empty";
+        if (!RegExp(
+                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9-]+\.[a-zA-Z-]+")
+            .hasMatch(value)) {
+          return "Email must be a valid email address";
+        }
+        return null;
+      },
+      onSaved: (value) {
+        print("Saved");
+        _email = value;
+        _repositry.setEmail(value);
+      },
+      hintText: 'e.g. jane.doe@email.com',
     );
 
     final acceptTandC = CustomCheckboxFormField(
@@ -155,8 +156,9 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
           child: CustomWidthButton(
             'Create Account',
             backgroundColor: Theme.of(context).primaryColor,
-            buttonWidthProportion: 0.6,
+            buttonWidth: 250.0,
             onPressed: () {
+              print("Button pressed");
               validateAndSave(model);
             },
             fontSize: 18.0,
@@ -175,8 +177,9 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
             'Skip',
             backgroundColor: Colors.white,
             textColor: Theme.of(context).primaryColor,
-            buttonWidthProportion: 0.6,
+            buttonWidth: 250.0,
             onPressed: () {
+              print("Button pressed");
               model.facebookLogin();
             },
             fontSize: 18.0,
@@ -261,32 +264,10 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                         ],
                       ),
                     ),
-                    Center(
-                        child: Text(
-                      "Or sign up with email",
-                      style: textStyleFrom(
-                        Theme.of(context).primaryTextTheme.headline4,
-                        color: Colors.black,
-                      ),
-                    )),
                     Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Email",
-                            style: textStyleFrom(
-                              Theme.of(context).primaryTextTheme.headline5,
-                              color: Colors.black,
-                            ),
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                        SizedBox(height: 8),
-                        emailTextField,
-                        SizedBox(height: 15),
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -300,6 +281,20 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                         ),
                         SizedBox(height: 8),
                         nameTextField,
+                        SizedBox(height: 15),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Email",
+                            style: textStyleFrom(
+                              Theme.of(context).primaryTextTheme.headline5,
+                              color: Colors.black,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        emailTextField,
                         SizedBox(height: 20),
                         acceptTandC,
                         newsletterSignup,

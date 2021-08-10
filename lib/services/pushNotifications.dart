@@ -22,15 +22,15 @@ class PushNotificationService {
     }
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        print('onMessage: $message');
+      print('onMessage: $message');
     });
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-        print('onMessage: $message');
-        _serialiseAndNavigate(message);
+      print('onMessage: $message');
+      _serialiseAndNavigate(message);
     });
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-        print('onMessage: $message');
-        _serialiseAndNavigate(message);
+      print('onMessage: $message');
+      _serialiseAndNavigate(message);
     });
   }
 
