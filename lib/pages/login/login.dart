@@ -65,7 +65,6 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         return null;
       },
       onSaved: (value) {
-        print("Saved");
         _email = value;
         _repositry.setEmail(value);
       },
@@ -84,7 +83,6 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         return null;
       },
       onSaved: (value) {
-        print("Saved");
         _name = value;
         _repositry.setName(value);
       },
@@ -159,7 +157,6 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
             backgroundColor: Theme.of(context).primaryColor,
             buttonWidthProportion: 0.6,
             onPressed: () {
-              print("Button pressed");
               validateAndSave(model);
             },
             fontSize: 18.0,
@@ -180,7 +177,6 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
             textColor: Theme.of(context).primaryColor,
             buttonWidthProportion: 0.6,
             onPressed: () {
-              print("Button pressed");
               model.facebookLogin();
             },
             fontSize: 18.0,
