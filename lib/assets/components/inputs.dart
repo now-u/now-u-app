@@ -40,10 +40,8 @@ class CustomTextFormField extends StatelessWidget {
       autofocus: autofocus,
       validator: validator,
       onSaved: onSaved,
-      style: textStyleFrom(
-        Theme.of(context).primaryTextTheme.headline5,
-        color: Colors.grey
-      ),
+      style: textStyleFrom(Theme.of(context).primaryTextTheme.headline5,
+          color: Colors.grey),
       textCapitalization: textCapitalization ?? TextCapitalization.none,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),

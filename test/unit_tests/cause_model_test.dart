@@ -17,7 +17,7 @@ void main() {
       expect(cause.icon, 'icon_name');
       expect(cause.description, 'Some desc');
       expect(cause.headerImage, 'Header image');
-      expect(cause.actions, [1,2,3]);
+      expect(cause.actions, [1, 2, 3]);
     });
   });
 }

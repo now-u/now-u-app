@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-class Cause{
+class Cause {
   int id;
   String name;
   String icon;
@@ -8,9 +8,15 @@ class Cause{
   String headerImage;
   List<int> actions;
 
-  Cause({this.id, this.name, this.icon, this.description, this.headerImage, this.actions});
+  Cause(
+      {this.id,
+      this.name,
+      this.icon,
+      this.description,
+      this.headerImage,
+      this.actions});
 
-  Cause.fromJson(Map json){
+  Cause.fromJson(Map json) {
     this.id = json['id'];
     this.name = json['name'];
     this.icon = json['icon'];
@@ -20,14 +26,13 @@ class Cause{
   }
 }
 
-class CauseAction{
+class CauseAction {
   final int id;
   bool actionFetched = false;
 
-  bool get isActionFetched{
+  bool get isActionFetched {
     return this.actionFetched;
   }
 
   CauseAction({@required this.id});
-
 }
