@@ -82,8 +82,7 @@ class _CampaignTileState extends State<CampaignTile> {
         children: <Widget>[
           // Image
           Expanded(
-            child: Stack(
-              children: <Widget>[
+            child: Stack(children: <Widget>[
               Container(
                 height: MediaQuery.of(context).size.height * 0.3,
                 child: Padding(
