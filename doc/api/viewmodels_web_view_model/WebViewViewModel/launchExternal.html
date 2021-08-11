@@ -102,14 +102,13 @@
     <section class="summary source-code" id="source">
       <h2><span>Implementation</span></h2>
       <pre class="language-dart"><code class="language-dart">void launchExternal() {
-  _navigationService.launchLink(
-              initialUrl,
-              isExternal: true,
-              title: &#39;Open with an External Browser?&#39;,
-              description: &#39;You are about to open this link with an external browser.&#39;,
-              buttonText: &#39;Yes, Go Ahead&#39;,
-              closeButtonText: &#39;Stay Here&#39;
-              );
+  _navigationService.launchLink(initialUrl,
+      isExternal: true,
+      title: &#39;Open with an External Browser?&#39;,
+      description:
+          &#39;You are about to open this link with an external browser.&#39;,
+      buttonText: &#39;Yes, Go Ahead&#39;,
+      closeButtonText: &#39;Stay Here&#39;);
 }</code></pre>
     </section>
 
