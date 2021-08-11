@@ -2,6 +2,7 @@ import 'package:app/models/Reward.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Campaigns.dart';
+import 'package:app/models/Organisation.dart';
 
 List<String> stagingUsers = [
   "james@now-u.com",
@@ -46,26 +47,32 @@ class User {
 
   int points;
 
+  Organisation _organisation;
+  Organisation get organisation => _organisation;
+  set setOrganisation(Organisation org) => _organisation = org;
+
   String token;
 
-  User(
-      {id,
-      token,
-      fullName,
-      email,
-      dateOfBirth,
-      location,
-      monthlyDonationLimit,
-      homeOwner,
-      selectedCampaigns,
-      completedCampaigns,
-      completedActions,
-      rejectedActions,
-      starredActions,
-      completedRewards,
-      completedActionsType,
-      completedLearningResources,
-      points}) {
+  User({
+    id,
+    token,
+    fullName,
+    email,
+    dateOfBirth,
+    location,
+    monthlyDonationLimit,
+    homeOwner,
+    selectedCampaigns,
+    completedCampaigns,
+    completedActions,
+    rejectedActions,
+    starredActions,
+    completedRewards,
+    completedActionsType,
+    completedLearningResources,
+    points,
+    organisation,
+  }) {
     this.id = id;
     this.fullName = fullName;
     this.email = email;
@@ -87,6 +94,7 @@ class User {
     this.points = points ?? 0;
 
     this.token = token;
+    _organisation = organisation;
   }
 
   // This will be removed real soon cause if the user token is null then we need to login again
@@ -133,6 +141,7 @@ class User {
     Map<CampaignActionType, int> completedActionsType,
     int points,
     String token,
+    Organisation organisation,
   }) {
     return User(
       id: id ?? this.id,
@@ -153,6 +162,7 @@ class User {
       completedActionsType: completedActionsType ?? this.completedActionsType,
       points: points ?? this.points,
       token: token ?? this.token,
+      organisation: organisation ?? _organisation,
     );
   }
 
@@ -206,6 +216,9 @@ class User {
 
     points = json['points'] ?? 0;
     token = json['token'];
+    _organisation = json['organisation'] == null
+        ? null
+        : Organisation.fromJson(json['organisation']);
     print("Got new user");
   }
   Map toJson() => {

@@ -1,0 +1,96 @@
+{
+  "data": [
+    {
+      "id": 17,
+      "title": "Advancing Economic Justice for Women",
+      "description_app": "The gender gap in annual earnings for young women in the UK aged 18-21 is currently 32.8% and for young women aged 22-29 is 19%. This is the result of factors including discrimination in the workplace, career gender stereotypes and disproportionate caring responsibilities. The outbreak of Covid-19 has exacerbated this issue, with many women disproportionately impacted by the pandemic.\n \nNot only do women face unequal treatment in the workplace, but they also carry the brunt of domestic/care work at home. This campaign aims to raise awareness about economic injustice for women by driving institutional change and breaking down gender stereotypes regarding domestic/care work.",
+      "header_image": "https://images.unsplash.com/photo-1607748851687-ba9a10438621?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
+      "created_at": "2021-02-25T18:56:00.627Z",
+      "updated_at": "2021-04-09T16:31:00.145Z",
+      "video_link": "https://www.youtube.com/watch?v=bBk068rmGb0&feature=emb_logo",
+      "description_web": "The gender gap in annual earnings for young women in the UK aged 18-21 is currently 32.8% and for young women aged 22-29 is 19%. This is the result of factors including discrimination in the workplace, career gender stereotypes and disproportionate caring responsibilities. The outbreak of Covid-19 has exacerbated this issue, with many women disproportionately impacted by the pandemic.\n \nNot only do women face unequal treatment in the workplace, but they also carry the brunt of domestic/care work at home. Prior to Covid, in the UK, women spent 1.8 times more time on unpaid care work and chores than men. Globally, the average is a lot higher with women doing 3 times as much unpaid work than men. Balancing unpaid and paid care can have significant impacts on their mental and physical wellbeing, as well as the wellbeing of others. Unpaid care work is significantly undervalued compared to paid work outside of the home. This is problematic as the majority of this work is undertaken by women, making its devaluation tied to the devaluation of women’s social position.\n \nThis campaign aims to raise awareness about economic injustice for women by driving institutional change, breaking down gender stereotypes regarding domestic/care work and strengthening the capacity of organisations working on this issue.\n",
+      "enabled": true,
+      "start_date": "2021-03-06T00:00:00.000Z",
+      "end_date": "2021-05-28T23:00:00.000Z",
+      "short_name": "Economic Justice for Women",
+      "number_of_campaigners": 44,
+      "number_of_completed_actions": 74,
+      "general_partners": [
+        {
+          "id": 36,
+          "name": "Young Women's Trust",
+          "description": "Young Women's Trust is a feminist organisation working to achieve economic justice for young women.\n\nYoung Women’s Trust offers support to young women aged 18 to 30, who are living on low or no pay and want to build a better future. We campaign for young women’s equality in the workplace and our research examines what young women’s lives are really like.",
+          "logo_link": "https://now-u.s3.eu-west-2.amazonaws.com/YWT_logo_no_background_1_beb8dd48bc.png",
+          "created_at": "2021-04-16T10:16:42.593Z",
+          "updated_at": "2021-04-19T17:23:46.194Z",
+          "email": "contact@youngwomenstrust.org",
+          "website": "https://www.youngwomenstrust.org/",
+          "IG_link": "https://www.instagram.com/youngwomenstrust/",
+          "FB_link": "https://www.facebook.com/youngwomenstrust",
+          "twitter_link": "https://twitter.com/YWTrust",
+          "extra_text_1": null,
+          "extra_text_2": null,
+          "extra_text_3": null,
+          "extra_link_1": null,
+          "extra_link_2": null,
+          "extra_link_3": null,
+          "organisation_type": "charity",
+          "code": null,
+          "geographic_reach": "International"
+        }
+      ],
+      "campaign_partners": [
+        
+      ],
+      "sdgs": [
+        {
+          "id": 5,
+          "title": "GOAL 5: Gender Equality",
+          "type": "United Nations Sustainable Development Goal",
+          "created_at": "2020-04-01T20:24:00.000Z",
+          "updated_at": "2020-04-01T20:24:00.000Z"
+        }
+      ],
+      "key_aims": [
+        {
+          "id": 87,
+          "title": "Raise awareness about economic injustice for women, including unrecognised unpaid work",
+          "type": "Key Aim",
+          "created_at": "2021-02-25T18:57:01.497Z",
+          "updated_at": "2021-02-25T18:57:01.497Z"
+        }
+      ],
+      "actions": [
+        {
+          "id": 552,
+          "title": "Donate to the Young Women's Trust",
+          "link": "https://www.youngwomenstrust.org/donate/",
+          "type": "donate",
+          "campaign_id": 17,
+          "created_at": "2021-03-05T14:27:43.764Z",
+          "updated_at": "2021-03-05T14:27:43.772Z",
+          "what_description": "Donate to the Young Women's Trust, an organisation working to achieve economic justice for young women.",
+          "why_description": "Your donations will: help train young women to drive local community change, fund campaigns to build equal and respectful workplaces, and fund vital services that help women recognise their own strengths.",
+          "time": 5.0,
+          "enabled": true,
+          "release_date": "2021-03-06T00:00:00.000Z",
+          "end_date": null
+        }
+      ],
+      "learning_topics": [
+        {
+          "id": 114,
+          "title": "What does economic justice for women mean?",
+          "image_link": "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=80",
+          "our_answer": "Women’s economic justice means women can benefit from economic activities on terms which recognise the value of their contribution, respect their dignity and make it possible for them to negotiate a fair income.",
+          "campaign_id": 17,
+          "created_at": "2021-03-01T22:20:51.927Z",
+          "updated_at": "2021-03-01T22:20:51.932Z",
+          "linked_campaign": null,
+          "priority": 1
+        }
+      ],
+      "infographic_url": "https://now-u.s3.eu-west-2.amazonaws.com/Economic_Justice_for_Women_8d16d92735.png"
+    }
+  ]
+}

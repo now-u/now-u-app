@@ -1,0 +1,38 @@
+{
+  "name": "firebase_dynamic_links",
+  "version": "0.6.3",
+  "summary": "Flutter plugin for Google Dynamic Links for Firebase, an app solution for creating and handling links across multiple platforms.",
+  "description": "Flutter plugin for Google Dynamic Links for Firebase, an app solution for creating and handling links across multiple platforms.",
+  "homepage": "https://github.com/FirebaseExtended/flutterfire/tree/master/packages/firebase_dynamic_links",
+  "license": {
+    "file": "../LICENSE"
+  },
+  "authors": "The Chromium Authors",
+  "source": {
+    "path": "."
+  },
+  "source_files": "Classes/**/*",
+  "public_header_files": "Classes/**/*.h",
+  "dependencies": {
+    "Flutter": [
+
+    ],
+    "firebase_core": [
+
+    ],
+    "Firebase/CoreOnly": [
+      "~> 6.33.0"
+    ],
+    "Firebase/DynamicLinks": [
+      "~> 6.33.0"
+    ]
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "static_framework": true,
+  "pod_target_xcconfig": {
+    "GCC_PREPROCESSOR_DEFINITIONS": "LIBRARY_VERSION=\\@\\\"0.6.3\\\" LIBRARY_NAME=\\@\\\"flutter-fire-dl\\\"",
+    "DEFINES_MODULE": "YES"
+  }
+}
