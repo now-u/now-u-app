@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the build method from the AccountDetailsPage class, for the Dart programming language.">
+  <title>build method - AccountDetailsPage class - AccountDetailsPage library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../../static-assets/github.css">
+  <link rel="stylesheet" href="../../static-assets/styles.css">
+  <link rel="icon" href="../../static-assets/favicon.png">
+
+  
+</head>
+
+
+<body data-base-href="../../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">app</a></li>
+    <li><a href="../../pages_more_morePages_AccountDetailsPage/pages_more_morePages_AccountDetailsPage-library.html">AccountDetailsPage</a></li>
+    <li><a href="../../pages_more_morePages_AccountDetailsPage/AccountDetailsPage-class.html">AccountDetailsPage</a></li>
+    <li class="self-crumb">build method</li>
+  </ol>
+  <div class="self-name">build</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-method">build</span> method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+<div>
+  <ol class="annotation-list">
+    <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
+  </ol>
+</div>
+
+<span class="returntype"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span>
+<span class="name ">build</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="build-param-context"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span></span></li>
+</ol>)
+
+      <div class="features">override</div>
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Describes the part of the user interface represented by this widget.</p>
+<p>The framework calls this method when this widget is inserted into the tree
+in a given <a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a> and when the dependencies of this widget change
+(e.g., an <a href="https://api.flutter.dev/flutter/widgets/InheritedWidget-class.html">InheritedWidget</a> referenced by this widget changes). This
+method can potentially be called in every frame and should not have any side
+effects beyond building a widget.</p>
+<p>The framework replaces the subtree below this widget with the widget
+returned by this method, either by updating the existing subtree or by
+removing the subtree and inflating a new subtree, depending on whether the
+widget returned by this method can update the root of the existing
+subtree, as determined by calling <a href="https://api.flutter.dev/flutter/widgets/Widget/canUpdate.html">Widget.canUpdate</a>.</p>
+<p>Typically implementations return a newly created constellation of widgets
+that are configured with information from this widget's constructor and
+from the given <a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a>.</p>
+<p>The given <a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a> contains information about the location in the
+tree at which this widget is being built. For example, the context
+provides the set of inherited widgets for this location in the tree. A
+given widget might be built with multiple different <a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a>
+arguments over time if the widget is moved around the tree or if the
+widget is inserted into the tree in multiple places at once.</p>
+<p>The implementation of this method must only depend on:</p>
+<ul>
+<li>the fields of the widget, which themselves must not change over time,
+and</li>
+<li>any ambient state obtained from the <code>context</code> using
+<a href="https://api.flutter.dev/flutter/widgets/BuildContext/dependOnInheritedWidgetOfExactType.html">BuildContext.dependOnInheritedWidgetOfExactType</a>.</li>
+</ul>
+<p>If a widget's <a href="../../pages_more_morePages_AccountDetailsPage/AccountDetailsPage/build.html">build</a> method is to depend on anything else, use a
+<a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a> instead.</p>
+<p>See also:</p>
+<ul>
+<li><a href="https://api.flutter.dev/flutter/widgets/StatelessWidget-class.html">StatelessWidget</a>, which contains the discussion on performance considerations.</li>
+</ul>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: Colors.white,
+    appBar: customAppBar(
+      text: &quot;Edit account details&quot;,
+      context: context,
+      backButtonText: &quot;Menu&quot;,
+    ),
+    body: ViewModelBuilder&lt;AccountDetailsViewModel&gt;.reactive(
+      viewModelBuilder: () =&gt; AccountDetailsViewModel(),
+      onModelReady: (model) =&gt; model.init(),
+      builder: (context, model, child) {
+        return Form(
+            key: model.formKey,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(18, 0, 18, 0),
+              child: ListView(
+                children: &lt;Widget&gt;[
+                  &#47;&#47; TODO: Name
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 30, 0, 8),
+                    child: Text(
+                      &quot;Name&quot;,
+                      style: textStyleFrom(
+                        Theme.of(context).primaryTextTheme.headline5,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  CustomTextFormField(
+                      autofocus: false,
+                      initialValue: model.currentUser.getName(),
+                      style: CustomFormFieldStyle.Light,
+                      onChanged: (String name) {
+                        model.name = name;
+                      }),
+                  &#47;&#47; TODO: Age
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 28.5, 0, 8),
+                    child: Text(
+                      &quot;Date of birth&quot;,
+                      style: textStyleFrom(
+                        Theme.of(context).primaryTextTheme.headline5,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                      onTap: () =&gt; _datePicker(context, model.latestDob,
+                              (DateTime date) {
+                            model.dob = date;
+                          }),
+                      child: AbsorbPointer(
+                        child: CustomTextFormField(
+                          style: CustomFormFieldStyle.Light,
+                          controller: model.dobFieldController,
+                        ),
+                      )),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 28.5, 0, 8),
+                    child: Text(
+                      &quot;Location&quot;,
+                      style: textStyleFrom(
+                        Theme.of(context).primaryTextTheme.headline5,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                      onTap: () async {
+                        &#47;&#47; generate a new token here
+                        final Suggestion result = await showSearch(
+                          context: context,
+                          delegate: AddressSearch(model.fetchSuggestions),
+                        );
+
+                        print(&quot;result&quot;);
+                        print(result);
+                        &#47;&#47; This will change the text displayed in the TextField
+                        if (result != null) {
+                          final placeDetails =
+                              await model.getPlaceDetails(result.placeId);
+                          print(&quot;We go em ${placeDetails.zipCode}&quot;);
+                        }
+                      },
+                      child: AbsorbPointer(
+                        child: CustomTextFormField(
+                          style: CustomFormFieldStyle.Light,
+                          controller: model.locationFieldController,
+                        ),
+                      )),
+                  &#47;&#47; TODO: Email
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 28.5, 0, 8),
+                    child: Text(
+                      &quot;Email&quot;,
+                      style: textStyleFrom(
+                        Theme.of(context).primaryTextTheme.headline5,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  &#47;&#47; TODO: Make field disabled
+                  CustomTextFormField(
+                    autofocus: false,
+                    style: CustomFormFieldStyle.Light,
+                    initialValue: model.currentUser.getEmail(),
+                    enabled: false,
+                  ),
+                  &#47;&#47; TODO: Receive newsletter toggle
+                  Row(
+                    children: &lt;Widget&gt;[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 20, 0, 5),
+                        child: Text(
+                          &quot;Receive newsletter&quot;,
+                          style: textStyleFrom(
+                            Theme.of(context).primaryTextTheme.headline4,
+                          ),
+                        ),
+                      ),
+                      &#47;&#47; TODO: Implement Toggle Button
+                      &#47;&#47; CustomToggleButton(),
+                    ],
+                  ),
+                  &#47;&#47; TODO: Organisation Code
+                  &#47;&#47; TODO: CustomSwitch in inputs.dart
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 8),
+                    child: Text(
+                      &quot;Organisation&quot;,
+                      style: textStyleFrom(
+                        Theme.of(context).primaryTextTheme.headline4,
+                      ),
+                    ),
+                  ),
+                  Column(
+                      children: model.userOrganisation != null
+                          ? [
+                              Row(
+                                children: [
+                                  Image.network(
+                                    model.userOrganisation.getLogoLink(),
+                                    width: 60,
+                                  ),
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    child: Text(
+                                      model.userOrganisation.getName(),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.remove_circle,
+                                      color: Theme.of(context).errorColor,
+                                    ),
+                                    onPressed: () {
+                                      model.leaveOrganisation();
+                                    },
+                                  )
+                                ],
+                              )
+                            ]
+                          : [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 0, 0, 21),
+                                child: Text(
+                                  &quot;If you work for one of our business partners, you can enter the organisation code below so they can see the actions you’ve taken.&quot;,
+                                  style: textStyleFrom(
+                                    Theme.of(context)
+                                        .primaryTextTheme
+                                        .bodyText2,
+                                  ),
+                                ),
+                              ),
+                              CustomTextFormField(
+                                  autofocus: false,
+                                  hintText: &#39;Enter organisation code&#39;,
+                                  style: CustomFormFieldStyle.Light,
+                                  onChanged: (String code) {
+                                    model.orgCode = code;
+                                  }),
+                            ]),
+                  &#47;&#47; TODO: Ok button
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 21, 0, 0),
+                    child: DarkButton(
+                      &quot;Save&quot;,
+                      onPressed: model.save,
+                    ),
+                  ),
+                  &#47;&#47; TODO: Delete account button
+                  SizedBox(
+                    height: 82,
+                  ),
+                  &#47;&#47;TODO add this in
+                  Row(
+                    children: &lt;Widget&gt;[
+                      Expanded(
+                        child: SizedBox(),
+                      ),
+                      CustomTextButton(
+                        &quot;Delete my account&quot;,
+                        onClick: () {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (context) =&gt; SingleChildScrollView(
+                              child: Container(
+                                &#47;&#47; This off sets content from keyboard if visible
+                                padding: EdgeInsets.only(
+                                    bottom: MediaQuery.of(context)
+                                        .viewInsets
+                                        .bottom),
+                                child: ConfirmationModal(),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      Expanded(
+                        child: SizedBox(
+                          height: 100,
+                        ),
+                      ),
+                    ],
+                  ),
+                  &#47;&#47; TODO: Save Changes
+                ],
+              ),
+            ));
+      },
+    ),
+  );
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../../index.html">app</a></li>
+  <li><a href="../../pages_more_morePages_AccountDetailsPage/pages_more_morePages_AccountDetailsPage-library.html">AccountDetailsPage</a></li>
+  <li><a href="../../pages_more_morePages_AccountDetailsPage/AccountDetailsPage-class.html">AccountDetailsPage</a></li>
+  <li class="self-crumb">build method</li>
+</ol>
+
+
+    <h5>AccountDetailsPage class</h5>
+    <ol>
+
+    <li class="section-title"><a href="../../pages_more_morePages_AccountDetailsPage/AccountDetailsPage-class.html#constructors">Constructors</a></li>
+    <li><a href="../../pages_more_morePages_AccountDetailsPage/AccountDetailsPage/AccountDetailsPage.html">AccountDetailsPage</a></li>
+
+
+    <li class="section-title inherited">
+      <a href="../../pages_more_morePages_AccountDetailsPage/AccountDetailsPage-class.html#instance-properties">Properties</a>
+    </li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/key.html">key</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+
+    <li class="section-title"><a href="../../pages_more_morePages_AccountDetailsPage/AccountDetailsPage-class.html#instance-methods">Methods</a></li>
+    <li><a href="../../pages_more_morePages_AccountDetailsPage/AccountDetailsPage/build.html">build</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/StatelessWidget/createElement.html">createElement</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/debugDescribeChildren.html">debugDescribeChildren</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/debugFillProperties.html">debugFillProperties</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toDiagnosticsNode.html">toDiagnosticsNode</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/Diagnosticable/toString.html">toString</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toStringDeep.html">toStringDeep</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toStringShallow.html">toStringShallow</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/toStringShort.html">toStringShort</a></li>
+
+    <li class="section-title inherited"><a href="../../pages_more_morePages_AccountDetailsPage/AccountDetailsPage-class.html#operators">Operators</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/operator_equals.html">operator ==</a></li>
+
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    app
+      1.2.0+34
+  </span>
+
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js"></script>
+<script src="../../static-assets/script.js"></script>
+
+
+
+</body>
+
+</html>
+
