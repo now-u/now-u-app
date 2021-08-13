@@ -10,6 +10,7 @@ import 'package:app/services/navigation_service.dart';
 import 'package:app/managers/dialog_manager.dart';
 
 import 'package:app/pages/other/startup_view.dart';
+import 'package:app/pages/playground/playground_page.dart';
 
 void main() {
   Crashlytics.instance.enableInDevMode = true;
@@ -94,7 +95,7 @@ class _AppState extends State<App> {
         onGenerateRoute: (settings) => MaterialPageRoute(
             builder: (context) => DialogManager(child: widget)),
       ),
-      home: StartUpView(),
+      home: PlaygroundView(), //SHOULD BE REPLACED WITH StartUpView()
       //initialRoute: Routes.intro,
       onGenerateRoute: initRoutes,
       theme: ThemeData(
