@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:app/assets/components/buttons/iconButton.dart';
+import 'package:app/assets/components/buttons/customIconButton.dart';
+import 'package:app/assets/components/buttons/button_styles&sizes.dart';
 import 'package:app/assets/icons/customIcons.dart';
+
 
 class CauseTile extends StatefulWidget {
   final String causeName;
@@ -54,7 +56,7 @@ class _CauseTileState extends State<CauseTile> {
                 children: [
                   Expanded(flex: 3,
                       child: Text('Learn more', textAlign: TextAlign.center)),
-                  Expanded(flex: 1, child: CustomIconButton(size: 4, isCircularButton: true, onPressed: () {print('pressed');}, icon: CustomIcons.ic_actions))
+                  Expanded(flex: 1, child: CustomIconButton(size: ButtonSize.Small, isCircularButton: true, onPressed: () {print('pressed');}, icon: CustomIcons.ic_actions))
                 ],
               )
             ],

@@ -1,17 +1,16 @@
-import 'package:app/assets/StyleFrom.dart';
 import 'package:flutter/material.dart';
+import 'package:app/assets/components/buttons/button_styles&sizes.dart';
+import 'package:app/assets/StyleFrom.dart';
 
 class CustomIconButton extends StatelessWidget {
   final VoidCallback onPressed;
   final IconData icon;
-  final double size;
-  final double borderRadius;
+  final ButtonSize size;
   final Color backgroundColor;
   final Color iconColor;
   final bool isCircularButton;
 
   CustomIconButton({
-    this.borderRadius,
     @required this.onPressed,
     @required this.icon,
     this.iconColor,
@@ -23,9 +22,9 @@ class CustomIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      height: size,
+      height: buttonStyleStyles[size]['height'],
       elevation: 0,
-      color: this.backgroundColor ?? Colors.white,
+      color: this.backgroundColor ?? Theme.of(context).primaryColor,
       disabledColor: colorFrom(
         Theme.of(context).primaryColor,
         opacity: 0.5,
@@ -34,19 +33,16 @@ class CustomIconButton extends StatelessWidget {
       shape: isCircularButton
           ? CircleBorder()
           : RoundedRectangleBorder(
-        borderRadius: borderRadius ?? BorderRadius.circular(
-            8),
+        borderRadius: BorderRadius.circular(
+            buttonStyleStyles[size]['borderRadius']),
       ),
       padding: isCircularButton
           ? EdgeInsets.all(0)
           : EdgeInsets.symmetric(horizontal: 60.0, vertical: 15.0),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Icon(
-          icon,
-          size: isCircularButton ? 15 : 25,
-          color: iconColor ?? Theme.of(context).primaryColor,
-        ),
+      child: Icon(
+        icon,
+        size: isCircularButton ? 15 : 25,
+        color: iconColor ?? Colors.white,
       ),
     );
   }
