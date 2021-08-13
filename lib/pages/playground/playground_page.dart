@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:app/assets/components/causeTile.dart';
 import 'package:app/assets/icons/customIcons.dart';
+import 'package:app/models/Cause.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PlaygroundView extends StatelessWidget {
   @override
@@ -14,8 +16,8 @@ class PlaygroundView extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                CauseTile(causeName: 'Environment', iconData: CustomIcons.ic_actions,),
-                CauseTile(causeName: 'Health & Wellbeing', iconData: CustomIcons.ic_actions,),
+                CauseTile(cause: Cause(name: 'Environment'), causeIcon: FontAwesomeIcons.leaf, isSelected: false),
+                CauseTile(cause: Cause(name: 'Health & Wellbeing'), causeIcon: FontAwesomeIcons.heart, isSelected: true),
               ],
             )
         )
