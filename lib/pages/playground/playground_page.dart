@@ -10,18 +10,21 @@ class PlaygroundView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          color: Color(0XFFF3F4F8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                CauseTile(cause: Cause(name: 'Environment'), causeIcon: FontAwesomeIcons.leaf, isSelected: false),
-                CauseTile(cause: Cause(name: 'Health & Wellbeing'), causeIcon: FontAwesomeIcons.heart, isSelected: true),
-              ],
-            )
-        )
-        )
-    );
+            child: Container(
+                height: MediaQuery.of(context).size.height,
+                color: Color(0XFFF3F4F8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    CauseTile(
+                        cause: Cause(name: 'Environment'),
+                        causeIcon: FontAwesomeIcons.leaf,
+                        isSelected: false),
+                    CauseTile(
+                        cause: Cause(name: 'Health & Wellbeing'),
+                        causeIcon: FontAwesomeIcons.heart,
+                        isSelected: true),
+                  ],
+                ))));
   }
 }

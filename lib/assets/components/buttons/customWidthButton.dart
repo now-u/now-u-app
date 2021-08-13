@@ -14,12 +14,12 @@ class CustomWidthButton extends StatelessWidget {
 
   CustomWidthButton(this.text,
       {@required this.onPressed,
-        this.rightIcon,
-        @required this.size,
-        @required this.fontSize,
-        @required this.buttonWidthProportion,
-        this.backgroundColor,
-        this.textColor});
+      this.rightIcon,
+      @required this.size,
+      @required this.fontSize,
+      @required this.buttonWidthProportion,
+      this.backgroundColor,
+      this.textColor});
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +36,8 @@ class CustomWidthButton extends StatelessWidget {
           ),
           onPressed: onPressed,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(
-                buttonStyleStyles[size]['borderRadius']),
+            borderRadius:
+                BorderRadius.circular(buttonStyleStyles[size]['borderRadius']),
           ),
           child: Padding(
             padding: EdgeInsets.symmetric(
