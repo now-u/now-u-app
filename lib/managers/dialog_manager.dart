@@ -94,8 +94,8 @@ class _DialogManagerState extends State<DialogManager> {
 
     List<Widget> buttonWidgets = [];
     for (final DialogButton button in buttons) {
-      DarkButtonStyle buttonStyle =
-          button.style != null ? button.style : DarkButtonStyle.Primary;
+      ButtonStyle buttonStyle =
+          button.style != null ? button.style : ButtonStyle.Primary;
       buttonWidgets.add(Container(
         width: double.infinity,
         child: DarkButton(

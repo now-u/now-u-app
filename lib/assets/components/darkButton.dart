@@ -1,39 +1,8 @@
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:flutter/material.dart';
+import 'package:app/assets/components/buttons/buttons_styles.dart';
 
-final double defaultBorderRadius = 8.0;
-final double defaultPadding = 14.0;
-
-enum DarkButtonSize { Small, Medium, Large }
-enum DarkButtonStyle { Primary, Secondary, Outline }
-
-Map darkButtonStyleStyles = {
-  DarkButtonSize.Small: {
-    'style': DarkButtonSize.Small,
-    'height': 32.0,
-    'borderRadius': 8.0,
-    'fontSize': 14.0,
-    'hPadding': 10.0,
-    'vPadding': 8.0,
-  },
-  DarkButtonSize.Medium: {
-    'style': DarkButtonSize.Medium,
-    'height': 40.0,
-    'borderRadius': 8.0,
-    'fontSize': 17.0,
-    'hPadding': 16.0,
-    'vPadding': 8.0,
-  },
-  DarkButtonSize.Large: {
-    'style': DarkButtonSize.Large,
-    'height': 48.0,
-    'borderRadius': 8.0,
-    'fontSize': 17.0,
-    'hPadding': 16.0,
-    'vPadding': 8.0,
-  },
-};
 
 // ignore: must_be_immutable
 class DarkButton extends StatelessWidget {
@@ -41,12 +10,12 @@ class DarkButton extends StatelessWidget {
   final String text;
   final IconData rightIcon;
   final IconData leftIcon;
-  final DarkButtonSize size;
+  final ButtonSize size;
   final double fontSize;
   final DarkButtonStyle style;
 
   DarkButton(this.text,
-      {this.size = DarkButtonSize.Medium,
+      {this.size = ButtonSize.Medium,
       @required this.onPressed,
       this.rightIcon,
       this.leftIcon,
@@ -86,7 +55,7 @@ class SecondaryButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
   final IconData rightIcon;
-  final DarkButtonSize size;
+  final ButtonSize size;
   final double fontSize;
 
   SecondaryButton(
@@ -136,7 +105,7 @@ class PrimaryButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
   final IconData rightIcon;
-  final DarkButtonSize size;
+  final ButtonSize size;
   final double fontSize;
 
   PrimaryButton(
@@ -201,7 +170,7 @@ class PrimaryButton extends StatelessWidget {
 class OutlineButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
-  final DarkButtonSize size;
+  final ButtonSize size;
   final double fontSize;
 
   OutlineButton(
@@ -255,7 +224,7 @@ class CustomWidthButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
   final IconData rightIcon;
-  final DarkButtonSize size;
+  final ButtonSize size;
   final double fontSize;
   final double buttonWidthProportion;
   final Color backgroundColor;
@@ -309,7 +278,7 @@ class CustomWidthButton extends StatelessWidget {
 class CustomIconButton extends StatelessWidget {
   final VoidCallback onPressed;
   final IconData icon;
-  final DarkButtonSize size;
+  final ButtonSize size;
   final Color backgroundColor;
   final Color iconColor;
   final bool isCircularButton;
