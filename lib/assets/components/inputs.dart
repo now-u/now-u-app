@@ -51,7 +51,7 @@ class CustomTextFormField extends StatelessWidget {
         hintStyle: TextStyle(
           color: hintTextColor ??
               colorFrom(
-                Theme.of(context).primaryColor,
+                Theme.of(context).accentColor,
                 opacity: 0.5,
               ),
         ),

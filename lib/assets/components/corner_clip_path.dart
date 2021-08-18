@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class BackgroundClipper extends CustomClipper<Path> {
+class LoginBackgroundClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = Path();

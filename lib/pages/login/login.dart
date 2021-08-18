@@ -156,7 +156,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
           child: CustomWidthButton(
             'Create Account',
             backgroundColor: Theme.of(context).primaryColor,
-            buttonWidth: 250.0,
+            buttonWidthProportion: 0.8,
             onPressed: () {
               print("Button pressed");
               validateAndSave(model);
@@ -177,7 +177,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
             'Skip',
             backgroundColor: Colors.white,
             textColor: Theme.of(context).primaryColor,
-            buttonWidth: 250.0,
+            buttonWidthProportion: 0.8,
             onPressed: () {
               print("Button pressed");
               model.facebookLogin();
@@ -195,7 +195,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         child: Stack(
           children: [
             ClipPath(
-                clipper: BackgroundClipper(),
+                clipper: LoginBackgroundClipper(),
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.2,
                   decoration: BoxDecoration(
