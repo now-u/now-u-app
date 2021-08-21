@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:app/assets/components/buttons/customIconButton.dart';
-import 'package:app/assets/components/buttons/button_styles&sizes.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app/models/Cause.dart';
 
@@ -12,7 +11,7 @@ class CauseTile extends StatelessWidget {
   final bool isSelected;
   final IconData causeIcon;
 
-  CauseTile({@required this.cause, @required this.isSelected, this.causeIcon});
+  CauseTile({@required this.cause, @required this.isSelected, @required this.causeIcon});
 
   @override
   Widget build(BuildContext context) {
