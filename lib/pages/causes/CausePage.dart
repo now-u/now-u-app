@@ -60,8 +60,7 @@ class CausePage extends StatelessWidget {
                           isSelected: true),
                     ],
                   ),
-                  CustomWidthButton('Get started',
-                      onPressed: () {
+                  CustomWidthButton('Get started', onPressed: () {
                     model.goHome();
                   },
                       size: ButtonSize.Medium,
