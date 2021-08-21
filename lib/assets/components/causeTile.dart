@@ -9,7 +9,10 @@ class CauseTile extends StatelessWidget {
   final bool isSelected;
   final IconData causeIcon;
 
-  CauseTile({@required this.cause, @required this.isSelected, @required this.causeIcon});
+  CauseTile(
+      {@required this.cause,
+      @required this.isSelected,
+      @required this.causeIcon});
 
   @override
   Widget build(BuildContext context) {
