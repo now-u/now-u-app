@@ -65,9 +65,9 @@ class CustomIconButton extends StatelessWidget {
       shape: isCircularButton
           ? CircleBorder()
           : RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(
-            buttonStyleStyles[size]['borderRadius']),
-      ),
+              borderRadius: BorderRadius.circular(
+                  buttonStyleStyles[size]['borderRadius']),
+            ),
       padding: isCircularButton
           ? EdgeInsets.all(0)
           : EdgeInsets.symmetric(horizontal: 60.0, vertical: 15.0),

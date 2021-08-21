@@ -4,9 +4,7 @@ import 'package:app/assets/components/buttons/customIconButton.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app/models/Cause.dart';
 
-
 class CauseTile extends StatelessWidget {
-
   final Cause cause;
   final bool isSelected;
   final IconData causeIcon;
@@ -41,11 +39,13 @@ class CauseTile extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(0, 8, 0, 4),
                     child: Icon(causeIcon,
                         size: 60.0,
-                        color: isSelected ? Color(0XFFFF8800) : Color(0XFF373A4A)),
+                        color:
+                            isSelected ? Color(0XFFFF8800) : Color(0XFF373A4A)),
                   ),
                   Text(
                     '${cause.name}',
-                    style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                    style:
+                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -55,9 +55,18 @@ class CauseTile extends StatelessWidget {
               flex: 1,
               child: Row(
                 children: [
-                  Expanded(flex: 3,
+                  Expanded(
+                      flex: 3,
                       child: Text('Learn more', textAlign: TextAlign.center)),
-                  Expanded(flex: 1, child: CustomIconButton(size: ButtonSize.Small, isCircularButton: true, onPressed: () {print('pressed');}, icon: FontAwesomeIcons.question))
+                  Expanded(
+                      flex: 1,
+                      child: CustomIconButton(
+                          size: ButtonSize.Small,
+                          isCircularButton: true,
+                          onPressed: () {
+                            print('pressed');
+                          },
+                          icon: FontAwesomeIcons.question))
                 ],
               ),
             )
