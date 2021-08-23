@@ -42,9 +42,8 @@ class CausePage extends StatelessWidget {
                             ),
                             Text(
                               'Take action and selected the causes which are important to you',
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.white),
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.white),
                             ),
                           ],
                         ),
