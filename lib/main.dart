@@ -11,7 +11,7 @@ import 'package:app/managers/dialog_manager.dart';
 
 import 'package:app/pages/other/startup_view.dart';
 import 'package:app/pages/playground/playground_page.dart';
-import 'package:app/pages/causes/CausePage.dart';
+import 'package:app/pages/causes/CauseOnboardingPage.dart';
 
 void main() {
   Crashlytics.instance.enableInDevMode = true;
