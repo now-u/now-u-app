@@ -22,10 +22,10 @@ class CausePage extends StatelessWidget {
                         height: MediaQuery.of(context).size.height * 0.4,
                         decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              colors: [Color(0XFF011A43), Color(0XFF012B93)],
-                              begin: Alignment.bottomLeft,
-                              end: Alignment.topRight,
-                            )),
+                          colors: [Color(0XFF011A43), Color(0XFF012B93)],
+                          begin: Alignment.bottomLeft,
+                          end: Alignment.topRight,
+                        )),
                       )),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
@@ -70,7 +70,8 @@ class CausePage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   CauseTile(
                                       gestureFunction: () =>
@@ -87,7 +88,8 @@ class CausePage extends StatelessWidget {
                                 ],
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   CauseTile(
                                       gestureFunction: () =>
@@ -104,13 +106,15 @@ class CausePage extends StatelessWidget {
                                 ],
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   CauseTile(
                                       gestureFunction: () =>
                                           model.toggleSelection(causeIndex: 4),
                                       cause: model.causesList[4],
-                                      causeIcon: FontAwesomeIcons.handHoldingUsd,
+                                      causeIcon:
+                                          FontAwesomeIcons.handHoldingUsd,
                                       isSelected: model.causesSelectedList[4]),
                                   CauseTile(
                                       gestureFunction: () =>
