@@ -73,7 +73,9 @@ class CauseTile extends StatelessWidget {
                         child: CustomIconButton(
                             size: ButtonSize.Small,
                             isCircularButton: true,
-                            onPressed: (){print('hello');},
+                            onPressed: () {
+                              print('hello');
+                            },
                             icon: FontAwesomeIcons.question))
                   ],
                 ),
