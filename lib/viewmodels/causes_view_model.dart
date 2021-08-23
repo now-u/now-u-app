@@ -31,16 +31,16 @@ class CausesViewModel extends BaseModel {
     notifyListeners();
   }
 
-  void getIsButtonDisabled(){
+  void getIsButtonDisabled() {
     _isButtonDisabled = true;
-    for (int countIndex = 0; countIndex <= 5; countIndex ++){
+    for (int countIndex = 0; countIndex <= 5; countIndex++) {
       if (_causesSelectedList[countIndex] == true) {
         _isButtonDisabled = false;
       }
     }
   }
 
-  void toggleSelection({int causeIndex}){
+  void toggleSelection({int causeIndex}) {
     _causesSelectedList[causeIndex] = !_causesSelectedList[causeIndex];
     getIsButtonDisabled();
     notifyListeners();
