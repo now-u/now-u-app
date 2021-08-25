@@ -45,7 +45,7 @@ class _DialogManagerState extends State<DialogManager> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Image.network(request.headerImage ?? 'https://images.unsplash.com/photo-1498925008800-019c7d59d903?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=968&q=80'),
+            Image.network(request.headerImage ?? 'https://i.ytimg.com/vi/h5vnFpWCOhQ/maxresdefault.jpg'),
             SizedBox(height: 20),
             Text(
               request.title,
