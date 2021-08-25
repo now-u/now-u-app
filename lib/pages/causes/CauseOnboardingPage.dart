@@ -77,13 +77,15 @@ class CausePage extends StatelessWidget {
                                           model.toggleSelection(causeIndex: 0),
                                       cause: model.causesList[0],
                                       causeIcon: FontAwesomeIcons.leaf,
-                                      isSelected: model.causesSelectedList[0]),
+                                      isSelected: model.causesSelectedList[0],
+                                  getInfoFunction: () => model.getCausePopup(causeIndex: 0),),
                                   CauseTile(
                                       gestureFunction: () =>
                                           model.toggleSelection(causeIndex: 1),
                                       cause: model.causesList[1],
                                       causeIcon: FontAwesomeIcons.heart,
-                                      isSelected: model.causesSelectedList[1]),
+                                      isSelected: model.causesSelectedList[1],
+                                    getInfoFunction: () => model.getCausePopup(causeIndex: 1),),
                                 ],
                               ),
                               Row(
@@ -94,13 +96,15 @@ class CausePage extends StatelessWidget {
                                           model.toggleSelection(causeIndex: 2),
                                       cause: model.causesList[2],
                                       causeIcon: FontAwesomeIcons.balanceScale,
-                                      isSelected: model.causesSelectedList[2]),
+                                      isSelected: model.causesSelectedList[2],
+                                    getInfoFunction: () => model.getCausePopup(causeIndex: 2),),
                                   CauseTile(
                                       gestureFunction: () =>
                                           model.toggleSelection(causeIndex: 3),
                                       cause: model.causesList[3],
                                       causeIcon: FontAwesomeIcons.graduationCap,
-                                      isSelected: model.causesSelectedList[3]),
+                                      isSelected: model.causesSelectedList[3],
+                                    getInfoFunction: () => model.getCausePopup(causeIndex: 3),),
                                 ],
                               ),
                               Row(
@@ -111,13 +115,15 @@ class CausePage extends StatelessWidget {
                                           model.toggleSelection(causeIndex: 4),
                                       cause: model.causesList[4],
                                       causeIcon: FontAwesomeIcons.handHoldingUsd,
-                                      isSelected: model.causesSelectedList[4]),
+                                      isSelected: model.causesSelectedList[4],
+                                    getInfoFunction: () => model.getCausePopup(causeIndex: 4),),
                                   CauseTile(
                                       gestureFunction: () =>
                                           model.toggleSelection(causeIndex: 5),
                                       cause: model.causesList[5],
                                       causeIcon: FontAwesomeIcons.home,
-                                      isSelected: model.causesSelectedList[5]),
+                                      isSelected: model.causesSelectedList[5],
+                                    getInfoFunction: () => model.getCausePopup(causeIndex: 5),),
                                 ],
                               ),
                             ],
@@ -134,7 +140,7 @@ class CausePage extends StatelessWidget {
                                           return null;
                                         }
                                       : () {
-                                          model.goHome();
+                                          model.getCausePopup();
                                         },
                                   backgroundColor: model.isButtonDisabled
                                       ? Colors.grey

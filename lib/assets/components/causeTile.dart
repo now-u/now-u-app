@@ -9,13 +9,13 @@ class CauseTile extends StatelessWidget {
   final bool isSelected;
   final IconData causeIcon;
   final VoidCallback gestureFunction;
-  // final VoidCallback getInfoFunction;
+  final VoidCallback getInfoFunction;
 
   CauseTile(
       {@required this.cause,
       @required this.isSelected,
       @required this.gestureFunction,
-      // @required this.getInfoFunction,
+      @required this.getInfoFunction,
       @required this.causeIcon});
 
   @override
@@ -73,9 +73,7 @@ class CauseTile extends StatelessWidget {
                         child: CustomIconButton(
                             size: ButtonSize.Small,
                             isCircularButton: true,
-                            onPressed: () {
-                              print('hello');
-                            },
+                            onPressed: getInfoFunction,
                             icon: FontAwesomeIcons.question))
                   ],
                 ),

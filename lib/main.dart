@@ -97,7 +97,7 @@ class _AppState extends State<App> {
             builder: (context) => DialogManager(child: widget)),
       ),
       home: CausePage(), //SHOULD BE REPLACED WITH StartUpView()
-      //initialRoute: Routes.intro,
+      // initialRoute: Routes.intro,
       onGenerateRoute: initRoutes,
       theme: ThemeData(
         // This is the theme of the application.
