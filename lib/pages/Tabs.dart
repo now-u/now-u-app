@@ -7,6 +7,7 @@ import 'package:app/pages/home/Home.dart';
 import 'package:app/pages/more/MoreMenu.dart';
 import 'package:app/pages/news/NewsPage.dart';
 import 'package:app/pages/action/ActionPage.dart';
+import 'package:app/pages/explore/ExplorePage.dart';
 
 //import 'package:app/assets/dynamicLinks.dart';
 
@@ -25,17 +26,12 @@ class TabsPage extends StatefulWidget {
 
 class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
   TabPage currentPage;
-  int _subIndex;
 
   @override
   void initState() {
     currentPage = widget.currentPage;
-    _subIndex = null;
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    //handleDynamicLinks(
-    //  changePage
-    //);
   }
 
   @override
@@ -50,7 +46,6 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
     print(subIndex);
     setState(() {
       currentPage = page;
-      _subIndex = subIndex;
     });
   }
 
@@ -79,6 +74,11 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
         'title': "News",
       },
       {
+        'page': ExplorePage(),
+        'icon': Icon(CustomIcons.ic_news),
+        'title': "Explore",
+      },
+      {
         'page': Profile(),
         'icon': Icon(CustomIcons.ic_more),
         'title': "More",
@@ -102,9 +102,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
             child: _pages[i]['icon'],
           ),
           icon: _pages[i]['icon'],
-          title: Text(
-            _pages[i]['title'],
-          ),
+          label: _pages[i]['title']
         ));
       }
       return items;
@@ -127,7 +125,6 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
             onTap: (index) {
               setState(() {
                 currentPage = TabPage.values[index];
-                _subIndex = null;
               });
             },
           ),
