@@ -1,4 +1,3 @@
-//import 'package:app/constants/route_names.dart';
 import 'package:app/locator.dart';
 import 'package:app/routes.dart';
 import 'package:app/services/auth.dart';
@@ -9,7 +8,7 @@ import 'package:app/services/remote_config_service.dart';
 import 'package:app/viewmodels/base_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-class StartUpViewModel extends BaseModel {
+class OnBoardingViewModel extends BaseModel {
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   final NavigationService _navigationService = locator<NavigationService>();
@@ -30,13 +29,15 @@ class StartUpViewModel extends BaseModel {
     final RemoteConfigService _remoteConfigService =
         locator<RemoteConfigService>();
     await _remoteConfigService.init();
+  }
 
+  Future<void> navigateToNextScreen() async {
     var hasLoggedInUser = await _authenticationService.isUserLoggedIn();
 
     if (hasLoggedInUser) {
       _navigationService.navigateTo(Routes.home);
     } else {
-      _navigationService.navigateTo(Routes.onBoarding);
+      _navigationService.navigateTo(Routes.login);
     }
   }
 }
