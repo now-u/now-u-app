@@ -67,7 +67,12 @@ class CauseTile extends StatelessWidget {
                   children: [
                     Expanded(
                         flex: 3,
-                        child: Text('Learn more', textAlign: TextAlign.center)),
+                        child: MaterialButton(
+                            child: Text(
+                              'Learn more',
+                              textAlign: TextAlign.center,
+                            ),
+                            onPressed: getInfoFunction)),
                     Expanded(
                         flex: 1,
                         child: CustomIconButton(

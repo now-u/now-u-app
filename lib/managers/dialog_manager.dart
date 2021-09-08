@@ -7,7 +7,6 @@ import 'package:app/services/navigation_service.dart';
 
 import 'package:app/assets/components/buttons/darkButton.dart';
 import 'package:app/assets/StyleFrom.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
 
 class DialogManager extends StatefulWidget {
