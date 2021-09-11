@@ -12,6 +12,8 @@ class OnBoardingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<OnBoardingViewModel>.reactive(
         viewModelBuilder: () => OnBoardingViewModel(),
-        builder: (context, model, child) => OnBoardingCarousel());
+        builder: (context, model, child) => OnBoardingCarousel(
+              model: model,
+            ));
   }
 }

@@ -1,4 +1,5 @@
 import 'package:app/assets/StyleFrom.dart';
+import 'package:app/viewmodels/onboarding_model.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -8,8 +9,8 @@ import 'second_page.dart';
 import 'third_page.dart';
 
 class OnBoardingCarousel extends StatelessWidget {
-  const OnBoardingCarousel({Key key}) : super(key: key);
-
+  const OnBoardingCarousel({Key key, this.model}) : super(key: key);
+  final OnBoardingViewModel model;
   @override
   Widget build(BuildContext context) {
     final pageController = PageController(initialPage: 0);
@@ -19,7 +20,20 @@ class OnBoardingCarousel extends StatelessWidget {
         children: [
           PageView(
             controller: pageController,
-            children: pages,
+            children: [
+              FirstOnBoardingPage(
+                model: model,
+              ),
+              SecondOnBoardingPage(
+                model: model,
+              ),
+              ThirdOnBoardingPage(
+                model: model,
+              ),
+              FourthOnBoardingPage(
+                model: model,
+              )
+            ],
           ),
           Positioned(
             bottom: MediaQuery.of(context).size.height * 0.05,
@@ -27,7 +41,7 @@ class OnBoardingCarousel extends StatelessWidget {
             child: Center(
               child: SmoothPageIndicator(
                 controller: pageController,
-                count: pages.length,
+                count: 4,
                 effect: ExpandingDotsEffect(
                     dotColor: colorFrom(
                       Colors.white,
@@ -44,10 +58,3 @@ class OnBoardingCarousel extends StatelessWidget {
     );
   }
 }
-
-const List<Widget> pages = [
-  FirstOnBoardingPage(),
-  SecondOnBoardingPage(),
-  ThirdOnBoardingPage(),
-  FourthOnBoardingPage()
-];

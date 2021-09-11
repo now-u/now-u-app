@@ -1,9 +1,10 @@
 import 'package:app/assets/StyleFrom.dart';
+import 'package:app/viewmodels/onboarding_model.dart';
 import 'package:flutter/material.dart';
 
 class FirstOnBoardingPage extends StatelessWidget {
-  const FirstOnBoardingPage({Key key}) : super(key: key);
-
+  const FirstOnBoardingPage({this.model, Key key}) : super(key: key);
+  final OnBoardingViewModel model;
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
