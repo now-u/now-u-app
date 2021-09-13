@@ -13,7 +13,10 @@ class SecondOnBoardingPage extends StatelessWidget {
       boldText: 'Choose causes you care about',
       normalText:
           'Select and support the social and environmental issues important to you.',
-      imagePath: 'assets/imgs/intro/On-Boarding illustrations-01.png',
+      illustrationImagePath:
+          'assets/imgs/intro/On-Boarding illustrations-01.png',
+      showGetStartedButton: false,
+      showSkipButton: true,
     );
   }
 }

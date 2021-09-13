@@ -11,7 +11,10 @@ class ThirdOnBoardingPage extends StatelessWidget {
       model: model,
       boldText: 'Learn and take action',
       normalText: 'Find ways to make a difference that suit you.',
-      imagePath: 'assets/imgs/intro/On-Boarding illustrations-02.png',
+      illustrationImagePath:
+          'assets/imgs/intro/On-Boarding illustrations-02.png',
+      showGetStartedButton: false,
+      showSkipButton: true,
     );
   }
 }
