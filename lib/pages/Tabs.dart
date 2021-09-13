@@ -74,7 +74,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
         'title': "News",
       },
       {
-        'page': ExplorePage(),
+        'page': campaign_explore_page,
         'icon': Icon(CustomIcons.ic_news),
         'title': "Explore",
       },

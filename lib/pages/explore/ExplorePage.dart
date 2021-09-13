@@ -3,73 +3,69 @@ import 'package:flutter/material.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Explorable.dart';
+import 'package:app/assets/components/selectionItem.dart';
+import 'package:app/assets/components/selectionPill.dart';
 
-final List<Map> dummyData = [
-  {"abc": "def"},
-  {"abc": "def"},
-  {"abc": "def"},
-  {"abc": "def"},
-];
+import 'package:app/locator.dart';
+import 'package:app/services/campaign_service.dart';
 
-Future<List<Explorable>> getActions() async {
-  await Future.delayed(const Duration(seconds: 2));
-  return [
-    CampaignAction(
-      type: CampaignActionType.Volunteer,
-      link: "http://google.com",
-      time: 4,
-      whyDescription: "because",
-      whatDescription: "this",
-      id: 1,
-      title: "Action title"
-    ),
-    CampaignAction(
-      type: CampaignActionType.Volunteer,
-      link: "http://google.com",
-      time: 4,
-      whyDescription: "because",
-      whatDescription: "this",
-      id: 1,
-      title: "Action title"
-    )
-  ];
+class ExploreFilterOption<T> {
+  /// What is displayed to the user
+  final String displayName;
+
+  /// The value posted to the api when this is selected
+  final T parameterValue;
+
+  /// Whether the filter is selected
+  bool isSelected;
+
+  ExploreFilterOption({this.displayName, this.parameterValue, this.isSelected = false});
+
+  void toggleSelect() {
+    print("TOGGLING");
+    isSelected = !isSelected;
+  }
+
+  Widget render() {
+    return SelectionPill(displayName, isSelected, onClick: toggleSelect);
+  }
+} 
+
+class ExploreFilter {
+  /// The name of the parameter to be posted to the api
+  final String parameterName;
+
+  /// The options that can be selected for this filter
+  final List<ExploreFilterOption> options;
+
+  /// Whether multiple filter options can be selected at once
+  final bool multi; 
+
+  const ExploreFilter({this.parameterName, this.options, this.multi});
 }
 
-Future<List<Explorable>> getCampaigns() async {
-  await Future.delayed(const Duration(seconds: 5));
-  return [
-    Campaign(
-      id: 1,
-      title: "Action title",
-      description: "abc",
-      headerImage: "http://abc.com",
-      actions: [],
-      shortName: "abc",
-      sdgs: []
-    ),
-  ];
-}
-
-class ExploreSection {
-
-  /// Endpoint to hit to get data for this section
-  final String fetchFunction;
-  /// URL params to send to endpoint
-  final Map<String, dynamic> fetchArgs;
+abstract class ExploreSection<ExplorableType> {
 
   /// Title of the section
   final String title;
+
+  // TODO
+  /// Where clicking on the title should go (maybe this should be a function?)
   // final String link;
+
   /// Description of the section
   final String description;
 
-  final Function getTiles; 
- 
-  const ExploreSection({this.fetchFunction, this.fetchArgs, this.title, this.description, this.getTiles});
+  // Params to provide to fetch query
+  final Map fetchParams;
 
-  Future<List<Explorable>> fetchTiles() {
-    return getActions();
-  }
+  /// 
+  final ExploreFilter filter;
+ 
+  const ExploreSection({this.title, this.description, this.fetchParams, this.filter});
+
+  Future<List<ExplorableType>> fetchTiles();
+  Widget renderTile(ExplorableType tile);
 
   Widget render(BuildContext context) {
     return Column(
@@ -78,10 +74,21 @@ class ExploreSection {
         Text(title, style: Theme.of(context).primaryTextTheme.headline2, textAlign: TextAlign.left),
         Text(description, style: Theme.of(context).primaryTextTheme.headline4, textAlign: TextAlign.left),
         Container(
+          height: 60,
+          child: filter != null ? ListView(
+            scrollDirection: Axis.horizontal,
+            children: filter.options.map((ExploreFilterOption option) => Padding(
+                padding: EdgeInsets.all(10),
+                child: option.render(),
+              )
+            ).toList()
+          ) : SizedBox(height: 0),
+        ),
+        Container(
           height: 200,
-          child: FutureBuilder<List<Explorable>>(
-            future: getTiles(),
-            builder: (BuildContext context, AsyncSnapshot<List<Explorable>> snapshot) {
+          child: FutureBuilder<List<ExplorableType>>(
+            future: fetchTiles(),
+            builder: (BuildContext context, AsyncSnapshot<List<ExplorableType>> snapshot) {
               if (!snapshot.hasData) {
                 return Container(
                   child: CircularProgressIndicator()
@@ -91,7 +98,7 @@ class ExploreSection {
                 scrollDirection: Axis.horizontal,
                 children: snapshot.data.map((item) => Padding(
                     padding: EdgeInsets.all(10),
-                    child: item.renderTile()
+                    child: renderTile(item) 
                   )
                 ).toList()
               );
@@ -103,17 +110,48 @@ class ExploreSection {
   }
 }
 
-const List<ExploreSection> exploreSections = [
-  ExploreSection(title: "Actions", description: "Take a wide range of actions to drive lasting change for issues you care about", getTiles: getActions),
-  ExploreSection(title: "Campaigns", description: "Join members of the now-u community in coordinated campaigns to make a difference", getTiles: getCampaigns),
+class CampaignExploreSection extends ExploreSection<Campaign> {
+  const CampaignExploreSection({String title, String description, Map fetchParams, ExploreFilter filter}) : super(title:title, description:description, fetchParams:fetchParams, filter:filter);
+
+  Future<List<Campaign>> fetchTiles() async {
+    final CampaignService _campaignService = locator<CampaignService>();
+    await _campaignService.fetchCampaigns();
+    return _campaignService.campaigns;
+  }
+
+  Widget renderTile(Campaign tile) {
+    return Container(color: Colors.red, height: 100, width: 200);
+  }
+}
+
+class ActionExploreSection extends ExploreSection<CampaignAction> {
+  const ActionExploreSection({String title, String description, Map fetchParams, ExploreFilter filter}) : super(title:title, description:description, fetchParams:fetchParams, filter:filter);
+
+  Future<List<CampaignAction>> fetchTiles() async {
+    final CampaignService _campaignService = locator<CampaignService>();
+    await _campaignService.fetchCampaigns();
+    return _campaignService.getActiveActions();
+  }
+
+  Widget renderTile(CampaignAction tile) {
+    return Container(
+      color: Colors.red, height: 100, width: 200
+    );
+  }
+}
+
+ExploreFilter filter = ExploreFilter(parameterName: "abc", options: [ExploreFilterOption(displayName: "1-5")]);
+List<ExploreSection> exploreSections = [
+  ActionExploreSection(title: "Actions", description: "Actions, do stuff", filter: filter),
+  CampaignExploreSection(title: "Campaigns", description: "Join members of the now-u community in coordinated campaigns to make a difference"),
 ];
 
 class ExplorePage extends StatelessWidget {
 
   final List<ExploreSection> sections;
-  ExplorePage(
-    {this.sections=exploreSections}
-  );
+  ExplorePage({
+    @required this.sections
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -125,3 +163,5 @@ class ExplorePage extends StatelessWidget {
     );
   }
 }
+
+var campaign_explore_page = ExplorePage(sections: exploreSections);
