@@ -333,7 +333,6 @@ class CampaignAction implements Explorable {
 
   Widget renderTile() {
     return Container(
-      child: Container(color: Colors.blue, height: 200, width: 500)
-    );
+        child: Container(color: Colors.blue, height: 200, width: 500));
   }
 }

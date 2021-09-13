@@ -211,7 +211,7 @@ class Campaign implements Explorable {
     }
     return DateTime.now().compareTo(endDate) > 0;
   }
-  
+
   Widget renderTile() {
     return Container(color: Colors.red, height: 200, width: 500);
   }
