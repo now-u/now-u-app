@@ -330,10 +330,4 @@ class CampaignAction implements Explorable {
           0;
     }
   }
-
-  Widget renderTile() {
-    return Container(
-      child: Container(color: Colors.blue, height: 200, width: 500)
-    );
-  }
 }

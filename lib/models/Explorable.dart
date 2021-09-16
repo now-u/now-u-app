@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
 
 abstract class Explorable {
-  Widget renderTile();
 }
