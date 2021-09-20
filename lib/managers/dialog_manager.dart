@@ -6,6 +6,7 @@ import 'package:app/services/dialog_service.dart';
 import 'package:app/services/navigation_service.dart';
 
 import 'package:app/assets/components/buttons/darkButton.dart';
+import 'package:app/assets/components/custom_network_image.dart';
 import 'package:app/assets/StyleFrom.dart';
 
 
@@ -44,7 +45,7 @@ class _DialogManagerState extends State<DialogManager> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Image.network(request.headerImage ?? 'https://i.ytimg.com/vi/h5vnFpWCOhQ/maxresdefault.jpg'),
+            request.headerImage != null ? CustomNetworkImage(request.headerImage) : SizedBox(height: 0),
             SizedBox(height: 20),
             Text(
               request.title,
@@ -82,7 +83,7 @@ class _DialogManagerState extends State<DialogManager> {
         Container(
           width: double.infinity,
           child: DarkButton(
-            'Select Cause',
+            'Ok',
             onPressed: () {
               _dialogService.dialogComplete(AlertResponse(response: true));
               Navigator.of(context).pop();

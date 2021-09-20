@@ -5,8 +5,18 @@ import 'package:app/assets/components/causeTile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app/assets/components/buttons/customWidthButton.dart';
 import 'package:stacked/stacked.dart';
+import 'package:app/models/Cause.dart';
 
 class CausePage extends StatelessWidget {
+  
+  // List<List<Cause>> getCausesGridLayout(List<Cause> causes, int numberOfColumns) {
+  //   List<List<Cause>> columns = [];
+  //   for (int i = 0; i < causes.length; i+=numberOfColumns) {
+  //     columns.add(causes.sublist(i, i+numberOfColumns));
+  //   }
+  //   return columns;
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,14 +36,16 @@ class CausePage extends StatelessWidget {
                               begin: Alignment.bottomLeft,
                               end: Alignment.topRight,
                             )),
-                      )),
+                      ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
-                          flex: 3,
+                          flex: 2,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Column(
@@ -49,7 +61,8 @@ class CausePage extends StatelessWidget {
                                         style: TextStyle(
                                             fontSize: 35,
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.white),
+                                            color: Colors.white
+                                        ),
                                       ),
                                     ),
                                     Expanded(flex: 3, child: SizedBox())
@@ -57,8 +70,7 @@ class CausePage extends StatelessWidget {
                                 ),
                                 Text(
                                   'Take action and selected the causes which are important to you',
-                                  style: TextStyle(
-                                      fontSize: 15, color: Colors.white),
+                                  style: TextStyle(fontSize: 15, color: Colors.white),
                                 ),
                               ],
                             ),
@@ -66,71 +78,32 @@ class CausePage extends StatelessWidget {
                         ),
                         Expanded(
                           flex: 10,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  CauseTile(
-                                      gestureFunction: () =>
-                                          model.toggleSelection(causeIndex: 0),
-                                      cause: model.causesList[0],
-                                      causeIcon: FontAwesomeIcons.leaf,
-                                      isSelected: model.causesSelectedList[0],
-                                  getInfoFunction: () => model.getCausePopup(causeIndex: 0),),
-                                  CauseTile(
-                                      gestureFunction: () =>
-                                          model.toggleSelection(causeIndex: 1),
-                                      cause: model.causesList[1],
-                                      causeIcon: FontAwesomeIcons.heart,
-                                      isSelected: model.causesSelectedList[1],
-                                    getInfoFunction: () => model.getCausePopup(causeIndex: 1),),
-                                ],
+                          child: Container(
+                            padding: const EdgeInsets.all(35.0),
+                            child: GridView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: 1.0,
+                                mainAxisSpacing: 30.0,
+                                crossAxisSpacing: 30.0,
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  CauseTile(
-                                      gestureFunction: () =>
-                                          model.toggleSelection(causeIndex: 2),
-                                      cause: model.causesList[2],
-                                      causeIcon: FontAwesomeIcons.balanceScale,
-                                      isSelected: model.causesSelectedList[2],
-                                    getInfoFunction: () => model.getCausePopup(causeIndex: 2),),
-                                  CauseTile(
-                                      gestureFunction: () =>
-                                          model.toggleSelection(causeIndex: 3),
-                                      cause: model.causesList[3],
-                                      causeIcon: FontAwesomeIcons.graduationCap,
-                                      isSelected: model.causesSelectedList[3],
-                                    getInfoFunction: () => model.getCausePopup(causeIndex: 3),),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  CauseTile(
-                                      gestureFunction: () =>
-                                          model.toggleSelection(causeIndex: 4),
-                                      cause: model.causesList[4],
-                                      causeIcon: FontAwesomeIcons.handHoldingUsd,
-                                      isSelected: model.causesSelectedList[4],
-                                    getInfoFunction: () => model.getCausePopup(causeIndex: 4),),
-                                  CauseTile(
-                                      gestureFunction: () =>
-                                          model.toggleSelection(causeIndex: 5),
-                                      cause: model.causesList[5],
-                                      causeIcon: FontAwesomeIcons.home,
-                                      isSelected: model.causesSelectedList[5],
-                                    getInfoFunction: () => model.getCausePopup(causeIndex: 5),),
-                                ],
-                              ),
-                            ],
+                              itemCount: 6,
+                              itemBuilder: (context, index) {
+                                return CauseTile(
+                                    gestureFunction: () => model.toggleSelection(causeIndex: index),
+                                    cause: model.causesList[index],
+                                    causeIcon: FontAwesomeIcons.leaf,
+                                    isSelected: model.causesSelectedList[index],
+                                    getInfoFunction: () => model.getCausePopup(causeIndex: index),
+                                );
+                              },
+                            ),
                           ),
                         ),
                         Expanded(
-                          flex: 2,
+                          flex: 1,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

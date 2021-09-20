@@ -35,11 +35,13 @@ class CauseTile extends StatelessWidget {
                     offset: Offset(0, 8),
                     blurRadius: 6)
               ]),
-          width: MediaQuery.of(context).size.width * 0.4,
-          height: MediaQuery.of(context).size.width * 0.4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              Expanded(
+                flex: 1,
+                child: SizedBox(height: 0)
+              ),
               Expanded(
                 flex: 3,
                 child: Column(
@@ -64,22 +66,25 @@ class CauseTile extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(
-                        flex: 3,
-                        child: MaterialButton(
-                            child: Text(
-                              'Learn more',
-                              textAlign: TextAlign.center,
-                            ),
-                            onPressed: getInfoFunction)),
-                    Expanded(
-                        flex: 1,
-                        child: CustomIconButton(
-                            size: ButtonSize.Small,
-                            isCircularButton: true,
-                            onPressed: getInfoFunction,
-                            icon: FontAwesomeIcons.question))
+                    Container(color: Colors.red, width: 10, height: 10),
+                    Container(color: Colors.blue, width: 10, height: 10),
+                    MaterialButton(
+                      child: Text(
+                        'Learn more',
+                        textAlign: TextAlign.center,
+                      ),
+                      onPressed: getInfoFunction,
+                      padding: const EdgeInsets.symmetric(horizontal: 0),
+                    ),
+                    Container(color: Colors.blue, width: 10, height: 10),
+                    CustomIconButton(
+                        size: ButtonSize.Small,
+                        isCircularButton: true,
+                        onPressed: getInfoFunction,
+                        icon: FontAwesomeIcons.question,
+                    )
                   ],
                 ),
               )
