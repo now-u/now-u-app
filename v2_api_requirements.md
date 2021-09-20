@@ -142,7 +142,7 @@ GET /campaigns/1
 
 /causes
 
-- Selected is true if the user has 'joioned' the cause
+- Selected is true if the user has 'joined' the cause
 
 ```json
   [

@@ -11,7 +11,6 @@ import 'package:app/services/campaign_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:app/viewmodels/explore_page_view_model.dart';
 
-
 abstract class ExploreSection<ExplorableType> {
 
   /// Title of the section
@@ -96,8 +95,8 @@ class CampaignExploreSection extends ExploreSection<Campaign> {
     return _campaignService.campaigns;
   }
 
-  Widget renderTile(Campaign tile) {
-    return Container(color: Colors.red, height: 100, width: 200);
+  Widget renderTile(Campaign campaign) {
+    return Container(color: Colors.red, height: 100, width: 200, child: Text(campaign.title));
   }
 }
 
@@ -112,7 +111,7 @@ class ActionExploreSection extends ExploreSection<CampaignAction> {
 
   Widget renderTile(CampaignAction tile) {
     return Container(
-      color: Colors.red, height: 100, width: 200
+      color: Colors.blue, height: 100, width: 200
     );
   }
 }

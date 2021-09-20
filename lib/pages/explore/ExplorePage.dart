@@ -6,12 +6,6 @@ import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/pages/explore/ExploreSection.dart';
 import 'package:app/pages/explore/ExploreFilter.dart';
 
-ExploreFilter filter = ExploreFilter(parameterName: "abc", options: [ExploreFilterOption(displayName: "1-5")]);
-List<ExploreSection> exploreSections = [
-  ActionExploreSection(title: "Actions", description: "Actions, do stuff", filter: filter),
-  CampaignExploreSection(title: "Campaigns", description: "Join members of the now-u community in coordinated campaigns to make a difference"),
-];
-
 class ExplorePage extends StatelessWidget {
 
   final List<ExploreSection> sections;
@@ -24,10 +18,17 @@ class ExplorePage extends StatelessWidget {
     return Scaffold(
       body: ListView(
         scrollDirection: Axis.vertical,
-        children: sections.map((section) => section.render(context)).toList()
+        children: sections.map((ExploreSection section) => section.render(context)).toList()
       ),
     );
   }
 }
+
+ExploreFilter filter = ExploreFilter(parameterName: "abc", options: [ExploreFilterOption(displayName: "1-5"), ExploreFilterOption(displayName: "5-10")]);
+
+List<ExploreSection> exploreSections = [
+  ActionExploreSection(title: "Actions", description: "Actions, do stuff", filter: filter),
+  CampaignExploreSection(title: "Campaigns", description: "Join members of the now-u community in coordinated campaigns to make a difference"),
+];
 
 var campaign_explore_page = ExplorePage(sections: exploreSections);
