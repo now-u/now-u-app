@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+typedef Widget GridItemBuilder(BuildContext context, int rowIndex, int colIndex, int index);
+
 class ExpandedGrid extends StatelessWidget {
   /// A list (column) of list (rows) of widgets
   final List<List<Widget>> items;
@@ -11,7 +13,7 @@ class ExpandedGrid extends StatelessWidget {
   static Widget builder({
     @required int numberOfRows,
     @required int itemCount,
-    @required Function itemBuilder,
+    @required GridItemBuilder itemBuilder,
   }) {
     List<List<Widget>> widgets = [];
     int numberOfCols = (itemCount / numberOfRows).ceil();
