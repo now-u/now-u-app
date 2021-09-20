@@ -4,40 +4,25 @@ import 'package:app/assets/StyleFrom.dart';
 final double defaultBorderRadius = 8.0;
 final double defaultPadding = 14.0;
 
-enum ButtonSize { Small, Medium, Large }
-enum ButtonStyle { Primary, Secondary, Outline }
+enum IconButtonSize { XSmall, Small }
 
 Map buttonStyleStyles = {
-  ButtonSize.Small: {
-    'style': ButtonSize.Small,
+  IconButtonSize.XSmall: {
+    'height': 8.0,
+    'borderRadius': 8.0,
+    'iconSize': 12.0,
+  },
+  IconButtonSize.Small: {
     'height': 32.0,
     'borderRadius': 8.0,
-    'fontSize': 14.0,
-    'hPadding': 8,
-    'vPadding': 8,
-  },
-  ButtonSize.Medium: {
-    'style': ButtonSize.Medium,
-    'height': 40.0,
-    'borderRadius': 8.0,
-    'fontSize': 17.0,
-    'hPadding': 16.0,
-    'vPadding': 8.0,
-  },
-  ButtonSize.Large: {
-    'style': ButtonSize.Large,
-    'height': 48.0,
-    'borderRadius': 8.0,
-    'fontSize': 17.0,
-    'hPadding': 16.0,
-    'vPadding': 8.0,
+    'iconSize': 25.0,
   },
 };
 
 class CustomIconButton extends StatelessWidget {
   final VoidCallback onPressed;
   final IconData icon;
-  final ButtonSize size;
+  final IconButtonSize size;
   final Color backgroundColor;
   final Color iconColor;
   final bool isCircularButton;
@@ -73,9 +58,53 @@ class CustomIconButton extends StatelessWidget {
           : EdgeInsets.symmetric(horizontal: 60.0, vertical: 15.0),
       child: Icon(
         icon,
-        size: isCircularButton ? 15 : 25,
+        size: isCircularButton ? buttonStyleStyles[size]["iconSize"] - 10 : buttonStyleStyles[size]["iconSize"],
         color: iconColor ?? Colors.white,
       ),
+    );
+  }
+}
+
+class CircularIconButton extends StatelessWidget {
+
+  final VoidCallback onPressed;
+  final IconData icon;
+  final double height;
+  final double iconSize;
+  
+  final Color backgroundColor;
+  final Color iconColor;
+
+  CircularIconButton({
+    @required this.icon,
+    @required this.onPressed,
+    this.iconColor,
+    this.backgroundColor,
+    this.height,
+    this.iconSize
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: height,
+      child: MaterialButton(
+        height: height,
+        elevation: 0,
+        color: this.backgroundColor ?? Theme.of(context).primaryColor,
+        disabledColor: colorFrom(
+          Theme.of(context).primaryColor,
+          opacity: 0.5,
+        ),
+        onPressed: onPressed,
+        shape: CircleBorder(),
+        padding: EdgeInsets.all(0),
+        child: Icon(
+          icon,
+          size: iconSize, 
+          color: iconColor ?? Colors.white,
+        ),
+      )
     );
   }
 }

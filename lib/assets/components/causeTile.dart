@@ -68,8 +68,6 @@ class CauseTile extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(color: Colors.red, width: 10, height: 10),
-                    Container(color: Colors.blue, width: 10, height: 10),
                     MaterialButton(
                       child: Text(
                         'Learn more',
@@ -78,13 +76,12 @@ class CauseTile extends StatelessWidget {
                       onPressed: getInfoFunction,
                       padding: const EdgeInsets.symmetric(horizontal: 0),
                     ),
-                    Container(color: Colors.blue, width: 10, height: 10),
-                    CustomIconButton(
-                        size: ButtonSize.Small,
-                        isCircularButton: true,
+                    CircularIconButton(
                         onPressed: getInfoFunction,
                         icon: FontAwesomeIcons.question,
-                    )
+                        iconSize: 10,
+                        height: 20,
+                    ),
                   ],
                 ),
               )
