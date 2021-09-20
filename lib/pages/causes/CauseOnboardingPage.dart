@@ -104,7 +104,7 @@ class CausePage extends StatelessWidget {
                             child: ExpandedGrid.builder(
                               numberOfRows: 2,
                               itemCount: 6,
-                              itemBuilder: (rowIndex, colIndex, index) {
+                              itemBuilder: (context, rowIndex, colIndex, index) {
                                 return CauseTile(
                                     gestureFunction: () => model.toggleSelection(causeIndex: index),
                                     cause: model.causesList[index],

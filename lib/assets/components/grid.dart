@@ -18,7 +18,9 @@ class ExpandedGrid extends StatelessWidget {
     for (int c = 0; c < numberOfCols; c++) {
       List<Widget> rowWidgets = [];
       for (int r = 0; r < numberOfRows; r++) {
-        rowWidgets.add(itemBuilder(r, c, c*numberOfRows + r));
+        rowWidgets.add(Builder(
+          builder: (context) => itemBuilder(context, r, c, c*numberOfRows + r))
+        );
       }
       widgets.add(rowWidgets);
     }
