@@ -1,4 +1,5 @@
 import 'package:app/assets/components/causeOnboardingClipper.dart';
+import 'package:app/assets/components/grid.dart';
 import 'package:app/viewmodels/causes_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:app/assets/components/causeTile.dart';
@@ -80,17 +81,30 @@ class CausePage extends StatelessWidget {
                           flex: 10,
                           child: Container(
                             padding: const EdgeInsets.all(35.0),
-                            child: GridView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                childAspectRatio: 1.0,
-                                mainAxisSpacing: 30.0,
-                                crossAxisSpacing: 30.0,
-                              ),
+                            // child: GridView.builder(
+                            //   physics: NeverScrollableScrollPhysics(),
+                            //   shrinkWrap: true,
+                            //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            //     crossAxisCount: 2,
+                            //     childAspectRatio: 1.0,
+                            //     mainAxisSpacing: 30.0,
+                            //     crossAxisSpacing: 30.0,
+                            //   ),
+                            //   itemCount: 6,
+                            //   itemBuilder: (context, index) {
+                            //     return CauseTile(
+                            //         gestureFunction: () => model.toggleSelection(causeIndex: index),
+                            //         cause: model.causesList[index],
+                            //         causeIcon: FontAwesomeIcons.leaf,
+                            //         isSelected: model.causesSelectedList[index],
+                            //         getInfoFunction: () => model.getCausePopup(causeIndex: index),
+                            //     );
+                            //   },
+                            // ),
+                            child: ExpandedGrid.builder(
+                              numberOfRows: 2,
                               itemCount: 6,
-                              itemBuilder: (context, index) {
+                              itemBuilder: (rowIndex, colIndex, index) {
                                 return CauseTile(
                                     gestureFunction: () => model.toggleSelection(causeIndex: index),
                                     cause: model.causesList[index],
@@ -98,7 +112,7 @@ class CausePage extends StatelessWidget {
                                     isSelected: model.causesSelectedList[index],
                                     getInfoFunction: () => model.getCausePopup(causeIndex: index),
                                 );
-                              },
+                              }
                             ),
                           ),
                         ),

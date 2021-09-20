@@ -23,6 +23,8 @@ class CauseTile extends StatelessWidget {
     return GestureDetector(
       onTap: gestureFunction,
       child: Container(
+          width: MediaQuery.of(context).size.width * 0.4,
+          height: MediaQuery.of(context).size.width * 0.4,
           decoration: BoxDecoration(
               color: isSelected ? Color(0XFFFFF3E5) : Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(10)),

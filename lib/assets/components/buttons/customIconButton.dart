@@ -66,7 +66,6 @@ class CustomIconButton extends StatelessWidget {
 }
 
 class CircularIconButton extends StatelessWidget {
-
   final VoidCallback onPressed;
   final IconData icon;
   final double height;
