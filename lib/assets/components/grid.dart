@@ -37,7 +37,7 @@ class ExpandedGrid extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: items.map((row) => 
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: row
         )
       ).toList()
