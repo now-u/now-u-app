@@ -78,7 +78,7 @@ class AuthenticationService {
       String email, String name, bool acceptNewletter) async {
     try {
       await http.post(
-        domainPrefix + 'users',
+        Uri.parse(domainPrefix + 'users'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -102,7 +102,7 @@ class AuthenticationService {
   Future<String> login(String email, String token) async {
     try {
       http.Response response = await http.post(
-        domainPrefix + 'users/login',
+        Uri.parse(domainPrefix + 'users/login'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -138,7 +138,7 @@ class AuthenticationService {
 
   Future<User> getUser(String token) async {
     http.Response userResponse =
-        await http.get(domainPrefix + 'users/me', headers: <String, String>{
+        await http.get(Uri.parse(domainPrefix + 'users/me'), headers: <String, String>{
       'token': token,
     });
     if (handleAuthRequestErrors(userResponse) != null) {
@@ -165,7 +165,7 @@ class AuthenticationService {
         userDetials["organisation_code"] = orgCode;
       }
       http.Response response = await http.put(
-        domainPrefix + 'users/me',
+        Uri.parse(domainPrefix + 'users/me'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'token': currentUser.getToken(),
@@ -191,7 +191,7 @@ class AuthenticationService {
   Future<String> deleteUserAccount() async {
     try {
       http.Response response = await http.delete(
-        domainPrefix + 'users/me',
+        Uri.parse(domainPrefix + 'users/me'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'token': currentUser.getToken(),
@@ -216,7 +216,7 @@ class AuthenticationService {
     try {
       print("Leaving org");
       http.Response response = await http.put(
-        domainPrefix + 'users/me/organisations',
+        Uri.parse(domainPrefix + 'users/me/organisations'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'token': currentUser.getToken(),
@@ -239,7 +239,7 @@ class AuthenticationService {
   Future<bool> completeAction(int actionId) async {
     try {
       http.Response response = await http.post(
-        domainPrefix + 'users/me/actions/$actionId/complete',
+        Uri.parse(domainPrefix + 'users/me/actions/$actionId/complete'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'token': currentUser.getToken(),
@@ -262,7 +262,7 @@ class AuthenticationService {
   Future<bool> starAction(int actionId) async {
     try {
       http.Response response = await http.post(
-        domainPrefix + 'users/me/actions/$actionId/favourite',
+        Uri.parse(domainPrefix + 'users/me/actions/$actionId/favourite'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'token': currentUser.getToken(),
@@ -285,7 +285,7 @@ class AuthenticationService {
   Future<bool> removeActionStatus(int actionId) async {
     try {
       http.Response response = await http.delete(
-        domainPrefix + 'users/me/actions/$actionId',
+        Uri.parse(domainPrefix + 'users/me/actions/$actionId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'token': currentUser.getToken(),
@@ -310,7 +310,7 @@ class AuthenticationService {
   Future<User> rejectAction(String token, int actionId, String reason) async {
     Map jsonBody = {'reason': reason};
     http.Response response = await http.post(
-      domainPrefix + 'users/me/actions/$actionId/reject',
+      Uri.parse(domainPrefix + 'users/me/actions/$actionId/reject'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'token': currentUser.getToken(),
@@ -327,7 +327,7 @@ class AuthenticationService {
   Future<bool> joinCampaign(int campaignId) async {
     try {
       http.Response response = await http.post(
-        domainPrefix + 'users/me/campaigns/$campaignId',
+        Uri.parse(domainPrefix + 'users/me/campaigns/$campaignId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'token': currentUser.getToken(),
@@ -350,7 +350,7 @@ class AuthenticationService {
   Future<bool> leaveCampaign(int campaignId) async {
     try {
       http.Response response = await http.delete(
-        domainPrefix + 'users/me/campaigns/$campaignId',
+        Uri.parse(domainPrefix + 'users/me/campaigns/$campaignId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'token': currentUser.getToken(),
@@ -373,7 +373,7 @@ class AuthenticationService {
   Future<bool> completeLearningResource(int learningResourceId) async {
     try {
       http.Response response = await http.post(
-        domainPrefix + 'users/me/learning_resources/$learningResourceId',
+        Uri.parse(domainPrefix + 'users/me/learning_resources/$learningResourceId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'token': currentUser.getToken(),

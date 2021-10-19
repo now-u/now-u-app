@@ -1,24 +1,29 @@
 import 'package:flutter/cupertino.dart';
 
-class Cause {
+class ListCause {
   int id;
-  String name;
+  String title;
   String icon;
   String description;
+  bool selected;
+}
+
+class Cause extends ListCause {
   String headerImage;
   List<int> actions;
 
   Cause(
       {this.id,
-      this.name,
+      this.title,
       this.icon,
       this.description,
+      this.selected,
       this.headerImage,
       this.actions});
 
   Cause.fromJson(Map json) {
     this.id = json['id'];
-    this.name = json['name'];
+    this.title = json['title'];
     this.icon = json['icon'];
     this.description = json['description'];
     this.headerImage = json['headerImage'];
