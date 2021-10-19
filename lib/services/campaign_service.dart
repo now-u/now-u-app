@@ -91,7 +91,7 @@ class CampaignService {
 
   Future fetchCampaign(int id) async {
     try {
-      var response = await http.get(domainPrefix + "campaigns/$id");
+      var response = await http.get(Uri.parse(domainPrefix + "campaigns/$id"));
       Campaign c = Campaign.fromJson(json.decode(response.body)['data']);
       return c;
     } catch (e) {
@@ -102,7 +102,7 @@ class CampaignService {
 
   Future fetchCampaigns() async {
     try {
-      var response = await http.get(domainPrefix + "campaigns",
+      var response = await http.get(Uri.parse(domainPrefix + "campaigns"),
           headers: <String, String>{
             'token': _authenticationService.currentUser.getToken()
           });
@@ -112,7 +112,7 @@ class CampaignService {
   }
 
   Future<List<Campaign>> getPastCampaigns() async {
-    var response = await http.get(domainPrefix + "campaigns" + "?old=true");
+    var response = await http.get(Uri.parse(domainPrefix + "campaigns" + "?old=true"));
     if (response.statusCode == 200) {
       Campaigns cs = Campaigns.fromJson(json.decode(response.body)['data']);
       return cs.getActiveCampaigns();
@@ -123,7 +123,7 @@ class CampaignService {
   }
 
   Future<CampaignAction> getAction(int id) async {
-    var response = await http.get(domainPrefix + "actions/$id");
+    var response = await http.get(Uri.parse(domainPrefix + "actions/$id"));
     if (response.statusCode == 200) {
       CampaignAction a =
           CampaignAction.fromJson(json.decode(response.body)['data']);
@@ -135,7 +135,7 @@ class CampaignService {
   }
 
   Future<LearningTopic> getLearningTopic(int id) async {
-    var response = await http.get(domainPrefix + "learning_topics/$id");
+    var response = await http.get(Uri.parse(domainPrefix + "learning_topics/$id"));
     if (response.statusCode == 200) {
       LearningTopic topic =
           LearningTopic.fromJson(json.decode(response.body)['data']);
@@ -149,7 +149,7 @@ class CampaignService {
   Future getLearningCentre(int campaignId) async {
     try {
       http.Response response = await http
-          .get(domainPrefix + "campaigns/$campaignId/learning_topics");
+          .get(Uri.parse(domainPrefix + "campaigns/$campaignId/learning_topics"));
       if (response.statusCode == 200) {
         List jsonData = json.decode(response.body)["data"] as List;
         LearningCentre lc = LearningCentre.fromJson(jsonData);

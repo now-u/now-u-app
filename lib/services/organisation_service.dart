@@ -8,7 +8,7 @@ class OrganisationService {
   // This gets all the partners (for now this is just all the organisations)
   Future<List<Organisation>> getPartners() async {
     try {
-      var response = await http.get(domainPrefix + "organisations");
+      var response = await http.get(Uri.parse(domainPrefix + "organisations"));
       if (response.statusCode == 200) {
         List<Organisation> c = json
             .decode(response.body)['data']
@@ -26,7 +26,7 @@ class OrganisationService {
   Future<Organisation> getOrganisation(int id) async {
     try {
       print("Getting org");
-      var response = await http.get(domainPrefix + "organisations/$id");
+      var response = await http.get(Uri.parse(domainPrefix + "organisations/$id"));
       if (response.statusCode == 200) {
         Organisation org =
             Organisation.fromJson(json.decode(response.body)['data']);

@@ -11,7 +11,7 @@ class NewsService {
 
   Future fetchArticles() async {
     try {
-      var response = await http.get(domainPrefix + "articles");
+      var response = await http.get(Uri.parse(domainPrefix + "articles"));
       _articles = json
           .decode(response.body)['data']
           .map((e) => Article.fromJson(e))

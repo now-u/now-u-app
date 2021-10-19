@@ -13,7 +13,7 @@ class FAQService {
 
   Future fetchFAQs() async {
     try {
-      var response = await http.get(domainPrefix + "faqs");
+      var response = await http.get(Uri.parse(domainPrefix + "faqs"));
       if (response.statusCode != 200) {
         return false;
       }

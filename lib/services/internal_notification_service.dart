@@ -20,7 +20,7 @@ class InternalNotificationService {
   Future fetchNotifications() async {
     try {
       http.Response response = await http.get(
-          domainPrefix + 'users/me/notifications',
+          Uri.parse(domainPrefix + 'users/me/notifications'),
           headers: <String, String>{
             'token': _authenticationService.currentUser.getToken(),
           });
@@ -40,7 +40,7 @@ class InternalNotificationService {
   Future<bool> dismissNotification(int notificationId) async {
     try {
       http.Response response = await http.put(
-          domainPrefix + 'users/me/notifications/$notificationId/dismiss',
+          Uri.parse(domainPrefix + 'users/me/notifications/$notificationId/dismiss'),
           headers: <String, String>{
             'token': _authenticationService.currentUser.getToken(),
           });

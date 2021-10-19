@@ -23,7 +23,7 @@ class GoogleLocationSearchService {
         _remoteConfigService.getValue(RemoteConfigKey.googlePlaceAPIKey);
 
     final request =
-        'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&language=$lang&key=$_apiKey&sessiontoken=$_sessionToken';
+        Uri.parse('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&language=$lang&key=$_apiKey&sessiontoken=$_sessionToken');
     final response = await client.get(request);
 
     if (response.statusCode == 200) {
@@ -57,7 +57,7 @@ class GoogleLocationSearchService {
         _remoteConfigService.getValue(RemoteConfigKey.googlePlaceAPIKey);
 
     final request =
-        'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=address_component&key=$_apiKey&sessiontoken=$_sessionToken';
+        Uri.parse('https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=address_component&key=$_apiKey&sessiontoken=$_sessionToken');
     final response = await client.get(request);
 
     if (response.statusCode == 200) {
