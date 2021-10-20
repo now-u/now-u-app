@@ -60,7 +60,7 @@ class NewsViewModel extends BaseModel {
   // Filter for string - this was used for search but should really be deleted now (but search may come back one day xD)
   void filterArticlesList(String query) {
     if (query.isNotEmpty) {
-      List<Article> tempList = List<Article>();
+      List<Article> tempList = List<Article>.empty();
       _newsService!.articles!.forEach((article) {
         if (article.getTitle()!.toLowerCase().contains(query.toLowerCase())) {
           tempList.add(article);

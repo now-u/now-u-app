@@ -82,29 +82,29 @@ class AccountDetailsPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    GestureDetector(
-                        onTap: () async {
-                          // generate a new token here
-                          final Suggestion? result = await showSearch(
-                            context: context,
-                            delegate: AddressSearch(model.fetchSuggestions),
-                          );
+                    // GestureDetector(
+                    //     onTap: () async {
+                    //       // generate a new token here
+                    //       final Suggestion? result = await showSearch(
+                    //         context: context,
+                    //         delegate: AddressSearch(model.fetchSuggestions),
+                    //       );
 
-                          print("result");
-                          print(result);
-                          // This will change the text displayed in the TextField
-                          if (result != null) {
-                            final placeDetails =
-                                await model.getPlaceDetails(result.placeId);
-                            print("We go em ${placeDetails.zipCode}");
-                          }
-                        },
-                        child: AbsorbPointer(
-                          child: CustomTextFormField(
-                            style: CustomFormFieldStyle.Light,
-                            controller: model.locationFieldController,
-                          ),
-                        )),
+                    //       print("result");
+                    //       print(result);
+                    //       // This will change the text displayed in the TextField
+                    //       if (result != null) {
+                    //         final placeDetails =
+                    //             await model.getPlaceDetails(result.placeId);
+                    //         print("We go em ${placeDetails.zipCode}");
+                    //       }
+                    //     },
+                    //     child: AbsorbPointer(
+                    //       child: CustomTextFormField(
+                    //         style: CustomFormFieldStyle.Light,
+                    //         controller: model.locationFieldController,
+                    //       ),
+                    //     )),
                     // TODO: Email
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 28.5, 0, 8),
@@ -309,7 +309,7 @@ class AddressSearch extends SearchDelegate<Suggestion?> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return null;
+    return Container();
   }
 
   @override
@@ -319,7 +319,7 @@ class AddressSearch extends SearchDelegate<Suggestion?> {
           ? null
           : fetchSuggestions(
               query, Localizations.localeOf(context).languageCode),
-      builder: (context, snapshot) => query == ''
+      builder: (context, AsyncSnapshot snapshot) => query == ''
           ? Container(
               padding: EdgeInsets.all(16.0),
               child: Text('Enter your address'),

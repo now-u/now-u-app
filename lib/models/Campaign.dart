@@ -57,7 +57,7 @@ class Campaign {
     this.videoLink = videoLink;
     this.generalPartners = generalPartners ?? [];
     this.campaignPartners = campaignPartners ?? [];
-    this.sdgs = sdgs ?? [];
+    this.sdgs = sdgs;
     this.keyAims = keyAims ?? [];
     this.startDate = startDate;
     this.endDate = endDate;

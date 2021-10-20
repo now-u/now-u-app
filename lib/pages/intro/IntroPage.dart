@@ -45,12 +45,12 @@ class _IntroPageState extends State<IntroPage> {
   // Animation Setup
   final Duration animationDuration = Duration(milliseconds: 500);
   final Duration delay = Duration(milliseconds: 300);
-  GlobalKey rectGetterGetStartedKey = RectGetter.createGlobalKey();
-  GlobalKey rectGetterSkipKey = RectGetter.createGlobalKey();
+  var rectGetterGetStartedKey = RectGetter.createGlobalKey();
+  var rectGetterSkipKey = RectGetter.createGlobalKey();
   Rect? rect;
 
   void _onTapSkip() async {
-    setState(() => rect = RectGetter.getRectFromKey(rectGetterSkipKey as GlobalKey<_RectGetterState>));
+    setState(() => rect = RectGetter.getRectFromKey(rectGetterSkipKey));
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       setState(() =>
           rect = rect!.inflate(1.3 * MediaQuery.of(context).size.longestSide));
@@ -59,7 +59,7 @@ class _IntroPageState extends State<IntroPage> {
   }
 
   void _onTapGetStarted() async {
-    setState(() => rect = RectGetter.getRectFromKey(rectGetterGetStartedKey as GlobalKey<_RectGetterState>));
+    setState(() => rect = RectGetter.getRectFromKey(rectGetterGetStartedKey));
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       setState(() =>
           rect = rect!.inflate(1.3 * MediaQuery.of(context).size.longestSide));
@@ -97,7 +97,7 @@ class _IntroPageState extends State<IntroPage> {
                             Container(
                                 width: 70,
                                 child: RectGetter(
-                                  key: rectGetterSkipKey as GlobalKey<_RectGetterState>,
+                                  key: rectGetterSkipKey,
                                   child: CustomTextButton("Skip", onClick: () {
                                     //Navigator.pushNamed(context, '/');
                                     _onTapSkip();
@@ -137,7 +137,7 @@ class _IntroPageState extends State<IntroPage> {
                                     //  }
                                     //)
                                     : RectGetter(
-                                        key: rectGetterGetStartedKey as GlobalKey<_RectGetterState>,
+                                        key: rectGetterGetStartedKey,
                                         child: DarkButton(
                                           "Get Started!",
                                           onPressed: _onTapGetStarted,

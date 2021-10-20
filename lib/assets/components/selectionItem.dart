@@ -297,9 +297,7 @@ class LeadingSelectionItem extends StatelessWidget {
                                       (innerHpadding ?? defaultInnerHpadding) *
                                           2 -
                                       (iconWidth ?? defaultIconWidth) -
-                                      10 -
-                                      extraOverflow! ??
-                                  40,
+                                      10 - (extraOverflow ?? 40),
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(

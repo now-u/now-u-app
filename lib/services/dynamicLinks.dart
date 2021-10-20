@@ -23,7 +23,7 @@ class DynamicLinkService {
   Future handleDynamicLinks() async {
     bool gotIosLink = false;
     if (await _deviceInfoService!.isIOS13) {
-      gotIosLink = await initUniLinks();
+    await initUniLinks();
     }
     if (!gotIosLink) {
       // 1. Get the initial dynamic link if the app is opened with a dynamic link
@@ -120,19 +120,19 @@ class DynamicLinkService {
   Future<bool> initUniLinks() async {
     // Example deeplink
     // com.nowu.app://loginMobile?token=14087f13e394b73447607a8da3828056271d4fd789fd1dc6cf5f3ba4601836295dd319a0c5e69f64
+    bool gotLink = false;
 
     // Attach a listener to the stream
-    _sub = getUriLinksStream().listen((Uri? deepLink) {
-      if (deepLink == null) {
-        return false;
+    _sub = uriLinkStream.listen((Uri? deepLink) {
+      if (deepLink != null) {
+        gotLink = true;
+        _handleDeepLink(deepLink);
       }
-      _handleDeepLink(deepLink);
-      return true;
     }, onError: (err) {
       // Handle exception by warning the user their action did not succeed
       print('D| $err');
     });
     // TODO: Don't forget to call _sub.cancel() in dispose()
-    return false;
+    return gotLink;
   }
 }

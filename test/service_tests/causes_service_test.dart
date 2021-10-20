@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
+import 'causes_service_test.mocks.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:app/services/causes_service.dart';
@@ -24,16 +25,16 @@ void main() {
 
   group('fetchAlbum', () {
     test('returns a List of Causes if the request is successfully', () async {
-      // final client = MockClient();
+      final client = MockClient();
 
-      // // Use Mockito to return a successful response when it calls the
-      // // provided http.Client.
-      // when(client
-      //         .get(Uri.parse('https://api.now-u.com/api/v2/causes')))
-      //     .thenAnswer((_) async =>
-      //         http.Response(causesResponse, 200));
+      // Use Mockito to return a successful response when it calls the
+      // provided http.Client.
+      when(client
+              .get(Uri.parse('https://api.now-u.com/api/v2/causes')))
+          .thenAnswer((_) async =>
+              http.Response(causesResponse, 200));
 
-      // expect(await _causesService.getCauses(client), isA<List<Cause>>());
+      expect(await _causesService.getCauses(client), isA<List<Cause>>());
     });
   });
 }

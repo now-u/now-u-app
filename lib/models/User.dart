@@ -12,10 +12,6 @@ List<String> stagingUsers = [
   "charlieblindsay@gmail.com"
 ];
 
-List<int> rewardValues = [1, 5, 10, 25, 50, 100, 200];
-int pointsForJoiningCampaign = 10;
-int pointsForCompletingAction = 5;
-
 class User {
   int? id;
   //FirebaseUser firebaseUser;
@@ -52,6 +48,8 @@ class User {
   set setOrganisation(Organisation? org) => _organisation = org;
 
   String? token;
+
+  bool get isStagingUser => stagingUsers.contains(this.email);
 
   User({
     id,
@@ -91,8 +89,6 @@ class User {
 
     this.completedActionsType = completedActionsType ?? initCompletedAction();
 
-    this.points = points ?? 0;
-
     this.token = token;
     _organisation = organisation;
   }
@@ -115,7 +111,6 @@ class User {
     completedLearningResources = [];
     completedActionsType = initCompletedAction();
     token = null;
-    points = 0;
   }
 
   User copyWith({
@@ -139,7 +134,6 @@ class User {
     List<int>? starredActions,
     List<int>? completedLearningResources,
     Map<CampaignActionType, int>? completedActionsType,
-    int? points,
     String? token,
     Organisation? organisation,
   }) {
@@ -160,7 +154,6 @@ class User {
       completedLearningResources:
           completedLearningResources ?? this.completedLearningResources,
       completedActionsType: completedActionsType ?? this.completedActionsType,
-      points: points ?? this.points,
       token: token ?? this.token,
       organisation: organisation ?? _organisation,
     );
@@ -214,7 +207,6 @@ class User {
         ? this.initCompletedAction()
         : campaignActionTypesDecode(json['completed_actions_type'].cast<int>());
 
-    points = json['points'] ?? 0;
     token = json['token'];
     _organisation = json['organisation'] == null
         ? null
@@ -236,10 +228,8 @@ class User {
         'rejected_actions': rejectedActions,
         'favourited_actions': starredActions,
         'completed_learning_resources': completedLearningResources,
-        //'completed_rewards': completedRewards,
         'completed_actions_type':
             campaignActionTypesEncode(completedActionsType),
-        'points': points,
         'token': token,
       };
 
@@ -364,10 +354,6 @@ class User {
     return completedActions;
   }
 
-  int? getPoints() {
-    return points;
-  }
-
   String? getToken() {
     return token;
   }
@@ -408,26 +394,12 @@ class User {
     this.homeOwner = homeOwner;
   }
 
-  void setPoints(int? points) {
-    this.points = points;
-  }
-
   void setCompletedActions(List<int?>? actions) {
     this.completedActions = actions;
   }
 
   void setToken(String token) {
     this.token = token;
-  }
-
-  void incrementPoints(int points) {
-    this.points += points;
-    print("User points are now " + this.points.toString());
-  }
-
-  void decrementPoints(int points) {
-    this.points -= points;
-    print("User points are now " + this.points.toString());
   }
 
   void addSelectedCamaping(int id) {
@@ -437,13 +409,11 @@ class User {
       } else {
         this.selectedCampaigns!.add(id);
       }
-      incrementPoints(pointsForJoiningCampaign);
     }
   }
 
   void removeSelectedCamaping(int id) {
     this.selectedCampaigns!.remove(id);
-    decrementPoints(pointsForJoiningCampaign);
   }
 
   double getCampaignProgress(Campaign campaign) {
@@ -470,36 +440,6 @@ class User {
     return total / campaigns.activeLength();
   }
 
-  // Progress
-  // Return the reward progress
-  double getRewardProgress(Reward reward) {
-    //if(this.completedRewards.contains(reward.getId())) return 1;
-    RewardType type = reward.type;
-    int? count = 0;
-    if (type == RewardType.CompletedActionsNumber) {
-      count = this.completedActions!.length;
-    } else if (type == RewardType.CompletedCampaignsNumber) {
-      count = this.completedCampaigns!.length;
-    } else if (type == RewardType.SelectInOneMonthCampaignsNumber) {
-      count = this.selectedCampaigns!.length;
-    } else if (type == RewardType.CompletedTypedActionsNumber) {
-      if (reward.getActionType() == null) {
-        print(
-            "A CompletedTypedActionsNumber reward requires a CampaignActionType");
-        return 0;
-      } else {
-        count = this.completedActionsType![reward.getActionType()];
-      }
-    }
-
-    // return
-    if (count! > reward.successNumber) {
-      //completeReward(reward);
-      return 1;
-    }
-    return count / reward.successNumber;
-  }
-
   void completeAction(CampaignAction a, {Function? onCompleteReward}) {
     if (completedActions!.contains(a.getId())) {
       print("You can only complete an action once");
@@ -507,7 +447,6 @@ class User {
     }
     completedActions!.add(a.getId());
     completedActionsType!.update(a.getType(), (int x) => x + 1);
-    //incrementPoints(pointsForCompletingAction);
     print(a.getType().toString());
     print(completedActionsType![a.getType()]);
   }
@@ -515,40 +454,6 @@ class User {
   void rejectAction(CampaignAction a) {
     rejectedActions!.add(a.getId());
   }
-
-  bool isMilestone(int x) {
-    if (x < 300) {
-      return rewardValues.contains(x);
-    } else
-      return x % 50 == 0;
-  }
-
-  // Returns the news rewards completed when this action is completed
-  List<Reward> newlyCompletedRewards(CampaignAction completedAction) {
-    List<Reward> newRewards = [];
-    if (isMilestone(completedActions!.length + 1)) {
-      newRewards.add(Reward(
-        successNumber: completedActions!.length + 1,
-        type: RewardType.CompletedActionsNumber,
-        //title: nextValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ nextValue(v, rewardValues)} ${ k.toString() }",
-      ));
-    }
-    print(completedAction.getType());
-    print(this.completedActionsType);
-    if (isMilestone(completedActionsType![completedAction.getType()]! + 1)) {
-      newRewards.add(Reward(
-        successNumber: completedActionsType![completedAction.getType()]! + 1,
-        type: RewardType.CompletedTypedActionsNumber,
-        actionType: completedAction.getType(),
-      ));
-    }
-    return newRewards;
-  }
-
-  // Old reward system
-  //void completeReward(Reward r) {
-  //  completedRewards.add(r.getId());
-  //}
 
   bool isCompleted(CampaignAction a) {
     return completedActions!.contains(a.getId());
@@ -564,98 +469,6 @@ class User {
     }
     print(cas);
     return cas;
-  }
-
-  int nextValue(int x, List<int> nums) {
-    for (int i = 0; i < nums.length; i++) {
-      if (rewardValues[i] > x) return rewardValues[i];
-    }
-    return ((x % 100) + 1) * 100; // Keep incrememnting rewardValues in 100s
-  }
-
-  int prevValue(int x, List<int> nums) {
-    if (x <= 0) return 0; // In this case no reward completed
-    if (x >= 300) {
-      return ((x % 100)) * 100; // Keep incrememnting rewardValues in 100s
-
-    }
-    for (int i = nums.length - 1; i >= 0; i--) {
-      if (rewardValues[i] <= x) return rewardValues[i];
-    }
-    return 0; // Probably bad news if we get here
-  }
-
-  // Get rewards to be completed
-  List<Reward> getNextRewards({int? x}) {
-    List<Reward> rewards = [];
-    // Get new CompletedTypedActionsNumber
-    completedActionsType!.forEach((k, v) {
-      rewards.add(Reward(
-        successNumber: nextValue(v, rewardValues),
-        type: RewardType.CompletedTypedActionsNumber,
-        actionType: k,
-        //title: nextValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ nextValue(v, rewardValues)} ${ k.toString() }",
-      ));
-    });
-    // Add next completedActionsNumber
-    rewards.add(Reward(
-      successNumber: nextValue(completedCampaigns!.length, rewardValues),
-      type: RewardType.CompletedCampaignsNumber,
-    ));
-
-    // Add total completed actions
-    rewards.add(Reward(
-      successNumber: nextValue(completedActions!.length, rewardValues),
-      type: RewardType.CompletedActionsNumber,
-    ));
-    return rewards;
-  }
-
-  // Get largest reward that have been completed
-  List<Reward> getPreviousRewards({int? x}) {
-    List<Reward> rewards = [];
-    // Get pev (complted) CompletedTypedActionsNumber
-    completedActionsType!.forEach((k, v) {
-      if (prevValue(v, rewardValues) != 0) {
-        rewards.add(Reward(
-          //id: ,  // Need to generate id based on value --> same each time generated
-          successNumber: prevValue(v, rewardValues),
-          type: RewardType.CompletedTypedActionsNumber,
-          actionType: k,
-          //title: prevValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ prevValue(v, rewardValues)} ${ k.toString() }",
-        ));
-      }
-    });
-
-    // Add total completed campaigns
-    if (completedCampaigns!.length > 0) {
-      rewards.add(Reward(
-        successNumber: prevValue(completedCampaigns!.length, rewardValues),
-        type: RewardType.CompletedCampaignsNumber,
-      ));
-    }
-
-    // Add total completed actions
-    if (completedActions!.length > 0) {
-      rewards.add(Reward(
-        successNumber: prevValue(completedActions!.length, rewardValues),
-        type: RewardType.CompletedActionsNumber,
-      ));
-    }
-
-    print("previous rewards");
-    print(rewards.length);
-    return rewards;
-  }
-
-  List<Reward> getAllRewards({int? x}) {
-    List<Reward> completedRewards = getPreviousRewards();
-    List<Reward> nextRewards = getNextRewards();
-    return completedRewards..addAll(nextRewards);
-  }
-
-  bool isStagingUser() {
-    return stagingUsers.contains(email);
   }
 }
 

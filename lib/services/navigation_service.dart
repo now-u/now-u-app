@@ -157,7 +157,7 @@ class NavigationService {
             response: false,
             style: DarkButtonStyle.Secondary,
           ),
-        ]) as FutureOr<AlertResponse>);
+        ]) as Future<AlertResponse>);
     if (exit.response) {
       if (extraOnConfirmFunction != null) {
         extraOnConfirmFunction();

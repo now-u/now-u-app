@@ -142,7 +142,7 @@ class AuthenticationService {
       'token': token,
     });
     if (handleAuthRequestErrors(userResponse) != null) {
-      return handleAuthRequestErrors(userResponse) as FutureOr<User>;
+      return handleAuthRequestErrors(userResponse) as Future<User>;
     }
     User u = User.fromJson(json.decode(userResponse.body)["data"]);
     return u;
@@ -249,8 +249,6 @@ class AuthenticationService {
         return false;
       }
       User u = User.fromJson(json.decode(response.body)['data']);
-
-      _currentUser!.setPoints(u.getPoints());
       _currentUser!.setCompletedActions(u.getCompletedActions());
 
       return true;
@@ -274,7 +272,6 @@ class AuthenticationService {
       User u = User.fromJson(json.decode(response.body)['data']);
       _currentUser = _currentUser!.copyWith(
         starredActions: u.starredActions,
-        points: u.points,
       );
       return true;
     } catch (e) {
@@ -295,7 +292,6 @@ class AuthenticationService {
         return false;
       }
       User u = User.fromJson(json.decode(response.body)['data']);
-      //_currentUser.setPoints(u.getPoints());
       _currentUser = _currentUser!.copyWith(
         starredActions: u.getStarredActions(),
         rejectedActions: u.getRejectedActions(),
@@ -318,7 +314,7 @@ class AuthenticationService {
       body: json.encode(jsonBody),
     );
     if (handleAuthRequestErrors(response) != null) {
-      return handleAuthRequestErrors(response) as FutureOr<User>;
+      return handleAuthRequestErrors(response) as Future<User>;
     }
     User u = User.fromJson(json.decode(response.body)['data']);
     return u;
@@ -339,7 +335,6 @@ class AuthenticationService {
       User u = User.fromJson(json.decode(response.body)["data"]);
       _currentUser = _currentUser!.copyWith(
         selectedCampaigns: u.getSelectedCampaigns(),
-        points: u.getPoints(),
       );
       return true;
     } catch (e) {
@@ -362,7 +357,6 @@ class AuthenticationService {
       User u = User.fromJson(json.decode(response.body)["data"]);
       _currentUser = _currentUser!.copyWith(
         selectedCampaigns: u.getSelectedCampaigns(),
-        points: u.getPoints(),
       );
       return true;
     } catch (e) {

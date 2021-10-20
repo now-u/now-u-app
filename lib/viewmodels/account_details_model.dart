@@ -120,10 +120,10 @@ class AccountDetailsViewModel extends BaseModel {
     return await _googleLocationSearchService!.getPlaceDetailFromId(placeId);
   }
 
-  Future<List<Suggestion>?> fetchSuggestions(String input, String lang) async {
-    List? suggestions =
+  Future<List<Suggestion>> fetchSuggestions(String input, String lang) async {
+    List<Suggestion>? suggestions =
         await _googleLocationSearchService!.fetchSuggestions(input, lang);
-    return suggestions as FutureOr<List<Suggestion>?>;
+    return suggestions ?? List<Suggestion>.empty();
   }
 
   Future<bool> leaveOrganisation() async {

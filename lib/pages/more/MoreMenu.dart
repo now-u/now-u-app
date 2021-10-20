@@ -183,7 +183,7 @@ class Profile extends StatelessWidget {
                     SizedBox(height: 20),
 
                     // Dev Tools
-                    model.currentUser!.isStagingUser()
+                    model.currentUser!.isStagingUser
                         ? Column(children: [
                             GestureDetector(
                                 child: ProfileTile(

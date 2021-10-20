@@ -65,19 +65,6 @@ class CampaignService {
     if (!(includeStarred ?? true)) {
       actions.removeWhere((a) => user.getStarredActions()!.contains(a.getId()));
     }
-    if (onlySelectedCampaigns ?? false) {
-      // If action is not in the selected campaings then get rid
-      // TODO CHECK THIS
-      List<Campaign> activeSelectedCampaigns = getActiveSelectedCampaigns();
-      actions.removeWhere((action) {
-        activeSelectedCampaigns.forEach((campaign) {
-          if (campaign.getActions()!.contains(action)) {
-            return false;
-          }
-        });
-        return true;
-      });
-    }
     return actions;
   }
 

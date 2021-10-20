@@ -6,7 +6,7 @@ final double shadowBlurRadius = 20;
 final Offset shadowOffset = Offset(0, 3);
 
 BoxShadow customTileBoxShadow(bool onWhiteBackground) => BoxShadow(
-      color: onWhiteBackground ?? false ? shadowWhiteColor : shadowColor,
+      color: onWhiteBackground ? shadowWhiteColor : shadowColor,
       offset: shadowOffset,
       blurRadius: shadowBlurRadius,
     );
