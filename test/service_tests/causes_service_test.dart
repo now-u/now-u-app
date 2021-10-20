@@ -14,8 +14,8 @@ void main() {
   setupLocator();
   CausesService _causesService = locator<CausesService>();
 
-  group('get ', () {
-    test('returns a List of Causes if the request is successfully', () async {
+  group('get causes', () {
+    test('returns a List of ListCauses if the request is successfully', () async {
       final client = MockClient();
       _causesService.client = client;
 
@@ -32,6 +32,27 @@ void main() {
       expect(causes.length, 1);
 
       ListCause cause = causes[0];
+      expect(cause.id, 1);
+      expect(cause.title, "Cause title");
+      expect(cause.icon, "ic-abc");
+      expect(cause.description, "Cause description");
+      expect(cause.selected, true);
+    });
+
+    // TODO error case
+  });
+  
+  group('get cause', () {
+    test('returns a Cause if the request is successfully', () async {
+      final client = MockClient();
+      _causesService.client = client;
+
+      when(client
+              .get(Uri.parse('https://api.now-u.com/api/v2/cause/1?'), headers: {"Content-Type": "application/json; charset=UTF-8"}))
+          .thenAnswer((_) async =>
+              http.Response(await readTestData("cause.json"), 200));
+
+      Cause cause = await _causesService.getCause(1);
       expect(cause.id, 1);
       expect(cause.title, "Cause title");
       expect(cause.icon, "ic-abc");
