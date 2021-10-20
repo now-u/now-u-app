@@ -2,16 +2,16 @@ import 'package:app/assets/components/header.dart';
 import 'package:flutter/material.dart';
 
 class InfoPageArgumnets {
-  final String title;
-  final String body;
+  final String? title;
+  final String? body;
 
-  InfoPageArgumnets({@required this.title, @required this.body});
+  InfoPageArgumnets({required this.title, required this.body});
 
-  String getTitle() {
+  String? getTitle() {
     return title;
   }
 
-  String getBody() {
+  String? getBody() {
     return body;
   }
 }
@@ -33,7 +33,7 @@ class InfoPage extends StatelessWidget {
           Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               child: Text(
-                args.getBody().replaceAll("\n", "\n\n"),
+                args.getBody()!.replaceAll("\n", "\n\n"),
                 style: Theme.of(context).primaryTextTheme.bodyText1,
               )),
         ],

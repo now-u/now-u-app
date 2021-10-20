@@ -58,9 +58,9 @@ Color lightGrey = Color.fromRGBO(119, 119, 119, 1);
 
 //List<Widget> _pages = <Widget>[Campaigns(campaigns), Home(), Profile(_user)];
 
-Future<Map> getSecrets() async {
+Future<Map?> getSecrets() async {
   String data = await rootBundle.loadString('assets/json/secrets.json');
-  Map jsondata = json.decode(data);
+  Map? jsondata = json.decode(data);
   return jsondata;
   //return jsondata.containsKey(value) ? jsondata[value] : null;
 }
@@ -72,7 +72,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   int deepLinkPageIndex = 1;
-  Widget page;
+  Widget? page;
   @override
   void initState() {
     // Initalise Fireabse app
@@ -94,7 +94,7 @@ class _AppState extends State<App> {
       ),
       home: StartUpView(),
       //initialRoute: Routes.intro,
-      onGenerateRoute: initRoutes,
+      onGenerateRoute: initRoutes as Route<dynamic>? Function(RouteSettings)?,
       theme: ThemeData(
         // This is the theme of the application.
         applyElevationOverlayColor: true,

@@ -6,11 +6,11 @@ import 'package:app/services/navigation_service.dart';
 import 'package:flutter/widgets.dart';
 
 class BaseModel extends ChangeNotifier {
-  final AuthenticationService _authenticationService =
+  final AuthenticationService? _authenticationService =
       locator<AuthenticationService>();
-  final NavigationService _navigationService = locator<NavigationService>();
+  final NavigationService? _navigationService = locator<NavigationService>();
 
-  User get currentUser => _authenticationService.currentUser;
+  User? get currentUser => _authenticationService!.currentUser;
 
   bool _busy = false;
   bool get busy => _busy;
@@ -21,7 +21,7 @@ class BaseModel extends ChangeNotifier {
   }
 
   void logout() {
-    _authenticationService.logout();
-    _navigationService.navigateTo(Routes.login);
+    _authenticationService!.logout();
+    _navigationService!.navigateTo(Routes.login);
   }
 }

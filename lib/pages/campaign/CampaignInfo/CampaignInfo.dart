@@ -25,8 +25,8 @@ import 'package:app/viewmodels/campaign_info_model.dart';
 const double H_PADDING = 20;
 
 class CampaignInfo extends StatelessWidget {
-  final Campaign campaign;
-  final int campaignId;
+  final Campaign? campaign;
+  final int? campaignId;
 
   CampaignInfo({this.campaign, this.campaignId})
       : assert(campaign != null || campaignId != null);
@@ -58,7 +58,7 @@ class CampaignInfo extends StatelessWidget {
 }
 
 class CampaignInfoBody extends StatelessWidget {
-  final Campaign _campaign;
+  final Campaign? _campaign;
   final CampaignInfoViewModel model;
 
   CampaignInfoBody(this._campaign, this.model);
@@ -76,7 +76,7 @@ class CampaignInfoBody extends StatelessWidget {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: customNetworkImageProvider(
-                          _campaign.getHeaderImage()),
+                          _campaign!.getHeaderImage()),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -84,14 +84,14 @@ class CampaignInfoBody extends StatelessWidget {
                     padding: EdgeInsets.only(bottom: 20),
                     child: Column(children: [
                       PageHeader(
-                        title: _campaign.getTitle(),
+                        title: _campaign!.getTitle(),
                         textColor: Colors.white,
                         backButton: true,
                         backButtonText: "",
                         maxLines: 4,
                         fontSize: Theme.of(context)
                             .primaryTextTheme
-                            .headline3
+                            .headline3!
                             .fontSize,
                         extraInnerPadding: 20,
                       ),
@@ -127,13 +127,13 @@ class CampaignInfoBody extends StatelessWidget {
                               Container(
                                 height: 180,
                                 child:
-                                    CustomNetworkImage(_campaign.infographic),
+                                    CustomNetworkImage(_campaign!.infographic),
                               ),
                               SizedBox(
                                 height: 12,
                               ),
                               DarkButton("Take action", onPressed: () {
-                                if (_campaign.isPast()) {
+                                if (_campaign!.isPast()) {
                                   Navigator.of(context).pushNamed(
                                       Routes.pastCampaignActionPage,
                                       arguments: _campaign);
@@ -162,12 +162,12 @@ class CampaignInfoBody extends StatelessWidget {
                           children: [
                             CampaignStat(
                                 text:
-                                    "${_campaign.getNumberOfCampaigners()} people have joined",
+                                    "${_campaign!.getNumberOfCampaigners()} people have joined",
                                 icon: Icons.people),
                             //CampaignStat(text: "Actions completed"),,
                             CampaignStat(
                               text:
-                                  "${_campaign.getNumberOfActionsCompleted()} actions completed by now-u users",
+                                  "${_campaign!.getNumberOfActionsCompleted()} actions completed by now-u users",
                               icon: CustomIcons.ic_clipboard,
                             ),
                             CampaignStat(
@@ -186,7 +186,7 @@ class CampaignInfoBody extends StatelessWidget {
                                 text: "Watch the video",
                                 icon: CustomIcons.ic_video,
                                 onTap: () {
-                                  model.viewCampaignVideo(_campaign);
+                                  model.viewCampaignVideo(_campaign!);
                                 }),
                             CampaignButton(
                                 text: "Read summary",
@@ -202,7 +202,7 @@ class CampaignInfoBody extends StatelessWidget {
                                 onTap: () {
                                   Navigator.of(context).pushNamed(
                                       Routes.learningSingle,
-                                      arguments: _campaign.getId());
+                                      arguments: _campaign!.getId());
                                 }),
                           ],
                         ),
@@ -216,7 +216,7 @@ class CampaignInfoBody extends StatelessWidget {
                             CustomTextButton(
                               "Share this campaign",
                               onClick: () async {
-                                String text = await _campaign.getShareText();
+                                String text = await _campaign!.getShareText();
                                 Share.share(text);
                               },
                             ),
@@ -248,7 +248,7 @@ class CampaignInfoBody extends StatelessWidget {
                         ),
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: _campaign.getKeyAims().map((aim) {
+                            children: _campaign!.getKeyAims()!.map((aim) {
                               return Column(children: [
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -276,7 +276,7 @@ class CampaignInfoBody extends StatelessWidget {
                   )),
 
               // Partners
-              _campaign.getGeneralPartners().length == 0
+              _campaign!.getGeneralPartners()!.length == 0
                   ? Container()
                   : Container(
                       color: Color.fromRGBO(247, 248, 252, 1),
@@ -298,7 +298,7 @@ class CampaignInfoBody extends StatelessWidget {
                               ),
                               Wrap(
                                 children: getOrganistaionTiles(
-                                    _campaign.getGeneralPartners(), context),
+                                    _campaign!.getGeneralPartners()!, context),
                                 spacing: 10,
                                 runSpacing: 10,
                                 crossAxisAlignment: WrapCrossAlignment.start,
@@ -317,11 +317,11 @@ class CampaignInfoBody extends StatelessWidget {
                   child: ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: _campaign.getSDGs().length,
+                itemCount: _campaign!.getSDGs()!.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: EdgeInsets.all(10),
-                    child: SDGSelectionItem(_campaign.getSDGs()[index], model),
+                    child: SDGSelectionItem(_campaign!.getSDGs()![index], model),
                   );
                 },
                 // )
@@ -344,7 +344,7 @@ class CampaignInfoBody extends StatelessWidget {
                         model.openSDGGoals();
                       },
                       fontSize:
-                          Theme.of(context).primaryTextTheme.bodyText1.fontSize,
+                          Theme.of(context).primaryTextTheme.bodyText1!.fontSize,
                     ),
                   ])
                 ],
@@ -373,7 +373,7 @@ class CampaignInfoBody extends StatelessWidget {
                 )),
               ),
               onPressed: () {
-                model.joinCampaign(_campaign.getId());
+                model.joinCampaign(_campaign!.getId());
               },
               color: Theme.of(context).primaryColor,
             ),
@@ -387,8 +387,8 @@ class CampaignStat extends StatelessWidget {
   final IconData icon;
 
   CampaignStat({
-    @required this.text,
-    @required this.icon,
+    required this.text,
+    required this.icon,
   });
 
   @override
@@ -399,7 +399,7 @@ class CampaignStat extends StatelessWidget {
         children: [
           Icon(
             icon,
-            color: Theme.of(context).primaryTextTheme.bodyText1.color,
+            color: Theme.of(context).primaryTextTheme.bodyText1!.color,
           ),
           SizedBox(
             width: 10,
@@ -420,9 +420,9 @@ class CampaignButton extends StatelessWidget {
   final Function onTap;
 
   CampaignButton({
-    @required this.text,
-    @required this.icon,
-    @required this.onTap,
+    required this.text,
+    required this.icon,
+    required this.onTap,
   });
 
   @override
@@ -437,7 +437,7 @@ class CampaignButton extends StatelessWidget {
               children: [
                 Icon(
                   icon,
-                  color: Theme.of(context).primaryTextTheme.bodyText1.color,
+                  color: Theme.of(context).primaryTextTheme.bodyText1!.color,
                 ),
                 SizedBox(
                   width: 14,
@@ -502,7 +502,7 @@ class SDGSelectionItem extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.all(0),
                 child: Image.asset(
-                  sdg.getImage(),
+                  sdg.getImage()!,
                 ),
               ),
             ),
@@ -551,7 +551,7 @@ List<Widget> getOrganistaionTiles(
                   width: 5,
                 ),
                 Text(
-                  org.getName(),
+                  org.getName()!,
                 )
               ],
             ),
@@ -565,7 +565,7 @@ List<Widget> getOrganistaionTiles(
 
 class SectionTitle extends StatelessWidget {
   final String text;
-  final double hPadding;
+  final double? hPadding;
 
   SectionTitle(
     this.text, {

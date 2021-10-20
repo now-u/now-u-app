@@ -138,9 +138,9 @@ class _ActionPageState extends State<ActionPage> {
                                             padding:
                                                 EdgeInsets.only(bottom: 10),
                                             child: CampaignSelectionTile(
-                                              model.currentUser
+                                              model.currentUser!
                                                   .filterSelectedCampaigns(
-                                                      model.campaigns)[index],
+                                                      model.campaigns!)[index],
                                               height: CAMPAIGN_SELECT_HEIGHT,
                                             ),
                                           );
@@ -289,7 +289,7 @@ class SortScreen extends StatefulWidget {
 }
 
 class _SortScreenState extends State<SortScreen> {
-  Map<String, Map> selections;
+  Map<String, Map>? selections;
 
   initState() {
     selections = widget.selections;
@@ -342,10 +342,10 @@ class _SortScreenState extends State<SortScreen> {
                       controlAffinity: ListTileControlAffinity.leading,
                       activeColor: Theme.of(context).primaryColor,
                       title: Text(timeBrackets[index]['text']),
-                      value: selections['times'][timeBrackets[index]['text']],
-                      onChanged: (bool value) {
+                      value: selections!['times']![timeBrackets[index]['text']],
+                      onChanged: (bool? value) {
                         setState(() {
-                          selections['times'][timeBrackets[index]['text']] =
+                          selections!['times']![timeBrackets[index]['text']] =
                               value;
                         });
                       });
@@ -365,11 +365,11 @@ class _SortScreenState extends State<SortScreen> {
                   return CheckboxSelectionItem(
                       title: campaignActionSuperTypeData[
                           CampaignActionSuperType.values[index]]['name'],
-                      value: selections['categories']
+                      value: selections!['categories']!
                           [CampaignActionSuperType.values[index]],
                       onChanged: (bool value) {
                         setState(() {
-                          selections['categories']
+                          selections!['categories']!
                               [CampaignActionSuperType.values[index]] = value;
                         });
                       });
@@ -385,18 +385,18 @@ class _SortScreenState extends State<SortScreen> {
                 children: [
                   CheckboxSelectionItem(
                       title: "Include completed",
-                      value: selections['extras']['completed'],
+                      value: selections!['extras']!['completed'],
                       onChanged: (bool value) {
                         setState(() {
-                          selections['extras']['completed'] = value;
+                          selections!['extras']!['completed'] = value;
                         });
                       }),
                   CheckboxSelectionItem(
                       title: "Include rejected",
-                      value: selections['extras']['rejected'],
+                      value: selections!['extras']!['rejected'],
                       onChanged: (bool value) {
                         setState(() {
-                          selections['extras']['rejected'] = value;
+                          selections!['extras']!['rejected'] = value;
                         });
                       }),
                 ],
@@ -482,7 +482,7 @@ class _ActiveDoneSelectorState extends State<ActiveDoneSelector> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: widget.onClick,
+        onTap: widget.onClick as void Function()?,
         child: Padding(
           padding: EdgeInsets.only(left: 12, bottom: 10),
           child: SelectionPill(widget.text, widget.selected),

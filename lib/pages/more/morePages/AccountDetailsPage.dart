@@ -45,7 +45,7 @@ class AccountDetailsPage extends StatelessWidget {
                     ),
                     CustomTextFormField(
                         autofocus: false,
-                        initialValue: model.currentUser.getName(),
+                        initialValue: model.currentUser!.getName(),
                         style: CustomFormFieldStyle.Light,
                         onChanged: (String name) {
                           model.name = name;
@@ -85,7 +85,7 @@ class AccountDetailsPage extends StatelessWidget {
                     GestureDetector(
                         onTap: () async {
                           // generate a new token here
-                          final Suggestion result = await showSearch(
+                          final Suggestion? result = await showSearch(
                             context: context,
                             delegate: AddressSearch(model.fetchSuggestions),
                           );
@@ -120,7 +120,7 @@ class AccountDetailsPage extends StatelessWidget {
                     CustomTextFormField(
                       autofocus: false,
                       style: CustomFormFieldStyle.Light,
-                      initialValue: model.currentUser.getEmail(),
+                      initialValue: model.currentUser!.getEmail(),
                       enabled: false,
                     ),
                     // TODO: Receive newsletter toggle
@@ -156,13 +156,13 @@ class AccountDetailsPage extends StatelessWidget {
                                 Row(
                                   children: [
                                     Image.network(
-                                      model.userOrganisation.getLogoLink(),
+                                      model.userOrganisation!.getLogoLink()!,
                                       width: 60,
                                     ),
                                     SizedBox(width: 10),
                                     Expanded(
                                       child: Text(
-                                        model.userOrganisation.getName(),
+                                        model.userOrganisation!.getName()!,
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 2,
                                       ),
@@ -254,13 +254,13 @@ class AccountDetailsPage extends StatelessWidget {
   }
 
   Future<Null> _datePicker(
-      BuildContext context, DateTime date, Function onChanged) async {
-    final DateTime picked = await showDatePicker(
+      BuildContext context, DateTime? date, Function onChanged) async {
+    final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: date ?? DateTime(1995, 1),
       firstDate: DateTime(1800, 1),
       lastDate: DateTime(2100),
-      builder: (BuildContext context, Widget child) {
+      builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
             primaryColor: Theme.of(context).primaryColor,
@@ -269,7 +269,7 @@ class AccountDetailsPage extends StatelessWidget {
                 ColorScheme.light(primary: Theme.of(context).primaryColor),
             //buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
           ),
-          child: child,
+          child: child!,
         );
       },
     );
@@ -279,7 +279,7 @@ class AccountDetailsPage extends StatelessWidget {
   }
 }
 
-class AddressSearch extends SearchDelegate<Suggestion> {
+class AddressSearch extends SearchDelegate<Suggestion?> {
   Function fetchSuggestions;
   AddressSearch(this.fetchSuggestions);
 
@@ -328,9 +328,9 @@ class AddressSearch extends SearchDelegate<Suggestion> {
               ? ListView.builder(
                   itemBuilder: (context, index) => ListTile(
                     title:
-                        Text((snapshot.data[index] as Suggestion).description),
+                        Text((snapshot.data[index] as Suggestion).description!),
                     onTap: () {
-                      close(context, snapshot.data[index] as Suggestion);
+                      close(context, snapshot.data[index] as Suggestion?);
                     },
                   ),
                   itemCount: snapshot.data.length,

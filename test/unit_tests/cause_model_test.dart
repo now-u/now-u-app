@@ -6,14 +6,14 @@ void main() {
     test('Happy json test', () {
       Cause cause = Cause(
           id: 1,
-          name: "Cause_name",
+          title: "Cause_name",
           icon: "icon_name",
           description: "Some desc",
           headerImage: "Header image",
           actions: [1, 2, 3]);
 
       expect(cause.id, 1);
-      expect(cause.name, 'Cause_name');
+      expect(cause.title, 'Cause_name');
       expect(cause.icon, 'icon_name');
       expect(cause.description, 'Some desc');
       expect(cause.headerImage, 'Header image');

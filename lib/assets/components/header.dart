@@ -8,20 +8,20 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../StyleFrom.dart';
 
 class PageHeader extends StatelessWidget {
-  final Function onTap;
-  final String title;
-  final IconData icon;
-  final bool backButton;
-  final String backButtonText;
-  final double padding;
-  final int maxLines;
+  final Function? onTap;
+  final String? title;
+  final IconData? icon;
+  final bool? backButton;
+  final String? backButtonText;
+  final double? padding;
+  final int? maxLines;
   // For Colour
-  final Color textColor;
+  final Color? textColor;
   // For question mark button
-  final String infoTitle;
-  final String infoText;
-  final double fontSize;
-  final double extraInnerPadding;
+  final String? infoTitle;
+  final String? infoText;
+  final double? fontSize;
+  final double? extraInnerPadding;
 
   PageHeader(
       {this.onTap,
@@ -51,7 +51,7 @@ class PageHeader extends StatelessWidget {
         SizedBox(height: extraInnerPadding ?? 0),
         Container(
           child: Padding(
-            padding: EdgeInsets.only(left: padding == null ? 20 : padding + 10),
+            padding: EdgeInsets.only(left: padding == null ? 20 : padding! + 10),
             child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -59,7 +59,7 @@ class PageHeader extends StatelessWidget {
                   infoText == null && infoTitle == null && maxLines != null
                       ? Expanded(
                           child: Text(
-                            title,
+                            title!,
                             textAlign: TextAlign.left,
                             style: textStyleFrom(
                               Theme.of(context).primaryTextTheme.headline2,
@@ -72,7 +72,7 @@ class PageHeader extends StatelessWidget {
                         )
                       : Container(
                           child: Text(
-                            title,
+                            title!,
                             textAlign: TextAlign.left,
                             style: textStyleFrom(
                               Theme.of(context).primaryTextTheme.headline2,
@@ -110,11 +110,11 @@ class PageHeader extends StatelessWidget {
 }
 
 class PageHeaderBackButton extends StatelessWidget {
-  final Function onTap;
-  final IconData icon;
-  final bool backButton;
-  final String backButtonText;
-  final double padding;
+  final Function? onTap;
+  final IconData? icon;
+  final bool? backButton;
+  final String? backButtonText;
+  final double? padding;
 
   PageHeaderBackButton(
       {this.backButton,
@@ -154,7 +154,7 @@ class PageHeaderBackButton extends StatelessWidget {
               : Align(
                   alignment: Alignment.centerRight,
                   child: GestureDetector(
-                    onTap: onTap,
+                    onTap: onTap as void Function()?,
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: padding ?? 10.0, vertical: 10.0),

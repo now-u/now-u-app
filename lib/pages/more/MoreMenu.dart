@@ -99,7 +99,7 @@ final profileTiles = <Map>[
 /// checking if the elements inside it is either sectionHeading
 /// or [ProfileTile]
 class Profile extends StatelessWidget {
-  final NavigationService _navigationService = locator<NavigationService>();
+  final NavigationService? _navigationService = locator<NavigationService>();
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +147,7 @@ class Profile extends StatelessWidget {
                                       context, profileTiles[index]["page"]);
                                 } else if (profileTiles[index]["link"] !=
                                     null) {
-                                  _navigationService.launchLink(
+                                  _navigationService!.launchLink(
                                       profileTiles[index]["link"],
                                       isExternal: profileTiles[index]
                                               ['external'] ??
@@ -183,7 +183,7 @@ class Profile extends StatelessWidget {
                     SizedBox(height: 20),
 
                     // Dev Tools
-                    model.currentUser.isStagingUser()
+                    model.currentUser!.isStagingUser()
                         ? Column(children: [
                             GestureDetector(
                                 child: ProfileTile(
@@ -203,7 +203,7 @@ class Profile extends StatelessWidget {
                                 child: ProfileTile(
                                     "Navigate test", FontAwesomeIcons.code),
                                 onTap: () {
-                                  _navigationService.launchLink(
+                                  _navigationService!.launchLink(
                                       "internal:learningTopic&id=-1");
                                 }),
                           ])
@@ -217,8 +217,8 @@ class Profile extends StatelessWidget {
 
 class SocialButton extends StatelessWidget {
   final double size = 50;
-  final IconData icon;
-  final String link;
+  final IconData? icon;
+  final String? link;
 
   SocialButton({
     this.icon,
@@ -229,7 +229,7 @@ class SocialButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          launch(link);
+          launch(link!);
         },
         child: CustomTile(
             borderRadius: size / 2,

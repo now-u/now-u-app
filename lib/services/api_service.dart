@@ -14,21 +14,21 @@ class ApiError {
 class ApiService {
   String baseUrl = "https://api.now-u.com/api/v2/";
   
-  User _currentUser;
-  User get currentUser => _currentUser;
+  User? _currentUser;
+  User? get currentUser => _currentUser;
   
   Map getRequestHeaders() {
-    return <String, String>{
+    return <String, String?>{
       'Content-Type': 'application/json; charset=UTF-8',
-      'token': currentUser.getToken(),
+      'token': currentUser!.getToken(),
     };
   }
 
-  Future<Map> getRequest(String path, {Map<String, dynamic> params}) async {
+  Future<Map?> getRequest(String path, {Map<String, dynamic>? params}) async {
     final uri = Uri.https(baseUrl, path, params);
     http.Response response = await http.get(
       uri,
-      headers: getRequestHeaders()
+      headers: getRequestHeaders() as Map<String, String>?
     );
       
     if (response.statusCode == 401) {

@@ -22,11 +22,11 @@ final double hPadding = 10;
 
 class ActionInfoArguments {
   final CampaignAction action;
-  final Campaign campaign;
+  final Campaign? campaign;
 
   ActionInfoArguments({
-    @required this.action,
-    @required this.campaign,
+    required this.action,
+    required this.campaign,
   });
 }
 
@@ -40,9 +40,9 @@ class ActionInfo extends StatefulWidget {
 class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
   final double expandedHeight = 400.0;
 
-  CampaignAction _action;
+  late CampaignAction _action;
   // Action's parent campaign
-  Campaign _campaign;
+  Campaign? _campaign;
   @override
   void initState() {
     _campaign = widget.args.campaign;
@@ -58,9 +58,9 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
         viewModelBuilder: () => ActionInfoViewModel(),
         builder: (context, model, child) {
           bool completed =
-              model.currentUser.getCompletedActions().contains(_action.getId());
+              model.currentUser!.getCompletedActions()!.contains(_action.getId());
           bool starred =
-              model.currentUser.getStarredActions().contains(_action.getId());
+              model.currentUser!.getStarredActions()!.contains(_action.getId());
           return Scaffold(
               appBar: customAppBar(
                 text: _action.getSuperTypeName(),
@@ -73,11 +73,11 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                   children: [
                     Container(
                       width: double.infinity,
-                      color: _action.getSuperTypeData()['iconBackgroundColor'],
+                      color: _action.getSuperTypeData()!['iconBackgroundColor'],
                       child: Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: 15, vertical: 20),
-                          child: Text(_action.getTitle())),
+                          child: Text(_action.getTitle()!)),
                     ),
                     Container(
                       height: completed ? null : 10,
@@ -123,14 +123,14 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                 SizedBox(width: 6),
                                 Icon(FontAwesomeIcons.clock, size: 12),
                                 SizedBox(width: 3),
-                                Text(_action.getTimeText()),
+                                Text(_action.getTimeText()!),
                               ],
                             ),
                             GestureDetector(
                                 onTap: () {
                                   Navigator.of(context).pushNamed(
                                       Routes.campaignInfo,
-                                      arguments: _campaign.getId());
+                                      arguments: _campaign!.getId());
                                 },
                                 child: Container(
                                   height: 20,
@@ -244,7 +244,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                             padding: EdgeInsets.only(top: 20, bottom: 10),
                             child: Container(
                                 color: _action
-                                    .getSuperTypeData()['iconBackgroundColor'],
+                                    .getSuperTypeData()!['iconBackgroundColor'],
                                 child: Padding(
                                   padding: const EdgeInsets.all(15.0),
                                   child: Column(
@@ -269,7 +269,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                                   "You have completed this action and contributed to the goals of the ",
                                             ),
                                             TextSpan(
-                                                text: _campaign.getTitle(),
+                                                text: _campaign!.getTitle(),
                                                 style: textStyleFrom(
                                                   Theme.of(context)
                                                       .primaryTextTheme
@@ -285,7 +285,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                                                 Routes
                                                                     .campaignInfo,
                                                                 arguments:
-                                                                    _campaign
+                                                                    _campaign!
                                                                         .getId());
                                                       }),
                                             TextSpan(

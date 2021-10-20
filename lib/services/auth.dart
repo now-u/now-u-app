@@ -21,12 +21,12 @@ class AuthError {
 
 class AuthenticationService {
   //final NavigationService _navigationService = locator<NavigationService>();
-  final SharedPreferencesService _sharedPreferencesService =
+  final SharedPreferencesService? _sharedPreferencesService =
       locator<SharedPreferencesService>();
-  final DeviceInfoService _deviceInfoService = locator<DeviceInfoService>();
+  final DeviceInfoService? _deviceInfoService = locator<DeviceInfoService>();
 
-  User _currentUser;
-  User get currentUser => _currentUser;
+  User? _currentUser;
+  User? get currentUser => _currentUser;
 
   // This is not final as it can be changed
   String domainPrefix = "https://api.now-u.com/api/v1/";
@@ -36,7 +36,7 @@ class AuthenticationService {
   }
 
   Future<bool> isUserLoggedIn() async {
-    User user = await _sharedPreferencesService.loadUserFromPrefs();
+    User? user = await _sharedPreferencesService!.loadUserFromPrefs();
     if (user != null) {
       print("[isUserLoggedIn()]: user from Prefs not null");
       await _updateUser(user.getToken());
@@ -45,7 +45,7 @@ class AuthenticationService {
     return _currentUser != null;
   }
 
-  Future _updateUser(String token) async {
+  Future _updateUser(String? token) async {
     if (token != null) {
       print("[_updateUser()]: _currentUser BEFORE getUser(token): " +
           _currentUser.toString());
@@ -53,13 +53,13 @@ class AuthenticationService {
 
       print("[_updateUser()]: _currentUser AFTER getUser(token): " +
           _currentUser.toString());
-      _sharedPreferencesService.saveUserToPrefs(_currentUser);
+      _sharedPreferencesService!.saveUserToPrefs(_currentUser!);
     }
   }
 
   // Generic Reuqest
   // Handle 401 errors
-  Future handleAuthRequestErrors(http.Response response) {
+  Future? handleAuthRequestErrors(http.Response response) {
     if (response.statusCode == 200) {
       return null;
     } else if (response.statusCode == 401) {
@@ -75,7 +75,7 @@ class AuthenticationService {
   }
 
   Future sendSignInWithEmailLink(
-      String email, String name, bool acceptNewletter) async {
+      String? email, String? name, bool? acceptNewletter) async {
     try {
       await http.post(
         Uri.parse(domainPrefix + 'users'),
@@ -86,8 +86,8 @@ class AuthenticationService {
           'email': email,
           'full_name': name,
           'newsletter_signup': acceptNewletter,
-          'platform': _deviceInfoService.osType,
-          'version': await _deviceInfoService.osVersion,
+          'platform': _deviceInfoService!.osType,
+          'version': await _deviceInfoService!.osVersion,
         }),
       );
       return true;
@@ -99,14 +99,14 @@ class AuthenticationService {
     }
   }
 
-  Future<String> login(String email, String token) async {
+  Future<String?> login(String? email, String? token) async {
     try {
       http.Response response = await http.post(
         Uri.parse(domainPrefix + 'users/login'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(<String, String>{
+        body: jsonEncode(<String, String?>{
           'email': email,
           'token': token,
         }),
@@ -119,7 +119,7 @@ class AuthenticationService {
         return AuthError.tokenExpired;
       }
 
-      User user = await getUser(json.decode(response.body)['data']['token']);
+      User user = await getUser(json.decode(response.body)['data']['token'])!;
       _updateUser(user.getToken());
       return null;
     } on Error catch (e) {
@@ -130,28 +130,28 @@ class AuthenticationService {
 
   bool logout() {
     print("current user: " + _currentUser.toString());
-    _sharedPreferencesService.removeUserFromPrefs();
+    _sharedPreferencesService!.removeUserFromPrefs();
     _currentUser = null;
     print("current user: " + _currentUser.toString());
     return true;
   }
 
-  Future<User> getUser(String token) async {
+  Future<User>? getUser(String token) async {
     http.Response userResponse =
         await http.get(Uri.parse(domainPrefix + 'users/me'), headers: <String, String>{
       'token': token,
     });
     if (handleAuthRequestErrors(userResponse) != null) {
-      return handleAuthRequestErrors(userResponse);
+      return handleAuthRequestErrors(userResponse) as FutureOr<User>;
     }
     User u = User.fromJson(json.decode(userResponse.body)["data"]);
     return u;
   }
 
   Future<bool> updateUserDetails({
-    String name,
-    DateTime dob,
-    String orgCode,
+    String? name,
+    DateTime? dob,
+    String? orgCode,
   }) async {
     try {
       final Map<String, String> userDetials = {};
@@ -168,7 +168,7 @@ class AuthenticationService {
         Uri.parse(domainPrefix + 'users/me'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'token': currentUser.getToken(),
+          'token': currentUser!.getToken()!,
         },
         body: jsonEncode(userDetials),
       );
@@ -178,23 +178,23 @@ class AuthenticationService {
       print(response.body);
       print(json.decode(response.body)['data']['organisation']);
       User u = User.fromJson(json.decode(response.body)['data']);
-      currentUser.setName(u.getName());
-      currentUser.setDateOfBirth(u.getDateOfBirth());
+      currentUser!.setName(u.getName());
+      currentUser!.setDateOfBirth(u.getDateOfBirth());
       print("new user og is ${u.organisation}");
-      currentUser.setOrganisation = u.organisation;
+      currentUser!.setOrganisation = u.organisation;
       return true;
     } catch (e) {
       return false;
     }
   }
 
-  Future<String> deleteUserAccount() async {
+  Future<String?> deleteUserAccount() async {
     try {
       http.Response response = await http.delete(
         Uri.parse(domainPrefix + 'users/me'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'token': currentUser.getToken(),
+          'token': currentUser!.getToken()!,
         },
       );
       if (response.statusCode >= 400 && response.statusCode < 500) {
@@ -219,7 +219,7 @@ class AuthenticationService {
         Uri.parse(domainPrefix + 'users/me/organisations'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'token': currentUser.getToken(),
+          'token': currentUser!.getToken()!,
         },
       );
       if (response.statusCode >= 300) {
@@ -228,7 +228,7 @@ class AuthenticationService {
       }
       print("Put organisation_code null");
       User u = User.fromJson(json.decode(response.body));
-      currentUser.setOrganisation = u.organisation;
+      currentUser!.setOrganisation = u.organisation;
       return true;
     } catch (e) {
       print("Error");
@@ -236,13 +236,13 @@ class AuthenticationService {
     }
   }
 
-  Future<bool> completeAction(int actionId) async {
+  Future<bool> completeAction(int? actionId) async {
     try {
       http.Response response = await http.post(
         Uri.parse(domainPrefix + 'users/me/actions/$actionId/complete'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'token': currentUser.getToken(),
+          'token': currentUser!.getToken()!,
         },
       );
       if (response.statusCode != 200) {
@@ -250,8 +250,8 @@ class AuthenticationService {
       }
       User u = User.fromJson(json.decode(response.body)['data']);
 
-      _currentUser.setPoints(u.getPoints());
-      _currentUser.setCompletedActions(u.getCompletedActions());
+      _currentUser!.setPoints(u.getPoints());
+      _currentUser!.setCompletedActions(u.getCompletedActions());
 
       return true;
     } catch (e) {
@@ -259,20 +259,20 @@ class AuthenticationService {
     }
   }
 
-  Future<bool> starAction(int actionId) async {
+  Future<bool> starAction(int? actionId) async {
     try {
       http.Response response = await http.post(
         Uri.parse(domainPrefix + 'users/me/actions/$actionId/favourite'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'token': currentUser.getToken(),
+          'token': currentUser!.getToken()!,
         },
       );
       if (response.statusCode != 200) {
         return false;
       }
       User u = User.fromJson(json.decode(response.body)['data']);
-      _currentUser = _currentUser.copyWith(
+      _currentUser = _currentUser!.copyWith(
         starredActions: u.starredActions,
         points: u.points,
       );
@@ -282,13 +282,13 @@ class AuthenticationService {
     }
   }
 
-  Future<bool> removeActionStatus(int actionId) async {
+  Future<bool> removeActionStatus(int? actionId) async {
     try {
       http.Response response = await http.delete(
         Uri.parse(domainPrefix + 'users/me/actions/$actionId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'token': currentUser.getToken(),
+          'token': currentUser!.getToken()!,
         },
       );
       if (response.statusCode != 200) {
@@ -296,7 +296,7 @@ class AuthenticationService {
       }
       User u = User.fromJson(json.decode(response.body)['data']);
       //_currentUser.setPoints(u.getPoints());
-      _currentUser = _currentUser.copyWith(
+      _currentUser = _currentUser!.copyWith(
         starredActions: u.getStarredActions(),
         rejectedActions: u.getRejectedActions(),
         completedActions: u.getCompletedActions(),
@@ -307,37 +307,37 @@ class AuthenticationService {
     }
   }
 
-  Future<User> rejectAction(String token, int actionId, String reason) async {
+  Future<User>? rejectAction(String token, int actionId, String reason) async {
     Map jsonBody = {'reason': reason};
     http.Response response = await http.post(
       Uri.parse(domainPrefix + 'users/me/actions/$actionId/reject'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'token': currentUser.getToken(),
+        'token': currentUser!.getToken()!,
       },
       body: json.encode(jsonBody),
     );
     if (handleAuthRequestErrors(response) != null) {
-      return handleAuthRequestErrors(response);
+      return handleAuthRequestErrors(response) as FutureOr<User>;
     }
     User u = User.fromJson(json.decode(response.body)['data']);
     return u;
   }
 
-  Future<bool> joinCampaign(int campaignId) async {
+  Future<bool> joinCampaign(int? campaignId) async {
     try {
       http.Response response = await http.post(
         Uri.parse(domainPrefix + 'users/me/campaigns/$campaignId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'token': currentUser.getToken(),
+          'token': currentUser!.getToken()!,
         },
       );
       if (response.statusCode != 200) {
         return false;
       }
       User u = User.fromJson(json.decode(response.body)["data"]);
-      _currentUser = _currentUser.copyWith(
+      _currentUser = _currentUser!.copyWith(
         selectedCampaigns: u.getSelectedCampaigns(),
         points: u.getPoints(),
       );
@@ -353,14 +353,14 @@ class AuthenticationService {
         Uri.parse(domainPrefix + 'users/me/campaigns/$campaignId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'token': currentUser.getToken(),
+          'token': currentUser!.getToken()!,
         },
       );
       if (response.statusCode != 200) {
         return false;
       }
       User u = User.fromJson(json.decode(response.body)["data"]);
-      _currentUser = _currentUser.copyWith(
+      _currentUser = _currentUser!.copyWith(
         selectedCampaigns: u.getSelectedCampaigns(),
         points: u.getPoints(),
       );
@@ -370,20 +370,20 @@ class AuthenticationService {
     }
   }
 
-  Future<bool> completeLearningResource(int learningResourceId) async {
+  Future<bool> completeLearningResource(int? learningResourceId) async {
     try {
       http.Response response = await http.post(
         Uri.parse(domainPrefix + 'users/me/learning_resources/$learningResourceId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'token': currentUser.getToken(),
+          'token': currentUser!.getToken()!,
         },
       );
       if (response.statusCode != 200) {
         return false;
       }
       User u = User.fromJson(json.decode(response.body)['data']);
-      _currentUser = _currentUser.copyWith(
+      _currentUser = _currentUser!.copyWith(
           completedLearningResources: u.getCompletedLearningResources());
       return true;
     } catch (e) {

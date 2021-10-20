@@ -10,9 +10,9 @@ import 'package:app/viewmodels/base_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class StartUpViewModel extends BaseModel {
-  final AuthenticationService _authenticationService =
+  final AuthenticationService? _authenticationService =
       locator<AuthenticationService>();
-  final NavigationService _navigationService = locator<NavigationService>();
+  final NavigationService? _navigationService = locator<NavigationService>();
 
   Future handleStartUpLogic() async {
     await Firebase.initializeApp();
@@ -31,12 +31,12 @@ class StartUpViewModel extends BaseModel {
         locator<RemoteConfigService>();
     await _remoteConfigService.init();
 
-    var hasLoggedInUser = await _authenticationService.isUserLoggedIn();
+    var hasLoggedInUser = await _authenticationService!.isUserLoggedIn();
 
     if (hasLoggedInUser) {
-      _navigationService.navigateTo(Routes.home);
+      _navigationService!.navigateTo(Routes.home);
     } else {
-      _navigationService.navigateTo(Routes.onBoarding);
+      _navigationService!.navigateTo(Routes.onBoarding);
     }
   }
 }

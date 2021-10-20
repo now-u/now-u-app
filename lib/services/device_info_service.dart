@@ -3,7 +3,7 @@ import 'package:device_info/device_info.dart';
 
 class DeviceInfoService {
   String get osType => Platform.operatingSystem;
-  Future<String> get osVersion async {
+  Future<String?> get osVersion async {
     if (Platform.isIOS) {
       var iosInfo = await DeviceInfoPlugin().iosInfo;
       return iosInfo.systemVersion;

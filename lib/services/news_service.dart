@@ -6,8 +6,8 @@ import 'package:app/models/Article.dart';
 class NewsService {
   String domainPrefix = "https://api.now-u.com/api/v1/";
 
-  List<Article> _articles = [];
-  List<Article> get articles => _articles;
+  List<Article>? _articles = [];
+  List<Article>? get articles => _articles;
 
   Future fetchArticles() async {
     try {

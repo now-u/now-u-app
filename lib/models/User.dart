@@ -17,41 +17,41 @@ int pointsForJoiningCampaign = 10;
 int pointsForCompletingAction = 5;
 
 class User {
-  int id;
+  int? id;
   //FirebaseUser firebaseUser;
-  String fullName;
-  String email;
-  DateTime dateOfBirth;
+  String? fullName;
+  String? email;
+  DateTime? dateOfBirth;
 
   // TODO make some attributes class that can take any attrribute so I dont need this
-  String location;
-  double monthlyDonationLimit;
-  bool homeOwner;
+  String? location;
+  double? monthlyDonationLimit;
+  bool? homeOwner;
 
   // Progress (All data stored as ids)
-  List<int> selectedCampaigns =
+  List<int>? selectedCampaigns =
       []; // Stores all campaings that have been selected (including old ones)
-  List<int> completedCampaigns =
+  List<int>? completedCampaigns =
       []; // Stores campaings where all actions have been completed (maybe we should do 80% of something)
   //List<int> completedRewards = [];
-  List<int> completedActions = [];
-  List<int> completedLearningResources = [];
+  List<int?>? completedActions = [];
+  List<int>? completedLearningResources = [];
 
   // Key is rejected id
   // Map stores rejection time and rejection reason
-  List<int> rejectedActions = [];
+  List<int?>? rejectedActions = [];
 
-  List<int> starredActions = [];
+  List<int>? starredActions = [];
 
-  Map<CampaignActionType, int> completedActionsType;
+  Map<CampaignActionType?, int>? completedActionsType;
 
-  int points;
+  int? points;
 
-  Organisation _organisation;
-  Organisation get organisation => _organisation;
-  set setOrganisation(Organisation org) => _organisation = org;
+  Organisation? _organisation;
+  Organisation? get organisation => _organisation;
+  set setOrganisation(Organisation? org) => _organisation = org;
 
-  String token;
+  String? token;
 
   User({
     id,
@@ -119,29 +119,29 @@ class User {
   }
 
   User copyWith({
-    int id,
+    int? id,
     //FirebaseUser firebaseUser,
-    String fullName,
-    String email,
-    DateTime dateOfBirth,
+    String? fullName,
+    String? email,
+    DateTime? dateOfBirth,
 
     // TODO make some attributes class that can take any attrribute so I dont need this
-    String location,
-    double monthlyDonationLimit,
-    bool homeOwner,
+    String? location,
+    double? monthlyDonationLimit,
+    bool? homeOwner,
 
     // Progress
-    List<int> selectedCampaigns,
-    List<int> completedCampaigns,
+    List<int>? selectedCampaigns,
+    List<int>? completedCampaigns,
     //List<int> completedRewards,
-    List<int> completedActions,
-    List<int> rejectedActions,
-    List<int> starredActions,
-    List<int> completedLearningResources,
-    Map<CampaignActionType, int> completedActionsType,
-    int points,
-    String token,
-    Organisation organisation,
+    List<int?>? completedActions,
+    List<int?>? rejectedActions,
+    List<int>? starredActions,
+    List<int>? completedLearningResources,
+    Map<CampaignActionType, int>? completedActionsType,
+    int? points,
+    String? token,
+    Organisation? organisation,
   }) {
     return User(
       id: id ?? this.id,
@@ -226,7 +226,7 @@ class User {
         'full_name': fullName,
         'email': email,
         'date_of_birth':
-            dateOfBirth == null ? null : dateOfBirth.toIso8601String(),
+            dateOfBirth == null ? null : dateOfBirth!.toIso8601String(),
         'location': location,
         'monthly_donation_limit': monthlyDonationLimit,
         'home_owner': homeOwner,
@@ -304,19 +304,19 @@ class User {
     }
   }
 
-  int getId() {
+  int? getId() {
     return id;
   }
 
-  String getName() {
+  String? getName() {
     return fullName;
   }
 
-  String getEmail() {
+  String? getEmail() {
     return email;
   }
 
-  DateTime getDateOfBirth() {
+  DateTime? getDateOfBirth() {
     return dateOfBirth;
   }
 
@@ -325,15 +325,15 @@ class User {
     return -1;
   }
 
-  String getLocation() {
+  String? getLocation() {
     return location;
   }
 
-  double getMonthlyDonationLimit() {
+  double? getMonthlyDonationLimit() {
     return monthlyDonationLimit;
   }
 
-  bool getHomeOwner() {
+  bool? getHomeOwner() {
     return homeOwner;
   }
 
@@ -343,13 +343,13 @@ class User {
 
   List<Campaign> filterSelectedCampaigns(List<Campaign> campaigns) {
     return campaigns
-        .where((c) => selectedCampaigns.contains(c.getId()))
+        .where((c) => selectedCampaigns!.contains(c.getId()))
         .toList();
   }
 
   List<Campaign> filterUnselectedCampaigns(List<Campaign> campaigns) {
     return campaigns
-        .where((c) => !selectedCampaigns.contains(c.getId()))
+        .where((c) => !selectedCampaigns!.contains(c.getId()))
         .toList();
   }
 
@@ -357,34 +357,34 @@ class User {
     if (selectedCampaigns == null)
       return 0;
     else
-      return selectedCampaigns.length;
+      return selectedCampaigns!.length;
   }
 
-  List<int> getCompletedActions() {
+  List<int?>? getCompletedActions() {
     return completedActions;
   }
 
-  int getPoints() {
+  int? getPoints() {
     return points;
   }
 
-  String getToken() {
+  String? getToken() {
     return token;
   }
 
-  List<int> getRejectedActions() {
+  List<int?>? getRejectedActions() {
     return rejectedActions;
   }
 
-  List<int> getStarredActions() {
+  List<int>? getStarredActions() {
     return starredActions;
   }
 
-  List<int> getCompletedLearningResources() {
+  List<int>? getCompletedLearningResources() {
     return completedLearningResources;
   }
 
-  void setName(String name) {
+  void setName(String? name) {
     this.fullName = name;
   }
 
@@ -392,7 +392,7 @@ class User {
     this.email = email;
   }
 
-  void setDateOfBirth(DateTime dob) {
+  void setDateOfBirth(DateTime? dob) {
     this.dateOfBirth = dob;
   }
 
@@ -408,11 +408,11 @@ class User {
     this.homeOwner = homeOwner;
   }
 
-  void setPoints(int points) {
+  void setPoints(int? points) {
     this.points = points;
   }
 
-  void setCompletedActions(List<int> actions) {
+  void setCompletedActions(List<int?>? actions) {
     this.completedActions = actions;
   }
 
@@ -431,31 +431,31 @@ class User {
   }
 
   void addSelectedCamaping(int id) {
-    if (!selectedCampaigns.contains(id)) {
+    if (!selectedCampaigns!.contains(id)) {
       if (this.selectedCampaigns == null) {
         this.selectedCampaigns = [id];
       } else {
-        this.selectedCampaigns.add(id);
+        this.selectedCampaigns!.add(id);
       }
       incrementPoints(pointsForJoiningCampaign);
     }
   }
 
   void removeSelectedCamaping(int id) {
-    this.selectedCampaigns.remove(id);
+    this.selectedCampaigns!.remove(id);
     decrementPoints(pointsForJoiningCampaign);
   }
 
   double getCampaignProgress(Campaign campaign) {
     return numberOfCompletedActionsForCampaign(campaign) /
-        campaign.getActions().length;
+        campaign.getActions()!.length;
   }
 
   int numberOfCompletedActionsForCampaign(Campaign campaign) {
     int count = 0;
-    List<CampaignAction> actions = campaign.getActions();
+    List<CampaignAction> actions = campaign.getActions()!;
     for (int i = 0; i < actions.length; i++) {
-      if (this.completedActions.contains(actions[i].getId())) {
+      if (this.completedActions!.contains(actions[i].getId())) {
         count++;
       }
     }
@@ -465,7 +465,7 @@ class User {
   double getActiveCampaignsProgress(Campaigns campaigns) {
     double total = 0;
     for (int i = 0; i < campaigns.activeLength(); i++) {
-      total += getCampaignProgress(campaigns.getActiveCampaigns()[i]);
+      total += getCampaignProgress(campaigns.getActiveCampaigns()![i]);
     }
     return total / campaigns.activeLength();
   }
@@ -475,45 +475,45 @@ class User {
   double getRewardProgress(Reward reward) {
     //if(this.completedRewards.contains(reward.getId())) return 1;
     RewardType type = reward.type;
-    int count = 0;
+    int? count = 0;
     if (type == RewardType.CompletedActionsNumber) {
-      count = this.completedActions.length;
+      count = this.completedActions!.length;
     } else if (type == RewardType.CompletedCampaignsNumber) {
-      count = this.completedCampaigns.length;
+      count = this.completedCampaigns!.length;
     } else if (type == RewardType.SelectInOneMonthCampaignsNumber) {
-      count = this.selectedCampaigns.length;
+      count = this.selectedCampaigns!.length;
     } else if (type == RewardType.CompletedTypedActionsNumber) {
       if (reward.getActionType() == null) {
         print(
             "A CompletedTypedActionsNumber reward requires a CampaignActionType");
         return 0;
       } else {
-        count = this.completedActionsType[reward.getActionType()];
+        count = this.completedActionsType![reward.getActionType()];
       }
     }
 
     // return
-    if (count > reward.successNumber) {
+    if (count! > reward.successNumber) {
       //completeReward(reward);
       return 1;
     }
     return count / reward.successNumber;
   }
 
-  void completeAction(CampaignAction a, {Function onCompleteReward}) {
-    if (completedActions.contains(a.getId())) {
+  void completeAction(CampaignAction a, {Function? onCompleteReward}) {
+    if (completedActions!.contains(a.getId())) {
       print("You can only complete an action once");
       return;
     }
-    completedActions.add(a.getId());
-    completedActionsType.update(a.getType(), (int x) => x + 1);
+    completedActions!.add(a.getId());
+    completedActionsType!.update(a.getType(), (int x) => x + 1);
     //incrementPoints(pointsForCompletingAction);
     print(a.getType().toString());
-    print(completedActionsType[a.getType()]);
+    print(completedActionsType![a.getType()]);
   }
 
   void rejectAction(CampaignAction a) {
-    rejectedActions.add(a.getId());
+    rejectedActions!.add(a.getId());
   }
 
   bool isMilestone(int x) {
@@ -526,18 +526,18 @@ class User {
   // Returns the news rewards completed when this action is completed
   List<Reward> newlyCompletedRewards(CampaignAction completedAction) {
     List<Reward> newRewards = [];
-    if (isMilestone(completedActions.length + 1)) {
+    if (isMilestone(completedActions!.length + 1)) {
       newRewards.add(Reward(
-        successNumber: completedActions.length + 1,
+        successNumber: completedActions!.length + 1,
         type: RewardType.CompletedActionsNumber,
         //title: nextValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ nextValue(v, rewardValues)} ${ k.toString() }",
       ));
     }
     print(completedAction.getType());
     print(this.completedActionsType);
-    if (isMilestone(completedActionsType[completedAction.getType()] + 1)) {
+    if (isMilestone(completedActionsType![completedAction.getType()]! + 1)) {
       newRewards.add(Reward(
-        successNumber: completedActionsType[completedAction.getType()] + 1,
+        successNumber: completedActionsType![completedAction.getType()]! + 1,
         type: RewardType.CompletedTypedActionsNumber,
         actionType: completedAction.getType(),
       ));
@@ -551,11 +551,11 @@ class User {
   //}
 
   bool isCompleted(CampaignAction a) {
-    return completedActions.contains(a.getId());
+    return completedActions!.contains(a.getId());
   }
 
-  Map<CampaignActionType, int> initCompletedAction() {
-    Map<CampaignActionType, int> cas = {};
+  Map<CampaignActionType?, int> initCompletedAction() {
+    Map<CampaignActionType?, int> cas = {};
     List<CampaignActionType> types = CampaignActionType.values;
     for (int i = 0; i < CampaignActionType.values.length; i++) {
       print(i);
@@ -586,10 +586,10 @@ class User {
   }
 
   // Get rewards to be completed
-  List<Reward> getNextRewards({int x}) {
+  List<Reward> getNextRewards({int? x}) {
     List<Reward> rewards = [];
     // Get new CompletedTypedActionsNumber
-    completedActionsType.forEach((k, v) {
+    completedActionsType!.forEach((k, v) {
       rewards.add(Reward(
         successNumber: nextValue(v, rewardValues),
         type: RewardType.CompletedTypedActionsNumber,
@@ -599,23 +599,23 @@ class User {
     });
     // Add next completedActionsNumber
     rewards.add(Reward(
-      successNumber: nextValue(completedCampaigns.length, rewardValues),
+      successNumber: nextValue(completedCampaigns!.length, rewardValues),
       type: RewardType.CompletedCampaignsNumber,
     ));
 
     // Add total completed actions
     rewards.add(Reward(
-      successNumber: nextValue(completedActions.length, rewardValues),
+      successNumber: nextValue(completedActions!.length, rewardValues),
       type: RewardType.CompletedActionsNumber,
     ));
     return rewards;
   }
 
   // Get largest reward that have been completed
-  List<Reward> getPreviousRewards({int x}) {
+  List<Reward> getPreviousRewards({int? x}) {
     List<Reward> rewards = [];
     // Get pev (complted) CompletedTypedActionsNumber
-    completedActionsType.forEach((k, v) {
+    completedActionsType!.forEach((k, v) {
       if (prevValue(v, rewardValues) != 0) {
         rewards.add(Reward(
           //id: ,  // Need to generate id based on value --> same each time generated
@@ -628,17 +628,17 @@ class User {
     });
 
     // Add total completed campaigns
-    if (completedCampaigns.length > 0) {
+    if (completedCampaigns!.length > 0) {
       rewards.add(Reward(
-        successNumber: prevValue(completedCampaigns.length, rewardValues),
+        successNumber: prevValue(completedCampaigns!.length, rewardValues),
         type: RewardType.CompletedCampaignsNumber,
       ));
     }
 
     // Add total completed actions
-    if (completedActions.length > 0) {
+    if (completedActions!.length > 0) {
       rewards.add(Reward(
-        successNumber: prevValue(completedActions.length, rewardValues),
+        successNumber: prevValue(completedActions!.length, rewardValues),
         type: RewardType.CompletedActionsNumber,
       ));
     }
@@ -648,7 +648,7 @@ class User {
     return rewards;
   }
 
-  List<Reward> getAllRewards({int x}) {
+  List<Reward> getAllRewards({int? x}) {
     List<Reward> completedRewards = getPreviousRewards();
     List<Reward> nextRewards = getNextRewards();
     return completedRewards..addAll(nextRewards);
@@ -660,11 +660,11 @@ class User {
 }
 
 // TODO this feels very fragile. Find out what happens if I delete/add a CampaignActionType
-List<int> campaignActionTypesEncode(Map<CampaignActionType, int> cats) {
-  List<int> encodable = <int>[];
+List<int?> campaignActionTypesEncode(Map<CampaignActionType?, int>? cats) {
+  List<int?> encodable = <int?>[];
   List<CampaignActionType> list = CampaignActionType.values;
   for (int i = 0; i < list.length; i++) {
-    encodable.add(cats[list[i]]);
+    encodable.add(cats![list[i]]);
   }
   return encodable;
 }

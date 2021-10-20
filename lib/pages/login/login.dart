@@ -11,7 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 enum LoginTypes { Login, Signup }
 
 class LoginPageArguments {
-  final LoginTypes loginType;
+  final LoginTypes? loginType;
   LoginPageArguments({this.loginType});
 }
 
@@ -24,9 +24,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
-  String _email;
-  String _name;
-  bool _newsletterSignup = false;
+  String? _email;
+  String? _name;
+  bool? _newsletterSignup = false;
 
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -35,7 +35,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
   }
 
   @override
@@ -102,7 +102,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
             ]),
       ),
       validator: (value) {
-        if (!value) return "You must accept our terms and conditions";
+        if (!value!) return "You must accept our terms and conditions";
         return null;
       },
     );
@@ -126,7 +126,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
 
     Widget loginButton() {
       Future<bool> validateAndSave(LoginViewModel model) async {
-        final FormState form = _formKey.currentState;
+        final FormState form = _formKey.currentState!;
         if (form.validate()) {
           form.save();
           //if (stagingUsers.contains(_email)) {
@@ -276,7 +276,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
               onNotification: (OverscrollIndicatorNotification overscroll) {
                 overscroll.disallowGlow();
                 return null;
-              },
+              } as bool Function(_)?,
               child: ListView(children: [
                 loginForm(),
               ])),

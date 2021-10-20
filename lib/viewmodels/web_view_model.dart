@@ -3,12 +3,12 @@ import 'package:app/locator.dart';
 import 'package:app/services/navigation_service.dart';
 
 class WebViewViewModel extends BaseModel {
-  final NavigationService _navigationService = locator<NavigationService>();
+  final NavigationService? _navigationService = locator<NavigationService>();
   final String initialUrl;
   WebViewViewModel(this.initialUrl);
 
   void onWebError() {
-    _navigationService.launchLink(initialUrl,
+    _navigationService!.launchLink(initialUrl,
         isExternal: true,
         title: "Web error",
         description:
@@ -16,7 +16,7 @@ class WebViewViewModel extends BaseModel {
   }
 
   void launchExternal() {
-    _navigationService.launchLink(initialUrl,
+    _navigationService!.launchLink(initialUrl,
         isExternal: true,
         title: 'Open with an External Browser?',
         description:

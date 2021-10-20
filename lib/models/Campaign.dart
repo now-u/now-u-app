@@ -7,45 +7,45 @@ import 'package:app/models/SDG.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/dynamicLinks.dart';
 
-final DynamicLinkService _dynamicLinkService = locator<DynamicLinkService>();
+final DynamicLinkService? _dynamicLinkService = locator<DynamicLinkService>();
 
 class Campaign {
-  int id;
-  String title;
-  String shortName;
-  String description;
-  int numberOfCampaigners;
-  int numberOfActionsCompleted;
-  String headerImage;
-  String _infographic;
-  String get infographic => _infographic;
-  bool isCampaignSelected;
-  List<CampaignAction> actions;
-  List<Organisation> generalPartners;
-  List<Organisation> campaignPartners;
-  String videoLink;
-  List<SDG> sdgs;
-  List<String> keyAims;
-  DateTime startDate;
-  DateTime endDate;
+  int? id;
+  String? title;
+  String? shortName;
+  String? description;
+  int? numberOfCampaigners;
+  int? numberOfActionsCompleted;
+  String? headerImage;
+  String? _infographic;
+  String? get infographic => _infographic;
+  bool? isCampaignSelected;
+  List<CampaignAction>? actions;
+  List<Organisation>? generalPartners;
+  List<Organisation>? campaignPartners;
+  String? videoLink;
+  List<SDG>? sdgs;
+  List<String>? keyAims;
+  DateTime? startDate;
+  DateTime? endDate;
 
   Campaign({
-    @required int id,
-    @required String title,
-    @required String shortName,
-    @required String description,
+    required int id,
+    required String title,
+    required String shortName,
+    required String description,
     this.numberOfCampaigners,
     this.numberOfActionsCompleted,
-    @required String headerImage,
-    @required List<CampaignAction> actions,
-    @required List<SDG> sdgs,
-    List<Organisation> generalPartners,
-    List<Organisation> campaignPartners,
-    String videoLink,
-    String infographic,
-    List<String> keyAims,
-    DateTime startDate,
-    DateTime endDate,
+    required String headerImage,
+    required List<CampaignAction> actions,
+    required List<SDG> sdgs,
+    List<Organisation>? generalPartners,
+    List<Organisation>? campaignPartners,
+    String? videoLink,
+    String? infographic,
+    List<String>? keyAims,
+    DateTime? startDate,
+    DateTime? endDate,
   }) {
     this.id = id;
     this.title = title;
@@ -125,40 +125,40 @@ class Campaign {
         'general_partners': generalPartners,
         'campaign_partners': campaignPartners,
         'video_link': videoLink,
-        'sdgs': sdgs.map((s) => s.getNumber()),
+        'sdgs': sdgs!.map((s) => s.getNumber()),
       };
 
-  int getId() {
+  int? getId() {
     return id;
   }
 
-  String getTitle() {
+  String? getTitle() {
     return title;
   }
 
-  String getShortName() {
+  String? getShortName() {
     return shortName;
   }
 
   String getDescription() {
     // TODO function to remove escape characters
-    var descriptionWithoutNs = description.replaceAll('\\n', '\n\n');
+    var descriptionWithoutNs = description!.replaceAll('\\n', '\n\n');
     return descriptionWithoutNs;
   }
 
-  int getNumberOfCampaigners() {
+  int? getNumberOfCampaigners() {
     return numberOfCampaigners;
   }
 
-  int getNumberOfActionsCompleted() {
+  int? getNumberOfActionsCompleted() {
     return numberOfActionsCompleted;
   }
 
-  String getHeaderImage() {
+  String? getHeaderImage() {
     return headerImage;
   }
 
-  String getVideoLink() {
+  String? getVideoLink() {
     return videoLink;
   }
 
@@ -166,23 +166,23 @@ class Campaign {
     return selectedCampaings.contains(id);
   }
 
-  List<CampaignAction> getActions() {
+  List<CampaignAction>? getActions() {
     return actions;
   }
 
-  List<Organisation> getCampaignPartners() {
+  List<Organisation>? getCampaignPartners() {
     return campaignPartners;
   }
 
-  List<Organisation> getGeneralPartners() {
+  List<Organisation>? getGeneralPartners() {
     return generalPartners;
   }
 
-  List<SDG> getSDGs() {
+  List<SDG>? getSDGs() {
     return sdgs;
   }
 
-  List<String> getKeyAims() {
+  List<String>? getKeyAims() {
     return keyAims;
   }
 
@@ -192,7 +192,7 @@ class Campaign {
   //}
 
   Future<String> getShareText() async {
-    Uri uri = await _dynamicLinkService.createDynamicLink(
+    Uri uri = await _dynamicLinkService!.createDynamicLink(
       linkPath: "campaigns/$id",
       title: "$title",
       description: "$description",
@@ -207,6 +207,6 @@ class Campaign {
     if (endDate == null) {
       return false;
     }
-    return DateTime.now().compareTo(endDate) > 0;
+    return DateTime.now().compareTo(endDate!) > 0;
   }
 }

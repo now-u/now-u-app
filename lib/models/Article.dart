@@ -8,9 +8,9 @@ enum ArticleType {
 }
 
 class Articles {
-  List<Article> articles;
+  List<Article>? articles;
 
-  List<Article> getArticles() {
+  List<Article>? getArticles() {
     return articles;
   }
 
@@ -20,29 +20,29 @@ class Articles {
 }
 
 class Article {
-  int id;
-  String title;
-  String subtitle;
-  String body;
-  String headerImage;
-  int linkedCampaign;
-  int linkedAction;
-  String videoLink;
-  DateTime createdAt;
-  DateTime releasedAt;
-  String source;
+  int? id;
+  String? title;
+  String? subtitle;
+  String? body;
+  String? headerImage;
+  int? linkedCampaign;
+  int? linkedAction;
+  String? videoLink;
+  DateTime? createdAt;
+  DateTime? releasedAt;
+  String? source;
 
-  String fullArticleLink;
-  String linkText;
+  String? fullArticleLink;
+  String? linkText;
   //ArticleType type;
-  bool isVideoOfTheDay;
+  bool? isVideoOfTheDay;
 
   Article({
-    @required this.id,
-    @required this.title,
-    @required this.subtitle,
-    @required this.body,
-    @required this.headerImage,
+    required this.id,
+    required this.title,
+    required this.subtitle,
+    required this.body,
+    required this.headerImage,
     this.linkedCampaign,
     this.fullArticleLink,
     this.linkedAction,
@@ -81,7 +81,7 @@ class Article {
         'header_image': headerImage,
         'created_at': headerImage,
         'release_date': releasedAt,
-        'campaign_id': createdAt.toIso8601String(),
+        'campaign_id': createdAt!.toIso8601String(),
         'linked_action': linkedAction,
         'full_article_link': fullArticleLink,
         'video_link': videoLink,
@@ -92,66 +92,66 @@ class Article {
         'source': source,
       };
 
-  int getId() {
+  int? getId() {
     return id;
   }
 
-  String getTitle() {
+  String? getTitle() {
     return title;
   }
 
-  String getSubtitle() {
+  String? getSubtitle() {
     return subtitle;
   }
 
-  String getBody() {
+  String? getBody() {
     return body;
   }
 
-  String getHeaderImage() {
+  String? getHeaderImage() {
     return headerImage;
   }
 
-  String getFullArticleLink() {
+  String? getFullArticleLink() {
     return fullArticleLink;
   }
 
-  String getLinkText() {
+  String? getLinkText() {
     return linkText;
   }
 
-  int getLinkedCampaign() {
+  int? getLinkedCampaign() {
     return linkedCampaign;
   }
 
-  int getLinkedAction() {
+  int? getLinkedAction() {
     return linkedAction;
   }
 
-  String getVideoLink() {
+  String? getVideoLink() {
     return videoLink;
   }
 
-  DateTime getCreationTime() {
+  DateTime? getCreationTime() {
     return createdAt;
   }
 
-  DateTime getReleaseDate() {
+  DateTime? getReleaseDate() {
     return releasedAt;
   }
 
-  String getSource() {
+  String? getSource() {
     return source;
   }
 
   //ArticleType getType() {
   //  return type;
   //}
-  bool getIsVideoOfTheDay() {
+  bool? getIsVideoOfTheDay() {
     return isVideoOfTheDay;
   }
 
-  String getCategory({List<Campaign> campaigns}) {
+  String? getCategory({List<Campaign>? campaigns}) {
     print("Getting catergory");
     print(linkedCampaign);
     print(campaigns);

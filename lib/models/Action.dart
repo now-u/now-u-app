@@ -184,7 +184,7 @@ List<Map> timeBrackets = [
   {"text": "Long term", "minTime": 240, "maxTime": double.infinity},
 ];
 
-CampaignActionType campaignActionTypeFromString(String s) {
+CampaignActionType campaignActionTypeFromString(String? s) {
   // Apparently if we return early it just doesnt do the return? Not sure why that would be but this seems to fix it
   CampaignActionType t = CampaignActionType.Other;
   campaignActionTypeData.forEach((key, value) {
@@ -195,8 +195,8 @@ CampaignActionType campaignActionTypeFromString(String s) {
   return t;
 }
 
-Tuple3<String, String, String> generateCampaingActionDesc(
-    CampaignActionType t) {
+Tuple3<String?, String?, String?> generateCampaingActionDesc(
+    CampaignActionType? t) {
   print("Getting campaing aciton desc");
   if (campaignActionTypeData.containsKey(t)) {
     print("Found key");
@@ -211,24 +211,24 @@ Tuple3<String, String, String> generateCampaingActionDesc(
 }
 
 class CampaignAction {
-  int id;
-  String title;
-  double time;
-  String whatDescription;
-  String whyDescription;
-  String link;
-  CampaignActionType type;
-  DateTime createdAt;
-  DateTime releasedAt;
+  int? id;
+  String? title;
+  double? time;
+  String? whatDescription;
+  String? whyDescription;
+  String? link;
+  CampaignActionType? type;
+  DateTime? createdAt;
+  DateTime? releasedAt;
 
   CampaignAction({
-    @required this.id,
-    @required this.title,
-    @required this.whatDescription,
-    @required this.whyDescription,
-    @required this.link,
-    @required this.type,
-    @required this.time,
+    required this.id,
+    required this.title,
+    required this.whatDescription,
+    required this.whyDescription,
+    required this.link,
+    required this.type,
+    required this.time,
     this.createdAt,
     this.releasedAt,
   });
@@ -255,47 +255,47 @@ class CampaignAction {
         'time': time,
       };
 
-  int getId() {
+  int? getId() {
     return id;
   }
 
-  String getTitle() {
+  String? getTitle() {
     return title;
   }
 
-  String getWhatDescription() {
+  String? getWhatDescription() {
     return whatDescription;
   }
 
-  String getWhyDescription() {
+  String? getWhyDescription() {
     return whyDescription;
   }
 
-  String getLink() {
+  String? getLink() {
     return link;
   }
 
-  double getTime() {
+  double? getTime() {
     return time;
   }
 
-  String getTimeText() {
+  String? getTimeText() {
     return timeBrackets.firstWhere((b) => b['maxTime'] > time)['text'];
   }
 
-  CampaignActionType getType() {
+  CampaignActionType? getType() {
     return type;
   }
 
-  CampaignActionSuperType getSuperType() {
+  CampaignActionSuperType? getSuperType() {
     return campaignActionTypeData[type]['type'];
   }
 
-  Map getSuperTypeData() {
+  Map? getSuperTypeData() {
     return campaignActionSuperTypeData[campaignActionTypeData[type]['type']];
   }
 
-  String getSuperTypeName() {
+  String? getSuperTypeName() {
     return campaignActionSuperTypeData[campaignActionTypeData[type]['type']]
         ['name'];
   }
@@ -319,11 +319,11 @@ class CampaignAction {
 
   bool isNew() {
     if (releasedAt == null) {
-      return DateTime.now().difference(createdAt).compareTo(Duration(days: 2)) <
+      return DateTime.now().difference(createdAt!).compareTo(Duration(days: 2)) <
           0;
     } else {
       return DateTime.now()
-              .difference(releasedAt)
+              .difference(releasedAt!)
               .compareTo(Duration(days: 2)) <
           0;
     }

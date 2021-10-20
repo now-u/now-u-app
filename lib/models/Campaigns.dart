@@ -9,21 +9,21 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 
 class Campaigns {
-  List<Campaign> activeCampaigns;
+  List<Campaign>? activeCampaigns;
 
   Campaigns(this.activeCampaigns);
 
-  List<Campaign> getActiveCampaigns() {
+  List<Campaign>? getActiveCampaigns() {
     return activeCampaigns;
   }
 
   List<Campaign> getPastCampaings() {
-    return activeCampaigns.where((c) => c.isPast()).toList();
+    return activeCampaigns!.where((c) => c.isPast()).toList();
   }
 
   List<Campaign> getSelectedActiveCampaigns(User u) {
     print("Getting asc");
-    var asc = activeCampaigns
+    var asc = activeCampaigns!
         .where((c) => u.getSelectedCampaigns().contains(c.getId()))
         .toList();
     print("Got asc");
@@ -35,14 +35,14 @@ class Campaigns {
   //TODO shuffle/ return in sesible order
   List<CampaignAction> getActions() {
     List<CampaignAction> actions = [];
-    for (int i = 0; i < activeCampaigns.length; i++) {
-      actions.addAll(activeCampaigns[i].getActions());
+    for (int i = 0; i < activeCampaigns!.length; i++) {
+      actions.addAll(activeCampaigns![i].getActions()!);
     }
     return actions;
   }
 
   int activeLength() {
-    return activeCampaigns.length;
+    return activeCampaigns!.length;
   }
 
   Campaigns.fromJson(List json) {
@@ -55,10 +55,10 @@ class Campaigns {
   }
 
   Campaigns getCampaignsFromIds(List<int> ids) {
-    List<Campaign> campaigns;
-    for (int i = 0; i < activeCampaigns.length; i++) {
-      if (ids.contains(activeCampaigns[i].getId())) {
-        campaigns.add(activeCampaigns[i]);
+    List<Campaign>? campaigns;
+    for (int i = 0; i < activeCampaigns!.length; i++) {
+      if (ids.contains(activeCampaigns![i].getId())) {
+        campaigns!.add(activeCampaigns![i]);
       }
     }
     return Campaigns(campaigns);

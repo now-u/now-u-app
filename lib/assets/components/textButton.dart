@@ -5,16 +5,16 @@ class CustomTextButton extends StatelessWidget {
   final Function onClick;
   final iconRight;
   final iconLeft;
-  final double fontSize;
-  final Color fontColor;
-  final FontWeight fontWeight;
+  final double? fontSize;
+  final Color? fontColor;
+  final FontWeight? fontWeight;
 
   // Handy to make text wrap
-  final double width;
+  final double? width;
 
   CustomTextButton(
     this.text, {
-    @required this.onClick,
+    required this.onClick,
     this.iconRight,
     this.iconLeft,
     this.fontSize,
@@ -27,7 +27,7 @@ class CustomTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         child: GestureDetector(
-      onTap: onClick,
+      onTap: onClick as void Function()?,
       child: Row(
         children: <Widget>[
           this.iconLeft != null
@@ -44,10 +44,10 @@ class CustomTextButton extends StatelessWidget {
               style: TextStyle(
                 color: fontColor ?? Theme.of(context).buttonColor,
                 fontFamily:
-                    Theme.of(context).primaryTextTheme.button.fontFamily,
+                    Theme.of(context).primaryTextTheme.button!.fontFamily,
                 fontWeight: fontWeight ??
-                    Theme.of(context).primaryTextTheme.button.fontWeight,
-                fontStyle: Theme.of(context).primaryTextTheme.button.fontStyle,
+                    Theme.of(context).primaryTextTheme.button!.fontWeight,
+                fontStyle: Theme.of(context).primaryTextTheme.button!.fontStyle,
                 fontSize: fontSize ?? 16,
               ),
               textAlign: TextAlign.center,

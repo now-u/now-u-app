@@ -6,18 +6,18 @@ import 'package:app/viewmodels/base_model.dart';
 
 
 class OnBoardingViewModel extends BaseModel {
-  final AuthenticationService _authenticationService =
+  final AuthenticationService? _authenticationService =
       locator<AuthenticationService>();
-  final NavigationService _navigationService = locator<NavigationService>();
+  final NavigationService? _navigationService = locator<NavigationService>();
 
 
   Future<void> navigateToNextScreen() async {
-    var hasLoggedInUser = await _authenticationService.isUserLoggedIn();
+    var hasLoggedInUser = await _authenticationService!.isUserLoggedIn();
 
     if (hasLoggedInUser) {
-      _navigationService.navigateTo(Routes.home);
+      _navigationService!.navigateTo(Routes.home);
     } else {
-      _navigationService.navigateTo(Routes.login);
+      _navigationService!.navigateTo(Routes.login);
     }
   }
 }

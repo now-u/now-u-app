@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class SectionTitle extends StatelessWidget {
   final String text;
-  final double padding;
-  final double vpadding;
+  final double? padding;
+  final double? vpadding;
 
   SectionTitle(this.text, {this.padding, this.vpadding});
   @override
