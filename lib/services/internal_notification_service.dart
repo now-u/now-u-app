@@ -22,7 +22,7 @@ class InternalNotificationService {
       http.Response response = await http.get(
           Uri.parse(domainPrefix + 'users/me/notifications'),
           headers: <String, String>{
-            'token': _authenticationService!.currentUser!.getToken()!,
+            'token': _authenticationService!.currentUser!.token!,
           });
 
       List<InternalNotification>? notifications = json
@@ -42,7 +42,7 @@ class InternalNotificationService {
       http.Response response = await http.put(
           Uri.parse(domainPrefix + 'users/me/notifications/$notificationId/dismiss'),
           headers: <String, String>{
-            'token': _authenticationService!.currentUser!.getToken()!,
+            'token': _authenticationService!.currentUser!.token!,
           });
       if (response.statusCode != 200) {
         print("Error dismissing notifications");

@@ -47,7 +47,8 @@ class User {
   Organisation? get organisation => _organisation;
   set setOrganisation(Organisation? org) => _organisation = org;
 
-  String? token;
+  String? _token;
+  String? get token => this._token;
 
   bool get isStagingUser => stagingUsers.contains(this.email);
 
@@ -89,7 +90,7 @@ class User {
 
     this.completedActionsType = completedActionsType ?? initCompletedAction();
 
-    this.token = token;
+    this._token = token;
     _organisation = organisation;
   }
 
@@ -110,7 +111,7 @@ class User {
     starredActions = [];
     completedLearningResources = [];
     completedActionsType = initCompletedAction();
-    token = null;
+    _token = null;
   }
 
   User copyWith({
@@ -154,7 +155,7 @@ class User {
       completedLearningResources:
           completedLearningResources ?? this.completedLearningResources,
       completedActionsType: completedActionsType ?? this.completedActionsType,
-      token: token ?? this.token,
+      token: token ?? this._token,
       organisation: organisation ?? _organisation,
     );
   }
@@ -207,7 +208,7 @@ class User {
         ? this.initCompletedAction()
         : campaignActionTypesDecode(json['completed_actions_type'].cast<int>());
 
-    token = json['token'];
+    _token = json['token'];
     _organisation = json['organisation'] == null
         ? null
         : Organisation.fromJson(json['organisation']);
@@ -230,7 +231,7 @@ class User {
         'completed_learning_resources': completedLearningResources,
         'completed_actions_type':
             campaignActionTypesEncode(completedActionsType),
-        'token': token,
+        'token': _token,
       };
 
   Map getAttributes() {
@@ -354,10 +355,6 @@ class User {
     return completedActions;
   }
 
-  String? getToken() {
-    return token;
-  }
-
   List<int?>? getRejectedActions() {
     return rejectedActions;
   }
@@ -399,7 +396,7 @@ class User {
   }
 
   void setToken(String token) {
-    this.token = token;
+    this._token = token;
   }
 
   void addSelectedCamaping(int id) {

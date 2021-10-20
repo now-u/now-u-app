@@ -12,23 +12,30 @@ class ApiError {
 }
 
 class ApiService {
-  String baseUrl = "https://api.now-u.com/api/v2/";
+  http.Client client = http.Client();
+
+  String baseUrl = "api.now-u.com";
+  String baseUrlPath = "api/v2/";
   
   User? _currentUser;
   User? get currentUser => _currentUser;
+  bool get isAuthenticated => currentUser != null && currentUser!.token != null;
   
-  Map getRequestHeaders() {
-    return <String, String?>{
+  Map<String, String> getRequestHeaders() {
+    Map<String, String> headers = {
       'Content-Type': 'application/json; charset=UTF-8',
-      'token': currentUser!.getToken(),
     };
+    if (isAuthenticated) {
+      headers['token'] = currentUser!.token as String;
+    }
+    return headers;
   }
 
-  Future<Map?> getRequest(String path, {Map<String, dynamic>? params}) async {
-    final uri = Uri.https(baseUrl, path, params);
-    http.Response response = await http.get(
+  Future<Map> getRequest(String path, {Map<String, dynamic>? params}) async {
+    final uri = Uri.https(baseUrl, baseUrlPath + path, params ?? {});
+    http.Response response = await client.get(
       uri,
-      headers: getRequestHeaders() as Map<String, String>?
+      headers: getRequestHeaders(),
     );
       
     if (response.statusCode == 401) {
@@ -39,6 +46,6 @@ class ApiService {
       throw ApiError.TOKEN_EXPIRED;
     }
 
-    return json.decode(response.body);
+    return await json.decode(response.body);
   }
 }

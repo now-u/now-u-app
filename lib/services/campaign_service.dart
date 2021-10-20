@@ -92,7 +92,7 @@ class CampaignService {
     try {
       var response = await http.get(Uri.parse(domainPrefix + "campaigns"),
           headers: <String, String>{
-            'token': _authenticationService!.currentUser!.getToken()!
+            'token': _authenticationService!.currentUser!.token!
           });
       Campaigns cs = Campaigns.fromJson(json.decode(response.body)['data']);
       _campaigns = cs.getActiveCampaigns();

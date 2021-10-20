@@ -1,4 +1,6 @@
 import 'package:mockito/mockito.dart';
+import 'dart:io';
+import 'package:flutter/services.dart';
 
 import 'package:app/locator.dart';
 import 'package:app/services/navigation_service.dart';
@@ -7,6 +9,11 @@ import 'package:app/services/dialog_service.dart';
 import 'package:app/services/analytics.dart';
 import 'package:app/services/auth.dart';
 import 'package:app/services/google_location_search_service.dart';
+
+Future<String> readTestData(String fileName, {String filePath = "test/data/"}) async {
+    final file = File(filePath + fileName);
+    return await file.readAsString();
+}
 
 class MockNavigationService extends Mock implements NavigationService {
   Future<dynamic> navigateTo(String route, {arguments}) async {
@@ -58,7 +65,7 @@ AnalyticsService getAndRegisterMockAnalyticsService() {
   return service;
 }
 
-void _removeRegistrationIfExists<T>() {
+void _removeRegistrationIfExists<T extends Object>() {
   if (locator.isRegistered<T>()) {
     locator.unregister<T>();
   }

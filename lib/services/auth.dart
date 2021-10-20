@@ -39,7 +39,7 @@ class AuthenticationService {
     User? user = await _sharedPreferencesService!.loadUserFromPrefs();
     if (user != null) {
       print("[isUserLoggedIn()]: user from Prefs not null");
-      await _updateUser(user.getToken());
+      await _updateUser(user.token);
     }
     print("[isUserLoggedIn()]: _currentUser: " + _currentUser.toString());
     return _currentUser != null;
@@ -120,7 +120,7 @@ class AuthenticationService {
       }
 
       User user = await getUser(json.decode(response.body)['data']['token'])!;
-      _updateUser(user.getToken());
+      _updateUser(user.token);
       return null;
     } on Error catch (e) {
       print("Error ${e.toString()}");
@@ -168,7 +168,7 @@ class AuthenticationService {
         Uri.parse(domainPrefix + 'users/me'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'token': currentUser!.getToken()!,
+          'token': currentUser!.token!,
         },
         body: jsonEncode(userDetials),
       );
@@ -194,7 +194,7 @@ class AuthenticationService {
         Uri.parse(domainPrefix + 'users/me'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'token': currentUser!.getToken()!,
+          'token': currentUser!.token!,
         },
       );
       if (response.statusCode >= 400 && response.statusCode < 500) {
@@ -219,7 +219,7 @@ class AuthenticationService {
         Uri.parse(domainPrefix + 'users/me/organisations'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'token': currentUser!.getToken()!,
+          'token': currentUser!.token!,
         },
       );
       if (response.statusCode >= 300) {
@@ -242,7 +242,7 @@ class AuthenticationService {
         Uri.parse(domainPrefix + 'users/me/actions/$actionId/complete'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'token': currentUser!.getToken()!,
+          'token': currentUser!.token!,
         },
       );
       if (response.statusCode != 200) {
@@ -263,7 +263,7 @@ class AuthenticationService {
         Uri.parse(domainPrefix + 'users/me/actions/$actionId/favourite'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'token': currentUser!.getToken()!,
+          'token': currentUser!.token!,
         },
       );
       if (response.statusCode != 200) {
@@ -285,7 +285,7 @@ class AuthenticationService {
         Uri.parse(domainPrefix + 'users/me/actions/$actionId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'token': currentUser!.getToken()!,
+          'token': currentUser!.token!,
         },
       );
       if (response.statusCode != 200) {
@@ -309,7 +309,7 @@ class AuthenticationService {
       Uri.parse(domainPrefix + 'users/me/actions/$actionId/reject'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'token': currentUser!.getToken()!,
+        'token': currentUser!.token!,
       },
       body: json.encode(jsonBody),
     );
@@ -326,7 +326,7 @@ class AuthenticationService {
         Uri.parse(domainPrefix + 'users/me/campaigns/$campaignId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'token': currentUser!.getToken()!,
+          'token': currentUser!.token!,
         },
       );
       if (response.statusCode != 200) {
@@ -348,7 +348,7 @@ class AuthenticationService {
         Uri.parse(domainPrefix + 'users/me/campaigns/$campaignId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'token': currentUser!.getToken()!,
+          'token': currentUser!.token!,
         },
       );
       if (response.statusCode != 200) {
@@ -370,7 +370,7 @@ class AuthenticationService {
         Uri.parse(domainPrefix + 'users/me/learning_resources/$learningResourceId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'token': currentUser!.getToken()!,
+          'token': currentUser!.token!,
         },
       );
       if (response.statusCode != 200) {

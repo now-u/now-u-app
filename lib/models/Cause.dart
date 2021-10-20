@@ -8,6 +8,14 @@ class ListCause {
   bool? selected;
 
   ListCause({this.id, this.title, this.icon, this.description, this.selected});
+  
+  ListCause.fromJson(Map json) {
+    this.id = json['id'];
+    this.title = json['title'];
+    this.icon = json['icon'];
+    this.description = json['description'];
+    this.selected = json['selected'];
+  }
 }
 
 class Cause extends ListCause {
@@ -17,11 +25,7 @@ class Cause extends ListCause {
   Cause({this.headerImage, this.actions, int? id, String? title, String? icon, String? description, bool? selected})
       : super(id: id, title: title, icon: icon, description: description, selected: selected);
 
-  Cause.fromJson(Map json) {
-    this.id = json['id'];
-    this.title = json['title'];
-    this.icon = json['icon'];
-    this.description = json['description'];
+  Cause.fromJson(Map json): super.fromJson(json) {
     this.headerImage = json['headerImage'];
     this.actions = json['actions'];
   }
