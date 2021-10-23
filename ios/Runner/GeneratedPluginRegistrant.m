@@ -2,6 +2,8 @@
 //  Generated file. Do not edit.
 //
 
+// clang-format off
+
 #import "GeneratedPluginRegistrant.h"
 
 #if __has_include(<device_info/FLTDeviceInfoPlugin.h>)
@@ -22,8 +24,8 @@
 @import firebase_core;
 #endif
 
-#if __has_include(<firebase_crashlytics/FirebaseCrashlyticsPlugin.h>)
-#import <firebase_crashlytics/FirebaseCrashlyticsPlugin.h>
+#if __has_include(<firebase_crashlytics/FLTFirebaseCrashlyticsPlugin.h>)
+#import <firebase_crashlytics/FLTFirebaseCrashlyticsPlugin.h>
 #else
 @import firebase_crashlytics;
 #endif
@@ -100,10 +102,10 @@
 @import url_launcher;
 #endif
 
-#if __has_include(<webview_flutter/FLTWebViewFlutterPlugin.h>)
-#import <webview_flutter/FLTWebViewFlutterPlugin.h>
+#if __has_include(<webview_flutter_wkwebview/FLTWebViewFlutterPlugin.h>)
+#import <webview_flutter_wkwebview/FLTWebViewFlutterPlugin.h>
 #else
-@import webview_flutter;
+@import webview_flutter_wkwebview;
 #endif
 
 @implementation GeneratedPluginRegistrant
@@ -112,7 +114,7 @@
   [FLTDeviceInfoPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTDeviceInfoPlugin"]];
   [FLTFirebaseAnalyticsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseAnalyticsPlugin"]];
   [FLTFirebaseCorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseCorePlugin"]];
-  [FirebaseCrashlyticsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FirebaseCrashlyticsPlugin"]];
+  [FLTFirebaseCrashlyticsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseCrashlyticsPlugin"]];
   [FLTFirebaseDynamicLinksPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseDynamicLinksPlugin"]];
   [FLTFirebaseMessagingPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseMessagingPlugin"]];
   [FLTFirebaseRemoteConfigPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseRemoteConfigPlugin"]];

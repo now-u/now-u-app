@@ -11,9 +11,8 @@ import 'package:app/services/dialog_service.dart';
 import 'package:app/locator.dart';
 
 void main() {
-  setupTestLocator();
   WidgetsFlutterBinding.ensureInitialized();
-  NavigationService _navigationService = locator<NavigationService>();
+  NavigationService? _navigationService = locator<NavigationService>();
 
   group('InternalLinkingTests -', () {
     group('isInternalLink tests -', () {
@@ -52,7 +51,7 @@ void main() {
     });
 
     group('getInternalLinkParameters -', () {
-      void testInternalLinkParameters(String input, Map expected) {
+      void testInternalLinkParameters(String input, Map? expected) {
         expect(_navigationService.getInternalLinkParameters(input), expected);
       }
 
@@ -121,7 +120,7 @@ void main() {
         });
 
         // Mock dialog service so it doesnt do a popup
-        MockDialogService mockDialogService = setupMockDialogService();
+        MockDialogService mockDialogService = getAndRegisterMockDialogService() as MockDialogService;
         when(mockDialogService.showDialog(
                 buttons: anyNamed('buttons'),
                 title: anyNamed('title'),
@@ -130,7 +129,7 @@ void main() {
 
         print("Creating mock service");
         final NavigationService _mockNavigationService =
-            setupMockNavigationService(isFake: true);
+            getAndRegisterMockNavigationService();
         await _mockNavigationService.launchLink(url);
         print("Launched link");
 

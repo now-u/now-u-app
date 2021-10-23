@@ -27,7 +27,7 @@ class CustomIcons {
 
   static const _customIcons = 'CustomIcons';
 
-  static const _kFontPkg = null;
+  static const dynamic _kFontPkg = null;
 
   static const IconData home =
       IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);

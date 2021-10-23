@@ -5,27 +5,27 @@ import 'package:flutter/material.dart';
 
 class BasicCarouselPage extends StatelessWidget {
   const BasicCarouselPage(
-      {Key key,
-      @required this.model,
-      @required this.boldText,
-      @required this.normalText,
+      {Key? key,
+      required this.model,
+      required this.boldText,
+      required this.normalText,
       this.illustrationImagePath,
-      @required this.showSkipButton,
-      @required this.showGetStartedButton,
+      required this.showSkipButton,
+      required this.showGetStartedButton,
       this.additionalText,
       this.backgroundImagePath,
       this.logoPath})
       : super(key: key);
 
-  final OnBoardingViewModel model;
+  final OnBoardingViewModel? model;
   final String boldText;
   final String normalText;
-  final String illustrationImagePath;
+  final String? illustrationImagePath;
   final bool showSkipButton;
   final bool showGetStartedButton;
-  final List<TextSpan> additionalText;
-  final String backgroundImagePath;
-  final String logoPath;
+  final List<TextSpan>? additionalText;
+  final String? backgroundImagePath;
+  final String? logoPath;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class BasicCarouselPage extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: textStyleFrom(Theme.of(context)
                           .primaryTextTheme
-                          .headline1
+                          .headline1!
                           .copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w900)),
@@ -62,7 +62,7 @@ class BasicCarouselPage extends StatelessWidget {
                       text: TextSpan(
                         text: normalText,
                         style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.bodyText1.copyWith(
+                          Theme.of(context).primaryTextTheme.bodyText1!.copyWith(
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.w400),
@@ -81,7 +81,7 @@ class BasicCarouselPage extends StatelessWidget {
     );
   }
 
-  Widget backgroundImage(String path) {
+  Widget backgroundImage(String? path) {
     return path != null
         ? Container(
             decoration: BoxDecoration(
@@ -90,7 +90,7 @@ class BasicCarouselPage extends StatelessWidget {
         : Container();
   }
 
-  Widget illustrationImage(String path, BuildContext context) {
+  Widget illustrationImage(String? path, BuildContext context) {
     return path != null
         ? Container(
             height: MediaQuery.of(context).size.height * 0.4,
@@ -111,7 +111,7 @@ class BasicCarouselPage extends StatelessWidget {
                   fontWeight: FontWeight.w700),
             ),
             onPressed: () {
-              model.navigateToNextScreen();
+              model!.navigateToNextScreen();
             },
             child: Text(
               'Skip',
@@ -122,7 +122,7 @@ class BasicCarouselPage extends StatelessWidget {
   }
 
   Widget getStartedButton(
-      bool show, BuildContext context, OnBoardingViewModel model) {
+      bool show, BuildContext context, OnBoardingViewModel? model) {
     return show
         ? Column(
             children: [
@@ -132,7 +132,7 @@ class BasicCarouselPage extends StatelessWidget {
               DarkButton(
                 "Get started",
                 onPressed: () {
-                  model.navigateToNextScreen();
+                  model!.navigateToNextScreen();
                 },
               )
             ],
@@ -140,7 +140,7 @@ class BasicCarouselPage extends StatelessWidget {
         : Container();
   }
 
-  Widget logo(String path, BuildContext context) {
+  Widget logo(String? path, BuildContext context) {
     return path != null
         ? Positioned(
             top: 10,

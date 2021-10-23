@@ -21,20 +21,20 @@ List motivationalPostfix = [
 class Reward {
   final random = new Random();
   //final int id;
-  String title;
+  String? title;
   //String _description;
 
   // Number required to complete action
   final int successNumber;
 
   final RewardType type;
-  final CampaignActionType actionType;
+  final CampaignActionType? actionType;
 
   Reward({
     //@required this.id,
-    String title,
-    @required this.successNumber,
-    @required this.type,
+    String? title,
+    required this.successNumber,
+    required this.type,
     this.actionType, // This is required if type = CompletedTypedActionsNumber
   }) {
     this.title = title ?? generateTitle();
@@ -43,10 +43,10 @@ class Reward {
   String generateTitle() {
     String endingPlural = successNumber > 1 ? "s" : "";
     if (type == RewardType.CompletedTypedActionsNumber) {
-      Tuple3<String, String, String> descPrePostFix =
+      Tuple3<String?, String?, String?> descPrePostFix =
           generateCampaingActionDesc(actionType);
-      String pre = descPrePostFix.item1;
-      String post = descPrePostFix.item3;
+      String pre = descPrePostFix.item1!;
+      String post = descPrePostFix.item3!;
       return (pre + " ${successNumber} " + post + "${endingPlural}");
     }
     if (type == RewardType.CompletedActionsNumber) {
@@ -62,10 +62,10 @@ class Reward {
 
   String generateCompletionText() {
     if (type == RewardType.CompletedTypedActionsNumber) {
-      Tuple3<String, String, String> descPrePostFix =
+      Tuple3<String?, String?, String?> descPrePostFix =
           generateCampaingActionDesc(actionType);
-      String pre = descPrePostFix.item2;
-      String post = descPrePostFix.item3;
+      String pre = descPrePostFix.item2!;
+      String post = descPrePostFix.item3!;
       String endingPlural = successNumber > 1 ? "s" : "";
       return ("You " +
           pre +
@@ -78,7 +78,7 @@ class Reward {
     return "";
   }
 
-  String getTitle() {
+  String? getTitle() {
     return title;
   }
 
@@ -86,7 +86,7 @@ class Reward {
     return type;
   }
 
-  CampaignActionType getActionType() {
+  CampaignActionType? getActionType() {
     return actionType;
   }
 }

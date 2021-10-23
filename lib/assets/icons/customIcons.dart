@@ -25,7 +25,7 @@ class CustomIcons {
   static const _kFontFam = 'CustomIcons';
   static const _kFontFam2 = 'CustomIcons2';
   static const _kFontFam3 = 'CustomIconsClipboard';
-  static const _kFontPkg = null;
+  static const dynamic _kFontPkg = null;
 
   static const IconData ic_partners =
       IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);

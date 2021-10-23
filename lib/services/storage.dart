@@ -2,7 +2,7 @@ import 'package:meta/meta.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class StorageProvider {
-  StorageProvider({@required this.flutterSecureStorage})
+  StorageProvider({required this.flutterSecureStorage})
       : assert(flutterSecureStorage != null);
 
   final FlutterSecureStorage flutterSecureStorage;
@@ -23,11 +23,11 @@ class StorageProvider {
     await flutterSecureStorage.delete(key: storageUserEmailKey);
   }
 
-  Future<String> getEmail() async {
+  Future<String?> getEmail() async {
     return await flutterSecureStorage.read(key: storageUserEmailKey);
   }
 
-  Future<String> getName() async {
+  Future<String?> getName() async {
     return await flutterSecureStorage.read(key: storageUserNameKey);
   }
 }
@@ -41,6 +41,6 @@ class SecureStorageService {
 
   Future<void> clearEmail() => _store.clearEmail();
 
-  Future<String> getEmail() => _store.getEmail();
-  Future<String> getName() => _store.getName();
+  Future<String?> getEmail() => _store.getEmail();
+  Future<String?> getName() => _store.getName();
 }

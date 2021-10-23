@@ -1,11 +1,12 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=/opt/hostedtoolcache/flutter/2.0.1-stable/x64
-FLUTTER_APPLICATION_PATH=/home/runner/work/now-u-app/now-u-app
+FLUTTER_ROOT=/home/jelgar/snap/flutter/common/flutter
+FLUTTER_APPLICATION_PATH=/home/jelgar/Documents/dev/now-u/app
+COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_TARGET=lib/main.dart
 FLUTTER_BUILD_DIR=build
-SYMROOT=${SOURCE_ROOT}/../build/ios
 FLUTTER_BUILD_NAME=1.2.0
 FLUTTER_BUILD_NUMBER=34
+EXCLUDED_ARCHS[sdk=iphonesimulator*]=i386 arm64
 DART_OBFUSCATION=false
 TRACK_WIDGET_CREATION=false
 TREE_SHAKE_ICONS=false

@@ -6,14 +6,14 @@ import 'package:app/assets/StyleFrom.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/navigation_service.dart';
 
-final NavigationService _navigationService = locator<NavigationService>();
+final NavigationService? _navigationService = locator<NavigationService>();
 
 class InternalNotification {
-  int id;
-  String title;
-  String subtitle;
-  String body;
-  String image;
+  int? id;
+  String? title;
+  String? subtitle;
+  String? body;
+  String? image;
 
   InternalNotification({this.title, this.body, this.image, this.subtitle});
 
@@ -27,31 +27,31 @@ class InternalNotification {
     image = json["image"];
   }
 
-  int getId() {
+  int? getId() {
     return id;
   }
 
-  String getTitle() {
+  String? getTitle() {
     return title;
   }
 
-  String getSubtitle() {
+  String? getSubtitle() {
     return subtitle;
   }
 
-  String getBody() {
+  String? getBody() {
     return body;
   }
 
-  String getImage() {
+  String? getImage() {
     return image;
   }
 
   Widget getBodyWidget(context) {
     return Markdown(
-      data: body,
-      onTapLink: (String text, String href, String title) {
-        _navigationService.launchLink(href);
+      data: body!,
+      onTapLink: (String text, String? href, String title) {
+        _navigationService!.launchLink(href!);
       },
       styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
         p: textStyleFrom(

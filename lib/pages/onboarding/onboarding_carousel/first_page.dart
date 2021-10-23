@@ -3,8 +3,8 @@ import 'package:app/viewmodels/onboarding_model.dart';
 import 'package:flutter/material.dart';
 
 class FirstOnBoardingPage extends StatelessWidget {
-  const FirstOnBoardingPage({this.model, Key key}) : super(key: key);
-  final OnBoardingViewModel model;
+  const FirstOnBoardingPage({this.model, Key? key}) : super(key: key);
+  final OnBoardingViewModel? model;
   @override
   Widget build(BuildContext context) {
     return BasicCarouselPage(

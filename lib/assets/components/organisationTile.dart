@@ -9,14 +9,14 @@ import 'package:app/routes.dart';
 
 class OrganisationTile extends StatelessWidget {
   final Organisation organisation;
-  final Function extraOnTap;
+  final Function? extraOnTap;
   OrganisationTile(this.organisation, {this.extraOnTap});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
           if (extraOnTap != null) {
-            extraOnTap();
+            extraOnTap!();
           }
           Navigator.of(context)
               .pushNamed(Routes.organisationPage, arguments: organisation);
@@ -48,7 +48,7 @@ class OrganisationTile extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(organisation.getName(),
+                  Text(organisation.getName()!,
                       style: textStyleFrom(
                         Theme.of(context).primaryTextTheme.bodyText1,
                         fontSize: 12,

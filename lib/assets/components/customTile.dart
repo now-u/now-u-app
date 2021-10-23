@@ -6,20 +6,20 @@ final double shadowBlurRadius = 20;
 final Offset shadowOffset = Offset(0, 3);
 
 BoxShadow customTileBoxShadow(bool onWhiteBackground) => BoxShadow(
-      color: onWhiteBackground ?? false ? shadowWhiteColor : shadowColor,
+      color: onWhiteBackground ? shadowWhiteColor : shadowColor,
       offset: shadowOffset,
       blurRadius: shadowBlurRadius,
     );
 
-BorderRadius tileBorderRadius({double borderRadius}) =>
+BorderRadius tileBorderRadius({double? borderRadius}) =>
     BorderRadius.all(Radius.circular(borderRadius ?? 8));
 
 class CustomTile extends StatelessWidget {
-  final Widget child;
-  final bool onWhiteBackground;
-  final Color color;
-  final double borderRadius;
-  final Function onClick;
+  final Widget? child;
+  final bool? onWhiteBackground;
+  final Color? color;
+  final double? borderRadius;
+  final Function? onClick;
   CustomTile({
     this.child,
     this.onWhiteBackground,
@@ -30,7 +30,7 @@ class CustomTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onClick,
+      onTap: onClick as void Function()?,
       child: Container(
         decoration: BoxDecoration(
             color: color ?? Colors.white,

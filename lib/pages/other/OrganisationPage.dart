@@ -17,7 +17,7 @@ import 'package:app/services/navigation_service.dart';
 final double SECTION_TITLE_BOTTOM_PADDING = 8;
 final double BETWEEN_SECTION_PADDING = 12;
 
-final NavigationService _navigationService = locator<NavigationService>();
+final NavigationService? _navigationService = locator<NavigationService>();
 
 class OraganisationInfoPage extends StatelessWidget {
   final Organisation organisation;
@@ -59,7 +59,7 @@ class OraganisationInfoPage extends StatelessWidget {
               Text(
                 organisation.getDescription(),
               ),
-              organisation.getCampaigns().length > 0
+              organisation.getCampaigns()!.length > 0
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -71,10 +71,10 @@ class OraganisationInfoPage extends StatelessWidget {
                           Container(
                             height: 120,
                             child: PageView.builder(
-                              itemCount: organisation.getCampaigns().length,
+                              itemCount: organisation.getCampaigns()!.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return CampaignSelectionTile(
-                                  organisation.getCampaigns()[index],
+                                  organisation.getCampaigns()![index],
                                   height: 120,
                                 );
                               },
@@ -93,7 +93,7 @@ class OraganisationInfoPage extends StatelessWidget {
                             vpadding: SECTION_TITLE_BOTTOM_PADDING,
                           ),
                           Text(
-                            organisation.getGeographicReach(),
+                            organisation.getGeographicReach()!,
                           ),
                         ]),
               SizedBox(height: BETWEEN_SECTION_PADDING),
@@ -107,7 +107,7 @@ class OraganisationInfoPage extends StatelessWidget {
                             vpadding: SECTION_TITLE_BOTTOM_PADDING,
                           ),
                           Text(
-                            organisation.getOrganistaionType(),
+                            organisation.getOrganistaionType()!,
                           ),
                         ]),
               SizedBox(height: BETWEEN_SECTION_PADDING),
@@ -167,7 +167,7 @@ List<Widget> getSocialMediaChildren(Organisation org) {
 }
 
 class SocialMediaButton extends StatelessWidget {
-  final String link;
+  final String? link;
   final IconData icon;
   SocialMediaButton(this.link, this.icon);
 
@@ -181,7 +181,7 @@ class SocialMediaButton extends StatelessWidget {
           size: 35,
         ),
         onPressed: () {
-          launch(link);
+          launch(link!);
         },
       ),
     );
@@ -203,8 +203,8 @@ List<Widget> getExtraLinks(Organisation org) {
 }
 
 class ExtraLinkButton extends StatelessWidget {
-  final String text;
-  final String link;
+  final String? text;
+  final String? link;
   ExtraLinkButton(this.text, this.link);
   @override
   Widget build(BuildContext context) {
@@ -214,7 +214,7 @@ class ExtraLinkButton extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.all(10),
             child: Text(
-              text,
+              text!,
               style: textStyleFrom(
                 Theme.of(context).primaryTextTheme.headline5,
                 color: Theme.of(context).buttonColor,
@@ -224,7 +224,7 @@ class ExtraLinkButton extends StatelessWidget {
             ),
           ),
           onClick: () {
-            _navigationService.launchLink(link);
+            _navigationService!.launchLink(link!);
           },
         ));
   }

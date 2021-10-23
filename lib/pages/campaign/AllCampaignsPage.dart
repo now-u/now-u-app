@@ -28,9 +28,9 @@ class AllCampaignsPage extends StatelessWidget {
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: model.currentCampaigns.length,
+              itemCount: model.currentCampaigns!.length,
               itemBuilder: (BuildContext context, int index) {
-                return CampaignTile(model.currentCampaigns[index]);
+                return CampaignTile(model.currentCampaigns![index]);
               },
             ),
 
@@ -47,9 +47,9 @@ class AllCampaignsPage extends StatelessWidget {
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: model.pastCampaigns.length,
+              itemCount: model.pastCampaigns!.length,
               itemBuilder: (BuildContext context, int index) {
-                return CampaignTile(model.pastCampaigns[index]);
+                return CampaignTile(model.pastCampaigns![index]);
               },
             ),
 

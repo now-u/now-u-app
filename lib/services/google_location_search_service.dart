@@ -11,19 +11,19 @@ import 'package:app/services/remote_config_service.dart';
 // https://github.com/yshean/google_places_flutter/blob/master/lib/place_service.dart
 
 class GoogleLocationSearchService {
-  final RemoteConfigService _remoteConfigService =
+  final RemoteConfigService? _remoteConfigService =
       locator<RemoteConfigService>();
 
   final client = Client();
   String _sessionToken = Uuid().v4();
   String get sessionToken => _sessionToken;
 
-  Future<List<Suggestion>> fetchSuggestions(String input, String lang) async {
+  Future<List<Suggestion>?> fetchSuggestions(String input, String lang) async {
     String _apiKey =
-        _remoteConfigService.getValue(RemoteConfigKey.googlePlaceAPIKey);
+        _remoteConfigService!.getValue(RemoteConfigKey.googlePlaceAPIKey);
 
     final request =
-        'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&language=$lang&key=$_apiKey&sessiontoken=$_sessionToken';
+        Uri.parse('https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&language=$lang&key=$_apiKey&sessiontoken=$_sessionToken');
     final response = await client.get(request);
 
     if (response.statusCode == 200) {
@@ -52,12 +52,12 @@ class GoogleLocationSearchService {
     }
   }
 
-  Future<Place> getPlaceDetailFromId(String placeId) async {
+  Future<Place> getPlaceDetailFromId(String? placeId) async {
     String _apiKey =
-        _remoteConfigService.getValue(RemoteConfigKey.googlePlaceAPIKey);
+        _remoteConfigService!.getValue(RemoteConfigKey.googlePlaceAPIKey);
 
     final request =
-        'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=address_component&key=$_apiKey&sessiontoken=$_sessionToken';
+        Uri.parse('https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=address_component&key=$_apiKey&sessiontoken=$_sessionToken');
     final response = await client.get(request);
 
     if (response.statusCode == 200) {
@@ -92,10 +92,10 @@ class GoogleLocationSearchService {
 }
 
 class Place {
-  String streetNumber;
-  String street;
-  String city;
-  String zipCode;
+  String? streetNumber;
+  String? street;
+  String? city;
+  String? zipCode;
 
   Place({
     this.streetNumber,
@@ -111,8 +111,8 @@ class Place {
 }
 
 class Suggestion {
-  final String placeId;
-  final String description;
+  final String? placeId;
+  final String? description;
 
   Suggestion(this.placeId, this.description);
 

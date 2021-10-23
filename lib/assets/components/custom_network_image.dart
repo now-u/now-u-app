@@ -3,14 +3,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class CustomNetworkImage extends StatelessWidget {
-  final String url;
-  final BoxFit fit;
-  final double height;
+  final String? url;
+  final BoxFit? fit;
+  final double? height;
 
-  final Function placeholder;
-  final Function errorWidget;
-  final Function progressIndicatorBuilder;
-  final BaseCacheManager cacheManager;
+  final Function? placeholder;
+  final Function? errorWidget;
+  final Function? progressIndicatorBuilder;
+  final BaseCacheManager? cacheManager;
 
   CustomNetworkImage(
     this.url, {
@@ -29,13 +29,13 @@ class CustomNetworkImage extends StatelessWidget {
       return Center(child: Icon(Icons.error));
     }
     return CachedNetworkImage(
-      imageUrl: url,
+      imageUrl: url!,
       placeholder: placeholder == null && progressIndicatorBuilder == null
           ? (context, url) => Center(child: CircularProgressIndicator())
-          : placeholder,
-      errorWidget: errorWidget ??
+          : placeholder as Widget Function(BuildContext, String)?,
+      errorWidget: errorWidget as Widget Function(BuildContext, String, dynamic)? ??
           (context, url, error) => Center(child: Icon(Icons.error)),
-      progressIndicatorBuilder: progressIndicatorBuilder,
+      progressIndicatorBuilder: progressIndicatorBuilder as Widget Function(BuildContext, String, DownloadProgress)?,
       fit: fit,
       height: height,
       cacheManager: cacheManager,
@@ -44,7 +44,7 @@ class CustomNetworkImage extends StatelessWidget {
 }
 
 // Where possible please use full fat CustomNetworkImage
-ImageProvider customNetworkImageProvider(String url) {
+ImageProvider customNetworkImageProvider(String? url) {
   if (url == null) {
     return AssetImage('assets/imgs/plain-white-background.jpg');
   }
