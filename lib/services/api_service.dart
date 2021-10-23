@@ -23,6 +23,7 @@ class ApiException implements Exception {
 Map<int, ApiExceptionType> responseCodeExceptionMapping = {
   401: ApiExceptionType.UNAUTHORIZED,
   419: ApiExceptionType.TOKEN_EXPIRED,
+  500: ApiExceptionType.INTERNAL,
 };
 
 class ApiService {
@@ -60,7 +61,7 @@ class ApiService {
   /// Make get request to api
   ///
   /// Returns Map of the response. Throws an [ApiException] if the request is
-  /// unsucessful.
+  /// unsuccessful.
   Future<Map> getRequest(String path, {Map<String, dynamic>? params}) async {
     // Convert param values to strings
     Map<String, dynamic>? stringParams;
@@ -85,6 +86,25 @@ class ApiService {
     http.Response response = await client.get(
       uri,
       headers: getRequestHeaders(),
+    );
+     
+    if (response.statusCode != 200) {
+      throw getExceptionForResponse(response);
+    }
+
+    return await json.decode(response.body);
+  }
+  
+  /// Make post request to api
+  ///
+  /// Returns Map of the response. Throws an [ApiException] if the request is
+  /// unsuccessful.
+  Future<Map> postRequest(String path, {Map<String, dynamic>? body}) async {
+    final uri = Uri.https(baseUrl, baseUrlPath + path);
+    http.Response response = await client.post(
+      uri,
+      headers: getRequestHeaders(),
+      body: body,
     );
      
     if (response.statusCode != 200) {
