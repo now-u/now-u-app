@@ -2,48 +2,92 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:app/models/User.dart';
+import 'package:app/services/auth.dart';
+import 'package:app/locator.dart';
 
-class ApiError {
-  static const UNAUTHORIZED = "unauthorized";
-  static const INTERNAL = "internal";
-  static const REQUEST = "request";
-  static const UNKNOWN = "unknown";
-  static const TOKEN_EXPIRED = "tokenExpired";
+/// Types of http errors
+enum ApiExceptionType {
+  UNAUTHORIZED, INTERNAL, REQUEST, UNKNOWN, TOKEN_EXPIRED
 }
+
+/// Exception for failed http requests
+class ApiException implements Exception {
+  ApiExceptionType type;
+  int statusCode;
+
+  ApiException({required this.type, required this.statusCode});
+}
+
+/// Map showing the translation from http response code to an
+/// [ApiApiExceptionType]
+Map<int, ApiExceptionType> responseCodeExceptionMapping = {
+  401: ApiExceptionType.UNAUTHORIZED,
+  419: ApiExceptionType.TOKEN_EXPIRED,
+};
 
 class ApiService {
   http.Client client = http.Client();
 
+  /// Base of url (no slashes)
   String baseUrl = "api.now-u.com";
+  /// The base path of the url (after the baseUrl)
   String baseUrlPath = "api/v2/";
+
+  /// Generate appropriate [ApiException] from http response.
+  ApiException getExceptionForResponse(http.Response response) {
+    ApiExceptionType exceptionType = responseCodeExceptionMapping[response.statusCode] ?? ApiExceptionType.UNKNOWN;
+    return ApiException(type: exceptionType, statusCode: response.statusCode);
+  }
   
-  User? _currentUser;
-  User? get currentUser => _currentUser;
-  bool get isAuthenticated => currentUser != null && currentUser!.token != null;
-  
+  /// Get headers for standard API request 
+  ///
+  /// If [AuthenticationService] says the user is authenticated the token will
+  /// also be added to the headers.
   Map<String, String> getRequestHeaders() {
     Map<String, String> headers = {
       'Content-Type': 'application/json; charset=UTF-8',
     };
-    if (isAuthenticated) {
-      headers['token'] = currentUser!.token as String;
+
+    // If the user is logged in add their token to the request headers
+    final AuthenticationService _authService = locator<AuthenticationService>();
+    if (_authService.isAuthenticated) {
+      // We know a token must exist as the user is authenticated
+      headers['token'] = _authService.token!;
     }
     return headers;
   }
 
+  /// Make get request to api
+  ///
+  /// Returns Map of the response. Throws an [ApiException] if the request is
+  /// unsucessful.
   Future<Map> getRequest(String path, {Map<String, dynamic>? params}) async {
-    final uri = Uri.https(baseUrl, baseUrlPath + path, params ?? {});
+    // Convert param values to strings
+    Map<String, dynamic>? stringParams;
+    if (params != null) {
+      stringParams = Map.fromIterable(params.keys, key: (k) => k , value: (k) {
+        dynamic value = params[k];
+        // If the value is already iterable (this includes strings and lists)
+        // return it
+        if (value is List) {
+          return "[" + value.map((item) => item.toString()).join(",") + "]";
+        }
+        if (value is Iterable) {
+          return value;
+        }
+        // Otherwise cast it to a string
+        return params[k].toString();
+      });
+    }
+    
+    final uri = Uri.https(baseUrl, baseUrlPath + path, stringParams);
     http.Response response = await client.get(
       uri,
       headers: getRequestHeaders(),
     );
-      
-    if (response.statusCode == 401) {
-      throw ApiError.UNAUTHORIZED;
-    }
-
-    if (response.statusCode == 419) {
-      throw ApiError.TOKEN_EXPIRED;
+     
+    if (response.statusCode != 200) {
+      throw getExceptionForResponse(response);
     }
 
     return await json.decode(response.body);

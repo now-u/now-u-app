@@ -1,5 +1,7 @@
-import 'package:app/services/api_service.dart';
 import 'package:app/models/Cause.dart';
+
+import 'package:app/locator.dart';
+import 'package:app/services/api_service.dart';
 
 class CausesService extends ApiService {
   Future<List<ListCause>> getCauses() async {

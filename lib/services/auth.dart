@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:app/locator.dart';
+import 'package:app/services/api_service.dart';
 import 'package:app/services/navigation_service.dart';
 import 'package:app/services/shared_preferences_service.dart';
 import 'package:app/services/device_info_service.dart';
@@ -19,14 +20,17 @@ class AuthError {
   static const tokenExpired = "tokenExpired";
 }
 
-class AuthenticationService {
+class AuthenticationService extends ApiService {
   //final NavigationService _navigationService = locator<NavigationService>();
   final SharedPreferencesService? _sharedPreferencesService =
       locator<SharedPreferencesService>();
   final DeviceInfoService? _deviceInfoService = locator<DeviceInfoService>();
-
+  
   User? _currentUser;
   User? get currentUser => _currentUser;
+
+  String? get token => currentUser?.token;
+  bool get isAuthenticated => token != null;
 
   // This is not final as it can be changed
   String domainPrefix = "https://api.now-u.com/api/v1/";
@@ -38,21 +42,14 @@ class AuthenticationService {
   Future<bool> isUserLoggedIn() async {
     User? user = await _sharedPreferencesService!.loadUserFromPrefs();
     if (user != null) {
-      print("[isUserLoggedIn()]: user from Prefs not null");
       await _updateUser(user.token);
     }
-    print("[isUserLoggedIn()]: _currentUser: " + _currentUser.toString());
     return _currentUser != null;
   }
 
   Future _updateUser(String? token) async {
     if (token != null) {
-      print("[_updateUser()]: _currentUser BEFORE getUser(token): " +
-          _currentUser.toString());
       _currentUser = await getUser(token);
-
-      print("[_updateUser()]: _currentUser AFTER getUser(token): " +
-          _currentUser.toString());
       _sharedPreferencesService!.saveUserToPrefs(_currentUser!);
     }
   }

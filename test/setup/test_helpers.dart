@@ -1,14 +1,26 @@
 import 'package:mockito/mockito.dart';
+import 'package:http/http.dart' as http;
+import 'package:mockito/annotations.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
 
 import 'package:app/locator.dart';
+import 'package:app/models/User.dart';
 import 'package:app/services/navigation_service.dart';
 import 'package:app/services/dialog_service.dart';
+import 'package:app/services/api_service.dart';
+import 'test_helpers.mocks.dart';
 
 import 'package:app/services/analytics.dart';
 import 'package:app/services/auth.dart';
 import 'package:app/services/google_location_search_service.dart';
+
+@GenerateMocks([http.Client])
+MockClient mockHttpClient(ApiService service) {
+  MockClient mockClient = MockClient();
+  service.client = mockClient;
+  return mockClient;
+}
 
 Future<String> readTestData(String fileName, {String filePath = "test/data/"}) async {
     final file = File(filePath + fileName);
@@ -25,15 +37,6 @@ NavigationService getAndRegisterMockNavigationService() {
   _removeRegistrationIfExists<NavigationService>();
   var service = MockNavigationService();
   locator.registerSingleton<NavigationService>(service);
-  return service;
-}
-
-class MockAuthenticationService extends Mock implements AuthenticationService {}
-
-AuthenticationService getAndRegisterMockAuthentiactionService() {
-  _removeRegistrationIfExists<AuthenticationService>();
-  var service = MockAuthenticationService();
-  locator.registerSingleton<AuthenticationService>(service);
   return service;
 }
 
@@ -69,4 +72,9 @@ void _removeRegistrationIfExists<T extends Object>() {
   if (locator.isRegistered<T>()) {
     locator.unregister<T>();
   }
+}
+
+void registerMock<T extends Object>(T service) {
+  _removeRegistrationIfExists<T>();
+  locator.registerSingleton<T>(service);
 }

@@ -13,6 +13,7 @@ import 'package:app/models/Cause.dart';
 void main() {
   setupLocator();
   CausesService _causesService = locator<CausesService>();
+  Map<String, String> unauthenticatedHeaders = {"Content-Type": "application/json; charset=UTF-8"};
 
   group('get causes', () {
     test('returns a List of ListCauses if the request is successfully', () async {
@@ -23,8 +24,7 @@ void main() {
       // provided http.Client.
       String response = await readTestData("causes.json");
       when(client
-              .get(Uri.parse('https://api.now-u.com/api/v2/causes?'), headers: {"Content-Type": "application/json; charset=UTF-8"}))
-
+              .get(Uri.parse('https://api.now-u.com/api/v2/causes'), headers: unauthenticatedHeaders))
           .thenAnswer((_) async =>
               http.Response(response, 200));
 
@@ -48,7 +48,7 @@ void main() {
       _causesService.client = client;
 
       when(client
-              .get(Uri.parse('https://api.now-u.com/api/v2/cause/1?'), headers: {"Content-Type": "application/json; charset=UTF-8"}))
+              .get(Uri.parse('https://api.now-u.com/api/v2/cause/1'), headers: unauthenticatedHeaders))
           .thenAnswer((_) async =>
               http.Response(await readTestData("cause.json"), 200));
 
