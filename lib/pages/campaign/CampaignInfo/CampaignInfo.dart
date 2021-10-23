@@ -76,7 +76,7 @@ class CampaignInfoBody extends StatelessWidget {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: customNetworkImageProvider(
-                          _campaign!.getHeaderImage()),
+                          _campaign!.headerImage),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -84,7 +84,7 @@ class CampaignInfoBody extends StatelessWidget {
                     padding: EdgeInsets.only(bottom: 20),
                     child: Column(children: [
                       PageHeader(
-                        title: _campaign!.getTitle(),
+                        title: _campaign!.title,
                         textColor: Colors.white,
                         backButton: true,
                         backButtonText: "",
@@ -133,7 +133,7 @@ class CampaignInfoBody extends StatelessWidget {
                                 height: 12,
                               ),
                               DarkButton("Take action", onPressed: () {
-                                if (_campaign!.isPast()) {
+                                if (_campaign!.isPast) {
                                   Navigator.of(context).pushNamed(
                                       Routes.pastCampaignActionPage,
                                       arguments: _campaign);
@@ -162,12 +162,12 @@ class CampaignInfoBody extends StatelessWidget {
                           children: [
                             CampaignStat(
                                 text:
-                                    "${_campaign!.getNumberOfCampaigners()} people have joined",
+                                    "${_campaign!.numberOfCampaigners} people have joined",
                                 icon: Icons.people),
                             //CampaignStat(text: "Actions completed"),,
                             CampaignStat(
                               text:
-                                  "${_campaign!.getNumberOfActionsCompleted()} actions completed by now-u users",
+                                  "${_campaign!.numberOfActionsCompleted} actions completed by now-u users",
                               icon: CustomIcons.ic_clipboard,
                             ),
                             CampaignStat(
@@ -202,7 +202,7 @@ class CampaignInfoBody extends StatelessWidget {
                                 onTap: () {
                                   Navigator.of(context).pushNamed(
                                       Routes.learningSingle,
-                                      arguments: _campaign!.getId());
+                                      arguments: _campaign!.id);
                                 }),
                           ],
                         ),
@@ -248,7 +248,7 @@ class CampaignInfoBody extends StatelessWidget {
                         ),
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: _campaign!.getKeyAims()!.map((aim) {
+                            children: _campaign!.keyAims!.map((aim) {
                               return Column(children: [
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -276,7 +276,7 @@ class CampaignInfoBody extends StatelessWidget {
                   )),
 
               // Partners
-              _campaign!.getGeneralPartners()!.length == 0
+              _campaign!.generalPartners!.length == 0
                   ? Container()
                   : Container(
                       color: Color.fromRGBO(247, 248, 252, 1),
@@ -298,7 +298,7 @@ class CampaignInfoBody extends StatelessWidget {
                               ),
                               Wrap(
                                 children: getOrganistaionTiles(
-                                    _campaign!.getGeneralPartners()!, context),
+                                    _campaign!.generalPartners!, context),
                                 spacing: 10,
                                 runSpacing: 10,
                                 crossAxisAlignment: WrapCrossAlignment.start,
@@ -309,46 +309,6 @@ class CampaignInfoBody extends StatelessWidget {
                               ),
                             ],
                           ))),
-
-              // SDGs
-              SizedBox(height: 30),
-
-              Container(
-                  child: ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: _campaign!.getSDGs()!.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: EdgeInsets.all(10),
-                    child: SDGSelectionItem(_campaign!.getSDGs()![index], model),
-                  );
-                },
-                // )
-              )),
-
-              SizedBox(height: 30),
-
-              // Find out more - SDGs
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Find out more at:",
-                    style: Theme.of(context).primaryTextTheme.bodyText1,
-                  ),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    CustomTextButton(
-                      "sustainabledevelopment.un.org",
-                      onClick: () {
-                        model.openSDGGoals();
-                      },
-                      fontSize:
-                          Theme.of(context).primaryTextTheme.bodyText1!.fontSize,
-                    ),
-                  ])
-                ],
-              ),
 
               SizedBox(height: model.campaignIsJoined ? 50 : 100),
             ],
@@ -373,7 +333,7 @@ class CampaignInfoBody extends StatelessWidget {
                 )),
               ),
               onPressed: () {
-                model.joinCampaign(_campaign!.getId());
+                model.joinCampaign(_campaign!.id);
               },
               color: Theme.of(context).primaryColor,
             ),

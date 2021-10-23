@@ -98,12 +98,10 @@ void main() {
       MockClient client = mockHttpClient(apiService);
 
       when(client.get(any, headers: anyNamed("headers"))).thenAnswer((_) => Future.value(http.Response(
-        '{"abc": "def"}', 200
+        '{}', 200
       )));
 
-      Map response = await apiService.getRequest("causes/stuff", params: {"causes": [1,2]});
-      expect(response, {"abc": "def"});
-
+      await apiService.getRequest("causes/stuff", params: {"causes": [1,2]});
       verify(client.get(Uri.parse("https://api.now-u.com/api/v2/causes/stuff?causes=%5B1%2C2%5D"), headers: anyNamed("headers"))).called(1);
     });
   });

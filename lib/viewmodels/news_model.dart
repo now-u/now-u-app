@@ -36,7 +36,7 @@ class NewsViewModel extends BaseModel {
     print(_filteredArticles);
     String? indexCategory = index == _campaignService!.campaigns!.length
         ? "general"
-        : _campaignService!.campaigns![index].getShortName();
+        : _campaignService!.campaigns![index].shortName;
 
     // Retap to deselect
     _category = _category == indexCategory ? null : indexCategory;
@@ -81,7 +81,7 @@ class NewsViewModel extends BaseModel {
   String? getCategoryFromIndex(int index) {
     return index == campaigns!.length
         ? "general"
-        : campaigns![index].getShortName();
+        : campaigns![index].shortName;
   }
 
   void openArticle(article) {

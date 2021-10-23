@@ -83,7 +83,7 @@ class ActionSelectionItem extends StatelessWidget {
   final double defaultInnerHpadding = 10;
   final double defaultIconWidth = 50;
 
-  final CampaignAction action;
+  final ListCauseAction action;
   final Campaign? campaign;
   final double? innerHpadding;
   final double? outerHpadding;
@@ -109,20 +109,19 @@ class ActionSelectionItem extends StatelessWidget {
         viewModelBuilder: () => BaseModel(),
         builder: (context, model, child) {
           bool completed =
-              model.currentUser!.getCompletedActions()!.contains(action.getId());
+              model.currentUser!.getCompletedActions()!.contains(action.id);
           return LeadingSelectionItem(
               backgroundColor: backgroundColor,
               innerHpadding: innerHpadding,
               outerHpadding: outerHpadding,
               iconWidth: iconWidth,
-              isNew: action.isNew(),
+              isNew: action.isNew,
               onTap: () {
                 if (extraOnTap != null) {
                   extraOnTap!();
                 }
                 Navigator.of(context).pushNamed(Routes.actionInfo,
-                    arguments: ActionInfoArguments(
-                        campaign: campaign, action: action));
+                    arguments: ActionInfoArguments(action: action));
               },
               leading: Stack(children: <Widget>[
                 Padding(
@@ -132,17 +131,16 @@ class ActionSelectionItem extends StatelessWidget {
                     height: 60,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
-                        color: completed
-                            ? action.getActionIconMap()['iconColor']
-                            : action.getActionIconMap()['iconBackgroundColor']),
+                        color: completed ? action.primaryColor : action.secondaryColor,
+                    ),
                     child: Center(
                       child: Icon(
                         completed
                             ? Icons.check
-                            : action.getActionIconMap()['icon'],
+                            : action.icon,
                         color: completed
                             ? Colors.white
-                            : action.getActionIconMap()['iconColor'],
+                            : action.primaryColor,
                         size: 30,
                       ),
                     ),
@@ -165,8 +163,8 @@ class ActionSelectionItem extends StatelessWidget {
                 //        ),
                 //      ),
               ]),
-              text: action.getTitle(),
-              time: action.getTimeText(),
+              text: action.title,
+              time: action.timeText,
               extraOverflow: 50);
         });
   }
@@ -469,11 +467,11 @@ class LearningCentreCampaignSelectionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ImageSelectionItem(
-      text: campaign!.getTitle(),
-      imageUrl: campaign!.getHeaderImage(),
+      text: campaign!.title,
+      imageUrl: campaign!.headerImage,
       onTap: () {
         Navigator.of(context)
-            .pushNamed(Routes.learningSingle, arguments: campaign!.getId());
+            .pushNamed(Routes.learningSingle, arguments: campaign!.id);
       },
       hpadding: hpadding,
       imageWidth: imageWidth,

@@ -65,6 +65,7 @@ class ApiService {
     // Convert param values to strings
     Map<String, dynamic>? stringParams;
     if (params != null) {
+      // Parse param values
       stringParams = Map.fromIterable(params.keys, key: (k) => k , value: (k) {
         dynamic value = params[k];
         // If the value is already iterable (this includes strings and lists)

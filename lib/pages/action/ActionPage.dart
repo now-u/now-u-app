@@ -358,19 +358,17 @@ class _SortScreenState extends State<SortScreen> {
               ListView.separated(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: CampaignActionSuperType.values.length,
+                itemCount: actionTypes.length,
                 separatorBuilder: (BuildContext context, int index) =>
                     ListDividor(),
                 itemBuilder: (BuildContext context, int index) {
+                  ActionType type = actionTypes[index];
                   return CheckboxSelectionItem(
-                      title: campaignActionSuperTypeData[
-                          CampaignActionSuperType.values[index]]['name'],
-                      value: selections!['categories']!
-                          [CampaignActionSuperType.values[index]],
+                      title: type.name,
+                      value: selections!['categories']![type],
                       onChanged: (bool value) {
                         setState(() {
-                          selections!['categories']!
-                              [CampaignActionSuperType.values[index]] = value;
+                          selections!['categories']![type] = value;
                         });
                       });
                   //return Text(timeBrackets[index]['text']);

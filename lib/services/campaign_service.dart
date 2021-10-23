@@ -4,7 +4,6 @@ import 'package:app/locator.dart';
 import 'package:app/services/auth.dart';
 
 import 'package:app/models/Campaign.dart';
-import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Learning.dart';
 
@@ -31,15 +30,15 @@ class CampaignService {
     return user.filterSelectedCampaigns(_campaigns!);
   }
 
-  List<CampaignAction> getActiveActions(
+  List<ListCauseAction> getActiveActions(
       {bool? includeCompleted,
       bool? includeRejected,
       bool? onlySelectedCampaigns,
       bool? includeTodo, // Todo actions are unstarred and uncompleted
       bool? includeStarred}) {
-    List<CampaignAction> actions = [];
+    List<ListCauseAction> actions = [];
     for (Campaign campaign in _campaigns!) {
-      actions.addAll(campaign.getActions()!);
+      actions.addAll(campaign.actions!);
     }
 
     User? user = _authenticationService!.currentUser;
@@ -49,28 +48,28 @@ class CampaignService {
     }
 
     if (!(includeRejected ?? false)) {
-      actions.removeWhere((a) => user.getRejectedActions()!.contains(a.getId()));
+      actions.removeWhere((a) => user.getRejectedActions()!.contains(a.id));
     }
 
     // If dont include todo actions then get rid of those todo
     if (!(includeTodo ?? true)) {
       actions.removeWhere((a) =>
-          !user.getCompletedActions()!.contains(a.getId()) &&
-          !user.getStarredActions()!.contains(a.getId()));
+          !user.getCompletedActions()!.contains(a.id) &&
+          !user.getStarredActions()!.contains(a.id));
     }
     if (!(includeCompleted ?? false)) {
       actions
-          .removeWhere((a) => user.getCompletedActions()!.contains(a.getId()));
+          .removeWhere((a) => user.getCompletedActions()!.contains(a.id));
     }
     if (!(includeStarred ?? true)) {
-      actions.removeWhere((a) => user.getStarredActions()!.contains(a.getId()));
+      actions.removeWhere((a) => user.getStarredActions()!.contains(a.id));
     }
     return actions;
   }
 
   Future getCampaign(int? id) async {
     Campaign? campaign =
-        _campaigns!.firstWhereOrNull((c) => c.getId() == id);
+        _campaigns!.firstWhereOrNull((c) => c.id == id);
     if (campaign != null) {
       return campaign;
     }
@@ -94,16 +93,18 @@ class CampaignService {
           headers: <String, String>{
             'token': _authenticationService!.currentUser!.token!
           });
-      Campaigns cs = Campaigns.fromJson(json.decode(response.body)['data']);
-      _campaigns = cs.getActiveCampaigns();
+      // Campaigns cs = Campaigns.fromJson(json.decode(response.body)['data']);
+      // _campaigns = cs.getActiveCampaigns();
+      return [];
     } catch (e) {}
   }
 
   Future<List<Campaign>?> getPastCampaigns() async {
     var response = await http.get(Uri.parse(domainPrefix + "campaigns" + "?old=true"));
     if (response.statusCode == 200) {
-      Campaigns cs = Campaigns.fromJson(json.decode(response.body)['data']);
-      return cs.getActiveCampaigns();
+      // Campaigns cs = Campaigns.fromJson(json.decode(response.body)['data']);
+      // return cs.getActiveCampaigns();
+      return [];
     } else {
       return Future.error("Error getting campaigns in http api",
           StackTrace.fromString("The stack trace is"));

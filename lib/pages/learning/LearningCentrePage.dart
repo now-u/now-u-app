@@ -50,12 +50,12 @@ class LearningCentrePage extends StatelessWidget {
                                 SizedBox(height: 10),
                                 Text(
                                   model.campaigns!
-                                          .map((c) => c.getId())
+                                          .map((c) => c.id)
                                           .contains(campaignId)
                                       ? model.campaigns!
                                           .firstWhere(
-                                              (c) => c.getId() == campaignId)
-                                          .getTitle()!
+                                              (c) => c.id == campaignId)
+                                          .title
                                       : "Learning centre",
                                   style: Theme.of(context)
                                       .primaryTextTheme

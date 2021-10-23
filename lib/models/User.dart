@@ -1,7 +1,6 @@
 import 'package:app/models/Reward.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
-import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Organisation.dart';
 
 List<String> stagingUsers = [
@@ -334,13 +333,13 @@ class User {
 
   List<Campaign> filterSelectedCampaigns(List<Campaign> campaigns) {
     return campaigns
-        .where((c) => selectedCampaigns!.contains(c.getId()))
+        .where((c) => selectedCampaigns!.contains(c.id))
         .toList();
   }
 
   List<Campaign> filterUnselectedCampaigns(List<Campaign> campaigns) {
     return campaigns
-        .where((c) => !selectedCampaigns!.contains(c.getId()))
+        .where((c) => !selectedCampaigns!.contains(c.id))
         .toList();
   }
 
@@ -415,45 +414,34 @@ class User {
 
   double getCampaignProgress(Campaign campaign) {
     return numberOfCompletedActionsForCampaign(campaign) /
-        campaign.getActions()!.length;
+        campaign.actions!.length;
   }
 
   int numberOfCompletedActionsForCampaign(Campaign campaign) {
     int count = 0;
-    List<CampaignAction> actions = campaign.getActions()!;
+    List<ListCauseAction> actions = campaign.actions!;
     for (int i = 0; i < actions.length; i++) {
-      if (this.completedActions!.contains(actions[i].getId())) {
+      if (this.completedActions!.contains(actions[i].id)) {
         count++;
       }
     }
     return count;
   }
 
-  double getActiveCampaignsProgress(Campaigns campaigns) {
-    double total = 0;
-    for (int i = 0; i < campaigns.activeLength(); i++) {
-      total += getCampaignProgress(campaigns.getActiveCampaigns()![i]);
-    }
-    return total / campaigns.activeLength();
-  }
-
   void completeAction(CampaignAction a, {Function? onCompleteReward}) {
-    if (completedActions!.contains(a.getId())) {
-      print("You can only complete an action once");
+    if (completedActions!.contains(a.id)) {
       return;
     }
-    completedActions!.add(a.getId());
-    completedActionsType!.update(a.getType(), (int x) => x + 1);
-    print(a.getType().toString());
-    print(completedActionsType![a.getType()]);
+    completedActions!.add(a.id);
+    completedActionsType!.update(a.type, (int x) => x + 1);
   }
 
   void rejectAction(CampaignAction a) {
-    rejectedActions!.add(a.getId());
+    rejectedActions!.add(a.id);
   }
 
   bool isCompleted(CampaignAction a) {
-    return completedActions!.contains(a.getId());
+    return completedActions!.contains(a.id);
   }
 
   Map<CampaignActionType?, int> initCompletedAction() {

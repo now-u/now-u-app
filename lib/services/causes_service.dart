@@ -1,4 +1,5 @@
 import 'package:app/models/Cause.dart';
+import 'package:app/models/Action.dart';
 
 import 'package:app/locator.dart';
 import 'package:app/services/api_service.dart';
@@ -14,5 +15,10 @@ class CausesService extends ApiService {
   Future<Cause> getCause(int id) async {
     Map response = await getRequest("cause/$id");
     return Cause.fromJson(response["data"]);
+  }
+  
+  Future<CampaignAction> getAction(int id) async {
+    Map response = await getRequest("action/$id");
+    return CampaignAction.fromJson(response["data"]);
   }
 }

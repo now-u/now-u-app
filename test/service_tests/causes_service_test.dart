@@ -20,13 +20,10 @@ void main() {
       final client = MockClient();
       _causesService.client = client;
 
-      // Use Mockito to return a successful response when it calls the
-      // provided http.Client.
-      String response = await readTestData("causes.json");
       when(client
               .get(Uri.parse('https://api.now-u.com/api/v2/causes'), headers: unauthenticatedHeaders))
           .thenAnswer((_) async =>
-              http.Response(response, 200));
+              http.Response(await readTestData("causes.json"), 200));
 
       List<ListCause> causes = await _causesService.getCauses();
       expect(causes.length, 1);

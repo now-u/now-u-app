@@ -80,7 +80,7 @@ class NewsPage extends StatelessWidget {
                                                 child: SelectionPill(
                                                   "#" +
                                                       model.campaigns![index]
-                                                          .getShortName()!,
+                                                          .shortName,
                                                   model.pillIsSelected(index),
                                                   fontSize: 12,
                                                   borderRadius: 25,

@@ -29,8 +29,8 @@ class ActionViewModel extends BaseCampaignViewModel {
   set setSelections(Map<String, Map>? selections) =>
       _selections = selections ?? _selections;
 
-  List<CampaignAction> _actions = [];
-  List<CampaignAction> get actions => _actions;
+  List<ListCauseAction> _actions = [];
+  List<ListCauseAction> get actions => _actions;
 
   Campaign? _campaign;
   Campaign? get campaign => _campaign;
@@ -64,8 +64,8 @@ class ActionViewModel extends BaseCampaignViewModel {
     for (int i = 0; i < timeBrackets.length; i++) {
       _selections['times']![timeBrackets[i]['text']] = false;
     }
-    for (int i = 0; i < CampaignActionSuperType.values.length; i++) {
-      _selections['categories']![CampaignActionSuperType.values[i]] = false;
+    for (int i = 0; i < actionTypes.length; i++) {
+      _selections['categories']![actionTypes[i]] = false;
     }
   }
 
@@ -74,7 +74,7 @@ class ActionViewModel extends BaseCampaignViewModel {
     if (campaign == null) {
       _actions = [];
     } else {
-      List<CampaignAction> tmpActions = [];
+      List<ListCauseAction> tmpActions = [];
       //tmpActions.addAll(campaign.getActions());
       bool? includeCompleted = selections['extras']!['completed'];
       bool? includeRejected = selections['extras']!['rejected'];
@@ -87,15 +87,15 @@ class ActionViewModel extends BaseCampaignViewModel {
           includeTodo: includeToDo,
           includeStarred: includeStarred));
       // Filter them for the campaign
-      tmpActions.removeWhere((a) => !campaign!.getActions()!.contains(a));
+      tmpActions.removeWhere((a) => !campaign!.actions!.contains(a));
       if (hasSelected(selections['times']!)) {
         // Remove the ones with the wrong times
-        tmpActions.removeWhere((a) => !selections['times']![a.getTimeText()]);
+        tmpActions.removeWhere((a) => !selections['times']![a.timeText]);
       }
       if (hasSelected(selections['categories']!)) {
         // Remove the ones with the wrong categories
         tmpActions
-            .removeWhere((a) => !selections['categories']![a.getSuperType()]);
+            .removeWhere((a) => !selections['categories']![a.superType]);
       }
 
       _actions = tmpActions;

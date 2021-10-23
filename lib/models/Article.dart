@@ -159,8 +159,8 @@ class Article {
       if (campaigns != null) {
         print(campaigns);
         for (int i = 0; i < campaigns.length; i++) {
-          if (campaigns[i].getId() == linkedCampaign) {
-            return campaigns[i].getShortName();
+          if (campaigns[i].id == linkedCampaign) {
+            return campaigns[i].shortName;
           }
         }
       }

@@ -15,7 +15,7 @@ class CampaignInfoViewModel extends BaseModel with CampaignWrite {
   Campaign? _campaign;
   Campaign? get campaign => _campaign;
   bool get campaignIsJoined =>
-      currentUser!.getSelectedCampaigns().contains(_campaign!.getId());
+      currentUser!.getSelectedCampaigns().contains(_campaign!.id);
   set setCampaign(Campaign? campaign) => _campaign = campaign;
 
   Future fetchCampaign(int? campaignId) async {
@@ -32,6 +32,6 @@ class CampaignInfoViewModel extends BaseModel with CampaignWrite {
   }
 
   void viewCampaignVideo(Campaign campaign) {
-    _navigationService!.launchLink(campaign.getVideoLink()!);
+    _navigationService!.launchLink(campaign.videoLink!);
   }
 }
