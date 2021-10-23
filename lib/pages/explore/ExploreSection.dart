@@ -6,7 +6,7 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/models/Action.dart';
 
 import 'package:app/locator.dart';
-import 'package:app/services/campaign_service.dart';
+import 'package:app/services/causes_service.dart';
 
 import 'package:stacked/stacked.dart';
 import 'package:app/viewmodels/explore_page_view_model.dart';
@@ -24,12 +24,17 @@ abstract class ExploreSection<ExplorableType> {
   final String description;
 
   // Params to provide to fetch query
-  final Map fetchParams;
+  final Map? fetchParams;
 
   /// 
-  final ExploreFilter filter;
+  final ExploreFilter? filter;
  
-  const ExploreSection({this.title, this.description, this.fetchParams, this.filter});
+  const ExploreSection({
+    required this.title,
+    required this.description,
+    this.fetchParams,
+    this.filter
+  });
 
   Future<List<ExplorableType>> fetchTiles();
   Widget renderTile(ExplorableType tile);
@@ -49,7 +54,7 @@ abstract class ExploreSection<ExplorableType> {
                   height: 60,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
-                    children: filter.options.map((ExploreFilterOption option) => Padding(
+                    children: filter!.options.map((ExploreFilterOption option) => Padding(
                         padding: EdgeInsets.all(10),
                         child: option.render(model),
                       )
@@ -72,7 +77,7 @@ abstract class ExploreSection<ExplorableType> {
               }
               return ListView(
                 scrollDirection: Axis.horizontal,
-                children: snapshot.data.map((item) => Padding(
+                children: snapshot.data!.map((item) => Padding(
                     padding: EdgeInsets.all(10),
                     child: renderTile(item) 
                   )
@@ -86,30 +91,38 @@ abstract class ExploreSection<ExplorableType> {
   }
 }
 
-class CampaignExploreSection extends ExploreSection<Campaign> {
-  const CampaignExploreSection({String title, String description, Map fetchParams, ExploreFilter filter}) : super(title:title, description:description, fetchParams:fetchParams, filter:filter);
+class CampaignExploreSection extends ExploreSection<ListCampaign> {
+  const CampaignExploreSection({
+    required String title,
+    required String description,
+    Map? fetchParams,
+    ExploreFilter? filter
+  }) : super(title:title, description:description, fetchParams:fetchParams, filter:filter);
 
-  Future<List<Campaign>> fetchTiles() async {
-    final CampaignService _campaignService = locator<CampaignService>();
-    await _campaignService.fetchCampaigns();
-    return _campaignService.campaigns;
+  Future<List<ListCampaign>> fetchTiles() async {
+    final CausesService _causesService = locator<CausesService>();
+    return await _causesService.getCampaigns();
   }
 
-  Widget renderTile(Campaign campaign) {
+  Widget renderTile(ListCampaign campaign) {
     return Container(color: Colors.red, height: 100, width: 200, child: Text(campaign.title));
   }
 }
 
-class ActionExploreSection extends ExploreSection<CampaignAction> {
-  const ActionExploreSection({String title, String description, Map fetchParams, ExploreFilter filter}) : super(title:title, description:description, fetchParams:fetchParams, filter:filter);
+class ActionExploreSection extends ExploreSection<ListCauseAction> {
+  const ActionExploreSection({
+    required String title,
+    required String description,
+    Map? fetchParams,
+    ExploreFilter? filter
+  }) : super(title:title, description:description, fetchParams:fetchParams, filter:filter);
 
-  Future<List<CampaignAction>> fetchTiles() async {
-    final CampaignService _campaignService = locator<CampaignService>();
-    await _campaignService.fetchCampaigns();
-    return _campaignService.getActiveActions();
+  Future<List<ListCauseAction>> fetchTiles() async {
+    final CausesService _causesService = locator<CausesService>();
+    return await _causesService.getActions();
   }
 
-  Widget renderTile(CampaignAction tile) {
+  Widget renderTile(ListCauseAction tile) {
     return Container(
       color: Colors.blue, height: 100, width: 200
     );

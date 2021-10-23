@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CompletedQuizPage extends StatelessWidget {
-  final int score;
+  final int? score;
   final int numberOfQuestion;
 
   CompletedQuizPage(this.score, this.numberOfQuestion);

@@ -49,13 +49,13 @@ class LearningCentrePage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 10),
                                 Text(
-                                  model.campaigns
-                                          .map((c) => c.getId())
+                                  model.campaigns!
+                                          .map((c) => c.id)
                                           .contains(campaignId)
-                                      ? model.campaigns
+                                      ? model.campaigns!
                                           .firstWhere(
-                                              (c) => c.getId() == campaignId)
-                                          .getTitle()
+                                              (c) => c.id == campaignId)
+                                          .title
                                       : "Learning centre",
                                   style: Theme.of(context)
                                       .primaryTextTheme
@@ -70,10 +70,10 @@ class LearningCentrePage extends StatelessWidget {
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: model.learningTopics.length,
+                    itemCount: model.learningTopics!.length,
                     itemBuilder: (context, index) {
                       return LearningTopicSelectionItem(
-                        topic: model.learningTopics[index],
+                        topic: model.learningTopics![index],
                       );
                     },
                   ),

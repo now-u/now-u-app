@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app/assets/icons/customIcons.dart';
@@ -6,10 +7,10 @@ import 'package:app/models/Action.dart';
 
 class LearningCentre {
   // Id of campaign
-  int campaign;
-  List<LearningTopic> learningTopics;
+  int? campaign;
+  List<LearningTopic>? learningTopics;
 
-  List<LearningTopic> getLearningTopics() {
+  List<LearningTopic>? getLearningTopics() {
     return learningTopics;
   }
 
@@ -24,17 +25,17 @@ class LearningCentre {
 
   bool containsNew() {
     var c =
-        learningTopics.firstWhere((r) => r.containsNew(), orElse: () => null);
+        learningTopics!.firstWhereOrNull((r) => r.containsNew());
     return c != null;
   }
 }
 
 class LearningTopic {
-  int id;
-  String title;
-  String imageLink;
-  String ourAnswer;
-  List<LearningResource> resources;
+  int? id;
+  String? title;
+  String? imageLink;
+  String? ourAnswer;
+  List<LearningResource>? resources;
 
   LearningTopic.fromJson(Map json) {
     print("Getting learning topic from json");
@@ -49,31 +50,30 @@ class LearningTopic {
         .cast<LearningResource>();
   }
 
-  int getId() {
+  int? getId() {
     return id;
   }
 
-  String getTitle() {
+  String? getTitle() {
     return title;
   }
 
-  String getImageLink() {
+  String? getImageLink() {
     return imageLink;
   }
 
-  String getOurAnswer() {
+  String? getOurAnswer() {
     return ourAnswer;
   }
 
-  List<LearningResource> getResources() {
+  List<LearningResource>? getResources() {
     return resources;
   }
 
   bool containsNew() {
     print("Checking contains");
     print(resources);
-    var r = resources.firstWhere((LearningResource r) => r.isNew(),
-        orElse: () => null);
+    var r = resources!.firstWhereOrNull((LearningResource r) => r.isNew());
     print("Checked contains");
     return r != null;
   }
@@ -87,13 +87,13 @@ enum LearningResourceType {
 }
 
 class LearningResource {
-  int id;
-  String title;
-  double time;
-  String link;
-  String type;
-  DateTime createdAt;
-  String source;
+  int? id;
+  String? title;
+  double? time;
+  String? link;
+  String? type;
+  DateTime? createdAt;
+  String? source;
 
   LearningResource.fromJson(Map json) {
     id = json['id'];
@@ -105,19 +105,19 @@ class LearningResource {
     source = json['source'];
   }
 
-  int getId() {
+  int? getId() {
     return id;
   }
 
-  String getTitle() {
+  String? getTitle() {
     return title;
   }
 
-  String getLink() {
+  String? getLink() {
     return link;
   }
 
-  String getType() {
+  String? getType() {
     return type;
   }
 
@@ -151,22 +151,22 @@ class LearningResource {
     return FontAwesomeIcons.chalkboardTeacher;
   }
 
-  double getTime() {
+  double? getTime() {
     return time;
   }
 
-  String getTimeText() {
+  String? getTimeText() {
     return timeBrackets.firstWhere((b) => b['maxTime'] > time)['text'];
   }
 
-  String getSource() {
+  String? getSource() {
     return source;
   }
 
   bool isNew() {
     print("Checking is new");
     print(createdAt);
-    return DateTime.now().difference(createdAt).compareTo(Duration(days: 2)) <
+    return DateTime.now().difference(createdAt!).compareTo(Duration(days: 2)) <
         0;
   }
 }

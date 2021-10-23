@@ -15,7 +15,7 @@ import 'package:app/pages/explore/ExplorePage.dart';
 enum TabPage { Home, Actions, Learning, News, Menu }
 
 class TabsPage extends StatefulWidget {
-  final TabPage currentPage;
+  final TabPage? currentPage;
   final dynamic arguments;
 
   TabsPage({this.currentPage, this.arguments});
@@ -25,22 +25,23 @@ class TabsPage extends StatefulWidget {
 }
 
 class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
-  TabPage currentPage;
+  TabPage? currentPage;
+  int? _subIndex;
 
   @override
   void initState() {
     currentPage = widget.currentPage;
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 
-  void changePage(TabPage page, {int subIndex}) {
+  void changePage(TabPage page, {int? subIndex}) {
     print("Changing page");
     print(page);
     print(subIndex);
@@ -110,9 +111,9 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-          body: _pages[currentPage.index]['page'],
+          body: _pages[currentPage!.index]['page'],
           bottomNavigationBar: BottomNavigationBar(
-            currentIndex: currentPage.index,
+            currentIndex: currentPage!.index,
             type: BottomNavigationBarType.fixed,
             elevation: 3,
             iconSize: 25,

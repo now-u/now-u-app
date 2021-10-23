@@ -15,7 +15,7 @@ class PastCampaignActionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<CampaignAction> actions = campaign.getActions();
+    List<ListCauseAction> actions = campaign.actions!;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -31,7 +31,7 @@ class PastCampaignActionPage extends StatelessWidget {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: customNetworkImageProvider(
-                            campaign.getHeaderImage()),
+                            campaign.headerImage),
                         fit: BoxFit.cover,
                       ),
                     )),
@@ -42,7 +42,7 @@ class PastCampaignActionPage extends StatelessWidget {
                       opacity: 0.5,
                     )),
                 PageHeader(
-                  title: campaign.getTitle(),
+                  title: campaign.title,
                   textColor: Colors.white,
                   backButton: true,
                   maxLines: 2,

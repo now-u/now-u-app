@@ -65,7 +65,7 @@ class NewsPage extends StatelessWidget {
                                 height: 60,
                                 child: ListView.builder(
                                     scrollDirection: Axis.horizontal,
-                                    itemCount: model.campaigns.length,
+                                    itemCount: model.campaigns!.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
                                       return Padding(
@@ -79,8 +79,8 @@ class NewsPage extends StatelessWidget {
                                                     vertical: 5),
                                                 child: SelectionPill(
                                                   "#" +
-                                                      model.campaigns[index]
-                                                          .getShortName(),
+                                                      model.campaigns![index]
+                                                          .shortName,
                                                   model.pillIsSelected(index),
                                                   fontSize: 12,
                                                   borderRadius: 25,
@@ -123,15 +123,15 @@ class NewsPage extends StatelessWidget {
 class NewsTile extends StatelessWidget {
   final Article article;
   final double height = 80;
-  final NewsViewModel model;
+  final NewsViewModel? model;
 
-  NewsTile({@required this.article, this.model});
+  NewsTile({required this.article, this.model});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          model.openArticle(article);
+          model!.openArticle(article);
         },
         child: Container(
           decoration: BoxDecoration(
@@ -165,7 +165,7 @@ class NewsTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        article.getTitle() ?? "",
+                        article.getTitle()!,
                         style: textStyleFrom(
                           Theme.of(context).primaryTextTheme.headline3,
                           fontSize: 20,
@@ -177,7 +177,7 @@ class NewsTile extends StatelessWidget {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        article.getSubtitle() ?? "",
+                        article.getSubtitle()!,
                         style: textStyleFrom(
                             Theme.of(context).primaryTextTheme.headline5,
                             color: Color.fromRGBO(109, 113, 129, 1)),
@@ -189,7 +189,7 @@ class NewsTile extends StatelessWidget {
                           ? Container()
                           : Text(
                               DateFormat('d MMMM yyyy')
-                                  .format(article.getReleaseDate()),
+                                  .format(article.getReleaseDate()!),
                               style: textStyleFrom(
                                 Theme.of(context).primaryTextTheme.bodyText1,
                                 fontSize: 12,
@@ -209,7 +209,7 @@ class NewsTile extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.all(5),
                           child: Text(
-                            article.getSource(),
+                            article.getSource()!,
                             style: textStyleFrom(
                               Theme.of(context).primaryTextTheme.bodyText1,
                               color: Theme.of(context).primaryColor,

@@ -1,14 +1,14 @@
 import 'package:app/assets/StyleFrom.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 import 'package:app/models/Explorable.dart';
-import 'package:app/assets/components/selectionItem.dart';
+import 'package:app/models/Cause.dart';
+
+import 'package:app/locator.dart';
+import 'package:app/services/causes_service.dart';
 
 // Custom Icons
 import 'package:app/assets/icons/customIcons.dart';
-
-enum CampaignActionSuperType { GetInvolved, Learn, Advoacte, RaiseMoney }
 
 enum CampaignActionType {
   Volunteer,
@@ -47,32 +47,45 @@ Color yellowO = colorFrom(yellow, opacity: 0.2);
 Color blue = Color.fromRGBO(38, 151, 211, 0.7);
 Color blueO = colorFrom(blue, opacity: 0.2);
 
-Map campaignActionSuperTypeData = {
-  CampaignActionSuperType.GetInvolved: {
-    'name': "Get involved",
-    'icon': CustomIcons.ic_getinvolved,
-    'iconColor': orange,
-    'iconBackgroundColor': orangeO,
-  },
-  CampaignActionSuperType.Learn: {
-    'name': "Learn",
-    'icon': CustomIcons.ic_learning,
-    'iconColor': blue,
-    'iconBackgroundColor': blueO,
-  },
-  CampaignActionSuperType.Advoacte: {
-    'name': "Advocate",
-    'icon': CustomIcons.ic_raiseawareness,
-    'iconColor': orange,
-    'iconBackgroundColor': orangeO,
-  },
-  CampaignActionSuperType.RaiseMoney: {
-    'name': "Raise money",
-    'icon': CustomIcons.ic_raisemoney,
-    'iconColor': yellow,
-    'iconBackgroundColor': yellowO,
-  },
-};
+class ActionType {
+  String name;
+  IconData icon;
+  Color primaryColor;
+  Color secondaryColor;
+
+  ActionType({
+    required this.name,
+    required this.icon,
+    required this.primaryColor,
+    required this.secondaryColor
+  });
+}
+
+ActionType getInvolved = ActionType(
+  name: "Get involved",
+  icon: CustomIcons.ic_getinvolved,
+  primaryColor: orange,
+  secondaryColor: orangeO,
+);
+ActionType learn = ActionType(
+  name: "Learn",
+  icon: CustomIcons.ic_learning,
+  primaryColor: blue,
+  secondaryColor: blueO,
+);
+ActionType advocate = ActionType(
+  name: "Advoacte",
+  icon: CustomIcons.ic_raiseawareness,
+  primaryColor: orange,
+  secondaryColor: orangeO,
+);
+ActionType raiseMoney = ActionType(
+  name: "Raise money",
+  icon: CustomIcons.ic_raisemoney,
+  primaryColor: yellow,
+  secondaryColor: yellowO,
+);
+List<ActionType> actionTypes = [getInvolved, learn, advocate, raiseMoney];
 
 Map defaultCampaignActionTypeData = {
   'name': "other",
@@ -81,7 +94,7 @@ Map defaultCampaignActionTypeData = {
   'displayName': "special action",
   //'icon': FontAwesomeIcons.check,
   //'Type': CustomIcons.heartHand,
-  'type': CampaignActionSuperType.GetInvolved,
+  'type': getInvolved,
 };
 
 Map campaignActionTypeData = {
@@ -91,7 +104,7 @@ Map campaignActionTypeData = {
     'pastVerb': "Volunteered",
     'displayName': "volunteer",
     //'icon': CustomIcons.icon_vol_1,
-    'type': CampaignActionSuperType.GetInvolved,
+    'type': getInvolved,
   },
   CampaignActionType.Donation: {
     'name': "donate",
@@ -99,7 +112,7 @@ Map campaignActionTypeData = {
     'pastVerb': "Made",
     'displayName': "donation",
     //'icon': CustomIcons.icon_donate_01,
-    'type': CampaignActionSuperType.RaiseMoney,
+    'type': raiseMoney,
   },
   CampaignActionType.Fundraise: {
     'name': "fundraise",
@@ -107,7 +120,7 @@ Map campaignActionTypeData = {
     'pastVerb': "Took part in",
     'displayName': "fundraiser",
     //'icon': CustomIcons.icon_fundraise_01,
-    'type': CampaignActionSuperType.RaiseMoney,
+    'type': raiseMoney,
   },
   CampaignActionType.Awareness: {
     'name': "awareness",
@@ -115,7 +128,7 @@ Map campaignActionTypeData = {
     'pastVerb': "Raised awareness",
     'displayName': "time",
     //'icon': CustomIcons.icon_raise_awareness_01_01,
-    'type': CampaignActionSuperType.Advoacte,
+    'type': advocate,
   },
   CampaignActionType.Petition: {
     'name': "sign",
@@ -123,7 +136,7 @@ Map campaignActionTypeData = {
     'pastVerb': "Signed",
     'displayName': "petiton",
     //'icon': CustomIcons.icon_petition_01,
-    'type': CampaignActionSuperType.Advoacte,
+    'type': advocate,
   },
   CampaignActionType.Behaviour: {
     'name': "behaviour",
@@ -131,7 +144,7 @@ Map campaignActionTypeData = {
     'pastVerb': "Completed",
     'displayName': "behaviour change action",
     //'icon': CustomIcons.icon_behaviour_01,
-    'type': CampaignActionSuperType.GetInvolved,
+    'type': getInvolved,
   },
   CampaignActionType.Contact: {
     'name': "contact",
@@ -139,7 +152,7 @@ Map campaignActionTypeData = {
     'pastVerb': "Completed",
     'displayName': "contact change action",
     //'icon': CustomIcons.icon_contact_01,
-    'type': CampaignActionSuperType.Advoacte,
+    'type': advocate,
   },
   CampaignActionType.Protest: {
     'name': "protest",
@@ -147,7 +160,7 @@ Map campaignActionTypeData = {
     'pastVerb': "Took part in",
     'displayName': "protest",
     //'icon': CustomIcons.icon_protest_01,
-    'type': CampaignActionSuperType.GetInvolved,
+    'type': getInvolved,
   },
   CampaignActionType.Connect: {
     'name': "connect",
@@ -156,7 +169,7 @@ Map campaignActionTypeData = {
     'displayName': "times",
     //'icon': FontAwesomeIcons.link,
     //'icon': CustomIcons.icon_connect_01,
-    'type': CampaignActionSuperType.GetInvolved,
+    'type': getInvolved,
   },
   CampaignActionType.Learn: {
     'name': "learn",
@@ -164,7 +177,7 @@ Map campaignActionTypeData = {
     'pastVerb': "Completed",
     'displayName': "learning action",
     //'icon': CustomIcons.icon_learning_01,
-    'type': CampaignActionSuperType.Learn,
+    'type': learn,
   },
   CampaignActionType.Quiz: {
     'name': "quiz",
@@ -172,7 +185,7 @@ Map campaignActionTypeData = {
     'pastVerb': "Completed",
     'displayName': "quiz",
     //'icon': CustomIcons.icon_quiz_01,
-    'type': CampaignActionSuperType.Learn,
+    'type': learn,
   },
   CampaignActionType.Other: defaultCampaignActionTypeData
 };
@@ -186,8 +199,7 @@ List<Map> timeBrackets = [
   {"text": "Long term", "minTime": 240, "maxTime": double.infinity},
 ];
 
-CampaignActionType campaignActionTypeFromString(String s) {
-  // Apparently if we return early it just doesnt do the return? Not sure why that would be but this seems to fix it
+CampaignActionType campaignActionTypeFromString(String? s) {
   CampaignActionType t = CampaignActionType.Other;
   campaignActionTypeData.forEach((key, value) {
     if (value['name'] == s) {
@@ -197,8 +209,8 @@ CampaignActionType campaignActionTypeFromString(String s) {
   return t;
 }
 
-Tuple3<String, String, String> generateCampaingActionDesc(
-    CampaignActionType t) {
+Tuple3<String?, String?, String?> generateCampaingActionDesc(
+    CampaignActionType? t) {
   print("Getting campaing aciton desc");
   if (campaignActionTypeData.containsKey(t)) {
     print("Found key");
@@ -212,122 +224,120 @@ Tuple3<String, String, String> generateCampaingActionDesc(
   return Tuple3("Complete", "Completed", "special action");
 }
 
-class CampaignAction implements Explorable {
-  int id;
-  String title;
-  double time;
-  String whatDescription;
-  String whyDescription;
-  String link;
-  CampaignActionType type;
-  DateTime createdAt;
-  DateTime releasedAt;
+class ListCauseAction extends Explorable {
+  int _id;
+  int get id => _id;
+  
+  String _title;
+  String get title => _title;
+
+  /// The type of the action
+  CampaignActionType _type;
+  /// Returns the type if its know otherwise return Other
+  CampaignActionType get type => campaignActionTypeData.containsKey(_type) ? _type : CampaignActionType.Other;
+  /// The super type is a bigger category than the type - This is used for the
+  /// styling.
+  ActionType get superType => campaignActionTypeData[type]['type'];
+  Color get primaryColor => superType.primaryColor;
+  Color get secondaryColor => superType.secondaryColor;
+  IconData get icon => superType.icon;
+
+  /// The causes that this action is part of
+  List<ListCause> _causes;
+  // Although at the api level an action can be in many causes, for now we are
+  // only showing a single cause in the UI.
+  ListCause? get cause => _causes.length > 0 ? _causes[0] : null;
+  
+  double _time;
+  double get time => _time;
+  String get timeText => timeBrackets.firstWhere((b) => b['maxTime'] > time)['text'];
+
+  DateTime _createdAt;
+  DateTime? _releasedAt;
+  /// Return when this action was released
+  DateTime get releaseTime => _releasedAt == null ? _createdAt : _releasedAt!;
+  bool get isNew => DateTime.now().difference(releaseTime).compareTo(Duration(days: 2)) < 0;
+
+  /// Whether the user has completed this action
+  bool _completed;
+  get isCompleted => _completed;
+  
+  /// Whether the user has completed this action
+  bool _starred;
+  get isStarred => _starred;
+
+  ListCauseAction({
+    required int id,
+    required String title,
+    required CampaignActionType type,
+    required List<ListCause> causes,
+    required DateTime createdAt,
+    required bool completed,
+    required bool starred,
+    required double time,
+
+    DateTime? releasedAt,
+  }) :
+    _id = id,
+    _title = title,
+    _type = type,
+    _causes = causes,
+    _time = time,
+    _createdAt = createdAt,
+    _releasedAt = releasedAt,
+    _completed = completed,
+    _starred = starred;
+  
+  ListCauseAction.fromJson(Map<String, dynamic> json) :
+      _id = json['id'],
+      _title = json['title'],
+      _type = campaignActionTypeFromString(json['type']),
+      _causes = json['causes'].map((causeJson) => ListCause.fromJson(causeJson)).toList().cast<ListCause>(),
+      _time = json['time'].toDouble(),
+      _createdAt = DateTime.parse(json['created_at']),
+      _releasedAt = json['release_date'] == null ? null : DateTime.parse(json['release_date']),
+      _completed = json['completed'],
+      _starred = json['starred'];
+
+    Future<CampaignAction> getAction() async {
+      CausesService _causesService = locator<CausesService>();
+      return _causesService.getAction(id);
+    }
+}
+
+class CampaignAction extends ListCauseAction {
+  String? _whatDescription;
+  String? get whatDescription => _whatDescription;
+
+  String? _whyDescription;
+  String? get whyDescription => _whyDescription;
+
+  String? _link;
+  String? get link => _link;
 
   CampaignAction({
-    @required this.id,
-    @required this.title,
-    @required this.whatDescription,
-    @required this.whyDescription,
-    @required this.link,
-    @required this.type,
-    @required this.time,
-    this.createdAt,
-    this.releasedAt,
-  });
+    required int id,
+    required String title,
+    required CampaignActionType type,
+    required List<ListCause> causes,
+    required DateTime createdAt,
+    required bool completed,
+    required bool starred,
+    required double time,
+    DateTime? releasedAt,
 
-  CampaignAction.fromJson(Map json) {
-    //print(json);
-    id = json['id'];
-    title = json['title'];
-    whatDescription = json['what_description'];
-    whyDescription = json['why_description'];
-    link = json['link'];
-    time = json['time'] == null ? 5.0 : json['time'].toDouble();
-    type = campaignActionTypeFromString(json['type']);
-    createdAt = DateTime.parse(json['created_at']);
-    releasedAt = json['release_date'] == null
-        ? null
-        : DateTime.parse(json['release_date']);
-  }
+    String? whatDescription,
+    String? whyDescription,
+    String? link,
+  }) : 
+    _whatDescription = whatDescription,
+    _whyDescription = whyDescription,
+    _link = link,
+    super(id: id, title: title, type: type, causes: causes, createdAt: createdAt, completed: completed, starred: starred, releasedAt: releasedAt, time: time);
 
-  Map toJson() => {
-        'id': id,
-        'title': title,
-        'type': type,
-        'time': time,
-      };
-
-  int getId() {
-    return id;
-  }
-
-  String getTitle() {
-    return title;
-  }
-
-  String getWhatDescription() {
-    return whatDescription;
-  }
-
-  String getWhyDescription() {
-    return whyDescription;
-  }
-
-  String getLink() {
-    return link;
-  }
-
-  double getTime() {
-    return time;
-  }
-
-  String getTimeText() {
-    return timeBrackets.firstWhere((b) => b['maxTime'] > time)['text'];
-  }
-
-  CampaignActionType getType() {
-    return type;
-  }
-
-  CampaignActionSuperType getSuperType() {
-    return campaignActionTypeData[type]['type'];
-  }
-
-  Map getSuperTypeData() {
-    return campaignActionSuperTypeData[campaignActionTypeData[type]['type']];
-  }
-
-  String getSuperTypeName() {
-    return campaignActionSuperTypeData[campaignActionTypeData[type]['type']]
-        ['name'];
-  }
-
-  Map getActionIconMap() {
-    if (campaignActionTypeData.containsKey(type)) {
-      return {
-        'icon':
-            campaignActionSuperTypeData[campaignActionTypeData[type]['type']]
-                ['icon'],
-        'iconColor':
-            campaignActionSuperTypeData[campaignActionTypeData[type]['type']]
-                ['iconColor'],
-        'iconBackgroundColor':
-            campaignActionSuperTypeData[campaignActionTypeData[type]['type']]
-                ['iconBackgroundColor'],
-      };
-    }
-    return defaultCampaignActionTypeData;
-  }
-
-  bool isNew() {
-    if (releasedAt == null) {
-      return DateTime.now().difference(createdAt).compareTo(Duration(days: 2)) <
-          0;
-    } else {
-      return DateTime.now()
-              .difference(releasedAt)
-              .compareTo(Duration(days: 2)) <
-          0;
-    }
-  }
+  CampaignAction.fromJson(Map<String, dynamic> json) :
+    _whatDescription = json['what_description'],
+    _whyDescription = json['why_description'],
+    _link = json['link'],
+    super.fromJson(json);
 }

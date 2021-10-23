@@ -9,12 +9,12 @@ class VideoPlayer extends StatefulWidget {
 
 class _VideoPlayerState extends State<VideoPlayer> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  YoutubePlayerController _controller;
-  TextEditingController _idController;
-  TextEditingController _seekToController;
+  late YoutubePlayerController _controller;
+  late TextEditingController _idController;
+  late TextEditingController _seekToController;
 
-  PlayerState _playerState;
-  YoutubeMetaData _videoMetaData;
+  PlayerState? _playerState;
+  YoutubeMetaData? _videoMetaData;
   double _volume = 100;
   bool _muted = false;
   bool _isPlayerReady = false;
@@ -110,7 +110,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
   }
 
   void _showSnackBar(String message) {
-    _scaffoldKey.currentState.showSnackBar(
+    _scaffoldKey.currentState!.showSnackBar(
       SnackBar(
         content: Text(
           message,

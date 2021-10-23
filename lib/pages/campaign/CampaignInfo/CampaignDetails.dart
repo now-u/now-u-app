@@ -18,13 +18,13 @@ class CampaignDetails extends StatelessWidget {
           Padding(
               padding: EdgeInsets.only(left: 20, right: 20, bottom: 15),
               child: Text(
-                _campaign.getTitle(),
+                _campaign.title,
                 style: Theme.of(context).primaryTextTheme.headline3,
               )),
           Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               child: Text(
-                _campaign.getDescription(),
+                _campaign.description,
                 style: Theme.of(context).primaryTextTheme.bodyText1,
               )),
         ],

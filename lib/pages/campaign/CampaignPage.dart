@@ -43,12 +43,12 @@ class CampaignPage extends StatelessWidget {
                         ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: model.campaigns.length,
+                          itemCount: model.campaigns!.length,
                           itemBuilder: (BuildContext context, int index) {
                             return CampaignTileWithJoinButtons(
-                              campaign: model.campaigns[index],
+                              campaign: model.campaigns![index],
                               isJoined: model
-                                  .isJoined(model.campaigns[index].getId()),
+                                  .isJoined(model.campaigns![index].id),
                               joinCampaign: model.joinCampaign,
                               leaveCampaign: model.leaveCampaign,
                             );

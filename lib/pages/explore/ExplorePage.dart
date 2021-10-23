@@ -10,7 +10,7 @@ class ExplorePage extends StatelessWidget {
 
   final List<ExploreSection> sections;
   ExplorePage({
-    @required this.sections
+    required this.sections
   });
 
   @override
@@ -24,7 +24,7 @@ class ExplorePage extends StatelessWidget {
   }
 }
 
-ExploreFilter filter = ExploreFilter(parameterName: "abc", options: [ExploreFilterOption(displayName: "1-5"), ExploreFilterOption(displayName: "5-10")]);
+ExploreFilter filter = ExploreFilter(parameterName: "abc", options: [ExploreFilterOption(displayName: "1-5", parameterValue: "abc"), ExploreFilterOption(displayName: "5-10", parameterValue: "def")]);
 
 List<ExploreSection> exploreSections = [
   ActionExploreSection(title: "Actions", description: "Actions, do stuff", filter: filter),

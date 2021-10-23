@@ -45,7 +45,7 @@ class LearningTopicPage extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 15),
                       child: Text(
-                        topic.getTitle(),
+                        topic.getTitle()!,
                         style: textStyleFrom(
                           Theme.of(context).primaryTextTheme.headline3,
                         ),
@@ -57,7 +57,7 @@ class LearningTopicPage extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 15),
                       child: Text(
-                        topic.getOurAnswer(),
+                        topic.getOurAnswer()!,
                         style: textStyleFrom(
                           Theme.of(context).primaryTextTheme.headline5,
                         ),
@@ -70,17 +70,17 @@ class LearningTopicPage extends StatelessWidget {
                     ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: topic.getResources().length,
+                      itemCount: topic.getResources()!.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
                           child: LearningResouceSelectionItem(
-                              resource: topic.getResources()[index],
+                              resource: topic.getResources()![index],
                               extraOnClick: () {
                                 model.completeLearningResource(
-                                    topic.getResources()[index].getId());
+                                    topic.getResources()![index].getId());
                               },
                               completed: model.learningResourceIsCompleted(
-                                  topic.getResources()[index].getId())),
+                                  topic.getResources()![index].getId())),
                         );
                       },
                     ),

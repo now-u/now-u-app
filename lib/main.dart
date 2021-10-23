@@ -1,19 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'dart:convert';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
-import 'package:app/routes.dart';
 import 'package:app/locator.dart';
+import 'package:app/managers/dialog_manager.dart';
+import 'package:app/pages/other/startup_view.dart';
+import 'package:app/routes.dart';
 import 'package:app/services/analytics.dart';
 import 'package:app/services/navigation_service.dart';
-import 'package:app/managers/dialog_manager.dart';
-
-import 'package:app/pages/other/startup_view.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
-  Crashlytics.instance.enableInDevMode = true;
-  FlutterError.onError = Crashlytics.instance.recordFlutterError;
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(App());
@@ -60,9 +56,9 @@ Color lightGrey = Color.fromRGBO(119, 119, 119, 1);
 
 //List<Widget> _pages = <Widget>[Campaigns(campaigns), Home(), Profile(_user)];
 
-Future<Map> getSecrets() async {
+Future<Map?> getSecrets() async {
   String data = await rootBundle.loadString('assets/json/secrets.json');
-  Map jsondata = json.decode(data);
+  Map? jsondata = json.decode(data);
   return jsondata;
   //return jsondata.containsKey(value) ? jsondata[value] : null;
 }
@@ -74,7 +70,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   int deepLinkPageIndex = 1;
-  Widget page;
+  Widget? page;
   @override
   void initState() {
     // Initalise Fireabse app
@@ -96,7 +92,7 @@ class _AppState extends State<App> {
       ),
       home: StartUpView(),
       //initialRoute: Routes.intro,
-      onGenerateRoute: initRoutes,
+      onGenerateRoute: initRoutes as Route<dynamic>? Function(RouteSettings)?,
       theme: ThemeData(
         // This is the theme of the application.
         applyElevationOverlayColor: true,

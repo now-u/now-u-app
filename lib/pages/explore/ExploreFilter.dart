@@ -12,7 +12,11 @@ class ExploreFilterOption<T> {
   /// Whether the filter is selected
   bool isSelected;
 
-  ExploreFilterOption({this.displayName, this.parameterValue, this.isSelected = false});
+  ExploreFilterOption({
+    required this.displayName,
+    required this.parameterValue,
+    this.isSelected = false
+  });
 
   void toggleSelect() {
     isSelected = !isSelected;
@@ -33,6 +37,10 @@ class ExploreFilter {
   /// Whether multiple filter options can be selected at once
   final bool multi; 
 
-  const ExploreFilter({this.parameterName, this.options, this.multi});
+  const ExploreFilter({
+    required this.parameterName,
+    required this.options, 
+    this.multi = false,
+  });
 }
 

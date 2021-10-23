@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class DetailScaffold extends StatefulWidget {
-  final ScrollController controller;
-  final ScrollPhysics physics;
-  final List<Widget> slivers;
+  final ScrollController? controller;
+  final ScrollPhysics? physics;
+  final List<Widget>? slivers;
 
   final double expandedHeight;
 
@@ -14,7 +14,7 @@ class DetailScaffold extends StatefulWidget {
   final bool hasPinnedAppBar;
 
   DetailScaffold({
-    @required this.expandedHeight,
+    required this.expandedHeight,
     this.controller,
     this.physics,
     this.slivers,
@@ -29,20 +29,20 @@ class DetailScaffold extends StatefulWidget {
 }
 
 class _DetailScaffoldState extends State<DetailScaffold> {
-  ScrollController ctrl;
+  ScrollController? ctrl;
 
   @override
   void initState() {
     super.initState();
 
     ctrl = widget.controller ?? ScrollController();
-    ctrl.addListener(() => setState(() {}));
+    ctrl!.addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
     if (widget.controller == null) {
-      ctrl.dispose();
+      ctrl!.dispose();
     }
 
     super.dispose();
@@ -55,7 +55,7 @@ class _DetailScaffoldState extends State<DetailScaffold> {
         CustomScrollView(
           controller: ctrl,
           physics: widget.physics,
-          slivers: widget.slivers,
+          slivers: widget.slivers!,
         ),
         _buildEdge(),
       ],
@@ -71,8 +71,8 @@ class _DetailScaffoldState extends State<DetailScaffold> {
     var top = defaultOffset;
     var edgeSize = edgeHeight;
 
-    if (ctrl.hasClients) {
-      double offset = ctrl.offset;
+    if (ctrl!.hasClients) {
+      double offset = ctrl!.offset;
       top -= offset > 0 ? offset : 0;
 
       if (widget.hasPinnedAppBar) {

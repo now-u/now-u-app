@@ -8,7 +8,7 @@ class SelectionPill extends StatelessWidget {
   final String text;
 
   /// The border radius of the pill 
-  final double borderRadius;
+  final double? borderRadius;
   /// The font size of the text on the pill
   final double fontSize;
  
@@ -16,7 +16,7 @@ class SelectionPill extends StatelessWidget {
   final bool isSelected;
   /// What to do when the pill is clicked on.
   /// this should define selection behaviour
-  final Function onClick;
+  final VoidCallback? onClick;
 
   SelectionPill(
     this.text,
@@ -29,7 +29,7 @@ class SelectionPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: onClick != null ? onClick : () => {},
+        onTap: onClick != null ? onClick! : () => {},
         child: Padding(
             padding: EdgeInsets.only(left: 12, bottom: 10),
             child: Container(
@@ -37,13 +37,13 @@ class SelectionPill extends StatelessWidget {
                   ? BoxDecoration(
                       color: Colors.white,
                       borderRadius: borderRadius != null
-                          ? BorderRadius.all(Radius.circular(borderRadius))
+                          ? BorderRadius.all(Radius.circular(borderRadius!))
                           : tileBorderRadius(),
                     )
                   : BoxDecoration(
                       color: Color.fromRGBO(222, 224, 232, 1),
                       borderRadius: borderRadius != null
-                          ? BorderRadius.all(Radius.circular(borderRadius))
+                          ? BorderRadius.all(Radius.circular(borderRadius!))
                           : tileBorderRadius(),
                     ),
               child: Center(

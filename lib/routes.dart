@@ -1,35 +1,35 @@
-import 'package:app/pages/campaign/CampaignPage.dart';
-import 'package:app/pages/other/OrganisationPage.dart';
-import 'package:flutter/material.dart';
-
 import 'package:app/assets/routes/customRoute.dart';
-import 'package:app/models/Organisation.dart';
-import 'package:app/models/Notification.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Learning.dart';
-
-import 'package:app/pages/more/morePages/FAQPage.dart';
-import 'package:app/pages/more/morePages/PartnersPage.dart';
-import 'package:app/pages/intro/IntroPage.dart';
-import 'package:app/pages/login/login.dart';
-import 'package:app/pages/login/emailSentPage.dart';
-import 'package:app/pages/login/login_code_view.dart';
-import 'package:app/pages/other/InfoPage.dart';
-import 'package:app/pages/other/WebView.dart';
-import 'package:app/pages/other/NotificationPage.dart';
+import 'package:app/models/Notification.dart';
+import 'package:app/models/Organisation.dart';
 import 'package:app/pages/Tabs.dart';
 import 'package:app/pages/action/ActionInfo.dart';
+import 'package:app/pages/campaign/AllCampaignsPage.dart';
+import 'package:app/pages/campaign/CampaignInfo/CampaignDetails.dart';
+import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
+import 'package:app/pages/campaign/CampaignPage.dart';
+import 'package:app/pages/campaign/PastCampaignActionPage.dart';
+import 'package:app/pages/intro/IntroPage.dart';
 import 'package:app/pages/learning/LearningCentreAllPage.dart';
 import 'package:app/pages/learning/LearningCentrePage.dart';
 import 'package:app/pages/learning/LearningTopicPage.dart';
-import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
+import 'package:app/pages/login/emailSentPage.dart';
+import 'package:app/pages/login/login.dart';
+import 'package:app/pages/login/login_code_view.dart';
 import 'package:app/pages/more/morePages/AccountDetailsPage.dart';
-import 'package:app/pages/campaign/CampaignInfo/CampaignDetails.dart';
-import 'package:app/pages/campaign/AllCampaignsPage.dart';
-import 'package:app/pages/campaign/PastCampaignActionPage.dart';
+import 'package:app/pages/more/morePages/FAQPage.dart';
+import 'package:app/pages/more/morePages/PartnersPage.dart';
+import 'package:app/pages/onboarding/onboarding_page.dart';
+import 'package:app/pages/other/InfoPage.dart';
+import 'package:app/pages/other/NotificationPage.dart';
+import 'package:app/pages/other/OrganisationPage.dart';
+import 'package:app/pages/other/WebView.dart';
+import 'package:flutter/material.dart';
 
 class Routes {
   // Intro
+  static const onBoarding = "onBoarding";
   static const intro = "intro";
   static const login = "login";
   static const emailSent = "emailSent";
@@ -71,6 +71,11 @@ Function initRoutes = (RouteSettings settings) {
   switch (settings.name) {
 
     // Into
+    case Routes.onBoarding:
+      {
+        return customRoute(
+            builder: (context) => OnBoardingPage(), settings: settings);
+      }
     case Routes.login:
       {
         if (args is LoginPageArguments) {
