@@ -156,7 +156,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                 style:
                                     Theme.of(context).primaryTextTheme.headline4),
                             SizedBox(height: 10),
-                            Text(model.action!.getWhatDescription() ?? "",
+                            Text(model.action!.whatDescription ?? "",
                                 style:
                                     Theme.of(context).primaryTextTheme.bodyText1),
                           ],
@@ -303,7 +303,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                 style:
                                     Theme.of(context).primaryTextTheme.headline4),
                             SizedBox(height: 10),
-                            Text(model.action!.getWhyDescription() ?? "",
+                            Text(model.action!.whyDescription ?? "",
                                 style:
                                     Theme.of(context).primaryTextTheme.bodyText1),
                           ],

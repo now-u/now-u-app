@@ -306,9 +306,14 @@ class ListCauseAction {
 }
 
 class CampaignAction extends ListCauseAction {
-  String? whatDescription;
-  String? whyDescription;
-  String? link;
+  String? _whatDescription;
+  String? get whatDescription => _whatDescription;
+
+  String? _whyDescription;
+  String? get whyDescription => _whyDescription;
+
+  String? _link;
+  String? get link => _link;
 
   CampaignAction({
     required int id,
@@ -321,26 +326,18 @@ class CampaignAction extends ListCauseAction {
     required double time,
     DateTime? releasedAt,
 
-    required this.whatDescription,
-    required this.whyDescription,
-    required this.link,
-  }) : super(id: id, title: title, type: type, causes: causes, createdAt: createdAt, completed: completed, starred: starred, releasedAt: releasedAt, time: time);
+    String? whatDescription,
+    String? whyDescription,
+    String? link,
+  }) : 
+    _whatDescription = whatDescription,
+    _whyDescription = whyDescription,
+    _link = link,
+    super(id: id, title: title, type: type, causes: causes, createdAt: createdAt, completed: completed, starred: starred, releasedAt: releasedAt, time: time);
 
   CampaignAction.fromJson(Map<String, dynamic> json) :
-    whatDescription = json['what_description'],
-    whyDescription = json['why_description'],
-    link = json['link'],
+    _whatDescription = json['what_description'],
+    _whyDescription = json['why_description'],
+    _link = json['link'],
     super.fromJson(json);
-
-  String? getWhatDescription() {
-    return whatDescription;
-  }
-
-  String? getWhyDescription() {
-    return whyDescription;
-  }
-
-  String? getLink() {
-    return link;
-  }
 }

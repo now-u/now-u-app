@@ -4,7 +4,6 @@ import 'package:app/locator.dart';
 import 'package:app/routes.dart';
 import 'package:app/services/auth.dart';
 import 'package:app/services/navigation_service.dart';
-import 'package:app/services/causes_service.dart';
 
 import 'package:app/models/Action.dart';
 
@@ -12,7 +11,6 @@ class ActionInfoViewModel extends BaseCampaignViewModel {
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   final NavigationService _navigationService = locator<NavigationService>();
-  final CausesService _causesService = locator<CausesService>();
 
   CampaignAction? _action;
   CampaignAction? get action => _action;
@@ -51,6 +49,6 @@ class ActionInfoViewModel extends BaseCampaignViewModel {
   }
 
   void launchAction() {
-    _navigationService.launchLink(_action!.getLink()!);
+    _navigationService.launchLink(_action!.link!);
   }
 }
