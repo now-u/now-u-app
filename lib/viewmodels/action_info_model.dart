@@ -19,6 +19,7 @@ class ActionInfoViewModel extends BaseCampaignViewModel {
 
   Future<void> fetchAction(ListCauseAction action) async {
     setBusy(true);
+    // TODO catch error
     _action = await action.getAction();
     isLoading = false;
     setBusy(false);
