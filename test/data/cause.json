@@ -1,0 +1,9 @@
+{
+  "data": {
+    "id": 1,
+    "title": "Cause title",
+    "icon": "ic-abc",
+    "description": "Cause description",
+    "selected": true
+  }
+}

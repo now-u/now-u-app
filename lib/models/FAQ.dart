@@ -1,8 +1,8 @@
 class FAQ {
   // TODO add category to FAQs
-  int id;
-  String question;
-  String answer;
+  int? id;
+  String? question;
+  String? answer;
   bool selected = false;
 
   FAQ({this.id, this.question, this.answer});
@@ -13,15 +13,15 @@ class FAQ {
     answer = json['answer'];
   }
 
-  int getId() {
+  int? getId() {
     return id;
   }
 
-  String getQuestion() {
+  String? getQuestion() {
     return question;
   }
 
-  String getAnswer() {
+  String? getAnswer() {
     return answer;
   }
 

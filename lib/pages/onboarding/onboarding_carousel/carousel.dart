@@ -9,8 +9,8 @@ import 'second_page.dart';
 import 'third_page.dart';
 
 class OnBoardingCarousel extends StatelessWidget {
-  const OnBoardingCarousel({Key key, this.model}) : super(key: key);
-  final OnBoardingViewModel model;
+  const OnBoardingCarousel({Key? key, this.model}) : super(key: key);
+  final OnBoardingViewModel? model;
   @override
   Widget build(BuildContext context) {
     final pageController = PageController(initialPage: 0);

@@ -3,8 +3,8 @@ import 'package:app/viewmodels/onboarding_model.dart';
 import 'package:flutter/material.dart';
 
 class FourthOnBoardingPage extends StatelessWidget {
-  const FourthOnBoardingPage({Key key, this.model}) : super(key: key);
-  final OnBoardingViewModel model;
+  const FourthOnBoardingPage({Key? key, this.model}) : super(key: key);
+  final OnBoardingViewModel? model;
 
   @override
   Widget build(BuildContext context) {

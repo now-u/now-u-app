@@ -6,14 +6,14 @@ import 'dart:convert';
 class FAQService {
   String domainPrefix = "https://api.now-u.com/api/v1/";
 
-  List<FAQ> _faqs = [];
-  List<FAQ> get faqs {
+  List<FAQ>? _faqs = [];
+  List<FAQ>? get faqs {
     return _faqs;
   }
 
   Future fetchFAQs() async {
     try {
-      var response = await http.get(domainPrefix + "faqs");
+      var response = await http.get(Uri.parse(domainPrefix + "faqs"));
       if (response.statusCode != 200) {
         return false;
       }

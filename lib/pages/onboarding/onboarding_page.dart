@@ -6,7 +6,7 @@ import 'package:stacked/stacked.dart';
 import 'onboarding_carousel/carousel.dart';
 
 class OnBoardingPage extends StatelessWidget {
-  const OnBoardingPage({Key key}) : super(key: key);
+  const OnBoardingPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -14,10 +14,10 @@ import 'package:stacked/stacked.dart';
 import 'package:app/viewmodels/base_model.dart';
 
 class Tile extends StatelessWidget {
-  final Widget child;
-  final double borderRadius;
-  final double hPadding;
-  final Function onTap;
+  final Widget? child;
+  final double? borderRadius;
+  final double? hPadding;
+  final Function? onTap;
   Tile({this.child, this.borderRadius, this.hPadding, this.onTap});
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class Tile extends StatelessWidget {
                     blurRadius: 6)
               ]),
           child: GestureDetector(
-            onTap: onTap,
+            onTap: onTap as void Function()?,
             child: ClipRRect(
               borderRadius:
                   BorderRadius.all(Radius.circular(borderRadius ?? 20)),
@@ -49,8 +49,8 @@ class Tile extends StatelessWidget {
 
 class CampaignTile extends StatefulWidget {
   final Campaign campaign;
-  final double hPadding;
-  final double hOuterPadding;
+  final double? hPadding;
+  final double? hOuterPadding;
 
   CampaignTile(
     this.campaign, {
@@ -91,7 +91,7 @@ class _CampaignTileState extends State<CampaignTile> {
                       decoration: BoxDecoration(
                     image: DecorationImage(
                       image: customNetworkImageProvider(
-                          widget.campaign.getHeaderImage()),
+                          widget.campaign.headerImage),
                       fit: BoxFit.cover,
                     ),
                     //borderRadius: BorderRadius.only(topLeft: Radius.circular(10))
@@ -101,9 +101,9 @@ class _CampaignTileState extends State<CampaignTile> {
               ViewModelBuilder<BaseModel>.reactive(
                   viewModelBuilder: () => BaseModel(),
                   builder: (context, model, child) {
-                    bool selected = model.currentUser
+                    bool selected = model.currentUser!
                         .getSelectedCampaigns()
-                        .contains(widget.campaign.getId());
+                        .contains(widget.campaign.id);
                     if (selected) {
                       return Padding(
                           padding: EdgeInsets.all(12),
@@ -125,7 +125,7 @@ class _CampaignTileState extends State<CampaignTile> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: hPadding),
             child: Text(
-              widget.campaign.getTitle(),
+              widget.campaign.title,
               textAlign: TextAlign.left,
               style: textStyleFrom(
                 Theme.of(context).primaryTextTheme.headline3,
@@ -141,7 +141,7 @@ class _CampaignTileState extends State<CampaignTile> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 NumberOfCampaignersIndicator(
-                    widget.campaign.getNumberOfCampaigners())
+                    widget.campaign.numberOfCampaigners)
               ],
             ),
           ),
@@ -156,13 +156,13 @@ class CampaignTileWithJoinButtons extends StatelessWidget {
   final Function joinCampaign;
   final Function leaveCampaign;
   final Campaign campaign;
-  final double outerPadding;
+  final double? outerPadding;
 
   CampaignTileWithJoinButtons({
-    @required this.isJoined,
-    @required this.joinCampaign,
-    @required this.leaveCampaign,
-    @required this.campaign,
+    required this.isJoined,
+    required this.joinCampaign,
+    required this.leaveCampaign,
+    required this.campaign,
     this.outerPadding,
   });
 
@@ -178,7 +178,7 @@ class CampaignTileWithJoinButtons extends StatelessWidget {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image:
-                        customNetworkImageProvider(campaign.getHeaderImage()),
+                        customNetworkImageProvider(campaign.headerImage),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -187,7 +187,7 @@ class CampaignTileWithJoinButtons extends StatelessWidget {
                 padding: EdgeInsets.all(10),
                 child: Column(children: [
                   Text(
-                    campaign.getTitle(),
+                    campaign.title,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: textStyleFrom(
@@ -196,7 +196,7 @@ class CampaignTileWithJoinButtons extends StatelessWidget {
                     ),
                   ),
                   NumberOfCampaignersIndicator(
-                      campaign.getNumberOfCampaigners()),
+                      campaign.numberOfCampaigners),
                 ]),
               ),
               Container(
@@ -217,7 +217,7 @@ class CampaignTileWithJoinButtons extends StatelessWidget {
                               "Joined",
                               //inverted: true,
                               onPressed: () {
-                                leaveCampaign(campaign.getId());
+                                leaveCampaign(campaign.id);
                               },
                               size: DarkButtonSize.Small,
                               rightIcon: Icons.check,
@@ -226,7 +226,7 @@ class CampaignTileWithJoinButtons extends StatelessWidget {
                               "Join",
                               //inverted: true,
                               onPressed: () {
-                                joinCampaign(campaign.getId());
+                                joinCampaign(campaign.id);
                               },
                               size: DarkButtonSize.Medium,
                               rightIcon: Icons.link,
@@ -243,7 +243,7 @@ class CampaignTileWithJoinButtons extends StatelessWidget {
 }
 
 class NumberOfCampaignersIndicator extends StatelessWidget {
-  final int numberOfCampaigners;
+  final int? numberOfCampaigners;
   NumberOfCampaignersIndicator(this.numberOfCampaigners);
 
   @override
@@ -286,14 +286,14 @@ class CampaignSelectionTile extends StatelessWidget {
   final double defaultHeight = 110;
 
   final Campaign campaign;
-  final double height;
+  final double? height;
   CampaignSelectionTile(this.campaign, {this.height});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
           Navigator.of(context)
-              .pushNamed(Routes.campaignInfo, arguments: campaign.getId());
+              .pushNamed(Routes.campaignInfo, arguments: campaign.id);
         },
         child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
@@ -310,7 +310,7 @@ class CampaignSelectionTile extends StatelessWidget {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: customNetworkImageProvider(
-                                  campaign.getHeaderImage()),
+                                  campaign.headerImage),
                               fit: BoxFit.cover,
                             ),
                           )),
@@ -326,7 +326,7 @@ class CampaignSelectionTile extends StatelessWidget {
                     alignment: Alignment.center,
                     child: Container(
                         width: MediaQuery.of(context).size.width * 0.6,
-                        child: Text(campaign.getTitle(),
+                        child: Text(campaign.title,
                             textAlign: TextAlign.center,
                             style: textStyleFrom(
                               Theme.of(context).primaryTextTheme.headline4,

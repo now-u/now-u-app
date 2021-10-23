@@ -14,6 +14,8 @@ import 'package:app/services/dialog_service.dart';
 import 'package:app/services/google_location_search_service.dart';
 import 'package:app/services/remote_config_service.dart';
 import 'package:app/services/organisation_service.dart';
+import 'package:app/services/causes_service.dart';
+import 'package:app/services/api_service.dart';
 
 import 'package:get_it/get_it.dart';
 
@@ -35,6 +37,8 @@ void setupLocator() {
   locator.registerLazySingleton(() => GoogleLocationSearchService());
   locator.registerLazySingleton(() => OrganisationService());
   locator.registerLazySingleton(() => AnalyticsService());
+  locator.registerLazySingleton(() => CausesService());
+  locator.registerLazySingleton(() => ApiService());
 }
 
 void registerFirebaseServicesToLocator() {

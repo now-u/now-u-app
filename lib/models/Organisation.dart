@@ -1,28 +1,28 @@
 import 'package:app/models/Campaign.dart';
 
 class Organisation {
-  int id;
-  String name;
-  String description;
-  String logoLink;
-  List<int> linkedCampaigns;
-  String organisationType;
-  String email;
-  String website;
-  String geographicReach;
+  int? id;
+  String? name;
+  String? description;
+  String? logoLink;
+  List<int>? linkedCampaigns;
+  String? organisationType;
+  String? email;
+  String? website;
+  String? geographicReach;
 
-  List<Campaign> campaigns;
+  List<Campaign>? campaigns;
 
-  String instagram;
-  String facebook;
-  String twitter;
+  String? instagram;
+  String? facebook;
+  String? twitter;
 
-  String extraText1;
-  String extraLink1;
-  String extraText2;
-  String extraLink2;
-  String extraText3;
-  String extraLink3;
+  String? extraText1;
+  String? extraLink1;
+  String? extraText2;
+  String? extraLink2;
+  String? extraText3;
+  String? extraLink3;
 
   Organisation.fromJson(Map json) {
     id = json['id'];
@@ -66,80 +66,80 @@ class Organisation {
         'website': website,
       };
 
-  String getName() {
+  String? getName() {
     return name;
   }
 
   String getDescription() {
-    var descriptionWithoutNs = description.replaceAll('\\n', '\n\n');
+    var descriptionWithoutNs = description!.replaceAll('\\n', '\n\n');
     return descriptionWithoutNs;
   }
 
-  String getLogoLink() {
+  String? getLogoLink() {
     return logoLink;
   }
 
-  List<int> getLinkedCampaigns() {
+  List<int>? getLinkedCampaigns() {
     return linkedCampaigns;
   }
 
-  String getEmail() {
+  String? getEmail() {
     return email;
   }
 
-  String getWebsite() {
+  String? getWebsite() {
     return website;
   }
 
-  String getGeographicReach() {
+  String? getGeographicReach() {
     return geographicReach;
   }
 
-  String getOrganistaionType() {
+  String? getOrganistaionType() {
     if (organisationType == null) {
       return null;
     }
-    String s = organisationType.replaceAll("_", " ");
+    String s = organisationType!.replaceAll("_", " ");
     return "${s[0].toUpperCase()}${s.substring(1)}";
   }
 
-  String getFacebook() {
+  String? getFacebook() {
     return facebook;
   }
 
-  String getInstagram() {
+  String? getInstagram() {
     return instagram;
   }
 
-  String getTwitter() {
+  String? getTwitter() {
     return twitter;
   }
 
-  String getExtraText1() {
+  String? getExtraText1() {
     return extraText1;
   }
 
-  String getExtraLink1() {
+  String? getExtraLink1() {
     return extraLink1;
   }
 
-  String getExtraText2() {
+  String? getExtraText2() {
     return extraText2;
   }
 
-  String getExtraLink2() {
+  String? getExtraLink2() {
     return extraLink2;
   }
 
-  String getExtraText3() {
+  String? getExtraText3() {
     return extraText3;
   }
 
-  String getExtraLink3() {
+  String? getExtraLink3() {
     return extraLink3;
   }
 
-  List<Campaign> getCampaigns() {
+  List<Campaign>? getCampaigns() {
     return campaigns;
   }
 }

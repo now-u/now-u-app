@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 
-PageRoute customRoute({WidgetBuilder builder, RouteSettings settings}) {
+PageRoute customRoute({WidgetBuilder? builder, RouteSettings? settings}) {
   return Platform.isAndroid
-      ? CustomAndroidRoute(builder: builder, settings: settings)
-      : CustomIosRoute(builder: builder, settings: settings);
+      ? CustomAndroidRoute(builder: builder!, settings: settings)
+      : CustomIosRoute(builder: builder!, settings: settings);
 }
 
 class CustomAndroidRoute<T> extends MaterialPageRoute<T> {
-  CustomAndroidRoute({WidgetBuilder builder, RouteSettings settings})
+  CustomAndroidRoute({required WidgetBuilder builder, RouteSettings? settings})
       : super(builder: builder, settings: settings);
 
   @override
@@ -42,6 +42,6 @@ class CustomAndroidRoute<T> extends MaterialPageRoute<T> {
 //}
 
 class CustomIosRoute<T> extends CupertinoPageRoute<T> {
-  CustomIosRoute({WidgetBuilder builder, RouteSettings settings})
+  CustomIosRoute({required WidgetBuilder builder, RouteSettings? settings})
       : super(builder: builder, settings: settings);
 }
