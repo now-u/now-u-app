@@ -6,7 +6,8 @@ import 'package:app/services/api_service.dart';
 class CausesService extends ApiService {
   Future<List<ListCause>> getCauses() async {
     Map response = await getRequest("causes");
-    return response["data"].map((causeData) => ListCause.fromJson(causeData)).toList();
+    List<Map<String, dynamic>> causesData = new List<Map<String, dynamic>>.from(response["data"]);
+    return causesData.map((causeData) => ListCause.fromJson(causeData)).toList();
   }
   
   Future<Cause> getCause(int id) async {
@@ -26,6 +27,7 @@ class CausesService extends ApiService {
   
   Future<List<ListCauseAction>> getActions() async {
     Map response = await getRequest("actions");
-    return response["data"].map((actionData) => ListCauseAction.fromJson(actionData)).toList();
+    List<Map<String, dynamic>> actionsData = new List<Map<String, dynamic>>.from(response["data"]);
+    return actionsData.map((actionData) => ListCauseAction.fromJson(actionData)).toList();
   }
 }

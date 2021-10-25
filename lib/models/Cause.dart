@@ -7,7 +7,7 @@ class ListCause {
 
   ListCause({this.id, this.title, this.icon, this.description, this.selected});
   
-  ListCause.fromJson(Map json) :
+  ListCause.fromJson(Map<String, dynamic> json) :
     id = json['id'],
     title = json['title'],
     icon = json['icon'],
@@ -22,7 +22,7 @@ class Cause extends ListCause {
   Cause({this.headerImage, this.actions, int? id, String? title, String? icon, String? description, bool? selected})
       : super(id: id, title: title, icon: icon, description: description, selected: selected);
 
-  Cause.fromJson(Map json): 
+  Cause.fromJson(Map<String, dynamic> json): 
     headerImage = json['headerImage'],
     actions = json['actions'],
     super.fromJson(json);
