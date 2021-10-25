@@ -26,7 +26,7 @@ class CausesService extends ApiService {
   }
   
   Future<List<ListCauseAction>> getActions() async {
-    Map response = await getRequest("actions");
+    Map response = await getRequest("action");
     List<Map<String, dynamic>> actionsData = new List<Map<String, dynamic>>.from(response["data"]);
     return actionsData.map((actionData) => ListCauseAction.fromJson(actionData)).toList();
   }

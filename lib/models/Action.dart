@@ -233,8 +233,8 @@ class ListCauseAction extends Explorable {
 
   /// The type of the action
   CampaignActionType _type;
-  /// Returns the type if its know otherwise return Other
-  CampaignActionType get type => campaignActionTypeData.containsKey(_type) ? _type : CampaignActionType.Other;
+  /// The type of the action 
+  CampaignActionType get type => _type;
   /// The super type is a bigger category than the type - This is used for the
   /// styling.
   ActionType get superType => campaignActionTypeData[type]['type'];
