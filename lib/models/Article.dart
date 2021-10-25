@@ -1,168 +1,88 @@
+import 'package:app/assets/icons/customIcons.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:app/models/Campaign.dart';
 
-enum ArticleType {
-  News,
-  Video,
-  Highlight,
+class ArticleType {
+  String name;
+  IconData icon;
+
+  ArticleType({
+    required this.name,
+    required this.icon,
+  });
 }
 
-class Articles {
-  List<Article>? articles;
+List<ArticleType> articleTypes = [
+  ArticleType(name: "news", icon: CustomIcons.ic_news),
+  ArticleType(name: "video", icon: CustomIcons.ic_video),
+];
 
-  List<Article>? getArticles() {
-    return articles;
-  }
-
-  //List<Article> getArticlesByType(ArticleType type) {
-  //  return articles.where((a) => a.getType() == type);
-  //}
+ArticleType articleTypeFromName(String name) {
+  return articleTypes.firstWhere((ArticleType type) => type.name == name);
 }
 
 class Article {
-  int? id;
-  String? title;
-  String? subtitle;
-  String? body;
-  String? headerImage;
-  int? linkedCampaign;
-  int? linkedAction;
-  String? videoLink;
-  DateTime? createdAt;
-  DateTime? releasedAt;
-  String? source;
+  int _id;
+  int get id => _id;
 
-  String? fullArticleLink;
-  String? linkText;
-  //ArticleType type;
-  bool? isVideoOfTheDay;
+  String _title;
+  String get title => _title;
+  
+  String _subtitle;
+  String get subtitle => _subtitle;
+
+  ArticleType _type;
+  ArticleType get type => _type;
+
+  String _headerImage;
+  String get headerImage => _headerImage;
+
+  DateTime? _releasedAt;
+  DateTime? get releasedAt => _releasedAt;
+
+  String? _source;
+  String? get source => _source;
+
+  String _fullArticleLink;
+  String get fullArticleLink => _fullArticleLink;
+
+  int? _linkedCampaignId;
 
   Article({
-    required this.id,
-    required this.title,
-    required this.subtitle,
-    required this.body,
-    required this.headerImage,
-    this.linkedCampaign,
-    this.fullArticleLink,
-    this.linkedAction,
-    this.videoLink,
-    this.createdAt,
-    this.releasedAt,
-    this.source,
-    //this.type,
-    this.isVideoOfTheDay,
-  });
+    required int id,
+    required String title,
+    required String subtitle,
+    required ArticleType type,
+    required String headerImage,
+    required String fullArticleLink,
+    String? source,
+    int? linkedCampaignId
+  }) :
+    _id = id,
+    _title = title,
+    _subtitle = subtitle,
+    _type = type,
+    _headerImage = headerImage,
+    _fullArticleLink = fullArticleLink,
+    _source = source,
+    _linkedCampaignId = linkedCampaignId;
 
-  Article.fromJson(Map json) {
-    id = json['id'];
-    title = json['title'];
-    subtitle = json['subtitle'];
-    body = json['body'];
-    headerImage = json['header_image'];
-    createdAt = DateTime.parse(json['created_at']);
-    releasedAt = json['release_date'] == null
-        ? null
-        : DateTime.parse(json['release_date']);
-    linkedCampaign = json['campaign_id'];
-    linkedAction = json['linked_action'];
-    fullArticleLink = json['full_article_link'];
-    linkText = json['link_text'];
-    videoLink = json['video_link'];
-    source = json['source'];
-    //type            = json['type'];
-    isVideoOfTheDay = json['video_of_the_day'] ?? false;
-  }
-
-  Map toJson() => {
-        'id': id,
-        'title': title,
-        'body': body,
-        'header_image': headerImage,
-        'created_at': headerImage,
-        'release_date': releasedAt,
-        'campaign_id': createdAt!.toIso8601String(),
-        'linked_action': linkedAction,
-        'full_article_link': fullArticleLink,
-        'video_link': videoLink,
-        //'type': type,
-        'video_of_the_day': videoLink,
-        'link_text': linkText,
-        'subtitle': subtitle,
-        'source': source,
-      };
-
-  int? getId() {
-    return id;
-  }
-
-  String? getTitle() {
-    return title;
-  }
-
-  String? getSubtitle() {
-    return subtitle;
-  }
-
-  String? getBody() {
-    return body;
-  }
-
-  String? getHeaderImage() {
-    return headerImage;
-  }
-
-  String? getFullArticleLink() {
-    return fullArticleLink;
-  }
-
-  String? getLinkText() {
-    return linkText;
-  }
-
-  int? getLinkedCampaign() {
-    return linkedCampaign;
-  }
-
-  int? getLinkedAction() {
-    return linkedAction;
-  }
-
-  String? getVideoLink() {
-    return videoLink;
-  }
-
-  DateTime? getCreationTime() {
-    return createdAt;
-  }
-
-  DateTime? getReleaseDate() {
-    return releasedAt;
-  }
-
-  String? getSource() {
-    return source;
-  }
-
-  //ArticleType getType() {
-  //  return type;
-  //}
-  bool? getIsVideoOfTheDay() {
-    return isVideoOfTheDay;
-  }
+  Article.fromJson(Map json) :
+    _id = json['id'],
+    _title = json['title'],
+    _subtitle = json['subtitle'],
+    _headerImage = json['header_image'],
+    _releasedAt = DateTime.parse(json['released_at']),
+    _fullArticleLink = json['full_article_link'],
+    _source = json['source'],
+    _type = articleTypeFromName(json['type']),
+    _linkedCampaignId = json['campaign_id'];
 
   String? getCategory({List<Campaign>? campaigns}) {
-    print("Getting catergory");
-    print(linkedCampaign);
-    print(campaigns);
-    if (linkedCampaign != null) {
-      if (campaigns != null) {
-        print(campaigns);
-        for (int i = 0; i < campaigns.length; i++) {
-          if (campaigns[i].id == linkedCampaign) {
-            return campaigns[i].shortName;
-          }
-        }
+    if (_linkedCampaignId != null && campaigns != null) {
+      for (int i = 0; i < campaigns.length; i++) {
+        if (campaigns[i].id == _linkedCampaignId) return campaigns[i].shortName;
       }
     }
     return "General";

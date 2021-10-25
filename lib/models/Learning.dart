@@ -15,8 +15,6 @@ class LearningCentre {
   }
 
   LearningCentre.fromJson(List json) {
-    print("Getting learning centre from json");
-    //campaign = json['campaign'];
     learningTopics = json
         .map((e) => LearningTopic.fromJson(e))
         .toList()
@@ -31,142 +29,99 @@ class LearningCentre {
 }
 
 class LearningTopic {
-  int? id;
-  String? title;
-  String? imageLink;
-  String? ourAnswer;
-  List<LearningResource>? resources;
+  int _id;
+  int get id => _id;
 
-  LearningTopic.fromJson(Map json) {
-    print("Getting learning topic from json");
-    id = json['id'];
-    title = json['title'];
-    imageLink = json['image_link'];
-    ourAnswer = json['our_answer'];
-    print("Got the things up till resources");
-    resources = (json['learning_resources'])
+  String _title;
+  String get title => _title;
+
+  String _imageLink;
+  String get imageLink => _imageLink;
+
+  String _ourAnswer;
+  String get ourAnswer => _ourAnswer;
+
+  List<LearningResource> _resources;
+  List<LearningResource> get resources => _resources;
+
+  LearningTopic.fromJson(Map json) :
+    _id = json['id'],
+    _title = json['title'],
+    _imageLink = json['image_link'],
+    _ourAnswer = json['our_answer'],
+    _resources = (json['learning_resources'])
         .map((e) => LearningResource.fromJson(e))
         .toList()
         .cast<LearningResource>();
-  }
-
-  int? getId() {
-    return id;
-  }
-
-  String? getTitle() {
-    return title;
-  }
-
-  String? getImageLink() {
-    return imageLink;
-  }
-
-  String? getOurAnswer() {
-    return ourAnswer;
-  }
-
-  List<LearningResource>? getResources() {
-    return resources;
-  }
 
   bool containsNew() {
-    print("Checking contains");
-    print(resources);
-    var r = resources!.firstWhereOrNull((LearningResource r) => r.isNew());
-    print("Checked contains");
+    var r = resources.firstWhereOrNull((LearningResource r) => r.isNew());
     return r != null;
   }
 }
 
-enum LearningResourceType {
-  Video,
-  Reading,
-  Infographic,
-  Other,
+class LearningResourceType {
+  String name;
+  IconData icon;
+
+  LearningResourceType({
+    required this.name,
+    required this.icon,
+  });
+}
+
+LearningResourceType otherType = LearningResourceType(name: "other", icon: FontAwesomeIcons.chalkboardTeacher);
+List<LearningResourceType> learningResourceTypes = [
+  LearningResourceType(name: "video", icon: CustomIcons.ic_video),
+  LearningResourceType(name: "reading", icon: CustomIcons.ic_learning),
+  LearningResourceType(name: "infographic", icon: CustomIcons.ic_report),
+  LearningResourceType(name: "report", icon: CustomIcons.ic_report),
+  LearningResourceType(name: "story", icon: CustomIcons.ic_story),
+  otherType,
+];
+
+LearningResourceType getResourceTypeFromString(String typeName) {
+  LearningResourceType? type = learningResourceTypes.firstWhereOrNull((LearningResourceType type) => type.name == typeName);
+  if (type == null) {
+    return otherType;
+  }
+  return type;
 }
 
 class LearningResource {
-  int? id;
-  String? title;
-  double? time;
-  String? link;
-  String? type;
-  DateTime? createdAt;
-  String? source;
+  int _id;
+  int get id => _id;
 
-  LearningResource.fromJson(Map json) {
-    id = json['id'];
-    title = json['title'];
-    time = json['time'];
-    link = json['link'];
-    type = json['type'];
-    createdAt = DateTime.parse(json['created_at']);
-    source = json['source'];
-  }
+  String _title;
+  String get title => _title;
 
-  int? getId() {
-    return id;
-  }
+  double _time;
+  double get time => _time;
+  String get timeText => timeBrackets.firstWhere((b) => b['maxTime'] > _time)['text'];
 
-  String? getTitle() {
-    return title;
-  }
+  String _link;
+  String get link => _link;
 
-  String? getLink() {
-    return link;
-  }
+  LearningResourceType _type;
+  LearningResourceType get type => _type;
+  IconData get icon => _type.icon;
 
-  String? getType() {
-    return type;
-  }
+  DateTime _createdAt;
+  DateTime get createdAt => _createdAt;
 
-  IconData getTypeIcon() {
-    switch (type) {
-      case "reading":
-        {
-          return CustomIcons.ic_learning;
-        }
-      case "video":
-        {
-          return CustomIcons.ic_video;
-        }
-      case "infographic":
-        {
-          return CustomIcons.ic_report;
-        }
-      case "report":
-        {
-          return CustomIcons.ic_report;
-        }
-      case "story":
-        {
-          return CustomIcons.ic_story;
-        }
-      case "other":
-        {
-          return FontAwesomeIcons.chalkboardTeacher;
-        }
-    }
-    return FontAwesomeIcons.chalkboardTeacher;
-  }
+  String? _source;
+  String? get source => _source;
 
-  double? getTime() {
-    return time;
-  }
-
-  String? getTimeText() {
-    return timeBrackets.firstWhere((b) => b['maxTime'] > time)['text'];
-  }
-
-  String? getSource() {
-    return source;
-  }
+  LearningResource.fromJson(Map json) :
+    _id = json['id'],
+    _title = json['title'],
+    _time = json['time'],
+    _link = json['link'],
+    _type = getResourceTypeFromString(json['type']),
+    _createdAt = DateTime.parse(json['created_at']),
+    _source = json['source'];
 
   bool isNew() {
-    print("Checking is new");
-    print(createdAt);
-    return DateTime.now().difference(createdAt!).compareTo(Duration(days: 2)) <
-        0;
+    return DateTime.now().difference(_createdAt).compareTo(Duration(days: 2)) < 0;
   }
 }

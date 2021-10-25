@@ -42,10 +42,7 @@ class NewsViewModel extends BaseModel {
     _category = _category == indexCategory ? null : indexCategory;
 
     _filteredArticles.clear();
-    print(_filteredArticles);
     _filteredArticles.addAll(_newsService!.articles!);
-    print(_filteredArticles);
-    print(_newsService!.articles);
     if (_category != null) {
       _filteredArticles.removeWhere((a) =>
           a.getCategory(campaigns: _campaignService!.campaigns) != _category);
@@ -62,11 +59,10 @@ class NewsViewModel extends BaseModel {
     if (query.isNotEmpty) {
       List<Article> tempList = List<Article>.empty();
       _newsService!.articles!.forEach((article) {
-        if (article.getTitle()!.toLowerCase().contains(query.toLowerCase())) {
+        if (article.title.toLowerCase().contains(query.toLowerCase())) {
           tempList.add(article);
         }
       });
-      print("Set searching to true");
       _searching = true;
       _filteredArticles.clear();
       _filteredArticles.addAll(tempList);

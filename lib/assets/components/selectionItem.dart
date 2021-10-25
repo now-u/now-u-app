@@ -197,7 +197,7 @@ class LearningResouceSelectionItem extends StatelessWidget {
     return LeadingSelectionItem(
       onTap: () {
         _navigationService!.launchLink(
-          resource.getLink()!,
+          resource.link,
           extraOnConfirmFunction: extraOnClick,
         );
       },
@@ -214,7 +214,7 @@ class LearningResouceSelectionItem extends StatelessWidget {
             ),
             child: Center(
               child: Icon(
-                resource.getTypeIcon(),
+                resource.icon,
                 size: 30,
                 color: Theme.of(context).primaryColor,
               ),
@@ -222,8 +222,8 @@ class LearningResouceSelectionItem extends StatelessWidget {
           ),
         ),
       ]),
-      text: resource.getTitle(),
-      secondaryText: resource.getSource(),
+      text: resource.title,
+      secondaryText: resource.source,
       extraOverflow: 40,
       isCompleted: completed,
     );
@@ -397,13 +397,13 @@ class LearningTopicSelectionItem extends StatelessWidget {
   final double borderRadius = 8;
 
   @required
-  final LearningTopic? topic;
+  final LearningTopic topic;
   final double? hpadding;
   final double? imageWidth;
   final double? height;
 
   LearningTopicSelectionItem({
-    this.topic,
+    required this.topic,
     this.hpadding,
     this.imageWidth,
     this.height,
@@ -412,15 +412,15 @@ class LearningTopicSelectionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ImageSelectionItem(
-      text: topic!.getTitle(),
-      imageUrl: topic!.getImageLink(),
+      text: topic.title,
+      imageUrl: topic.imageLink,
       onTap: () {
         Navigator.of(context).pushNamed(Routes.learningTopic, arguments: topic);
       },
       hpadding: hpadding,
       imageWidth: imageWidth,
       height: height,
-      hasNew: topic!.containsNew(),
+      hasNew: topic.containsNew(),
     );
   }
 }

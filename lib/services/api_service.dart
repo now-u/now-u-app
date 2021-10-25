@@ -94,7 +94,7 @@ class ApiService {
 
     return await json.decode(response.body);
   }
-  
+
   /// Make post request to api
   ///
   /// Returns Map of the response. Throws an [ApiException] if the request is

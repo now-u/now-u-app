@@ -27,14 +27,3 @@ class Cause extends ListCause {
     actions = json['actions'],
     super.fromJson(json);
 }
-
-class CauseAction {
-  final int id;
-  bool actionFetched = false;
-
-  bool get isActionFetched {
-    return this.actionFetched;
-  }
-
-  CauseAction({required this.id});
-}
