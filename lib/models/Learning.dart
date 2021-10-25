@@ -81,11 +81,7 @@ List<LearningResourceType> learningResourceTypes = [
 ];
 
 LearningResourceType getResourceTypeFromString(String typeName) {
-  LearningResourceType? type = learningResourceTypes.firstWhereOrNull((LearningResourceType type) => type.name == typeName);
-  if (type == null) {
-    return otherType;
-  }
-  return type;
+  return learningResourceTypes.firstWhere((LearningResourceType type) => type.name == typeName, orElse: () => otherType);
 }
 
 class LearningResource {
