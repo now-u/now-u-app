@@ -105,7 +105,7 @@ class _FAQTileState extends State<FAQTile> {
                   children: [
                     Expanded(
                       child: Text(
-                        widget.faq.getQuestion()!,
+                        widget.faq.question,
                         style: Theme.of(context).primaryTextTheme.headline4,
                       ),
                     ),
@@ -122,7 +122,7 @@ class _FAQTileState extends State<FAQTile> {
                       padding:
                           EdgeInsets.symmetric(vertical: 12, horizontal: 20),
                       child: Text(
-                        widget.faq.getAnswer()!,
+                        widget.faq.answer,
                         style: Theme.of(context).primaryTextTheme.bodyText1,
                       ))
                   : Container(),
