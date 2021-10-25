@@ -211,11 +211,7 @@ CampaignActionType campaignActionTypeFromString(String? s) {
 
 Tuple3<String?, String?, String?> generateCampaingActionDesc(
     CampaignActionType? t) {
-  print("Getting campaing aciton desc");
   if (campaignActionTypeData.containsKey(t)) {
-    print("Found key");
-    print(campaignActionTypeData[t]['name']);
-    print("Looking for the thing");
     return Tuple3(
         campaignActionTypeData[t]['verb'],
         campaignActionTypeData[t]['pastVerb'],
