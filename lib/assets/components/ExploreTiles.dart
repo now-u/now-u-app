@@ -64,8 +64,32 @@ class ExploreActionTile extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: Container(),
-              flex: 3,
+              child: Container(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.symmetric(horizontal: 12),
+                child: Text(
+                  // title,
+                  "Tell Zara to stop profiting from Uighur forced labour",
+                  style: Theme.of(context).primaryTextTheme.headline2!.apply(
+                        fontSizeDelta: -9,
+                      ),
+                ),
+              ),
+              flex: 2,
+            ),
+            Expanded(
+              child: Container(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.symmetric(horizontal: 12),
+                child: Row(
+                  children: [
+                    // TODO get icon from cause
+                    Icon(Icons.error),
+                    SizedBox(width: 8),
+                    Text(cause!.title!)
+                  ],
+                ),
+              ),
             ),
           ],
         ),

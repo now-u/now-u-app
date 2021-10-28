@@ -1,6 +1,7 @@
 import 'package:app/assets/components/ExploreTiles.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
+import 'package:app/models/Cause.dart';
 import 'package:app/pages/explore/ExploreFilter.dart';
 import 'package:app/viewmodels/explore_page_view_model.dart';
 import 'package:flutter/material.dart';
@@ -140,7 +141,7 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
               id: i,
               title: "This is action $i",
               type: types[i],
-              causes: [],
+              causes: [ListCause(title: "Equality & Human-Rights")],
               createdAt: DateTime.now(),
               completed: false,
               starred: false,
