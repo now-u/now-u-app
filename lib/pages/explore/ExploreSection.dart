@@ -24,11 +24,15 @@ abstract class ExploreSection<ExplorableType> {
   ///
   final ExploreFilter? filter;
 
-  const ExploreSection(
-      {required this.title,
-      required this.description,
-      this.fetchParams,
-      this.filter});
+  final double tileHeight;
+
+  const ExploreSection({
+    required this.title,
+    required this.description,
+    this.fetchParams,
+    this.filter,
+    this.tileHeight = 160,
+  });
 
   Future<List<ExplorableType>> fetchTiles();
 
@@ -62,16 +66,17 @@ abstract class ExploreSection<ExplorableType> {
                   })
               : SizedBox(height: 0),
           Container(
-            height: 200,
+            height: tileHeight,
             child: FutureBuilder<List<ExplorableType>>(
                 future: fetchTiles(),
                 builder: (BuildContext context,
                     AsyncSnapshot<List<ExplorableType>> snapshot) {
                   if (!snapshot.hasData) {
-                    return Container(child: CircularProgressIndicator());
+                    return Center(child: CircularProgressIndicator());
                   }
 
                   return ListView.builder(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
                     scrollDirection: Axis.horizontal,
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) =>
@@ -84,16 +89,18 @@ abstract class ExploreSection<ExplorableType> {
 }
 
 class CampaignExploreSection extends ExploreSection<ListCampaign> {
-  const CampaignExploreSection(
-      {required String title,
-      required String description,
-      Map? fetchParams,
-      ExploreFilter? filter})
-      : super(
-            title: title,
-            description: description,
-            fetchParams: fetchParams,
-            filter: filter);
+  const CampaignExploreSection({
+    required String title,
+    required String description,
+    Map? fetchParams,
+    ExploreFilter? filter,
+  }) : super(
+          title: title,
+          description: description,
+          fetchParams: fetchParams,
+          filter: filter,
+          tileHeight: 300,
+        );
 
   Future<List<ListCampaign>> fetchTiles() async {
     // TODO remove mock
@@ -103,7 +110,7 @@ class CampaignExploreSection extends ExploreSection<ListCampaign> {
             5,
             (i) => ListCampaign(
                 id: i,
-                title: "This is action $i",
+                title: "Tell Zara to stop profiting from Uighur forced labour",
                 shortName: "action$i",
                 headerImage: "url?",
                 completed: false,
@@ -117,16 +124,18 @@ class CampaignExploreSection extends ExploreSection<ListCampaign> {
 }
 
 class ActionExploreSection extends ExploreSection<ListCauseAction> {
-  const ActionExploreSection(
-      {required String title,
-      required String description,
-      Map? fetchParams,
-      ExploreFilter? filter})
-      : super(
-            title: title,
-            description: description,
-            fetchParams: fetchParams,
-            filter: filter);
+  const ActionExploreSection({
+    required String title,
+    required String description,
+    Map? fetchParams,
+    ExploreFilter? filter,
+  }) : super(
+          title: title,
+          description: description,
+          fetchParams: fetchParams,
+          filter: filter,
+          tileHeight: 160,
+        );
 
   Future<List<ListCauseAction>> fetchTiles() async {
     // TODO remove mock
@@ -139,7 +148,7 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
           5,
           (i) => ListCauseAction(
               id: i,
-              title: "This is action $i",
+              title: "Tell Zara to stop profiting from Uighur forced labour",
               type: types[i],
               causes: [ListCause(title: "Equality & Human-Rights")],
               createdAt: DateTime.now(),
