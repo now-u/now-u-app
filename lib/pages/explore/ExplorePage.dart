@@ -26,11 +26,16 @@ ExploreFilter filter = ExploreFilter(parameterName: "abc", options: [
 
 List<ExploreSection> exploreSections = [
   CampaignExploreSection(
-      title: "Campaigns",
-      description:
-          "Join members of the now-u community in coordinated campaigns to make a difference"),
+    title: "Campaigns",
+    description:
+        "Join members of the now-u community in coordinated campaigns to make a difference",
+  ),
   ActionExploreSection(
-      title: "Actions", description: "Actions, do stuff", filter: filter),
+    title: "Actions",
+    description:
+        "Take a wide range of actions to drive lasting change for issues you care about",
+    filter: filter,
+  ),
 ];
 
 var campaign_explore_page = ExplorePage(sections: exploreSections);
