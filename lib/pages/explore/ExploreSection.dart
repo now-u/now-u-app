@@ -105,16 +105,20 @@ class CampaignExploreSection extends ExploreSection<ListCampaign> {
   Future<List<ListCampaign>> fetchTiles() async {
     // TODO remove mock
     return Future.delayed(
-        Duration(seconds: 2),
-        () => List.generate(
-            5,
-            (i) => ListCampaign(
-                id: i,
-                title: "Tell Zara to stop profiting from Uighur forced labour",
-                shortName: "action$i",
-                headerImage: "url?",
-                completed: false,
-                causes: [])));
+      Duration(seconds: 2),
+      () => List.generate(
+        5,
+        (i) => ListCampaign(
+          id: i,
+          title:
+              "Advocate for global access to water, sanitation and hygiene (WASH)",
+          shortName: "action$i",
+          headerImage: "https://picsum.photos/200",
+          completed: false,
+          causes: [ListCause(title: "Equality & Human-Rights")],
+        ),
+      ),
+    );
 
     // final CausesService _causesService = locator<CausesService>();
     // return await _causesService.getCampaigns();

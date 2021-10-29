@@ -5,11 +5,46 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ExploreCampaignTile extends StatelessWidget {
-  ExploreCampaignTile(ListCampaign model, {Key? key}) : super(key: key);
+  final String headerImage;
+  final String title;
+  final ListCause? cause;
+
+  ExploreCampaignTile(ListCampaign model, {Key? key})
+      : this.headerImage = model.headerImage,
+        this.title = model.title,
+        this.cause = model.cause,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card();
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      clipBehavior: Clip.antiAlias,
+      child: AspectRatio(
+        aspectRatio: 0.75,
+        child: Column(
+          children: [
+            AspectRatio(
+              aspectRatio: 1.5,
+              child: Image.network(
+                headerImage,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Expanded(
+              child: Container(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.symmetric(horizontal: 12),
+                child: _ExploreTileTitle(title),
+              ),
+            ),
+            Padding(
+                padding: EdgeInsets.only(bottom: 8),
+                child: _ExploreTileCause(cause!)),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -30,7 +65,6 @@ class ExploreActionTile extends StatelessWidget {
         timeText = model.timeText,
         super(key: key);
 
-  // TODO fonts and colors
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -40,14 +74,11 @@ class ExploreActionTile extends StatelessWidget {
         aspectRatio: 1.65,
         child: Column(
           children: [
-            Expanded(
-              flex: 1,
+            Flexible(
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 12),
-                width: double.infinity,
                 color: color,
                 child: Row(
-                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Icon(
                       icon,
@@ -77,15 +108,24 @@ class ExploreActionTile extends StatelessWidget {
                 ),
               ),
             ),
-            Expanded(
-              child: Container(
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.symmetric(horizontal: 12),
-                child: _ExploreTileTitle(title),
+            Flexible(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      padding: EdgeInsets.symmetric(horizontal: 12),
+                      child: _ExploreTileTitle(title),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 8),
+                    child: _ExploreTileCause(cause!),
+                  )
+                ],
               ),
-              flex: 2,
+              flex: 3,
             ),
-            Expanded(child: _ExploreTileCause(cause!)),
           ],
         ),
       ),
@@ -103,7 +143,7 @@ class _ExploreTileTitle extends StatelessWidget {
     return Text(
       title,
       style: Theme.of(context).primaryTextTheme.headline2!,
-      textScaleFactor: .5,
+      textScaleFactor: .6,
     );
   }
 }
