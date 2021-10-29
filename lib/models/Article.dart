@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:app/models/Campaign.dart';
 
 class ArticleType {
-  String name;
-  IconData icon;
+  final String name;
+  final IconData icon;
 
   ArticleType({
     required this.name,
@@ -23,31 +23,15 @@ ArticleType articleTypeFromName(String name) {
 }
 
 class Article {
-  int _id;
-  int get id => _id;
-
-  String _title;
-  String get title => _title;
-  
-  String _subtitle;
-  String get subtitle => _subtitle;
-
-  ArticleType _type;
-  ArticleType get type => _type;
-
-  String _headerImage;
-  String get headerImage => _headerImage;
-
-  DateTime? _releasedAt;
-  DateTime? get releasedAt => _releasedAt;
-
-  String? _source;
-  String? get source => _source;
-
-  String _fullArticleLink;
-  String get fullArticleLink => _fullArticleLink;
-
-  int? _linkedCampaignId;
+  final int id;
+  final String title;
+  final String subtitle;
+  final ArticleType type;
+  final String headerImage;
+  final DateTime? releasedAt;
+  final String? source;
+  final String fullArticleLink;
+  final int? linkedCampaignId;
 
   Article({
     required int id,
@@ -57,32 +41,34 @@ class Article {
     required String headerImage,
     required String fullArticleLink,
     String? source,
-    int? linkedCampaignId
+    int? linkedCampaignId,
+    DateTime? releasedAt,
   }) :
-    _id = id,
-    _title = title,
-    _subtitle = subtitle,
-    _type = type,
-    _headerImage = headerImage,
-    _fullArticleLink = fullArticleLink,
-    _source = source,
-    _linkedCampaignId = linkedCampaignId;
+    id = id,
+    title = title,
+    subtitle = subtitle,
+    type = type,
+    headerImage = headerImage,
+    fullArticleLink = fullArticleLink,
+    source = source,
+    releasedAt = releasedAt,
+    linkedCampaignId = linkedCampaignId;
 
   Article.fromJson(Map json) :
-    _id = json['id'],
-    _title = json['title'],
-    _subtitle = json['subtitle'],
-    _headerImage = json['header_image'],
-    _releasedAt = DateTime.parse(json['released_at']),
-    _fullArticleLink = json['full_article_link'],
-    _source = json['source'],
-    _type = articleTypeFromName(json['type']),
-    _linkedCampaignId = json['campaign_id'];
+    id = json['id'],
+    title = json['title'],
+    subtitle = json['subtitle'],
+    headerImage = json['header_image'],
+    releasedAt = DateTime.parse(json['released_at']),
+    fullArticleLink = json['full_article_link'],
+    source = json['source'],
+    type = articleTypeFromName(json['type']),
+    linkedCampaignId = json['campaign_id'];
 
   String? getCategory({List<Campaign>? campaigns}) {
-    if (_linkedCampaignId != null && campaigns != null) {
+    if (linkedCampaignId != null && campaigns != null) {
       for (int i = 0; i < campaigns.length; i++) {
-        if (campaigns[i].id == _linkedCampaignId) return campaigns[i].shortName;
+        if (campaigns[i].id == linkedCampaignId) return campaigns[i].shortName;
       }
     }
     return "General";
