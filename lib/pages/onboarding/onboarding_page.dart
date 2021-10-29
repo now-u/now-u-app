@@ -13,7 +13,8 @@ class OnBoardingPage extends StatelessWidget {
     return ViewModelBuilder<OnBoardingViewModel>.reactive(
         viewModelBuilder: () => OnBoardingViewModel(),
         builder: (context, model, child) => OnBoardingCarousel(
-              model: model,
-            ));
+          model: model,
+        ),
+    );
   }
 }
