@@ -95,6 +95,12 @@ class ApiService {
     return await json.decode(response.body);
   }
 
+  Future<List<Map<String, dynamic>>> getListRequest(String path, {Map<String, dynamic>? params}) async {
+    Map response = await getRequest(path, params: params);
+    List<Map<String, dynamic>> listData = new List<Map<String, dynamic>>.from(response["data"]);
+    return listData;
+  }
+
   /// Make post request to api
   ///
   /// Returns Map of the response. Throws an [ApiException] if the request is

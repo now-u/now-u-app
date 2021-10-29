@@ -9,6 +9,7 @@ import '../setup/test_helpers.dart';
 import 'package:app/locator.dart';
 import 'package:app/models/Cause.dart';
 import 'package:app/models/Action.dart';
+import 'package:app/assets/icons/customIcons.dart';
 
 @GenerateMocks([http.Client])
 void main() {
@@ -32,7 +33,7 @@ void main() {
       ListCause cause = causes[0];
       expect(cause.id, 1);
       expect(cause.title, "Cause title");
-      expect(cause.icon, "ic-abc");
+      expect(cause.icon, getIconFromString("ic_abc"));
       expect(cause.description, "Cause description");
       expect(cause.selected, true);
     });
@@ -53,7 +54,7 @@ void main() {
       Cause cause = await _causesService.getCause(1);
       expect(cause.id, 1);
       expect(cause.title, "Cause title");
-      expect(cause.icon, "ic-abc");
+      expect(cause.icon, getIconFromString("ic_abc"));
       expect(cause.description, "Cause description");
       expect(cause.selected, true);
     });

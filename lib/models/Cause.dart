@@ -1,29 +1,63 @@
-class ListCause {
-  int? id;
-  String? title;
-  String? icon;
-  String? description;
-  bool? selected;
+import 'package:flutter/widgets.dart';
+import 'package:app/assets/icons/customIcons.dart';
+import 'package:app/models/Action.dart';
 
-  ListCause({this.id, this.title, this.icon, this.description, this.selected});
+class ListCause {
+  int _id;
+  String _title;
+  IconData _icon;
+  String _description;
+  bool _selected;
+
+  int get id => _id;
+  String get title => _title;
+  IconData get icon => _icon;
+  String get description => _description;
+  bool get selected => _selected;
+
+  ListCause({
+    required int id,
+    required String title,
+    required IconData icon,
+    required String description,
+    required bool selected
+  }): 
+    _id = id,
+    _title = title,
+    _icon = icon,
+    _description = description,
+    _selected = selected;
   
   ListCause.fromJson(Map<String, dynamic> json) :
-    id = json['id'],
-    title = json['title'],
-    icon = json['icon'],
-    description = json['description'],
-    selected = json['selected'];
+    _id = json['id'],
+    _title = json['title'],
+    _icon = getIconFromString(json['icon']),
+    _description = json['description'],
+    _selected = json['selected'];
 }
 
 class Cause extends ListCause {
-  String? headerImage;
-  List<int>? actions;
+  String _headerImage;
+  List<ListCauseAction> _actions;
 
-  Cause({this.headerImage, this.actions, int? id, String? title, String? icon, String? description, bool? selected})
-      : super(id: id, title: title, icon: icon, description: description, selected: selected);
+  String get headerImage => _headerImage;
+  List<ListCauseAction> get actions => _actions;
+
+  Cause({
+    required String headerImage, 
+    required List<ListCauseAction> actions, 
+    required int id,
+    required String title,
+    required IconData icon,
+    required String description,
+    required bool selected
+  }) : 
+    _headerImage = headerImage,
+    _actions = actions,
+    super(id: id, title: title, icon: icon, description: description, selected: selected);
 
   Cause.fromJson(Map<String, dynamic> json): 
-    headerImage = json['headerImage'],
-    actions = json['actions'],
+    _headerImage = json['header_image'],
+    _actions = json['actions'].map((actionData) => ListCauseAction.fromJson(actionData)).toList().cast<ListCauseAction>(),
     super.fromJson(json);
 }
