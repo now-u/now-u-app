@@ -115,7 +115,15 @@ class CampaignExploreSection extends ExploreSection<ListCampaign> {
           shortName: "action$i",
           headerImage: "https://picsum.photos/200",
           completed: false,
-          causes: [ListCause(title: "Equality & Human-Rights")],
+          causes: [
+            ListCause(
+              id: 0,
+              title: "Equality & Human-Rights",
+              icon: Icons.error,
+              description: "This is a cause",
+              selected: false,
+            )
+          ],
         ),
       ),
     );
@@ -154,7 +162,15 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
               id: i,
               title: "Tell Zara to stop profiting from Uighur forced labour",
               type: types[i],
-              causes: [ListCause(title: "Equality & Human-Rights")],
+              causes: [
+                ListCause(
+                  id: 0,
+                  title: "Equality & Human-Rights",
+                  icon: Icons.error,
+                  description: "This is a cause",
+                  selected: false,
+                )
+              ],
               createdAt: DateTime.now(),
               completed: false,
               starred: false,

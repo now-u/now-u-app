@@ -160,14 +160,13 @@ class _ExploreTileCause extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 12),
       child: Row(
         children: [
-          // TODO get icon from cause
           Icon(
-            Icons.error,
+            cause.icon,
             size: 18,
           ),
           SizedBox(width: 6),
           Text(
-            cause.title!,
+            cause.title,
             textScaleFactor: .9,
           )
         ],
