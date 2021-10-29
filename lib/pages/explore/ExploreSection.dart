@@ -1,4 +1,4 @@
-import 'package:app/assets/components/ExploreTiles.dart';
+import 'package:app/assets/components/explore_tiles.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Cause.dart';
