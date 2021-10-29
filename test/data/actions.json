@@ -7,8 +7,10 @@
         "causes": [
           {
             "id": 1,
-            "title": "Name of the campaign",
-            "icon": "ic-abc"
+            "title": "Cause title",
+            "icon": "ic-abc",
+            "description": "Cause description",
+            "selected": true
           }
         ],
         "time": 2.0,

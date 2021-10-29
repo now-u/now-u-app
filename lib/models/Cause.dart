@@ -57,7 +57,7 @@ class Cause extends ListCause {
     super(id: id, title: title, icon: icon, description: description, selected: selected);
 
   Cause.fromJson(Map<String, dynamic> json): 
-    _headerImage = json['headerImage'],
+    _headerImage = json['header_image'],
     _actions = json['actions'].map((actionData) => ListCauseAction.fromJson(actionData)).toList().cast<ListCauseAction>(),
     super.fromJson(json);
 }
