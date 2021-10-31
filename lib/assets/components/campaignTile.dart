@@ -177,8 +177,7 @@ class CampaignTileWithJoinButtons extends StatelessWidget {
                 height: 100,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image:
-                        customNetworkImageProvider(campaign.headerImage),
+                    image: customNetworkImageProvider(campaign.headerImage),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -195,8 +194,7 @@ class CampaignTileWithJoinButtons extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  NumberOfCampaignersIndicator(
-                      campaign.numberOfCampaigners),
+                  NumberOfCampaignersIndicator(campaign.numberOfCampaigners),
                 ]),
               ),
               Container(

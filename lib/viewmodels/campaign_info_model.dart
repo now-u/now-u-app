@@ -19,7 +19,8 @@ class CampaignInfoViewModel extends BaseModel with CampaignWrite {
   set setCampaign(Campaign? campaign) => _campaign = campaign;
 
   Future fetchCampaign(int? campaignId) async {
-    _campaign = await (_campaignService!.getCampaign(campaignId) as Future<Campaign?>);
+    _campaign =
+        await (_campaignService!.getCampaign(campaignId) as Future<Campaign?>);
     notifyListeners();
   }
 

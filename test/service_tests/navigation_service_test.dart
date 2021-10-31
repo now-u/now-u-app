@@ -120,7 +120,8 @@ void main() {
         });
 
         // Mock dialog service so it doesnt do a popup
-        MockDialogService mockDialogService = getAndRegisterMockDialogService() as MockDialogService;
+        MockDialogService mockDialogService =
+            getAndRegisterMockDialogService() as MockDialogService;
         when(mockDialogService.showDialog(
                 buttons: anyNamed('buttons'),
                 title: anyNamed('title'),

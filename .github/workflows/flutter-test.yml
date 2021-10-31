@@ -18,7 +18,6 @@ jobs:
       
       - uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.0.1'
           channel: 'stable'
 
       - run: dart --version

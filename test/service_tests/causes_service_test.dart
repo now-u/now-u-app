@@ -13,15 +13,18 @@ import 'package:app/models/Cause.dart';
 void main() {
   setupLocator();
   CausesService _causesService = locator<CausesService>();
-  Map<String, String> unauthenticatedHeaders = {"Content-Type": "application/json; charset=UTF-8"};
+  Map<String, String> unauthenticatedHeaders = {
+    "Content-Type": "application/json; charset=UTF-8"
+  };
 
   group('get causes', () {
-    test('returns a List of ListCauses if the request is successfully', () async {
+    test('returns a List of ListCauses if the request is successfully',
+        () async {
       final client = MockClient();
       _causesService.client = client;
 
-      when(client
-              .get(Uri.parse('https://api.now-u.com/api/v2/causes'), headers: unauthenticatedHeaders))
+      when(client.get(Uri.parse('https://api.now-u.com/api/v2/causes'),
+              headers: unauthenticatedHeaders))
           .thenAnswer((_) async =>
               http.Response(await readTestData("causes.json"), 200));
 
@@ -38,14 +41,14 @@ void main() {
 
     // TODO error case
   });
-  
+
   group('get cause', () {
     test('returns a Cause if the request is successfully', () async {
       final client = MockClient();
       _causesService.client = client;
 
-      when(client
-              .get(Uri.parse('https://api.now-u.com/api/v2/cause/1'), headers: unauthenticatedHeaders))
+      when(client.get(Uri.parse('https://api.now-u.com/api/v2/cause/1'),
+              headers: unauthenticatedHeaders))
           .thenAnswer((_) async =>
               http.Response(await readTestData("cause.json"), 200));
 

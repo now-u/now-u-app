@@ -53,8 +53,7 @@ class LearningCentrePage extends StatelessWidget {
                                           .map((c) => c.id)
                                           .contains(campaignId)
                                       ? model.campaigns!
-                                          .firstWhere(
-                                              (c) => c.id == campaignId)
+                                          .firstWhere((c) => c.id == campaignId)
                                           .title
                                       : "Learning centre",
                                   style: Theme.of(context)

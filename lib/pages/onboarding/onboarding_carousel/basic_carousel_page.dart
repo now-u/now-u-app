@@ -62,10 +62,13 @@ class BasicCarouselPage extends StatelessWidget {
                       text: TextSpan(
                         text: normalText,
                         style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.bodyText1!.copyWith(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400),
+                          Theme.of(context)
+                              .primaryTextTheme
+                              .bodyText1!
+                              .copyWith(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400),
                         ),
                         children: additionalText,
                       ),

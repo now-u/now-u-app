@@ -53,12 +53,11 @@ class ActionType {
   Color primaryColor;
   Color secondaryColor;
 
-  ActionType({
-    required this.name,
-    required this.icon,
-    required this.primaryColor,
-    required this.secondaryColor
-  });
+  ActionType(
+      {required this.name,
+      required this.icon,
+      required this.primaryColor,
+      required this.secondaryColor});
 }
 
 ActionType getInvolved = ActionType(
@@ -227,14 +226,18 @@ Tuple3<String?, String?, String?> generateCampaingActionDesc(
 class ListCauseAction {
   int _id;
   int get id => _id;
-  
+
   String _title;
   String get title => _title;
 
   /// The type of the action
   CampaignActionType _type;
+
   /// Returns the type if its know otherwise return Other
-  CampaignActionType get type => campaignActionTypeData.containsKey(_type) ? _type : CampaignActionType.Other;
+  CampaignActionType get type => campaignActionTypeData.containsKey(_type)
+      ? _type
+      : CampaignActionType.Other;
+
   /// The super type is a bigger category than the type - This is used for the
   /// styling.
   ActionType get superType => campaignActionTypeData[type]['type'];
@@ -247,21 +250,24 @@ class ListCauseAction {
   // Although at the api level an action can be in many causes, for now we are
   // only showing a single cause in the UI.
   ListCause? get cause => _causes.length > 0 ? _causes[0] : null;
-  
+
   double _time;
   double get time => _time;
-  String get timeText => timeBrackets.firstWhere((b) => b['maxTime'] > time)['text'];
+  String get timeText =>
+      timeBrackets.firstWhere((b) => b['maxTime'] > time)['text'];
 
   DateTime _createdAt;
   DateTime? _releasedAt;
+
   /// Return when this action was released
   DateTime get releaseTime => _releasedAt == null ? _createdAt : _releasedAt!;
-  bool get isNew => DateTime.now().difference(releaseTime).compareTo(Duration(days: 2)) < 0;
+  bool get isNew =>
+      DateTime.now().difference(releaseTime).compareTo(Duration(days: 2)) < 0;
 
   /// Whether the user has completed this action
   bool _completed;
   get isCompleted => _completed;
-  
+
   /// Whether the user has completed this action
   bool _starred;
   get isStarred => _starred;
@@ -275,34 +281,37 @@ class ListCauseAction {
     required bool completed,
     required bool starred,
     required double time,
-
     DateTime? releasedAt,
-  }) :
-    _id = id,
-    _title = title,
-    _type = type,
-    _causes = causes,
-    _time = time,
-    _createdAt = createdAt,
-    _releasedAt = releasedAt,
-    _completed = completed,
-    _starred = starred;
-  
-  ListCauseAction.fromJson(Map<String, dynamic> json) :
-      _id = json['id'],
-      _title = json['title'],
-      _type = campaignActionTypeFromString(json['type']),
-      _causes = json['causes'].map((causeJson) => ListCause.fromJson(causeJson)).toList().cast<ListCause>(),
-      _time = json['time'].toDouble(),
-      _createdAt = DateTime.parse(json['created_at']),
-      _releasedAt = json['release_date'] == null ? null : DateTime.parse(json['release_date']),
-      _completed = json['completed'],
-      _starred = json['starred'];
+  })  : _id = id,
+        _title = title,
+        _type = type,
+        _causes = causes,
+        _time = time,
+        _createdAt = createdAt,
+        _releasedAt = releasedAt,
+        _completed = completed,
+        _starred = starred;
 
-    Future<CampaignAction> getAction() async {
-      CausesService _causesService = locator<CausesService>();
-      return _causesService.getAction(id);
-    }
+  ListCauseAction.fromJson(Map<String, dynamic> json)
+      : _id = json['id'],
+        _title = json['title'],
+        _type = campaignActionTypeFromString(json['type']),
+        _causes = json['causes']
+            .map((causeJson) => ListCause.fromJson(causeJson))
+            .toList()
+            .cast<ListCause>(),
+        _time = json['time'].toDouble(),
+        _createdAt = DateTime.parse(json['created_at']),
+        _releasedAt = json['release_date'] == null
+            ? null
+            : DateTime.parse(json['release_date']),
+        _completed = json['completed'],
+        _starred = json['starred'];
+
+  Future<CampaignAction> getAction() async {
+    CausesService _causesService = locator<CausesService>();
+    return _causesService.getAction(id);
+  }
 }
 
 class CampaignAction extends ListCauseAction {
@@ -325,19 +334,26 @@ class CampaignAction extends ListCauseAction {
     required bool starred,
     required double time,
     DateTime? releasedAt,
-
     String? whatDescription,
     String? whyDescription,
     String? link,
-  }) : 
-    _whatDescription = whatDescription,
-    _whyDescription = whyDescription,
-    _link = link,
-    super(id: id, title: title, type: type, causes: causes, createdAt: createdAt, completed: completed, starred: starred, releasedAt: releasedAt, time: time);
+  })  : _whatDescription = whatDescription,
+        _whyDescription = whyDescription,
+        _link = link,
+        super(
+            id: id,
+            title: title,
+            type: type,
+            causes: causes,
+            createdAt: createdAt,
+            completed: completed,
+            starred: starred,
+            releasedAt: releasedAt,
+            time: time);
 
-  CampaignAction.fromJson(Map<String, dynamic> json) :
-    _whatDescription = json['what_description'],
-    _whyDescription = json['why_description'],
-    _link = json['link'],
-    super.fromJson(json);
+  CampaignAction.fromJson(Map<String, dynamic> json)
+      : _whatDescription = json['what_description'],
+        _whyDescription = json['why_description'],
+        _link = json['link'],
+        super.fromJson(json);
 }

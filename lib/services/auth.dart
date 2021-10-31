@@ -25,7 +25,7 @@ class AuthenticationService extends ApiService {
   final SharedPreferencesService? _sharedPreferencesService =
       locator<SharedPreferencesService>();
   final DeviceInfoService? _deviceInfoService = locator<DeviceInfoService>();
-  
+
   User? _currentUser;
   User? get currentUser => _currentUser;
 
@@ -134,8 +134,8 @@ class AuthenticationService extends ApiService {
   }
 
   Future<User>? getUser(String token) async {
-    http.Response userResponse =
-        await http.get(Uri.parse(domainPrefix + 'users/me'), headers: <String, String>{
+    http.Response userResponse = await http
+        .get(Uri.parse(domainPrefix + 'users/me'), headers: <String, String>{
       'token': token,
     });
     if (handleAuthRequestErrors(userResponse) != null) {
@@ -364,7 +364,8 @@ class AuthenticationService extends ApiService {
   Future<bool> completeLearningResource(int? learningResourceId) async {
     try {
       http.Response response = await http.post(
-        Uri.parse(domainPrefix + 'users/me/learning_resources/$learningResourceId'),
+        Uri.parse(
+            domainPrefix + 'users/me/learning_resources/$learningResourceId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'token': currentUser!.token!,
