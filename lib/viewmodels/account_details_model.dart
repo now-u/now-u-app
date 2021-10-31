@@ -55,8 +55,8 @@ class AccountDetailsViewModel extends BaseModel {
 
   Future<void> save() async {
     setBusy(true);
-    bool success = await _authenticationService!.updateUserDetails(
-        name: _name, dob: _dob, orgCode: _orgCode);
+    bool success = await _authenticationService!
+        .updateUserDetails(name: _name, dob: _dob, orgCode: _orgCode);
 
     if (success) {
       print("Success");

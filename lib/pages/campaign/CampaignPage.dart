@@ -47,8 +47,8 @@ class CampaignPage extends StatelessWidget {
                           itemBuilder: (BuildContext context, int index) {
                             return CampaignTileWithJoinButtons(
                               campaign: model.campaigns![index],
-                              isJoined: model
-                                  .isJoined(model.campaigns![index].id),
+                              isJoined:
+                                  model.isJoined(model.campaigns![index].id),
                               joinCampaign: model.joinCampaign,
                               leaveCampaign: model.leaveCampaign,
                             );

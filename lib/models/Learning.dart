@@ -24,8 +24,7 @@ class LearningCentre {
   }
 
   bool containsNew() {
-    var c =
-        learningTopics!.firstWhereOrNull((r) => r.containsNew());
+    var c = learningTopics!.firstWhereOrNull((r) => r.containsNew());
     return c != null;
   }
 }

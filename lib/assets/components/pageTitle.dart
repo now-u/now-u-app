@@ -37,7 +37,8 @@ class PageTitle extends StatelessWidget {
         SafeArea(
           child: Padding(
             padding: EdgeInsets.fromLTRB(0, TOP_PADDING, 0, BOTTOM_PADDING),
-            child: Text(title, style: Theme.of(context).primaryTextTheme.headline1),
+            child: Text(title,
+                style: Theme.of(context).primaryTextTheme.headline1),
           ),
         ),
         Container(

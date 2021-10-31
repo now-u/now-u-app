@@ -26,7 +26,8 @@ class OrganisationService {
   Future<Organisation?> getOrganisation(int id) async {
     try {
       print("Getting org");
-      var response = await http.get(Uri.parse(domainPrefix + "organisations/$id"));
+      var response =
+          await http.get(Uri.parse(domainPrefix + "organisations/$id"));
       if (response.statusCode == 200) {
         Organisation org =
             Organisation.fromJson(json.decode(response.body)['data']);

@@ -198,8 +198,10 @@ class IntroPageSection extends StatelessWidget {
                   style: TextStyle(
                     fontSize:
                         Theme.of(context).primaryTextTheme.headline1!.fontSize,
-                    fontWeight:
-                        Theme.of(context).primaryTextTheme.headline1!.fontWeight,
+                    fontWeight: Theme.of(context)
+                        .primaryTextTheme
+                        .headline1!
+                        .fontWeight,
                     color: Colors.white,
                   )),
               SizedBox(
