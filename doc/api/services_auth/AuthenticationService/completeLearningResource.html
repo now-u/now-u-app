@@ -67,7 +67,8 @@
   <pre class="language-dart"><code class="language-dart">Future&lt;bool&gt; completeLearningResource(int? learningResourceId) async {
   try {
     http.Response response = await http.post(
-      Uri.parse(domainPrefix + &#39;users&#47;me&#47;learning_resources&#47;$learningResourceId&#39;),
+      Uri.parse(
+          domainPrefix + &#39;users&#47;me&#47;learning_resources&#47;$learningResourceId&#39;),
       headers: &lt;String, String&gt;{
         &#39;Content-Type&#39;: &#39;application&#47;json; charset=UTF-8&#39;,
         &#39;token&#39;: currentUser!.token!,

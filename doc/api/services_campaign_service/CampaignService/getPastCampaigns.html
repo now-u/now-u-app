@@ -64,7 +64,8 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;List&lt;Campaign&gt;?&gt; getPastCampaigns() async {
-  var response = await http.get(Uri.parse(domainPrefix + &quot;campaigns&quot; + &quot;?old=true&quot;));
+  var response =
+      await http.get(Uri.parse(domainPrefix + &quot;campaigns&quot; + &quot;?old=true&quot;));
   if (response.statusCode == 200) {
     &#47;&#47; Campaigns cs = Campaigns.fromJson(json.decode(response.body)[&#39;data&#39;]);
     &#47;&#47; return cs.getActiveCampaigns();

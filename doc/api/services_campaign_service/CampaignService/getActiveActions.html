@@ -96,8 +96,7 @@
         !user.getStarredActions()!.contains(a.id));
   }
   if (!(includeCompleted ?? false)) {
-    actions
-        .removeWhere((a) =&gt; user.getCompletedActions()!.contains(a.id));
+    actions.removeWhere((a) =&gt; user.getCompletedActions()!.contains(a.id));
   }
   if (!(includeStarred ?? true)) {
     actions.removeWhere((a) =&gt; user.getStarredActions()!.contains(a.id));

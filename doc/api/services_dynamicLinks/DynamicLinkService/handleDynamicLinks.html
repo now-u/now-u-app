@@ -66,7 +66,7 @@
   <pre class="language-dart"><code class="language-dart">Future handleDynamicLinks() async {
   bool gotIosLink = false;
   if (await _deviceInfoService!.isIOS13) {
-  await initUniLinks();
+    await initUniLinks();
   }
   if (!gotIosLink) {
     &#47;&#47; 1. Get the initial dynamic link if the app is opened with a dynamic link

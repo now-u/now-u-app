@@ -65,8 +65,8 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;User&gt;? getUser(String token) async {
-  http.Response userResponse =
-      await http.get(Uri.parse(domainPrefix + &#39;users&#47;me&#39;), headers: &lt;String, String&gt;{
+  http.Response userResponse = await http
+      .get(Uri.parse(domainPrefix + &#39;users&#47;me&#39;), headers: &lt;String, String&gt;{
     &#39;token&#39;: token,
   });
   if (handleAuthRequestErrors(userResponse) != null) {

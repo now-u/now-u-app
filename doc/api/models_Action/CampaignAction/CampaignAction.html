@@ -80,15 +80,22 @@
   required bool starred,
   required double time,
   DateTime? releasedAt,
-
   String? whatDescription,
   String? whyDescription,
   String? link,
-}) :
-  _whatDescription = whatDescription,
-  _whyDescription = whyDescription,
-  _link = link,
-  super(id: id, title: title, type: type, causes: causes, createdAt: createdAt, completed: completed, starred: starred, releasedAt: releasedAt, time: time);</code></pre>
+})  : _whatDescription = whatDescription,
+      _whyDescription = whyDescription,
+      _link = link,
+      super(
+          id: id,
+          title: title,
+          type: type,
+          causes: causes,
+          createdAt: createdAt,
+          completed: completed,
+          starred: starred,
+          releasedAt: releasedAt,
+          time: time);</code></pre>
 </section>
 
 

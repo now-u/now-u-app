@@ -141,8 +141,7 @@ Widget build(BuildContext context) {
                                         .map((c) =&gt; c.id)
                                         .contains(campaignId)
                                     ? model.campaigns!
-                                        .firstWhere(
-                                            (c) =&gt; c.id == campaignId)
+                                        .firstWhere((c) =&gt; c.id == campaignId)
                                         .title
                                     : &quot;Learning centre&quot;,
                                 style: Theme.of(context)

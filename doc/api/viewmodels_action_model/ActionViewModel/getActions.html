@@ -88,8 +88,7 @@
     }
     if (hasSelected(selections[&#39;categories&#39;]!)) {
       &#47;&#47; Remove the ones with the wrong categories
-      tmpActions
-          .removeWhere((a) =&gt; !selections[&#39;categories&#39;]![a.superType]);
+      tmpActions.removeWhere((a) =&gt; !selections[&#39;categories&#39;]![a.superType]);
     }
 
     _actions = tmpActions;

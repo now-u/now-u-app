@@ -68,8 +68,8 @@
   String _apiKey =
       _remoteConfigService!.getValue(RemoteConfigKey.googlePlaceAPIKey);
 
-  final request =
-      Uri.parse(&#39;https:&#47;&#47;maps.googleapis.com&#47;maps&#47;api&#47;place&#47;details&#47;json?place_id=$placeId&amp;fields=address_component&amp;key=$_apiKey&amp;sessiontoken=$_sessionToken&#39;);
+  final request = Uri.parse(
+      &#39;https:&#47;&#47;maps.googleapis.com&#47;maps&#47;api&#47;place&#47;details&#47;json?place_id=$placeId&amp;fields=address_component&amp;key=$_apiKey&amp;sessiontoken=$_sessionToken&#39;);
   final response = await client.get(request);
 
   if (response.statusCode == 200) {

@@ -131,17 +131,15 @@ Widget build(BuildContext context) {
                   width: 60,
                   height: 60,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      color: completed ? action.primaryColor : action.secondaryColor,
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    color: completed
+                        ? action.primaryColor
+                        : action.secondaryColor,
                   ),
                   child: Center(
                     child: Icon(
-                      completed
-                          ? Icons.check
-                          : action.icon,
-                      color: completed
-                          ? Colors.white
-                          : action.primaryColor,
+                      completed ? Icons.check : action.icon,
+                      color: completed ? Colors.white : action.primaryColor,
                       size: 30,
                     ),
                   ),

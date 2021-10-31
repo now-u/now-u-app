@@ -66,7 +66,8 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">fetchLearningCentre(int id) async {
   setBusy(true);
-  _learningCenter = await (_campaignService!.getLearningCentre(id) as Future&lt;LearningCentre?&gt;);
+  _learningCenter = await (_campaignService!.getLearningCentre(id)
+      as Future&lt;LearningCentre?&gt;);
   setBusy(false);
   notifyListeners();
 }</code></pre>

@@ -67,7 +67,8 @@
   <pre class="language-dart"><code class="language-dart">Future&lt;bool&gt; dismissNotification(int? notificationId) async {
   try {
     http.Response response = await http.put(
-        Uri.parse(domainPrefix + &#39;users&#47;me&#47;notifications&#47;$notificationId&#47;dismiss&#39;),
+        Uri.parse(
+            domainPrefix + &#39;users&#47;me&#47;notifications&#47;$notificationId&#47;dismiss&#39;),
         headers: &lt;String, String&gt;{
           &#39;token&#39;: _authenticationService!.currentUser!.token!,
         });

@@ -115,8 +115,7 @@ Widget build(BuildContext context) {
               height: 100,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image:
-                      customNetworkImageProvider(campaign.headerImage),
+                  image: customNetworkImageProvider(campaign.headerImage),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -133,8 +132,7 @@ Widget build(BuildContext context) {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                NumberOfCampaignersIndicator(
-                    campaign.numberOfCampaigners),
+                NumberOfCampaignersIndicator(campaign.numberOfCampaigners),
               ]),
             ),
             Container(

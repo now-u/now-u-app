@@ -68,7 +68,9 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">ApiException getExceptionForResponse(http.Response response) {
-  ApiExceptionType exceptionType = responseCodeExceptionMapping[response.statusCode] ?? ApiExceptionType.UNKNOWN;
+  ApiExceptionType exceptionType =
+      responseCodeExceptionMapping[response.statusCode] ??
+          ApiExceptionType.UNKNOWN;
   return ApiException(type: exceptionType, statusCode: response.statusCode);
 }</code></pre>
 </section>

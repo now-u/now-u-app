@@ -67,7 +67,8 @@
   <pre class="language-dart"><code class="language-dart">Future&lt;Organisation?&gt; getOrganisation(int id) async {
   try {
     print(&quot;Getting org&quot;);
-    var response = await http.get(Uri.parse(domainPrefix + &quot;organisations&#47;$id&quot;));
+    var response =
+        await http.get(Uri.parse(domainPrefix + &quot;organisations&#47;$id&quot;));
     if (response.statusCode == 200) {
       Organisation org =
           Organisation.fromJson(json.decode(response.body)[&#39;data&#39;]);

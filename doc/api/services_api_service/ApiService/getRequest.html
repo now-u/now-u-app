@@ -75,19 +75,21 @@ unsucessful.</p>
   Map&lt;String, dynamic&gt;? stringParams;
   if (params != null) {
     &#47;&#47; Parse param values
-    stringParams = Map.fromIterable(params.keys, key: (k) =&gt; k , value: (k) {
-      dynamic value = params[k];
-      &#47;&#47; If the value is already iterable (this includes strings and lists)
-      &#47;&#47; return it
-      if (value is List) {
-        return &quot;[&quot; + value.map((item) =&gt; item.toString()).join(&quot;,&quot;) + &quot;]&quot;;
-      }
-      if (value is Iterable) {
-        return value;
-      }
-      &#47;&#47; Otherwise cast it to a string
-      return params[k].toString();
-    });
+    stringParams = Map.fromIterable(params.keys,
+        key: (k) =&gt; k,
+        value: (k) {
+          dynamic value = params[k];
+          &#47;&#47; If the value is already iterable (this includes strings and lists)
+          &#47;&#47; return it
+          if (value is List) {
+            return &quot;[&quot; + value.map((item) =&gt; item.toString()).join(&quot;,&quot;) + &quot;]&quot;;
+          }
+          if (value is Iterable) {
+            return value;
+          }
+          &#47;&#47; Otherwise cast it to a string
+          return params[k].toString();
+        });
   }
 
   final uri = Uri.https(baseUrl, baseUrlPath + path, stringParams);

@@ -66,8 +66,8 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future getLearningCentre(int campaignId) async {
   try {
-    http.Response response = await http
-        .get(Uri.parse(domainPrefix + &quot;campaigns&#47;$campaignId&#47;learning_topics&quot;));
+    http.Response response = await http.get(
+        Uri.parse(domainPrefix + &quot;campaigns&#47;$campaignId&#47;learning_topics&quot;));
     if (response.statusCode == 200) {
       List jsonData = json.decode(response.body)[&quot;data&quot;] as List;
       LearningCentre lc = LearningCentre.fromJson(jsonData);

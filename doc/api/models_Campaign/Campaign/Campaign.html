@@ -85,30 +85,34 @@
   required List&lt;ListCause&gt; causes,
   DateTime? startDate,
   DateTime? endDate,
-
   required String description,
   required List&lt;CampaignAction&gt; actions,
-
   required String videoLink,
   required String infographicUrl,
   required int numberOfCampaigners,
   required int numberOfActionsCompleted,
-
   List&lt;Organisation&gt;? generalPartners,
   List&lt;Organisation&gt;? campaignPartners,
   List&lt;String&gt;? keyAims,
-
-}) :
-  &#47;&#47; Default lists to empty
-  _description = description,
-  _generalPartners = generalPartners ?? [],
-  _campaignPartners = campaignPartners ?? [],
-  _keyAims = keyAims ?? [],
-  _videoLink = videoLink,
-  _infographicUrl = infographicUrl,
-  _numberOfCampaigners = numberOfCampaigners,
-  _numberOfActionsCompleted = numberOfActionsCompleted,
-  super(id: id, title: title, headerImage: headerImage, shortName: shortName, startDate: startDate, endDate: endDate, completed: completed, causes: causes);</code></pre>
+})  :
+      &#47;&#47; Default lists to empty
+      _description = description,
+      _generalPartners = generalPartners ?? [],
+      _campaignPartners = campaignPartners ?? [],
+      _keyAims = keyAims ?? [],
+      _videoLink = videoLink,
+      _infographicUrl = infographicUrl,
+      _numberOfCampaigners = numberOfCampaigners,
+      _numberOfActionsCompleted = numberOfActionsCompleted,
+      super(
+          id: id,
+          title: title,
+          headerImage: headerImage,
+          shortName: shortName,
+          startDate: startDate,
+          endDate: endDate,
+          completed: completed,
+          causes: causes);</code></pre>
 </section>
 
 

@@ -66,7 +66,8 @@
   <pre class="language-dart"><code class="language-dart">Future&lt;List&lt;ListCause&gt;&gt; getCauses() async {
   Map response = await getRequest(&quot;causes&quot;);
   List causesData = response[&quot;data&quot;];
-  List&lt;ListCause&gt; causes = causesData.map((causeData) =&gt; ListCause.fromJson(causeData)).toList();
+  List&lt;ListCause&gt; causes =
+      causesData.map((causeData) =&gt; ListCause.fromJson(causeData)).toList();
   return causes;
 }</code></pre>
 </section>

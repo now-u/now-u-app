@@ -131,12 +131,11 @@ Widget build(BuildContext context) {
                           Container(
                             height: 45,
                             width: MediaQuery.of(context).size.width -
-                                    (outerHpadding ?? defaultOuterHpadding) *
-                                        2 -
-                                    (innerHpadding ?? defaultInnerHpadding) *
-                                        2 -
-                                    (iconWidth ?? defaultIconWidth) -
-                                    10 - (extraOverflow ?? 40),
+                                (outerHpadding ?? defaultOuterHpadding) * 2 -
+                                (innerHpadding ?? defaultInnerHpadding) * 2 -
+                                (iconWidth ?? defaultIconWidth) -
+                                10 -
+                                (extraOverflow ?? 40),
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(

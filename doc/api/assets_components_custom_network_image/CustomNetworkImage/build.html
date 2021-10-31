@@ -115,9 +115,11 @@ Widget build(BuildContext context) {
     placeholder: placeholder == null &amp;&amp; progressIndicatorBuilder == null
         ? (context, url) =&gt; Center(child: CircularProgressIndicator())
         : placeholder as Widget Function(BuildContext, String)?,
-    errorWidget: errorWidget as Widget Function(BuildContext, String, dynamic)? ??
-        (context, url, error) =&gt; Center(child: Icon(Icons.error)),
-    progressIndicatorBuilder: progressIndicatorBuilder as Widget Function(BuildContext, String, DownloadProgress)?,
+    errorWidget:
+        errorWidget as Widget Function(BuildContext, String, dynamic)? ??
+            (context, url, error) =&gt; Center(child: Icon(Icons.error)),
+    progressIndicatorBuilder: progressIndicatorBuilder as Widget Function(
+        BuildContext, String, DownloadProgress)?,
     fit: fit,
     height: height,
     cacheManager: cacheManager,

@@ -59,16 +59,21 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">ListCauseAction.fromJson(Map&lt;String, dynamic&gt; json) :
-    _id = json[&#39;id&#39;],
-    _title = json[&#39;title&#39;],
-    _type = campaignActionTypeFromString(json[&#39;type&#39;]),
-    _causes = json[&#39;causes&#39;].map((causeJson) =&gt; ListCause.fromJson(causeJson)).toList().cast&lt;ListCause&gt;(),
-    _time = json[&#39;time&#39;].toDouble(),
-    _createdAt = DateTime.parse(json[&#39;created_at&#39;]),
-    _releasedAt = json[&#39;release_date&#39;] == null ? null : DateTime.parse(json[&#39;release_date&#39;]),
-    _completed = json[&#39;completed&#39;],
-    _starred = json[&#39;starred&#39;];</code></pre>
+  <pre class="language-dart"><code class="language-dart">ListCauseAction.fromJson(Map&lt;String, dynamic&gt; json)
+    : _id = json[&#39;id&#39;],
+      _title = json[&#39;title&#39;],
+      _type = campaignActionTypeFromString(json[&#39;type&#39;]),
+      _causes = json[&#39;causes&#39;]
+          .map((causeJson) =&gt; ListCause.fromJson(causeJson))
+          .toList()
+          .cast&lt;ListCause&gt;(),
+      _time = json[&#39;time&#39;].toDouble(),
+      _createdAt = DateTime.parse(json[&#39;created_at&#39;]),
+      _releasedAt = json[&#39;release_date&#39;] == null
+          ? null
+          : DateTime.parse(json[&#39;release_date&#39;]),
+      _completed = json[&#39;completed&#39;],
+      _starred = json[&#39;starred&#39;];</code></pre>
 </section>
 
 
