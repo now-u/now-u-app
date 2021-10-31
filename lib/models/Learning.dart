@@ -36,31 +36,22 @@ class LearningCentre {
 /// which the user can use to find out more information about this topic.
 class LearningTopic {
   /// Api id
-  int _id;
-  int get id => _id;
-
+  final int id;
   /// The title of a the topic, usually a question 
-  String _title;
-  String get title => _title;
-
+  final String title;
   /// Link for header image for this topic 
-  String _imageLink;
-  String get imageLink => _imageLink;
-
+  final String imageLink;
   /// Our answer to the topic question
-  String _ourAnswer;
-  String get ourAnswer => _ourAnswer;
-
+  final String ourAnswer;
   /// The additional resources associated with this topic
-  List<LearningResource> _resources;
-  List<LearningResource> get resources => _resources;
+  final List<LearningResource> resources;
 
   LearningTopic.fromJson(Map json) :
-    _id = json['id'],
-    _title = json['title'],
-    _imageLink = json['image_link'],
-    _ourAnswer = json['our_answer'],
-    _resources = (json['learning_resources'])
+    id = json['id'],
+    title = json['title'],
+    imageLink = json['image_link'],
+    ourAnswer = json['our_answer'],
+    resources = (json['learning_resources'])
         .map((e) => LearningResource.fromJson(e))
         .toList()
         .cast<LearningResource>();
@@ -74,8 +65,8 @@ class LearningTopic {
 }
 
 class LearningResourceType {
-  String name;
-  IconData icon;
+  final String name;
+  final IconData icon;
 
   LearningResourceType({
     required this.name,
@@ -104,46 +95,33 @@ LearningResourceType getResourceTypeFromString(String typeName) {
 /// has completed the resource. // TODO Do this
 class LearningResource {
   /// Api id 
-  int _id;
-  int get id => _id;
-
+  final int id;
   /// Title of the resource
-  String _title;
-  String get title => _title;
-
+  final String title;
   /// Time expected to complete the resource (in mins) 
-  double _time;
-  double get time => _time;
-  String get timeText => timeBrackets.firstWhere((b) => b['maxTime'] > _time)['text'];
-
+  final double time;
+  String get timeText => timeBrackets.firstWhere((b) => b['maxTime'] > time)['text'];
   /// Link to the resource (This could be internal or external see [NavigationService])
-  String _link;
-  String get link => _link;
-
+  final String link;
   /// The type of the resource (eg article/video)
-  LearningResourceType _type;
-  LearningResourceType get type => _type;
-  IconData get icon => _type.icon;
-
-  DateTime _createdAt;
-  DateTime get createdAt => _createdAt;
-
+  final LearningResourceType type;
+  IconData get icon => type.icon;
+  final DateTime createdAt;
   /// String name of the source of the article eg BBC news
-  String? _source;
-  String? get source => _source;
+  final String? source;
 
   LearningResource.fromJson(Map json) :
-    _id = json['id'],
-    _title = json['title'],
-    _time = json['time'],
-    _link = json['link'],
-    _type = getResourceTypeFromString(json['type']),
-    _createdAt = DateTime.parse(json['created_at']),
-    _source = json['source'];
+    id = json['id'],
+    title = json['title'],
+    time = json['time'],
+    link = json['link'],
+    type = getResourceTypeFromString(json['type']),
+    createdAt = DateTime.parse(json['created_at']),
+    source = json['source'];
 
   /// Whether the resource has been created in the last 2 days 
   // TODO move to api
   bool isNew() {
-    return DateTime.now().difference(_createdAt).compareTo(Duration(days: 2)) < 0;
+    return DateTime.now().difference(createdAt).compareTo(Duration(days: 2)) < 0;
   }
 }
