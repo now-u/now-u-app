@@ -44,6 +44,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-function">customTileBoxShadow</span> function 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
  
 </h1></div>
 
@@ -62,7 +63,7 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">BoxShadow customTileBoxShadow(bool onWhiteBackground) =&gt; BoxShadow(
-      color: onWhiteBackground ?? false ? shadowWhiteColor : shadowColor,
+      color: onWhiteBackground ? shadowWhiteColor : shadowColor,
       offset: shadowOffset,
       blurRadius: shadowBlurRadius,
     );</code></pre>

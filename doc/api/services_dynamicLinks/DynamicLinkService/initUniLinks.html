@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">initUniLinks</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -65,20 +66,20 @@
   <pre class="language-dart"><code class="language-dart">Future&lt;bool&gt; initUniLinks() async {
   &#47;&#47; Example deeplink
   &#47;&#47; com.nowu.app:&#47;&#47;loginMobile?token=14087f13e394b73447607a8da3828056271d4fd789fd1dc6cf5f3ba4601836295dd319a0c5e69f64
+  bool gotLink = false;
 
   &#47;&#47; Attach a listener to the stream
-  _sub = getUriLinksStream().listen((Uri deepLink) {
-    if (deepLink == null) {
-      return false;
+  _sub = uriLinkStream.listen((Uri? deepLink) {
+    if (deepLink != null) {
+      gotLink = true;
+      _handleDeepLink(deepLink);
     }
-    _handleDeepLink(deepLink);
-    return true;
   }, onError: (err) {
     &#47;&#47; Handle exception by warning the user their action did not succeed
     print(&#39;D| $err&#39;);
   });
   &#47;&#47; TODO: Don&#39;t forget to call _sub.cancel() in dispose()
-  return false;
+  return gotLink;
 }</code></pre>
 </section>
 

@@ -44,6 +44,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-function">customRoute</span> function 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
  
 </h1></div>
 
@@ -51,8 +52,8 @@
         
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/widgets/PageRoute-class.html">PageRoute</a></span>
-<span class="name ">customRoute</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="customRoute-param-builder">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/WidgetBuilder.html">WidgetBuilder</a></span> <span class="parameter-name">builder</span>, </span></li>
-<li><span class="parameter" id="customRoute-param-settings"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/RouteSettings-class.html">RouteSettings</a></span> <span class="parameter-name">settings</span>}</span></li>
+<span class="name ">customRoute</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="customRoute-param-builder">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/WidgetBuilder.html">WidgetBuilder</a>?</span> <span class="parameter-name">builder</span>, </span></li>
+<li><span class="parameter" id="customRoute-param-settings"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/RouteSettings-class.html">RouteSettings</a>?</span> <span class="parameter-name">settings</span>}</span></li>
 </ol>)
 
     </section>
@@ -62,10 +63,10 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">PageRoute customRoute({WidgetBuilder builder, RouteSettings settings}) {
+  <pre class="language-dart"><code class="language-dart">PageRoute customRoute({WidgetBuilder? builder, RouteSettings? settings}) {
   return Platform.isAndroid
-      ? CustomAndroidRoute(builder: builder, settings: settings)
-      : CustomIosRoute(builder: builder, settings: settings);
+      ? CustomAndroidRoute(builder: builder!, settings: settings)
+      : CustomIosRoute(builder: builder!, settings: settings);
 }</code></pre>
 </section>
 

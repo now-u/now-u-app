@@ -45,13 +45,14 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">completeLearningResource</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
       
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
-<span class="name ">completeLearningResource</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="completeLearningResource-param-id"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">id</span></span></li>
+<span class="name ">completeLearningResource</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="completeLearningResource-param-id"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">id</span></span></li>
 </ol>)
 
       
@@ -63,9 +64,9 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future completeLearningResource(int id) async {
+  <pre class="language-dart"><code class="language-dart">Future completeLearningResource(int? id) async {
   setBusy(true);
-  await _authenticationService.completeLearningResource(id);
+  await _authenticationService!.completeLearningResource(id);
   setBusy(false);
   notifyListeners();
 }</code></pre>

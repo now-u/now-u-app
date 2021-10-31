@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-property">userOrganisation</span> property 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
 
@@ -52,7 +53,7 @@
 <section id="getter">
 
 <section class="multi-line-signature">
-  <span class="returntype"><a href="../../models_Organisation/Organisation-class.html">Organisation</a></span>
+  <span class="returntype"><a href="../../models_Organisation/Organisation-class.html">Organisation</a>?</span>
   <span class="name ">userOrganisation</span>
   
 
@@ -63,8 +64,8 @@
 
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Organisation get userOrganisation =&gt;
-    _authenticationService.currentUser.organisation;</code></pre>
+  <pre class="language-dart"><code class="language-dart">Organisation? get userOrganisation =&gt;
+    _authenticationService!.currentUser!.organisation;</code></pre>
 </section>
 
 </section>

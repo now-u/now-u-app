@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">build</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -106,7 +107,7 @@ and</li>
   <pre class="language-dart"><code class="language-dart">@override
 Widget build(BuildContext context) {
   return GestureDetector(
-    onTap: onTap,
+    onTap: onTap as void Function()?,
     child: Padding(
         padding: EdgeInsets.symmetric(
             vertical: 5, horizontal: outerHpadding ?? defaultOuterHpadding),
@@ -117,11 +118,11 @@ Widget build(BuildContext context) {
                 vertical: 10,
                 horizontal: innerHpadding ?? defaultInnerHpadding),
             child: Row(children: &lt;Widget&gt;[
-              leading,
+              leading!,
               SizedBox(width: 10),
               Expanded(
                 child: SelectionItem(
-                    onClick: onTap,
+                    onClick: onTap as void Function()?,
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.max,
@@ -135,13 +136,11 @@ Widget build(BuildContext context) {
                                     (innerHpadding ?? defaultInnerHpadding) *
                                         2 -
                                     (iconWidth ?? defaultIconWidth) -
-                                    10 -
-                                    extraOverflow ??
-                                40,
+                                    10 - (extraOverflow ?? 40),
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                text,
+                                text!,
                                 style: textStyleFrom(
                                   Theme.of(context)
                                       .primaryTextTheme
@@ -166,7 +165,7 @@ Widget build(BuildContext context) {
                                     SizedBox(
                                       width: 2,
                                     ),
-                                    Text(time,
+                                    Text(time!,
                                         style: textStyleFrom(
                                           Theme.of(context)
                                               .primaryTextTheme
@@ -180,7 +179,7 @@ Widget build(BuildContext context) {
                                 )
                               : secondaryText == null
                                   ? Container()
-                                  : Text(secondaryText,
+                                  : Text(secondaryText!,
                                       style: textStyleFrom(
                                         Theme.of(context)
                                             .primaryTextTheme
@@ -200,7 +199,7 @@ Widget build(BuildContext context) {
                   right: 0,
                   child: Container(
                     decoration: BoxDecoration(
-                        color: isNew
+                        color: isNew!
                             ? Theme.of(context).errorColor
                             : Color.fromRGBO(89, 152, 26, 1),
                         borderRadius: BorderRadius.only(
@@ -208,7 +207,7 @@ Widget build(BuildContext context) {
                     child: Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                        child: isNew
+                        child: isNew!
                             ? Text(&quot;New&quot;,
                                 style: textStyleFrom(
                                   Theme.of(context)

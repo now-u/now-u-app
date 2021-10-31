@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">launchTandCs</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -63,7 +64,7 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">void launchTandCs() {
-  _navigationService.launchLink(
+  _navigationService!.launchLink(
     &quot;http:&#47;&#47;www.now-u.com&#47;static&#47;media&#47;now-u_privacy-notice.25c0d41b.pdf&quot;,
     isExternal: true,
   );

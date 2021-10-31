@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">build</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -154,7 +155,7 @@ Widget build(BuildContext context) {
                               height: 60,
                               child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: model.campaigns.length,
+                                  itemCount: model.campaigns!.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return Padding(
@@ -168,8 +169,8 @@ Widget build(BuildContext context) {
                                                   vertical: 5),
                                               child: SelectionPill(
                                                 &quot;#&quot; +
-                                                    model.campaigns[index]
-                                                        .getShortName(),
+                                                    model.campaigns![index]
+                                                        .shortName,
                                                 model.pillIsSelected(index),
                                                 fontSize: 12,
                                                 borderRadius: 25,

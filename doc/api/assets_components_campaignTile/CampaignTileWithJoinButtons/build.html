@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">build</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -115,7 +116,7 @@ Widget build(BuildContext context) {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image:
-                      customNetworkImageProvider(campaign.getHeaderImage()),
+                      customNetworkImageProvider(campaign.headerImage),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -124,7 +125,7 @@ Widget build(BuildContext context) {
               padding: EdgeInsets.all(10),
               child: Column(children: [
                 Text(
-                  campaign.getTitle(),
+                  campaign.title,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: textStyleFrom(
@@ -133,7 +134,7 @@ Widget build(BuildContext context) {
                   ),
                 ),
                 NumberOfCampaignersIndicator(
-                    campaign.getNumberOfCampaigners()),
+                    campaign.numberOfCampaigners),
               ]),
             ),
             Container(
@@ -154,7 +155,7 @@ Widget build(BuildContext context) {
                             &quot;Joined&quot;,
                             &#47;&#47;inverted: true,
                             onPressed: () {
-                              leaveCampaign(campaign.getId());
+                              leaveCampaign(campaign.id);
                             },
                             size: DarkButtonSize.Small,
                             rightIcon: Icons.check,
@@ -163,7 +164,7 @@ Widget build(BuildContext context) {
                             &quot;Join&quot;,
                             &#47;&#47;inverted: true,
                             onPressed: () {
-                              joinCampaign(campaign.getId());
+                              joinCampaign(campaign.id);
                             },
                             size: DarkButtonSize.Medium,
                             rightIcon: Icons.link,

@@ -45,13 +45,14 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">openSDGGoals</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
       
 
 <span class="returntype">void</span>
-<span class="name ">openSDGGoals</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="openSDGGoals-param-sdg">{<span class="type-annotation"><a href="../../models_SDG/SDG-class.html">SDG</a></span> <span class="parameter-name">sdg</span>}</span></li>
+<span class="name ">openSDGGoals</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="openSDGGoals-param-sdg">{<span class="type-annotation"><a href="../../models_SDG/SDG-class.html">SDG</a>?</span> <span class="parameter-name">sdg</span>}</span></li>
 </ol>)
 
       
@@ -63,11 +64,11 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">void openSDGGoals({SDG sdg}) {
+  <pre class="language-dart"><code class="language-dart">void openSDGGoals({SDG? sdg}) {
   if (sdg != null) {
-    _navigationService.launchLink(sdg.getLink());
+    _navigationService!.launchLink(sdg.getLink()!);
   } else {
-    _navigationService.launchLink(&quot;https:&#47;&#47;sustainabledevelopment.un.org&quot;);
+    _navigationService!.launchLink(&quot;https:&#47;&#47;sustainabledevelopment.un.org&quot;);
   }
 }</code></pre>
 </section>

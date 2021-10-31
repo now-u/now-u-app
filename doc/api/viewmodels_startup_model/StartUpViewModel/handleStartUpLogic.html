@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">handleStartUpLogic</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -66,6 +67,8 @@
   await Firebase.initializeApp();
   registerFirebaseServicesToLocator();
 
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+
   final DynamicLinkService _dynamicLinkService =
       locator&lt;DynamicLinkService&gt;();
   await _dynamicLinkService.handleDynamicLinks();
@@ -79,12 +82,12 @@
       locator&lt;RemoteConfigService&gt;();
   await _remoteConfigService.init();
 
-  var hasLoggedInUser = await _authenticationService.isUserLoggedIn();
+  var hasLoggedInUser = await _authenticationService!.isUserLoggedIn();
 
   if (hasLoggedInUser) {
-    _navigationService.navigateTo(Routes.home);
+    _navigationService!.navigateTo(Routes.home);
   } else {
-    _navigationService.navigateTo(Routes.onBoarding);
+    _navigationService!.navigateTo(Routes.onBoarding);
   }
 }</code></pre>
 </section>

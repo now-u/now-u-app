@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">build</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -124,9 +125,9 @@ Widget build(BuildContext context) {
           ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: model.currentCampaigns.length,
+            itemCount: model.currentCampaigns!.length,
             itemBuilder: (BuildContext context, int index) {
-              return CampaignTile(model.currentCampaigns[index]);
+              return CampaignTile(model.currentCampaigns![index]);
             },
           ),
 
@@ -143,9 +144,9 @@ Widget build(BuildContext context) {
           ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: model.pastCampaigns.length,
+            itemCount: model.pastCampaigns!.length,
             itemBuilder: (BuildContext context, int index) {
-              return CampaignTile(model.pastCampaigns[index]);
+              return CampaignTile(model.pastCampaigns![index]);
             },
           ),
 

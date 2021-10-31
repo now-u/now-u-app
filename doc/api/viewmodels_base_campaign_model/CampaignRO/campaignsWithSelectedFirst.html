@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-property">campaignsWithSelectedFirst</span> property 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
 
@@ -52,7 +53,7 @@
 <section id="getter">
 
 <section class="multi-line-signature">
-  <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../models_Campaign/Campaign-class.html">Campaign</a></span>&gt;</span></span>
+  <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../models_Campaign/Campaign-class.html">Campaign</a></span>&gt;</span>?</span>
   <span class="name ">campaignsWithSelectedFirst</span>
   
 
@@ -63,15 +64,15 @@
 
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">List&lt;Campaign&gt; get campaignsWithSelectedFirst {
+  <pre class="language-dart"><code class="language-dart">List&lt;Campaign&gt;? get campaignsWithSelectedFirst {
   if (currentUser == null) {
-    return _campaignsService.campaigns;
+    return _campaignsService!.campaigns;
   }
 
   List&lt;Campaign&gt; selectedCs =
-      currentUser.filterSelectedCampaigns(_campaignsService.campaigns);
+      currentUser!.filterSelectedCampaigns(_campaignsService!.campaigns!);
   List&lt;Campaign&gt; unselectedCs =
-      currentUser.filterUnselectedCampaigns(_campaignsService.campaigns);
+      currentUser!.filterUnselectedCampaigns(_campaignsService!.campaigns!);
 
   &#47;&#47; Give some spice to your life
   selectedCs.shuffle();

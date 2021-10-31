@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">build</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -105,7 +106,7 @@ and</li>
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
 Widget build(BuildContext context) {
-  List&lt;CampaignAction&gt; actions = campaign.getActions();
+  List&lt;ListCauseAction&gt; actions = campaign.actions!;
   return SafeArea(
     child: Scaffold(
       backgroundColor: Colors.white,
@@ -121,7 +122,7 @@ Widget build(BuildContext context) {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: customNetworkImageProvider(
-                          campaign.getHeaderImage()),
+                          campaign.headerImage),
                       fit: BoxFit.cover,
                     ),
                   )),
@@ -132,7 +133,7 @@ Widget build(BuildContext context) {
                     opacity: 0.5,
                   )),
               PageHeader(
-                title: campaign.getTitle(),
+                title: campaign.title,
                 textColor: Colors.white,
                 backButton: true,
                 maxLines: 2,

@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">initState</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -85,8 +86,8 @@ replacing the object.</li>
 method. However, <a href="https://api.flutter.dev/flutter/widgets/State/didChangeDependencies.html">didChangeDependencies</a> will be called immediately
 following this method, and <a href="https://api.flutter.dev/flutter/widgets/BuildContext/dependOnInheritedWidgetOfExactType.html">BuildContext.dependOnInheritedWidgetOfExactType</a> can
 be used there.</p>
-<p>If you override this, make sure your method starts with a call to
-super.initState().</p>
+<p>Implementations of this method should start with a call to the inherited
+method, as in <code>super.initState()</code>.</p>
 </section>
 
 
@@ -96,7 +97,7 @@ super.initState().</p>
   <pre class="language-dart"><code class="language-dart">@override
 void initState() {
   super.initState();
-  WidgetsBinding.instance.addObserver(this);
+  WidgetsBinding.instance!.addObserver(this);
 }</code></pre>
 </section>
 
@@ -135,6 +136,7 @@ void initState() {
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/State/widget.html">widget</a></li>
 
     <li class="section-title"><a href="../../pages_login_login/LoginPageState-class.html#instance-methods">Methods</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/State/activate.html">activate</a></li>
     <li><a href="../../pages_login_login/LoginPageState/build.html">build</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/State/deactivate.html">deactivate</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/State/debugFillProperties.html">debugFillProperties</a></li>

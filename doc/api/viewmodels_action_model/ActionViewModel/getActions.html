@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">getActions</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -67,28 +68,28 @@
   if (campaign == null) {
     _actions = [];
   } else {
-    List&lt;CampaignAction&gt; tmpActions = [];
+    List&lt;ListCauseAction&gt; tmpActions = [];
     &#47;&#47;tmpActions.addAll(campaign.getActions());
-    bool includeCompleted = selections[&#39;extras&#39;][&#39;completed&#39;];
-    bool includeRejected = selections[&#39;extras&#39;][&#39;rejected&#39;];
-    bool includeToDo = selections[&#39;extras&#39;][&#39;todo&#39;];
-    bool includeStarred = selections[&#39;extras&#39;][&#39;starred&#39;];
+    bool? includeCompleted = selections[&#39;extras&#39;]![&#39;completed&#39;];
+    bool? includeRejected = selections[&#39;extras&#39;]![&#39;rejected&#39;];
+    bool? includeToDo = selections[&#39;extras&#39;]![&#39;todo&#39;];
+    bool? includeStarred = selections[&#39;extras&#39;]![&#39;starred&#39;];
     &#47;&#47; Get all the actions
-    tmpActions.addAll(_campaignsService.getActiveActions(
+    tmpActions.addAll(_campaignsService!.getActiveActions(
         includeCompleted: includeCompleted,
         includeRejected: includeRejected,
         includeTodo: includeToDo,
         includeStarred: includeStarred));
     &#47;&#47; Filter them for the campaign
-    tmpActions.removeWhere((a) =&gt; !campaign.getActions().contains(a));
-    if (hasSelected(selections[&#39;times&#39;])) {
+    tmpActions.removeWhere((a) =&gt; !campaign!.actions!.contains(a));
+    if (hasSelected(selections[&#39;times&#39;]!)) {
       &#47;&#47; Remove the ones with the wrong times
-      tmpActions.removeWhere((a) =&gt; !selections[&#39;times&#39;][a.getTimeText()]);
+      tmpActions.removeWhere((a) =&gt; !selections[&#39;times&#39;]![a.timeText]);
     }
-    if (hasSelected(selections[&#39;categories&#39;])) {
+    if (hasSelected(selections[&#39;categories&#39;]!)) {
       &#47;&#47; Remove the ones with the wrong categories
       tmpActions
-          .removeWhere((a) =&gt; !selections[&#39;categories&#39;][a.getSuperType()]);
+          .removeWhere((a) =&gt; !selections[&#39;categories&#39;]![a.superType]);
     }
 
     _actions = tmpActions;

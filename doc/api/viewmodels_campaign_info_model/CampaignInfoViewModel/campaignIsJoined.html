@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-property">campaignIsJoined</span> property 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
 
@@ -64,7 +65,7 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">bool get campaignIsJoined =&gt;
-    currentUser.getSelectedCampaigns().contains(_campaign.getId());</code></pre>
+    currentUser!.getSelectedCampaigns().contains(_campaign!.id);</code></pre>
 </section>
 
 </section>

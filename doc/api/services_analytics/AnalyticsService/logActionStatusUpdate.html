@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">logActionStatusUpdate</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -68,11 +69,11 @@
   print(&quot;Logging action completed&quot;);
   await _analytics
       .logEvent(name: &quot;action_$status&quot;, parameters: &lt;String, dynamic&gt;{
-    &quot;id&quot;: action.getId(),
-    &quot;title&quot;: action.getTitle(),
-    &quot;type&quot;: action.getType().toString(),
-    &quot;super_type&quot;: action.getSuperType().toString(),
-    &quot;time&quot;: action.getTime(),
+    &quot;id&quot;: action.id,
+    &quot;title&quot;: action.title,
+    &quot;type&quot;: action.type.toString(),
+    &quot;super_type&quot;: action.superType.name,
+    &quot;time&quot;: action.time,
   });
 }</code></pre>
 </section>

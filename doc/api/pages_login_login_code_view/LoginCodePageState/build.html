@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">build</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -176,7 +177,7 @@ Widget build(BuildContext context) {
 
   Widget loginButton() {
     Future&lt;bool&gt; validateAndSave(LoginViewModel model) async {
-      final FormState form = _formKey.currentState;
+      final FormState form = _formKey.currentState!;
       print(&quot;Hello&quot;);
       if (form.validate()) {
         form.save();
@@ -284,7 +285,7 @@ Widget build(BuildContext context) {
         body: NotificationListener(
             onNotification: (OverscrollIndicatorNotification overscroll) {
               overscroll.disallowGlow();
-              return null;
+              return true;
             },
             child: ListView(children: [
               loginForm(),
@@ -328,6 +329,7 @@ Widget build(BuildContext context) {
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/State/widget.html">widget</a></li>
 
     <li class="section-title"><a href="../../pages_login_login_code_view/LoginCodePageState-class.html#instance-methods">Methods</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/State/activate.html">activate</a></li>
     <li><a href="../../pages_login_login_code_view/LoginCodePageState/build.html">build</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/State/deactivate.html">deactivate</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/State/debugFillProperties.html">debugFillProperties</a></li>

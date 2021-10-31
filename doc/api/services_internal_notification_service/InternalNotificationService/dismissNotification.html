@@ -45,13 +45,14 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">dismissNotification</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
       
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>&gt;</span></span>
-<span class="name ">dismissNotification</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="dismissNotification-param-notificationId"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">notificationId</span></span></li>
+<span class="name ">dismissNotification</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="dismissNotification-param-notificationId"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">notificationId</span></span></li>
 </ol>)
 
       
@@ -63,19 +64,19 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;bool&gt; dismissNotification(int notificationId) async {
+  <pre class="language-dart"><code class="language-dart">Future&lt;bool&gt; dismissNotification(int? notificationId) async {
   try {
     http.Response response = await http.put(
-        domainPrefix + &#39;users&#47;me&#47;notifications&#47;$notificationId&#47;dismiss&#39;,
+        Uri.parse(domainPrefix + &#39;users&#47;me&#47;notifications&#47;$notificationId&#47;dismiss&#39;),
         headers: &lt;String, String&gt;{
-          &#39;token&#39;: _authenticationService.currentUser.getToken(),
+          &#39;token&#39;: _authenticationService!.currentUser!.token!,
         });
     if (response.statusCode != 200) {
       print(&quot;Error dismissing notifications&quot;);
       print(response.statusCode);
       return false;
     }
-    _notifications
+    _notifications!
         .removeWhere((InternalNotification n) =&gt; n.getId() == notificationId);
     return true;
   } catch (e) {

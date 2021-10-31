@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">initSelections</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -67,10 +68,10 @@
   getActions();
 
   for (int i = 0; i &lt; timeBrackets.length; i++) {
-    _selections[&#39;times&#39;][timeBrackets[i][&#39;text&#39;]] = false;
+    _selections[&#39;times&#39;]![timeBrackets[i][&#39;text&#39;]] = false;
   }
-  for (int i = 0; i &lt; CampaignActionSuperType.values.length; i++) {
-    _selections[&#39;categories&#39;][CampaignActionSuperType.values[i]] = false;
+  for (int i = 0; i &lt; actionTypes.length; i++) {
+    _selections[&#39;categories&#39;]![actionTypes[i]] = false;
   }
 }</code></pre>
 </section>

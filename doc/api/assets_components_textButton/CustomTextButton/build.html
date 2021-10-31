@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">build</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -107,7 +108,7 @@ and</li>
 Widget build(BuildContext context) {
   return Container(
       child: GestureDetector(
-    onTap: onClick,
+    onTap: onClick as void Function()?,
     child: Row(
       children: &lt;Widget&gt;[
         this.iconLeft != null
@@ -124,10 +125,10 @@ Widget build(BuildContext context) {
             style: TextStyle(
               color: fontColor ?? Theme.of(context).buttonColor,
               fontFamily:
-                  Theme.of(context).primaryTextTheme.button.fontFamily,
+                  Theme.of(context).primaryTextTheme.button!.fontFamily,
               fontWeight: fontWeight ??
-                  Theme.of(context).primaryTextTheme.button.fontWeight,
-              fontStyle: Theme.of(context).primaryTextTheme.button.fontStyle,
+                  Theme.of(context).primaryTextTheme.button!.fontWeight,
+              fontStyle: Theme.of(context).primaryTextTheme.button!.fontStyle,
               fontSize: fontSize ?? 16,
             ),
             textAlign: TextAlign.center,

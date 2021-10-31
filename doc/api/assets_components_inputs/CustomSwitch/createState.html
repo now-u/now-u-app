@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">createState</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -67,7 +68,7 @@
 <p>Subclasses should override this method to return a newly created
 instance of their associated <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> subclass:</p>
 <pre class="language-dart"><code class="language-dart">@override
-_MyState createState() =&gt; _MyState();
+State&lt;MyWidget&gt; createState() =&gt; _MyWidgetState();
 </code></pre>
 <p>The framework can call this method multiple times over the lifetime of
 a <a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a>. For example, if the widget is inserted into the tree

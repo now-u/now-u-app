@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">build</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -149,7 +150,7 @@ Widget build(BuildContext context) {
                                     context, profileTiles[index][&quot;page&quot;]);
                               } else if (profileTiles[index][&quot;link&quot;] !=
                                   null) {
-                                _navigationService.launchLink(
+                                _navigationService!.launchLink(
                                     profileTiles[index][&quot;link&quot;],
                                     isExternal: profileTiles[index]
                                             [&#39;external&#39;] ??
@@ -185,7 +186,7 @@ Widget build(BuildContext context) {
                   SizedBox(height: 20),
 
                   &#47;&#47; Dev Tools
-                  model.currentUser.isStagingUser()
+                  model.currentUser!.isStagingUser
                       ? Column(children: [
                           GestureDetector(
                               child: ProfileTile(
@@ -205,7 +206,7 @@ Widget build(BuildContext context) {
                               child: ProfileTile(
                                   &quot;Navigate test&quot;, FontAwesomeIcons.code),
                               onTap: () {
-                                _navigationService.launchLink(
+                                _navigationService!.launchLink(
                                     &quot;internal:learningTopic&amp;id=-1&quot;);
                               }),
                         ])

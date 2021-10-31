@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">build</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -118,7 +119,7 @@ Widget build(BuildContext context) {
       SizedBox(height: extraInnerPadding ?? 0),
       Container(
         child: Padding(
-          padding: EdgeInsets.only(left: padding == null ? 20 : padding + 10),
+          padding: EdgeInsets.only(left: padding == null ? 20 : padding! + 10),
           child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -126,7 +127,7 @@ Widget build(BuildContext context) {
                 infoText == null &amp;&amp; infoTitle == null &amp;&amp; maxLines != null
                     ? Expanded(
                         child: Text(
-                          title,
+                          title!,
                           textAlign: TextAlign.left,
                           style: textStyleFrom(
                             Theme.of(context).primaryTextTheme.headline2,
@@ -139,7 +140,7 @@ Widget build(BuildContext context) {
                       )
                     : Container(
                         child: Text(
-                          title,
+                          title!,
                           textAlign: TextAlign.left,
                           style: textStyleFrom(
                             Theme.of(context).primaryTextTheme.headline2,

@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">containsNew</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -65,8 +66,7 @@
   <pre class="language-dart"><code class="language-dart">bool containsNew() {
   print(&quot;Checking contains&quot;);
   print(resources);
-  var r = resources.firstWhere((LearningResource r) =&gt; r.isNew(),
-      orElse: () =&gt; null);
+  var r = resources!.firstWhereOrNull((LearningResource r) =&gt; r.isNew());
   print(&quot;Checked contains&quot;);
   return r != null;
 }</code></pre>

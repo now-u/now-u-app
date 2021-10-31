@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">fetchPastCampaigns</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -64,7 +65,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future fetchPastCampaigns() async {
   setBusy(true);
-  _pastCampaigns = await _campaignService.getPastCampaigns();
+  _pastCampaigns = await _campaignService!.getPastCampaigns();
   setBusy(false);
   notifyListeners();
 }</code></pre>

@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">fetchCampaigns</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -64,12 +65,13 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future fetchCampaigns() async {
   try {
-    var response = await http.get(domainPrefix + &quot;campaigns&quot;,
+    var response = await http.get(Uri.parse(domainPrefix + &quot;campaigns&quot;),
         headers: &lt;String, String&gt;{
-          &#39;token&#39;: _authenticationService.currentUser.getToken()
+          &#39;token&#39;: _authenticationService!.currentUser!.token!
         });
-    Campaigns cs = Campaigns.fromJson(json.decode(response.body)[&#39;data&#39;]);
-    _campaigns = cs.getActiveCampaigns();
+    &#47;&#47; Campaigns cs = Campaigns.fromJson(json.decode(response.body)[&#39;data&#39;]);
+    &#47;&#47; _campaigns = cs.getActiveCampaigns();
+    return [];
   } catch (e) {}
 }</code></pre>
 </section>

@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">buildTransitions</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -80,20 +81,23 @@ that animate the new topmost route's comings and goings. When the
 primary <code>animation</code> runs from 0.0 to 1.0. When the Navigator pops the
 topmost route, e.g. because the use pressed the back button, the
 primary animation runs from 1.0 to 0.0.</p>
-<p>The following example uses the primary animation to drive a
+<p>{@tool snippet}
+The following example uses the primary animation to drive a
 <a href="https://api.flutter.dev/flutter/widgets/SlideTransition-class.html">SlideTransition</a> that translates the top of the new route vertically
 from the bottom of the screen when it is pushed on the Navigator's
 stack. When the route is popped the SlideTransition translates the
 route from the top of the screen back to the bottom.</p>
+<p>We've used <a href="https://api.flutter.dev/flutter/widgets/PageRouteBuilder-class.html">PageRouteBuilder</a> to demonstrate the <a href="../../assets_routes_customRoute/CustomAndroidRoute/buildTransitions.html">buildTransitions</a> method
+here. The body of an override of the <a href="../../assets_routes_customRoute/CustomAndroidRoute/buildTransitions.html">buildTransitions</a> method would be
+defined in the same way.</p>
 <pre class="language-dart"><code class="language-dart">PageRouteBuilder(
   pageBuilder: (BuildContext context,
       Animation&lt;double&gt; animation,
       Animation&lt;double&gt; secondaryAnimation,
-      Widget child,
   ) {
     return Scaffold(
-      appBar: AppBar(title: Text('Hello')),
-      body: Center(
+      appBar: AppBar(title: const Text('Hello')),
+      body: const Center(
         child: Text('Hello World'),
       ),
     );
@@ -112,11 +116,9 @@ route from the top of the screen back to the bottom.</p>
       child: child, // child is the value returned by pageBuilder
     );
   },
-);
+)
 </code></pre>
-<p>We've used <a href="https://api.flutter.dev/flutter/widgets/PageRouteBuilder-class.html">PageRouteBuilder</a> to demonstrate the <a href="../../assets_routes_customRoute/CustomAndroidRoute/buildTransitions.html">buildTransitions</a> method
-here. The body of an override of the <a href="../../assets_routes_customRoute/CustomAndroidRoute/buildTransitions.html">buildTransitions</a> method would be
-defined in the same way.</p>
+<p>{@end-tool}</p>
 <p>When the <a href="https://api.flutter.dev/flutter/widgets/Navigator-class.html">Navigator</a> pushes a route on the top of its stack, the
 <code>secondaryAnimation</code> can be used to define how the route that was on
 the top of the stack leaves the screen. Similarly when the topmost route
@@ -125,32 +127,47 @@ below it reappears on the screen. When the Navigator pushes a new route
 on the top of its stack, the old topmost route's secondaryAnimation
 runs from 0.0 to 1.0. When the Navigator pops the topmost route, the
 secondaryAnimation for the route below it runs from 1.0 to 0.0.</p>
-<p>The example below adds a transition that's driven by the
+<p>{@tool snippet}
+The example below adds a transition that's driven by the
 <code>secondaryAnimation</code>. When this route disappears because a new route has
 been pushed on top of it, it translates in the opposite direction of
 the new route. Likewise when the route is exposed because the topmost
 route has been popped off.</p>
-<pre class="language-dart"><code class="language-dart">  transitionsBuilder: (
+<pre class="language-dart"><code class="language-dart">PageRouteBuilder(
+  pageBuilder: (BuildContext context,
+      Animation&lt;double&gt; animation,
+      Animation&lt;double&gt; secondaryAnimation,
+  ) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Hello')),
+      body: const Center(
+        child: Text('Hello World'),
+      ),
+    );
+  },
+  transitionsBuilder: (
       BuildContext context,
       Animation&lt;double&gt; animation,
       Animation&lt;double&gt; secondaryAnimation,
       Widget child,
   ) {
     return SlideTransition(
-      position: AlignmentTween(
+      position: Tween&lt;Offset&gt;(
         begin: const Offset(0.0, 1.0),
         end: Offset.zero,
       ).animate(animation),
       child: SlideTransition(
-        position: TweenOffset(
+        position: Tween&lt;Offset&gt;(
           begin: Offset.zero,
           end: const Offset(0.0, 1.0),
         ).animate(secondaryAnimation),
         child: child,
       ),
-    );
-  }
+     );
+  },
+)
 </code></pre>
+<p>{@end-tool}</p>
 <p>In practice the <code>secondaryAnimation</code> is used pretty rarely.</p>
 <p>The arguments to this method are as follows:</p>
 <ul>

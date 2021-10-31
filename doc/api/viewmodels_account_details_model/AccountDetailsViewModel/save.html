@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">save</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -64,7 +65,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; save() async {
   setBusy(true);
-  bool success = await _authenticationService.updateUserDetails(
+  bool success = await _authenticationService!.updateUserDetails(
       name: _name, dob: _dob, orgCode: _orgCode);
 
   if (success) {
@@ -72,7 +73,7 @@
     setBusy(false);
     notifyListeners();
   } else {
-    _dialogService.showDialog(
+    _dialogService!.showDialog(
       title: &quot;Error&quot;,
       description:
           &quot;Sorry there has been an error whilst updating your details.&quot;,

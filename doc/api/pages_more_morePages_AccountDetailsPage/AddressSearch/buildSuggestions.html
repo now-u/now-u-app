@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">buildSuggestions</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -87,7 +88,7 @@ Widget buildSuggestions(BuildContext context) {
         ? null
         : fetchSuggestions(
             query, Localizations.localeOf(context).languageCode),
-    builder: (context, snapshot) =&gt; query == &#39;&#39;
+    builder: (context, AsyncSnapshot snapshot) =&gt; query == &#39;&#39;
         ? Container(
             padding: EdgeInsets.all(16.0),
             child: Text(&#39;Enter your address&#39;),
@@ -96,9 +97,9 @@ Widget buildSuggestions(BuildContext context) {
             ? ListView.builder(
                 itemBuilder: (context, index) =&gt; ListTile(
                   title:
-                      Text((snapshot.data[index] as Suggestion).description),
+                      Text((snapshot.data[index] as Suggestion).description!),
                   onTap: () {
-                    close(context, snapshot.data[index] as Suggestion);
+                    close(context, snapshot.data[index] as Suggestion?);
                   },
                 ),
                 itemCount: snapshot.data.length,

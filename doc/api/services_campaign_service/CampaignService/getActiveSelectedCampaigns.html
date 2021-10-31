@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">getActiveSelectedCampaigns</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -63,11 +64,11 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">List&lt;Campaign&gt; getActiveSelectedCampaigns() {
-  User user = _authenticationService.currentUser;
+  User? user = _authenticationService!.currentUser;
   if (user == null) {
     return [];
   }
-  return user.filterSelectedCampaigns(_campaigns);
+  return user.filterSelectedCampaigns(_campaigns!);
 }</code></pre>
 </section>
 

@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">handleDynamicLinks</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -64,24 +65,24 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future handleDynamicLinks() async {
   bool gotIosLink = false;
-  if (await _deviceInfoService.isIOS13) {
-    gotIosLink = await initUniLinks();
+  if (await _deviceInfoService!.isIOS13) {
+  await initUniLinks();
   }
   if (!gotIosLink) {
     &#47;&#47; 1. Get the initial dynamic link if the app is opened with a dynamic link
-    final PendingDynamicLinkData data =
+    final PendingDynamicLinkData? data =
         await FirebaseDynamicLinks.instance.getInitialLink();
 
     &#47;&#47; 2. handle link that has been retrieved
-    final Uri deepLink = data?.link;
+    final Uri? deepLink = data?.link;
     _handleDeepLink(deepLink);
   }
   &#47;&#47; 3. Register a link callback to fire if the app is opened up from the background
   &#47;&#47; using a dynamic link.
   FirebaseDynamicLinks.instance.onLink(
-      onSuccess: (PendingDynamicLinkData dynamicLink) async {
+      onSuccess: (PendingDynamicLinkData? dynamicLink) async {
     &#47;&#47; 3a. handle link that has been retrieved
-    _handleDeepLink(dynamicLink.link);
+    _handleDeepLink(dynamicLink!.link);
   }, onError: (OnLinkErrorException e) async {
     print(&#39;Link Failed: ${e.message}&#39;);
   });

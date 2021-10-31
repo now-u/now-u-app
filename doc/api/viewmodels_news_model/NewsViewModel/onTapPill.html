@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">onTapPill</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -65,21 +66,21 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">void onTapPill(index) {
   print(_filteredArticles);
-  String indexCategory = index == _campaignService.campaigns.length
+  String? indexCategory = index == _campaignService!.campaigns!.length
       ? &quot;general&quot;
-      : _campaignService.campaigns[index].getShortName();
+      : _campaignService!.campaigns![index].shortName;
 
   &#47;&#47; Retap to deselect
   _category = _category == indexCategory ? null : indexCategory;
 
   _filteredArticles.clear();
   print(_filteredArticles);
-  _filteredArticles.addAll(_newsService.articles);
+  _filteredArticles.addAll(_newsService!.articles!);
   print(_filteredArticles);
-  print(_newsService.articles);
+  print(_newsService!.articles);
   if (_category != null) {
     _filteredArticles.removeWhere((a) =&gt;
-        a.getCategory(campaigns: _campaignService.campaigns) != _category);
+        a.getCategory(campaigns: _campaignService!.campaigns) != _category);
   }
   notifyListeners();
 }</code></pre>

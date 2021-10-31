@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">getLearningCentre</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -66,7 +67,7 @@
   <pre class="language-dart"><code class="language-dart">Future getLearningCentre(int campaignId) async {
   try {
     http.Response response = await http
-        .get(domainPrefix + &quot;campaigns&#47;$campaignId&#47;learning_topics&quot;);
+        .get(Uri.parse(domainPrefix + &quot;campaigns&#47;$campaignId&#47;learning_topics&quot;));
     if (response.statusCode == 200) {
       List jsonData = json.decode(response.body)[&quot;data&quot;] as List;
       LearningCentre lc = LearningCentre.fromJson(jsonData);

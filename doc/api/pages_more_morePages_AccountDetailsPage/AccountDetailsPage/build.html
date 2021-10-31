@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">build</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -135,7 +136,7 @@ Widget build(BuildContext context) {
                   ),
                   CustomTextFormField(
                       autofocus: false,
-                      initialValue: model.currentUser.getName(),
+                      initialValue: model.currentUser!.getName(),
                       style: CustomFormFieldStyle.Light,
                       onChanged: (String name) {
                         model.name = name;
@@ -172,29 +173,29 @@ Widget build(BuildContext context) {
                       ),
                     ),
                   ),
-                  GestureDetector(
-                      onTap: () async {
-                        &#47;&#47; generate a new token here
-                        final Suggestion result = await showSearch(
-                          context: context,
-                          delegate: AddressSearch(model.fetchSuggestions),
-                        );
+                  &#47;&#47; GestureDetector(
+                  &#47;&#47;     onTap: () async {
+                  &#47;&#47;       &#47;&#47; generate a new token here
+                  &#47;&#47;       final Suggestion? result = await showSearch(
+                  &#47;&#47;         context: context,
+                  &#47;&#47;         delegate: AddressSearch(model.fetchSuggestions),
+                  &#47;&#47;       );
 
-                        print(&quot;result&quot;);
-                        print(result);
-                        &#47;&#47; This will change the text displayed in the TextField
-                        if (result != null) {
-                          final placeDetails =
-                              await model.getPlaceDetails(result.placeId);
-                          print(&quot;We go em ${placeDetails.zipCode}&quot;);
-                        }
-                      },
-                      child: AbsorbPointer(
-                        child: CustomTextFormField(
-                          style: CustomFormFieldStyle.Light,
-                          controller: model.locationFieldController,
-                        ),
-                      )),
+                  &#47;&#47;       print(&quot;result&quot;);
+                  &#47;&#47;       print(result);
+                  &#47;&#47;       &#47;&#47; This will change the text displayed in the TextField
+                  &#47;&#47;       if (result != null) {
+                  &#47;&#47;         final placeDetails =
+                  &#47;&#47;             await model.getPlaceDetails(result.placeId);
+                  &#47;&#47;         print(&quot;We go em ${placeDetails.zipCode}&quot;);
+                  &#47;&#47;       }
+                  &#47;&#47;     },
+                  &#47;&#47;     child: AbsorbPointer(
+                  &#47;&#47;       child: CustomTextFormField(
+                  &#47;&#47;         style: CustomFormFieldStyle.Light,
+                  &#47;&#47;         controller: model.locationFieldController,
+                  &#47;&#47;       ),
+                  &#47;&#47;     )),
                   &#47;&#47; TODO: Email
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 28.5, 0, 8),
@@ -210,7 +211,7 @@ Widget build(BuildContext context) {
                   CustomTextFormField(
                     autofocus: false,
                     style: CustomFormFieldStyle.Light,
-                    initialValue: model.currentUser.getEmail(),
+                    initialValue: model.currentUser!.getEmail(),
                     enabled: false,
                   ),
                   &#47;&#47; TODO: Receive newsletter toggle
@@ -246,13 +247,13 @@ Widget build(BuildContext context) {
                               Row(
                                 children: [
                                   Image.network(
-                                    model.userOrganisation.getLogoLink(),
+                                    model.userOrganisation!.getLogoLink()!,
                                     width: 60,
                                   ),
                                   SizedBox(width: 10),
                                   Expanded(
                                     child: Text(
-                                      model.userOrganisation.getName(),
+                                      model.userOrganisation!.getName()!,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 2,
                                     ),

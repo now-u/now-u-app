@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">leaveOrganisation</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -66,10 +67,10 @@
   try {
     print(&quot;Leaving org&quot;);
     http.Response response = await http.put(
-      domainPrefix + &#39;users&#47;me&#47;organisations&#39;,
+      Uri.parse(domainPrefix + &#39;users&#47;me&#47;organisations&#39;),
       headers: &lt;String, String&gt;{
         &#39;Content-Type&#39;: &#39;application&#47;json; charset=UTF-8&#39;,
-        &#39;token&#39;: currentUser.getToken(),
+        &#39;token&#39;: currentUser!.token!,
       },
     );
     if (response.statusCode &gt;= 300) {
@@ -78,7 +79,7 @@
     }
     print(&quot;Put organisation_code null&quot;);
     User u = User.fromJson(json.decode(response.body));
-    currentUser.setOrganisation = u.organisation;
+    currentUser!.setOrganisation = u.organisation;
     return true;
   } catch (e) {
     print(&quot;Error&quot;);
@@ -115,15 +116,23 @@
     <li class="section-title">
       <a href="../../services_auth/AuthenticationService-class.html#instance-properties">Properties</a>
     </li>
+    <li class="inherited"><a href="../../services_api_service/ApiService/baseUrl.html">baseUrl</a></li>
+    <li class="inherited"><a href="../../services_api_service/ApiService/baseUrlPath.html">baseUrlPath</a></li>
+    <li class="inherited"><a href="../../services_api_service/ApiService/client.html">client</a></li>
     <li><a href="../../services_auth/AuthenticationService/currentUser.html">currentUser</a></li>
     <li><a href="../../services_auth/AuthenticationService/domainPrefix.html">domainPrefix</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li><a href="../../services_auth/AuthenticationService/isAuthenticated.html">isAuthenticated</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li><a href="../../services_auth/AuthenticationService/token.html">token</a></li>
 
     <li class="section-title"><a href="../../services_auth/AuthenticationService-class.html#instance-methods">Methods</a></li>
     <li><a href="../../services_auth/AuthenticationService/completeAction.html">completeAction</a></li>
     <li><a href="../../services_auth/AuthenticationService/completeLearningResource.html">completeLearningResource</a></li>
     <li><a href="../../services_auth/AuthenticationService/deleteUserAccount.html">deleteUserAccount</a></li>
+    <li class="inherited"><a href="../../services_api_service/ApiService/getExceptionForResponse.html">getExceptionForResponse</a></li>
+    <li class="inherited"><a href="../../services_api_service/ApiService/getRequest.html">getRequest</a></li>
+    <li class="inherited"><a href="../../services_api_service/ApiService/getRequestHeaders.html">getRequestHeaders</a></li>
     <li><a href="../../services_auth/AuthenticationService/getUser.html">getUser</a></li>
     <li><a href="../../services_auth/AuthenticationService/handleAuthRequestErrors.html">handleAuthRequestErrors</a></li>
     <li><a href="../../services_auth/AuthenticationService/isUserLoggedIn.html">isUserLoggedIn</a></li>

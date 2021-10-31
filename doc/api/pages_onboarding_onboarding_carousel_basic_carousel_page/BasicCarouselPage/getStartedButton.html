@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">getStartedButton</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -53,7 +54,7 @@
 <span class="returntype"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span>
 <span class="name ">getStartedButton</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="getStartedButton-param-show"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">show</span>, </span></li>
 <li><span class="parameter" id="getStartedButton-param-context"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span>, </span></li>
-<li><span class="parameter" id="getStartedButton-param-model"><span class="type-annotation"><a href="../../viewmodels_onboarding_model/OnBoardingViewModel-class.html">OnBoardingViewModel</a></span> <span class="parameter-name">model</span></span></li>
+<li><span class="parameter" id="getStartedButton-param-model"><span class="type-annotation"><a href="../../viewmodels_onboarding_model/OnBoardingViewModel-class.html">OnBoardingViewModel</a>?</span> <span class="parameter-name">model</span></span></li>
 </ol>)
 
       
@@ -66,7 +67,7 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Widget getStartedButton(
-    bool show, BuildContext context, OnBoardingViewModel model) {
+    bool show, BuildContext context, OnBoardingViewModel? model) {
   return show
       ? Column(
           children: [
@@ -76,7 +77,7 @@
             DarkButton(
               &quot;Get started&quot;,
               onPressed: () {
-                model.navigateToNextScreen();
+                model!.navigateToNextScreen();
               },
             )
           ],

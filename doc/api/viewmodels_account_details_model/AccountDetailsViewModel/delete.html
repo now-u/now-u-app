@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">delete</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -65,20 +66,20 @@
   <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; delete() async {
   setBusy(true);
 
-  String error = await _authenticationService.deleteUserAccount();
+  String? error = await _authenticationService!.deleteUserAccount();
 
   if (error == null) {
-    _dialogService.showDialog(
+    _dialogService!.showDialog(
       title: &quot;All done!&quot;,
       description: &quot;Your account has now been deleted.&quot;,
     );
-    await _analyticsService.logUserAccountDeleted();
+    await _analyticsService!.logUserAccountDeleted();
     logout();
   } else {
     switch (error) {
       case AuthError.request:
         {
-          _dialogService.showDialog(
+          _dialogService!.showDialog(
               title: &quot;Client Error&quot;,
               description:
                   &quot;Sorry, something went wrong!\nTry restarting your app.&quot;);
@@ -86,7 +87,7 @@
         }
       case AuthError.internal:
         {
-          _dialogService.showDialog(
+          _dialogService!.showDialog(
               title: &quot;Server Error&quot;,
               description:
                   &quot;Sorry, there was a server problem.\nTry again later.&quot;);
@@ -94,7 +95,7 @@
         }
       default:
         {
-          _dialogService.showDialog(
+          _dialogService!.showDialog(
               title: &quot;Error&quot;,
               description: &quot;Sorry, something went wrong!\nPlease try again.&quot;);
           break;

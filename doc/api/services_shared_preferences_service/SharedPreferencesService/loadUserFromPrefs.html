@@ -45,12 +45,13 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">loadUserFromPrefs</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../models_User/User-class.html">User</a></span>&gt;</span></span>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../models_User/User-class.html">User</a>?</span>&gt;</span></span>
 <span class="name ">loadUserFromPrefs</span>(<wbr>)
 
       
@@ -62,7 +63,7 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;User&gt; loadUserFromPrefs() async {
+  <pre class="language-dart"><code class="language-dart">Future&lt;User?&gt; loadUserFromPrefs() async {
   print(&quot;[SharedPreferencesService]: loadUserFromPrefs() running&quot;);
   SharedPreferences preferences = await SharedPreferences.getInstance();
   var string = preferences.getString(&#39;user&#39;);

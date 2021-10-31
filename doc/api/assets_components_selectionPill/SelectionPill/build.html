@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">build</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -114,13 +115,13 @@ Widget build(BuildContext context) {
                     customTileBoxShadow(false),
                   ],
                   borderRadius: borderRadius != null
-                      ? BorderRadius.all(Radius.circular(borderRadius))
+                      ? BorderRadius.all(Radius.circular(borderRadius!))
                       : tileBorderRadius(),
                 )
               : BoxDecoration(
                   color: Color.fromRGBO(222, 224, 232, 1),
                   borderRadius: borderRadius != null
-                      ? BorderRadius.all(Radius.circular(borderRadius))
+                      ? BorderRadius.all(Radius.circular(borderRadius!))
                       : tileBorderRadius(),
                 ),
           child: Center(

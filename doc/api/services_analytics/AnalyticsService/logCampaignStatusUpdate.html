@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">logCampaignStatusUpdate</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -67,8 +68,8 @@
   <pre class="language-dart"><code class="language-dart">Future logCampaignStatusUpdate(Campaign campaign, String status) async {
   await _analytics
       .logEvent(name: &quot;campaign_$status&quot;, parameters: &lt;String, dynamic&gt;{
-    &quot;id&quot;: campaign.getId(),
-    &quot;title&quot;: campaign.getTitle(),
+    &quot;id&quot;: campaign.id,
+    &quot;title&quot;: campaign.title,
   });
 }</code></pre>
 </section>

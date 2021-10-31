@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">build</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -129,7 +130,7 @@ Widget build(BuildContext context) {
             horizontal: darkButtonStyleStyles[size][&#39;hPadding&#39;],
           ),
           child: Text(
-            text,
+            text!,
             style: textStyleFrom(
               Theme.of(context).primaryTextTheme.button,
               color: Colors.white,

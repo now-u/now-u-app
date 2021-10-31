@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">build</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -111,12 +112,12 @@ Widget build(BuildContext context) {
       child: PageView.builder(
         key: campaignCarouselPageKey,
         controller: controller,
-        itemCount: cs.length,
+        itemCount: cs!.length,
         itemBuilder: (BuildContext context, int index) {
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 10),
             child: CampaignTile(
-              cs[index],
+              cs![index],
               hOuterPadding: 4,
             ),
           );
@@ -126,7 +127,7 @@ Widget build(BuildContext context) {
     SmoothPageIndicator(
       key: campaignCarouselPageKey,
       controller: controller,
-      count: cs.length,
+      count: cs!.length,
       effect: customSmoothPageInducatorEffect,
     ),
     SizedBox(height: 30),

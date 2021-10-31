@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">navigateToNextScreen</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -63,12 +64,12 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; navigateToNextScreen() async {
-  var hasLoggedInUser = await _authenticationService.isUserLoggedIn();
+  var hasLoggedInUser = await _authenticationService!.isUserLoggedIn();
 
   if (hasLoggedInUser) {
-    _navigationService.navigateTo(Routes.home);
+    _navigationService!.navigateTo(Routes.home);
   } else {
-    _navigationService.navigateTo(Routes.login);
+    _navigationService!.navigateTo(Routes.login);
   }
 }</code></pre>
 </section>

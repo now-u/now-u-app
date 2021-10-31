@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">launchLink</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -52,12 +53,12 @@
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
 <span class="name ">launchLink</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="launchLink-param-url"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">url</span>, </span></li>
-<li><span class="parameter" id="launchLink-param-title">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">title</span>, </span></li>
-<li><span class="parameter" id="launchLink-param-description"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">description</span>, </span></li>
-<li><span class="parameter" id="launchLink-param-buttonText"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">buttonText</span>, </span></li>
-<li><span class="parameter" id="launchLink-param-closeButtonText"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">closeButtonText</span>, </span></li>
-<li><span class="parameter" id="launchLink-param-extraOnConfirmFunction"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Function-class.html">Function</a></span> <span class="parameter-name">extraOnConfirmFunction</span>, </span></li>
-<li><span class="parameter" id="launchLink-param-isExternal"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">isExternal</span>}</span></li>
+<li><span class="parameter" id="launchLink-param-title">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">title</span>, </span></li>
+<li><span class="parameter" id="launchLink-param-description"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">description</span>, </span></li>
+<li><span class="parameter" id="launchLink-param-buttonText"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">buttonText</span>, </span></li>
+<li><span class="parameter" id="launchLink-param-closeButtonText"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">closeButtonText</span>, </span></li>
+<li><span class="parameter" id="launchLink-param-extraOnConfirmFunction"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Function-class.html">Function</a>?</span> <span class="parameter-name">extraOnConfirmFunction</span>, </span></li>
+<li><span class="parameter" id="launchLink-param-isExternal"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">isExternal</span>}</span></li>
 </ol>)
 
       
@@ -71,19 +72,19 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future launchLink(
   String url, {
-  String title,
-  String description,
-  String buttonText,
-  String closeButtonText,
-  Function extraOnConfirmFunction,
-  bool isExternal,
+  String? title,
+  String? description,
+  String? buttonText,
+  String? closeButtonText,
+  Function? extraOnConfirmFunction,
+  bool? isExternal,
 }) async {
   if (isInternalLink(url)) {
     String route = getInternalLinkRoute(url);
-    Map parameters = getInternalLinkParameters(url);
+    Map? parameters = getInternalLinkParameters(url);
 
     if (ID_ROUTES.contains(route)) {
-      int id = int.tryParse(parameters[&#39;id&#39;]);
+      int? id = int.tryParse(parameters![&#39;id&#39;]);
 
       if (route == Routes.campaignInfo || route == Routes.learningSingle) {
         navigateTo(route, arguments: id);
@@ -91,20 +92,20 @@
       }
 
       if (route == Routes.actionInfo) {
-        _campaignService.getAction(id).then((CampaignAction action) {
+        _campaignService!.getAction(id).then((CampaignAction action) {
           navigateTo(route, arguments: action);
         }).catchError((e) {
-          _dialogService.showDialog(
+          _dialogService!.showDialog(
               title: &quot;Error&quot;, description: &quot;Error navigating to route&quot;);
         });
         return;
       }
 
       if (route == Routes.learningTopic) {
-        _campaignService.getLearningTopic(id).then((LearningTopic topic) {
+        _campaignService!.getLearningTopic(id).then((LearningTopic topic) {
           navigateTo(route, arguments: topic);
         }).catchError((e) {
-          _dialogService.showDialog(
+          _dialogService!.showDialog(
               title: &quot;Error&quot;, description: &quot;Error navigating to route&quot;);
         });
         return;

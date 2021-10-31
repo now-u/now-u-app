@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">build</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -108,7 +109,7 @@ Widget build(BuildContext context) {
   return GestureDetector(
       onTap: () {
         if (extraOnTap != null) {
-          extraOnTap();
+          extraOnTap!();
         }
         Navigator.of(context)
             .pushNamed(Routes.organisationPage, arguments: organisation);
@@ -140,7 +141,7 @@ Widget build(BuildContext context) {
                 SizedBox(
                   height: 10,
                 ),
-                Text(organisation.getName(),
+                Text(organisation.getName()!,
                     style: textStyleFrom(
                       Theme.of(context).primaryTextTheme.bodyText1,
                       fontSize: 12,

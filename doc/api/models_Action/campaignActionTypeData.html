@@ -44,6 +44,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-top-level-property">campaignActionTypeData</span> top-level property 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
  
 </h1></div>
 
@@ -65,7 +66,7 @@
     &#39;pastVerb&#39;: &quot;Volunteered&quot;,
     &#39;displayName&#39;: &quot;volunteer&quot;,
     &#47;&#47;&#39;icon&#39;: CustomIcons.icon_vol_1,
-    &#39;type&#39;: CampaignActionSuperType.GetInvolved,
+    &#39;type&#39;: getInvolved,
   },
   CampaignActionType.Donation: {
     &#39;name&#39;: &quot;donate&quot;,
@@ -73,7 +74,7 @@
     &#39;pastVerb&#39;: &quot;Made&quot;,
     &#39;displayName&#39;: &quot;donation&quot;,
     &#47;&#47;&#39;icon&#39;: CustomIcons.icon_donate_01,
-    &#39;type&#39;: CampaignActionSuperType.RaiseMoney,
+    &#39;type&#39;: raiseMoney,
   },
   CampaignActionType.Fundraise: {
     &#39;name&#39;: &quot;fundraise&quot;,
@@ -81,7 +82,7 @@
     &#39;pastVerb&#39;: &quot;Took part in&quot;,
     &#39;displayName&#39;: &quot;fundraiser&quot;,
     &#47;&#47;&#39;icon&#39;: CustomIcons.icon_fundraise_01,
-    &#39;type&#39;: CampaignActionSuperType.RaiseMoney,
+    &#39;type&#39;: raiseMoney,
   },
   CampaignActionType.Awareness: {
     &#39;name&#39;: &quot;awareness&quot;,
@@ -89,7 +90,7 @@
     &#39;pastVerb&#39;: &quot;Raised awareness&quot;,
     &#39;displayName&#39;: &quot;time&quot;,
     &#47;&#47;&#39;icon&#39;: CustomIcons.icon_raise_awareness_01_01,
-    &#39;type&#39;: CampaignActionSuperType.Advoacte,
+    &#39;type&#39;: advocate,
   },
   CampaignActionType.Petition: {
     &#39;name&#39;: &quot;sign&quot;,
@@ -97,7 +98,7 @@
     &#39;pastVerb&#39;: &quot;Signed&quot;,
     &#39;displayName&#39;: &quot;petiton&quot;,
     &#47;&#47;&#39;icon&#39;: CustomIcons.icon_petition_01,
-    &#39;type&#39;: CampaignActionSuperType.Advoacte,
+    &#39;type&#39;: advocate,
   },
   CampaignActionType.Behaviour: {
     &#39;name&#39;: &quot;behaviour&quot;,
@@ -105,7 +106,7 @@
     &#39;pastVerb&#39;: &quot;Completed&quot;,
     &#39;displayName&#39;: &quot;behaviour change action&quot;,
     &#47;&#47;&#39;icon&#39;: CustomIcons.icon_behaviour_01,
-    &#39;type&#39;: CampaignActionSuperType.GetInvolved,
+    &#39;type&#39;: getInvolved,
   },
   CampaignActionType.Contact: {
     &#39;name&#39;: &quot;contact&quot;,
@@ -113,7 +114,7 @@
     &#39;pastVerb&#39;: &quot;Completed&quot;,
     &#39;displayName&#39;: &quot;contact change action&quot;,
     &#47;&#47;&#39;icon&#39;: CustomIcons.icon_contact_01,
-    &#39;type&#39;: CampaignActionSuperType.Advoacte,
+    &#39;type&#39;: advocate,
   },
   CampaignActionType.Protest: {
     &#39;name&#39;: &quot;protest&quot;,
@@ -121,7 +122,7 @@
     &#39;pastVerb&#39;: &quot;Took part in&quot;,
     &#39;displayName&#39;: &quot;protest&quot;,
     &#47;&#47;&#39;icon&#39;: CustomIcons.icon_protest_01,
-    &#39;type&#39;: CampaignActionSuperType.GetInvolved,
+    &#39;type&#39;: getInvolved,
   },
   CampaignActionType.Connect: {
     &#39;name&#39;: &quot;connect&quot;,
@@ -130,7 +131,7 @@
     &#39;displayName&#39;: &quot;times&quot;,
     &#47;&#47;&#39;icon&#39;: FontAwesomeIcons.link,
     &#47;&#47;&#39;icon&#39;: CustomIcons.icon_connect_01,
-    &#39;type&#39;: CampaignActionSuperType.GetInvolved,
+    &#39;type&#39;: getInvolved,
   },
   CampaignActionType.Learn: {
     &#39;name&#39;: &quot;learn&quot;,
@@ -138,7 +139,7 @@
     &#39;pastVerb&#39;: &quot;Completed&quot;,
     &#39;displayName&#39;: &quot;learning action&quot;,
     &#47;&#47;&#39;icon&#39;: CustomIcons.icon_learning_01,
-    &#39;type&#39;: CampaignActionSuperType.Learn,
+    &#39;type&#39;: learn,
   },
   CampaignActionType.Quiz: {
     &#39;name&#39;: &quot;quiz&quot;,
@@ -146,7 +147,7 @@
     &#39;pastVerb&#39;: &quot;Completed&quot;,
     &#39;displayName&#39;: &quot;quiz&quot;,
     &#47;&#47;&#39;icon&#39;: CustomIcons.icon_quiz_01,
-    &#39;type&#39;: CampaignActionSuperType.Learn,
+    &#39;type&#39;: learn,
   },
   CampaignActionType.Other: defaultCampaignActionTypeData
 };</code></pre>
@@ -173,21 +174,27 @@
     <h5>Action library</h5>
     <ol>
   <li class="section-title"><a href="../models_Action/models_Action-library.html#classes">Classes</a></li>
+  <li><a href="../models_Action/ActionType-class.html">ActionType</a></li>
   <li><a href="../models_Action/CampaignAction-class.html">CampaignAction</a></li>
+  <li><a href="../models_Action/ListCauseAction-class.html">ListCauseAction</a></li>
 
 
 
 
   <li class="section-title"><a href="../models_Action/models_Action-library.html#properties">Properties</a></li>
+  <li><a href="../models_Action/actionTypes.html">actionTypes</a></li>
+  <li><a href="../models_Action/advocate.html">advocate</a></li>
   <li><a href="../models_Action/blue.html">blue</a></li>
   <li><a href="../models_Action/blueO.html">blueO</a></li>
-  <li><a href="../models_Action/campaignActionSuperTypeData.html">campaignActionSuperTypeData</a></li>
   <li><a href="../models_Action/campaignActionTypeData.html">campaignActionTypeData</a></li>
   <li><a href="../models_Action/defaultCampaignActionTypeData.html">defaultCampaignActionTypeData</a></li>
+  <li><a href="../models_Action/getInvolved.html">getInvolved</a></li>
   <li><a href="../models_Action/green.html">green</a></li>
   <li><a href="../models_Action/greenO.html">greenO</a></li>
+  <li><a href="../models_Action/learn.html">learn</a></li>
   <li><a href="../models_Action/orange.html">orange</a></li>
   <li><a href="../models_Action/orangeO.html">orangeO</a></li>
+  <li><a href="../models_Action/raiseMoney.html">raiseMoney</a></li>
   <li><a href="../models_Action/red.html">red</a></li>
   <li><a href="../models_Action/redO.html">redO</a></li>
   <li><a href="../models_Action/rejectionReasons.html">rejectionReasons</a></li>
@@ -200,7 +207,6 @@
   <li><a href="../models_Action/generateCampaingActionDesc.html">generateCampaingActionDesc</a></li>
 
   <li class="section-title"><a href="../models_Action/models_Action-library.html#enums">Enums</a></li>
-  <li><a href="../models_Action/CampaignActionSuperType-class.html">CampaignActionSuperType</a></li>
   <li><a href="../models_Action/CampaignActionType-class.html">CampaignActionType</a></li>
 
 

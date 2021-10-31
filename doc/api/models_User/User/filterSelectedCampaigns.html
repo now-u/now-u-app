@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">filterSelectedCampaigns</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -65,7 +66,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">List&lt;Campaign&gt; filterSelectedCampaigns(List&lt;Campaign&gt; campaigns) {
   return campaigns
-      .where((c) =&gt; selectedCampaigns.contains(c.getId()))
+      .where((c) =&gt; selectedCampaigns!.contains(c.id))
       .toList();
 }</code></pre>
 </section>
@@ -110,6 +111,7 @@
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
     <li><a href="../../models_User/User/homeOwner.html">homeOwner</a></li>
     <li><a href="../../models_User/User/id.html">id</a></li>
+    <li><a href="../../models_User/User/isStagingUser.html">isStagingUser</a></li>
     <li><a href="../../models_User/User/location.html">location</a></li>
     <li><a href="../../models_User/User/monthlyDonationLimit.html">monthlyDonationLimit</a></li>
     <li><a href="../../models_User/User/organisation.html">organisation</a></li>
@@ -125,12 +127,9 @@
     <li><a href="../../models_User/User/addSelectedCamaping.html">addSelectedCamaping</a></li>
     <li><a href="../../models_User/User/completeAction.html">completeAction</a></li>
     <li><a href="../../models_User/User/copyWith.html">copyWith</a></li>
-    <li><a href="../../models_User/User/decrementPoints.html">decrementPoints</a></li>
     <li><a href="../../models_User/User/filterSelectedCampaigns.html">filterSelectedCampaigns</a></li>
     <li><a href="../../models_User/User/filterUnselectedCampaigns.html">filterUnselectedCampaigns</a></li>
-    <li><a href="../../models_User/User/getActiveCampaignsProgress.html">getActiveCampaignsProgress</a></li>
     <li><a href="../../models_User/User/getAge.html">getAge</a></li>
-    <li><a href="../../models_User/User/getAllRewards.html">getAllRewards</a></li>
     <li><a href="../../models_User/User/getAttributes.html">getAttributes</a></li>
     <li><a href="../../models_User/User/getCampaignProgress.html">getCampaignProgress</a></li>
     <li><a href="../../models_User/User/getCompletedActions.html">getCompletedActions</a></li>
@@ -142,26 +141,15 @@
     <li><a href="../../models_User/User/getLocation.html">getLocation</a></li>
     <li><a href="../../models_User/User/getMonthlyDonationLimit.html">getMonthlyDonationLimit</a></li>
     <li><a href="../../models_User/User/getName.html">getName</a></li>
-    <li><a href="../../models_User/User/getNextRewards.html">getNextRewards</a></li>
-    <li><a href="../../models_User/User/getPoints.html">getPoints</a></li>
     <li><a href="../../models_User/User/getPostAttributes.html">getPostAttributes</a></li>
-    <li><a href="../../models_User/User/getPreviousRewards.html">getPreviousRewards</a></li>
     <li><a href="../../models_User/User/getRejectedActions.html">getRejectedActions</a></li>
-    <li><a href="../../models_User/User/getRewardProgress.html">getRewardProgress</a></li>
     <li><a href="../../models_User/User/getSelectedCampaigns.html">getSelectedCampaigns</a></li>
     <li><a href="../../models_User/User/getSelectedCampaignsLength.html">getSelectedCampaignsLength</a></li>
     <li><a href="../../models_User/User/getStarredActions.html">getStarredActions</a></li>
-    <li><a href="../../models_User/User/getToken.html">getToken</a></li>
-    <li><a href="../../models_User/User/incrementPoints.html">incrementPoints</a></li>
     <li><a href="../../models_User/User/initCompletedAction.html">initCompletedAction</a></li>
     <li><a href="../../models_User/User/isCompleted.html">isCompleted</a></li>
-    <li><a href="../../models_User/User/isMilestone.html">isMilestone</a></li>
-    <li><a href="../../models_User/User/isStagingUser.html">isStagingUser</a></li>
-    <li><a href="../../models_User/User/newlyCompletedRewards.html">newlyCompletedRewards</a></li>
-    <li><a href="../../models_User/User/nextValue.html">nextValue</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
     <li><a href="../../models_User/User/numberOfCompletedActionsForCampaign.html">numberOfCompletedActionsForCampaign</a></li>
-    <li><a href="../../models_User/User/prevValue.html">prevValue</a></li>
     <li><a href="../../models_User/User/rejectAction.html">rejectAction</a></li>
     <li><a href="../../models_User/User/removeSelectedCamaping.html">removeSelectedCamaping</a></li>
     <li><a href="../../models_User/User/setAttribute.html">setAttribute</a></li>
@@ -172,7 +160,6 @@
     <li><a href="../../models_User/User/setLocation.html">setLocation</a></li>
     <li><a href="../../models_User/User/setMonthlyDonationLimit.html">setMonthlyDonationLimit</a></li>
     <li><a href="../../models_User/User/setName.html">setName</a></li>
-    <li><a href="../../models_User/User/setPoints.html">setPoints</a></li>
     <li><a href="../../models_User/User/setToken.html">setToken</a></li>
     <li><a href="../../models_User/User/toJson.html">toJson</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>

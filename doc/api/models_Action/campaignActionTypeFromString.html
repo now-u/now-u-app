@@ -44,6 +44,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-function">campaignActionTypeFromString</span> function 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
  
 </h1></div>
 
@@ -51,7 +52,7 @@
         
 
 <span class="returntype"><a href="../models_Action/CampaignActionType-class.html">CampaignActionType</a></span>
-<span class="name ">campaignActionTypeFromString</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="campaignActionTypeFromString-param-s"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">s</span></span></li>
+<span class="name ">campaignActionTypeFromString</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="campaignActionTypeFromString-param-s"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">s</span></span></li>
 </ol>)
 
     </section>
@@ -61,8 +62,7 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">CampaignActionType campaignActionTypeFromString(String s) {
-  &#47;&#47; Apparently if we return early it just doesnt do the return? Not sure why that would be but this seems to fix it
+  <pre class="language-dart"><code class="language-dart">CampaignActionType campaignActionTypeFromString(String? s) {
   CampaignActionType t = CampaignActionType.Other;
   campaignActionTypeData.forEach((key, value) {
     if (value[&#39;name&#39;] == s) {
@@ -93,21 +93,27 @@
     <h5>Action library</h5>
     <ol>
   <li class="section-title"><a href="../models_Action/models_Action-library.html#classes">Classes</a></li>
+  <li><a href="../models_Action/ActionType-class.html">ActionType</a></li>
   <li><a href="../models_Action/CampaignAction-class.html">CampaignAction</a></li>
+  <li><a href="../models_Action/ListCauseAction-class.html">ListCauseAction</a></li>
 
 
 
 
   <li class="section-title"><a href="../models_Action/models_Action-library.html#properties">Properties</a></li>
+  <li><a href="../models_Action/actionTypes.html">actionTypes</a></li>
+  <li><a href="../models_Action/advocate.html">advocate</a></li>
   <li><a href="../models_Action/blue.html">blue</a></li>
   <li><a href="../models_Action/blueO.html">blueO</a></li>
-  <li><a href="../models_Action/campaignActionSuperTypeData.html">campaignActionSuperTypeData</a></li>
   <li><a href="../models_Action/campaignActionTypeData.html">campaignActionTypeData</a></li>
   <li><a href="../models_Action/defaultCampaignActionTypeData.html">defaultCampaignActionTypeData</a></li>
+  <li><a href="../models_Action/getInvolved.html">getInvolved</a></li>
   <li><a href="../models_Action/green.html">green</a></li>
   <li><a href="../models_Action/greenO.html">greenO</a></li>
+  <li><a href="../models_Action/learn.html">learn</a></li>
   <li><a href="../models_Action/orange.html">orange</a></li>
   <li><a href="../models_Action/orangeO.html">orangeO</a></li>
+  <li><a href="../models_Action/raiseMoney.html">raiseMoney</a></li>
   <li><a href="../models_Action/red.html">red</a></li>
   <li><a href="../models_Action/redO.html">redO</a></li>
   <li><a href="../models_Action/rejectionReasons.html">rejectionReasons</a></li>
@@ -120,7 +126,6 @@
   <li><a href="../models_Action/generateCampaingActionDesc.html">generateCampaingActionDesc</a></li>
 
   <li class="section-title"><a href="../models_Action/models_Action-library.html#enums">Enums</a></li>
-  <li><a href="../models_Action/CampaignActionSuperType-class.html">CampaignActionSuperType</a></li>
   <li><a href="../models_Action/CampaignActionType-class.html">CampaignActionType</a></li>
 
 

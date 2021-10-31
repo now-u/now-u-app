@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">build</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -110,9 +111,9 @@ Widget build(BuildContext context) {
     keyboardType: keyboardType ?? TextInputType.text,
     textInputAction: TextInputAction.go,
     autofocus: autofocus ?? false,
-    validator: validator,
-    onSaved: onSaved,
-    onChanged: onChanged,
+    validator: validator as String? Function(String?)?,
+    onSaved: onSaved as void Function(String?)?,
+    onChanged: onChanged as void Function(String)?,
     style: textStyleFrom(
       Theme.of(context).primaryTextTheme.headline5,
       color:

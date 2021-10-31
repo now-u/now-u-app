@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">build</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -134,7 +135,7 @@ Widget build(BuildContext context) {
             : Align(
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
-                  onTap: onTap,
+                  onTap: onTap as void Function()?,
                   child: Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: padding ?? 10.0, vertical: 10.0),

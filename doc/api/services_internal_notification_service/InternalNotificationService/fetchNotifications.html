@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">fetchNotifications</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -65,12 +66,12 @@
   <pre class="language-dart"><code class="language-dart">Future fetchNotifications() async {
   try {
     http.Response response = await http.get(
-        domainPrefix + &#39;users&#47;me&#47;notifications&#39;,
+        Uri.parse(domainPrefix + &#39;users&#47;me&#47;notifications&#39;),
         headers: &lt;String, String&gt;{
-          &#39;token&#39;: _authenticationService.currentUser.getToken(),
+          &#39;token&#39;: _authenticationService!.currentUser!.token!,
         });
 
-    List&lt;InternalNotification&gt; notifications = json
+    List&lt;InternalNotification&gt;? notifications = json
         .decode(response.body)[&#39;data&#39;]
         .map((e) =&gt; InternalNotification.fromJson(e))
         .toList()

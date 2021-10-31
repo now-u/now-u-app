@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">build</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -137,7 +138,7 @@ Widget build(BuildContext context) {
             Text(
               organisation.getDescription(),
             ),
-            organisation.getCampaigns().length &gt; 0
+            organisation.getCampaigns()!.length &gt; 0
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -149,10 +150,10 @@ Widget build(BuildContext context) {
                         Container(
                           height: 120,
                           child: PageView.builder(
-                            itemCount: organisation.getCampaigns().length,
+                            itemCount: organisation.getCampaigns()!.length,
                             itemBuilder: (BuildContext context, int index) {
                               return CampaignSelectionTile(
-                                organisation.getCampaigns()[index],
+                                organisation.getCampaigns()![index],
                                 height: 120,
                               );
                             },
@@ -171,7 +172,7 @@ Widget build(BuildContext context) {
                           vpadding: SECTION_TITLE_BOTTOM_PADDING,
                         ),
                         Text(
-                          organisation.getGeographicReach(),
+                          organisation.getGeographicReach()!,
                         ),
                       ]),
             SizedBox(height: BETWEEN_SECTION_PADDING),
@@ -185,7 +186,7 @@ Widget build(BuildContext context) {
                           vpadding: SECTION_TITLE_BOTTOM_PADDING,
                         ),
                         Text(
-                          organisation.getOrganistaionType(),
+                          organisation.getOrganistaionType()!,
                         ),
                       ]),
             SizedBox(height: BETWEEN_SECTION_PADDING),

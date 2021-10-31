@@ -44,14 +44,15 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-function">campaignActionTypesEncode</span> function 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
  
 </h1></div>
 
     <section class="multi-line-signature">
         
 
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>&gt;</span></span>
-<span class="name ">campaignActionTypesEncode</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="campaignActionTypesEncode-param-cats"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../models_Action/CampaignActionType-class.html">CampaignActionType</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">cats</span></span></li>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span>&gt;</span></span>
+<span class="name ">campaignActionTypesEncode</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="campaignActionTypesEncode-param-cats"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../models_Action/CampaignActionType-class.html">CampaignActionType</a>?</span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>&gt;</span>?</span> <span class="parameter-name">cats</span></span></li>
 </ol>)
 
     </section>
@@ -61,11 +62,11 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">List&lt;int&gt; campaignActionTypesEncode(Map&lt;CampaignActionType, int&gt; cats) {
-  List&lt;int&gt; encodable = &lt;int&gt;[];
+  <pre class="language-dart"><code class="language-dart">List&lt;int?&gt; campaignActionTypesEncode(Map&lt;CampaignActionType?, int&gt;? cats) {
+  List&lt;int?&gt; encodable = &lt;int?&gt;[];
   List&lt;CampaignActionType&gt; list = CampaignActionType.values;
   for (int i = 0; i &lt; list.length; i++) {
-    encodable.add(cats[list[i]]);
+    encodable.add(cats![list[i]]);
   }
   return encodable;
 }</code></pre>
@@ -97,9 +98,6 @@
 
 
   <li class="section-title"><a href="../models_User/models_User-library.html#properties">Properties</a></li>
-  <li><a href="../models_User/pointsForCompletingAction.html">pointsForCompletingAction</a></li>
-  <li><a href="../models_User/pointsForJoiningCampaign.html">pointsForJoiningCampaign</a></li>
-  <li><a href="../models_User/rewardValues.html">rewardValues</a></li>
   <li><a href="../models_User/stagingUsers.html">stagingUsers</a></li>
 
   <li class="section-title"><a href="../models_User/models_User-library.html#functions">Functions</a></li>

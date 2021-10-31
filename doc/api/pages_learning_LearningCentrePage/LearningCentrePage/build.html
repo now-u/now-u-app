@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">build</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -136,13 +137,13 @@ Widget build(BuildContext context) {
                               ),
                               SizedBox(height: 10),
                               Text(
-                                model.campaigns
-                                        .map((c) =&gt; c.getId())
+                                model.campaigns!
+                                        .map((c) =&gt; c.id)
                                         .contains(campaignId)
-                                    ? model.campaigns
+                                    ? model.campaigns!
                                         .firstWhere(
-                                            (c) =&gt; c.getId() == campaignId)
-                                        .getTitle()
+                                            (c) =&gt; c.id == campaignId)
+                                        .title
                                     : &quot;Learning centre&quot;,
                                 style: Theme.of(context)
                                     .primaryTextTheme
@@ -157,10 +158,10 @@ Widget build(BuildContext context) {
                 ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: model.learningTopics.length,
+                  itemCount: model.learningTopics!.length,
                   itemBuilder: (context, index) {
                     return LearningTopicSelectionItem(
-                      topic: model.learningTopics[index],
+                      topic: model.learningTopics![index],
                     );
                   },
                 ),

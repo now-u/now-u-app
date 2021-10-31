@@ -45,17 +45,18 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">getActiveActions</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../models_Action/CampaignAction-class.html">CampaignAction</a></span>&gt;</span></span>
-<span class="name ">getActiveActions</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="getActiveActions-param-includeCompleted">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">includeCompleted</span>, </span></li>
-<li><span class="parameter" id="getActiveActions-param-includeRejected"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">includeRejected</span>, </span></li>
-<li><span class="parameter" id="getActiveActions-param-onlySelectedCampaigns"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">onlySelectedCampaigns</span>, </span></li>
-<li><span class="parameter" id="getActiveActions-param-includeTodo"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">includeTodo</span>, </span></li>
-<li><span class="parameter" id="getActiveActions-param-includeStarred"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">includeStarred</span>}</span></li>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../models_Action/ListCauseAction-class.html">ListCauseAction</a></span>&gt;</span></span>
+<span class="name ">getActiveActions</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="getActiveActions-param-includeCompleted">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">includeCompleted</span>, </span></li>
+<li><span class="parameter" id="getActiveActions-param-includeRejected"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">includeRejected</span>, </span></li>
+<li><span class="parameter" id="getActiveActions-param-onlySelectedCampaigns"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">onlySelectedCampaigns</span>, </span></li>
+<li><span class="parameter" id="getActiveActions-param-includeTodo"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">includeTodo</span>, </span></li>
+<li><span class="parameter" id="getActiveActions-param-includeStarred"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">includeStarred</span>}</span></li>
 </ol>)
 
       
@@ -67,52 +68,39 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">List&lt;CampaignAction&gt; getActiveActions(
-    {bool includeCompleted,
-    bool includeRejected,
-    bool onlySelectedCampaigns,
-    bool includeTodo, &#47;&#47; Todo actions are unstarred and uncompleted
-    bool includeStarred}) {
-  List&lt;CampaignAction&gt; actions = [];
-  for (Campaign campaign in _campaigns) {
-    actions.addAll(campaign.getActions());
+  <pre class="language-dart"><code class="language-dart">List&lt;ListCauseAction&gt; getActiveActions(
+    {bool? includeCompleted,
+    bool? includeRejected,
+    bool? onlySelectedCampaigns,
+    bool? includeTodo, &#47;&#47; Todo actions are unstarred and uncompleted
+    bool? includeStarred}) {
+  List&lt;ListCauseAction&gt; actions = [];
+  for (Campaign campaign in _campaigns!) {
+    actions.addAll(campaign.actions!);
   }
 
-  User user = _authenticationService.currentUser;
+  User? user = _authenticationService!.currentUser;
 
   if (user == null) {
     return actions;
   }
 
   if (!(includeRejected ?? false)) {
-    actions.removeWhere((a) =&gt; user.getRejectedActions().contains(a.getId()));
+    actions.removeWhere((a) =&gt; user.getRejectedActions()!.contains(a.id));
   }
 
   &#47;&#47; If dont include todo actions then get rid of those todo
   if (!(includeTodo ?? true)) {
     actions.removeWhere((a) =&gt;
-        !user.getCompletedActions().contains(a.getId()) &amp;&amp;
-        !user.getStarredActions().contains(a.getId()));
+        !user.getCompletedActions()!.contains(a.id) &amp;&amp;
+        !user.getStarredActions()!.contains(a.id));
   }
   if (!(includeCompleted ?? false)) {
     actions
-        .removeWhere((a) =&gt; user.getCompletedActions().contains(a.getId()));
+        .removeWhere((a) =&gt; user.getCompletedActions()!.contains(a.id));
   }
   if (!(includeStarred ?? true)) {
-    actions.removeWhere((a) =&gt; user.getStarredActions().contains(a.getId()));
-  }
-  if (onlySelectedCampaigns ?? false) {
-    &#47;&#47; If action is not in the selected campaings then get rid
-    &#47;&#47; TODO CHECK THIS
-    List&lt;Campaign&gt; activeSelectedCampaigns = getActiveSelectedCampaigns();
-    actions.removeWhere((action) {
-      activeSelectedCampaigns.forEach((campaign) {
-        if (campaign.getActions().contains(action)) {
-          return false;
-        }
-      });
-      return true;
-    });
+    actions.removeWhere((a) =&gt; user.getStarredActions()!.contains(a.id));
   }
   return actions;
 }</code></pre>

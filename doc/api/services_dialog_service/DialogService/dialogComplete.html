@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">dialogComplete</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -65,7 +66,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">void dialogComplete(AlertResponse response) {
   if (_dialogCompleter != null) {
-    _dialogCompleter.complete(response);
+    _dialogCompleter!.complete(response);
   }
   _dialogCompleter = null;
 }</code></pre>

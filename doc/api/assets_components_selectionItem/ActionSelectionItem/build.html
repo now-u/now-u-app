@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">build</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -109,20 +110,19 @@ Widget build(BuildContext context) {
       viewModelBuilder: () =&gt; BaseModel(),
       builder: (context, model, child) {
         bool completed =
-            model.currentUser.getCompletedActions().contains(action.getId());
+            model.currentUser!.getCompletedActions()!.contains(action.id);
         return LeadingSelectionItem(
             backgroundColor: backgroundColor,
             innerHpadding: innerHpadding,
             outerHpadding: outerHpadding,
             iconWidth: iconWidth,
-            isNew: action.isNew(),
+            isNew: action.isNew,
             onTap: () {
               if (extraOnTap != null) {
-                extraOnTap();
+                extraOnTap!();
               }
               Navigator.of(context).pushNamed(Routes.actionInfo,
-                  arguments: ActionInfoArguments(
-                      campaign: campaign, action: action));
+                  arguments: ActionInfoArguments(action: action));
             },
             leading: Stack(children: &lt;Widget&gt;[
               Padding(
@@ -132,17 +132,16 @@ Widget build(BuildContext context) {
                   height: 60,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
-                      color: completed
-                          ? action.getActionIconMap()[&#39;iconColor&#39;]
-                          : action.getActionIconMap()[&#39;iconBackgroundColor&#39;]),
+                      color: completed ? action.primaryColor : action.secondaryColor,
+                  ),
                   child: Center(
                     child: Icon(
                       completed
                           ? Icons.check
-                          : action.getActionIconMap()[&#39;icon&#39;],
+                          : action.icon,
                       color: completed
                           ? Colors.white
-                          : action.getActionIconMap()[&#39;iconColor&#39;],
+                          : action.primaryColor,
                       size: 30,
                     ),
                   ),
@@ -165,8 +164,8 @@ Widget build(BuildContext context) {
               &#47;&#47;        ),
               &#47;&#47;      ),
             ]),
-            text: action.getTitle(),
-            time: action.getTimeText(),
+            text: action.title,
+            time: action.timeText,
             extraOverflow: 50);
       });
 }</code></pre>

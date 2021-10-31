@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">filterArticlesList</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -65,9 +66,9 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">void filterArticlesList(String query) {
   if (query.isNotEmpty) {
-    List&lt;Article&gt; tempList = List&lt;Article&gt;();
-    _newsService.articles.forEach((article) {
-      if (article.getTitle().toLowerCase().contains(query.toLowerCase())) {
+    List&lt;Article&gt; tempList = List&lt;Article&gt;.empty();
+    _newsService!.articles!.forEach((article) {
+      if (article.getTitle()!.toLowerCase().contains(query.toLowerCase())) {
         tempList.add(article);
       }
     });
@@ -78,7 +79,7 @@
   } else {
     _searching = false;
     _filteredArticles.clear();
-    _filteredArticles.addAll(_newsService.articles);
+    _filteredArticles.addAll(_newsService!.articles!);
   }
   notifyListeners();
 }</code></pre>

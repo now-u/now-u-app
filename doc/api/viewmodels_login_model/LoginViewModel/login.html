@@ -45,15 +45,16 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">login</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
       
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
-<span class="name ">login</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="login-param-email">{<span>@<a href="https://pub.dev/documentation/meta/1.3.0/meta/required-constant.html">required</a></span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">email</span>, </span></li>
-<li><span class="parameter" id="login-param-token"><span>@<a href="https://pub.dev/documentation/meta/1.3.0/meta/required-constant.html">required</a></span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">token</span>, </span></li>
-<li><span class="parameter" id="login-param-isManul"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">isManul</span>}</span></li>
+<span class="name ">login</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="login-param-email">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">email</span>, </span></li>
+<li><span class="parameter" id="login-param-token"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">token</span>, </span></li>
+<li><span class="parameter" id="login-param-isManul"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">isManul</span>}</span></li>
 </ol>)
 
       
@@ -66,13 +67,13 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future login({
-  @required String email,
-  @required String token,
-  bool isManul,
+  required String? email,
+  required String? token,
+  bool? isManul,
 }) async {
   setBusy(true);
 
-  var err = await _authenticationService.login(
+  var err = await _authenticationService!.login(
     email,
     token,
   );
@@ -85,26 +86,26 @@
     String errorMsg = &quot;Login error please try again&quot;;
     if (err == AuthError.tokenExpired) {
       errorMsg = &quot;Your token has expired, please restart the login process&quot;;
-      await _dialogService.showDialog(
+      await _dialogService!.showDialog(
           title: &quot;Login error&quot;, description: errorMsg);
-      _navigationService.navigateTo(Routes.login);
+      _navigationService!.navigateTo(Routes.login);
     } else if (err == AuthError.unauthorized) {
-      if (isManul) {
+      if (isManul!) {
         errorMsg =
             &quot;Incorrect token, please double check your token from the email&quot;;
-        await _dialogService.showDialog(
+        await _dialogService!.showDialog(
             title: &quot;Login error&quot;, description: errorMsg);
       } else {
         errorMsg = &quot;Incorrect login link, please try again&quot;;
-        await _dialogService.showDialog(
+        await _dialogService!.showDialog(
             title: &quot;Login error&quot;, description: errorMsg);
       }
     } else {
-      await _dialogService.showDialog(
+      await _dialogService!.showDialog(
           title: &quot;Login error&quot;, description: errorMsg);
     }
   } else {
-    _navigationService.navigateTo(Routes.intro);
+    _navigationService!.navigateTo(Routes.intro);
   }
 }</code></pre>
 </section>

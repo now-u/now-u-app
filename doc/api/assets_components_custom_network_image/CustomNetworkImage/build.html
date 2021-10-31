@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">build</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -110,13 +111,13 @@ Widget build(BuildContext context) {
     return Center(child: Icon(Icons.error));
   }
   return CachedNetworkImage(
-    imageUrl: url,
+    imageUrl: url!,
     placeholder: placeholder == null &amp;&amp; progressIndicatorBuilder == null
         ? (context, url) =&gt; Center(child: CircularProgressIndicator())
-        : placeholder,
-    errorWidget: errorWidget ??
+        : placeholder as Widget Function(BuildContext, String)?,
+    errorWidget: errorWidget as Widget Function(BuildContext, String, dynamic)? ??
         (context, url, error) =&gt; Center(child: Icon(Icons.error)),
-    progressIndicatorBuilder: progressIndicatorBuilder,
+    progressIndicatorBuilder: progressIndicatorBuilder as Widget Function(BuildContext, String, DownloadProgress)?,
     fit: fit,
     height: height,
     cacheManager: cacheManager,

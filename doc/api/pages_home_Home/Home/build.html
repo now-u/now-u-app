@@ -45,6 +45,7 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">build</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -114,15 +115,15 @@ Widget build(BuildContext context) {
           viewModelBuilder: () =&gt; HomeViewModel(),
           onModelReady: (model) =&gt; model.fetchAll(),
           builder: (context, model, child) {
-            List&lt;Campaign&gt; campaigns = model.campaignsWithSelectedFirst;
+            List&lt;Campaign&gt;? campaigns = model.campaignsWithSelectedFirst;
             return ScrollableSheetPage(
-                header: model.notifications.length &gt; 0
+                header: model.notifications!.length &gt; 0
                     ? HeaderWithNotifications(
-                        name: model.currentUser.getName(),
-                        notification: model.notifications[0],
+                        name: model.currentUser!.getName(),
+                        notification: model.notifications![0],
                         dismissNotification: model.dismissNotification,
                       )
-                    : HeaderStyle1(model.currentUser.getName()),
+                    : HeaderStyle1(model.currentUser!.getName()),
                 children: &lt;Widget&gt;[
                   HomeTitle(
                     &quot;Current campaigns&quot;,
