@@ -75,8 +75,7 @@ class CampaignInfoBody extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: customNetworkImageProvider(
-                          _campaign!.headerImage),
+                      image: customNetworkImageProvider(_campaign!.headerImage),
                       fit: BoxFit.cover,
                     ),
                   ),

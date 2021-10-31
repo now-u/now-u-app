@@ -79,9 +79,7 @@ class NewsViewModel extends BaseModel {
   }
 
   String? getCategoryFromIndex(int index) {
-    return index == campaigns!.length
-        ? "general"
-        : campaigns![index].shortName;
+    return index == campaigns!.length ? "general" : campaigns![index].shortName;
   }
 
   void openArticle(article) {

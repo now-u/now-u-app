@@ -51,7 +51,8 @@ class PageHeader extends StatelessWidget {
         SizedBox(height: extraInnerPadding ?? 0),
         Container(
           child: Padding(
-            padding: EdgeInsets.only(left: padding == null ? 20 : padding! + 10),
+            padding:
+                EdgeInsets.only(left: padding == null ? 20 : padding! + 10),
             child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
