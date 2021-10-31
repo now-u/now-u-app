@@ -122,6 +122,6 @@ class LearningResource {
   /// Whether the resource has been created in the last 2 days 
   // TODO move to api
   bool isNew() {
-    return DateTime.now().difference(_createdAt).compareTo(Duration(days: 2)) < 0;
+    return DateTime.now().difference(createdAt).compareTo(Duration(days: 2)) < 0;
   }
 }
