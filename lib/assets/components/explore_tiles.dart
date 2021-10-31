@@ -1,3 +1,4 @@
+import 'package:app/assets/components/custom_network_image.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Cause.dart';
@@ -26,7 +27,7 @@ class ExploreCampaignTile extends StatelessWidget {
           children: [
             AspectRatio(
               aspectRatio: 1.5,
-              child: Image.network(
+              child: CustomNetworkImage(
                 headerImage,
                 fit: BoxFit.cover,
               ),
