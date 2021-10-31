@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 import 'package:app/assets/components/selectionPill.dart';
 import 'package:app/viewmodels/explore_page_view_model.dart';
 
@@ -42,5 +43,16 @@ class ExploreFilter {
     required this.options, 
     this.multi = false,
   });
+
+  Map<String, dynamic> toJson() {
+    // If many can be selected return a list
+    dynamic value = multi 
+        ? options.where((option) => option.isSelected).map((option) => option.parameterValue).toList()
+        : options.firstWhereOrNull((option) => option.isSelected)?.parameterValue;
+
+    return {
+      parameterName: value
+    };
+  }
 }
 
