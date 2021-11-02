@@ -26,7 +26,8 @@ class ListCampaign extends Explorable {
 
   // Although at the api level a campaign can be in many causes, for now we are
   // only showing a single cause in the UI.
-  ListCause? get cause => _causes.isNotEmpty ? _causes[0] : null;
+  // TODO initialize in constructor initializer list if we're sticking to this logic
+  ListCause get cause => _causes[0];
 
   /// Returns whether the campaign has ended
   bool get isPast =>

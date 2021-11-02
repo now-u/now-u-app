@@ -8,7 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class ExploreCampaignTile extends StatelessWidget {
   final String headerImage;
   final String title;
-  final ListCause? cause;
+  final ListCause cause;
 
   ExploreCampaignTile(ListCampaign model, {Key? key})
       : headerImage = model.headerImage,
@@ -41,7 +41,7 @@ class ExploreCampaignTile extends StatelessWidget {
             ),
             Padding(
                 padding: const EdgeInsets.only(bottom: 8),
-                child: _ExploreTileCause(cause!)),
+                child: _ExploreTileCause(cause)),
           ],
         ),
       ),
@@ -56,7 +56,7 @@ class ExploreActionTile extends StatelessWidget {
   final Color headerColor;
   final Color dividerColor;
   final IconData icon;
-  final ListCause? cause;
+  final ListCause cause;
   final String timeText;
 
   ExploreActionTile(ListCauseAction model, {Key? key})
@@ -127,7 +127,7 @@ class ExploreActionTile extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8),
-                    child: _ExploreTileCause(cause!),
+                    child: _ExploreTileCause(cause),
                   )
                 ],
               ),
