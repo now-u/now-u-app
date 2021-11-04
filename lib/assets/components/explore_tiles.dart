@@ -2,6 +2,7 @@ import 'package:app/assets/components/custom_network_image.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Cause.dart';
+import 'package:app/models/news.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -26,38 +27,44 @@ class ExploreCampaignTile extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: AspectRatio(
         aspectRatio: 0.75,
-        child: Column(
-          children: [
-            Stack(
-              alignment: Alignment.topRight,
-              children: [
-                AspectRatio(
-                  aspectRatio: 1.5,
-                  child: CustomNetworkImage(
-                    headerImage,
-                    fit: BoxFit.cover,
+        child: InkWell(
+          onTap: () {
+            // TODO do something
+          },
+          child: Column(
+            children: [
+              Stack(
+                alignment: Alignment.topRight,
+                children: [
+                  AspectRatio(
+                    aspectRatio: 1.5,
+                    // FIXME ink animation doesn't cover image
+                    child: CustomNetworkImage(
+                      headerImage,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: _ExploreTileCheckmark(
-                    showCheckmark: showCheckmark,
-                    completed: completed,
-                  ),
-                )
-              ],
-            ),
-            Expanded(
-              child: Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: _ExploreTileTitle(title),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: _ExploreTileCheckmark(
+                      showCheckmark: showCheckmark,
+                      completed: completed,
+                    ),
+                  )
+                ],
               ),
-            ),
-            Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: _ExploreTileCause(cause)),
-          ],
+              Expanded(
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: _ExploreTileTitle(title),
+                ),
+              ),
+              Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: _ExploreTileCause(cause)),
+            ],
+          ),
         ),
       ),
     );
@@ -95,68 +102,162 @@ class ExploreActionTile extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: AspectRatio(
         aspectRatio: 1.65,
-        child: Column(
-          children: [
-            Flexible(
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                color: headerColor,
-                child: Row(
-                  children: [
-                    Icon(
-                      icon,
-                      size: 18,
-                      color: iconColor,
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      type.name,
-                      textScaleFactor: .8,
-                    ),
-                    VerticalDivider(
-                      color: dividerColor,
-                      indent: 12,
-                      endIndent: 12,
-                    ),
-                    const FaIcon(
-                      // Use FaIcon to center icons properly
-                      FontAwesomeIcons.clock,
-                      size: 16,
-                      color: Color.fromRGBO(55, 58, 74, 1),
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      timeText,
-                      textScaleFactor: .8,
-                    ),
-                    Expanded(child: Container()),
-                    _ExploreTileCheckmark(
-                      showCheckmark: showCheckmark,
-                      completed: completed,
-                    ),
-                  ],
+        child: InkWell(
+          onTap: () {
+            // TODO do something
+          },
+          child: Column(
+            children: [
+              Flexible(
+                child: Ink(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  color: headerColor,
+                  child: Row(
+                    children: [
+                      Icon(
+                        icon,
+                        size: 18,
+                        color: iconColor,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        type.name,
+                        textScaleFactor: .8,
+                      ),
+                      VerticalDivider(
+                        color: dividerColor,
+                        indent: 12,
+                        endIndent: 12,
+                      ),
+                      const FaIcon(
+                        // Use FaIcon to center icons properly
+                        FontAwesomeIcons.clock,
+                        size: 16,
+                        color: Color.fromRGBO(55, 58, 74, 1),
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        timeText,
+                        textScaleFactor: .8,
+                      ),
+                      Expanded(child: Container()),
+                      _ExploreTileCheckmark(
+                        showCheckmark: showCheckmark,
+                        completed: completed,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Flexible(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: _ExploreTileTitle(title),
+              Flexible(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: _ExploreTileTitle(title),
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: _ExploreTileCause(cause),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: _ExploreTileCause(cause),
+                    )
+                  ],
+                ),
+                flex: 3,
               ),
-              flex: 3,
-            ),
-          ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ExploreNewsTile extends StatelessWidget {
+  final String title;
+  final String desc;
+  final String headerImage;
+  final String dateString;
+  final String url;
+  final String shortUrl;
+
+  ExploreNewsTile(ListNews model, {Key? key})
+      : title = model.title,
+        desc = model.desc,
+        headerImage = model.headerImage,
+        dateString = model.dateString,
+        url = model.url,
+        shortUrl = model.shortUrl,
+        super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      clipBehavior: Clip.antiAlias,
+      child: AspectRatio(
+        aspectRatio: 0.8,
+        child: InkWell(
+          onTap: () {
+            // TODO do something
+          },
+          child: Column(
+            children: [
+              AspectRatio(
+                aspectRatio: 1.8,
+                // FIXME ink animation doesn't cover image
+                child: CustomNetworkImage(
+                  headerImage,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: Theme.of(context).primaryTextTheme.headline2!,
+                        textScaleFactor: .7,
+                      ),
+                      Text(
+                        desc,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .bodyText2!
+                            .apply(fontStyle: FontStyle.normal),
+                      ),
+                      Text(
+                        dateString,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Ink(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                decoration: const BoxDecoration(
+                    color: Color.fromRGBO(247, 248, 252, 1)),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    shortUrl,
+                    style: Theme.of(context).primaryTextTheme.bodyText1?.apply(
+                          color: const Color.fromRGBO(255, 136, 0, 1),
+                        ),
+                    textScaleFactor: .7,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

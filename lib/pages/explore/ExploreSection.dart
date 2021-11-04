@@ -3,6 +3,7 @@ import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Cause.dart';
 import 'package:app/models/Explorable.dart';
+import 'package:app/models/news.dart';
 import 'package:app/pages/explore/ExploreFilter.dart';
 import 'package:app/viewmodels/explore_page_view_model.dart';
 import 'package:flutter/material.dart';
@@ -191,4 +192,45 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
   @override
   Widget renderTile(ListCauseAction tile) =>
       ExploreActionTile(tile, showCheckmark);
+}
+
+class NewsExploreSection extends ExploreSection<ListNews> {
+  const NewsExploreSection({
+    required String title,
+    required String description,
+    Map? fetchParams,
+    ExploreFilter? filter,
+  }) : super(
+          title: title,
+          description: description,
+          fetchParams: fetchParams,
+          filter: filter,
+          tileHeight: 330,
+          showCheckmark: false,
+        );
+
+  @override
+  Future<List<ListNews>> fetchTiles(Map<String, dynamic>? params) async {
+    // TODO remove mock
+    return Future.delayed(
+      const Duration(seconds: 2),
+      () => List.generate(
+        5,
+        (i) => ListNews(
+          id: i,
+          title: "Ocean protection can yield ‘triple benefits’",
+          desc:
+              "A new study suggests that carefully planned marine protect lorem ipsum...",
+          headerImage: "https://picsum.photos/id/$i/200",
+          date: DateTime.utc(2020, 1, i + 1),
+          url: "https://www.google.com",
+        ),
+      ),
+    );
+    // final CausesService _causesService = locator<CausesService>();
+    // return await _causesService.getCampaigns(params: params);
+  }
+
+  @override
+  Widget renderTile(ListNews tile) => ExploreNewsTile(tile);
 }

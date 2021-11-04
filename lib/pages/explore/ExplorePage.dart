@@ -38,6 +38,10 @@ List<ExploreSection> exploreSections = [
     filter: filter,
     showCheckmark: false,
   ),
+  const NewsExploreSection(
+      title: "News",
+      description:
+          "Find out what’s going on in the world this week in relation to your chosen causes"),
 ];
 
 var campaign_explore_page = ExplorePage(sections: exploreSections);
