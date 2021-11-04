@@ -1,14 +1,11 @@
-import 'package:app/assets/StyleFrom.dart';
-import 'package:flutter/material.dart';
-import 'package:tuple/tuple.dart';
-import 'package:app/models/Explorable.dart';
-import 'package:app/models/Cause.dart';
-
-import 'package:app/locator.dart';
-import 'package:app/services/causes_service.dart';
-
 // Custom Icons
 import 'package:app/assets/icons/customIcons.dart';
+import 'package:app/locator.dart';
+import 'package:app/models/Cause.dart';
+import 'package:app/models/Explorable.dart';
+import 'package:app/services/causes_service.dart';
+import 'package:flutter/material.dart';
+import 'package:tuple/tuple.dart';
 
 enum CampaignActionType {
   Volunteer,
@@ -25,7 +22,7 @@ enum CampaignActionType {
   Other
 }
 
-List<String> rejectionReasons = [
+const List<String> rejectionReasons = [
   "It requires too much effort",
   "It takes too long",
   "It does not seem useful/impactful",
@@ -34,60 +31,69 @@ List<String> rejectionReasons = [
   "Other",
 ];
 
-// Depreciated
-Color red = Color.fromRGBO(211, 0, 1, 1);
-Color redO = colorFrom(red, opacity: 0.15);
+const green0 = Color.fromRGBO(89, 152, 26, 1);
+const green1 = Color.fromRGBO(230, 240, 221, 1);
+const green2 = Color.fromRGBO(177, 199, 155, 1);
 
-Color green = Color.fromRGBO(89, 152, 26, 0.7);
-Color greenO = colorFrom(green, opacity: 0.2);
-Color orange = Color.fromRGBO(255, 136, 0, 0.7);
-Color orangeO = colorFrom(orange, opacity: 0.2);
-Color yellow = Color.fromRGBO(243, 183, 0, 0.7);
-Color yellowO = colorFrom(yellow, opacity: 0.2);
-Color blue = Color.fromRGBO(38, 151, 211, 0.7);
-Color blueO = colorFrom(blue, opacity: 0.2);
+const orange0 = Color.fromRGBO(255, 136, 0, 1);
+const orange1 = Color.fromRGBO(255, 237, 217, 1);
+const orange2 = Color.fromRGBO(231, 190, 162, 1);
+
+const yellow0 = Color.fromRGBO(243, 183, 0, 1);
+const yellow1 = Color.fromRGBO(253, 244, 217, 1);
+const yellow2 = Color.fromRGBO(243, 183, 0, 1);
+
+const blue0 = Color.fromRGBO(38, 151, 211, 1);
+const blue1 = Color.fromRGBO(190, 224, 242, 1);
+const blue2 = Color.fromRGBO(99, 180, 223, 1);
 
 class ActionType {
-  String name;
-  IconData icon;
-  Color primaryColor;
-  Color secondaryColor;
+  final String name;
+  final IconData icon;
+  final Color primaryColor;
+  final Color secondaryColor;
+  final Color tertiaryColor;
 
-  ActionType({
+  const ActionType({
     required this.name,
     required this.icon,
     required this.primaryColor,
-    required this.secondaryColor
+    required this.secondaryColor,
+    required this.tertiaryColor,
   });
 }
 
-ActionType getInvolved = ActionType(
+const ActionType getInvolved = ActionType(
   name: "Get involved",
   icon: CustomIcons.ic_getinvolved,
-  primaryColor: orange,
-  secondaryColor: orangeO,
+  primaryColor: orange0,
+  secondaryColor: orange1,
+  tertiaryColor: orange2,
 );
-ActionType learn = ActionType(
+const ActionType learn = ActionType(
   name: "Learn",
   icon: CustomIcons.ic_learning,
-  primaryColor: blue,
-  secondaryColor: blueO,
+  primaryColor: blue0,
+  secondaryColor: blue1,
+  tertiaryColor: blue2,
 );
-ActionType advocate = ActionType(
-  name: "Advoacte",
+const ActionType advocate = ActionType(
+  name: "Advocate",
   icon: CustomIcons.ic_raiseawareness,
-  primaryColor: orange,
-  secondaryColor: orangeO,
+  primaryColor: orange0,
+  secondaryColor: orange1,
+  tertiaryColor: orange2,
 );
-ActionType raiseMoney = ActionType(
+const ActionType raiseMoney = ActionType(
   name: "Raise money",
   icon: CustomIcons.ic_raisemoney,
-  primaryColor: yellow,
-  secondaryColor: yellowO,
+  primaryColor: yellow0,
+  secondaryColor: yellow1,
+  tertiaryColor: yellow2,
 );
-List<ActionType> actionTypes = [getInvolved, learn, advocate, raiseMoney];
+const List<ActionType> actionTypes = [getInvolved, learn, advocate, raiseMoney];
 
-Map defaultCampaignActionTypeData = {
+const Map defaultCampaignActionTypeData = {
   'name': "other",
   'verb': "Complete",
   'pastVerb': "Completed",
@@ -97,7 +103,7 @@ Map defaultCampaignActionTypeData = {
   'type': getInvolved,
 };
 
-Map campaignActionTypeData = {
+const Map campaignActionTypeData = {
   CampaignActionType.Volunteer: {
     'name': "volunteer",
     'verb': "Volunteer",
@@ -134,7 +140,7 @@ Map campaignActionTypeData = {
     'name': "sign",
     'verb': "Sign",
     'pastVerb': "Signed",
-    'displayName': "petiton",
+    'displayName': "petition",
     //'icon': CustomIcons.icon_petition_01,
     'type': advocate,
   },
@@ -165,7 +171,7 @@ Map campaignActionTypeData = {
   CampaignActionType.Connect: {
     'name': "connect",
     'verb': "Connect",
-    'pastVerb': "Connted",
+    'pastVerb': "Connected",
     'displayName': "times",
     //'icon': FontAwesomeIcons.link,
     //'icon': CustomIcons.icon_connect_01,
@@ -190,7 +196,7 @@ Map campaignActionTypeData = {
   CampaignActionType.Other: defaultCampaignActionTypeData
 };
 
-List<Map> timeBrackets = [
+const List<Map> timeBrackets = [
   {"text": "1-5 mins", "minTime": 0, "maxTime": 5},
   {"text": "5-15 mins", "minTime": 5, "maxTime": 15},
   {"text": "15-30 mins", "minTime": 15, "maxTime": 30},
@@ -209,7 +215,7 @@ CampaignActionType campaignActionTypeFromString(String? s) {
   return t;
 }
 
-Tuple3<String?, String?, String?> generateCampaingActionDesc(
+Tuple3<String?, String?, String?> generateCampaignActionDesc(
     CampaignActionType? t) {
   if (campaignActionTypeData.containsKey(t)) {
     return Tuple3(
@@ -217,99 +223,92 @@ Tuple3<String?, String?, String?> generateCampaingActionDesc(
         campaignActionTypeData[t]['pastVerb'],
         campaignActionTypeData[t]['displayName']);
   }
-  return Tuple3("Complete", "Completed", "special action");
+  return const Tuple3("Complete", "Completed", "special action");
 }
 
 class ListCauseAction extends Explorable {
-  int _id;
-  int get id => _id;
-  
-  String _title;
-  String get title => _title;
+  final int id;
+
+  final String title;
 
   /// The type of the action
-  CampaignActionType _type;
-  /// The type of the action 
-  CampaignActionType get type => _type;
+  final CampaignActionType type;
+
   /// The super type is a bigger category than the type - This is used for the
   /// styling.
   ActionType get superType => campaignActionTypeData[type]['type'];
+
   Color get primaryColor => superType.primaryColor;
+
   Color get secondaryColor => superType.secondaryColor;
+
+  Color get tertiaryColor => superType.tertiaryColor;
+
   IconData get icon => superType.icon;
 
-  /// The causes that this action is part of
-  List<ListCause> _causes;
+  /// The cause that this action is part of
   // Although at the api level an action can be in many causes, for now we are
   // only showing a single cause in the UI.
-  ListCause? get cause => _causes.length > 0 ? _causes[0] : null;
-  
-  double _time;
-  double get time => _time;
-  String get timeText => timeBrackets.firstWhere((b) => b['maxTime'] > time)['text'];
+  final ListCause cause;
 
-  DateTime _createdAt;
-  DateTime? _releasedAt;
-  /// Return when this action was released
-  DateTime get releaseTime => _releasedAt == null ? _createdAt : _releasedAt!;
-  bool get isNew => DateTime.now().difference(releaseTime).compareTo(Duration(days: 2)) < 0;
+  final double time;
+
+  String get timeText =>
+      timeBrackets.firstWhere((b) => b['maxTime'] > time)['text'];
+
+  /// When this action was released
+  final DateTime releaseTime;
+
+  bool get isNew =>
+      DateTime.now()
+          .difference(releaseTime)
+          .compareTo(const Duration(days: 2)) <
+      0;
 
   /// Whether the user has completed this action
-  bool _completed;
-  get isCompleted => _completed;
-  
+  final bool completed;
+
   /// Whether the user has completed this action
-  bool _starred;
-  get isStarred => _starred;
+  final bool starred;
 
   ListCauseAction({
-    required int id,
-    required String title,
-    required CampaignActionType type,
+    required this.id,
+    required this.title,
+    required this.type,
     required List<ListCause> causes,
     required DateTime createdAt,
-    required bool completed,
-    required bool starred,
-    required double time,
-
+    required this.completed,
+    required this.starred,
+    required this.time,
     DateTime? releasedAt,
-  }) :
-    _id = id,
-    _title = title,
-    _type = type,
-    _causes = causes,
-    _time = time,
-    _createdAt = createdAt,
-    _releasedAt = releasedAt,
-    _completed = completed,
-    _starred = starred;
-  
-  ListCauseAction.fromJson(Map<String, dynamic> json) :
-      _id = json['id'],
-      _title = json['title'],
-      _type = campaignActionTypeFromString(json['type']),
-      _causes = json['causes'].map((causeJson) => ListCause.fromJson(causeJson)).toList().cast<ListCause>(),
-      _time = json['time'].toDouble(),
-      _createdAt = DateTime.parse(json['created_at']),
-      _releasedAt = json['release_date'] == null ? null : DateTime.parse(json['release_date']),
-      _completed = json['completed'],
-      _starred = json['starred'];
+  })  : cause = causes[0],
+        releaseTime = releasedAt ?? createdAt;
 
-    Future<CampaignAction> getAction() async {
-      CausesService _causesService = locator<CausesService>();
-      return _causesService.getAction(id);
-    }
+  ListCauseAction.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        title = json['title'],
+        type = campaignActionTypeFromString(json['type']),
+        cause = json['causes']
+            .map((causeJson) => ListCause.fromJson(causeJson))
+            .toList()
+            .cast<ListCause>()[0],
+        time = json['time'].toDouble(),
+        releaseTime = json['release_date'] != null
+            ? DateTime.parse(json['release_date'])
+            : DateTime.parse(json['created_at']),
+        completed = json['completed'],
+        starred = json['starred'];
+
+  Future<CampaignAction> getAction() async {
+    CausesService _causesService = locator<CausesService>();
+    return _causesService.getAction(id);
+  }
 }
 
 class CampaignAction extends ListCauseAction {
-  String? _whatDescription;
-  String? get whatDescription => _whatDescription;
-
-  String? _whyDescription;
-  String? get whyDescription => _whyDescription;
-
-  String? _link;
-  String? get link => _link;
+  final String? whatDescription;
+  final String? whyDescription;
+  final String? link;
 
   CampaignAction({
     required int id,
@@ -321,19 +320,24 @@ class CampaignAction extends ListCauseAction {
     required bool starred,
     required double time,
     DateTime? releasedAt,
+    this.whatDescription,
+    this.whyDescription,
+    this.link,
+  }) : super(
+          id: id,
+          title: title,
+          type: type,
+          causes: causes,
+          createdAt: createdAt,
+          completed: completed,
+          starred: starred,
+          releasedAt: releasedAt,
+          time: time,
+        );
 
-    String? whatDescription,
-    String? whyDescription,
-    String? link,
-  }) : 
-    _whatDescription = whatDescription,
-    _whyDescription = whyDescription,
-    _link = link,
-    super(id: id, title: title, type: type, causes: causes, createdAt: createdAt, completed: completed, starred: starred, releasedAt: releasedAt, time: time);
-
-  CampaignAction.fromJson(Map<String, dynamic> json) :
-    _whatDescription = json['what_description'],
-    _whyDescription = json['why_description'],
-    _link = json['link'],
-    super.fromJson(json);
+  CampaignAction.fromJson(Map<String, dynamic> json)
+      : whatDescription = json['what_description'],
+        whyDescription = json['why_description'],
+        link = json['link'],
+        super.fromJson(json);
 }

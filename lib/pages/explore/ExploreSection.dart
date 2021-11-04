@@ -1,15 +1,18 @@
+import 'package:app/assets/components/explore_tiles.dart';
 import 'package:flutter/material.dart';
 import 'package:app/models/Explorable.dart';
 import 'package:app/pages/explore/ExploreFilter.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Cause.dart';
 import 'package:app/models/Action.dart';
-
+import 'package:app/models/Campaign.dart';
+import 'package:app/models/Cause.dart';
+import 'package:app/pages/explore/ExploreFilter.dart';
+import 'package:app/viewmodels/explore_page_view_model.dart';
+import 'package:flutter/material.dart';
+import 'package:stacked/stacked.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/causes_service.dart';
-
-import 'package:stacked/stacked.dart';
-import 'package:app/viewmodels/explore_page_view_model.dart';
 
 import 'dart:io';
 import 'dart:convert';
@@ -29,14 +32,17 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
   // Params to provide to fetch query
   final Map? fetchParams;
 
-  /// 
+  ///
   final ExploreFilter? filter;
- 
+
+  final double tileHeight;
+
   const ExploreSection({
     required this.title,
     required this.description,
     this.fetchParams,
-    this.filter
+    this.filter,
+    this.tileHeight = 160,
   });
 
   Future<List<ExplorableType>> fetchTiles(Map<String, dynamic>? params);
@@ -68,22 +74,20 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                 : SizedBox(height: 0),
 
               Container(
-                height: 200,
+                height: tileHeight,
                 child: model.busy 
-                  ? Container(
+                  ? Center(
                       child: CircularProgressIndicator()
                     )
                   : model.error || model.tiles == null 
                     // TODO handle error here
                     ? Container(color: Colors.red)
-                    : ListView(
+                    : ListView.builder(
+                        padding: EdgeInsets.symmetric(horizontal: 8),
                         scrollDirection: Axis.horizontal,
-                        children: model.tiles!.map((item) => Padding(
-                            padding: EdgeInsets.all(10),
-                            child: renderTile(item) 
-                          )
-                        ).toList()
-                      )
+                        itemCount: model.tiles!.length,
+                        itemBuilder: (context, index) => renderTile(model.tiles![index]),
+                      ),
               ),
             ]
           );
@@ -97,17 +101,44 @@ class CampaignExploreSection extends ExploreSection<ListCampaign> {
     required String title,
     required String description,
     Map? fetchParams,
-    ExploreFilter? filter
-  }) : super(title:title, description:description, fetchParams:fetchParams, filter:filter);
+    ExploreFilter? filter,
+  }) : super(
+          title: title,
+          description: description,
+          fetchParams: fetchParams,
+          filter: filter,
+          tileHeight: 300,
+        );
 
   Future<List<ListCampaign>> fetchTiles(Map<String, dynamic>? params) async {
-    final CausesService _causesService = locator<CausesService>();
-    return await _causesService.getCampaigns(params: params);
+    // TODO remove mock
+    return Future.delayed(
+      Duration(seconds: 2),
+      () => List.generate(
+        5,
+        (i) => ListCampaign(
+          id: i,
+          title:
+              "Advocate for global access to water, sanitation and hygiene (WASH)",
+          shortName: "action$i",
+          headerImage: "https://picsum.photos/200",
+          completed: false,
+          causes: [
+            ListCause(
+              id: 0,
+              title: "Equality & Human-Rights",
+              icon: Icons.error,
+              description: "This is a cause",
+              selected: false,
+            )
+          ],
+        ),
+      ),
+    );
+    // final CausesService _causesService = locator<CausesService>();
+    // return await _causesService.getCampaigns(params: params);
   }
-
-  Widget renderTile(ListCampaign campaign) {
-    return Container(color: Colors.red, height: 100, width: 200, child: Text(campaign.title));
-  }
+  Widget renderTile(ListCampaign campaign) => ExploreCampaignTile(campaign);
 }
 
 class ActionExploreSection extends ExploreSection<ListCauseAction> {
@@ -115,18 +146,45 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
     required String title,
     required String description,
     Map? fetchParams,
-    ExploreFilter? filter
-  }) : super(title:title, description:description, fetchParams:fetchParams, filter:filter);
+    ExploreFilter? filter,
+  }) : super(
+          title: title,
+          description: description,
+          fetchParams: fetchParams,
+          filter: filter,
+          tileHeight: 160,
+        );
 
   Future<List<ListCauseAction>> fetchTiles(Map<String, dynamic>? params) async {
+    // TODO remove mock
+    return Future.delayed(Duration(seconds: 2), () {
+      var types = []
+        ..addAll(CampaignActionType.values)
+        ..shuffle();
+
+      return List.generate(
+          5,
+          (i) => ListCauseAction(
+              id: i,
+              title: "Tell Zara to stop profiting from Uighur forced labour",
+              type: types[i],
+              causes: [
+                ListCause(
+                  id: 0,
+                  title: "Equality & Human-Rights",
+                  icon: Icons.error,
+                  description: "This is a cause",
+                  selected: false,
+                )
+              ],
+              createdAt: DateTime.now(),
+              completed: false,
+              starred: false,
+              time: 42));
+    });
     final CausesService _causesService = locator<CausesService>();
     return await _causesService.getActions(params: params);
   }
 
-  Widget renderTile(ListCauseAction tile) {
-    return Container(
-      color: Colors.blue, height: 100, width: 200
-    );
-  }
+  Widget renderTile(ListCauseAction model) => ExploreActionTile(model);
 }
-

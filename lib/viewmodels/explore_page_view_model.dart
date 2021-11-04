@@ -23,7 +23,7 @@ class ExplorePageViewModel<ExplorableType extends Explorable> extends BaseModel 
 
   void fetchTiles() async {
     setBusy(true);
-    this.tiles = await _fetchTiles(params: filter?.toJson());
+    this.tiles = await _fetchTiles(filter?.toJson());
     setBusy(false);
   }
 }

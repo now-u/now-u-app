@@ -1,7 +1,6 @@
 import 'package:app/assets/icons/customIcons.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:app/models/Campaign.dart';
+import 'package:flutter/material.dart';
 
 class ArticleType {
   final String name;
@@ -34,36 +33,27 @@ class Article {
   final int? linkedCampaignId;
 
   Article({
-    required int id,
-    required String title,
-    required String subtitle,
-    required ArticleType type,
-    required String headerImage,
-    required String fullArticleLink,
-    String? source,
-    int? linkedCampaignId,
-    DateTime? releasedAt,
-  }) :
-    id = id,
-    title = title,
-    subtitle = subtitle,
-    type = type,
-    headerImage = headerImage,
-    fullArticleLink = fullArticleLink,
-    source = source,
-    releasedAt = releasedAt,
-    linkedCampaignId = linkedCampaignId;
+    required this.id,
+    required this.title,
+    required this.subtitle,
+    required this.type,
+    required this.headerImage,
+    required this.fullArticleLink,
+    this.source,
+    this.linkedCampaignId,
+    this.releasedAt,
+  });
 
-  Article.fromJson(Map json) :
-    id = json['id'],
-    title = json['title'],
-    subtitle = json['subtitle'],
-    headerImage = json['header_image'],
-    releasedAt = DateTime.parse(json['released_at']),
-    fullArticleLink = json['full_article_link'],
-    source = json['source'],
-    type = articleTypeFromName(json['type']),
-    linkedCampaignId = json['campaign_id'];
+  Article.fromJson(Map json)
+      : id = json['id'],
+        title = json['title'],
+        subtitle = json['subtitle'],
+        headerImage = json['header_image'],
+        releasedAt = DateTime.parse(json['released_at']),
+        fullArticleLink = json['full_article_link'],
+        source = json['source'],
+        type = articleTypeFromName(json['type']),
+        linkedCampaignId = json['campaign_id'];
 
   String? getCategory({List<Campaign>? campaigns}) {
     if (linkedCampaignId != null && campaigns != null) {
