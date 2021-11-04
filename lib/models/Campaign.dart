@@ -21,13 +21,10 @@ class ListCampaign extends Explorable {
   /// Has the user completed this campaign
   final bool completed;
 
-  /// The causes that this campaign is part of
-  final List<ListCause> _causes;
-
+  /// The cause that this campaign is part of
   // Although at the api level a campaign can be in many causes, for now we are
   // only showing a single cause in the UI.
-  // TODO initialize in constructor initializer list if we're sticking to this logic
-  ListCause get cause => _causes[0];
+  final ListCause cause;
 
   /// Returns whether the campaign has ended
   bool get isPast =>
@@ -42,7 +39,7 @@ class ListCampaign extends Explorable {
     required List<ListCause> causes,
     this.startDate,
     this.endDate,
-  }) : _causes = causes;
+  }) : cause = causes[0];
 
   ListCampaign.fromJson(Map<String, dynamic> json)
       : id = json['id'],
@@ -52,10 +49,10 @@ class ListCampaign extends Explorable {
         startDate = json['start_date'],
         endDate = json['end_date'],
         completed = json['completed'],
-        _causes = json['causes']
+        cause = json['causes']
             .map((causeJson) => ListCause.fromJson(causeJson))
             .toList()
-            .cast<ListCause>();
+            .cast<ListCause>()[0];
 }
 
 class Campaign extends ListCampaign {

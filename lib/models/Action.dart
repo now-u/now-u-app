@@ -246,13 +246,10 @@ class ListCauseAction extends Explorable {
 
   IconData get icon => superType.icon;
 
-  /// The causes that this action is part of
-  final List<ListCause> _causes;
-
+  /// The cause that this action is part of
   // Although at the api level an action can be in many causes, for now we are
   // only showing a single cause in the UI.
-  // TODO initialize in constructor initializer list if we're sticking to this logic
-  ListCause get cause => _causes[0];
+  final ListCause cause;
 
   final double time;
 
@@ -284,17 +281,17 @@ class ListCauseAction extends Explorable {
     required this.starred,
     required this.time,
     DateTime? releasedAt,
-  })  : _causes = causes,
+  })  : cause = causes[0],
         releaseTime = releasedAt ?? createdAt;
 
   ListCauseAction.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         title = json['title'],
         type = campaignActionTypeFromString(json['type']),
-        _causes = json['causes']
+        cause = json['causes']
             .map((causeJson) => ListCause.fromJson(causeJson))
             .toList()
-            .cast<ListCause>(),
+            .cast<ListCause>()[0],
         time = json['time'].toDouble(),
         releaseTime = json['release_date'] != null
             ? DateTime.parse(json['release_date'])
