@@ -9,11 +9,14 @@ class ExploreCampaignTile extends StatelessWidget {
   final String headerImage;
   final String title;
   final ListCause cause;
+  final bool showCheckmark;
+  final bool completed;
 
-  ExploreCampaignTile(ListCampaign model, {Key? key})
+  ExploreCampaignTile(ListCampaign model, this.showCheckmark, {Key? key})
       : headerImage = model.headerImage,
         title = model.title,
         cause = model.cause,
+        completed = model.completed,
         super(key: key);
 
   @override
@@ -25,12 +28,24 @@ class ExploreCampaignTile extends StatelessWidget {
         aspectRatio: 0.75,
         child: Column(
           children: [
-            AspectRatio(
-              aspectRatio: 1.5,
-              child: CustomNetworkImage(
-                headerImage,
-                fit: BoxFit.cover,
-              ),
+            Stack(
+              alignment: Alignment.topRight,
+              children: [
+                AspectRatio(
+                  aspectRatio: 1.5,
+                  child: CustomNetworkImage(
+                    headerImage,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: _ExploreTileCheckmark(
+                    showCheckmark: showCheckmark,
+                    completed: completed,
+                  ),
+                )
+              ],
             ),
             Expanded(
               child: Container(
@@ -59,9 +74,9 @@ class ExploreActionTile extends StatelessWidget {
   final ListCause cause;
   final String timeText;
   final bool completed;
-  final bool showCompleted;
+  final bool showCheckmark;
 
-  ExploreActionTile(ListCauseAction model, this.showCompleted, {Key? key})
+  ExploreActionTile(ListCauseAction model, this.showCheckmark, {Key? key})
       : title = model.title,
         type = model.superType,
         iconColor = model.primaryColor,
@@ -72,10 +87,6 @@ class ExploreActionTile extends StatelessWidget {
         timeText = model.timeText,
         completed = model.completed,
         super(key: key);
-
-  static const Color _completedColor = Color.fromRGBO(89, 152, 26, 1);
-
-  static const Color _uncompletedColor = Color.fromRGBO(155, 159, 177, 1);
 
   @override
   Widget build(BuildContext context) {
@@ -119,14 +130,10 @@ class ExploreActionTile extends StatelessWidget {
                       textScaleFactor: .8,
                     ),
                     Expanded(child: Container()),
-                    showCompleted
-                        ? FaIcon(
-                            FontAwesomeIcons.solidCheckCircle,
-                            color:
-                                completed ? _completedColor : _uncompletedColor,
-                            size: 20,
-                          )
-                        : Container(),
+                    _ExploreTileCheckmark(
+                      showCheckmark: showCheckmark,
+                      completed: completed,
+                    ),
                   ],
                 ),
               ),
@@ -195,5 +202,49 @@ class _ExploreTileCause extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class _ExploreTileCheckmark extends StatelessWidget {
+  /// Whether to show the checkmark at all
+  final bool showCheckmark;
+
+  /// If the card has been completed
+  final bool completed;
+
+  /// Colors for the checkmark
+  static const Color _completedColor = Color.fromRGBO(89, 152, 26, 1);
+  static const Color _uncompletedColor = Color.fromRGBO(155, 159, 177, 1);
+
+  const _ExploreTileCheckmark({
+    required this.showCheckmark,
+    this.completed = false,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (showCheckmark) {
+      return Stack(
+        children: [
+          Positioned.fill(
+            child: Container(
+              margin: const EdgeInsets.all(1),
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          FaIcon(
+            FontAwesomeIcons.solidCheckCircle,
+            color: completed ? _completedColor : _uncompletedColor,
+            size: 20,
+          ),
+        ],
+      );
+    }
+
+    return Container();
   }
 }

@@ -27,12 +27,15 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
 
   final double tileHeight;
 
+  final bool showCheckmark;
+
   const ExploreSection({
     required this.title,
     required this.description,
     this.fetchParams,
     this.filter,
     this.tileHeight = 160,
+    this.showCheckmark = false,
   });
 
   Future<List<ExplorableType>> fetchTiles(Map<String, dynamic>? params);
@@ -94,12 +97,14 @@ class CampaignExploreSection extends ExploreSection<ListCampaign> {
     required String description,
     Map? fetchParams,
     ExploreFilter? filter,
+    bool showCheckmark = false,
   }) : super(
           title: title,
           description: description,
           fetchParams: fetchParams,
           filter: filter,
           tileHeight: 300,
+          showCheckmark: showCheckmark,
         );
 
   @override
@@ -114,7 +119,7 @@ class CampaignExploreSection extends ExploreSection<ListCampaign> {
           title:
               "Advocate for global access to water, sanitation and hygiene (WASH)",
           shortName: "action$i",
-          headerImage: "https://picsum.photos/200",
+          headerImage: "https://picsum.photos/id/$i/200",
           completed: false,
           causes: [
             ListCause(
@@ -133,25 +138,24 @@ class CampaignExploreSection extends ExploreSection<ListCampaign> {
   }
 
   @override
-  Widget renderTile(ListCampaign tile) => ExploreCampaignTile(tile);
+  Widget renderTile(ListCampaign tile) =>
+      ExploreCampaignTile(tile, showCheckmark);
 }
 
 class ActionExploreSection extends ExploreSection<ListCauseAction> {
-  final bool _showCompleted;
-
   const ActionExploreSection({
     required String title,
     required String description,
     Map? fetchParams,
     ExploreFilter? filter,
-    bool? showCompleted,
-  })  : _showCompleted = showCompleted ?? false,
-        super(
+    bool showCheckmark = false,
+  }) : super(
           title: title,
           description: description,
           fetchParams: fetchParams,
           filter: filter,
           tileHeight: 160,
+          showCheckmark: showCheckmark,
         );
 
   @override
@@ -186,5 +190,5 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
 
   @override
   Widget renderTile(ListCauseAction tile) =>
-      ExploreActionTile(tile, _showCompleted);
+      ExploreActionTile(tile, showCheckmark);
 }
