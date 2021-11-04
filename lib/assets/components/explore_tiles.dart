@@ -58,8 +58,10 @@ class ExploreActionTile extends StatelessWidget {
   final IconData icon;
   final ListCause cause;
   final String timeText;
+  final bool completed;
+  final bool showCompleted;
 
-  ExploreActionTile(ListCauseAction model, {Key? key})
+  ExploreActionTile(ListCauseAction model, this.showCompleted, {Key? key})
       : title = model.title,
         type = model.superType,
         iconColor = model.primaryColor,
@@ -68,7 +70,12 @@ class ExploreActionTile extends StatelessWidget {
         icon = model.icon,
         cause = model.cause,
         timeText = model.timeText,
+        completed = model.completed,
         super(key: key);
+
+  static const Color _completedColor = Color.fromRGBO(89, 152, 26, 1);
+
+  static const Color _uncompletedColor = Color.fromRGBO(155, 159, 177, 1);
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +117,16 @@ class ExploreActionTile extends StatelessWidget {
                     Text(
                       timeText,
                       textScaleFactor: .8,
-                    )
+                    ),
+                    Expanded(child: Container()),
+                    showCompleted
+                        ? FaIcon(
+                            FontAwesomeIcons.solidCheckCircle,
+                            color:
+                                completed ? _completedColor : _uncompletedColor,
+                            size: 20,
+                          )
+                        : Container(),
                   ],
                 ),
               ),

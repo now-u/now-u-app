@@ -35,6 +35,7 @@ List<ExploreSection> exploreSections = [
     description:
         "Take a wide range of actions to drive lasting change for issues you care about",
     filter: filter,
+    showCompleted: true,
   ),
 ];
 

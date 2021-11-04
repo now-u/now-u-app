@@ -1,21 +1,14 @@
 import 'package:app/assets/components/explore_tiles.dart';
-import 'package:flutter/material.dart';
-import 'package:app/models/Explorable.dart';
-import 'package:app/pages/explore/ExploreFilter.dart';
-import 'package:app/models/Campaign.dart';
-import 'package:app/models/Cause.dart';
+import 'package:app/locator.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Cause.dart';
+import 'package:app/models/Explorable.dart';
 import 'package:app/pages/explore/ExploreFilter.dart';
+import 'package:app/services/causes_service.dart';
 import 'package:app/viewmodels/explore_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:app/locator.dart';
-import 'package:app/services/causes_service.dart';
-
-import 'dart:io';
-import 'dart:convert';
 
 abstract class ExploreSection<ExplorableType extends Explorable> {
 
@@ -142,12 +135,16 @@ class CampaignExploreSection extends ExploreSection<ListCampaign> {
 }
 
 class ActionExploreSection extends ExploreSection<ListCauseAction> {
+  final bool _showCompleted;
+
   const ActionExploreSection({
     required String title,
     required String description,
     Map? fetchParams,
     ExploreFilter? filter,
-  }) : super(
+    bool? showCompleted,
+  })  : _showCompleted = showCompleted ?? false,
+        super(
           title: title,
           description: description,
           fetchParams: fetchParams,
@@ -186,5 +183,5 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
     return await _causesService.getActions(params: params);
   }
 
-  Widget renderTile(ListCauseAction model) => ExploreActionTile(model);
+  Widget renderTile(ListCauseAction model) => ExploreActionTile(model, _showCompleted);
 }
