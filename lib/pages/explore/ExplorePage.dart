@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class ExplorePage extends StatelessWidget {
   final List<ExploreSection> sections;
 
-  ExplorePage({required this.sections});
+  const ExplorePage({required this.sections, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ ExploreFilter filter = ExploreFilter(parameterName: "abc", options: [
 ]);
 
 List<ExploreSection> exploreSections = [
-  CampaignExploreSection(
+  const CampaignExploreSection(
     title: "Campaigns",
     description:
         "Join members of the now-u community in coordinated campaigns to make a difference",
