@@ -44,7 +44,7 @@ class CausesViewModel extends BaseModel {
 
   void getStarted() async {
     // TODO register selection
-    _navigationService.navigateTo(Routes.home);
+    _navigationService.navigateTo(Routes.login);
   }
 
   Future getCausePopup({required int causeIndex}) async {
