@@ -6,10 +6,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
 class CircularCheckBox extends StatefulWidget {
-  final ValueChanged<bool> onChanged;
-  final bool value;
-  final Color inactiveColor;
-  final Color activeColor;
+  final ValueChanged<bool?>? onChanged;
+  final bool? value;
+  final Color? inactiveColor;
+  final Color? activeColor;
 
   CircularCheckBox(
       {this.value, this.onChanged, this.inactiveColor, this.activeColor});

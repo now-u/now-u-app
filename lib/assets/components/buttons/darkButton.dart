@@ -38,16 +38,16 @@ Map darkButtonStyleStyles = {
 // ignore: must_be_immutable
 class DarkButton extends StatelessWidget {
   final VoidCallback onPressed;
-  final String text;
-  final IconData rightIcon;
-  final IconData leftIcon;
+  final String? text;
+  final IconData? rightIcon;
+  final IconData? leftIcon;
   final DarkButtonSize size;
-  final double fontSize;
-  final DarkButtonStyle style;
+  final double? fontSize;
+  final DarkButtonStyle? style;
 
   DarkButton(this.text,
       {this.size = DarkButtonSize.Medium,
-      @required this.onPressed,
+      required this.onPressed,
       this.rightIcon,
       this.leftIcon,
       this.style,
@@ -84,17 +84,17 @@ class DarkButton extends StatelessWidget {
 // ignore: must_be_immutable
 class SecondaryButton extends StatelessWidget {
   final VoidCallback onPressed;
-  final String text;
-  final IconData rightIcon;
+  final String? text;
+  final IconData? rightIcon;
   final DarkButtonSize size;
-  final double fontSize;
+  final double? fontSize;
 
   SecondaryButton(
     this.text, {
-    @required this.onPressed,
-    @required this.rightIcon,
-    @required this.size,
-    @required this.fontSize,
+    required this.onPressed,
+    required this.rightIcon,
+    required this.size,
+    required this.fontSize,
   });
 
   @override
@@ -119,7 +119,7 @@ class SecondaryButton extends StatelessWidget {
             horizontal: darkButtonStyleStyles[size]['hPadding'],
           ),
           child: Text(
-            text,
+            text!,
             style: textStyleFrom(
               Theme.of(context).primaryTextTheme.button,
               color: Theme.of(context).buttonColor,
@@ -134,17 +134,17 @@ class SecondaryButton extends StatelessWidget {
 
 class PrimaryButton extends StatelessWidget {
   final VoidCallback onPressed;
-  final String text;
-  final IconData rightIcon;
+  final String? text;
+  final IconData? rightIcon;
   final DarkButtonSize size;
-  final double fontSize;
+  final double? fontSize;
 
   PrimaryButton(
     this.text, {
-    @required this.onPressed,
-    @required this.rightIcon,
-    @required this.size,
-    @required this.fontSize,
+    required this.onPressed,
+    required this.rightIcon,
+    required this.size,
+    required this.fontSize,
   });
 
   @override
@@ -177,7 +177,7 @@ class PrimaryButton extends StatelessWidget {
               horizontal: darkButtonStyleStyles[size]['hPadding'],
             ),
             child: Text(
-              text,
+              text!,
               style: textStyleFrom(
                 Theme.of(context).primaryTextTheme.button,
                 color: Colors.white,
@@ -200,15 +200,15 @@ class PrimaryButton extends StatelessWidget {
 
 class OutlineButton extends StatelessWidget {
   final VoidCallback onPressed;
-  final String text;
+  final String? text;
   final DarkButtonSize size;
-  final double fontSize;
+  final double? fontSize;
 
   OutlineButton(
     this.text, {
-    @required this.onPressed,
-    @required this.size,
-    @required this.fontSize,
+    required this.onPressed,
+    required this.size,
+    required this.fontSize,
   });
 
   @override
@@ -237,7 +237,7 @@ class OutlineButton extends StatelessWidget {
               horizontal: darkButtonStyleStyles[size]['hPadding'],
             ),
             child: Text(
-              text,
+              text!,
               style: textStyleFrom(
                 Theme.of(context).primaryTextTheme.button,
                 color: Colors.white,

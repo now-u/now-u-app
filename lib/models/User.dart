@@ -1,7 +1,6 @@
 import 'package:app/models/Reward.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
-import 'package:app/models/Campaigns.dart';
 import 'package:app/models/Organisation.dart';
 
 List<String> stagingUsers = [
@@ -12,46 +11,45 @@ List<String> stagingUsers = [
   "charlieblindsay@gmail.com"
 ];
 
-List<int> rewardValues = [1, 5, 10, 25, 50, 100, 200];
-int pointsForJoiningCampaign = 10;
-int pointsForCompletingAction = 5;
-
 class User {
-  int id;
+  int? id;
   //FirebaseUser firebaseUser;
-  String fullName;
-  String email;
-  DateTime dateOfBirth;
+  String? fullName;
+  String? email;
+  DateTime? dateOfBirth;
 
   // TODO make some attributes class that can take any attrribute so I dont need this
-  String location;
-  double monthlyDonationLimit;
-  bool homeOwner;
+  String? location;
+  double? monthlyDonationLimit;
+  bool? homeOwner;
 
   // Progress (All data stored as ids)
-  List<int> selectedCampaigns =
+  List<int>? selectedCampaigns =
       []; // Stores all campaings that have been selected (including old ones)
-  List<int> completedCampaigns =
+  List<int>? completedCampaigns =
       []; // Stores campaings where all actions have been completed (maybe we should do 80% of something)
   //List<int> completedRewards = [];
-  List<int> completedActions = [];
-  List<int> completedLearningResources = [];
+  List<int?>? completedActions = [];
+  List<int>? completedLearningResources = [];
 
   // Key is rejected id
   // Map stores rejection time and rejection reason
-  List<int> rejectedActions = [];
+  List<int?>? rejectedActions = [];
 
-  List<int> starredActions = [];
+  List<int>? starredActions = [];
 
-  Map<CampaignActionType, int> completedActionsType;
+  Map<CampaignActionType?, int>? completedActionsType;
 
-  int points;
+  int? points;
 
-  Organisation _organisation;
-  Organisation get organisation => _organisation;
-  set setOrganisation(Organisation org) => _organisation = org;
+  Organisation? _organisation;
+  Organisation? get organisation => _organisation;
+  set setOrganisation(Organisation? org) => _organisation = org;
 
-  String token;
+  String? _token;
+  String? get token => this._token;
+
+  bool get isStagingUser => stagingUsers.contains(this.email);
 
   User({
     id,
@@ -91,9 +89,7 @@ class User {
 
     this.completedActionsType = completedActionsType ?? initCompletedAction();
 
-    this.points = points ?? 0;
-
-    this.token = token;
+    this._token = token;
     _organisation = organisation;
   }
 
@@ -114,34 +110,32 @@ class User {
     starredActions = [];
     completedLearningResources = [];
     completedActionsType = initCompletedAction();
-    token = null;
-    points = 0;
+    _token = null;
   }
 
   User copyWith({
-    int id,
+    int? id,
     //FirebaseUser firebaseUser,
-    String fullName,
-    String email,
-    DateTime dateOfBirth,
+    String? fullName,
+    String? email,
+    DateTime? dateOfBirth,
 
     // TODO make some attributes class that can take any attrribute so I dont need this
-    String location,
-    double monthlyDonationLimit,
-    bool homeOwner,
+    String? location,
+    double? monthlyDonationLimit,
+    bool? homeOwner,
 
     // Progress
-    List<int> selectedCampaigns,
-    List<int> completedCampaigns,
+    List<int>? selectedCampaigns,
+    List<int>? completedCampaigns,
     //List<int> completedRewards,
-    List<int> completedActions,
-    List<int> rejectedActions,
-    List<int> starredActions,
-    List<int> completedLearningResources,
-    Map<CampaignActionType, int> completedActionsType,
-    int points,
-    String token,
-    Organisation organisation,
+    List<int?>? completedActions,
+    List<int?>? rejectedActions,
+    List<int>? starredActions,
+    List<int>? completedLearningResources,
+    Map<CampaignActionType, int>? completedActionsType,
+    String? token,
+    Organisation? organisation,
   }) {
     return User(
       id: id ?? this.id,
@@ -160,8 +154,7 @@ class User {
       completedLearningResources:
           completedLearningResources ?? this.completedLearningResources,
       completedActionsType: completedActionsType ?? this.completedActionsType,
-      points: points ?? this.points,
-      token: token ?? this.token,
+      token: token ?? this._token,
       organisation: organisation ?? _organisation,
     );
   }
@@ -214,8 +207,7 @@ class User {
         ? this.initCompletedAction()
         : campaignActionTypesDecode(json['completed_actions_type'].cast<int>());
 
-    points = json['points'] ?? 0;
-    token = json['token'];
+    _token = json['token'];
     _organisation = json['organisation'] == null
         ? null
         : Organisation.fromJson(json['organisation']);
@@ -226,7 +218,7 @@ class User {
         'full_name': fullName,
         'email': email,
         'date_of_birth':
-            dateOfBirth == null ? null : dateOfBirth.toIso8601String(),
+            dateOfBirth == null ? null : dateOfBirth!.toIso8601String(),
         'location': location,
         'monthly_donation_limit': monthlyDonationLimit,
         'home_owner': homeOwner,
@@ -236,11 +228,9 @@ class User {
         'rejected_actions': rejectedActions,
         'favourited_actions': starredActions,
         'completed_learning_resources': completedLearningResources,
-        //'completed_rewards': completedRewards,
         'completed_actions_type':
             campaignActionTypesEncode(completedActionsType),
-        'points': points,
-        'token': token,
+        'token': _token,
       };
 
   Map getAttributes() {
@@ -304,19 +294,19 @@ class User {
     }
   }
 
-  int getId() {
+  int? getId() {
     return id;
   }
 
-  String getName() {
+  String? getName() {
     return fullName;
   }
 
-  String getEmail() {
+  String? getEmail() {
     return email;
   }
 
-  DateTime getDateOfBirth() {
+  DateTime? getDateOfBirth() {
     return dateOfBirth;
   }
 
@@ -325,15 +315,15 @@ class User {
     return -1;
   }
 
-  String getLocation() {
+  String? getLocation() {
     return location;
   }
 
-  double getMonthlyDonationLimit() {
+  double? getMonthlyDonationLimit() {
     return monthlyDonationLimit;
   }
 
-  bool getHomeOwner() {
+  bool? getHomeOwner() {
     return homeOwner;
   }
 
@@ -342,49 +332,37 @@ class User {
   }
 
   List<Campaign> filterSelectedCampaigns(List<Campaign> campaigns) {
-    return campaigns
-        .where((c) => selectedCampaigns.contains(c.getId()))
-        .toList();
+    return campaigns.where((c) => selectedCampaigns!.contains(c.id)).toList();
   }
 
   List<Campaign> filterUnselectedCampaigns(List<Campaign> campaigns) {
-    return campaigns
-        .where((c) => !selectedCampaigns.contains(c.getId()))
-        .toList();
+    return campaigns.where((c) => !selectedCampaigns!.contains(c.id)).toList();
   }
 
   int getSelectedCampaignsLength() {
     if (selectedCampaigns == null)
       return 0;
     else
-      return selectedCampaigns.length;
+      return selectedCampaigns!.length;
   }
 
-  List<int> getCompletedActions() {
+  List<int?>? getCompletedActions() {
     return completedActions;
   }
 
-  int getPoints() {
-    return points;
-  }
-
-  String getToken() {
-    return token;
-  }
-
-  List<int> getRejectedActions() {
+  List<int?>? getRejectedActions() {
     return rejectedActions;
   }
 
-  List<int> getStarredActions() {
+  List<int>? getStarredActions() {
     return starredActions;
   }
 
-  List<int> getCompletedLearningResources() {
+  List<int>? getCompletedLearningResources() {
     return completedLearningResources;
   }
 
-  void setName(String name) {
+  void setName(String? name) {
     this.fullName = name;
   }
 
@@ -392,7 +370,7 @@ class User {
     this.email = email;
   }
 
-  void setDateOfBirth(DateTime dob) {
+  void setDateOfBirth(DateTime? dob) {
     this.dateOfBirth = dob;
   }
 
@@ -408,154 +386,62 @@ class User {
     this.homeOwner = homeOwner;
   }
 
-  void setPoints(int points) {
-    this.points = points;
-  }
-
-  void setCompletedActions(List<int> actions) {
+  void setCompletedActions(List<int?>? actions) {
     this.completedActions = actions;
   }
 
   void setToken(String token) {
-    this.token = token;
-  }
-
-  void incrementPoints(int points) {
-    this.points += points;
-    print("User points are now " + this.points.toString());
-  }
-
-  void decrementPoints(int points) {
-    this.points -= points;
-    print("User points are now " + this.points.toString());
+    this._token = token;
   }
 
   void addSelectedCamaping(int id) {
-    if (!selectedCampaigns.contains(id)) {
+    if (!selectedCampaigns!.contains(id)) {
       if (this.selectedCampaigns == null) {
         this.selectedCampaigns = [id];
       } else {
-        this.selectedCampaigns.add(id);
+        this.selectedCampaigns!.add(id);
       }
-      incrementPoints(pointsForJoiningCampaign);
     }
   }
 
   void removeSelectedCamaping(int id) {
-    this.selectedCampaigns.remove(id);
-    decrementPoints(pointsForJoiningCampaign);
+    this.selectedCampaigns!.remove(id);
   }
 
   double getCampaignProgress(Campaign campaign) {
     return numberOfCompletedActionsForCampaign(campaign) /
-        campaign.getActions().length;
+        campaign.actions!.length;
   }
 
   int numberOfCompletedActionsForCampaign(Campaign campaign) {
     int count = 0;
-    List<CampaignAction> actions = campaign.getActions();
+    List<ListCauseAction> actions = campaign.actions!;
     for (int i = 0; i < actions.length; i++) {
-      if (this.completedActions.contains(actions[i].getId())) {
+      if (this.completedActions!.contains(actions[i].id)) {
         count++;
       }
     }
     return count;
   }
 
-  double getActiveCampaignsProgress(Campaigns campaigns) {
-    double total = 0;
-    for (int i = 0; i < campaigns.activeLength(); i++) {
-      total += getCampaignProgress(campaigns.getActiveCampaigns()[i]);
-    }
-    return total / campaigns.activeLength();
-  }
-
-  // Progress
-  // Return the reward progress
-  double getRewardProgress(Reward reward) {
-    //if(this.completedRewards.contains(reward.getId())) return 1;
-    RewardType type = reward.type;
-    int count = 0;
-    if (type == RewardType.CompletedActionsNumber) {
-      count = this.completedActions.length;
-    } else if (type == RewardType.CompletedCampaignsNumber) {
-      count = this.completedCampaigns.length;
-    } else if (type == RewardType.SelectInOneMonthCampaignsNumber) {
-      count = this.selectedCampaigns.length;
-    } else if (type == RewardType.CompletedTypedActionsNumber) {
-      if (reward.getActionType() == null) {
-        print(
-            "A CompletedTypedActionsNumber reward requires a CampaignActionType");
-        return 0;
-      } else {
-        count = this.completedActionsType[reward.getActionType()];
-      }
-    }
-
-    // return
-    if (count > reward.successNumber) {
-      //completeReward(reward);
-      return 1;
-    }
-    return count / reward.successNumber;
-  }
-
-  void completeAction(CampaignAction a, {Function onCompleteReward}) {
-    if (completedActions.contains(a.getId())) {
-      print("You can only complete an action once");
+  void completeAction(CampaignAction a, {Function? onCompleteReward}) {
+    if (completedActions!.contains(a.id)) {
       return;
     }
-    completedActions.add(a.getId());
-    completedActionsType.update(a.getType(), (int x) => x + 1);
-    //incrementPoints(pointsForCompletingAction);
-    print(a.getType().toString());
-    print(completedActionsType[a.getType()]);
+    completedActions!.add(a.id);
+    completedActionsType!.update(a.type, (int x) => x + 1);
   }
 
   void rejectAction(CampaignAction a) {
-    rejectedActions.add(a.getId());
+    rejectedActions!.add(a.id);
   }
-
-  bool isMilestone(int x) {
-    if (x < 300) {
-      return rewardValues.contains(x);
-    } else
-      return x % 50 == 0;
-  }
-
-  // Returns the news rewards completed when this action is completed
-  List<Reward> newlyCompletedRewards(CampaignAction completedAction) {
-    List<Reward> newRewards = [];
-    if (isMilestone(completedActions.length + 1)) {
-      newRewards.add(Reward(
-        successNumber: completedActions.length + 1,
-        type: RewardType.CompletedActionsNumber,
-        //title: nextValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ nextValue(v, rewardValues)} ${ k.toString() }",
-      ));
-    }
-    print(completedAction.getType());
-    print(this.completedActionsType);
-    if (isMilestone(completedActionsType[completedAction.getType()] + 1)) {
-      newRewards.add(Reward(
-        successNumber: completedActionsType[completedAction.getType()] + 1,
-        type: RewardType.CompletedTypedActionsNumber,
-        actionType: completedAction.getType(),
-      ));
-    }
-    return newRewards;
-  }
-
-  // Old reward system
-  //void completeReward(Reward r) {
-  //  completedRewards.add(r.getId());
-  //}
 
   bool isCompleted(CampaignAction a) {
-    return completedActions.contains(a.getId());
+    return completedActions!.contains(a.id);
   }
 
-  Map<CampaignActionType, int> initCompletedAction() {
-    Map<CampaignActionType, int> cas = {};
+  Map<CampaignActionType?, int> initCompletedAction() {
+    Map<CampaignActionType?, int> cas = {};
     List<CampaignActionType> types = CampaignActionType.values;
     for (int i = 0; i < CampaignActionType.values.length; i++) {
       print(i);
@@ -565,106 +451,14 @@ class User {
     print(cas);
     return cas;
   }
-
-  int nextValue(int x, List<int> nums) {
-    for (int i = 0; i < nums.length; i++) {
-      if (rewardValues[i] > x) return rewardValues[i];
-    }
-    return ((x % 100) + 1) * 100; // Keep incrememnting rewardValues in 100s
-  }
-
-  int prevValue(int x, List<int> nums) {
-    if (x <= 0) return 0; // In this case no reward completed
-    if (x >= 300) {
-      return ((x % 100)) * 100; // Keep incrememnting rewardValues in 100s
-
-    }
-    for (int i = nums.length - 1; i >= 0; i--) {
-      if (rewardValues[i] <= x) return rewardValues[i];
-    }
-    return 0; // Probably bad news if we get here
-  }
-
-  // Get rewards to be completed
-  List<Reward> getNextRewards({int x}) {
-    List<Reward> rewards = [];
-    // Get new CompletedTypedActionsNumber
-    completedActionsType.forEach((k, v) {
-      rewards.add(Reward(
-        successNumber: nextValue(v, rewardValues),
-        type: RewardType.CompletedTypedActionsNumber,
-        actionType: k,
-        //title: nextValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ nextValue(v, rewardValues)} ${ k.toString() }",
-      ));
-    });
-    // Add next completedActionsNumber
-    rewards.add(Reward(
-      successNumber: nextValue(completedCampaigns.length, rewardValues),
-      type: RewardType.CompletedCampaignsNumber,
-    ));
-
-    // Add total completed actions
-    rewards.add(Reward(
-      successNumber: nextValue(completedActions.length, rewardValues),
-      type: RewardType.CompletedActionsNumber,
-    ));
-    return rewards;
-  }
-
-  // Get largest reward that have been completed
-  List<Reward> getPreviousRewards({int x}) {
-    List<Reward> rewards = [];
-    // Get pev (complted) CompletedTypedActionsNumber
-    completedActionsType.forEach((k, v) {
-      if (prevValue(v, rewardValues) != 0) {
-        rewards.add(Reward(
-          //id: ,  // Need to generate id based on value --> same each time generated
-          successNumber: prevValue(v, rewardValues),
-          type: RewardType.CompletedTypedActionsNumber,
-          actionType: k,
-          //title: prevValue(v, rewardValues) == 1 ? "Complete your first ${ k.toString() } " : "Complete ${ prevValue(v, rewardValues)} ${ k.toString() }",
-        ));
-      }
-    });
-
-    // Add total completed campaigns
-    if (completedCampaigns.length > 0) {
-      rewards.add(Reward(
-        successNumber: prevValue(completedCampaigns.length, rewardValues),
-        type: RewardType.CompletedCampaignsNumber,
-      ));
-    }
-
-    // Add total completed actions
-    if (completedActions.length > 0) {
-      rewards.add(Reward(
-        successNumber: prevValue(completedActions.length, rewardValues),
-        type: RewardType.CompletedActionsNumber,
-      ));
-    }
-
-    print("previous rewards");
-    print(rewards.length);
-    return rewards;
-  }
-
-  List<Reward> getAllRewards({int x}) {
-    List<Reward> completedRewards = getPreviousRewards();
-    List<Reward> nextRewards = getNextRewards();
-    return completedRewards..addAll(nextRewards);
-  }
-
-  bool isStagingUser() {
-    return stagingUsers.contains(email);
-  }
 }
 
 // TODO this feels very fragile. Find out what happens if I delete/add a CampaignActionType
-List<int> campaignActionTypesEncode(Map<CampaignActionType, int> cats) {
-  List<int> encodable = <int>[];
+List<int?> campaignActionTypesEncode(Map<CampaignActionType?, int>? cats) {
+  List<int?> encodable = <int?>[];
   List<CampaignActionType> list = CampaignActionType.values;
   for (int i = 0; i < list.length; i++) {
-    encodable.add(cats[list[i]]);
+    encodable.add(cats![list[i]]);
   }
   return encodable;
 }

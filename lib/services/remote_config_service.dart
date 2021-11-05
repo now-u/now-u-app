@@ -5,7 +5,7 @@ class RemoteConfigKey {
 }
 
 class RemoteConfigService {
-  RemoteConfig remoteConfig;
+  late RemoteConfig remoteConfig;
 
   Future init() async {
     remoteConfig = RemoteConfig.instance;

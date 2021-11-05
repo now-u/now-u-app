@@ -8,26 +8,26 @@ import 'package:app/assets/components/buttons/darkButton.dart';
 import 'package:app/assets/StyleFrom.dart';
 
 class DialogManager extends StatefulWidget {
-  final Widget child;
-  DialogManager({Key key, this.child}) : super(key: key);
+  final Widget? child;
+  DialogManager({Key? key, this.child}) : super(key: key);
 
   @override
   _DialogManagerState createState() => _DialogManagerState();
 }
 
 class _DialogManagerState extends State<DialogManager> {
-  final DialogService _dialogService = locator<DialogService>();
-  final NavigationService _navigationService = locator<NavigationService>();
+  final DialogService? _dialogService = locator<DialogService>();
+  final NavigationService? _navigationService = locator<NavigationService>();
 
   @override
   void initState() {
     super.initState();
-    _dialogService.registerDialogListener(_showDialog);
+    _dialogService!.registerDialogListener(_showDialog);
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.child;
+    return widget.child!;
   }
 
   void _showDialog(AlertRequest request) {
@@ -46,7 +46,7 @@ class _DialogManagerState extends State<DialogManager> {
               children: <Widget>[
                 SizedBox(height: 20),
                 Text(
-                  request.title,
+                  request.title!,
                   textAlign: TextAlign.center,
                   style: textStyleFrom(
                     Theme.of(context).primaryTextTheme.headline2,
@@ -56,7 +56,7 @@ class _DialogManagerState extends State<DialogManager> {
                 Padding(
                   padding: EdgeInsets.all(5),
                   child: Text(
-                    request.description,
+                    request.description!,
                     style: textStyleFrom(
                       Theme.of(context).primaryTextTheme.bodyText1,
                       color: Theme.of(context).primaryColorDark,
@@ -76,7 +76,7 @@ class _DialogManagerState extends State<DialogManager> {
     );
   }
 
-  List<Widget> _getButtons(List buttons) {
+  List<Widget> _getButtons(List? buttons) {
     if (buttons == null) {
       return <Widget>[
         Container(
@@ -84,7 +84,7 @@ class _DialogManagerState extends State<DialogManager> {
           child: DarkButton(
             "Ok",
             onPressed: () {
-              _dialogService.dialogComplete(AlertResponse(response: true));
+              _dialogService!.dialogComplete(AlertResponse(response: true));
               Navigator.of(context).pop();
             },
           ),
@@ -93,15 +93,15 @@ class _DialogManagerState extends State<DialogManager> {
     }
 
     List<Widget> buttonWidgets = [];
-    for (final DialogButton button in buttons) {
-      DarkButtonStyle buttonStyle =
+    for (final DialogButton button in buttons as Iterable<DialogButton>) {
+      DarkButtonStyle? buttonStyle =
           button.style != null ? button.style : DarkButtonStyle.Primary;
       buttonWidgets.add(Container(
         width: double.infinity,
         child: DarkButton(
           button.text,
           onPressed: () {
-            _dialogService
+            _dialogService!
                 .dialogComplete(AlertResponse(response: button.response));
             if (button.closeOnClick != false) {
               Navigator.of(context).pop();

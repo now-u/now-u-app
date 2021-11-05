@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 class SelectionPill extends StatelessWidget {
   final String text;
   final bool selected;
-  final double borderRadius;
-  final double fontSize;
+  final double? borderRadius;
+  final double? fontSize;
 
   SelectionPill(
     this.text,
@@ -25,13 +25,13 @@ class SelectionPill extends StatelessWidget {
                       customTileBoxShadow(false),
                     ],
                     borderRadius: borderRadius != null
-                        ? BorderRadius.all(Radius.circular(borderRadius))
+                        ? BorderRadius.all(Radius.circular(borderRadius!))
                         : tileBorderRadius(),
                   )
                 : BoxDecoration(
                     color: Color.fromRGBO(222, 224, 232, 1),
                     borderRadius: borderRadius != null
-                        ? BorderRadius.all(Radius.circular(borderRadius))
+                        ? BorderRadius.all(Radius.circular(borderRadius!))
                         : tileBorderRadius(),
                   ),
             child: Center(

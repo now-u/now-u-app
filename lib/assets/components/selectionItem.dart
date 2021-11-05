@@ -19,15 +19,15 @@ import 'package:app/locator.dart';
 import 'package:app/services/navigation_service.dart';
 
 final Color CHEVRON_COLOR = Color.fromRGBO(109, 113, 129, 1);
-final NavigationService _navigationService = locator<NavigationService>();
+final NavigationService? _navigationService = locator<NavigationService>();
 
 class SelectionItem extends StatelessWidget {
-  final String text;
-  final GestureTapCallback onClick;
-  final IconData icon;
-  final Color arrowColor;
-  final EdgeInsetsGeometry padding;
-  final Widget child;
+  final String? text;
+  final GestureTapCallback? onClick;
+  final IconData? icon;
+  final Color? arrowColor;
+  final EdgeInsetsGeometry? padding;
+  final Widget? child;
 
   SelectionItem({
     this.text,
@@ -58,7 +58,7 @@ class SelectionItem extends StatelessWidget {
                   Padding(
                       padding: this.padding ?? EdgeInsets.all(15),
                       child: Text(
-                        text,
+                        text!,
                         style: Theme.of(context).primaryTextTheme.bodyText1,
                       ),
                     ),
@@ -83,18 +83,18 @@ class ActionSelectionItem extends StatelessWidget {
   final double defaultInnerHpadding = 10;
   final double defaultIconWidth = 50;
 
-  final CampaignAction action;
-  final Campaign campaign;
-  final double innerHpadding;
-  final double outerHpadding;
-  final double iconWidth;
-  final bool isNew;
-  final Function extraOnTap;
-  final Color backgroundColor;
+  final ListCauseAction action;
+  final Campaign? campaign;
+  final double? innerHpadding;
+  final double? outerHpadding;
+  final double? iconWidth;
+  final bool? isNew;
+  final Function? extraOnTap;
+  final Color? backgroundColor;
 
   ActionSelectionItem({
-    @required this.action,
-    @required this.campaign,
+    required this.action,
+    required this.campaign,
     this.iconWidth,
     this.innerHpadding,
     this.outerHpadding,
@@ -109,20 +109,19 @@ class ActionSelectionItem extends StatelessWidget {
         viewModelBuilder: () => BaseModel(),
         builder: (context, model, child) {
           bool completed =
-              model.currentUser.getCompletedActions().contains(action.getId());
+              model.currentUser!.getCompletedActions()!.contains(action.id);
           return LeadingSelectionItem(
               backgroundColor: backgroundColor,
               innerHpadding: innerHpadding,
               outerHpadding: outerHpadding,
               iconWidth: iconWidth,
-              isNew: action.isNew(),
+              isNew: action.isNew,
               onTap: () {
                 if (extraOnTap != null) {
-                  extraOnTap();
+                  extraOnTap!();
                 }
                 Navigator.of(context).pushNamed(Routes.actionInfo,
-                    arguments: ActionInfoArguments(
-                        campaign: campaign, action: action));
+                    arguments: ActionInfoArguments(action: action));
               },
               leading: Stack(children: <Widget>[
                 Padding(
@@ -131,18 +130,15 @@ class ActionSelectionItem extends StatelessWidget {
                     width: 60,
                     height: 60,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        color: completed
-                            ? action.getActionIconMap()['iconColor']
-                            : action.getActionIconMap()['iconBackgroundColor']),
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      color: completed
+                          ? action.primaryColor
+                          : action.secondaryColor,
+                    ),
                     child: Center(
                       child: Icon(
-                        completed
-                            ? Icons.check
-                            : action.getActionIconMap()['icon'],
-                        color: completed
-                            ? Colors.white
-                            : action.getActionIconMap()['iconColor'],
+                        completed ? Icons.check : action.icon,
+                        color: completed ? Colors.white : action.primaryColor,
                         size: 30,
                       ),
                     ),
@@ -165,8 +161,8 @@ class ActionSelectionItem extends StatelessWidget {
                 //        ),
                 //      ),
               ]),
-              text: action.getTitle(),
-              time: action.getTimeText(),
+              text: action.title,
+              time: action.timeText,
               extraOverflow: 50);
         });
   }
@@ -178,15 +174,15 @@ class LearningResouceSelectionItem extends StatelessWidget {
   final double defaultIconWidth = 50;
 
   final LearningResource resource;
-  final double innerHpadding;
-  final double outerHpadding;
-  final double iconWidth;
-  final Function extraOnClick;
+  final double? innerHpadding;
+  final double? outerHpadding;
+  final double? iconWidth;
+  final Function? extraOnClick;
 
-  final bool completed;
+  final bool? completed;
 
   LearningResouceSelectionItem({
-    @required this.resource,
+    required this.resource,
     this.iconWidth,
     this.innerHpadding,
     this.outerHpadding,
@@ -198,8 +194,8 @@ class LearningResouceSelectionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return LeadingSelectionItem(
       onTap: () {
-        _navigationService.launchLink(
-          resource.getLink(),
+        _navigationService!.launchLink(
+          resource.getLink()!,
           extraOnConfirmFunction: extraOnClick,
         );
       },
@@ -237,18 +233,18 @@ class LeadingSelectionItem extends StatelessWidget {
   final double defaultInnerHpadding = 5;
   final double defaultIconWidth = 50;
 
-  final double innerHpadding;
-  final double outerHpadding;
-  final double iconWidth;
-  final Widget leading;
-  final Function onTap;
-  final String text;
-  final String time;
-  final String secondaryText;
-  final double extraOverflow;
-  final Color backgroundColor;
-  final bool isNew;
-  final bool isCompleted;
+  final double? innerHpadding;
+  final double? outerHpadding;
+  final double? iconWidth;
+  final Widget? leading;
+  final Function? onTap;
+  final String? text;
+  final String? time;
+  final String? secondaryText;
+  final double? extraOverflow;
+  final Color? backgroundColor;
+  final bool? isNew;
+  final bool? isCompleted;
 
   LeadingSelectionItem({
     this.iconWidth,
@@ -268,7 +264,7 @@ class LeadingSelectionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: onTap as void Function()?,
       child: Padding(
           padding: EdgeInsets.symmetric(
               vertical: 5, horizontal: outerHpadding ?? defaultOuterHpadding),
@@ -279,11 +275,11 @@ class LeadingSelectionItem extends StatelessWidget {
                   vertical: 10,
                   horizontal: innerHpadding ?? defaultInnerHpadding),
               child: Row(children: <Widget>[
-                leading,
+                leading!,
                 SizedBox(width: 10),
                 Expanded(
                   child: SelectionItem(
-                      onClick: onTap,
+                      onClick: onTap as void Function()?,
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.max,
@@ -292,18 +288,15 @@ class LeadingSelectionItem extends StatelessWidget {
                             Container(
                               height: 45,
                               width: MediaQuery.of(context).size.width -
-                                      (outerHpadding ?? defaultOuterHpadding) *
-                                          2 -
-                                      (innerHpadding ?? defaultInnerHpadding) *
-                                          2 -
-                                      (iconWidth ?? defaultIconWidth) -
-                                      10 -
-                                      extraOverflow ??
-                                  40,
+                                  (outerHpadding ?? defaultOuterHpadding) * 2 -
+                                  (innerHpadding ?? defaultInnerHpadding) * 2 -
+                                  (iconWidth ?? defaultIconWidth) -
+                                  10 -
+                                  (extraOverflow ?? 40),
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  text,
+                                  text!,
                                   style: textStyleFrom(
                                     Theme.of(context)
                                         .primaryTextTheme
@@ -328,7 +321,7 @@ class LeadingSelectionItem extends StatelessWidget {
                                       SizedBox(
                                         width: 2,
                                       ),
-                                      Text(time,
+                                      Text(time!,
                                           style: textStyleFrom(
                                             Theme.of(context)
                                                 .primaryTextTheme
@@ -342,7 +335,7 @@ class LeadingSelectionItem extends StatelessWidget {
                                   )
                                 : secondaryText == null
                                     ? Container()
-                                    : Text(secondaryText,
+                                    : Text(secondaryText!,
                                         style: textStyleFrom(
                                           Theme.of(context)
                                               .primaryTextTheme
@@ -362,7 +355,7 @@ class LeadingSelectionItem extends StatelessWidget {
                     right: 0,
                     child: Container(
                       decoration: BoxDecoration(
-                          color: isNew
+                          color: isNew!
                               ? Theme.of(context).errorColor
                               : Color.fromRGBO(89, 152, 26, 1),
                           borderRadius: BorderRadius.only(
@@ -370,7 +363,7 @@ class LeadingSelectionItem extends StatelessWidget {
                       child: Padding(
                           padding:
                               EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                          child: isNew
+                          child: isNew!
                               ? Text("New",
                                   style: textStyleFrom(
                                     Theme.of(context)
@@ -401,10 +394,10 @@ class LearningTopicSelectionItem extends StatelessWidget {
   final double borderRadius = 8;
 
   @required
-  final LearningTopic topic;
-  final double hpadding;
-  final double imageWidth;
-  final double height;
+  final LearningTopic? topic;
+  final double? hpadding;
+  final double? imageWidth;
+  final double? height;
 
   LearningTopicSelectionItem({
     this.topic,
@@ -416,27 +409,27 @@ class LearningTopicSelectionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ImageSelectionItem(
-      text: topic.getTitle(),
-      imageUrl: topic.getImageLink(),
+      text: topic!.getTitle(),
+      imageUrl: topic!.getImageLink(),
       onTap: () {
         Navigator.of(context).pushNamed(Routes.learningTopic, arguments: topic);
       },
       hpadding: hpadding,
       imageWidth: imageWidth,
       height: height,
-      hasNew: topic.containsNew(),
+      hasNew: topic!.containsNew(),
     );
   }
 }
 
 class CheckboxSelectionItem extends StatelessWidget {
-  final bool value;
+  final bool? value;
   final Function onChanged;
-  final String title;
+  final String? title;
   CheckboxSelectionItem({
-    @required this.value,
-    @required this.onChanged,
-    @required this.title,
+    required this.value,
+    required this.onChanged,
+    required this.title,
   });
 
   @override
@@ -445,20 +438,20 @@ class CheckboxSelectionItem extends StatelessWidget {
       dense: true,
       controlAffinity: ListTileControlAffinity.leading,
       activeColor: Theme.of(context).primaryColor,
-      title: Text(title),
+      title: Text(title!),
       value: value,
-      onChanged: onChanged,
+      onChanged: onChanged as void Function(bool?)?,
     );
   }
 }
 
 class LearningCentreCampaignSelectionItem extends StatelessWidget {
   @required
-  final Campaign campaign;
-  final double hpadding;
-  final double imageWidth;
-  final double height;
-  final bool onWhiteBackground;
+  final Campaign? campaign;
+  final double? hpadding;
+  final double? imageWidth;
+  final double? height;
+  final bool? onWhiteBackground;
 
   LearningCentreCampaignSelectionItem({
     this.campaign,
@@ -471,11 +464,11 @@ class LearningCentreCampaignSelectionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ImageSelectionItem(
-      text: campaign.getTitle(),
-      imageUrl: campaign.getHeaderImage(),
+      text: campaign!.title,
+      imageUrl: campaign!.headerImage,
       onTap: () {
         Navigator.of(context)
-            .pushNamed(Routes.learningSingle, arguments: campaign.getId());
+            .pushNamed(Routes.learningSingle, arguments: campaign!.id);
       },
       hpadding: hpadding,
       imageWidth: imageWidth,
@@ -493,16 +486,16 @@ class ImageSelectionItem extends StatelessWidget {
   final double borderRadius = 8;
 
   @required
-  final double hpadding;
-  final double imageWidth;
-  final double height;
-  final bool onWhiteBackground;
+  final double? hpadding;
+  final double? imageWidth;
+  final double? height;
+  final bool? onWhiteBackground;
 
-  final String text;
-  final String imageUrl;
-  final Function onTap;
+  final String? text;
+  final String? imageUrl;
+  final Function? onTap;
 
-  final bool hasNew;
+  final bool? hasNew;
 
   ImageSelectionItem({
     this.text,
@@ -518,7 +511,7 @@ class ImageSelectionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: onTap as void Function()?,
       child: Padding(
           padding: EdgeInsets.symmetric(
               vertical: 5, horizontal: hpadding ?? defaultHpadding),
@@ -556,7 +549,7 @@ class ImageSelectionItem extends StatelessWidget {
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      text,
+                                      text!,
                                       style: Theme.of(context)
                                           .primaryTextTheme
                                           .bodyText1,

@@ -18,7 +18,7 @@ class FakeCacheManager extends Mock implements CacheManager {
   void throwsNotFound(String url) {
     when(getFileStream(
       url,
-      withProgress: anyNamed('withProgress'),
+      withProgress: anyNamed('withProgress')!,
       headers: anyNamed('headers'),
       key: anyNamed('key'),
     )).thenThrow(HttpExceptionWithStatus(404, 'Invalid statusCode: 404',
@@ -28,7 +28,7 @@ class FakeCacheManager extends Mock implements CacheManager {
   ExpectedData returns(
     String url,
     List<int> imageData, {
-    Duration delayBetweenChunks,
+    Duration? delayBetweenChunks,
   }) {
     const chunkSize = 8;
     final chunks = <Uint8List>[
@@ -38,7 +38,7 @@ class FakeCacheManager extends Mock implements CacheManager {
 
     when(getFileStream(
       url,
-      withProgress: anyNamed('withProgress'),
+      withProgress: anyNamed('withProgress')!,
       headers: anyNamed('headers'),
       key: anyNamed('key'),
     )).thenAnswer((realInvocation) => _createResultStream(
@@ -59,7 +59,7 @@ class FakeCacheManager extends Mock implements CacheManager {
     String url,
     List<Uint8List> chunks,
     List<int> imageData,
-    Duration delayBetweenChunks,
+    Duration? delayBetweenChunks,
   ) async* {
     var totalSize = imageData.length;
     var downloaded = 0;
@@ -81,7 +81,7 @@ class FakeImageCacheManager extends Mock implements ImageCacheManager {
   ExpectedData returns(
     String url,
     List<int> imageData, {
-    Duration delayBetweenChunks,
+    Duration? delayBetweenChunks,
   }) {
     const chunkSize = 8;
     final chunks = <Uint8List>[
@@ -91,7 +91,7 @@ class FakeImageCacheManager extends Mock implements ImageCacheManager {
 
     when(getImageFile(
       url,
-      withProgress: anyNamed('withProgress'),
+      withProgress: anyNamed('withProgress')!,
       headers: anyNamed('headers'),
       key: anyNamed('key'),
     )).thenAnswer((realInvocation) => _createResultStream(
@@ -112,7 +112,7 @@ class FakeImageCacheManager extends Mock implements ImageCacheManager {
     String url,
     List<Uint8List> chunks,
     List<int> imageData,
-    Duration delayBetweenChunks,
+    Duration? delayBetweenChunks,
   ) async* {
     var totalSize = imageData.length;
     var downloaded = 0;
@@ -131,33 +131,33 @@ class FakeImageCacheManager extends Mock implements ImageCacheManager {
 }
 
 class ExpectedData {
-  final int chunks;
-  final int totalSize;
-  final int chunkSize;
+  final int? chunks;
+  final int? totalSize;
+  final int? chunkSize;
 
   const ExpectedData({this.chunks, this.totalSize, this.chunkSize});
 }
 
 class TestImageWidget extends StatelessWidget {
-  final FakeCacheManager cacheManager;
-  final ProgressIndicatorBuilder progressBuilder;
-  final PlaceholderWidgetBuilder placeholderBuilder;
-  final LoadingErrorWidgetBuilder errorBuilder;
+  final FakeCacheManager? cacheManager;
+  final ProgressIndicatorBuilder? progressBuilder;
+  final PlaceholderWidgetBuilder? placeholderBuilder;
+  final LoadingErrorWidgetBuilder? errorBuilder;
   final String imageUrl;
 
   TestImageWidget({
-    Key key,
-    @required this.imageUrl,
-    @required this.cacheManager,
-    VoidCallback onProgress,
-    VoidCallback onPlaceHolder,
-    VoidCallback onError,
+    Key? key,
+    required this.imageUrl,
+    required this.cacheManager,
+    VoidCallback? onProgress,
+    VoidCallback? onPlaceHolder,
+    VoidCallback? onError,
   })  : progressBuilder = getProgress(onProgress),
         placeholderBuilder = getPlaceholder(onPlaceHolder),
         errorBuilder = getErrorBuilder(onError),
         super(key: key);
 
-  static ProgressIndicatorBuilder getProgress(VoidCallback onProgress) {
+  static ProgressIndicatorBuilder? getProgress(VoidCallback? onProgress) {
     if (onProgress == null) return null;
     return (context, url, progress) {
       onProgress();
@@ -165,7 +165,7 @@ class TestImageWidget extends StatelessWidget {
     };
   }
 
-  static PlaceholderWidgetBuilder getPlaceholder(VoidCallback onPlaceHolder) {
+  static PlaceholderWidgetBuilder? getPlaceholder(VoidCallback? onPlaceHolder) {
     if (onPlaceHolder == null) return null;
     return (context, url) {
       onPlaceHolder();
@@ -173,7 +173,7 @@ class TestImageWidget extends StatelessWidget {
     };
   }
 
-  static LoadingErrorWidgetBuilder getErrorBuilder(VoidCallback onError) {
+  static LoadingErrorWidgetBuilder? getErrorBuilder(VoidCallback? onError) {
     if (onError == null) return null;
     return (context, error, stacktrace) {
       onError();
