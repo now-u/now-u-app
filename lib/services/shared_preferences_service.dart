@@ -21,7 +21,7 @@ class SharedPreferencesService {
     }
   }
 
-  Future<User> loadUserFromPrefs() async {
+  Future<User?> loadUserFromPrefs() async {
     print("[SharedPreferencesService]: loadUserFromPrefs() running");
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var string = preferences.getString('user');

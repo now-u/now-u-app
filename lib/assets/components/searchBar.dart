@@ -7,7 +7,7 @@ class SearchBar extends StatelessWidget {
 
   final Function onChanged;
   final TextEditingController controller;
-  final bool autofocus;
+  final bool? autofocus;
 
   SearchBar(
     this.onChanged,
@@ -28,7 +28,7 @@ class SearchBar extends StatelessWidget {
             child: TextField(
               autofocus: autofocus ?? false,
               controller: controller,
-              onChanged: onChanged,
+              onChanged: onChanged as void Function(String)?,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: "Search for something",

@@ -5,7 +5,7 @@ import '../setup/helpers/image_helpers.dart';
 import '../setup/fake_cache_manager.dart';
 
 void main() {
-  FakeCacheManager cacheManager;
+  FakeCacheManager? cacheManager;
 
   setUp(() {
     cacheManager = FakeCacheManager();
@@ -40,7 +40,7 @@ void main() {
     testWidgets('placeholder called when fail', (tester) async {
       var imageUrl = '1234';
       // Create the widget by telling the tester to build it.
-      cacheManager.throwsNotFound(imageUrl);
+      cacheManager!.throwsNotFound(imageUrl);
       var placeholderShown = false;
       var thrown = false;
       await tester.pumpWidget(TestImageWidget(
@@ -56,7 +56,7 @@ void main() {
 
     testWidgets('errorBuilder called when image fails', (tester) async {
       var imageUrl = '12345';
-      cacheManager.throwsNotFound(imageUrl);
+      cacheManager!.throwsNotFound(imageUrl);
       var thrown = false;
       await tester.pumpWidget(TestImageWidget(
         imageUrl: imageUrl,
@@ -86,7 +86,7 @@ void main() {
     testWidgets('progress indicator called when success', (tester) async {
       var imageUrl = '123';
       // Create the widget by telling the tester to build it.
-      cacheManager.returns(imageUrl, kTransparentImage);
+      cacheManager!.returns(imageUrl, kTransparentImage);
       var progressShown = false;
       var thrown = false;
       await tester.pumpWidget(TestImageWidget(
@@ -103,7 +103,7 @@ void main() {
     testWidgets('placeholder called when fail', (tester) async {
       var imageUrl = '1234';
       // Create the widget by telling the tester to build it.
-      cacheManager.throwsNotFound(imageUrl);
+      cacheManager!.throwsNotFound(imageUrl);
       var placeholderShown = false;
       var thrown = false;
       await tester.pumpWidget(TestImageWidget(
@@ -121,7 +121,7 @@ void main() {
       var imageUrl = '7891';
       // Create the widget by telling the tester to build it.
       var delay = Duration(milliseconds: 1);
-      var expectedResult = cacheManager.returns(
+      var expectedResult = cacheManager!.returns(
         imageUrl,
         kTransparentImage,
         delayBetweenChunks: delay,
@@ -134,12 +134,12 @@ void main() {
         onProgress: () => progressIndicatorCalled++,
         onError: () => thrown = true,
       ));
-      for (var i = 0; i < expectedResult.chunks; i++) {
+      for (var i = 0; i < expectedResult.chunks!; i++) {
         await tester.pump(delay);
         await tester.idle();
       }
       expect(thrown, isFalse);
-      expect(progressIndicatorCalled, expectedResult.chunks + 1);
+      expect(progressIndicatorCalled, expectedResult.chunks! + 1);
     });
   });
 }

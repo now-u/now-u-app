@@ -5,16 +5,16 @@ import 'package:app/assets/StyleFrom.dart';
 class ScrollableSheetPage extends StatelessWidget {
   final Widget header;
   final List<Widget> children;
-  final double initialChildSize;
-  final double minChildSize;
-  final double maxChildSize;
-  final Shadow shadow;
-  final Color scaffoldBackgroundColor;
-  final Color sheetBackgroundColor;
+  final double? initialChildSize;
+  final double? minChildSize;
+  final double? maxChildSize;
+  final Shadow? shadow;
+  final Color? scaffoldBackgroundColor;
+  final Color? sheetBackgroundColor;
 
   ScrollableSheetPage({
-    @required this.header,
-    @required this.children,
+    required this.header,
+    required this.children,
     this.initialChildSize,
     this.minChildSize,
     this.maxChildSize,

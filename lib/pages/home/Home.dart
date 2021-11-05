@@ -45,15 +45,15 @@ class Home extends StatelessWidget {
             viewModelBuilder: () => HomeViewModel(),
             onModelReady: (model) => model.fetchAll(),
             builder: (context, model, child) {
-              List<Campaign> campaigns = model.campaignsWithSelectedFirst;
+              List<Campaign>? campaigns = model.campaignsWithSelectedFirst;
               return ScrollableSheetPage(
-                  header: model.notifications.length > 0
+                  header: model.notifications!.length > 0
                       ? HeaderWithNotifications(
-                          name: model.currentUser.getName(),
-                          notification: model.notifications[0],
+                          name: model.currentUser!.getName(),
+                          notification: model.notifications![0],
                           dismissNotification: model.dismissNotification,
                         )
-                      : HeaderStyle1(model.currentUser.getName()),
+                      : HeaderStyle1(model.currentUser!.getName()),
                   children: <Widget>[
                     HomeTitle(
                       "Current campaigns",
@@ -192,7 +192,7 @@ Widget sectionTitle(String t, BuildContext context) {
 }
 
 class CampaignCarosel extends StatelessWidget {
-  final List<Campaign> cs;
+  final List<Campaign>? cs;
   final PageController controller;
 
   CampaignCarosel(this.cs, this.controller);
@@ -204,12 +204,12 @@ class CampaignCarosel extends StatelessWidget {
         child: PageView.builder(
           key: campaignCarouselPageKey,
           controller: controller,
-          itemCount: cs.length,
+          itemCount: cs!.length,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 10),
               child: CampaignTile(
-                cs[index],
+                cs![index],
                 hOuterPadding: 4,
               ),
             );
@@ -219,7 +219,7 @@ class CampaignCarosel extends StatelessWidget {
       SmoothPageIndicator(
         key: campaignCarouselPageKey,
         controller: controller,
-        count: cs.length,
+        count: cs!.length,
         effect: customSmoothPageInducatorEffect,
       ),
       SizedBox(height: 30),
@@ -229,10 +229,10 @@ class CampaignCarosel extends StatelessWidget {
 
 class HomeTitle extends StatelessWidget {
   final String title;
-  final String subtitle;
-  final String infoTitle;
-  final String infoText;
-  final TextAlign textAlign;
+  final String? subtitle;
+  final String? infoTitle;
+  final String? infoText;
+  final TextAlign? textAlign;
 
   HomeTitle(
     this.title, {
@@ -287,7 +287,7 @@ class HomeTitle extends StatelessWidget {
               : Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
                   child: Text(
-                    subtitle,
+                    subtitle!,
                     style: Theme.of(context).primaryTextTheme.bodyText1,
                     textAlign: textAlign ?? TextAlign.start,
                   ),
@@ -301,14 +301,14 @@ class HomeTitle extends StatelessWidget {
 class ImpactTile extends StatelessWidget {
   final int number;
   final String text;
-  final String route;
+  final String? route;
   ImpactTile(this.number, this.text, {this.route});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         if (route != null) {
-          Navigator.of(context).pushNamed(route);
+          Navigator.of(context).pushNamed(route!);
         }
       },
       child: Container(
@@ -336,7 +336,7 @@ class ImpactTile extends StatelessWidget {
 }
 
 class HeaderStyle1 extends StatelessWidget {
-  final String name;
+  final String? name;
   HeaderStyle1(this.name);
   @override
   Widget build(BuildContext context) {
@@ -401,13 +401,13 @@ class HeaderStyle1 extends StatelessWidget {
 }
 
 class HeaderWithNotifications extends StatelessWidget {
-  final String name;
+  final String? name;
   final InternalNotification notification;
   final Function dismissNotification;
   HeaderWithNotifications(
-      {@required this.name,
-      @required this.notification,
-      @required this.dismissNotification});
+      {required this.name,
+      required this.notification,
+      required this.dismissNotification});
   @override
   Widget build(BuildContext context) {
     return Container(

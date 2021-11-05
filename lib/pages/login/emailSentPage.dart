@@ -14,10 +14,10 @@ import 'package:app/routes.dart';
 import 'package:app/pages/login/login.dart';
 
 class EmailSentPageArguments {
-  final String email;
-  final String token;
+  final String? email;
+  final String? token;
   EmailSentPageArguments({
-    @required this.email,
+    required this.email,
     this.token,
   });
 }
@@ -31,7 +31,7 @@ class EmailSentPage extends StatefulWidget {
 }
 
 class _EmailSentPageState extends State<EmailSentPage> {
-  String token;
+  String? token;
 
   @override
   void initState() {
@@ -45,7 +45,7 @@ class _EmailSentPageState extends State<EmailSentPage> {
         viewModelBuilder: () => LoginViewModel(),
         onModelReady: (model) {
           if (token != null) {
-            if (model.currentUser == null || model.currentUser.token == null) {
+            if (model.currentUser == null || model.currentUser!.token == null) {
               model.login(email: widget.args.email, token: token);
             } else {
               Navigator.of(context).pushNamed(Routes.home);
@@ -85,11 +85,11 @@ class _EmailSentPageState extends State<EmailSentPage> {
                             style: TextStyle(
                               fontSize: Theme.of(context)
                                   .primaryTextTheme
-                                  .headline1
+                                  .headline1!
                                   .fontSize,
                               fontWeight: Theme.of(context)
                                   .primaryTextTheme
-                                  .headline1
+                                  .headline1!
                                   .fontWeight,
                               color: Colors.white,
                             )),
@@ -139,11 +139,11 @@ class _EmailSentPageState extends State<EmailSentPage> {
                                 style: TextStyle(
                                   fontSize: Theme.of(context)
                                       .primaryTextTheme
-                                      .bodyText1
+                                      .bodyText1!
                                       .fontSize,
                                   fontWeight: Theme.of(context)
                                       .primaryTextTheme
-                                      .bodyText1
+                                      .bodyText1!
                                       .fontWeight,
                                   color: Colors.white,
                                 ))),
@@ -197,9 +197,11 @@ class IntroPageSection extends StatelessWidget {
               Text(title,
                   style: TextStyle(
                     fontSize:
-                        Theme.of(context).primaryTextTheme.headline1.fontSize,
-                    fontWeight:
-                        Theme.of(context).primaryTextTheme.headline1.fontWeight,
+                        Theme.of(context).primaryTextTheme.headline1!.fontSize,
+                    fontWeight: Theme.of(context)
+                        .primaryTextTheme
+                        .headline1!
+                        .fontWeight,
                     color: Colors.white,
                   )),
               SizedBox(
@@ -212,11 +214,11 @@ class IntroPageSection extends StatelessWidget {
                       style: TextStyle(
                         fontSize: Theme.of(context)
                             .primaryTextTheme
-                            .bodyText1
+                            .bodyText1!
                             .fontSize,
                         fontWeight: Theme.of(context)
                             .primaryTextTheme
-                            .bodyText1
+                            .bodyText1!
                             .fontWeight,
                         color: Colors.white,
                       ))),
@@ -231,7 +233,7 @@ class IntroPageSection extends StatelessWidget {
 class FadeRouteBuilder<T> extends PageRouteBuilder<T> {
   final Widget page;
 
-  FadeRouteBuilder({@required this.page})
+  FadeRouteBuilder({required this.page})
       : super(
           pageBuilder: (context, animation1, animation2) => page,
           transitionsBuilder: (context, animation1, animation2, child) {

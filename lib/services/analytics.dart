@@ -24,19 +24,19 @@ class AnalyticsService {
     print("Logging action completed");
     await _analytics
         .logEvent(name: "action_$status", parameters: <String, dynamic>{
-      "id": action.getId(),
-      "title": action.getTitle(),
-      "type": action.getType().toString(),
-      "super_type": action.getSuperType().toString(),
-      "time": action.getTime(),
+      "id": action.id,
+      "title": action.title,
+      "type": action.type.toString(),
+      "super_type": action.superType.name,
+      "time": action.time,
     });
   }
 
   Future logCampaignStatusUpdate(Campaign campaign, String status) async {
     await _analytics
         .logEvent(name: "campaign_$status", parameters: <String, dynamic>{
-      "id": campaign.getId(),
-      "title": campaign.getTitle(),
+      "id": campaign.id,
+      "title": campaign.title,
     });
   }
 

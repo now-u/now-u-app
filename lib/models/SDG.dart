@@ -1,8 +1,8 @@
 class SDG {
-  int number;
-  String name;
-  String image;
-  String link;
+  int? number;
+  String? name;
+  String? image;
+  String? link;
 
   SDG({
     this.number,
@@ -11,24 +11,24 @@ class SDG {
     this.link,
   });
 
-  int getNumber() {
+  int? getNumber() {
     return number;
   }
 
-  String getName() {
+  String? getName() {
     return name;
   }
 
-  String getImage() {
+  String? getImage() {
     return image;
   }
 
-  String getLink() {
+  String? getLink() {
     return link;
   }
 }
 
-SDG getSDGfromNumber(int number) {
+SDG? getSDGfromNumber(int? number) {
   print("getting sdg $number");
   for (int i = 0; i < sdgs.length; i++) {
     if (sdgs[i].number == number) {

@@ -38,16 +38,16 @@ class CustomIconButton extends StatelessWidget {
   final VoidCallback onPressed;
   final IconData icon;
   final ButtonSize size;
-  final Color backgroundColor;
-  final Color iconColor;
+  final Color? backgroundColor;
+  final Color? iconColor;
   final bool isCircularButton;
 
   CustomIconButton({
-    @required this.onPressed,
-    @required this.icon,
+    required this.onPressed,
+    required this.icon,
+    required this.size,
+    required this.isCircularButton,
     this.iconColor,
-    @required this.size,
-    @required this.isCircularButton,
     this.backgroundColor,
   });
 

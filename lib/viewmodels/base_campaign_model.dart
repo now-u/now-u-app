@@ -7,37 +7,37 @@ import 'package:app/services/campaign_service.dart';
 import 'package:app/services/auth.dart';
 
 mixin CampaignRO on BaseModel {
-  final CampaignService _campaignsService = locator<CampaignService>();
+  final CampaignService? _campaignsService = locator<CampaignService>();
 
   // Pull the latest campaigns from the db
   void fetchCampaigns() async {
     setBusy(true);
-    await _campaignsService.fetchCampaigns();
+    await _campaignsService!.fetchCampaigns();
     setBusy(false);
     notifyListeners();
   }
 
   // getSelectedCampaigns
   List<Campaign> get selectedCampaigns {
-    return currentUser.filterSelectedCampaigns(_campaignsService.campaigns);
+    return currentUser!.filterSelectedCampaigns(_campaignsService!.campaigns!);
   }
 
   List<Campaign> get selectedActiveCampaigns {
-    return currentUser.filterSelectedCampaigns(_campaignsService.campaigns);
+    return currentUser!.filterSelectedCampaigns(_campaignsService!.campaigns!);
   }
 
   // Get campaigns
-  List<Campaign> get campaigns => _campaignsService.campaigns;
+  List<Campaign>? get campaigns => _campaignsService!.campaigns;
 
-  List<Campaign> get campaignsWithSelectedFirst {
+  List<Campaign>? get campaignsWithSelectedFirst {
     if (currentUser == null) {
-      return _campaignsService.campaigns;
+      return _campaignsService!.campaigns;
     }
 
     List<Campaign> selectedCs =
-        currentUser.filterSelectedCampaigns(_campaignsService.campaigns);
+        currentUser!.filterSelectedCampaigns(_campaignsService!.campaigns!);
     List<Campaign> unselectedCs =
-        currentUser.filterUnselectedCampaigns(_campaignsService.campaigns);
+        currentUser!.filterUnselectedCampaigns(_campaignsService!.campaigns!);
 
     // Give some spice to your life
     selectedCs.shuffle();
@@ -53,25 +53,25 @@ mixin CampaignRO on BaseModel {
 }
 
 mixin CampaignWrite on BaseModel {
-  final AuthenticationService _authenticationService =
+  final AuthenticationService? _authenticationService =
       locator<AuthenticationService>();
 
-  Future joinCampaign(int id) async {
+  Future joinCampaign(int? id) async {
     setBusy(true);
-    await _authenticationService.joinCampaign(id);
+    await _authenticationService!.joinCampaign(id);
     setBusy(false);
     notifyListeners();
   }
 
   Future leaveCampaign(int id) async {
     setBusy(true);
-    await _authenticationService.leaveCampaign(id);
+    await _authenticationService!.leaveCampaign(id);
     setBusy(false);
     notifyListeners();
   }
 
-  bool isJoined(int id) {
-    return _authenticationService.currentUser
+  bool isJoined(int? id) {
+    return _authenticationService!.currentUser!
         .getSelectedCampaigns()
         .contains(id);
   }

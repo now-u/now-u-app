@@ -6,8 +6,8 @@ const double BOTTOM_PADDING = 20;
 
 class PageTitle extends StatelessWidget {
   final String title;
-  bool hasBackButton;
-  final GestureTapCallback onClickBackButton;
+  late bool hasBackButton;
+  final GestureTapCallback? onClickBackButton;
 
   PageTitle(this.title, {hasBackButton, this.onClickBackButton}) {
     this.hasBackButton = hasBackButton ?? false;
@@ -37,7 +37,8 @@ class PageTitle extends StatelessWidget {
         SafeArea(
           child: Padding(
             padding: EdgeInsets.fromLTRB(0, TOP_PADDING, 0, BOTTOM_PADDING),
-            child: Text(title, style: Theme.of(context).primaryTextTheme.title),
+            child: Text(title,
+                style: Theme.of(context).primaryTextTheme.headline1),
           ),
         ),
         Container(

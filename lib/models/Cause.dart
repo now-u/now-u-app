@@ -1,29 +1,43 @@
-import 'package:flutter/cupertino.dart';
+class ListCause {
+  int? id;
+  String? title;
+  String? icon;
+  String? description;
+  bool? selected;
 
-class Cause {
-  int id;
-  String name;
-  String icon;
-  String description;
-  String headerImage;
-  List<int> actions;
+  ListCause({this.id, this.title, this.icon, this.description, this.selected});
+
+  ListCause.fromJson(Map json)
+      : id = json['id'],
+        title = json['title'],
+        icon = json['icon'],
+        description = json['description'],
+        selected = json['selected'];
+}
+
+class Cause extends ListCause {
+  String? headerImage;
+  List<int>? actions;
 
   Cause(
-      {this.id,
-      this.name,
-      this.icon,
-      this.description,
-      this.headerImage,
-      this.actions});
+      {this.headerImage,
+      this.actions,
+      int? id,
+      String? title,
+      String? icon,
+      String? description,
+      bool? selected})
+      : super(
+            id: id,
+            title: title,
+            icon: icon,
+            description: description,
+            selected: selected);
 
-  Cause.fromJson(Map json) {
-    this.id = json['id'];
-    this.name = json['name'];
-    this.icon = json['icon'];
-    this.description = json['description'];
-    this.headerImage = json['headerImage'];
-    this.actions = json['actions'];
-  }
+  Cause.fromJson(Map json)
+      : headerImage = json['headerImage'],
+        actions = json['actions'],
+        super.fromJson(json);
 }
 
 class CauseAction {
@@ -34,5 +48,5 @@ class CauseAction {
     return this.actionFetched;
   }
 
-  CauseAction({@required this.id});
+  CauseAction({required this.id});
 }

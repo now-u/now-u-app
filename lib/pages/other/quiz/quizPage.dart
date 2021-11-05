@@ -17,17 +17,17 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  Question currentQuestion;
-  int currentQuestionIndex;
-  int score;
-  int selectAnswerIndex;
-  bool isCompleted;
+  late Question currentQuestion;
+  late int currentQuestionIndex;
+  int? score;
+  int? selectAnswerIndex;
+  late bool isCompleted;
 
   @override
   void initState() {
     score = 0;
     currentQuestionIndex = 0;
-    currentQuestion = widget.quiz.getQuestions()[currentQuestionIndex];
+    currentQuestion = widget.quiz.getQuestions()![currentQuestionIndex];
     isCompleted = false;
     super.initState();
   }
@@ -39,13 +39,13 @@ class _QuizPageState extends State<QuizPage> {
         title: Text("Question ${currentQuestion}"),
       ),
       body: isCompleted
-          ? CompletedQuizPage(score, widget.quiz.getQuestions().length)
+          ? CompletedQuizPage(score, widget.quiz.getQuestions()!.length)
           : Column(
               children: <Widget>[
                 Container(
                   height: MediaQuery.of(context).size.height * 0.4,
                   child: Center(
-                    child: Text(currentQuestion.getQuestion()),
+                    child: Text(currentQuestion.getQuestion()!),
                   ),
                 ),
                 Expanded(
@@ -57,18 +57,18 @@ class _QuizPageState extends State<QuizPage> {
                       itemCount: 4,
                       itemBuilder: (BuildContext context, int index) {
                         Color c = (index == selectAnswerIndex)
-                            ? (currentQuestion.getAnswers()[index].isCorrect)
+                            ? currentQuestion.getAnswers()![index].isCorrect!
                                 ? Colors.green
                                 : Colors.red
                             : Colors.grey;
-                        return AnswerTile(currentQuestion.getAnswers()[index],
+                        return AnswerTile(currentQuestion.getAnswers()![index],
                             color: c, onClick: (answer) {
                           print("Selected answer = " + (index).toString());
                           setState(() {
                             selectAnswerIndex = index;
                             if (currentQuestion
-                                .getAnswers()[index]
-                                .getIsCorrect()) {
+                                .getAnswers()![index]
+                                .getIsCorrect()!) {
                               print("Increasing score");
                               score += 1;
                             }
@@ -76,7 +76,7 @@ class _QuizPageState extends State<QuizPage> {
                           Timer(Duration(seconds: 1), () {
                             currentQuestionIndex += 1;
                             if (currentQuestionIndex >=
-                                widget.quiz.getQuestions().length) {
+                                widget.quiz.getQuestions()!.length) {
                               setState(() {
                                 isCompleted = true;
                               });
@@ -84,7 +84,7 @@ class _QuizPageState extends State<QuizPage> {
                               setState(() {
                                 selectAnswerIndex = null;
                                 currentQuestion = widget.quiz
-                                    .getQuestions()[currentQuestionIndex];
+                                    .getQuestions()![currentQuestionIndex];
                               });
                             }
                           });
@@ -104,7 +104,7 @@ class AnswerTile extends StatelessWidget {
   final Color color;
   final Function onClick;
 
-  AnswerTile(this.answer, {@required this.color, @required this.onClick});
+  AnswerTile(this.answer, {required this.color, required this.onClick});
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +118,7 @@ class AnswerTile extends StatelessWidget {
               child: Container(
                   color: color,
                   child: Center(
-                    child: Text(answer.getAnswer()),
+                    child: Text(answer.getAnswer()!),
                   )),
             )));
   }
