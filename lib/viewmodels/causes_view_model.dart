@@ -16,10 +16,7 @@ class CausesViewModel extends BaseModel {
   List<bool> _causesSelectedList = [false, false, false, false, false, false];
 
   List<bool> get causesSelectedList => _causesSelectedList;
-
-  bool _isButtonDisabled = true;
-
-  bool get isButtonDisabled => _isButtonDisabled;
+  bool get isButtonDisabled => !_causesSelectedList.any((element) => element);
 
   final NavigationService _navigationService = locator<NavigationService>();
 
@@ -40,22 +37,13 @@ class CausesViewModel extends BaseModel {
     notifyListeners();
   }
 
-  void getIsButtonDisabled() {
-    _isButtonDisabled = true;
-    for (int countIndex = 0; countIndex <= 5; countIndex++) {
-      if (_causesSelectedList[countIndex] == true) {
-        _isButtonDisabled = false;
-      }
-    }
-  }
-
   void toggleSelection({required int causeIndex}) {
     _causesSelectedList[causeIndex] = !_causesSelectedList[causeIndex];
-    getIsButtonDisabled();
     notifyListeners();
   }
 
-  void goHome() async {
+  void getStarted() async {
+    // TODO register selection
     _navigationService.navigateTo(Routes.home);
   }
 

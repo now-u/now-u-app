@@ -105,7 +105,7 @@ class CausePage extends StatelessWidget {
                             child: CustomWidthButton('Get started',
                               onPressed: model.isButtonDisabled 
                                 ? () {} 
-                                : () {print("GO");},
+                                : () {model.getStarted();},
                               backgroundColor: model.isButtonDisabled
                                   ? Colors.grey
                                   : Theme.of(context).primaryColor,

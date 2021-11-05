@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:app/locator.dart';
 import 'package:app/managers/dialog_manager.dart';
-import 'package:app/pages/causes/CauseOnboardingPage.dart';
+import 'package:app/pages/other/startup_view.dart';
 import 'package:app/routes.dart';
 import 'package:app/services/analytics.dart';
 import 'package:app/services/navigation_service.dart';
@@ -90,7 +90,7 @@ class _AppState extends State<App> {
         onGenerateRoute: (settings) => MaterialPageRoute(
             builder: (context) => DialogManager(child: widget)),
       ),
-      home: CausePage(), //SHOULD BE REPLACED WITH StartUpView()
+      home: StartUpView(),
       onGenerateRoute: initRoutes as Route<dynamic>? Function(RouteSettings)?,
       theme: ThemeData(
         // This is the theme of the application.
