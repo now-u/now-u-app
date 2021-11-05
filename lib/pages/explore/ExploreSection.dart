@@ -3,7 +3,7 @@ import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Cause.dart';
 import 'package:app/models/Explorable.dart';
-import 'package:app/models/news.dart';
+import 'package:app/models/article.dart';
 import 'package:app/pages/explore/ExploreFilter.dart';
 import 'package:app/viewmodels/explore_page_view_model.dart';
 import 'package:flutter/material.dart';
@@ -185,7 +185,7 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
   Widget renderTile(ListCauseAction tile) => ExploreActionTile(tile);
 }
 
-class NewsExploreSection extends ExploreSection<ListNews> {
+class NewsExploreSection extends ExploreSection<Article> {
   const NewsExploreSection({
     required String title,
     required String description,
@@ -200,27 +200,26 @@ class NewsExploreSection extends ExploreSection<ListNews> {
         );
 
   @override
-  Future<List<ListNews>> fetchTiles(Map<String, dynamic>? params) async {
+  Future<List<Article>> fetchTiles(Map<String, dynamic>? params) async {
     // TODO remove mock
     return Future.delayed(
       const Duration(seconds: 2),
       () => List.generate(
         5,
-        (i) => ListNews(
+        (i) => Article(
           id: i,
           title: "Ocean protection can yield ‘triple benefits’",
-          desc:
+          subtitle:
               "A new study suggests that carefully planned marine protect lorem ipsum...",
           headerImage: "https://picsum.photos/id/$i/200",
-          date: DateTime.utc(2020, 1, i + 1),
-          url: "https://www.google.com",
+          releasedAt: DateTime.utc(2020, 1, i + 1),
+          fullArticleLink: "https://www.google.com",
+          type: articleTypeFromName("news"),
         ),
       ),
     );
-    // final CausesService _causesService = locator<CausesService>();
-    // return await _causesService.getCampaigns(params: params);
   }
 
   @override
-  Widget renderTile(ListNews tile) => ExploreNewsTile(tile);
+  Widget renderTile(Article tile) => ExploreNewsTile(tile);
 }

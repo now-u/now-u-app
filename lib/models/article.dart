@@ -1,6 +1,8 @@
 import 'package:app/assets/icons/customIcons.dart';
 import 'package:app/models/Campaign.dart';
+import 'package:app/models/Explorable.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ArticleType {
   final String name;
@@ -21,7 +23,7 @@ ArticleType articleTypeFromName(String name) {
   return articleTypes.firstWhere((ArticleType type) => type.name == name);
 }
 
-class Article {
+class Article extends Explorable {
   final int id;
   final String title;
   final String subtitle;
@@ -31,6 +33,13 @@ class Article {
   final String? source;
   final String fullArticleLink;
   final int? linkedCampaignId;
+
+  String? get dateString {
+    final releasedAt = this.releasedAt;
+    return releasedAt != null ? DateFormat("d MMM y").format(releasedAt) : null;
+  }
+
+  String get shortUrl => Uri.parse(fullArticleLink).host;
 
   Article({
     required this.id,

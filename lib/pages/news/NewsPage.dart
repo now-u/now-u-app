@@ -5,7 +5,7 @@ import 'package:app/assets/components/header.dart';
 import 'package:app/assets/components/selectionPill.dart';
 import 'package:app/assets/components/custom_network_image.dart';
 
-import 'package:app/models/Article.dart';
+import 'package:app/models/article.dart';
 
 import 'package:stacked/stacked.dart';
 import 'package:app/viewmodels/news_model.dart';

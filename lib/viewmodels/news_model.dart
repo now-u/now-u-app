@@ -1,5 +1,5 @@
 import 'package:app/viewmodels/base_model.dart';
-import 'package:app/models/Article.dart';
+import 'package:app/models/article.dart';
 import 'package:app/models/Campaign.dart';
 
 import 'package:app/locator.dart';

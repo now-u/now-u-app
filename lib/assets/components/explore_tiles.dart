@@ -2,7 +2,7 @@ import 'package:app/assets/components/custom_network_image.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Cause.dart';
-import 'package:app/models/news.dart';
+import 'package:app/models/article.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -173,18 +173,18 @@ class ExploreActionTile extends StatelessWidget {
 
 class ExploreNewsTile extends StatelessWidget {
   final String title;
-  final String desc;
+  final String subtitle;
   final String headerImage;
   final String dateString;
   final String url;
   final String shortUrl;
 
-  ExploreNewsTile(ListNews model, {Key? key})
+  ExploreNewsTile(Article model, {Key? key})
       : title = model.title,
-        desc = model.desc,
+        subtitle = model.subtitle,
         headerImage = model.headerImage,
-        dateString = model.dateString,
-        url = model.url,
+        dateString = model.dateString ?? "",
+        url = model.fullArticleLink,
         shortUrl = model.shortUrl,
         super(key: key);
 
@@ -222,7 +222,7 @@ class ExploreNewsTile extends StatelessWidget {
                         textScaleFactor: .7,
                       ),
                       Text(
-                        desc,
+                        subtitle,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context)

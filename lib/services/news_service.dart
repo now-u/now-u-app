@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:app/models/Article.dart';
+import 'package:app/models/article.dart';
 
 class NewsService {
   String domainPrefix = "https://api.now-u.com/api/v1/";
