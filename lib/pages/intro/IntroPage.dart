@@ -45,24 +45,24 @@ class _IntroPageState extends State<IntroPage> {
   // Animation Setup
   final Duration animationDuration = Duration(milliseconds: 500);
   final Duration delay = Duration(milliseconds: 300);
-  GlobalKey rectGetterGetStartedKey = RectGetter.createGlobalKey();
-  GlobalKey rectGetterSkipKey = RectGetter.createGlobalKey();
-  Rect rect;
+  var rectGetterGetStartedKey = RectGetter.createGlobalKey();
+  var rectGetterSkipKey = RectGetter.createGlobalKey();
+  Rect? rect;
 
   void _onTapSkip() async {
     setState(() => rect = RectGetter.getRectFromKey(rectGetterSkipKey));
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       setState(() =>
-          rect = rect.inflate(1.3 * MediaQuery.of(context).size.longestSide));
+          rect = rect!.inflate(1.3 * MediaQuery.of(context).size.longestSide));
       Future.delayed(animationDuration + delay, _goToNextPage);
     });
   }
 
   void _onTapGetStarted() async {
     setState(() => rect = RectGetter.getRectFromKey(rectGetterGetStartedKey));
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       setState(() =>
-          rect = rect.inflate(1.3 * MediaQuery.of(context).size.longestSide));
+          rect = rect!.inflate(1.3 * MediaQuery.of(context).size.longestSide));
       Future.delayed(animationDuration + delay, _goToNextPage);
     });
   }
@@ -194,10 +194,10 @@ class _IntroPageState extends State<IntroPage> {
     }
     return AnimatedPositioned(
       duration: animationDuration,
-      left: rect.left,
-      right: MediaQuery.of(context).size.width - rect.right,
-      top: rect.top,
-      bottom: MediaQuery.of(context).size.height - rect.bottom,
+      left: rect!.left,
+      right: MediaQuery.of(context).size.width - rect!.right,
+      top: rect!.top,
+      bottom: MediaQuery.of(context).size.height - rect!.bottom,
       child: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
@@ -227,9 +227,9 @@ class IntroPageSection extends StatelessWidget {
         ),
         Text(title,
             style: TextStyle(
-              fontSize: Theme.of(context).primaryTextTheme.headline1.fontSize,
+              fontSize: Theme.of(context).primaryTextTheme.headline1!.fontSize,
               fontWeight:
-                  Theme.of(context).primaryTextTheme.headline1.fontWeight,
+                  Theme.of(context).primaryTextTheme.headline1!.fontWeight,
               color: Colors.white,
             )),
         Container(
@@ -238,9 +238,9 @@ class IntroPageSection extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize:
-                      Theme.of(context).primaryTextTheme.bodyText1.fontSize,
+                      Theme.of(context).primaryTextTheme.bodyText1!.fontSize,
                   fontWeight:
-                      Theme.of(context).primaryTextTheme.bodyText1.fontWeight,
+                      Theme.of(context).primaryTextTheme.bodyText1!.fontWeight,
                   color: Colors.white,
                 )))
       ],
@@ -251,7 +251,7 @@ class IntroPageSection extends StatelessWidget {
 class FadeRouteBuilder<T> extends PageRouteBuilder<T> {
   final Widget page;
 
-  FadeRouteBuilder({@required this.page})
+  FadeRouteBuilder({required this.page})
       : super(
           pageBuilder: (context, animation1, animation2) => page,
           transitionsBuilder: (context, animation1, animation2, child) {

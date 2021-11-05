@@ -7,13 +7,13 @@ class ExpandedGrid extends StatelessWidget {
   final List<List<Widget>> items;
 
   ExpandedGrid({
-    this.items,
+    required this.items,
   });
 
   static Widget builder({
-    @required int numberOfRows,
-    @required int itemCount,
-    @required GridItemBuilder itemBuilder,
+    required int numberOfRows,
+    required int itemCount,
+    required GridItemBuilder itemBuilder,
   }) {
     List<List<Widget>> widgets = [];
     int numberOfCols = (itemCount / numberOfRows).ceil();
@@ -35,11 +35,15 @@ class ExpandedGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisSize: MainAxisSize.max,
       children: items.map((row) => 
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: row
-        )
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            children: row
+          )
+        ),
       ).toList()
     );
   }

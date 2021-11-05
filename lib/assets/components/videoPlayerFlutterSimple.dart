@@ -12,12 +12,12 @@ class VideoPlayer extends StatefulWidget {
 
 class _VideoPlayerState extends State<VideoPlayer> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  YoutubePlayerController _controller;
-  TextEditingController _idController;
-  TextEditingController _seekToController;
+  YoutubePlayerController? _controller;
+  TextEditingController? _idController;
+  late TextEditingController _seekToController;
 
-  PlayerState _playerState;
-  YoutubeMetaData _videoMetaData;
+  PlayerState? _playerState;
+  late YoutubeMetaData _videoMetaData;
   double _volume = 100;
   bool _muted = false;
   bool _isPlayerReady = false;
@@ -57,10 +57,10 @@ class _VideoPlayerState extends State<VideoPlayer> {
   }
 
   void listener() {
-    if (_isPlayerReady && mounted && !_controller.value.isFullScreen) {
+    if (_isPlayerReady && mounted && !_controller!.value.isFullScreen) {
       setState(() {
-        _playerState = _controller.value.playerState;
-        _videoMetaData = _controller.metadata;
+        _playerState = _controller!.value.playerState;
+        _videoMetaData = _controller!.metadata;
       });
     }
   }
@@ -68,14 +68,14 @@ class _VideoPlayerState extends State<VideoPlayer> {
   @override
   void deactivate() {
     // Pauses video while navigating to next page.
-    _controller.pause();
+    _controller!.pause();
     super.deactivate();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
-    _idController.dispose();
+    _controller!.dispose();
+    _idController!.dispose();
     _seekToController.dispose();
     super.dispose();
   }
@@ -87,14 +87,14 @@ class _VideoPlayerState extends State<VideoPlayer> {
       body: ListView(
         children: [
           YoutubePlayer(
-            controller: _controller,
+            controller: _controller!,
             showVideoProgressIndicator: true,
             progressIndicatorColor: Colors.blueAccent,
             topActions: <Widget>[
               SizedBox(width: 8.0),
               Expanded(
                 child: Text(
-                  _controller.metadata.title,
+                  _controller!.metadata.title,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,
@@ -108,7 +108,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
               _isPlayerReady = true;
             },
             onEnded: (data) {
-              _controller
+              _controller!
                   .load(_ids[(_ids.indexOf(data.videoId) + 1) % _ids.length]);
               _showSnackBar('Next Video Started!');
             },
@@ -129,12 +129,12 @@ class _VideoPlayerState extends State<VideoPlayer> {
                   children: [
                     _text(
                       'Playback Quality',
-                      _controller.value.playbackQuality,
+                      _controller!.value.playbackQuality,
                     ),
                     Spacer(),
                     _text(
                       'Playback Rate',
-                      '${_controller.value.playbackRate}x  ',
+                      '${_controller!.value.playbackRate}x  ',
                     ),
                   ],
                 ),
@@ -153,7 +153,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
                     ),
                     suffixIcon: IconButton(
                       icon: Icon(Icons.clear),
-                      onPressed: () => _idController.clear(),
+                      onPressed: () => _idController!.clear(),
                     ),
                   ),
                 ),
@@ -172,22 +172,23 @@ class _VideoPlayerState extends State<VideoPlayer> {
                     IconButton(
                       icon: Icon(Icons.skip_previous),
                       onPressed: _isPlayerReady
-                          ? () => _controller.load(_ids[
-                              (_ids.indexOf(_controller.metadata.videoId) - 1) %
+                          ? () => _controller!.load(_ids[
+                              (_ids.indexOf(_controller!.metadata.videoId) -
+                                      1) %
                                   _ids.length])
                           : null,
                     ),
                     IconButton(
                       icon: Icon(
-                        _controller.value.isPlaying
+                        _controller!.value.isPlaying
                             ? Icons.pause
                             : Icons.play_arrow,
                       ),
                       onPressed: _isPlayerReady
                           ? () {
-                              _controller.value.isPlaying
-                                  ? _controller.pause()
-                                  : _controller.play();
+                              _controller!.value.isPlaying
+                                  ? _controller!.pause()
+                                  : _controller!.play();
                               setState(() {});
                             }
                           : null,
@@ -197,8 +198,8 @@ class _VideoPlayerState extends State<VideoPlayer> {
                       onPressed: _isPlayerReady
                           ? () {
                               _muted
-                                  ? _controller.unMute()
-                                  : _controller.mute();
+                                  ? _controller!.unMute()
+                                  : _controller!.mute();
                               setState(() {
                                 _muted = !_muted;
                               });
@@ -212,8 +213,9 @@ class _VideoPlayerState extends State<VideoPlayer> {
                     IconButton(
                       icon: Icon(Icons.skip_next),
                       onPressed: _isPlayerReady
-                          ? () => _controller.load(_ids[
-                              (_ids.indexOf(_controller.metadata.videoId) + 1) %
+                          ? () => _controller!.load(_ids[
+                              (_ids.indexOf(_controller!.metadata.videoId) +
+                                      1) %
                                   _ids.length])
                           : null,
                     ),
@@ -239,7 +241,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
                                 setState(() {
                                   _volume = value;
                                 });
-                                _controller.setVolume(_volume.round());
+                                _controller!.setVolume(_volume.round());
                               }
                             : null,
                       ),
@@ -271,7 +273,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
     );
   }
 
-  Widget _text(String title, String value) {
+  Widget _text(String title, String? value) {
     return RichText(
       text: TextSpan(
         text: '$title : ',
@@ -292,7 +294,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
     );
   }
 
-  Color _getStateColor(PlayerState state) {
+  Color? _getStateColor(PlayerState? state) {
     switch (state) {
       case PlayerState.unknown:
         return Colors.grey[700];
@@ -321,12 +323,12 @@ class _VideoPlayerState extends State<VideoPlayer> {
         color: Colors.blueAccent,
         onPressed: _isPlayerReady
             ? () {
-                if (_idController.text.isNotEmpty) {
+                if (_idController!.text.isNotEmpty) {
                   var id = YoutubePlayer.convertUrlToId(
-                    _idController.text,
+                    _idController!.text,
                   );
-                  if (action == 'LOAD') _controller.load(id);
-                  if (action == 'CUE') _controller.cue(id);
+                  if (action == 'LOAD') _controller!.load(id!);
+                  if (action == 'CUE') _controller!.cue(id!);
                   FocusScope.of(context).requestFocus(FocusNode());
                 } else {
                   _showSnackBar('Source can\'t be empty!');
@@ -352,7 +354,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
   }
 
   void _showSnackBar(String message) {
-    _scaffoldKey.currentState.showSnackBar(
+    _scaffoldKey.currentState!.showSnackBar(
       SnackBar(
         content: Text(
           message,

@@ -1,8 +1,8 @@
 class Offer {
-  int _id;
-  String _title;
-  String _description;
-  String _link;
+  int? _id;
+  String? _title;
+  String? _description;
+  String? _link;
 
   Offer({id, title, description, link}) {
     _id = id;
@@ -11,19 +11,19 @@ class Offer {
     _link = link;
   }
 
-  int getId() {
+  int? getId() {
     return _id;
   }
 
-  String getTitle() {
+  String? getTitle() {
     return _title;
   }
 
-  String getDescription() {
+  String? getDescription() {
     return _description;
   }
 
-  String getLink() {
+  String? getLink() {
     return _link;
   }
 }

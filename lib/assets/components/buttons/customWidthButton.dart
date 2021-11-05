@@ -37,21 +37,23 @@ Map buttonStyleStyles = {
 class CustomWidthButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
-  final IconData rightIcon;
+  final IconData? rightIcon;
   final ButtonSize size;
   final double fontSize;
   final double buttonWidthProportion;
-  final Color backgroundColor;
-  final Color textColor;
+  final Color? backgroundColor;
+  final Color? textColor;
 
-  CustomWidthButton(this.text,
-      {@required this.onPressed,
-      this.rightIcon,
-      @required this.size,
-      @required this.fontSize,
-      @required this.buttonWidthProportion,
-      this.backgroundColor,
-      this.textColor});
+  CustomWidthButton(this.text, 
+  {
+    required this.onPressed,
+    required this.size,
+    required this.fontSize,
+    required this.buttonWidthProportion,
+    this.rightIcon,
+    this.backgroundColor,
+    this.textColor
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +83,7 @@ class CustomWidthButton extends StatelessWidget {
               style: textStyleFrom(
                 Theme.of(context).primaryTextTheme.button,
                 color: textColor ?? Colors.white,
-                fontSize: fontSize ?? buttonStyleStyles[size]['fontSize'],
+                fontSize: fontSize,
               ),
             ),
           ),

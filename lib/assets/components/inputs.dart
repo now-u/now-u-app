@@ -9,17 +9,17 @@ final double theHeight = 30;
 enum CustomFormFieldStyle { Light, Dark }
 
 class CustomTextFormField extends StatelessWidget {
-  final bool autofocus;
-  final bool enabled;
-  final TextInputType keyboardType;
-  final Function validator;
-  final Function onSaved;
-  final Function onChanged;
-  final CustomFormFieldStyle style;
-  final String hintText;
-  final String initialValue;
-  final TextCapitalization textCapitalization;
-  final TextEditingController controller;
+  final bool? autofocus;
+  final bool? enabled;
+  final TextInputType? keyboardType;
+  final Function? validator;
+  final Function? onSaved;
+  final Function? onChanged;
+  final CustomFormFieldStyle? style;
+  final String? hintText;
+  final String? initialValue;
+  final TextCapitalization? textCapitalization;
+  final TextEditingController? controller;
 
   CustomTextFormField({
     this.autofocus,
@@ -42,9 +42,9 @@ class CustomTextFormField extends StatelessWidget {
       keyboardType: keyboardType ?? TextInputType.text,
       textInputAction: TextInputAction.go,
       autofocus: autofocus ?? false,
-      validator: validator,
-      onSaved: onSaved,
-      onChanged: onChanged,
+      validator: validator as String? Function(String?)?,
+      onSaved: onSaved as void Function(String?)?,
+      onChanged: onChanged as void Function(String)?,
       style: textStyleFrom(
         Theme.of(context).primaryTextTheme.headline5,
         color:
@@ -71,9 +71,9 @@ class CustomTextFormField extends StatelessWidget {
 }
 
 class CustomSwitch extends StatefulWidget {
-  final bool value;
-  final ValueChanged<bool> onChanged;
-  final Color activeColor;
+  final bool? value;
+  final ValueChanged<bool>? onChanged;
+  final Color? activeColor;
   final Color inactiveColor;
   final Color activeTextColor;
   final Color inactiveTextColor;
@@ -82,7 +82,7 @@ class CustomSwitch extends StatefulWidget {
   final String inactiveText = "Off";
 
   const CustomSwitch(
-      {Key key,
+      {Key? key,
       this.value,
       this.onChanged,
       this.activeColor,
@@ -97,8 +97,8 @@ class CustomSwitch extends StatefulWidget {
 
 class _CustomSwitchState extends State<CustomSwitch>
     with SingleTickerProviderStateMixin {
-  Animation _circleAnimation;
-  AnimationController _animationController;
+  late Animation _circleAnimation;
+  late AnimationController _animationController;
 
   @override
   void initState() {
@@ -110,8 +110,8 @@ class _CustomSwitchState extends State<CustomSwitch>
     );
 
     _circleAnimation = AlignmentTween(
-      begin: widget.value ? Alignment.centerRight : Alignment.centerLeft,
-      end: widget.value ? Alignment.centerLeft : Alignment.centerRight,
+      begin: widget.value! ? Alignment.centerRight : Alignment.centerLeft,
+      end: widget.value! ? Alignment.centerLeft : Alignment.centerRight,
     ).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.linear),
     );
@@ -131,7 +131,9 @@ class _CustomSwitchState extends State<CustomSwitch>
                 _animationController.forward();
               }
 
-              !widget.value ? widget.onChanged(true) : widget.onChanged(false);
+              !widget.value!
+                  ? widget.onChanged!(true)
+                  : widget.onChanged!(false);
             }
           },
           child: Container(
@@ -193,9 +195,9 @@ class _CustomSwitchState extends State<CustomSwitch>
 
 class CustomCheckboxFormField extends FormField<bool> {
   CustomCheckboxFormField(
-      {Widget title,
-      FormFieldSetter<bool> onSaved,
-      FormFieldValidator<bool> validator,
+      {Widget? title,
+      FormFieldSetter<bool>? onSaved,
+      FormFieldValidator<bool>? validator,
       bool initialValue = false,
       bool autovalidate = false})
       : super(
@@ -216,11 +218,11 @@ class CustomCheckboxFormField extends FormField<bool> {
                               activeColor: Theme.of(context).primaryColor,
                             ),
                             SizedBox(width: 3),
-                            Expanded(child: title),
+                            Expanded(child: title!),
                           ],
                         ),
                         state.hasError
-                            ? Text(state.errorText,
+                            ? Text(state.errorText!,
                                 style: textStyleFrom(
                                     Theme.of(context)
                                         .primaryTextTheme

@@ -3,16 +3,14 @@ import 'package:flutter/material.dart';
 
 import 'package:app/locator.dart';
 import 'package:app/services/dialog_service.dart';
-import 'package:app/services/navigation_service.dart';
 
 import 'package:app/assets/components/buttons/darkButton.dart';
-import 'package:app/assets/components/custom_network_image.dart';
 import 'package:app/assets/StyleFrom.dart';
 
 
 class DialogManager extends StatefulWidget {
-  final Widget child;
-  DialogManager({Key key, this.child}) : super(key: key);
+  final Widget? child;
+  DialogManager({Key? key, this.child}) : super(key: key);
 
   @override
   _DialogManagerState createState() => _DialogManagerState();
@@ -20,7 +18,6 @@ class DialogManager extends StatefulWidget {
 
 class _DialogManagerState extends State<DialogManager> {
   final DialogService _dialogService = locator<DialogService>();
-  final NavigationService _navigationService = locator<NavigationService>();
 
   @override
   void initState() {
@@ -30,7 +27,7 @@ class _DialogManagerState extends State<DialogManager> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.child;
+    return widget.child!;
   }
 
   void _showDialog(AlertRequest request) {
@@ -41,43 +38,45 @@ class _DialogManagerState extends State<DialogManager> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            request.headerImage != null ? CustomNetworkImage(request.headerImage) : SizedBox(height: 0),
-            SizedBox(height: 20),
-            Text(
-              request.title,
-              textAlign: TextAlign.center,
-              style: textStyleFrom(
-                Theme.of(context).primaryTextTheme.headline2,
-              ),
-            ),
-            SizedBox(height: 20),
-            Padding(
-              padding: EdgeInsets.all(5),
-              child: Text(
-                request.description,
-                style: textStyleFrom(
-                  Theme.of(context).primaryTextTheme.bodyText1,
-                  color: Theme.of(context).primaryColorDark,
+        content: Padding(
+            padding: EdgeInsets.all(25),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                SizedBox(height: 20),
+                Text(
+                  request.title!,
+                  textAlign: TextAlign.center,
+                  style: textStyleFrom(
+                    Theme.of(context).primaryTextTheme.headline2,
+                  ),
                 ),
-                textAlign: TextAlign.center,
-              ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: EdgeInsets.all(5),
+                  child: Text(
+                    request.description!,
+                    style: textStyleFrom(
+                      Theme.of(context).primaryTextTheme.bodyText1,
+                      color: Theme.of(context).primaryColorDark,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                SizedBox(height: 20),
+                Column(
+                  children: _getButtons(request.buttons),
+                ),
+                SizedBox(height: 20),
+              ],
             ),
-            SizedBox(height: 20),
-            Column(
-              children: _getButtons(request.buttons),
-            ),
-            SizedBox(height: 20),
-          ],
         ),
       ),
     );
   }
 
-  List<Widget> _getButtons(List buttons) {
+  List<Widget> _getButtons(List? buttons) {
     if (buttons == null) {
       return <Widget>[
         Container(
@@ -94,9 +93,7 @@ class _DialogManagerState extends State<DialogManager> {
     }
 
     List<Widget> buttonWidgets = [];
-    for (final CustomDialogButton button in buttons) {
-      DarkButtonStyle buttonStyle =
-      button.style != null ? button.style : DarkButtonStyle.Primary;
+    for (final DialogButton button in buttons as Iterable<DialogButton>) {
       buttonWidgets.add(Container(
         child: CustomWidthButton(
           button.text,

@@ -5,11 +5,11 @@ import 'package:app/assets/components/textButton.dart';
 
 AppBar customAppBar({
   text,
-  @required context,
-  String backButtonText,
-  bool hasBackButton,
-  List<Widget> actions,
-  Function extraOnTap,
+  required context,
+  String? backButtonText,
+  bool? hasBackButton,
+  List<Widget>? actions,
+  Function? extraOnTap,
 }) {
   hasBackButton = hasBackButton == null ? true : hasBackButton;
   return AppBar(

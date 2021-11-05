@@ -1,8 +1,8 @@
 class Badge {
-  String name;
-  int points; // also used as id
-  String image;
-  String successMessage;
+  String? name;
+  int? points; // also used as id
+  String? image;
+  String? successMessage;
 
   Badge({
     this.name,
@@ -11,19 +11,19 @@ class Badge {
     this.successMessage,
   });
 
-  String getName() {
+  String? getName() {
     return name;
   }
 
-  String getImage() {
+  String? getImage() {
     return image;
   }
 
-  String getSuccessMessage() {
+  String? getSuccessMessage() {
     return successMessage;
   }
 
-  int getPoints() {
+  int? getPoints() {
     return points;
   }
 }
@@ -113,18 +113,18 @@ final List<Badge> badges = [
           "Incredible! You stepped up to the role and have played a huge part in driving positive change! Bravo!"),
 ];
 
-int getNextBadge(int currentPoints) {
+int? getNextBadge(int currentPoints) {
   for (int i = 0; i < badges.length; i++) {
-    if (badges[i].getPoints() > currentPoints) {
+    if (badges[i].getPoints()! > currentPoints) {
       return badges[i].getPoints();
     }
   }
   return null;
 }
 
-Badge getNextBadgeFromInt(int points) {
+Badge? getNextBadgeFromInt(int points) {
   for (int i = 0; i < badges.length; i++) {
-    if (badges[i].getPoints() >= points) {
+    if (badges[i].getPoints()! >= points) {
       return badges[i];
     }
   }

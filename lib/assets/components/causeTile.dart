@@ -11,20 +11,19 @@ class CauseTile extends StatelessWidget {
   final VoidCallback gestureFunction;
   final VoidCallback getInfoFunction;
 
-  CauseTile(
-      {@required this.cause,
-      @required this.isSelected,
-      @required this.gestureFunction,
-      @required this.getInfoFunction,
-      @required this.causeIcon});
+  CauseTile({
+    required this.cause,
+    required this.isSelected,
+    required this.gestureFunction,
+    required this.getInfoFunction,
+    required this.causeIcon
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: gestureFunction,
       child: Container(
-          width: MediaQuery.of(context).size.width * 0.4,
-          height: MediaQuery.of(context).size.width * 0.4,
           decoration: BoxDecoration(
               color: isSelected ? Color(0XFFFFF3E5) : Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -42,26 +41,30 @@ class CauseTile extends StatelessWidget {
             children: [
               Expanded(
                 flex: 1,
-                child: SizedBox(height: 0)
+                child: Container()
               ),
               Expanded(
-                flex: 3,
+                flex: 5,
                 child: Column(
                   children: [
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 8, 0, 4),
                       child: Icon(causeIcon,
-                          size: 45.0,
+                          size: 24.0,
                           color: isSelected
                               ? Color(0XFFFF8800)
                               : Color(0XFF373A4A)),
                     ),
-                    Text(
-                      '${cause.name}',
-                      style: TextStyle(
-                          fontSize: 20.0, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
+                    Container(
+                      height: 40,
+                      child: Center(
+                        child: Text(
+                            '${cause.title}',
+                            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, height: 1),
+                            textAlign: TextAlign.center,
+                        ),
+                      )
+                    )
                   ],
                 ),
               ),

@@ -24,13 +24,13 @@ class PartnersPage extends StatelessWidget {
                 crossAxisCount: 3,
                 childAspectRatio: 0.85,
               ),
-              itemCount: model.parterns.length,
+              itemCount: model.parterns!.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                     height: 200,
                     child: Padding(
                       padding: EdgeInsets.all(8),
-                      child: OrganisationTile(model.parterns[index]),
+                      child: OrganisationTile(model.parterns![index]),
                     ));
               },
             );

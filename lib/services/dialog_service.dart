@@ -2,10 +2,10 @@ import 'dart:async';
 import 'package:app/assets/components/buttons/darkButton.dart';
 
 class AlertRequest {
-  final String title;
-  final String description;
-  final String headerImage;
-  final List buttons;
+  final String? title;
+  final String? headerImage;
+  final String? description;
+  final List? buttons;
 
   AlertRequest({this.title, this.description, this.headerImage, this.buttons});
 }
@@ -15,16 +15,16 @@ class AlertResponse {
   AlertResponse({this.response});
 }
 
-class CustomDialogButton {
+class DialogButton {
   String text;
   dynamic response; // If the button is clicked what should the dialog service return
-  DarkButtonStyle style;
+  DarkButtonStyle? style;
   //Function onClick; // This might be handy in the future
-  bool closeOnClick;
+  bool? closeOnClick;
 
   // Constructor:
-  CustomDialogButton({
-    this.text,
+  DialogButton({
+    required this.text,
     this.response,
     this.style,
     this.closeOnClick,
@@ -33,28 +33,28 @@ class CustomDialogButton {
 }
 
 class DialogService {
-  Function(AlertRequest) _showDialogListener;
-  Completer<AlertResponse> _dialogCompleter;
+  late Function(AlertRequest) _showDialogListener;
+  Completer<AlertResponse>? _dialogCompleter;
 
   void registerDialogListener(Function(AlertRequest) showDialogListener) {
     _showDialogListener = showDialogListener;
   }
 
   Future showDialog({
-    String title,
-    String description,
-    String headerImage,
-    List buttons,
+    String? title,
+    String? description,
+    String? headerImage,
+    List? buttons,
   }) {
     _dialogCompleter = Completer<AlertResponse>();
     _showDialogListener(
         AlertRequest(title: title, description: description, headerImage: headerImage, buttons: buttons));
-    return _dialogCompleter.future;
+    return _dialogCompleter!.future;
   }
 
   void dialogComplete(AlertResponse response) {
     if (_dialogCompleter != null) {
-      _dialogCompleter.complete(response);
+      _dialogCompleter!.complete(response);
     }
     _dialogCompleter = null;
   }

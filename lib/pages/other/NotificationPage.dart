@@ -44,7 +44,7 @@ class NotificationPage extends StatelessWidget {
                   CustomNetworkImage(notification.getImage(), height: 150),
                   SizedBox(height: 60),
                   Text(
-                    notification.getTitle(),
+                    notification.getTitle()!,
                     style: textStyleFrom(
                       Theme.of(context).primaryTextTheme.headline2,
                       color: Colors.white,

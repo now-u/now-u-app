@@ -30,7 +30,7 @@ class CausePage extends StatelessWidget {
                   ClipPath(
                       clipper: CauseBackgroundClipper(),
                       child: Container(
-                        height: MediaQuery.of(context).size.height * 0.4,
+                        height: MediaQuery.of(context).size.height * 0.43,
                         decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [Color(0XFF011A43), Color(0XFF012B93)],
@@ -60,7 +60,7 @@ class CausePage extends StatelessWidget {
                                       child: Text(
                                         'Welcome to now-u',
                                         style: TextStyle(
-                                            fontSize: 35,
+                                            fontSize: 30,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white
                                         ),
@@ -70,7 +70,7 @@ class CausePage extends StatelessWidget {
                                   ],
                                 ),
                                 Text(
-                                  'Take action and selected the causes which are important to you',
+                                  'Take action and selected the causes which are important to you.',
                                   style: TextStyle(fontSize: 15, color: Colors.white),
                                 ),
                               ],
@@ -80,44 +80,42 @@ class CausePage extends StatelessWidget {
                         Expanded(
                           flex: 10,
                           child: Container(
-                            padding: const EdgeInsets.all(35.0),
+                            padding: const EdgeInsets.all(15.0),
                             child: ExpandedGrid.builder(
                               numberOfRows: 2,
                               itemCount: 6,
                               itemBuilder: (context, rowIndex, colIndex, index) {
-                                return CauseTile(
-                                    gestureFunction: () => model.toggleSelection(causeIndex: index),
-                                    cause: model.causesList[index],
-                                    causeIcon: FontAwesomeIcons.leaf,
-                                    isSelected: model.causesSelectedList[index],
-                                    getInfoFunction: () => model.getCausePopup(causeIndex: index),
-                                );
+                                return Expanded(child: Padding(
+                                  padding: EdgeInsets.all(10), 
+                                  child: CauseTile(
+                                      gestureFunction: () => model.toggleSelection(causeIndex: index),
+                                      cause: model.causesList[index],
+                                      causeIcon: FontAwesomeIcons.leaf,
+                                      isSelected: model.causesSelectedList[index],
+                                      getInfoFunction: () => model.getCausePopup(causeIndex: index),
+                                  ),
+                                ));
                               }
                             ),
                           ),
                         ),
                         Expanded(
                           flex: 1,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CustomWidthButton('Get started',
-                                  onPressed: model.isButtonDisabled
-                                      ? () {
-                                          return null;
-                                        }
-                                      : () {
-                                          model.getCausePopup();
-                                        },
-                                  backgroundColor: model.isButtonDisabled
-                                      ? Colors.grey
-                                      : Theme.of(context).primaryColor,
-                                  size: ButtonSize.Medium,
-                                  fontSize: 20.0,
-                                  buttonWidthProportion: 0.6),
-                            ],
+                          child: Center(
+                            child: CustomWidthButton('Get started',
+                              onPressed: model.isButtonDisabled 
+                                ? () {} 
+                                : () {print("GO");},
+                              backgroundColor: model.isButtonDisabled
+                                  ? Colors.grey
+                                  : Theme.of(context).primaryColor,
+                              size: ButtonSize.Medium,
+                              fontSize: 20.0,
+                              buttonWidthProportion: 0.6,
+                            ),
                           ),
-                        )
+                        ),
+                        SizedBox(height: 10),
                       ],
                     ),
                   )

@@ -23,16 +23,16 @@ class CustomIconButton extends StatelessWidget {
   final VoidCallback onPressed;
   final IconData icon;
   final IconButtonSize size;
-  final Color backgroundColor;
-  final Color iconColor;
+  final Color? backgroundColor;
+  final Color? iconColor;
   final bool isCircularButton;
 
   CustomIconButton({
-    @required this.onPressed,
-    @required this.icon,
+    required this.onPressed,
+    required this.icon,
+    required this.size,
+    required this.isCircularButton,
     this.iconColor,
-    @required this.size,
-    @required this.isCircularButton,
     this.backgroundColor,
   });
 
@@ -68,15 +68,15 @@ class CustomIconButton extends StatelessWidget {
 class CircularIconButton extends StatelessWidget {
   final VoidCallback onPressed;
   final IconData icon;
-  final double height;
-  final double iconSize;
   
-  final Color backgroundColor;
-  final Color iconColor;
+  final Color? backgroundColor;
+  final Color? iconColor;
+  final double? height;
+  final double? iconSize;
 
   CircularIconButton({
-    @required this.icon,
-    @required this.onPressed,
+    required this.icon,
+    required this.onPressed,
     this.iconColor,
     this.backgroundColor,
     this.height,

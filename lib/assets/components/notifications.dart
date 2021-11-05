@@ -11,7 +11,7 @@ class NotificationTile extends StatelessWidget {
   final InternalNotification notification;
   final Function dismissFunction;
 
-  NotificationTile(this.notification, {@required this.dismissFunction});
+  NotificationTile(this.notification, {required this.dismissFunction});
   @override
   Widget build(BuildContext context) {
     return CustomTile(
@@ -49,7 +49,7 @@ class NotificationTile extends StatelessWidget {
                 children: [
                   SizedBox(height: 10),
                   Text(
-                    notification.getTitle(),
+                    notification.getTitle()!,
                     style: Theme.of(context).primaryTextTheme.headline4,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,

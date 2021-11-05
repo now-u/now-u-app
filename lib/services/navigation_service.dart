@@ -20,19 +20,20 @@ const List ID_ROUTES = [
 ];
 
 class NavigationService {
-  final DialogService _dialogService = locator<DialogService>();
+  final DialogService? _dialogService = locator<DialogService>();
 
-  final CampaignService _campaignService = locator<CampaignService>();
+  final CampaignService? _campaignService = locator<CampaignService>();
 
   final GlobalKey<NavigatorState> navigatorKey =
       new GlobalKey<NavigatorState>();
 
   Future<dynamic> navigateTo(String routeName, {arguments}) {
-    return navigatorKey.currentState.pushNamed(routeName, arguments: arguments);
+    return navigatorKey.currentState!
+        .pushNamed(routeName, arguments: arguments);
   }
 
   void goBack() {
-    return navigatorKey.currentState.pop();
+    return navigatorKey.currentState!.pop();
   }
 
   bool isInternalLink(String link) {
@@ -51,7 +52,7 @@ class NavigationService {
     return link.startsWith("mailto:");
   }
 
-  Map getInternalLinkParameters(String url) {
+  Map? getInternalLinkParameters(String url) {
     String link = url.substring(INTERNAL_PREFIX.length);
 
     if (!link.contains('&')) return null;
@@ -79,19 +80,19 @@ class NavigationService {
 
   Future launchLink(
     String url, {
-    String title,
-    String description,
-    String buttonText,
-    String closeButtonText,
-    Function extraOnConfirmFunction,
-    bool isExternal,
+    String? title,
+    String? description,
+    String? buttonText,
+    String? closeButtonText,
+    Function? extraOnConfirmFunction,
+    bool? isExternal,
   }) async {
     if (isInternalLink(url)) {
       String route = getInternalLinkRoute(url);
-      Map parameters = getInternalLinkParameters(url);
+      Map? parameters = getInternalLinkParameters(url);
 
       if (ID_ROUTES.contains(route)) {
-        int id = int.tryParse(parameters['id']);
+        int? id = int.tryParse(parameters!['id']);
 
         if (route == Routes.campaignInfo || route == Routes.learningSingle) {
           navigateTo(route, arguments: id);
@@ -99,20 +100,20 @@ class NavigationService {
         }
 
         if (route == Routes.actionInfo) {
-          _campaignService.getAction(id).then((CampaignAction action) {
+          _campaignService!.getAction(id).then((CampaignAction action) {
             navigateTo(route, arguments: action);
           }).catchError((e) {
-            _dialogService.showDialog(
+            _dialogService!.showDialog(
                 title: "Error", description: "Error navigating to route");
           });
           return;
         }
 
         if (route == Routes.learningTopic) {
-          _campaignService.getLearningTopic(id).then((LearningTopic topic) {
+          _campaignService!.getLearningTopic(id).then((LearningTopic topic) {
             navigateTo(route, arguments: topic);
           }).catchError((e) {
-            _dialogService.showDialog(
+            _dialogService!.showDialog(
                 title: "Error", description: "Error navigating to route");
           });
           return;
@@ -137,27 +138,27 @@ class NavigationService {
 
   void launchLinkExternal(
     String url, {
-    String title,
-    String description,
-    String buttonText,
-    String closeButtonText,
-    Function extraOnConfirmFunction,
+    String? title,
+    String? description,
+    String? buttonText,
+    String? closeButtonText,
+    Function? extraOnConfirmFunction,
   }) async {
-    AlertResponse exit = await _dialogService.showDialog(
+    AlertResponse exit = await (_dialogService!.showDialog(
         title: title ?? "You're about to leave",
         description: description ??
             "This link will take you out of the app. Are you sure you want to go?",
         buttons: [
-          CustomDialogButton(
+          DialogButton(
             text: buttonText ?? "Let's go",
             response: true,
           ),
-          CustomDialogButton(
+          DialogButton(
             text: closeButtonText ?? "Close",
             response: false,
             style: DarkButtonStyle.Secondary,
           ),
-        ]);
+        ]) as Future<AlertResponse>);
     if (exit.response) {
       if (extraOnConfirmFunction != null) {
         extraOnConfirmFunction();

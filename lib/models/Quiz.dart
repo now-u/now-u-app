@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 
 class Quiz {
-  int id;
-  String title;
-  String description;
-  List<Question> questions;
+  int? id;
+  String? title;
+  String? description;
+  List<Question>? questions;
 
   Quiz.fromJson(Map json) {
     print("Id is");
@@ -25,15 +25,15 @@ class Quiz {
         .cast<Question>();
   }
 
-  int getId() {
+  int? getId() {
     return id;
   }
 
-  String getTitle() {
+  String? getTitle() {
     return title;
   }
 
-  List<Question> getQuestions() {
+  List<Question>? getQuestions() {
     return questions;
   }
 }
@@ -69,8 +69,8 @@ Future<Quiz> readQuizFromAssets(int id) async {
 }
 
 class Question {
-  String question;
-  List<Answer> answers;
+  String? question;
+  List<Answer>? answers;
 
   Question.fromJson(Map json) {
     question = json['question'];
@@ -80,29 +80,29 @@ class Question {
         .cast<Answer>();
   }
 
-  String getQuestion() {
+  String? getQuestion() {
     return question;
   }
 
-  List<Answer> getAnswers() {
+  List<Answer>? getAnswers() {
     return answers;
   }
 }
 
 class Answer {
-  String answer;
-  bool isCorrect;
+  String? answer;
+  bool? isCorrect;
 
   Answer.fromJson(Map json) {
     answer = json['answer'];
     isCorrect = json['isCorrect'];
   }
 
-  String getAnswer() {
+  String? getAnswer() {
     return answer;
   }
 
-  bool getIsCorrect() {
+  bool? getIsCorrect() {
     return isCorrect;
   }
 }

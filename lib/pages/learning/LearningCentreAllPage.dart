@@ -51,10 +51,10 @@ class LearningCentreAllPage extends StatelessWidget {
                   ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: model.campaigns.length,
+                    itemCount: model.campaigns!.length,
                     itemBuilder: (context, index) {
                       return LearningCentreCampaignSelectionItem(
-                        campaign: model.campaigns[index],
+                        campaign: model.campaigns![index],
                         onWhiteBackground: true,
                       );
                     },

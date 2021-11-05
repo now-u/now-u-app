@@ -17,7 +17,7 @@ class LoginCodePage extends StatefulWidget {
 
 class LoginCodePageState extends State<LoginCodePage>
     with WidgetsBindingObserver {
-  String _token;
+  String? _token;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -41,7 +41,7 @@ class LoginCodePageState extends State<LoginCodePage>
 
     Widget loginButton() {
       Future<bool> validateAndSave(LoginViewModel model) async {
-        final FormState form = _formKey.currentState;
+        final FormState form = _formKey.currentState!;
         print("Hello");
         if (form.validate()) {
           form.save();
@@ -149,7 +149,7 @@ class LoginCodePageState extends State<LoginCodePage>
           body: NotificationListener(
               onNotification: (OverscrollIndicatorNotification overscroll) {
                 overscroll.disallowGlow();
-                return null;
+                return true;
               },
               child: ListView(children: [
                 loginForm(),
