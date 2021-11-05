@@ -11,13 +11,12 @@ class CauseTile extends StatelessWidget {
   final VoidCallback gestureFunction;
   // final VoidCallback getInfoFunction;
 
-  CauseTile({
-    required this.cause,
-    required this.isSelected,
-    required this.gestureFunction,
-    // required this.getInfoFunction,
-    required this.causeIcon
-  });
+  CauseTile(
+      {required this.cause,
+      required this.isSelected,
+      required this.gestureFunction,
+      // required this.getInfoFunction,
+      required this.causeIcon});
 
   @override
   Widget build(BuildContext context) {
