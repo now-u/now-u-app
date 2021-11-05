@@ -28,15 +28,12 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
 
   final double tileHeight;
 
-  final bool showCheckmark;
-
   const ExploreSection({
     required this.title,
     required this.description,
     this.fetchParams,
     this.filter,
     this.tileHeight = 160,
-    this.showCheckmark = false,
   });
 
   Future<List<ExplorableType>> fetchTiles(Map<String, dynamic>? params);
@@ -98,14 +95,12 @@ class CampaignExploreSection extends ExploreSection<ListCampaign> {
     required String description,
     Map? fetchParams,
     ExploreFilter? filter,
-    bool showCheckmark = false,
   }) : super(
           title: title,
           description: description,
           fetchParams: fetchParams,
           filter: filter,
           tileHeight: 300,
-          showCheckmark: showCheckmark,
         );
 
   @override
@@ -139,8 +134,7 @@ class CampaignExploreSection extends ExploreSection<ListCampaign> {
   }
 
   @override
-  Widget renderTile(ListCampaign tile) =>
-      ExploreCampaignTile(tile, showCheckmark);
+  Widget renderTile(ListCampaign tile) => ExploreCampaignTile(tile);
 }
 
 class ActionExploreSection extends ExploreSection<ListCauseAction> {
@@ -149,14 +143,12 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
     required String description,
     Map? fetchParams,
     ExploreFilter? filter,
-    bool showCheckmark = false,
   }) : super(
           title: title,
           description: description,
           fetchParams: fetchParams,
           filter: filter,
           tileHeight: 160,
-          showCheckmark: showCheckmark,
         );
 
   @override
@@ -190,8 +182,7 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
   }
 
   @override
-  Widget renderTile(ListCauseAction tile) =>
-      ExploreActionTile(tile, showCheckmark);
+  Widget renderTile(ListCauseAction tile) => ExploreActionTile(tile);
 }
 
 class NewsExploreSection extends ExploreSection<ListNews> {
@@ -206,7 +197,6 @@ class NewsExploreSection extends ExploreSection<ListNews> {
           fetchParams: fetchParams,
           filter: filter,
           tileHeight: 330,
-          showCheckmark: false,
         );
 
   @override

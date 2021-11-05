@@ -29,14 +29,12 @@ List<ExploreSection> exploreSections = [
     title: "Campaigns",
     description:
         "Join members of the now-u community in coordinated campaigns to make a difference",
-    showCheckmark: false,
   ),
   ActionExploreSection(
     title: "Actions",
     description:
         "Take a wide range of actions to drive lasting change for issues you care about",
     filter: filter,
-    showCheckmark: false,
   ),
   const NewsExploreSection(
       title: "News",
