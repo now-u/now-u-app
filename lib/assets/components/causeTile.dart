@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:app/assets/components/buttons/customIconButton.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app/models/Cause.dart';
+import 'package:app/assets/StyleFrom.dart';
 
 class CauseTile extends StatelessWidget {
   final ListCause cause;
@@ -28,7 +29,7 @@ class CauseTile extends StatelessWidget {
               color: isSelected ? Color(0XFFFFF3E5) : Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(10)),
               border: isSelected
-                  ? Border.all(width: 3, color: Color(0XFFFF8800))
+                  ? Border.all(width: 3, color: Theme.of(context).primaryColor)
                   : Border.all(width: 3, color: Colors.transparent),
               boxShadow: [
                 BoxShadow(
@@ -53,8 +54,9 @@ class CauseTile extends StatelessWidget {
                       child: Icon(causeIcon,
                           size: 24.0,
                           color: isSelected
-                              ? Color(0XFFFF8800)
-                              : Color(0XFF373A4A)),
+                              ? Theme.of(context).primaryColor
+                              : Theme.of(context).primaryColorDark,
+                      ),
                     ),
                     Container(
                       height: 40,
