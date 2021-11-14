@@ -6,18 +6,9 @@ import 'package:app/assets/components/causeTile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app/assets/components/buttons/customWidthButton.dart';
 import 'package:stacked/stacked.dart';
-import 'package:app/models/Cause.dart';
 
 class CausePage extends StatelessWidget {
   
-  // List<List<Cause>> getCausesGridLayout(List<Cause> causes, int numberOfColumns) {
-  //   List<List<Cause>> columns = [];
-  //   for (int i = 0; i < causes.length; i+=numberOfColumns) {
-  //     columns.add(causes.sublist(i, i+numberOfColumns));
-  //   }
-  //   return columns;
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

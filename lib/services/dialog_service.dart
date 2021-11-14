@@ -3,15 +3,6 @@ import 'package:app/assets/components/buttons/darkButton.dart';
 import 'package:app/managers/dialog_manager.dart';
 export 'package:app/managers/dialog_manager.dart';
 
-class AlertRequest {
-  final String? title;
-  final String? headerImage;
-  final String? description;
-  final List? buttons;
-
-  AlertRequest({this.title, this.description, this.headerImage, this.buttons});
-}
-
 class AlertResponse {
   final dynamic response;
   AlertResponse({this.response});
