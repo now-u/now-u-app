@@ -88,10 +88,9 @@ class _AppState extends State<App> {
       ],
       builder: (context, widget) => Navigator(
         onGenerateRoute: (settings) => MaterialPageRoute(
-            builder: (context) => DialogManager(child: widget)),
+            builder: (context) => DialogManager(child: widget!)),
       ),
       home: StartUpView(),
-      //initialRoute: Routes.intro,
       onGenerateRoute: initRoutes as Route<dynamic>? Function(RouteSettings)?,
       theme: ThemeData(
         // This is the theme of the application.

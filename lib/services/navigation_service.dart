@@ -6,7 +6,7 @@ import 'package:app/services/dialog_service.dart';
 import 'package:app/services/campaign_service.dart';
 
 import 'package:url_launcher/url_launcher.dart';
-import 'package:app/assets/components/darkButton.dart';
+import 'package:app/assets/components/buttons/darkButton.dart';
 import 'package:app/models/Learning.dart';
 import 'package:app/models/Action.dart';
 
@@ -20,9 +20,9 @@ const List ID_ROUTES = [
 ];
 
 class NavigationService {
-  final DialogService? _dialogService = locator<DialogService>();
+  final DialogService _dialogService = locator<DialogService>();
 
-  final CampaignService? _campaignService = locator<CampaignService>();
+  final CampaignService _campaignService = locator<CampaignService>();
 
   final GlobalKey<NavigatorState> navigatorKey =
       new GlobalKey<NavigatorState>();
@@ -100,21 +100,21 @@ class NavigationService {
         }
 
         if (route == Routes.actionInfo) {
-          _campaignService!.getAction(id).then((CampaignAction action) {
+          _campaignService.getAction(id).then((CampaignAction action) {
             navigateTo(route, arguments: action);
           }).catchError((e) {
-            _dialogService!.showDialog(
-                title: "Error", description: "Error navigating to route");
+            _dialogService.showDialog(BasicDialog(title: "Error", description: "Error navigating to route"));
           });
           return;
         }
 
         if (route == Routes.learningTopic) {
-          _campaignService!.getLearningTopic(id).then((LearningTopic topic) {
+          _campaignService.getLearningTopic(id).then((LearningTopic topic) {
             navigateTo(route, arguments: topic);
           }).catchError((e) {
-            _dialogService!.showDialog(
-                title: "Error", description: "Error navigating to route");
+            _dialogService.showDialog(
+              BasicDialog(title: "Error", description: "Error navigating to route")
+            );
           });
           return;
         }
@@ -144,21 +144,24 @@ class NavigationService {
     String? closeButtonText,
     Function? extraOnConfirmFunction,
   }) async {
-    AlertResponse exit = await (_dialogService!.showDialog(
-        title: title ?? "You're about to leave",
-        description: description ??
-            "This link will take you out of the app. Are you sure you want to go?",
-        buttons: [
-          DialogButton(
-            text: buttonText ?? "Let's go",
-            response: true,
-          ),
-          DialogButton(
-            text: closeButtonText ?? "Close",
-            response: false,
-            style: DarkButtonStyle.Secondary,
-          ),
-        ]) as Future<AlertResponse>);
+    AlertResponse exit = await (_dialogService.showDialog(
+        BasicDialog(
+          title: title ?? "You're about to leave",
+          description: description ??
+              "This link will take you out of the app. Are you sure you want to go?",
+          buttons: [
+            DialogButton(
+              text: buttonText ?? "Let's go",
+              response: true,
+            ),
+            DialogButton(
+              text: closeButtonText ?? "Close",
+              response: false,
+              style: DarkButtonStyle.Secondary,
+            ),
+          ]
+        ),
+      ) as Future<AlertResponse>);
     if (exit.response) {
       if (extraOnConfirmFunction != null) {
         extraOnConfirmFunction();

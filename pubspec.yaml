@@ -40,6 +40,8 @@ dependencies:
   intl: ^0.17.0 # Date formatting
   flutter_markdown: ^0.6.7
   cached_network_image: ^3.1.0
+  
+  rflutter_alert: ^2.0.4
 
   get_it: ^7.2.0
   get: ^4.3.8 # do things without context
