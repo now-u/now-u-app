@@ -57,7 +57,7 @@
 
       <dl class="constructor-summary-list">
         <dt id="DialogButton" class="callable">
-          <span class="name"><a href="../services_dialog_service/DialogButton/DialogButton.html">DialogButton</a></span><span class="signature">(<span class="parameter" id="-param-text">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">text</span>, </span><span class="parameter" id="-param-response"><span class="type-annotation">dynamic</span> <span class="parameter-name">response</span>, </span><span class="parameter" id="-param-style"><span class="type-annotation"><a href="../assets_components_darkButton/DarkButtonStyle-class.html">DarkButtonStyle</a>?</span> <span class="parameter-name">style</span>, </span><span class="parameter" id="-param-closeOnClick"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">closeOnClick</span>}</span>)</span>
+          <span class="name"><a href="../services_dialog_service/DialogButton/DialogButton.html">DialogButton</a></span><span class="signature">(<span class="parameter" id="-param-text">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">text</span>, </span><span class="parameter" id="-param-response"><span class="type-annotation">dynamic</span> <span class="parameter-name">response</span>, </span><span class="parameter" id="-param-style"><span class="type-annotation"><a href="../assets_components_buttons_darkButton/DarkButtonStyle-class.html">DarkButtonStyle</a>?</span> <span class="parameter-name">style</span>}</span>)</span>
         </dt>
         <dd>
            
@@ -69,17 +69,6 @@
       <h2>Properties</h2>
 
       <dl class="properties">
-        <dt id="closeOnClick" class="property">
-  <span class="name"><a href="../services_dialog_service/DialogButton/closeOnClick.html">closeOnClick</a></span>
-  <span class="signature">&#8596; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> 
-
-</dt>
-<dd>
-   
-  <div class="features">read / write</div>
-
-</dd>
-
         <dt id="hashCode" class="property inherited">
   <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></span>
   <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> 
@@ -115,7 +104,7 @@
 
         <dt id="style" class="property">
   <span class="name"><a href="../services_dialog_service/DialogButton/style.html">style</a></span>
-  <span class="signature">&#8596; <a href="../assets_components_darkButton/DarkButtonStyle-class.html">DarkButtonStyle</a>?</span> 
+  <span class="signature">&#8596; <a href="../assets_components_buttons_darkButton/DarkButtonStyle-class.html">DarkButtonStyle</a>?</span> 
 
 </dt>
 <dd>
@@ -126,7 +115,7 @@
 
         <dt id="text" class="property">
   <span class="name"><a href="../services_dialog_service/DialogButton/text.html">text</a></span>
-  <span class="signature">&#8596; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> 
+  <span class="signature">&#8596; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> 
 
 </dt>
 <dd>
@@ -211,9 +200,12 @@
     <h5>dialog_service library</h5>
     <ol>
   <li class="section-title"><a href="../services_dialog_service/services_dialog_service-library.html#classes">Classes</a></li>
-  <li><a href="../services_dialog_service/AlertRequest-class.html">AlertRequest</a></li>
   <li><a href="../services_dialog_service/AlertResponse-class.html">AlertResponse</a></li>
+  <li><a href="../managers_dialog_manager/BasicDialog-class.html">BasicDialog</a></li>
+  <li><a href="../managers_dialog_manager/CauseDialog-class.html">CauseDialog</a></li>
+  <li><a href="../managers_dialog_manager/CustomDialog-class.html">CustomDialog</a></li>
   <li><a href="../services_dialog_service/DialogButton-class.html">DialogButton</a></li>
+  <li><a href="../managers_dialog_manager/DialogManager-class.html">DialogManager</a></li>
   <li><a href="../services_dialog_service/DialogService-class.html">DialogService</a></li>
 
 
@@ -237,7 +229,6 @@
     <li class="section-title">
       <a href="../services_dialog_service/DialogButton-class.html#instance-properties">Properties</a>
     </li>
-    <li><a href="../services_dialog_service/DialogButton/closeOnClick.html">closeOnClick</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
     <li><a href="../services_dialog_service/DialogButton/response.html">response</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>

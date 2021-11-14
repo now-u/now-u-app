@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the fetchCauses method from the CausesViewModel class, for the Dart programming language.">
+  <title>fetchCauses method - CausesViewModel class - causes_view_model library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../../static-assets/github.css">
+  <link rel="stylesheet" href="../../static-assets/styles.css">
+  <link rel="icon" href="../../static-assets/favicon.png">
+
+  
+</head>
+
+
+<body data-base-href="../../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">app</a></li>
+    <li><a href="../../viewmodels_causes_view_model/viewmodels_causes_view_model-library.html">causes_view_model</a></li>
+    <li><a href="../../viewmodels_causes_view_model/CausesViewModel-class.html">CausesViewModel</a></li>
+    <li class="self-crumb">fetchCauses method</li>
+  </ol>
+  <div class="self-name">fetchCauses</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-method">fetchCauses</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
+<span class="name ">fetchCauses</span>(<wbr>)
+
+      
+
+    </section>
+    
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Future fetchCauses() async {
+  await Future.delayed(const Duration(seconds: 0));
+  _causesList = [
+    ListCause(
+      id: 1,
+      title: &#39;Environment&#39;,
+      description:
+            &#39;Get involved with charities and activists locally and across the globe.&#39;,
+      headerImage: &#39;https:&#47;&#47;images.unsplash.com&#47;photo-1498925008800-019c7d59d903?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=968&amp;q=80&#39;,
+      selected: true,
+      icon: CustomIcons.icon_quiz_01,
+    ),
+    ListCause(
+      id: 2,
+      title: &#39;Health &amp; Wellbeing&#39;,
+      description: &#39;ipsum&#39;,
+      headerImage: &#39;https:&#47;&#47;images.unsplash.com&#47;photo-1498925008800-019c7d59d903?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=968&amp;q=80&#39;,
+      selected: true,
+      icon: CustomIcons.icon_quiz_01,
+    ),
+    ListCause(
+      id: 3,
+      title: &#39;Equality &amp; Human-Rights&#39;,
+      description: &#39;ipsum&#39;,
+      headerImage: &#39;https:&#47;&#47;images.unsplash.com&#47;photo-1498925008800-019c7d59d903?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=968&amp;q=80&#39;,
+      selected: true,
+      icon: CustomIcons.icon_quiz_01,
+    ),
+    ListCause(
+      id: 4,
+      title: &#39;Education &amp; Citizenship&#39;,
+      description: &#39;ipsum&#39;,
+      headerImage: &#39;https:&#47;&#47;images.unsplash.com&#47;photo-1498925008800-019c7d59d903?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=968&amp;q=80&#39;,
+      selected: true,
+      icon: CustomIcons.icon_quiz_01,
+    ),
+    ListCause(
+      id: 5,
+      title: &#39;Economic Opportunity&#39;,
+      description: &#39;ipsum&#39;,
+      headerImage: &#39;https:&#47;&#47;images.unsplash.com&#47;photo-1498925008800-019c7d59d903?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=968&amp;q=80&#39;,
+      selected: true,
+      icon: CustomIcons.icon_quiz_01,
+    ),
+    ListCause(
+      id: 6,
+      title: &#39;Safe Homes &amp; Community&#39;,
+      description: &#39;Get involved with charities and activists locally and across the globe. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi&#39;,
+      headerImage: &#39;https:&#47;&#47;images.unsplash.com&#47;photo-1498925008800-019c7d59d903?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=968&amp;q=80&#39;,
+      selected: true,
+      icon: CustomIcons.icon_quiz_01,
+    )
+  ];
+  notifyListeners();
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../../index.html">app</a></li>
+  <li><a href="../../viewmodels_causes_view_model/viewmodels_causes_view_model-library.html">causes_view_model</a></li>
+  <li><a href="../../viewmodels_causes_view_model/CausesViewModel-class.html">CausesViewModel</a></li>
+  <li class="self-crumb">fetchCauses method</li>
+</ol>
+
+
+    <h5>CausesViewModel class</h5>
+    <ol>
+
+    <li class="section-title"><a href="../../viewmodels_causes_view_model/CausesViewModel-class.html#constructors">Constructors</a></li>
+    <li><a href="../../viewmodels_causes_view_model/CausesViewModel/CausesViewModel.html">CausesViewModel</a></li>
+
+
+    <li class="section-title">
+      <a href="../../viewmodels_causes_view_model/CausesViewModel-class.html#instance-properties">Properties</a>
+    </li>
+    <li class="inherited"><a href="../../viewmodels_base_model/BaseModel/busy.html">busy</a></li>
+    <li><a href="../../viewmodels_causes_view_model/CausesViewModel/causesList.html">causesList</a></li>
+    <li><a href="../../viewmodels_causes_view_model/CausesViewModel/causesSelectedList.html">causesSelectedList</a></li>
+    <li class="inherited"><a href="../../viewmodels_base_model/BaseModel/currentUser.html">currentUser</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/hasListeners.html">hasListeners</a></li>
+    <li><a href="../../viewmodels_causes_view_model/CausesViewModel/isButtonDisabled.html">isButtonDisabled</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+
+    <li class="section-title"><a href="../../viewmodels_causes_view_model/CausesViewModel-class.html#instance-methods">Methods</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/addListener.html">addListener</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/dispose.html">dispose</a></li>
+    <li><a href="../../viewmodels_causes_view_model/CausesViewModel/fetchCauses.html">fetchCauses</a></li>
+    <li><a href="../../viewmodels_causes_view_model/CausesViewModel/getCausePopup.html">getCausePopup</a></li>
+    <li><a href="../../viewmodels_causes_view_model/CausesViewModel/getStarted.html">getStarted</a></li>
+    <li class="inherited"><a href="../../viewmodels_base_model/BaseModel/logout.html">logout</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/notifyListeners.html">notifyListeners</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/removeListener.html">removeListener</a></li>
+    <li class="inherited"><a href="../../viewmodels_base_model/BaseModel/setBusy.html">setBusy</a></li>
+    <li><a href="../../viewmodels_causes_view_model/CausesViewModel/toggleSelection.html">toggleSelection</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+
+    <li class="section-title inherited"><a href="../../viewmodels_causes_view_model/CausesViewModel-class.html#operators">Operators</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    app
+      1.2.0+34
+  </span>
+
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js"></script>
+<script src="../../static-assets/script.js"></script>
+
+
+
+</body>
+
+</html>
+

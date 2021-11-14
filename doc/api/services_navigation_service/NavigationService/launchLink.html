@@ -92,21 +92,21 @@
       }
 
       if (route == Routes.actionInfo) {
-        _campaignService!.getAction(id).then((CampaignAction action) {
+        _campaignService.getAction(id).then((CampaignAction action) {
           navigateTo(route, arguments: action);
         }).catchError((e) {
-          _dialogService!.showDialog(
-              title: &quot;Error&quot;, description: &quot;Error navigating to route&quot;);
+          _dialogService.showDialog(BasicDialog(title: &quot;Error&quot;, description: &quot;Error navigating to route&quot;));
         });
         return;
       }
 
       if (route == Routes.learningTopic) {
-        _campaignService!.getLearningTopic(id).then((LearningTopic topic) {
+        _campaignService.getLearningTopic(id).then((LearningTopic topic) {
           navigateTo(route, arguments: topic);
         }).catchError((e) {
-          _dialogService!.showDialog(
-              title: &quot;Error&quot;, description: &quot;Error navigating to route&quot;);
+          _dialogService.showDialog(
+            BasicDialog(title: &quot;Error&quot;, description: &quot;Error navigating to route&quot;)
+          );
         });
         return;
       }

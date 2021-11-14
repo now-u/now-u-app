@@ -124,7 +124,7 @@
 </dd>
 
         <dt id="registerDialogListener" class="callable">
-  <span class="name"><a href="../services_dialog_service/DialogService/registerDialogListener.html">registerDialogListener</a></span><span class="signature">(<wbr><span class="parameter" id="registerDialogListener-param-showDialogListener"><span class="type-annotation">dynamic</span> <span class="parameter-name">showDialogListener</span>(<span class="parameter" id="param-"><span class="type-annotation"><a href="../services_dialog_service/AlertRequest-class.html">AlertRequest</a></span></span>)</span>)
+  <span class="name"><a href="../services_dialog_service/DialogService/registerDialogListener.html">registerDialogListener</a></span><span class="signature">(<wbr><span class="parameter" id="registerDialogListener-param-showDialogListener"><span class="type-annotation">dynamic</span> <span class="parameter-name">showDialogListener</span>(<span class="parameter" id="param-"><span class="type-annotation"><a href="../managers_dialog_manager/CustomDialog-class.html">CustomDialog</a></span></span>)</span>)
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -137,7 +137,7 @@
 </dd>
 
         <dt id="showDialog" class="callable">
-  <span class="name"><a href="../services_dialog_service/DialogService/showDialog.html">showDialog</a></span><span class="signature">(<wbr><span class="parameter" id="showDialog-param-title">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">title</span>, </span><span class="parameter" id="showDialog-param-description"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">description</span>, </span><span class="parameter" id="showDialog-param-buttons"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a>?</span> <span class="parameter-name">buttons</span>}</span>)
+  <span class="name"><a href="../services_dialog_service/DialogService/showDialog.html">showDialog</a></span><span class="signature">(<wbr><span class="parameter" id="showDialog-param-dialog"><span class="type-annotation"><a href="../managers_dialog_manager/CustomDialog-class.html">CustomDialog</a></span> <span class="parameter-name">dialog</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
   </span>
   
@@ -206,9 +206,12 @@
     <h5>dialog_service library</h5>
     <ol>
   <li class="section-title"><a href="../services_dialog_service/services_dialog_service-library.html#classes">Classes</a></li>
-  <li><a href="../services_dialog_service/AlertRequest-class.html">AlertRequest</a></li>
   <li><a href="../services_dialog_service/AlertResponse-class.html">AlertResponse</a></li>
+  <li><a href="../managers_dialog_manager/BasicDialog-class.html">BasicDialog</a></li>
+  <li><a href="../managers_dialog_manager/CauseDialog-class.html">CauseDialog</a></li>
+  <li><a href="../managers_dialog_manager/CustomDialog-class.html">CustomDialog</a></li>
   <li><a href="../services_dialog_service/DialogButton-class.html">DialogButton</a></li>
+  <li><a href="../managers_dialog_manager/DialogManager-class.html">DialogManager</a></li>
   <li><a href="../services_dialog_service/DialogService-class.html">DialogService</a></li>
 
 

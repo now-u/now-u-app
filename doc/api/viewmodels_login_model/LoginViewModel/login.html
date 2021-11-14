@@ -73,7 +73,7 @@
 }) async {
   setBusy(true);
 
-  var err = await _authenticationService!.login(
+  var err = await _authenticationService.login(
     email,
     token,
   );
@@ -86,26 +86,38 @@
     String errorMsg = &quot;Login error please try again&quot;;
     if (err == AuthError.tokenExpired) {
       errorMsg = &quot;Your token has expired, please restart the login process&quot;;
-      await _dialogService!
-          .showDialog(title: &quot;Login error&quot;, description: errorMsg);
-      _navigationService!.navigateTo(Routes.login);
+      await _dialogService.showDialog(
+        BasicDialog(
+          title: &quot;Login error&quot;, description: errorMsg
+        )
+      );
+      _navigationService.navigateTo(Routes.login);
     } else if (err == AuthError.unauthorized) {
       if (isManul!) {
         errorMsg =
             &quot;Incorrect token, please double check your token from the email&quot;;
-        await _dialogService!
-            .showDialog(title: &quot;Login error&quot;, description: errorMsg);
+        await _dialogService.showDialog(
+          BasicDialog(
+            title: &quot;Login error&quot;, description: errorMsg
+          )
+        );
       } else {
         errorMsg = &quot;Incorrect login link, please try again&quot;;
-        await _dialogService!
-            .showDialog(title: &quot;Login error&quot;, description: errorMsg);
+        await _dialogService.showDialog(
+          BasicDialog(
+            title: &quot;Login error&quot;, description: errorMsg
+          )
+        );
       }
     } else {
-      await _dialogService!
-          .showDialog(title: &quot;Login error&quot;, description: errorMsg);
+      await _dialogService.showDialog(
+        BasicDialog(
+          title: &quot;Login error&quot;, description: errorMsg,
+        )
+      );
     }
   } else {
-    _navigationService!.navigateTo(Routes.intro);
+    _navigationService.navigateTo(Routes.intro);
   }
 }</code></pre>
 </section>

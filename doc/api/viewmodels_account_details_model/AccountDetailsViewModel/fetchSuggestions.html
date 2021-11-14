@@ -67,7 +67,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;List&lt;Suggestion&gt;&gt; fetchSuggestions(String input, String lang) async {
   List&lt;Suggestion&gt;? suggestions =
-      await _googleLocationSearchService!.fetchSuggestions(input, lang);
+      await _googleLocationSearchService.fetchSuggestions(input, lang);
   return suggestions ?? List&lt;Suggestion&gt;.empty();
 }</code></pre>
 </section>

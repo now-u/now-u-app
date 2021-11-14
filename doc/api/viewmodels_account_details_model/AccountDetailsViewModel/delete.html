@@ -66,38 +66,49 @@
   <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; delete() async {
   setBusy(true);
 
-  String? error = await _authenticationService!.deleteUserAccount();
+  String? error = await _authenticationService.deleteUserAccount();
 
   if (error == null) {
-    _dialogService!.showDialog(
-      title: &quot;All done!&quot;,
-      description: &quot;Your account has now been deleted.&quot;,
+    _dialogService.showDialog(
+      BasicDialog(
+        title: &quot;All done!&quot;,
+        description: &quot;Your account has now been deleted.&quot;,
+      ),
     );
-    await _analyticsService!.logUserAccountDeleted();
+    await _analyticsService.logUserAccountDeleted();
     logout();
   } else {
     switch (error) {
       case AuthError.request:
         {
-          _dialogService!.showDialog(
+          _dialogService.showDialog(
+            BasicDialog(
               title: &quot;Client Error&quot;,
               description:
-                  &quot;Sorry, something went wrong!\nTry restarting your app.&quot;);
+                  &quot;Sorry, something went wrong!\nTry restarting your app.&quot;,
+            )
+          );
           break;
         }
       case AuthError.internal:
         {
-          _dialogService!.showDialog(
+          _dialogService.showDialog(
+            BasicDialog(
               title: &quot;Server Error&quot;,
               description:
-                  &quot;Sorry, there was a server problem.\nTry again later.&quot;);
+                  &quot;Sorry, there was a server problem.\nTry again later.&quot;
+            )
+          );
           break;
         }
       default:
         {
-          _dialogService!.showDialog(
+          _dialogService.showDialog(
+            BasicDialog(
               title: &quot;Error&quot;,
-              description: &quot;Sorry, something went wrong!\nPlease try again.&quot;);
+              description: &quot;Sorry, something went wrong!\nPlease try again.&quot;,
+            ),
+          );
           break;
         }
     }

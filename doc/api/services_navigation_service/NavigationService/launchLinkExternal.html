@@ -77,21 +77,24 @@
   String? closeButtonText,
   Function? extraOnConfirmFunction,
 }) async {
-  AlertResponse exit = await (_dialogService!.showDialog(
-      title: title ?? &quot;You&#39;re about to leave&quot;,
-      description: description ??
-          &quot;This link will take you out of the app. Are you sure you want to go?&quot;,
-      buttons: [
-        DialogButton(
-          text: buttonText ?? &quot;Let&#39;s go&quot;,
-          response: true,
-        ),
-        DialogButton(
-          text: closeButtonText ?? &quot;Close&quot;,
-          response: false,
-          style: DarkButtonStyle.Secondary,
-        ),
-      ]) as Future&lt;AlertResponse&gt;);
+  AlertResponse exit = await (_dialogService.showDialog(
+      BasicDialog(
+        title: title ?? &quot;You&#39;re about to leave&quot;,
+        description: description ??
+            &quot;This link will take you out of the app. Are you sure you want to go?&quot;,
+        buttons: [
+          DialogButton(
+            text: buttonText ?? &quot;Let&#39;s go&quot;,
+            response: true,
+          ),
+          DialogButton(
+            text: closeButtonText ?? &quot;Close&quot;,
+            response: false,
+            style: DarkButtonStyle.Secondary,
+          ),
+        ]
+      ),
+    ) as Future&lt;AlertResponse&gt;);
   if (exit.response) {
     if (extraOnConfirmFunction != null) {
       extraOnConfirmFunction();

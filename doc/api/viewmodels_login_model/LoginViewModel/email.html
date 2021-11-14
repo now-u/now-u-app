@@ -73,7 +73,7 @@
 }) async {
   setBusy(true);
 
-  var result = await _authenticationService!.sendSignInWithEmailLink(
+  var result = await _authenticationService.sendSignInWithEmailLink(
     email,
     name,
     newsletterSignup,
@@ -83,18 +83,23 @@
 
   if (result is bool) {
     if (result) {
-      _navigationService!.navigateTo(Routes.emailSent,
+      _navigationService.navigateTo(Routes.emailSent,
           arguments: EmailSentPageArguments(email: email));
     } else {
-      await _dialogService!.showDialog(
+      await _dialogService.showDialog(
+        BasicDialog(
           title: &quot;Login error&quot;,
-          description: &quot;There has been an error please try again&quot;);
+          description: &quot;There has been an error please try again&quot;,
+        ),
+      );
     }
   } else {
-    await _dialogService!.showDialog(
+    await _dialogService.showDialog(
+      BasicDialog(
         title: &quot;Login error&quot;,
-        description:
-            &quot;There has been an error, please check you have access to the internet.&quot;);
+        description: &quot;There has been an error, please check you have access to the internet.&quot;,
+      ),
+    );
   }
 }</code></pre>
 </section>

@@ -67,8 +67,10 @@
     &#47;&#47; Into
     case Routes.onBoarding:
       {
+        &#47;&#47; return customRoute(
+        &#47;&#47;     builder: (context) =&gt; OnBoardingPage(), settings: settings);
         return customRoute(
-            builder: (context) =&gt; OnBoardingPage(), settings: settings);
+            builder: (context) =&gt; CausePage(), settings: settings);
       }
     case Routes.login:
       {

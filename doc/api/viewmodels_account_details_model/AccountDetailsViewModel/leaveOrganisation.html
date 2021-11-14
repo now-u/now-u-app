@@ -65,7 +65,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;bool&gt; leaveOrganisation() async {
   setBusy(true);
-  await _authenticationService!.leaveOrganisation();
+  await _authenticationService.leaveOrganisation();
   setBusy(false);
   notifyListeners();
   return true;
