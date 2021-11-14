@@ -1,52 +1,57 @@
+import 'package:app/assets/icons/customIcons.dart';
+import 'package:app/models/Action.dart';
+import 'package:flutter/widgets.dart';
+
 class ListCause {
-  int? id;
-  String? title;
-  String? icon;
-  String? description;
-  bool? selected;
+  final int id;
+  final String title;
+  final IconData icon;
+  final String description;
+  final bool selected;
+  final String headerImage;
 
-  ListCause({this.id, this.title, this.icon, this.description, this.selected});
+  ListCause({
+    required this.id,
+    required this.title,
+    required this.icon,
+    required this.description,
+    required this.selected,
+    required this.headerImage,
+  });
 
-  ListCause.fromJson(Map json)
+  ListCause.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         title = json['title'],
-        icon = json['icon'],
+        icon = getIconFromString(json['icon']),
         description = json['description'],
-        selected = json['selected'];
+        selected = json['selected'],
+        headerImage = json['header_image'];
 }
 
 class Cause extends ListCause {
-  String? headerImage;
-  List<int>? actions;
+  final List<ListCauseAction> actions;
 
-  Cause(
-      {this.headerImage,
-      this.actions,
-      int? id,
-      String? title,
-      String? icon,
-      String? description,
-      bool? selected})
-      : super(
+  Cause({
+    required this.actions,
+    required int id,
+    required String title,
+    required IconData icon,
+    required String description,
+    required bool selected,
+    required String headerImage,
+  }) : super(
             id: id,
             title: title,
             icon: icon,
             description: description,
-            selected: selected);
+            selected: selected,
+            headerImage: headerImage,
+        );
 
-  Cause.fromJson(Map json)
-      : headerImage = json['headerImage'],
-        actions = json['actions'],
+  Cause.fromJson(Map<String, dynamic> json)
+      : actions = json['actions']
+            .map((actionData) => ListCauseAction.fromJson(actionData))
+            .toList()
+            .cast<ListCauseAction>(),
         super.fromJson(json);
-}
-
-class CauseAction {
-  final int id;
-  bool actionFetched = false;
-
-  bool get isActionFetched {
-    return this.actionFetched;
-  }
-
-  CauseAction({required this.id});
 }
