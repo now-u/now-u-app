@@ -87,7 +87,7 @@ class CauseTile extends StatelessWidget {
                         icon: FontAwesomeIcons.questionCircle,
                         iconSize: 14,
                         height: 20,
-                        backgroundColor: Colors.white,
+                        backgroundColor: Colors.transparent,
                         iconColor: Theme.of(context).primaryColor,
                     ),
                   ],
