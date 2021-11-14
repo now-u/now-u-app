@@ -68,7 +68,7 @@ class CausesViewModel extends BaseModel {
       ListCause(
         id: 6,
         title: 'Safe Homes & Community',
-        description: 'ipsum',
+        description: 'Get involved with charities and activists locally and across the globe. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi',
         headerImage: 'https://images.unsplash.com/photo-1498925008800-019c7d59d903?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=968&q=80',
         selected: true,
         icon: CustomIcons.icon_quiz_01,

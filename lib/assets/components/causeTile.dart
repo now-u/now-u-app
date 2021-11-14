@@ -35,7 +35,8 @@ class CauseTile extends StatelessWidget {
                     color: Color.fromRGBO(0, 0, 0, 0.16),
                     offset: Offset(0, 8),
                     blurRadius: 6)
-              ]),
+              ],
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -83,13 +84,16 @@ class CauseTile extends StatelessWidget {
                     ),
                     CircularIconButton(
                         onPressed: getInfoFunction,
-                        icon: FontAwesomeIcons.question,
-                        iconSize: 10,
+                        icon: FontAwesomeIcons.questionCircle,
+                        iconSize: 14,
                         height: 20,
+                        backgroundColor: Colors.white,
+                        iconColor: Theme.of(context).primaryColor,
                     ),
                   ],
                 ),
-              )
+              ),
+              SizedBox(height: 1)
             ],
           )),
     );

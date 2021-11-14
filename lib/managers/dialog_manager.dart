@@ -57,7 +57,6 @@ class CauseDialog extends CustomDialog {
                 )
               ]
             ),
-            SizedBox(height: 15),
             Padding(
                 padding: EdgeInsets.all(25),
                 child: Column(
@@ -68,20 +67,17 @@ class CauseDialog extends CustomDialog {
                       cause.title,
                       textAlign: TextAlign.center,
                       style: textStyleFrom(
-                        Theme.of(context).primaryTextTheme.headline4,
+                        Theme.of(context).primaryTextTheme.headline2,
                       ),
                     ),
-                    SizedBox(height: 20),
-                    Padding(
-                      padding: EdgeInsets.all(5),
-                      child: Text(
-                        cause.description,
-                        style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.bodyText1,
-                          color: Theme.of(context).primaryColorDark,
-                        ),
-                        textAlign: TextAlign.center,
+                    SizedBox(height: 15),
+                    Text(
+                      cause.description,
+                      style: textStyleFrom(
+                        Theme.of(context).primaryTextTheme.bodyText1,
+                        color: Theme.of(context).primaryColorDark,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 20),
                     Container(
@@ -93,7 +89,6 @@ class CauseDialog extends CustomDialog {
                         },
                       ),
                     ),
-                    SizedBox(height: 20),
                   ],
                 ),
             ),
