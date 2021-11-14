@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app/models/Cause.dart';
 
 class CauseTile extends StatelessWidget {
-  final Cause cause;
+  final ListCause cause;
   final bool isSelected;
   final IconData causeIcon;
   final VoidCallback gestureFunction;

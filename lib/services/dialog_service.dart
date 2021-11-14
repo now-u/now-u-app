@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:app/assets/components/buttons/darkButton.dart';
+import 'package:app/managers/dialog_manager.dart';
+export 'package:app/managers/dialog_manager.dart';
 
 class AlertRequest {
   final String? title;
@@ -19,36 +21,27 @@ class DialogButton {
   String text;
   dynamic response; // If the button is clicked what should the dialog service return
   DarkButtonStyle? style;
-  //Function onClick; // This might be handy in the future
-  bool? closeOnClick;
 
-  // Constructor:
   DialogButton({
     required this.text,
     this.response,
     this.style,
-    this.closeOnClick,
-    //this.onClick,
   });
 }
 
 class DialogService {
-  late Function(AlertRequest) _showDialogListener;
+  late Function(CustomDialog) _showDialogListener;
   Completer<AlertResponse>? _dialogCompleter;
 
-  void registerDialogListener(Function(AlertRequest) showDialogListener) {
+  void registerDialogListener(Function(CustomDialog) showDialogListener) {
     _showDialogListener = showDialogListener;
   }
 
-  Future showDialog({
-    String? title,
-    String? description,
-    String? headerImage,
-    List? buttons,
-  }) {
+  Future showDialog(
+    CustomDialog dialog
+  ) {
     _dialogCompleter = Completer<AlertResponse>();
-    _showDialogListener(
-        AlertRequest(title: title, description: description, headerImage: headerImage, buttons: buttons));
+    _showDialogListener(dialog);
     return _dialogCompleter!.future;
   }
 
