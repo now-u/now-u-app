@@ -1,24 +1,15 @@
 import 'package:app/assets/components/explore_tiles.dart';
-import 'package:flutter/material.dart';
-import 'package:app/models/Explorable.dart';
-import 'package:app/pages/explore/ExploreFilter.dart';
-import 'package:app/models/Campaign.dart';
-import 'package:app/models/Cause.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Cause.dart';
+import 'package:app/models/Explorable.dart';
+import 'package:app/models/article.dart';
 import 'package:app/pages/explore/ExploreFilter.dart';
 import 'package:app/viewmodels/explore_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:app/locator.dart';
-import 'package:app/services/causes_service.dart';
-
-import 'dart:io';
-import 'dart:convert';
 
 abstract class ExploreSection<ExplorableType extends Explorable> {
-
   /// Title of the section
   final String title;
 
@@ -46,53 +37,55 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
   });
 
   Future<List<ExplorableType>> fetchTiles(Map<String, dynamic>? params);
+
   Widget renderTile(ExplorableType tile);
 
   Widget render(BuildContext context) {
     return ViewModelBuilder<ExplorePageViewModel<ExplorableType>>.reactive(
-        viewModelBuilder: () => ExplorePageViewModel<ExplorableType>(filter: filter, fetchTiles: fetchTiles),
+        viewModelBuilder: () => ExplorePageViewModel<ExplorableType>(
+            filter: filter, fetchTiles: fetchTiles),
         onModelReady: (model) => model.fetchTiles(),
         builder: (context, model, child) {
           return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(title, style: Theme.of(context).primaryTextTheme.headline2, textAlign: TextAlign.left),
-              Text(description, style: Theme.of(context).primaryTextTheme.headline4, textAlign: TextAlign.left),
-              
-              filter != null 
-                ? Container(
-                    height: 60,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: filter!.options.map((ExploreFilterOption option) => Padding(
-                          padding: EdgeInsets.all(10),
-                          child: option.render(model),
-                        )
-                      ).toList()
-                    ),
-                  )
-                : SizedBox(height: 0),
-
-              Container(
-                height: tileHeight,
-                child: model.busy 
-                  ? Center(
-                      child: CircularProgressIndicator()
-                    )
-                  : model.error || model.tiles == null 
-                    // TODO handle error here
-                    ? Container(color: Colors.red)
-                    : ListView.builder(
-                        padding: EdgeInsets.symmetric(horizontal: 8),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: model.tiles!.length,
-                        itemBuilder: (context, index) => renderTile(model.tiles![index]),
-                      ),
-              ),
-            ]
-          );
-        }
-      );
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(title,
+                    style: Theme.of(context).primaryTextTheme.headline2,
+                    textAlign: TextAlign.left),
+                Text(description,
+                    style: Theme.of(context).primaryTextTheme.headline4,
+                    textAlign: TextAlign.left),
+                filter != null
+                    ? Container(
+                        height: 60,
+                        child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: filter!.options
+                                .map((ExploreFilterOption option) => Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: option.render(model),
+                                    ))
+                                .toList()),
+                      )
+                    : const SizedBox(height: 0),
+                Container(
+                  height: tileHeight,
+                  child: model.busy
+                      ? const Center(child: CircularProgressIndicator())
+                      : model.error || model.tiles == null
+                          // TODO handle error here
+                          ? Container(color: Colors.red)
+                          : ListView.builder(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
+                              scrollDirection: Axis.horizontal,
+                              itemCount: model.tiles!.length,
+                              itemBuilder: (context, index) =>
+                                  renderTile(model.tiles![index]),
+                            ),
+                ),
+              ]);
+        });
   }
 }
 
@@ -110,10 +103,11 @@ class CampaignExploreSection extends ExploreSection<ListCampaign> {
           tileHeight: 300,
         );
 
+  @override
   Future<List<ListCampaign>> fetchTiles(Map<String, dynamic>? params) async {
     // TODO remove mock
     return Future.delayed(
-      Duration(seconds: 2),
+      const Duration(seconds: 2),
       () => List.generate(
         5,
         (i) => ListCampaign(
@@ -121,7 +115,7 @@ class CampaignExploreSection extends ExploreSection<ListCampaign> {
           title:
               "Advocate for global access to water, sanitation and hygiene (WASH)",
           shortName: "action$i",
-          headerImage: "https://picsum.photos/200",
+          headerImage: "https://picsum.photos/id/$i/200",
           completed: false,
           causes: [
             ListCause(
@@ -138,7 +132,9 @@ class CampaignExploreSection extends ExploreSection<ListCampaign> {
     // final CausesService _causesService = locator<CausesService>();
     // return await _causesService.getCampaigns(params: params);
   }
-  Widget renderTile(ListCampaign campaign) => ExploreCampaignTile(campaign);
+
+  @override
+  Widget renderTile(ListCampaign tile) => ExploreCampaignTile(tile);
 }
 
 class ActionExploreSection extends ExploreSection<ListCauseAction> {
@@ -155,12 +151,11 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
           tileHeight: 160,
         );
 
+  @override
   Future<List<ListCauseAction>> fetchTiles(Map<String, dynamic>? params) async {
     // TODO remove mock
-    return Future.delayed(Duration(seconds: 2), () {
-      var types = []
-        ..addAll(CampaignActionType.values)
-        ..shuffle();
+    return Future.delayed(const Duration(seconds: 2), () {
+      var types = [...CampaignActionType.values]..shuffle();
 
       return List.generate(
           5,
@@ -182,9 +177,49 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
               starred: false,
               time: 42));
     });
-    final CausesService _causesService = locator<CausesService>();
-    return await _causesService.getActions(params: params);
+    // final CausesService _causesService = locator<CausesService>();
+    // return await _causesService.getActions(params: params);
   }
 
-  Widget renderTile(ListCauseAction model) => ExploreActionTile(model);
+  @override
+  Widget renderTile(ListCauseAction tile) => ExploreActionTile(tile);
+}
+
+class NewsExploreSection extends ExploreSection<Article> {
+  const NewsExploreSection({
+    required String title,
+    required String description,
+    Map? fetchParams,
+    ExploreFilter? filter,
+  }) : super(
+          title: title,
+          description: description,
+          fetchParams: fetchParams,
+          filter: filter,
+          tileHeight: 330,
+        );
+
+  @override
+  Future<List<Article>> fetchTiles(Map<String, dynamic>? params) async {
+    // TODO remove mock
+    return Future.delayed(
+      const Duration(seconds: 2),
+      () => List.generate(
+        5,
+        (i) => Article(
+          id: i,
+          title: "Ocean protection can yield ‘triple benefits’",
+          subtitle:
+              "A new study suggests that carefully planned marine protect lorem ipsum...",
+          headerImage: "https://picsum.photos/id/$i/200",
+          releasedAt: DateTime.utc(2020, 1, i + 1),
+          fullArticleLink: "https://www.google.com",
+          type: articleTypeFromName("news"),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget renderTile(Article tile) => ExploreNewsTile(tile);
 }
