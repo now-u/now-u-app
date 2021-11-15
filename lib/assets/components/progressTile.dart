@@ -17,21 +17,25 @@ class ProgressTile extends StatelessWidget {
             ],
             color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(10))),
-        height: MediaQuery.of(context).size.width * 0.4,
+        height: 200,
         width: MediaQuery.of(context).size.width * 0.9,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-              child: Text('My Progress', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24)),
-            ),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-              ProgressCircle(progressTitle: 'Campaigns', progressScore: 10,),
-              ProgressCircle(progressTitle: 'Actions Taken', progressScore: 20,),
-              ProgressCircle(progressTitle: 'Learnings', progressScore: 30,),
-            ])
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
+                child: Text('My Progress', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24)),
+              ),
+              SizedBox(height: 10),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+                ProgressCircle(progressTitle: 'Campaigns', progressScore: 10,),
+                ProgressCircle(progressTitle: 'Actions Taken', progressScore: 20,),
+                ProgressCircle(progressTitle: 'Learnings', progressScore: 30,),
+              ])
+            ],
+          ),
         ));
   }
 }
@@ -54,16 +58,16 @@ class ProgressCircle extends StatelessWidget {
                   color: Colors.grey.withOpacity(0.3),
                   spreadRadius: 3,
                   blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
+                  offset: Offset(0, 7), // changes position of shadow
                 ),
               ],
               color: Colors.white,
               shape: BoxShape.circle),
-          child: Text(progressScore.toString(), style: TextStyle(fontSize: 18))),
+          child: Text(progressScore.toString(), style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600))),
       SizedBox(
         height: 20,
       ),
-      Text(progressTitle, style: TextStyle(fontSize: 14))
+      Text(progressTitle, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600))
     ]);
   }
 }

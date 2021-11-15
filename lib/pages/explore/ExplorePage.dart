@@ -1,6 +1,8 @@
+import 'package:app/assets/components/progressTile.dart';
 import 'package:app/pages/explore/ExploreFilter.dart';
 import 'package:app/pages/explore/ExploreSection.dart';
 import 'package:flutter/material.dart';
+import 'package:app/assets/components/progressTile.dart';
 
 class ExplorePage extends StatelessWidget {
   final List<ExploreSection> sections;
@@ -34,6 +36,18 @@ List<ExploreSection> exploreSections = [
     title: "Actions",
     description:
         "Take a wide range of actions to drive lasting change for issues you care about",
+    filter: filter,
+  ),
+];
+
+List<ExploreSection> homePageExploreSections = [
+  CampaignExploreSection(
+    title: "My campaigns",
+    description: ''
+  ),
+  ActionExploreSection(
+    title: "What can I do today?",
+    description: '',
     filter: filter,
   ),
 ];

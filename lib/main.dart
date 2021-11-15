@@ -2,8 +2,12 @@ import 'dart:convert';
 
 import 'package:app/locator.dart';
 import 'package:app/managers/dialog_manager.dart';
+import 'package:app/pages/explore/ExplorePage.dart';
 import 'package:app/pages/other/startup_view.dart';
-import 'package:app/pages/playground/playground.dart';
+import 'package:app/pages/home/homePage.dart';
+import 'package:app/pages/home/Home.dart';
+import 'package:app/pages/explore/ExplorePage.dart';
+import 'package:app/pages/explore/ExploreSection.dart';
 import 'package:app/routes.dart';
 import 'package:app/services/analytics.dart';
 import 'package:app/services/navigation_service.dart';
@@ -92,7 +96,7 @@ class _AppState extends State<App> {
             builder: (context) => DialogManager(child: widget)),
       ),
       // home: StartUpView(),
-      home: PlaygroundPage(),
+      home: HomePage(sections: homePageExploreSections),
       //initialRoute: Routes.intro,
       onGenerateRoute: initRoutes as Route<dynamic>? Function(RouteSettings)?,
       theme: ThemeData(

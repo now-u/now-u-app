@@ -26,6 +26,7 @@ const PageStorageKey campaignCarouselPageKey = PageStorageKey(1);
 
 class Home extends StatelessWidget {
   final Function changePage;
+
   Home(this.changePage);
 
   final _controller = PageController(
@@ -53,7 +54,7 @@ class Home extends StatelessWidget {
                           notification: model.notifications![0],
                           dismissNotification: model.dismissNotification,
                         )
-                      : HeaderStyle1(model.currentUser!.getName()),
+                      : HeaderStyle1(name: model.currentUser!.getName(), isHomePage: false,),
                   children: <Widget>[
                     HomeTitle(
                       "Current campaigns",
@@ -196,6 +197,7 @@ class CampaignCarosel extends StatelessWidget {
   final PageController controller;
 
   CampaignCarosel(this.cs, this.controller);
+
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -302,7 +304,9 @@ class ImpactTile extends StatelessWidget {
   final int number;
   final String text;
   final String? route;
+
   ImpactTile(this.number, this.text, {this.route});
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -337,11 +341,14 @@ class ImpactTile extends StatelessWidget {
 
 class HeaderStyle1 extends StatelessWidget {
   final String? name;
-  HeaderStyle1(this.name);
+  final bool isHomePage;
+
+  HeaderStyle1({this.name, required this.isHomePage});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * (1 - 0.4),
+      height: isHomePage ? MediaQuery.of(context).size.height * 0.3 : MediaQuery.of(context).size.height * (1 - 0.4),
       width: double.infinity,
       decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -355,39 +362,20 @@ class HeaderStyle1 extends StatelessWidget {
       child: Stack(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(left: 15),
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.5,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Hello\n$name",
-                    style: textStyleFrom(
-                      Theme.of(context).primaryTextTheme.headline2,
-                      color: Colors.white,
-                      height: 0.95,
-                    ),
-                  ),
-                  SizedBox(height: 17),
-                  Text("Ready to start making a difference?",
-                      style: textStyleFrom(
-                        Theme.of(context).primaryTextTheme.headline3,
-                        fontSize: 20,
-                        color: Colors.white,
-                        height: 0.95,
-                      )),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.2),
-                ],
+            padding: isHomePage ? EdgeInsets.fromLTRB(15, MediaQuery.of(context).size.height * 0.1, 0, 0) : EdgeInsets.fromLTRB(15, MediaQuery.of(context).size.height * 0.2, 0, 0),
+            child: Text(
+              "Hello, \n$name",
+              style: textStyleFrom(
+                Theme.of(context).primaryTextTheme.headline2,
+                color: Colors.white,
+                height: 0.95,
               ),
             ),
           ),
           Positioned(
               right: -20,
               //top: actionsHomeTilePadding,
-              bottom: MediaQuery.of(context).size.height * 0.2,
+              bottom: isHomePage ? MediaQuery.of(context).size.height * 0.05 : MediaQuery.of(context).size.height * 0.1 ,
               child: Container(
                   height: MediaQuery.of(context).size.height * 0.3,
                   child: Image(
@@ -404,10 +392,12 @@ class HeaderWithNotifications extends StatelessWidget {
   final String? name;
   final InternalNotification notification;
   final Function dismissNotification;
+
   HeaderWithNotifications(
       {required this.name,
       required this.notification,
       required this.dismissNotification});
+
   @override
   Widget build(BuildContext context) {
     return Container(
