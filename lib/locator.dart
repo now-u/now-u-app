@@ -14,8 +14,12 @@ import 'package:app/services/dialog_service.dart';
 import 'package:app/services/google_location_search_service.dart';
 import 'package:app/services/remote_config_service.dart';
 import 'package:app/services/organisation_service.dart';
-import 'package:app/services/causes_service.dart';
 import 'package:app/services/api_service.dart';
+
+import 'package:app/services/causes_service.dart';
+import 'package:app/services/fake/fake_causes_service.dart';
+
+import 'package:app/assets/constants.dart' as constants;
 
 import 'package:get_it/get_it.dart';
 
@@ -37,7 +41,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => GoogleLocationSearchService());
   locator.registerLazySingleton(() => OrganisationService());
   locator.registerLazySingleton(() => AnalyticsService());
-  locator.registerLazySingleton(() => CausesService());
+  locator.registerLazySingleton(() => constants.devMode ? FakeCausesService() : CausesService());
   locator.registerLazySingleton(() => ApiService());
 }
 

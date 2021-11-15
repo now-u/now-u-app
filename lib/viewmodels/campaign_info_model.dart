@@ -32,6 +32,6 @@ class CampaignInfoViewModel extends BaseModel with CampaignWrite {
   }
 
   void viewCampaignVideo(Campaign campaign) {
-    _navigationService!.launchLink(campaign.videoLink!);
+    _navigationService!.launchLink(campaign.videoLink);
   }
 }

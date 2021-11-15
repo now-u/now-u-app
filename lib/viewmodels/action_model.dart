@@ -87,7 +87,7 @@ class ActionViewModel extends BaseCampaignViewModel {
           includeTodo: includeToDo,
           includeStarred: includeStarred));
       // Filter them for the campaign
-      tmpActions.removeWhere((a) => !campaign!.actions!.contains(a));
+      tmpActions.removeWhere((a) => !campaign!.actions.contains(a));
       if (hasSelected(selections['times']!)) {
         // Remove the ones with the wrong times
         tmpActions.removeWhere((a) => !selections['times']![a.timeText]);

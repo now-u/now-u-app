@@ -248,7 +248,7 @@ class CampaignInfoBody extends StatelessWidget {
                         ),
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: _campaign!.keyAims!.map((aim) {
+                            children: _campaign!.keyAims.map((aim) {
                               return Column(children: [
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -276,7 +276,7 @@ class CampaignInfoBody extends StatelessWidget {
                   )),
 
               // Partners
-              _campaign!.generalPartners!.length == 0
+              _campaign!.generalPartners.length == 0
                   ? Container()
                   : Container(
                       color: Color.fromRGBO(247, 248, 252, 1),
@@ -298,7 +298,7 @@ class CampaignInfoBody extends StatelessWidget {
                               ),
                               Wrap(
                                 children: getOrganistaionTiles(
-                                    _campaign!.generalPartners!, context),
+                                    _campaign!.generalPartners, context),
                                 spacing: 10,
                                 runSpacing: 10,
                                 crossAxisAlignment: WrapCrossAlignment.start,

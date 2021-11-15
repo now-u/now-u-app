@@ -4,8 +4,6 @@
     "title": "Cause title",
     "icon": "ic-abc",
     "description": "Cause description",
-    "selected": true,
-    "header_image": "https://someimage.com",
-    "actions": []
+    "selected": true
   }
 }

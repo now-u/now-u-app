@@ -1,3 +1,4 @@
+import 'package:app/assets/icons/customIcons.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
@@ -28,13 +29,13 @@ void main() {
               http.Response(await readTestData("causes.json"), 200));
 
       List<ListCause> causes = await _causesService.getCauses();
-      expect(causes.length, 1);
+      expect(causes.length, 6);
 
       ListCause cause = causes[0];
       expect(cause.id, 1);
-      expect(cause.title, "Cause title");
-      expect(cause.icon, getIconFromString("ic_abc"));
-      expect(cause.description, "Cause description");
+      expect(cause.title, "Environment");
+      expect(cause.icon, getIconFromString("ic_learning"));
+      expect(cause.description, "Get involved with charities and activists locally and across the globe.");
       expect(cause.selected, true);
     });
 
@@ -76,7 +77,7 @@ void main() {
       expect(action.link, "https://www.youtube.com/watch?v=MS4va1WLaro");
       expect(action.type, CampaignActionType.Learn);
 
-      ListCause actionCause = action.cause!;
+      ListCause actionCause = action.cause;
       expect(actionCause.id, 1);
     });
   });
@@ -97,7 +98,7 @@ void main() {
       expect(action.title, "Watch 'Why talk toilets?'");
       expect(action.type, CampaignActionType.Learn);
 
-      ListCause actionCause = action.cause!;
+      ListCause actionCause = action.cause;
       expect(actionCause.id, 1);
     });
   });

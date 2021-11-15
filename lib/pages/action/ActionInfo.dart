@@ -115,7 +115,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                         // TODO This must go to the causes info page
                                         Navigator.of(context).pushNamed(
                                             Routes.home,
-                                            arguments: model.action!.cause!.id);
+                                            arguments: model.action!.cause.id);
                                       },
                                       child: Container(
                                         height: 20,

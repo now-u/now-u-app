@@ -414,12 +414,12 @@ class User {
 
   double getCampaignProgress(Campaign campaign) {
     return numberOfCompletedActionsForCampaign(campaign) /
-        campaign.actions!.length;
+        campaign.actions.length;
   }
 
   int numberOfCompletedActionsForCampaign(Campaign campaign) {
     int count = 0;
-    List<ListCauseAction> actions = campaign.actions!;
+    List<ListCauseAction> actions = campaign.actions;
     for (int i = 0; i < actions.length; i++) {
       if (this.completedActions!.contains(actions[i].id)) {
         count++;

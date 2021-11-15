@@ -4,8 +4,8 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/services/api_service.dart';
 
 class CausesService extends ApiService {
-  Future<List<ListCause>> getCauses() async {
-    List<Map<String, dynamic>> data = await getListRequest("causes");
+  Future<List<ListCause>> getCauses({Map<String, dynamic>? params}) async {
+    List<Map<String, dynamic>> data = await getListRequest("causes", params: params);
     return data.map((causeData) => ListCause.fromJson(causeData)).toList();
   }
   
