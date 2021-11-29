@@ -56,7 +56,8 @@ void main() {
 
         // Mock api to always return true
         MockAuthenticationService mockAuth =
-            getAndRegisterMockAuthentiactionService() as MockAuthenticationService;
+            getAndRegisterMockAuthentiactionService()
+                as MockAuthenticationService;
         when(mockAuth.updateUserDetails(name: "jelgar", dob: now))
             .thenAnswer((_) => Future.value(true));
 
@@ -77,12 +78,14 @@ void main() {
           String dialogTitle, String dialogDescription) async {
         // Mock api to always return "success" string
         MockAuthenticationService mockAuth =
-            getAndRegisterMockAuthentiactionService() as MockAuthenticationService;
+            getAndRegisterMockAuthentiactionService()
+                as MockAuthenticationService;
         when(mockAuth.deleteUserAccount())
             .thenAnswer((_) async => deleteUserAccountResponse);
 
         // Mock Dialog service to return true when dialog shown
-        MockDialogService mockDialog = getAndRegisterMockDialogService() as MockDialogService;
+        MockDialogService mockDialog =
+            getAndRegisterMockDialogService() as MockDialogService;
         when(mockDialog.showDialog(
           title: dialogTitle,
           description: dialogDescription,

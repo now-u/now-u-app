@@ -7,7 +7,11 @@ import 'package:app/locator.dart';
 
 /// Types of http errors
 enum ApiExceptionType {
-  UNAUTHORIZED, INTERNAL, REQUEST, UNKNOWN, TOKEN_EXPIRED
+  UNAUTHORIZED,
+  INTERNAL,
+  REQUEST,
+  UNKNOWN,
+  TOKEN_EXPIRED
 }
 
 /// Exception for failed http requests
@@ -31,16 +35,19 @@ class ApiService {
 
   /// Base of url (no slashes)
   String baseUrl = "api.now-u.com";
+
   /// The base path of the url (after the baseUrl)
   String baseUrlPath = "api/v2/";
 
   /// Generate appropriate [ApiException] from http response.
   ApiException getExceptionForResponse(http.Response response) {
-    ApiExceptionType exceptionType = responseCodeExceptionMapping[response.statusCode] ?? ApiExceptionType.UNKNOWN;
+    ApiExceptionType exceptionType =
+        responseCodeExceptionMapping[response.statusCode] ??
+            ApiExceptionType.UNKNOWN;
     return ApiException(type: exceptionType, statusCode: response.statusCode);
   }
-  
-  /// Get headers for standard API request 
+
+  /// Get headers for standard API request
   ///
   /// If [AuthenticationService] says the user is authenticated the token will
   /// also be added to the headers.
@@ -67,27 +74,29 @@ class ApiService {
     Map<String, dynamic>? stringParams;
     if (params != null) {
       // Parse param values
-      stringParams = Map.fromIterable(params.keys, key: (k) => k , value: (k) {
-        dynamic value = params[k];
-        // If the value is already iterable (this includes strings and lists)
-        // return it
-        if (value is List) {
-          return "[" + value.map((item) => item.toString()).join(",") + "]";
-        }
-        if (value is Iterable) {
-          return value;
-        }
-        // Otherwise cast it to a string
-        return params[k].toString();
-      });
+      stringParams = Map.fromIterable(params.keys,
+          key: (k) => k,
+          value: (k) {
+            dynamic value = params[k];
+            // If the value is already iterable (this includes strings and lists)
+            // return it
+            if (value is List) {
+              return "[" + value.map((item) => item.toString()).join(",") + "]";
+            }
+            if (value is Iterable) {
+              return value;
+            }
+            // Otherwise cast it to a string
+            return params[k].toString();
+          });
     }
-    
+
     final uri = Uri.https(baseUrl, baseUrlPath + path, stringParams);
     http.Response response = await client.get(
       uri,
       headers: getRequestHeaders(),
     );
-     
+
     if (response.statusCode != 200) {
       throw getExceptionForResponse(response);
     }

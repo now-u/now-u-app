@@ -94,8 +94,7 @@ class ActionViewModel extends BaseCampaignViewModel {
       }
       if (hasSelected(selections['categories']!)) {
         // Remove the ones with the wrong categories
-        tmpActions
-            .removeWhere((a) => !selections['categories']![a.superType]);
+        tmpActions.removeWhere((a) => !selections['categories']![a.superType]);
       }
 
       _actions = tmpActions;

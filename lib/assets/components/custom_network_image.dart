@@ -33,9 +33,11 @@ class CustomNetworkImage extends StatelessWidget {
       placeholder: placeholder == null && progressIndicatorBuilder == null
           ? (context, url) => Center(child: CircularProgressIndicator())
           : placeholder as Widget Function(BuildContext, String)?,
-      errorWidget: errorWidget as Widget Function(BuildContext, String, dynamic)? ??
-          (context, url, error) => Center(child: Icon(Icons.error)),
-      progressIndicatorBuilder: progressIndicatorBuilder as Widget Function(BuildContext, String, DownloadProgress)?,
+      errorWidget:
+          errorWidget as Widget Function(BuildContext, String, dynamic)? ??
+              (context, url, error) => Center(child: Icon(Icons.error)),
+      progressIndicatorBuilder: progressIndicatorBuilder as Widget Function(
+          BuildContext, String, DownloadProgress)?,
       fit: fit,
       height: height,
       cacheManager: cacheManager,

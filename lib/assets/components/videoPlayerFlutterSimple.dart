@@ -173,7 +173,8 @@ class _VideoPlayerState extends State<VideoPlayer> {
                       icon: Icon(Icons.skip_previous),
                       onPressed: _isPlayerReady
                           ? () => _controller!.load(_ids[
-                              (_ids.indexOf(_controller!.metadata.videoId) - 1) %
+                              (_ids.indexOf(_controller!.metadata.videoId) -
+                                      1) %
                                   _ids.length])
                           : null,
                     ),
@@ -213,7 +214,8 @@ class _VideoPlayerState extends State<VideoPlayer> {
                       icon: Icon(Icons.skip_next),
                       onPressed: _isPlayerReady
                           ? () => _controller!.load(_ids[
-                              (_ids.indexOf(_controller!.metadata.videoId) + 1) %
+                              (_ids.indexOf(_controller!.metadata.videoId) +
+                                      1) %
                                   _ids.length])
                           : null,
                     ),

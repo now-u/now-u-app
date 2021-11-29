@@ -40,7 +40,8 @@ class InternalNotificationService {
   Future<bool> dismissNotification(int? notificationId) async {
     try {
       http.Response response = await http.put(
-          Uri.parse(domainPrefix + 'users/me/notifications/$notificationId/dismiss'),
+          Uri.parse(
+              domainPrefix + 'users/me/notifications/$notificationId/dismiss'),
           headers: <String, String>{
             'token': _authenticationService!.currentUser!.token!,
           });

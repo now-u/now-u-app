@@ -332,15 +332,11 @@ class User {
   }
 
   List<Campaign> filterSelectedCampaigns(List<Campaign> campaigns) {
-    return campaigns
-        .where((c) => selectedCampaigns!.contains(c.id))
-        .toList();
+    return campaigns.where((c) => selectedCampaigns!.contains(c.id)).toList();
   }
 
   List<Campaign> filterUnselectedCampaigns(List<Campaign> campaigns) {
-    return campaigns
-        .where((c) => !selectedCampaigns!.contains(c.id))
-        .toList();
+    return campaigns.where((c) => !selectedCampaigns!.contains(c.id)).toList();
   }
 
   int getSelectedCampaignsLength() {

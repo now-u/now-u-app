@@ -1,4 +1,3 @@
-import 'package:app/assets/icons/my_flutter_app_icons_old.dart';
 import 'package:app/routes.dart';
 import 'package:app/viewmodels/base_model.dart';
 import 'package:app/models/Cause.dart';
@@ -7,7 +6,6 @@ import 'package:app/services/navigation_service.dart';
 import 'package:app/services/causes_service.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/dialog_service.dart';
-import 'package:http/http.dart';
 
 class CausesViewModel extends BaseModel {
   final DialogService _dialogService = locator<DialogService>();
@@ -27,6 +25,7 @@ class CausesViewModel extends BaseModel {
     setBusy(true);
     _causesList = await _causesService.getCauses();
     setBusy(false);
+    notifyListeners();
   }
 
   void toggleSelection({required int causeIndex}) {
@@ -36,7 +35,6 @@ class CausesViewModel extends BaseModel {
 
   void getStarted() async {
     // TODO register selection
-    _causesService.joinCauses(selectedCauses);
     _navigationService.navigateTo(Routes.login);
   }
 

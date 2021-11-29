@@ -8,12 +8,12 @@ class CausesService extends ApiService {
     List<Map<String, dynamic>> data = await getListRequest("causes", params: params);
     return data.map((causeData) => ListCause.fromJson(causeData)).toList();
   }
-  
+
   Future<Cause> getCause(int id) async {
     Map response = await getRequest("cause/$id");
     return Cause.fromJson(response["data"]);
   }
-  
+
   Future<List<ListCampaign>> getCampaigns({Map<String, dynamic>? params}) async {
     List<Map<String, dynamic>> data = await getListRequest("campaign", params: params);
     return data.map((campData) => ListCampaign.fromJson(campData)).toList();

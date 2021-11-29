@@ -19,7 +19,8 @@ class LearningCenterViewModel extends BaseCampaignViewModel {
 
   fetchLearningCentre(int id) async {
     setBusy(true);
-    _learningCenter = await (_campaignService!.getLearningCentre(id) as Future<LearningCentre?>);
+    _learningCenter = await (_campaignService!.getLearningCentre(id)
+        as Future<LearningCentre?>);
     setBusy(false);
     notifyListeners();
   }

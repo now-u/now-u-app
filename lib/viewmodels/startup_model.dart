@@ -19,7 +19,7 @@ class StartUpViewModel extends BaseModel {
   Future handleStartUpLogic() async {
     await Firebase.initializeApp();
     registerFirebaseServicesToLocator();
-  
+
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
     final DynamicLinkService _dynamicLinkService =
