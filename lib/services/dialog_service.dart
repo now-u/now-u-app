@@ -10,7 +10,8 @@ class AlertResponse {
 
 class DialogButton {
   String text;
-  dynamic response; // If the button is clicked what should the dialog service return
+  dynamic
+      response; // If the button is clicked what should the dialog service return
   DarkButtonStyle? style;
 
   DialogButton({
@@ -28,9 +29,7 @@ class DialogService {
     _showDialogListener = showDialogListener;
   }
 
-  Future showDialog(
-    CustomDialog dialog
-  ) {
+  Future showDialog(CustomDialog dialog) {
     _dialogCompleter = Completer<AlertResponse>();
     _showDialogListener(dialog);
     return _dialogCompleter!.future;

@@ -104,9 +104,11 @@ class ApiService {
     return await json.decode(response.body);
   }
 
-  Future<List<Map<String, dynamic>>> getListRequest(String path, {Map<String, dynamic>? params}) async {
+  Future<List<Map<String, dynamic>>> getListRequest(String path,
+      {Map<String, dynamic>? params}) async {
     Map response = await getRequest(path, params: params);
-    List<Map<String, dynamic>> listData = new List<Map<String, dynamic>>.from(response["data"]);
+    List<Map<String, dynamic>> listData =
+        new List<Map<String, dynamic>>.from(response["data"]);
     return listData;
   }
 
@@ -121,7 +123,7 @@ class ApiService {
       headers: getRequestHeaders(),
       body: body,
     );
-     
+
     if (response.statusCode != 200) {
       throw getExceptionForResponse(response);
     }

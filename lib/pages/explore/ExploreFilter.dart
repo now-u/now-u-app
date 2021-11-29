@@ -13,20 +13,20 @@ class ExploreFilterOption<T> {
   /// Whether the filter is selected
   bool isSelected;
 
-  ExploreFilterOption({
-    required this.displayName,
-    required this.parameterValue,
-    this.isSelected = false
-  });
+  ExploreFilterOption(
+      {required this.displayName,
+      required this.parameterValue,
+      this.isSelected = false});
 
   void toggleSelect() {
     isSelected = !isSelected;
   }
 
   Widget render(ExplorePageViewModel model) {
-    return SelectionPill(displayName, isSelected, onClick: () => model.selectFilterOption(this));
+    return SelectionPill(displayName, isSelected,
+        onClick: () => model.selectFilterOption(this));
   }
-} 
+}
 
 class ExploreFilter {
   /// The name of the parameter to be posted to the api
@@ -36,23 +36,25 @@ class ExploreFilter {
   final List<ExploreFilterOption> options;
 
   /// Whether multiple filter options can be selected at once
-  final bool multi; 
+  final bool multi;
 
   const ExploreFilter({
     required this.parameterName,
-    required this.options, 
+    required this.options,
     this.multi = false,
   });
 
   Map<String, dynamic> toJson() {
     // If many can be selected return a list
-    dynamic value = multi 
-        ? options.where((option) => option.isSelected).map((option) => option.parameterValue).toList()
-        : options.firstWhereOrNull((option) => option.isSelected)?.parameterValue;
+    dynamic value = multi
+        ? options
+            .where((option) => option.isSelected)
+            .map((option) => option.parameterValue)
+            .toList()
+        : options
+            .firstWhereOrNull((option) => option.isSelected)
+            ?.parameterValue;
 
-    return {
-      parameterName: value
-    };
+    return {parameterName: value};
   }
 }
-

@@ -479,6 +479,6 @@ class ActiveDoneSelector extends StatefulWidget {
 class _ActiveDoneSelectorState extends State<ActiveDoneSelector> {
   @override
   Widget build(BuildContext context) {
-      return SelectionPill(widget.text, widget.selected, onClick: widget.onClick);
+    return SelectionPill(widget.text, widget.selected, onClick: widget.onClick);
   }
 }

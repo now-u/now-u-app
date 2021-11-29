@@ -19,9 +19,10 @@ MockClient mockHttpClient(ApiService service) {
   return mockClient;
 }
 
-Future<String> readTestData(String fileName, {String filePath = "assets/json/"}) async {
-    final file = File(filePath + fileName);
-    return await file.readAsString();
+Future<String> readTestData(String fileName,
+    {String filePath = "assets/json/"}) async {
+  final file = File(filePath + fileName);
+  return await file.readAsString();
 }
 
 class MockNavigationService extends Mock implements NavigationService {

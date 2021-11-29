@@ -38,7 +38,8 @@ void main() {
       expect(cause.id, 1);
       expect(cause.title, "Environment");
       expect(cause.icon, getIconFromString("ic_learning"));
-      expect(cause.description, "Get involved with charities and activists locally and across the globe.");
+      expect(cause.description,
+          "Get involved with charities and activists locally and across the globe.");
       expect(cause.selected, true);
     });
 
@@ -63,14 +64,14 @@ void main() {
       expect(cause.selected, true);
     });
   });
-  
+
   group('get action', () {
     test('returns an Action if the request is successfully', () async {
       final client = MockClient();
       _causesService.client = client;
 
-      when(client
-              .get(Uri.parse('https://api.now-u.com/api/v2/action/2'), headers: unauthenticatedHeaders))
+      when(client.get(Uri.parse('https://api.now-u.com/api/v2/action/2'),
+              headers: unauthenticatedHeaders))
           .thenAnswer((_) async =>
               http.Response(await readTestData("action.json"), 200));
 
@@ -84,14 +85,14 @@ void main() {
       expect(actionCause.id, 1);
     });
   });
-  
+
   group('get actions', () {
     test('returns a List of Actions if the request is successful', () async {
       final client = MockClient();
       _causesService.client = client;
 
-      when(client
-              .get(Uri.parse('https://api.now-u.com/api/v2/action'), headers: unauthenticatedHeaders))
+      when(client.get(Uri.parse('https://api.now-u.com/api/v2/action'),
+              headers: unauthenticatedHeaders))
           .thenAnswer((_) async =>
               http.Response(await readTestData("actions.json"), 200));
 

@@ -8,7 +8,6 @@ import 'package:app/assets/components/buttons/customWidthButton.dart';
 import 'package:stacked/stacked.dart';
 
 class CausePage extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,16 +18,16 @@ class CausePage extends StatelessWidget {
               return Stack(
                 children: [
                   ClipPath(
-                      clipper: CauseBackgroundClipper(),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.43,
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [Color(0XFF011A43), Color(0XFF012B93)],
-                              begin: Alignment.bottomLeft,
-                              end: Alignment.topRight,
-                            )),
-                      ),
+                    clipper: CauseBackgroundClipper(),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.43,
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                        colors: [Color(0XFF011A43), Color(0XFF012B93)],
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                      )),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
@@ -53,8 +52,7 @@ class CausePage extends StatelessWidget {
                                         style: TextStyle(
                                             fontSize: 30,
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.white
-                                        ),
+                                            color: Colors.white),
                                       ),
                                     ),
                                     Expanded(flex: 3, child: SizedBox())
@@ -62,7 +60,8 @@ class CausePage extends StatelessWidget {
                                 ),
                                 Text(
                                   'Take action and selected the causes which are important to you.',
-                                  style: TextStyle(fontSize: 15, color: Colors.white),
+                                  style: TextStyle(
+                                      fontSize: 15, color: Colors.white),
                                 ),
                               ],
                             ),
@@ -73,30 +72,37 @@ class CausePage extends StatelessWidget {
                           child: Container(
                             padding: const EdgeInsets.all(15.0),
                             child: ExpandedGrid.builder(
-                              numberOfRows: 2,
-                              itemCount: model.causesList.length,
-                              itemBuilder: (context, rowIndex, colIndex, index) {
-                                return Expanded(child: Padding(
-                                  padding: EdgeInsets.all(10), 
-                                  child: CauseTile(
-                                      gestureFunction: () => model.toggleSelection(causeIndex: index),
+                                numberOfRows: 2,
+                                itemCount: model.causesList.length,
+                                itemBuilder:
+                                    (context, rowIndex, colIndex, index) {
+                                  return Expanded(
+                                      child: Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: CauseTile(
+                                      gestureFunction: () => model
+                                          .toggleSelection(causeIndex: index),
                                       cause: model.causesList[index],
                                       causeIcon: FontAwesomeIcons.leaf,
-                                      isSelected: model.causesSelectedList[index],
-                                      getInfoFunction: () => model.getCausePopup(causeIndex: index),
-                                  ),
-                                ));
-                              }
-                            ),
+                                      isSelected:
+                                          model.causesSelectedList[index],
+                                      getInfoFunction: () => model
+                                          .getCausePopup(causeIndex: index),
+                                    ),
+                                  ));
+                                }),
                           ),
                         ),
                         Expanded(
                           flex: 1,
                           child: Center(
-                            child: CustomWidthButton('Get started',
-                              onPressed: model.isButtonDisabled 
-                                ? () {} 
-                                : () {model.getStarted();},
+                            child: CustomWidthButton(
+                              'Get started',
+                              onPressed: model.isButtonDisabled
+                                  ? () {}
+                                  : () {
+                                      model.getStarted();
+                                    },
                               backgroundColor: model.isButtonDisabled
                                   ? Colors.grey
                                   : Theme.of(context).primaryColor,

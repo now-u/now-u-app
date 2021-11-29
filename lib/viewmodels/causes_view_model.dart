@@ -39,9 +39,8 @@ class CausesViewModel extends BaseModel {
   }
 
   Future getCausePopup({required int causeIndex}) async {
-    var dialogResult = await _dialogService.showDialog(
-      CauseDialog(causesList[causeIndex])
-    );
+    var dialogResult =
+        await _dialogService.showDialog(CauseDialog(causesList[causeIndex]));
     if (dialogResult.response) {
       if (_causesSelectedList[causeIndex] == false) {
         toggleSelection(causeIndex: causeIndex);
