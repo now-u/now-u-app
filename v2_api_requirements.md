@@ -183,3 +183,17 @@ All endpoints should provide a limit
 
 e.g.
 `/actions?limit=5` should return a max of 5 actions
+
+
+# Posts
+
+## Select Causes 
+
+POST /me/causes
+
+{
+  "cause_ids": [
+    1, 2, 3
+  ]
+}
+

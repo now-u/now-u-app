@@ -22,9 +22,9 @@ class AuthError {
 
 class AuthenticationService extends ApiService {
   //final NavigationService _navigationService = locator<NavigationService>();
-  final SharedPreferencesService? _sharedPreferencesService =
+  final SharedPreferencesService _sharedPreferencesService =
       locator<SharedPreferencesService>();
-  final DeviceInfoService? _deviceInfoService = locator<DeviceInfoService>();
+  final DeviceInfoService _deviceInfoService = locator<DeviceInfoService>();
 
   User? _currentUser;
   User? get currentUser => _currentUser;
