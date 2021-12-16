@@ -4,7 +4,8 @@ import 'package:flutter/foundation.dart' show kReleaseMode;
 
 /// Whether we are currently running tests
 bool testMode = Platform.environment.containsKey('FLUTTER_TEST');
-/// Whether the app is currently running in debug mode 
+
+/// Whether the app is currently running in debug mode
 bool devMode = !testMode && !kReleaseMode;
 
 /// Primary brand color
@@ -13,10 +14,13 @@ Color brandColor = Color.fromRGBO(255, 136, 0, 1);
 //-- Accent colours --//
 /// Venetian Red
 Color accentRed = Color.fromRGBO(211, 0, 1, 1);
+
 /// Sunflower
 Color accentYellow = Color.fromRGBO(243, 183, 0, 1);
+
 /// Salomie
 Color accentLightYellow = Color.fromRGBO(243, 183, 0, 1);
+
 /// Oxford Blue
 Color accentBlue = Color.fromRGBO(1, 26, 67, 1);
 
@@ -42,5 +46,3 @@ class CustomFontSize {
   int heading5 = 16;
   int body = 16;
 }
-
-

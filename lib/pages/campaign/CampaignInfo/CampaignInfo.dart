@@ -125,8 +125,8 @@ class CampaignInfoBody extends StatelessWidget {
                               ),
                               Container(
                                 height: 180,
-                                child:
-                                    CustomNetworkImage(_campaign!.infographicUrl),
+                                child: CustomNetworkImage(
+                                    _campaign!.infographicUrl),
                               ),
                               SizedBox(
                                 height: 12,

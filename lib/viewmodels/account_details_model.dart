@@ -55,20 +55,19 @@ class AccountDetailsViewModel extends BaseModel {
 
   Future<void> save() async {
     setBusy(true);
-    bool success = await _authenticationService.updateUserDetails(name: _name, dob: _dob, orgCode: _orgCode);
+    bool success = await _authenticationService.updateUserDetails(
+        name: _name, dob: _dob, orgCode: _orgCode);
 
     if (success) {
       print("Success");
       setBusy(false);
       notifyListeners();
     } else {
-      _dialogService.showDialog(
-        BasicDialog(
-          title: "Error",
-          description:
-              "Sorry there has been an error whilst updating your details.",
-        )
-      );
+      _dialogService.showDialog(BasicDialog(
+        title: "Error",
+        description:
+            "Sorry there has been an error whilst updating your details.",
+      ));
       setBusy(false);
       notifyListeners();
     }
@@ -92,24 +91,19 @@ class AccountDetailsViewModel extends BaseModel {
       switch (error) {
         case AuthError.request:
           {
-            _dialogService.showDialog(
-              BasicDialog(
-                title: "Client Error",
-                description:
-                    "Sorry, something went wrong!\nTry restarting your app.",
-              )
-            );
+            _dialogService.showDialog(BasicDialog(
+              title: "Client Error",
+              description:
+                  "Sorry, something went wrong!\nTry restarting your app.",
+            ));
             break;
           }
         case AuthError.internal:
           {
-            _dialogService.showDialog(
-              BasicDialog(
+            _dialogService.showDialog(BasicDialog(
                 title: "Server Error",
                 description:
-                    "Sorry, there was a server problem.\nTry again later."
-              )
-            );
+                    "Sorry, there was a server problem.\nTry again later."));
             break;
           }
         default:

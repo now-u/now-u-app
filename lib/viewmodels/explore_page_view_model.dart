@@ -4,17 +4,17 @@ import 'package:app/pages/explore/ExploreFilter.dart';
 import 'package:app/models/Explorable.dart';
 
 // TODO rename to explore *section* view model
-class ExplorePageViewModel<ExplorableType extends Explorable> extends BaseModel {
-
+class ExplorePageViewModel<ExplorableType extends Explorable>
+    extends BaseModel {
   final ExploreFilter? filter;
   final Function _fetchTiles;
   bool isLoading = true;
   bool error = false;
 
-  List<ExplorableType>? tiles; 
+  List<ExplorableType>? tiles;
 
-  ExplorePageViewModel({required this.filter, required Function fetchTiles}) :
-    _fetchTiles = fetchTiles;
+  ExplorePageViewModel({required this.filter, required Function fetchTiles})
+      : _fetchTiles = fetchTiles;
 
   void selectFilterOption(ExploreFilterOption filterOption) {
     filterOption.toggleSelect();
