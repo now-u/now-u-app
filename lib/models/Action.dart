@@ -290,7 +290,8 @@ class ListCauseAction extends Explorable {
         type = campaignActionTypeFromString(json['type']),
         cause = ListCause.fromJson(json['causes'][0]),
         time = json['time'].toDouble(),
-        releaseTime = DateTime.parse(json['release_date'] ?? json['created_at']),
+        releaseTime =
+            DateTime.parse(json['release_date'] ?? json['created_at']),
         completed = json['completed'],
         starred = json['starred'];
 

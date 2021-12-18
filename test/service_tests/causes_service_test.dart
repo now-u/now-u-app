@@ -97,7 +97,7 @@ void main() {
               http.Response(await readTestData("actions.json"), 200));
 
       List<ListCauseAction> actions = await _causesService.getActions();
-      
+
       ListCauseAction action = actions[0];
 
       expect(action.id, 47);
