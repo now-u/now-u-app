@@ -2,6 +2,8 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart' show Color, Colors;
 import 'package:flutter/foundation.dart' show kReleaseMode;
 
+// --- Env --- //
+
 /// Whether we are currently running tests
 bool testMode = Platform.environment.containsKey('FLUTTER_TEST');
 
@@ -10,6 +12,8 @@ bool devMode = !testMode && !kReleaseMode;
 
 /// Primary brand color
 Color brandColor = Color.fromRGBO(255, 136, 0, 1);
+
+// --- Styles --- //
 
 //-- Accent colours --//
 /// Venetian Red
