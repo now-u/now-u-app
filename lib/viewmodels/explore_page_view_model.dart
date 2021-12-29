@@ -12,9 +12,13 @@ class ExplorePageViewModel extends BaseModel {
 
   ExplorePageViewModel(this.sections, this.title);
 
-  void update({List<ExploreSection>? sections, String? title, bool saveHistory = true}) {
+  void update(
+      {List<ExploreSection>? sections,
+      String? title,
+      bool saveHistory = true}) {
     if (saveHistory) {
-      previousPages.addLast(ExplorePage(sections: this.sections, title: this.title));
+      previousPages
+          .addLast(ExplorePage(sections: this.sections, title: this.title));
     }
     this.sections = sections ?? this.sections;
     this.title = title ?? this.title;
@@ -27,7 +31,7 @@ class ExplorePageViewModel extends BaseModel {
     if (previousPages.length == 0) {
       return;
     }
-    ExplorePage page = previousPages.last; 
+    ExplorePage page = previousPages.last;
     previousPages.removeLast();
     update(sections: page.sections, title: page.title, saveHistory: false);
   }

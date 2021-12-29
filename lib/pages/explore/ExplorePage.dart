@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:app/models/Action.dart';
 import 'package:app/pages/explore/ExploreSection.dart';
 import 'package:app/viewmodels/explore/explore_section_view_model.dart';
@@ -11,7 +9,8 @@ class ExplorePage extends StatelessWidget {
   final List<ExploreSection> sections;
   final String title;
 
-  ExplorePage({required this.sections, required this.title, Key? key}) : super(key: key);
+  ExplorePage({required this.sections, required this.title, Key? key})
+      : super(key: key);
 
   Widget _header(BuildContext context, ExplorePageViewModel model) {
     return Container(
@@ -20,11 +19,12 @@ class ExplorePage extends StatelessWidget {
         children: [
           if (model.canBack) Icon(Icons.chevron_left, size: 30),
           TextButton(
-              child: Text(model.title,
-                style: Theme.of(context).primaryTextTheme.headline2,
-                textAlign: TextAlign.left,
-              ),
-              onPressed: model.canBack ? () => model.back() : null,
+            child: Text(
+              model.title,
+              style: Theme.of(context).primaryTextTheme.headline2,
+              textAlign: TextAlign.left,
+            ),
+            onPressed: model.canBack ? () => model.back() : null,
           ),
         ],
       ),
@@ -39,12 +39,13 @@ class ExplorePage extends StatelessWidget {
           return Scaffold(
             body: ListView(
                 scrollDirection: Axis.vertical,
-                children: [_header(context, model)] + model.sections
-                    .map((ExploreSection section) => section.render(context, model))
-                    .toList()),
+                children: [_header(context, model)] +
+                    model.sections
+                        .map((ExploreSection section) =>
+                            section.render(context, model))
+                        .toList()),
           );
-        }
-      );
+        });
   }
 }
 
@@ -136,9 +137,9 @@ ExplorePage home_explore_page = ExplorePage(
       ]),
     ),
     NewsExploreSection(
-        title: "News",
-        description:
-            "Find out what’s going on in the world this week in relation to your chosen causes",
+      title: "News",
+      description:
+          "Find out what’s going on in the world this week in relation to your chosen causes",
     ),
   ],
 );
