@@ -47,11 +47,6 @@ class ExplorePage extends StatelessWidget {
   }
 }
 
-ExploreFilter filter = ExploreFilter(parameterName: "abc", options: [
-  ExploreFilterOption(displayName: "1-5", parameterValue: "abc"),
-  ExploreFilterOption(displayName: "5-10", parameterValue: "def")
-]);
-
 ExplorePage campaigns_explore_page = ExplorePage(
   title: "Campaigns",
   sections: [
@@ -76,7 +71,10 @@ ExplorePage home_explore_page = ExplorePage(
       title: "Actions",
       description:
           "Take a wide range of actions to drive lasting change for issues you care about",
-      filter: filter,
+      filter: ExploreFilter(parameterName: "abc", options: [
+        ExploreFilterOption(displayName: "1-5", parameterValue: "abc"),
+        ExploreFilterOption(displayName: "5-10", parameterValue: "def")
+      ]),
     ),
     NewsExploreSection(
         title: "News",
