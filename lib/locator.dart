@@ -34,7 +34,8 @@ void setupLocator() {
   locator.registerLazySingleton(() => SecureStorageService());
   locator.registerLazySingleton(() => SharedPreferencesService());
   locator.registerLazySingleton(() => AuthenticationService());
-  locator.registerLazySingleton(() => constants.devMode ? FakeNewsService() : NewsService());
+  locator.registerLazySingleton(
+      () => constants.devMode ? FakeNewsService() : NewsService());
   locator.registerLazySingleton(() => FAQService());
   locator.registerLazySingleton(() => InternalNotificationService());
   locator.registerLazySingleton(() => DeviceInfoService());

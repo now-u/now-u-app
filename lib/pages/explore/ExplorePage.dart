@@ -10,7 +10,8 @@ class ExplorePage extends StatelessWidget {
   final List<ExploreSection> sections;
   final String title;
 
-  ExplorePage({required this.sections, required this.title, Key? key}) : super(key: key);
+  ExplorePage({required this.sections, required this.title, Key? key})
+      : super(key: key);
 
   Widget _header(BuildContext context, ExplorePageViewModel model) {
     return Container(
@@ -19,11 +20,12 @@ class ExplorePage extends StatelessWidget {
         children: [
           if (model.canBack) Icon(Icons.chevron_left, size: 30),
           TextButton(
-              child: Text(model.title,
-                style: Theme.of(context).primaryTextTheme.headline2,
-                textAlign: TextAlign.left,
-              ),
-              onPressed: model.canBack ? () => model.back() : null,
+            child: Text(
+              model.title,
+              style: Theme.of(context).primaryTextTheme.headline2,
+              textAlign: TextAlign.left,
+            ),
+            onPressed: model.canBack ? () => model.back() : null,
           ),
         ],
       ),
@@ -38,25 +40,23 @@ class ExplorePage extends StatelessWidget {
           return Scaffold(
             body: ListView(
                 scrollDirection: Axis.vertical,
-                children: [_header(context, model)] + model.sections
-                    .map((ExploreSection section) => section.render(context, model))
-                    .toList()),
+                children: [_header(context, model)] +
+                    model.sections
+                        .map((ExploreSection section) =>
+                            section.render(context, model))
+                        .toList()),
           );
-        }
-      );
+        });
   }
 }
 
-ExplorePage campaigns_explore_page = ExplorePage(
-  title: "Campaigns",
-  sections: [
-    CampaignExploreSection(
-      title: "Campaigns",
-      description:
-          "Join members of the now-u community in coordinated campaigns to make a difference",
-    ),
-  ]
-);
+ExplorePage campaigns_explore_page = ExplorePage(title: "Campaigns", sections: [
+  CampaignExploreSection(
+    title: "Campaigns",
+    description:
+        "Join members of the now-u community in coordinated campaigns to make a difference",
+  ),
+]);
 
 ExplorePage home_explore_page = ExplorePage(
   title: "Explore",
@@ -77,9 +77,9 @@ ExplorePage home_explore_page = ExplorePage(
       ]),
     ),
     NewsExploreSection(
-        title: "News",
-        description:
-            "Find out what’s going on in the world this week in relation to your chosen causes",
+      title: "News",
+      description:
+          "Find out what’s going on in the world this week in relation to your chosen causes",
     ),
   ],
 );

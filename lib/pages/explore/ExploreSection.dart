@@ -54,11 +54,15 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     TextButton(
-                        child: Text(title,
-                          style: Theme.of(context).primaryTextTheme.headline2,
-                          textAlign: TextAlign.left,
-                        ),
-                        onPressed: link != null ? () => pageModel.update(title: link!.title, sections: link!.sections) : null,
+                      child: Text(
+                        title,
+                        style: Theme.of(context).primaryTextTheme.headline2,
+                        textAlign: TextAlign.left,
+                      ),
+                      onPressed: link != null
+                          ? () => pageModel.update(
+                              title: link!.title, sections: link!.sections)
+                          : null,
                     ),
                     if (link != null) Icon(Icons.chevron_right, size: 30)
                   ],
