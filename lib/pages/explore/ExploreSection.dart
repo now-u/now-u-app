@@ -21,7 +21,7 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
   final ExplorePage? link;
 
   /// Description of the section
-  final String description;
+  final String? description;
 
   // Params to provide to fetch query
   final Map<String, dynamic>? fetchParams;
@@ -33,7 +33,7 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
 
   const ExploreSection({
     required this.title,
-    required this.description,
+    this.description,
     this.link,
     this.fetchParams,
     this.filter,
@@ -45,7 +45,7 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
   Widget render(BuildContext context, ExplorePageViewModel pageModel) {
     return ViewModelBuilder<ExploreSectionViewModel<ExplorableType>>.reactive(
         viewModelBuilder: () => viewModel,
-        onModelReady: (model) => model.fetchTiles(),
+        onModelReady: (model) => model.init(),
         builder: (context, model, child) {
           return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,17 +63,20 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                     if (link != null) Icon(Icons.chevron_right, size: 30)
                   ],
                 ),
-                Text(description,
-                    style: Theme.of(context).primaryTextTheme.headline4,
-                    textAlign: TextAlign.left),
-                if (filter != null)
+                if (description != null)
+                  Text(
+                      description!,
+                      style: Theme.of(context).primaryTextTheme.headline4,
+                      textAlign: TextAlign.left,
+                  ),
+                if (model.filter != null)
                   Container(
                     height: 60,
                     child: ListView(
                         scrollDirection: Axis.horizontal,
-                        children: filter!.options
+                        children: model.filter!.options
                             .map((ExploreFilterOption option) => Padding(
-                                padding: const EdgeInsets.all(10),
+                                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 3),
                                 child: SelectionPill(
                                   option.displayName,
                                   option.isSelected,
@@ -111,9 +114,9 @@ class CampaignExploreSection extends ExploreSection<ListCampaign> {
         filter: filter,
       );
 
-  const CampaignExploreSection({
+  CampaignExploreSection({
     required String title,
-    required String description,
+    String? description,
     Map<String, dynamic>? fetchParams,
     ExplorePage? link,
     ExploreFilter? filter,
@@ -139,7 +142,7 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
 
   ActionExploreSection({
     required String title,
-    required String description,
+    String? description,
     Map<String, dynamic>? fetchParams,
     ExplorePage? link,
     ExploreFilter? filter,
@@ -165,7 +168,7 @@ class NewsExploreSection extends ExploreSection<Article> {
 
   NewsExploreSection({
     required String title,
-    required String description,
+    String? description,
     Map<String, dynamic>? fetchParams,
     ExplorePage? link,
     ExploreFilter? filter,
@@ -180,4 +183,44 @@ class NewsExploreSection extends ExploreSection<Article> {
 
   @override
   Widget renderTile(Article tile) => ExploreNewsTile(tile);
+}
+
+class CampaignExploreByCauseSection extends CampaignExploreSection {
+  @override
+  CampaignExploreByCauseSectionViewModel get viewModel =>
+      CampaignExploreByCauseSectionViewModel();
+
+  CampaignExploreByCauseSection({
+    required String title,
+    String? description,
+    Map<String, dynamic>? fetchParams,
+    ExplorePage? link,
+    ExploreFilter? filter,
+  }) : super(
+          title: title,
+          description: description,
+          fetchParams: fetchParams,
+          filter: filter,
+          link: link,
+        );
+}
+
+class ActionExploreByCauseSection extends ActionExploreSection {
+  @override
+  ActionExploreByCauseSectionViewModel get viewModel =>
+      ActionExploreByCauseSectionViewModel();
+
+  ActionExploreByCauseSection({
+    required String title,
+    String? description,
+    Map<String, dynamic>? fetchParams,
+    ExplorePage? link,
+    ExploreFilter? filter,
+  }) : super(
+          title: title,
+          description: description,
+          fetchParams: fetchParams,
+          filter: filter,
+          link: link,
+        );
 }

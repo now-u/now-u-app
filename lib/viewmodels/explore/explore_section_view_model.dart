@@ -1,5 +1,6 @@
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Action.dart';
+import 'package:app/models/Cause.dart';
 import 'package:app/models/article.dart';
 import 'package:app/services/causes_service.dart';
 import 'package:app/services/news_service.dart';
@@ -41,7 +42,7 @@ class ExploreFilter {
   const ExploreFilter({
     required this.parameterName,
     required this.options,
-    this.multi = false,
+    this.multi = true,
   });
 
   /// Deselect all options
@@ -85,7 +86,10 @@ abstract class ExploreSectionViewModel<ExplorableType extends Explorable>
   List<ExplorableType>? tiles;
   bool error = false;
 
-  ExploreSectionViewModel(this.params, this.filter);
+  ExploreSectionViewModel(
+    this.params, {
+    this.filter,
+  });
 
   Map<String, dynamic>? get queryParams {
     if (filter == null) return params;
@@ -93,10 +97,11 @@ abstract class ExploreSectionViewModel<ExplorableType extends Explorable>
     return mergeMaps(params!, filter!.toJson());
   }
 
-  Future<List<ExplorableType>> _fetchTiles();
-  void fetchTiles() async {
+  Future<List<ExplorableType>> fetchTiles();
+
+  void init() async {
     setBusy(true);
-    this.tiles = await _fetchTiles();
+    this.tiles = await fetchTiles();
     notifyListeners();
     setBusy(false);
   }
@@ -111,30 +116,58 @@ class CampaignExploreSectionViewModel
     extends ExploreSectionViewModel<ListCampaign> {
   CampaignExploreSectionViewModel(
       {Map<String, dynamic>? params, ExploreFilter? filter})
-      : super(params, filter);
+      : super(params, filter: filter);
 
-  Future<List<ListCampaign>> _fetchTiles() async {
+  Future<List<ListCampaign>> fetchTiles() async {
     return await _causesService.getCampaigns(params: queryParams);
   }
+}
+
+mixin ByCauseFilterMixin<T extends Explorable> on ExploreSectionViewModel<T> {
+  @override
+  void init() async {
+    super.init();
+
+    setBusy(true);
+    List<ListCause> causes = await _causesService.getCauses();
+    this.filter = ExploreFilter(
+        parameterName: "cause",
+        options: causes.map((ListCause cause) => 
+            ExploreFilterOption(displayName: cause.title, parameterValue:cause.id),
+        ).toList(),
+    );
+    notifyListeners();
+    setBusy(false);
+  }
+}
+
+class CampaignExploreByCauseSectionViewModel
+    extends CampaignExploreSectionViewModel with ByCauseFilterMixin<ListCampaign> {
+  CampaignExploreByCauseSectionViewModel() : super();
 }
 
 class ActionExploreSectionViewModel
     extends ExploreSectionViewModel<ListCauseAction> {
   ActionExploreSectionViewModel(
       {Map<String, dynamic>? params, ExploreFilter? filter})
-      : super(params, filter);
+      : super(params, filter: filter);
 
-  Future<List<ListCauseAction>> _fetchTiles() async {
+  Future<List<ListCauseAction>> fetchTiles() async {
     return await _causesService.getActions(params: queryParams);
   }
+}
+
+class ActionExploreByCauseSectionViewModel
+    extends ActionExploreSectionViewModel with ByCauseFilterMixin<ListCauseAction> {
+  ActionExploreByCauseSectionViewModel() : super();
 }
 
 class NewsExploreSectionViewModel extends ExploreSectionViewModel<Article> {
   NewsExploreSectionViewModel(
       {Map<String, dynamic>? params, ExploreFilter? filter})
-      : super(params, filter);
+      : super(params, filter: filter);
 
-  Future<List<Article>> _fetchTiles() async {
+  Future<List<Article>> fetchTiles() async {
     return await _newsService.getArticles(params: queryParams);
   }
 }

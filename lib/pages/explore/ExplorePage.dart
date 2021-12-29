@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:app/models/Action.dart';
 import 'package:app/pages/explore/ExploreSection.dart';
 import 'package:app/viewmodels/explore/explore_section_view_model.dart';
 import 'package:app/viewmodels/explore_page_view_model.dart';
@@ -51,11 +52,68 @@ ExplorePage campaigns_explore_page = ExplorePage(
   title: "Campaigns",
   sections: [
     CampaignExploreSection(
-      title: "Campaigns",
-      description:
-          "Join members of the now-u community in coordinated campaigns to make a difference",
+      title: "Campaigns of the month",
+      fetchParams: {
+        "of_the_month": true,
+      }
+    ),
+    CampaignExploreSection(
+      title: "Recommened campaigns",
+      fetchParams: {
+        "recommended": true,
+      }
+    ),
+    CampaignExploreByCauseSection(
+      title: "Campaigns by cause",
+    ),
+    CampaignExploreSection(
+      title: "Completed campaigns",
+      fetchParams: {
+        "completed": true,
+      }
     ),
   ]
+);
+
+ExplorePage actions_explore_page = ExplorePage(
+    title: "Actions",
+    sections: [
+      ActionExploreSection(
+        title: "Actions of the month",
+        fetchParams: {
+          "of_the_month": true,
+        }
+      ),
+      ActionExploreByCauseSection(
+        title: "Actions by cause",
+      ),
+      ActionExploreSection(
+        title: "Actions by time",
+        filter: ExploreFilter(
+          parameterName: "time",
+          options: timeBrackets.map((bracket) => ExploreFilterOption(
+            displayName: bracket['text'],
+            parameterValue: bracket['text'],
+          )).toList(),
+        )
+      ),
+      ActionExploreSection(
+        title: "Actions by type",
+        filter: ExploreFilter(
+          parameterName: "type",
+          options: actionTypes.map((type) => ExploreFilterOption(
+            displayName: type.name,
+            parameterValue: type.name,
+          )).toList(),
+        )
+      ),
+      ActionExploreSection(
+        title: "Completed actions",
+        fetchParams: {
+          "completed": true,
+        }
+      ),
+    ],
 );
 
 ExplorePage home_explore_page = ExplorePage(
@@ -69,6 +127,7 @@ ExplorePage home_explore_page = ExplorePage(
     ),
     ActionExploreSection(
       title: "Actions",
+      link: actions_explore_page,
       description:
           "Take a wide range of actions to drive lasting change for issues you care about",
       filter: ExploreFilter(parameterName: "abc", options: [
