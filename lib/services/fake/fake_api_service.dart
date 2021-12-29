@@ -15,7 +15,7 @@ abstract class FakeApiService {
 
   Future<Iterable> readIterableDataFromFile(String fileName) async {
     String response = await readDataFromFile(fileName);
-    dynamic data = json.decode(response)["data"]; 
+    dynamic data = json.decode(response)["data"];
     return data is Iterable ? data : Iterable.empty();
   }
 }

@@ -9,8 +9,9 @@ import 'package:app/models/Cause.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 
-class FakeCausesService extends ApiService with FakeApiService implements CausesService {
-
+class FakeCausesService extends ApiService
+    with FakeApiService
+    implements CausesService {
   Future<List<ListCause>> getCauses({Map<String, dynamic>? params}) async {
     print("Running get causes");
     String response = await readDataFromFile("causes.json");

@@ -11,7 +11,6 @@ import 'package:stacked/stacked.dart';
 import 'package:app/assets/components/selectionPill.dart';
 
 abstract class ExploreSection<ExplorableType extends Explorable> {
-
   ExploreSectionViewModel<ExplorableType> get viewModel;
 
   /// Title of the section
@@ -68,21 +67,21 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                     style: Theme.of(context).primaryTextTheme.headline4,
                     textAlign: TextAlign.left),
                 if (filter != null)
-                    Container(
-                        height: 60,
-                        child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: filter!.options
-                                .map((ExploreFilterOption option) => Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: SelectionPill(
-                                        option.displayName,
-                                        option.isSelected,
-                                        onClick: () => model.toggleFilterOption(option),
-                                      ) 
-                                    ))
-                                .toList()),
-                    ),
+                  Container(
+                    height: 60,
+                    child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: filter!.options
+                            .map((ExploreFilterOption option) => Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: SelectionPill(
+                                  option.displayName,
+                                  option.isSelected,
+                                  onClick: () =>
+                                      model.toggleFilterOption(option),
+                                )))
+                            .toList()),
+                  ),
                 Container(
                   height: tileHeight,
                   child: model.busy
@@ -105,12 +104,12 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
 }
 
 class CampaignExploreSection extends ExploreSection<ListCampaign> {
-
   @override
-  CampaignExploreSectionViewModel get viewModel => CampaignExploreSectionViewModel(
-    params: fetchParams,
-    filter: filter,
-  );
+  CampaignExploreSectionViewModel get viewModel =>
+      CampaignExploreSectionViewModel(
+        params: fetchParams,
+        filter: filter,
+      );
 
   const CampaignExploreSection({
     required String title,
@@ -132,12 +131,11 @@ class CampaignExploreSection extends ExploreSection<ListCampaign> {
 }
 
 class ActionExploreSection extends ExploreSection<ListCauseAction> {
-
   @override
   ActionExploreSectionViewModel get viewModel => ActionExploreSectionViewModel(
-    params: fetchParams,
-    filter: filter,
-  );
+        params: fetchParams,
+        filter: filter,
+      );
 
   ActionExploreSection({
     required String title,
@@ -161,9 +159,9 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
 class NewsExploreSection extends ExploreSection<Article> {
   @override
   NewsExploreSectionViewModel get viewModel => NewsExploreSectionViewModel(
-    params: fetchParams,
-    filter: filter,
-  );
+        params: fetchParams,
+        filter: filter,
+      );
 
   NewsExploreSection({
     required String title,
