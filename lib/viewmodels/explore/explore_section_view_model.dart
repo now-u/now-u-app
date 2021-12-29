@@ -37,7 +37,7 @@ class ExploreFilter {
 
   /// Whether multiple filter options can be selected at once
   final bool multi;
-  
+
   const ExploreFilter({
     required this.parameterName,
     required this.options,
@@ -50,7 +50,7 @@ class ExploreFilter {
       option.isSelected = false;
     });
   }
-  
+
   void toggleOption(ExploreFilterOption option) {
     // If an option is being selected and you cannot have multiple selections,
     // then clear current selections first.
@@ -59,7 +59,7 @@ class ExploreFilter {
     }
     option.isSelected = !option.isSelected;
   }
-  
+
   Map<String, dynamic> toJson() {
     // If many can be selected return a list
     dynamic value = multi
@@ -75,7 +75,8 @@ class ExploreFilter {
   }
 }
 
-abstract class ExploreSectionViewModel<ExplorableType extends Explorable> extends BaseModel {
+abstract class ExploreSectionViewModel<ExplorableType extends Explorable>
+    extends BaseModel {
   final CausesService _causesService = locator<CausesService>();
   final NewsService _newsService = locator<NewsService>();
 
@@ -106,26 +107,32 @@ abstract class ExploreSectionViewModel<ExplorableType extends Explorable> extend
   }
 }
 
-class CampaignExploreSectionViewModel extends ExploreSectionViewModel<ListCampaign> {
-  CampaignExploreSectionViewModel({Map<String, dynamic>? params, ExploreFilter? filter}) : super(params, filter);
+class CampaignExploreSectionViewModel
+    extends ExploreSectionViewModel<ListCampaign> {
+  CampaignExploreSectionViewModel(
+      {Map<String, dynamic>? params, ExploreFilter? filter})
+      : super(params, filter);
 
   Future<List<ListCampaign>> _fetchTiles() async {
     return await _causesService.getCampaigns(params: queryParams);
   }
 }
 
-
-class ActionExploreSectionViewModel extends ExploreSectionViewModel<ListCauseAction> {
-  ActionExploreSectionViewModel({Map<String, dynamic>? params, ExploreFilter? filter}) : super(params, filter);
+class ActionExploreSectionViewModel
+    extends ExploreSectionViewModel<ListCauseAction> {
+  ActionExploreSectionViewModel(
+      {Map<String, dynamic>? params, ExploreFilter? filter})
+      : super(params, filter);
 
   Future<List<ListCauseAction>> _fetchTiles() async {
     return await _causesService.getActions(params: queryParams);
   }
 }
 
-
 class NewsExploreSectionViewModel extends ExploreSectionViewModel<Article> {
-  NewsExploreSectionViewModel({Map<String, dynamic>? params, ExploreFilter? filter}) : super(params, filter);
+  NewsExploreSectionViewModel(
+      {Map<String, dynamic>? params, ExploreFilter? filter})
+      : super(params, filter);
 
   Future<List<Article>> _fetchTiles() async {
     return await _newsService.getArticles(params: queryParams);

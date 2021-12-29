@@ -11,7 +11,7 @@ import 'test_helpers.mocks.dart';
 
 import 'package:app/services/analytics.dart';
 import 'package:app/services/google_location_search_service.dart';
-  
+
 Map<String, String> unauthenticatedHeaders = {
   "Content-Type": "application/json; charset=UTF-8"
 };
