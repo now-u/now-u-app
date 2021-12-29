@@ -26,7 +26,6 @@ class TabsPage extends StatefulWidget {
 
 class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
   TabPage? currentPage;
-  int? _subIndex;
 
   @override
   void initState() {
@@ -75,7 +74,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
         'title': "News",
       },
       {
-        'page': campaign_explore_page,
+        'page': home_explore_page,
         'icon': Icon(CustomIcons.ic_news),
         'title': "Explore",
       },

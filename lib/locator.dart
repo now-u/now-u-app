@@ -1,5 +1,6 @@
 import 'package:app/services/dynamicLinks.dart';
 import 'package:app/services/auth.dart';
+import 'package:app/services/fake/fake_news_service.dart';
 import 'package:app/services/storage.dart';
 import 'package:app/services/analytics.dart';
 import 'package:app/services/pushNotifications.dart';
@@ -33,7 +34,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => SecureStorageService());
   locator.registerLazySingleton(() => SharedPreferencesService());
   locator.registerLazySingleton(() => AuthenticationService());
-  locator.registerLazySingleton(() => NewsService());
+  locator.registerLazySingleton(() => constants.devMode ? FakeNewsService() : NewsService());
   locator.registerLazySingleton(() => FAQService());
   locator.registerLazySingleton(() => InternalNotificationService());
   locator.registerLazySingleton(() => DeviceInfoService());

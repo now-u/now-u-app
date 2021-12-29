@@ -3,7 +3,9 @@ import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Explorable.dart';
 import 'package:app/models/article.dart';
+import 'package:app/pages/explore/ExplorePage.dart';
 import 'package:app/viewmodels/explore/explore_section_view_model.dart';
+import 'package:app/viewmodels/explore_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:app/assets/components/selectionPill.dart';
@@ -17,7 +19,7 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
 
   // TODO
   /// Where clicking on the title should go (maybe this should be a function?)
-  // final String link;
+  final ExplorePage? link;
 
   /// Description of the section
   final String description;
@@ -33,6 +35,7 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
   const ExploreSection({
     required this.title,
     required this.description,
+    this.link,
     this.fetchParams,
     this.filter,
     this.tileHeight = 160,
@@ -40,7 +43,7 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
 
   Widget renderTile(ExplorableType tile);
 
-  Widget render(BuildContext context) {
+  Widget render(BuildContext context, ExplorePageViewModel pageModel) {
     return ViewModelBuilder<ExploreSectionViewModel<ExplorableType>>.reactive(
         viewModelBuilder: () => viewModel,
         onModelReady: (model) => model.fetchTiles(),
@@ -48,9 +51,19 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
           return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(title,
-                    style: Theme.of(context).primaryTextTheme.headline2,
-                    textAlign: TextAlign.left),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    TextButton(
+                        child: Text(title,
+                          style: Theme.of(context).primaryTextTheme.headline2,
+                          textAlign: TextAlign.left,
+                        ),
+                        onPressed: link != null ? () => pageModel.update(title: link!.title, sections: link!.sections) : null,
+                    ),
+                    if (link != null) Icon(Icons.chevron_right, size: 30)
+                  ],
+                ),
                 Text(description,
                     style: Theme.of(context).primaryTextTheme.headline4,
                     textAlign: TextAlign.left),
@@ -103,12 +116,14 @@ class CampaignExploreSection extends ExploreSection<ListCampaign> {
     required String title,
     required String description,
     Map<String, dynamic>? fetchParams,
+    ExplorePage? link,
     ExploreFilter? filter,
   }) : super(
           title: title,
           description: description,
           fetchParams: fetchParams,
           filter: filter,
+          link: link,
           tileHeight: 300,
         );
 
@@ -124,16 +139,18 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
     filter: filter,
   );
 
-  const ActionExploreSection({
+  ActionExploreSection({
     required String title,
     required String description,
     Map<String, dynamic>? fetchParams,
+    ExplorePage? link,
     ExploreFilter? filter,
   }) : super(
           title: title,
           description: description,
           fetchParams: fetchParams,
           filter: filter,
+          link: link,
           tileHeight: 160,
         );
 
@@ -148,16 +165,18 @@ class NewsExploreSection extends ExploreSection<Article> {
     filter: filter,
   );
 
-  const NewsExploreSection({
+  NewsExploreSection({
     required String title,
     required String description,
     Map<String, dynamic>? fetchParams,
+    ExplorePage? link,
     ExploreFilter? filter,
   }) : super(
           title: title,
           description: description,
           fetchParams: fetchParams,
           filter: filter,
+          link: link,
           tileHeight: 330,
         );
 
