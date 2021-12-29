@@ -1,5 +1,5 @@
-import 'package:app/pages/explore/ExploreFilter.dart';
 import 'package:app/pages/explore/ExploreSection.dart';
+import 'package:app/viewmodels/explore/explore_section_view_model.dart';
 import 'package:flutter/material.dart';
 
 class ExplorePage extends StatelessWidget {

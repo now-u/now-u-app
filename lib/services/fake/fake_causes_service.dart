@@ -1,5 +1,6 @@
-import 'dart:io';
 import 'dart:convert';
+
+import 'package:app/services/fake/fake_api_service.dart';
 
 import '../causes_service.dart';
 import '../api_service.dart';
@@ -7,21 +8,11 @@ import '../api_service.dart';
 import 'package:app/models/Cause.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
-import 'package:flutter/services.dart' show rootBundle;
 
-Directory findRoot(FileSystemEntity entity) {
-  final Directory parent = entity.parent;
-  if (parent.path == entity.path) return parent;
-  return findRoot(parent);
-}
-
-class FakeCausesService extends ApiService implements CausesService {
-  Future<String> readDataFromFile(String fileName) async {
-    print("Getting asset");
-    return await rootBundle.loadString('assets/json/$fileName');
-  }
+class FakeCausesService extends ApiService with FakeApiService implements CausesService {
 
   Future<List<ListCause>> getCauses({Map<String, dynamic>? params}) async {
+    print("Running get causes");
     String response = await readDataFromFile("causes.json");
     Map causesData = json.decode(response);
     return causesData["data"]
@@ -43,20 +34,13 @@ class FakeCausesService extends ApiService implements CausesService {
 
   Future<List<ListCauseAction>> getActions(
       {Map<String, dynamic>? params}) async {
-    String response = await readDataFromFile("actions.json");
-    Map actionsData = json.decode(response);
-    return actionsData["data"]
-        .map<ListCauseAction>((actionData) => ListCause.fromJson(actionData))
-        .toList();
+    Iterable data = await readIterableDataFromFile("actions.json");
+    return data.map((e) => ListCauseAction.fromJson(e)).toList();
   }
 
   Future<List<ListCampaign>> getCampaigns(
       {Map<String, dynamic>? params}) async {
-    String response = await readDataFromFile("campaings.json");
-    Map data = json.decode(response);
-    return data["data"]
-        .map<ListCampaign>(
-            (campaignData) => ListCampaign.fromJson(campaignData))
-        .toList();
+    Iterable data = await readIterableDataFromFile("campaigns.json");
+    return data.map((e) => ListCampaign.fromJson(e)).toList();
   }
 }

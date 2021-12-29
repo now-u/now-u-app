@@ -17,6 +17,7 @@ class CausesService extends ApiService {
 
   Future<List<ListCampaign>> getCampaigns(
       {Map<String, dynamic>? params}) async {
+    print("Getting real campaigns");
     List<Map<String, dynamic>> data =
         await getListRequest("campaign", params: params);
     return data.map((campData) => ListCampaign.fromJson(campData)).toList();

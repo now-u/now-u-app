@@ -3,15 +3,15 @@ import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Explorable.dart';
 import 'package:app/models/article.dart';
-import 'package:app/pages/explore/ExploreFilter.dart';
-import 'package:app/viewmodels/explore_page_view_model.dart';
+import 'package:app/viewmodels/explore/explore_section_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-
-import 'package:app/locator.dart';
-import 'package:app/services/causes_service.dart';
+import 'package:app/assets/components/selectionPill.dart';
 
 abstract class ExploreSection<ExplorableType extends Explorable> {
+
+  ExploreSectionViewModel<ExplorableType> get viewModel;
+
   /// Title of the section
   final String title;
 
@@ -23,7 +23,7 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
   final String description;
 
   // Params to provide to fetch query
-  final Map? fetchParams;
+  final Map<String, dynamic>? fetchParams;
 
   ///
   final ExploreFilter? filter;
@@ -38,14 +38,11 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
     this.tileHeight = 160,
   });
 
-  Future<List<ExplorableType>> fetchTiles(Map<String, dynamic>? params);
-
   Widget renderTile(ExplorableType tile);
 
   Widget render(BuildContext context) {
-    return ViewModelBuilder<ExplorePageViewModel<ExplorableType>>.reactive(
-        viewModelBuilder: () => ExplorePageViewModel<ExplorableType>(
-            filter: filter, fetchTiles: fetchTiles),
+    return ViewModelBuilder<ExploreSectionViewModel<ExplorableType>>.reactive(
+        viewModelBuilder: () => viewModel,
         onModelReady: (model) => model.fetchTiles(),
         builder: (context, model, child) {
           return Column(
@@ -57,19 +54,22 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                 Text(description,
                     style: Theme.of(context).primaryTextTheme.headline4,
                     textAlign: TextAlign.left),
-                filter != null
-                    ? Container(
+                if (filter != null)
+                    Container(
                         height: 60,
                         child: ListView(
                             scrollDirection: Axis.horizontal,
                             children: filter!.options
                                 .map((ExploreFilterOption option) => Padding(
                                       padding: const EdgeInsets.all(10),
-                                      child: option.render(model),
+                                      child: SelectionPill(
+                                        option.displayName,
+                                        option.isSelected,
+                                        onClick: () => model.toggleFilterOption(option),
+                                      ) 
                                     ))
                                 .toList()),
-                      )
-                    : const SizedBox(height: 0),
+                    ),
                 Container(
                   height: tileHeight,
                   child: model.busy
@@ -92,10 +92,17 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
 }
 
 class CampaignExploreSection extends ExploreSection<ListCampaign> {
+
+  @override
+  CampaignExploreSectionViewModel get viewModel => CampaignExploreSectionViewModel(
+    params: fetchParams,
+    filter: filter,
+  );
+
   const CampaignExploreSection({
     required String title,
     required String description,
-    Map? fetchParams,
+    Map<String, dynamic>? fetchParams,
     ExploreFilter? filter,
   }) : super(
           title: title,
@@ -106,21 +113,21 @@ class CampaignExploreSection extends ExploreSection<ListCampaign> {
         );
 
   @override
-  Future<List<ListCampaign>> fetchTiles(Map<String, dynamic>? params) async {
-    // TODO remove mock
-    final CausesService _causesService = locator<CausesService>();
-    return await _causesService.getCampaigns(params: params);
-  }
-
-  @override
   Widget renderTile(ListCampaign tile) => ExploreCampaignTile(tile);
 }
 
 class ActionExploreSection extends ExploreSection<ListCauseAction> {
+
+  @override
+  ActionExploreSectionViewModel get viewModel => ActionExploreSectionViewModel(
+    params: fetchParams,
+    filter: filter,
+  );
+
   const ActionExploreSection({
     required String title,
     required String description,
-    Map? fetchParams,
+    Map<String, dynamic>? fetchParams,
     ExploreFilter? filter,
   }) : super(
           title: title,
@@ -131,20 +138,20 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
         );
 
   @override
-  Future<List<ListCauseAction>> fetchTiles(Map<String, dynamic>? params) async {
-    final CausesService _causesService = locator<CausesService>();
-    return await _causesService.getActions(params: params);
-  }
-
-  @override
   Widget renderTile(ListCauseAction tile) => ExploreActionTile(tile);
 }
 
 class NewsExploreSection extends ExploreSection<Article> {
+  @override
+  NewsExploreSectionViewModel get viewModel => NewsExploreSectionViewModel(
+    params: fetchParams,
+    filter: filter,
+  );
+
   const NewsExploreSection({
     required String title,
     required String description,
-    Map? fetchParams,
+    Map<String, dynamic>? fetchParams,
     ExploreFilter? filter,
   }) : super(
           title: title,
@@ -153,27 +160,6 @@ class NewsExploreSection extends ExploreSection<Article> {
           filter: filter,
           tileHeight: 330,
         );
-
-  @override
-  Future<List<Article>> fetchTiles(Map<String, dynamic>? params) async {
-    // TODO remove mock
-    return Future.delayed(
-      const Duration(seconds: 2),
-      () => List.generate(
-        5,
-        (i) => Article(
-          id: i,
-          title: "Ocean protection can yield ‘triple benefits’",
-          subtitle:
-              "A new study suggests that carefully planned marine protect lorem ipsum...",
-          headerImage: "https://picsum.photos/id/$i/200",
-          releasedAt: DateTime.utc(2020, 1, i + 1),
-          fullArticleLink: "https://www.google.com",
-          type: articleTypeFromName("news"),
-        ),
-      ),
-    );
-  }
 
   @override
   Widget renderTile(Article tile) => ExploreNewsTile(tile);

@@ -46,13 +46,10 @@ class ListCampaign extends Explorable {
         title = json['title'],
         shortName = json['short_name'],
         headerImage = json['header_image'],
-        startDate = json['start_date'],
-        endDate = json['end_date'],
+        startDate = DateTime.parse(json['start_date']),
+        endDate = DateTime.parse(json['end_date']),
         completed = json['completed'],
-        cause = json['causes']
-            .map((causeJson) => ListCause.fromJson(causeJson))
-            .toList()
-            .cast<ListCause>()[0];
+        cause = ListCause.fromJson(json['causes'][0]);
 }
 
 class Campaign extends ListCampaign {

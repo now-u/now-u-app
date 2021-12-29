@@ -58,7 +58,7 @@ class Article extends Explorable {
         title = json['title'],
         subtitle = json['subtitle'],
         headerImage = json['header_image'],
-        releasedAt = DateTime.parse(json['released_at']),
+        releasedAt = DateTime.parse(json['release_date']),
         fullArticleLink = json['full_article_link'],
         source = json['source'],
         type = articleTypeFromName(json['type']),
