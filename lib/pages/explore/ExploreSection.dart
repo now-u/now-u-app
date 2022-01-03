@@ -1,4 +1,5 @@
 import 'package:app/assets/components/explore_tiles.dart';
+import 'package:app/assets/constants.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Explorable.dart';
@@ -50,45 +51,59 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
           return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                // Section header
+                Column(
                   children: [
-                    TextButton(
-                      child: Text(
-                        title,
-                        style: Theme.of(context).primaryTextTheme.headline2,
-                        textAlign: TextAlign.left,
+                    // Text header
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                title,
+                                style: Theme.of(context).primaryTextTheme.headline3,
+                                textAlign: TextAlign.left,
+                              ),
+                                // onPressed: link != null
+                                //     ? () => pageModel.update(
+                                //         title: link!.title, sections: link!.sections)
+                                //     : null,
+                              // ),
+                              if (link != null) Icon(Icons.chevron_right, size: 30)
+                            ],
+                          ),
+                          if (description != null)
+                            Text(
+                                description!,
+                                style: Theme.of(context).primaryTextTheme.headline4,
+                                textAlign: TextAlign.left,
+                            ),
+                        ],
                       ),
-                      onPressed: link != null
-                          ? () => pageModel.update(
-                              title: link!.title, sections: link!.sections)
-                          : null,
                     ),
-                    if (link != null) Icon(Icons.chevron_right, size: 30)
+                    if (model.filter != null)
+                      Container(
+                        height: 60,
+                        child: ListView(
+                            padding: EdgeInsets.all(0),
+                            scrollDirection: Axis.horizontal,
+                            children: model.filter!.options
+                                .map((ExploreFilterOption option) => Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    child: SelectionPill(
+                                      option.displayName,
+                                      option.isSelected,
+                                      onClick: () =>
+                                          model.toggleFilterOption(option),
+                                      padding: EdgeInsets.all(0),
+                                    )))
+                                .toList()),
+                      ),
                   ],
                 ),
-                if (description != null)
-                  Text(
-                      description!,
-                      style: Theme.of(context).primaryTextTheme.headline4,
-                      textAlign: TextAlign.left,
-                  ),
-                if (model.filter != null)
-                  Container(
-                    height: 60,
-                    child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: model.filter!.options
-                            .map((ExploreFilterOption option) => Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 3),
-                                child: SelectionPill(
-                                  option.displayName,
-                                  option.isSelected,
-                                  onClick: () =>
-                                      model.toggleFilterOption(option),
-                                )))
-                            .toList()),
-                  ),
                 Container(
                   height: tileHeight,
                   child: model.busy
@@ -96,13 +111,21 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                       : model.error || model.tiles == null
                           // TODO handle error here
                           ? Container(color: Colors.red)
-                          : ListView.builder(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
-                              scrollDirection: Axis.horizontal,
-                              itemCount: model.tiles!.length,
-                              itemBuilder: (context, index) =>
-                                  renderTile(model.tiles![index]),
+                          : Padding(
+                              padding: EdgeInsets.only(bottom: CustomPaddingSize.large, top: CustomPaddingSize.normal),
+                              child: ListView.builder(
+                                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+                                scrollDirection: Axis.horizontal,
+                                itemCount: model.tiles!.length,
+                                itemBuilder: (context, index) =>
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          right: horizontalPadding,
+                                          left: index == 0 ? horizontalPadding : 0,
+                                      ),
+                                      child: renderTile(model.tiles![index]),
+                                    ),
+                              ),
                             ),
                 ),
               ]);

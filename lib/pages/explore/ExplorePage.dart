@@ -1,9 +1,12 @@
+import 'package:app/assets/constants.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/pages/explore/ExploreSection.dart';
 import 'package:app/viewmodels/explore/explore_section_view_model.dart';
 import 'package:app/viewmodels/explore_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+
+final double horizontalPadding = CustomPaddingSize.small;
 
 class ExplorePage extends StatelessWidget {
   final List<ExploreSection> sections;
@@ -13,21 +16,22 @@ class ExplorePage extends StatelessWidget {
       : super(key: key);
 
   Widget _header(BuildContext context, ExplorePageViewModel model) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          if (model.canBack) Icon(Icons.chevron_left, size: 30),
-          TextButton(
-            child: Text(
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            if (model.canBack) Icon(Icons.chevron_left, size: 30),
+            Text(
               model.title,
-              style: Theme.of(context).primaryTextTheme.headline2,
+              style: exploreHeading,
               textAlign: TextAlign.left,
             ),
-            onPressed: model.canBack ? () => model.back() : null,
-          ),
-        ],
-      ),
+            // onPressed: model.canBack ? () => model.back() : null,
+          ],
+        ),
+      )
     );
   }
 

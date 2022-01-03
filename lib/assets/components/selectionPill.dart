@@ -19,12 +19,15 @@ class SelectionPill extends StatelessWidget {
   /// this should define selection behaviour
   final VoidCallback? onClick;
 
+  final EdgeInsets padding;
+
   SelectionPill(
     this.text,
     this.isSelected, {
     this.borderRadius,
     this.fontSize = 20,
     this.onClick,
+    this.padding = const EdgeInsets.only(left: 12, bottom: 10),
   });
 
   @override
@@ -32,7 +35,7 @@ class SelectionPill extends StatelessWidget {
     return GestureDetector(
       onTap: onClick != null ? onClick! : () => {},
       child: Padding(
-        padding: EdgeInsets.only(left: 12, bottom: 10),
+        padding: padding,
         child: Container(
           decoration: isSelected
               ? BoxDecoration(

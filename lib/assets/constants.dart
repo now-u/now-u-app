@@ -1,5 +1,5 @@
 import 'dart:io' show Platform;
-import 'package:flutter/material.dart' show Color, Colors;
+import 'package:flutter/material.dart' show Color, Colors, TextStyle, FontWeight, FontStyle;
 import 'package:flutter/foundation.dart' show kReleaseMode;
 
 // --- Env --- //
@@ -43,10 +43,24 @@ String fontFamily = "Nunito";
 String fontFamilySecondary = "Poppins";
 
 class CustomFontSize {
-  int heading1 = 36;
-  int heading2 = 30;
-  int heading3 = 24;
-  int heading4 = 18;
-  int heading5 = 16;
-  int body = 16;
+  static double heading1 = 36;
+  static double heading2 = 30;
+  static double heading3 = 24;
+  static double heading4 = 18;
+  static double heading5 = 16;
+  static double body = 16;
 }
+
+class CustomPaddingSize {
+  static double xsmall = 8; 
+  static double small = 14; 
+  static double normal = 20; 
+  static double large = 50; 
+}
+
+TextStyle exploreHeading = TextStyle(
+  color: black1,
+  fontSize: CustomFontSize.heading2,
+  fontWeight: FontWeight.w400, // Regular
+  fontStyle: FontStyle.normal,
+);
