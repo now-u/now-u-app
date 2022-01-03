@@ -131,10 +131,13 @@ mixin ByCauseFilterMixin<T extends Explorable> on ExploreSectionViewModel<T> {
     setBusy(true);
     List<ListCause> causes = await _causesService.getCauses();
     this.filter = ExploreFilter(
-        parameterName: "cause",
-        options: causes.map((ListCause cause) => 
-            ExploreFilterOption(displayName: cause.title, parameterValue:cause.id),
-        ).toList(),
+      parameterName: "cause",
+      options: causes
+          .map(
+            (ListCause cause) => ExploreFilterOption(
+                displayName: cause.title, parameterValue: cause.id),
+          )
+          .toList(),
     );
     notifyListeners();
     setBusy(false);
@@ -142,7 +145,8 @@ mixin ByCauseFilterMixin<T extends Explorable> on ExploreSectionViewModel<T> {
 }
 
 class CampaignExploreByCauseSectionViewModel
-    extends CampaignExploreSectionViewModel with ByCauseFilterMixin<ListCampaign> {
+    extends CampaignExploreSectionViewModel
+    with ByCauseFilterMixin<ListCampaign> {
   CampaignExploreByCauseSectionViewModel() : super();
 }
 
@@ -157,8 +161,8 @@ class ActionExploreSectionViewModel
   }
 }
 
-class ActionExploreByCauseSectionViewModel
-    extends ActionExploreSectionViewModel with ByCauseFilterMixin<ListCauseAction> {
+class ActionExploreByCauseSectionViewModel extends ActionExploreSectionViewModel
+    with ByCauseFilterMixin<ListCauseAction> {
   ActionExploreByCauseSectionViewModel() : super();
 }
 

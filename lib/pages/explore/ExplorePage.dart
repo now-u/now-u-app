@@ -17,22 +17,22 @@ class ExplorePage extends StatelessWidget {
 
   Widget _header(BuildContext context, ExplorePageViewModel model) {
     return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            if (model.canBack) Icon(Icons.chevron_left, size: 30),
-            Text(
-              model.title,
-              style: exploreHeading,
-              textAlign: TextAlign.left,
-            ),
-            // onPressed: model.canBack ? () => model.back() : null,
-          ],
-        ),
-      )
-    );
+        child: Padding(
+      padding:
+          EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          if (model.canBack) Icon(Icons.chevron_left, size: 30),
+          Text(
+            model.title,
+            style: exploreHeading,
+            textAlign: TextAlign.left,
+          ),
+          // onPressed: model.canBack ? () => model.back() : null,
+        ],
+      ),
+    ));
   }
 
   @override
@@ -53,72 +53,56 @@ class ExplorePage extends StatelessWidget {
   }
 }
 
-ExplorePage campaigns_explore_page = ExplorePage(
-  title: "Campaigns",
-  sections: [
-    CampaignExploreSection(
-      title: "Campaigns of the month",
-      fetchParams: {
-        "of_the_month": true,
-      }
-    ),
-    CampaignExploreSection(
-      title: "Recommened campaigns",
-      fetchParams: {
-        "recommended": true,
-      }
-    ),
-    CampaignExploreByCauseSection(
-      title: "Campaigns by cause",
-    ),
-    CampaignExploreSection(
-      title: "Completed campaigns",
-      fetchParams: {
-        "completed": true,
-      }
-    ),
-  ]
-);
+ExplorePage campaigns_explore_page = ExplorePage(title: "Campaigns", sections: [
+  CampaignExploreSection(title: "Campaigns of the month", fetchParams: {
+    "of_the_month": true,
+  }),
+  CampaignExploreSection(title: "Recommened campaigns", fetchParams: {
+    "recommended": true,
+  }),
+  CampaignExploreByCauseSection(
+    title: "Campaigns by cause",
+  ),
+  CampaignExploreSection(title: "Completed campaigns", fetchParams: {
+    "completed": true,
+  }),
+]);
 
 ExplorePage actions_explore_page = ExplorePage(
-    title: "Actions",
-    sections: [
-      ActionExploreSection(
-        title: "Actions of the month",
-        fetchParams: {
-          "of_the_month": true,
-        }
-      ),
-      ActionExploreByCauseSection(
-        title: "Actions by cause",
-      ),
-      ActionExploreSection(
+  title: "Actions",
+  sections: [
+    ActionExploreSection(title: "Actions of the month", fetchParams: {
+      "of_the_month": true,
+    }),
+    ActionExploreByCauseSection(
+      title: "Actions by cause",
+    ),
+    ActionExploreSection(
         title: "Actions by time",
         filter: ExploreFilter(
           parameterName: "time",
-          options: timeBrackets.map((bracket) => ExploreFilterOption(
-            displayName: bracket['text'],
-            parameterValue: bracket['text'],
-          )).toList(),
-        )
-      ),
-      ActionExploreSection(
+          options: timeBrackets
+              .map((bracket) => ExploreFilterOption(
+                    displayName: bracket['text'],
+                    parameterValue: bracket['text'],
+                  ))
+              .toList(),
+        )),
+    ActionExploreSection(
         title: "Actions by type",
         filter: ExploreFilter(
           parameterName: "type",
-          options: actionTypes.map((type) => ExploreFilterOption(
-            displayName: type.name,
-            parameterValue: type.name,
-          )).toList(),
-        )
-      ),
-      ActionExploreSection(
-        title: "Completed actions",
-        fetchParams: {
-          "completed": true,
-        }
-      ),
-    ],
+          options: actionTypes
+              .map((type) => ExploreFilterOption(
+                    displayName: type.name,
+                    parameterValue: type.name,
+                  ))
+              .toList(),
+        )),
+    ActionExploreSection(title: "Completed actions", fetchParams: {
+      "completed": true,
+    }),
+  ],
 );
 
 ExplorePage home_explore_page = ExplorePage(

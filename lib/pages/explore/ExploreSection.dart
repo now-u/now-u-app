@@ -56,7 +56,8 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                   children: [
                     // Text header
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: horizontalPadding),
                       child: Column(
                         children: [
                           Row(
@@ -64,22 +65,26 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                             children: [
                               Text(
                                 title,
-                                style: Theme.of(context).primaryTextTheme.headline3,
+                                style: Theme.of(context)
+                                    .primaryTextTheme
+                                    .headline3,
                                 textAlign: TextAlign.left,
                               ),
-                                // onPressed: link != null
-                                //     ? () => pageModel.update(
-                                //         title: link!.title, sections: link!.sections)
-                                //     : null,
+                              // onPressed: link != null
+                              //     ? () => pageModel.update(
+                              //         title: link!.title, sections: link!.sections)
+                              //     : null,
                               // ),
-                              if (link != null) Icon(Icons.chevron_right, size: 30)
+                              if (link != null)
+                                Icon(Icons.chevron_right, size: 30)
                             ],
                           ),
                           if (description != null)
                             Text(
-                                description!,
-                                style: Theme.of(context).primaryTextTheme.headline4,
-                                textAlign: TextAlign.left,
+                              description!,
+                              style:
+                                  Theme.of(context).primaryTextTheme.headline4,
+                              textAlign: TextAlign.left,
                             ),
                         ],
                       ),
@@ -112,19 +117,21 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                           // TODO handle error here
                           ? Container(color: Colors.red)
                           : Padding(
-                              padding: EdgeInsets.only(bottom: CustomPaddingSize.large, top: CustomPaddingSize.normal),
+                              padding: EdgeInsets.only(
+                                  bottom: CustomPaddingSize.large,
+                                  top: CustomPaddingSize.normal),
                               child: ListView.builder(
-                                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 0),
                                 scrollDirection: Axis.horizontal,
                                 itemCount: model.tiles!.length,
-                                itemBuilder: (context, index) =>
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          right: horizontalPadding,
-                                          left: index == 0 ? horizontalPadding : 0,
-                                      ),
-                                      child: renderTile(model.tiles![index]),
-                                    ),
+                                itemBuilder: (context, index) => Padding(
+                                  padding: EdgeInsets.only(
+                                    right: horizontalPadding,
+                                    left: index == 0 ? horizontalPadding : 0,
+                                  ),
+                                  child: renderTile(model.tiles![index]),
+                                ),
                               ),
                             ),
                 ),
