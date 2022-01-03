@@ -11,6 +11,41 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:app/assets/components/selectionPill.dart';
 
+class ExploreFilterSelectionItem extends StatelessWidget {
+  final String text;
+  final bool isSelected;
+  final VoidCallback onPressed;
+
+  ExploreFilterSelectionItem({
+    required ExploreFilterOption item,
+    required this.onPressed
+  }):
+    this.text = item.displayName,
+    this.isSelected = item.isSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        decoration: BoxDecoration(
+          color: isSelected ? CustomColors.black1 : CustomColors.greyLight2,
+          borderRadius: BorderRadius.all(Radius.circular(24))
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        child: Center(
+          child: Text(
+            text,
+            style: TextStyle(
+              color: isSelected ? CustomColors.white : CustomColors.black2,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 abstract class ExploreSection<ExplorableType extends Explorable> {
   ExploreSectionViewModel<ExplorableType> get viewModel;
 
@@ -56,7 +91,8 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                   children: [
                     // Text header
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: horizontalPadding),
                       child: Column(
                         children: [
                           GestureDetector(
@@ -78,35 +114,41 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                           ),
                           if (description != null)
                             Text(
-                                description!,
-                                style: Theme.of(context).primaryTextTheme.headline4,
-                                textAlign: TextAlign.left,
+                              description!,
+                              style:
+                                  Theme.of(context).primaryTextTheme.headline4,
+                              textAlign: TextAlign.left,
                             ),
                         ],
                       ),
                     ),
+                    SizedBox(height: 2),
                     if (model.filter != null)
                       Container(
                         height: 40,
-                        child: ListView(
-                            padding: EdgeInsets.only(bottom: 10, top: 6),
+                        child: ListView.builder(
+                            padding: EdgeInsets.only(bottom: 8, top: 6),
                             scrollDirection: Axis.horizontal,
-                            children: model.filter!.options
-                                .map((ExploreFilterOption option) => Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 0),
-                                    child: SelectionPill(
-                                      option.displayName,
-                                      option.isSelected,
-                                      onClick: () =>
-                                          model.toggleFilterOption(option),
-                                      padding: EdgeInsets.all(0),
-                                    )))
-                                .toList()),
+                            itemCount: model.filter!.options.length,
+                            itemBuilder: (context, index) {
+                              ExploreFilterOption option = model.filter!.options[index];
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                  right: 5,
+                                  left: index == 0 ? horizontalPadding : 0,
+                                ),
+                                child: ExploreFilterSelectionItem(
+                                  item: option,
+                                  onPressed: () => model.toggleFilterOption(option),
+                                )
+                              );
+                            }
+                        ),
                       ),
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.only(bottom: CustomPaddingSize.large, top: CustomPaddingSize.normal),
+                  padding: EdgeInsets.only(bottom: CustomPaddingSize.large, top: CustomPaddingSize.small),
                   child: Container(
                     height: tileHeight,
                     child: model.busy
@@ -118,14 +160,13 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                                 padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
                                 scrollDirection: Axis.horizontal,
                                 itemCount: model.tiles!.length,
-                                itemBuilder: (context, index) =>
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          right: horizontalPadding,
-                                          left: index == 0 ? horizontalPadding : 0,
-                                      ),
-                                      child: renderTile(model.tiles![index]),
-                                    ),
+                                itemBuilder: (context, index) => Padding(
+                                  padding: EdgeInsets.only(
+                                    right: 2,
+                                    left: index == 0 ? horizontalPadding : 0,
+                                  ),
+                                  child: renderTile(model.tiles![index]),
+                                ),
                               ),
                   ),
                 ),

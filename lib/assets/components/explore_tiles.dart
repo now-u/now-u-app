@@ -220,6 +220,8 @@ class ExploreNewsTile extends StatelessWidget {
                         title,
                         style: Theme.of(context).primaryTextTheme.headline2!,
                         textScaleFactor: .7,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       Text(
                         subtitle,
