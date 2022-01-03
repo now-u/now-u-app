@@ -59,21 +59,22 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                       padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                       child: Column(
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                title,
-                                style: Theme.of(context).primaryTextTheme.headline3,
-                                textAlign: TextAlign.left,
-                              ),
-                                // onPressed: link != null
-                                //     ? () => pageModel.update(
-                                //         title: link!.title, sections: link!.sections)
-                                //     : null,
-                              // ),
-                              if (link != null) Icon(Icons.chevron_right, size: 30)
-                            ],
+                          GestureDetector(
+                            onTap: link != null
+                                ? () => pageModel.update(
+                                    title: link!.title, sections: link!.sections)
+                                : null,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  title,
+                                  style: Theme.of(context).primaryTextTheme.headline3,
+                                  textAlign: TextAlign.left,
+                                ),
+                                if (link != null) Icon(Icons.chevron_right, size: 30)
+                              ],
+                            ),
                           ),
                           if (description != null)
                             Text(
@@ -86,13 +87,13 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                     ),
                     if (model.filter != null)
                       Container(
-                        height: 60,
+                        height: 40,
                         child: ListView(
-                            padding: EdgeInsets.all(0),
+                            padding: EdgeInsets.only(bottom: 10, top: 6),
                             scrollDirection: Axis.horizontal,
                             children: model.filter!.options
                                 .map((ExploreFilterOption option) => Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    padding: EdgeInsets.symmetric(vertical: 0),
                                     child: SelectionPill(
                                       option.displayName,
                                       option.isSelected,
@@ -104,16 +105,16 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                       ),
                   ],
                 ),
-                Container(
-                  height: tileHeight,
-                  child: model.busy
-                      ? const Center(child: CircularProgressIndicator())
-                      : model.error || model.tiles == null
-                          // TODO handle error here
-                          ? Container(color: Colors.red)
-                          : Padding(
-                              padding: EdgeInsets.only(bottom: CustomPaddingSize.large, top: CustomPaddingSize.normal),
-                              child: ListView.builder(
+                Padding(
+                  padding: EdgeInsets.only(bottom: CustomPaddingSize.large, top: CustomPaddingSize.normal),
+                  child: Container(
+                    height: tileHeight,
+                    child: model.busy
+                        ? const Center(child: CircularProgressIndicator())
+                        : model.error || model.tiles == null
+                            // TODO handle error here
+                            ? Container(color: Colors.red)
+                            : ListView.builder(
                                 padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
                                 scrollDirection: Axis.horizontal,
                                 itemCount: model.tiles!.length,
@@ -126,7 +127,7 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                                       child: renderTile(model.tiles![index]),
                                     ),
                               ),
-                            ),
+                  ),
                 ),
               ]);
         });

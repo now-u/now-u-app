@@ -19,17 +19,19 @@ class ExplorePage extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            if (model.canBack) Icon(Icons.chevron_left, size: 30),
-            Text(
-              model.title,
-              style: exploreHeading,
-              textAlign: TextAlign.left,
-            ),
-            // onPressed: model.canBack ? () => model.back() : null,
-          ],
+        child: GestureDetector(
+          onTap: model.canBack ? () => model.back() : null,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              if (model.canBack) Icon(Icons.chevron_left, size: 30),
+              Text(
+                model.title,
+                style: exploreHeading,
+                textAlign: TextAlign.left,
+              ),
+            ],
+          ),
         ),
       )
     );
