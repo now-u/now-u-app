@@ -10,40 +10,48 @@ import 'package:app/services/dialog_service.dart';
 class CausesViewModel extends BaseModel {
   final DialogService _dialogService = locator<DialogService>();
 
-  List<ListCause> _causesList = [];
-  List<ListCause> get causesList => _causesList;
-
-  List<bool> _causesSelectedList = [false, false, false, false, false, false];
-
-  List<bool> get causesSelectedList => _causesSelectedList;
-  bool get isButtonDisabled => !_causesSelectedList.any((element) => element);
-
-  final NavigationService _navigationService = locator<NavigationService>();
-  final CausesService _causesService = locator<CausesService>();
+  Map<ListCause, bool> _causes = {};
+  List<ListCause> get causesList => _causes.keys.toList();
 
   Future fetchCauses() async {
     setBusy(true);
-    _causesList = await _causesService.getCauses();
+
+    List<ListCause> causesList = await _causesService.getCauses();
+    _causes = {for (ListCause cause in causesList) cause: cause.selected};
+
     setBusy(false);
     notifyListeners();
   }
 
-  void toggleSelection({required int causeIndex}) {
-    _causesSelectedList[causeIndex] = !_causesSelectedList[causeIndex];
+  bool isCauseSelected(ListCause cause){
+    return _causes[cause] ?? false;
+  }
+
+  bool get areAllCausesStillDisabled => !_causes.values.toList().any((value) => value);
+
+  final NavigationService _navigationService = locator<NavigationService>();
+  final CausesService _causesService = locator<CausesService>();
+
+  void toggleSelection({required ListCause listCause}) {
+    bool isCauseSelected = _causes[listCause] ?? false;
+    _causes[listCause] = !isCauseSelected;
     notifyListeners();
   }
 
   void getStarted() async {
-    // TODO register selection
+    List<ListCause> selectedCauses = causesList.where((cause) => isCauseSelected(cause)).toList();
+    _causesService.selectCauses(selectedCauses);
+
     _navigationService.navigateTo(Routes.login);
   }
 
-  Future getCausePopup({required int causeIndex}) async {
-    var dialogResult =
-        await _dialogService.showDialog(CauseDialog(causesList[causeIndex]));
+  Future getCausePopup({required ListCause listCause, required int causeIndex}) async {
+    var dialogResult = await _dialogService.showDialog(
+        CauseDialog(causesList[causeIndex])
+    );
     if (dialogResult.response) {
-      if (_causesSelectedList[causeIndex] == false) {
-        toggleSelection(causeIndex: causeIndex);
+      if (_causes[listCause] == false) {
+        toggleSelection(listCause: listCause);
       }
     }
   }

@@ -44,4 +44,9 @@ class FakeCausesService extends ApiService
     Iterable data = await readIterableDataFromFile("campaigns.json");
     return data.map((e) => ListCampaign.fromJson(e)).toList();
   }
+
+  @override
+  Future<void> selectCauses(List<ListCause> selectedCauses) async {
+    await Future.delayed(Duration(seconds: 1));
+  }
 }

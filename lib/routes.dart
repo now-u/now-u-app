@@ -22,6 +22,7 @@ import 'package:app/pages/more/morePages/FAQPage.dart';
 import 'package:app/pages/more/morePages/PartnersPage.dart';
 import 'package:app/pages/onboarding/onboarding_page.dart';
 import 'package:app/pages/causes/CauseOnboardingPage.dart';
+import 'package:app/pages/causes/CauseChangePage.dart';
 import 'package:app/pages/other/InfoPage.dart';
 import 'package:app/pages/other/NotificationPage.dart';
 import 'package:app/pages/other/OrganisationPage.dart';
@@ -77,7 +78,7 @@ Function initRoutes = (RouteSettings settings) {
         // return customRoute(
         //     builder: (context) => OnBoardingPage(), settings: settings);
         return customRoute(
-            builder: (context) => CausePage(), settings: settings);
+            builder: (context) => CauseChangePage(), settings: settings);
       }
     case Routes.login:
       {

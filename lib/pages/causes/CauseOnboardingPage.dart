@@ -7,7 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app/assets/components/buttons/customWidthButton.dart';
 import 'package:stacked/stacked.dart';
 
-class CausePage extends StatelessWidget {
+class CauseOnboardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,17 +17,14 @@ class CausePage extends StatelessWidget {
             builder: (context, model, child) {
               return Stack(
                 children: [
-                  ClipPath(
-                    clipper: CauseBackgroundClipper(),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.43,
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                        colors: [Color(0XFF011A43), Color(0XFF012B93)],
-                        begin: Alignment.bottomLeft,
-                        end: Alignment.topRight,
-                      )),
-                    ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.43,
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Color(0XFF011A43), Color(0XFF012B93)],
+                          begin: Alignment.bottomLeft,
+                          end: Alignment.topRight,
+                        )),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
@@ -74,36 +71,29 @@ class CausePage extends StatelessWidget {
                             child: ExpandedGrid.builder(
                                 numberOfRows: 2,
                                 itemCount: model.causesList.length,
-                                itemBuilder:
-                                    (context, rowIndex, colIndex, index) {
-                                  return Expanded(
-                                      child: Padding(
+                                itemBuilder: (context, rowIndex, colIndex, index) {
+                                  return Expanded(child: Padding(
                                     padding: EdgeInsets.all(10),
                                     child: CauseTile(
-                                      gestureFunction: () => model
-                                          .toggleSelection(causeIndex: index),
+                                      gestureFunction: () => model.toggleSelection(listCause: model.causesList[index]),
                                       cause: model.causesList[index],
                                       causeIcon: FontAwesomeIcons.leaf,
-                                      isSelected:
-                                          model.causesSelectedList[index],
-                                      getInfoFunction: () => model
-                                          .getCausePopup(causeIndex: index),
+                                      isSelected: model.isCauseSelected(model.causesList[index]),
+                                      getInfoFunction: () => model.getCausePopup(listCause: model.causesList[index], causeIndex: index),
                                     ),
                                   ));
-                                }),
+                                }
+                            ),
                           ),
                         ),
                         Expanded(
                           flex: 1,
                           child: Center(
-                            child: CustomWidthButton(
-                              'Get started',
-                              onPressed: model.isButtonDisabled
+                            child: CustomWidthButton('Get started',
+                              onPressed: model.areAllCausesStillDisabled
                                   ? () {}
-                                  : () {
-                                      model.getStarted();
-                                    },
-                              backgroundColor: model.isButtonDisabled
+                                  : () {model.getStarted();},
+                              backgroundColor: model.areAllCausesStillDisabled
                                   ? Colors.grey
                                   : Theme.of(context).primaryColor,
                               size: ButtonSize.Medium,
