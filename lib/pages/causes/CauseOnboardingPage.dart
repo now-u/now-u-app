@@ -21,10 +21,10 @@ class CauseOnboardingPage extends StatelessWidget {
                     height: MediaQuery.of(context).size.height * 0.43,
                     decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          colors: [Color(0XFF011A43), Color(0XFF012B93)],
-                          begin: Alignment.bottomLeft,
-                          end: Alignment.topRight,
-                        )),
+                      colors: [Color(0XFF011A43), Color(0XFF012B93)],
+                      begin: Alignment.bottomLeft,
+                      end: Alignment.topRight,
+                    )),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
@@ -71,31 +71,41 @@ class CauseOnboardingPage extends StatelessWidget {
                             child: ExpandedGrid.builder(
                                 numberOfRows: 2,
                                 itemCount: model.causesList.length,
-                                itemBuilder: (context, rowIndex, colIndex, index) {
-                                  return Expanded(child: Padding(
+                                itemBuilder:
+                                    (context, rowIndex, colIndex, index) {
+                                  return Expanded(
+                                      child: Padding(
                                     padding: EdgeInsets.all(10),
                                     child: CauseTile(
-                                      gestureFunction: () => model.toggleSelection(listCause: model.causesList[index]),
+                                      gestureFunction: () =>
+                                          model.toggleSelection(
+                                              listCause:
+                                                  model.causesList[index]),
                                       cause: model.causesList[index],
                                       causeIcon: FontAwesomeIcons.leaf,
-                                      isSelected: model.isCauseSelected(model.causesList[index]),
-                                      getInfoFunction: () => model.getCausePopup(listCause: model.causesList[index], causeIndex: index),
+                                      isSelected: model.isCauseSelected(
+                                          model.causesList[index]),
+                                      getInfoFunction: () =>
+                                          model.getCausePopup(
+                                              listCause:
+                                                  model.causesList[index],
+                                              causeIndex: index),
                                     ),
                                   ));
-                                }
-                            ),
+                                }),
                           ),
                         ),
                         Expanded(
                           flex: 1,
                           child: Center(
-                            child: CustomWidthButton('Get started',
+                            child: CustomWidthButton(
+                              'Get started',
                               onPressed: model.areAllCausesStillDisabled
                                   ? () {}
                                   : () {
-                              model.selectCauses();
-                              model.goToLogin();
-                              },
+                                      model.selectCauses();
+                                      model.goToLogin();
+                                    },
                               backgroundColor: model.areAllCausesStillDisabled
                                   ? Colors.grey
                                   : Theme.of(context).primaryColor,

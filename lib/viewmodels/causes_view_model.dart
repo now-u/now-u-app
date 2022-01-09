@@ -15,7 +15,8 @@ class CausesViewModel extends BaseModel {
   Map<ListCause, bool> _causes = {};
 
   List<ListCause> get causesList => _causes.keys.toList();
-  bool get areAllCausesStillDisabled => !_causes.values.toList().any((value) => value);
+  bool get areAllCausesStillDisabled =>
+      !_causes.values.toList().any((value) => value);
 
   Future fetchCauses() async {
     setBusy(true);
@@ -27,7 +28,7 @@ class CausesViewModel extends BaseModel {
     notifyListeners();
   }
 
-  bool isCauseSelected(ListCause cause){
+  bool isCauseSelected(ListCause cause) {
     return _causes[cause] ?? false;
   }
 
@@ -38,7 +39,8 @@ class CausesViewModel extends BaseModel {
   }
 
   void selectCauses() async {
-    List<ListCause> selectedCauses = causesList.where((cause) => isCauseSelected(cause)).toList();
+    List<ListCause> selectedCauses =
+        causesList.where((cause) => isCauseSelected(cause)).toList();
     _causesService.selectCauses(selectedCauses);
   }
 
@@ -50,16 +52,14 @@ class CausesViewModel extends BaseModel {
     _navigationService.navigateTo(Routes.home);
   }
 
-  Future getCausePopup({required ListCause listCause, required int causeIndex}) async {
-    var dialogResult = await _dialogService.showDialog(
-        CauseDialog(causesList[causeIndex])
-    );
+  Future getCausePopup(
+      {required ListCause listCause, required int causeIndex}) async {
+    var dialogResult =
+        await _dialogService.showDialog(CauseDialog(causesList[causeIndex]));
     if (dialogResult.response) {
       if (_causes[listCause] == false) {
         toggleSelection(listCause: listCause);
       }
     }
   }
-
-
 }
