@@ -9,9 +9,13 @@ import 'package:app/services/dialog_service.dart';
 
 class CausesViewModel extends BaseModel {
   final DialogService _dialogService = locator<DialogService>();
+  final NavigationService _navigationService = locator<NavigationService>();
+  final CausesService _causesService = locator<CausesService>();
 
   Map<ListCause, bool> _causes = {};
+
   List<ListCause> get causesList => _causes.keys.toList();
+  bool get areAllCausesStillDisabled => !_causes.values.toList().any((value) => value);
 
   Future fetchCauses() async {
     setBusy(true);
@@ -27,22 +31,23 @@ class CausesViewModel extends BaseModel {
     return _causes[cause] ?? false;
   }
 
-  bool get areAllCausesStillDisabled => !_causes.values.toList().any((value) => value);
-
-  final NavigationService _navigationService = locator<NavigationService>();
-  final CausesService _causesService = locator<CausesService>();
-
   void toggleSelection({required ListCause listCause}) {
     bool isCauseSelected = _causes[listCause] ?? false;
     _causes[listCause] = !isCauseSelected;
     notifyListeners();
   }
 
-  void getStarted() async {
+  void selectCauses() async {
     List<ListCause> selectedCauses = causesList.where((cause) => isCauseSelected(cause)).toList();
     _causesService.selectCauses(selectedCauses);
+  }
 
+  void goToLogin() {
     _navigationService.navigateTo(Routes.login);
+  }
+
+  void goHome() {
+    _navigationService.navigateTo(Routes.home);
   }
 
   Future getCausePopup({required ListCause listCause, required int causeIndex}) async {
@@ -55,4 +60,6 @@ class CausesViewModel extends BaseModel {
       }
     }
   }
+
+
 }

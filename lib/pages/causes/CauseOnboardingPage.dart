@@ -92,7 +92,10 @@ class CauseOnboardingPage extends StatelessWidget {
                             child: CustomWidthButton('Get started',
                               onPressed: model.areAllCausesStillDisabled
                                   ? () {}
-                                  : () {model.getStarted();},
+                                  : () {
+                              model.selectCauses();
+                              model.goToLogin();
+                              },
                               backgroundColor: model.areAllCausesStillDisabled
                                   ? Colors.grey
                                   : Theme.of(context).primaryColor,

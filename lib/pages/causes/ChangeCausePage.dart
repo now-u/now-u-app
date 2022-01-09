@@ -7,7 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app/assets/components/buttons/customWidthButton.dart';
 import 'package:stacked/stacked.dart';
 
-class CauseChangePage extends StatelessWidget {
+class ChangeCausePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +44,7 @@ class CauseChangePage extends StatelessWidget {
                                 ],
                               ),
                               onPressed: () {
-                                print('hello');
+                                model.goHome();
                               }),
                           SizedBox(width: 10)
                         ],
@@ -108,7 +108,8 @@ class CauseChangePage extends StatelessWidget {
                           onPressed: model.areAllCausesStillDisabled
                               ? () {}
                               : () {
-                                  model.getStarted();
+                                  model.selectCauses();
+                                  model.goHome();
                                 },
                           backgroundColor: model.areAllCausesStillDisabled
                               ? Colors.grey
