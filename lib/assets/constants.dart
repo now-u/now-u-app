@@ -13,22 +13,22 @@ bool devMode = !testMode && !kReleaseMode;
 class CustomColors {
   /// Primary brand color
   static Color brandColor = Color.fromRGBO(255, 136, 0, 1);
-  
+
   // --- Styles --- //
-  
+
   //-- Accent colours --//
   /// Venetian Red
   static Color accentRed = Color.fromRGBO(211, 0, 1, 1);
-  
+
   /// Sunflower
   static Color accentYellow = Color.fromRGBO(243, 183, 0, 1);
-  
+
   /// Salomie
   static Color accentLightYellow = Color.fromRGBO(243, 183, 0, 1);
-  
+
   /// Oxford Blue
   static Color accentBlue = Color.fromRGBO(1, 26, 67, 1);
-  
+
   //-- Neutrals --//
   static Color white = Colors.white;
   static Color greyLight1 = Color.fromRGBO(247, 248, 252, 1);
@@ -39,6 +39,7 @@ class CustomColors {
   static Color black1 = Color.fromRGBO(55, 58, 74, 1);
   static Color black2 = Color.fromRGBO(23, 23, 26, 1);
 }
+
 //-- Fonts --//
 String fontFamily = "Nunito";
 String fontFamilySecondary = "Poppins";
@@ -67,8 +68,9 @@ TextStyle exploreHeading = TextStyle(
 );
 
 const Offset tileShadowOffset = Offset(0, 3);
-const double tileShadowBlurRadius = 20; 
-const BorderRadius tileBorderRadius = const BorderRadius.all(Radius.circular(8));
+const double tileShadowBlurRadius = 20;
+const BorderRadius tileBorderRadius =
+    const BorderRadius.all(Radius.circular(8));
 const BoxShadow tileBoxShadowLight = const BoxShadow(
   color: Color.fromRGBO(0, 45, 96, 0.08),
   offset: tileShadowOffset,

@@ -43,9 +43,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
         builder: (context, model, child) {
           return Scaffold(
               appBar: customAppBar(
-                text: model.busy
-                    ? "Loading..."
-                    : model.action!.superType.name,
+                text: model.busy ? "Loading..." : model.action!.superType.name,
                 backButtonText: "Actions",
                 context: context,
               ),

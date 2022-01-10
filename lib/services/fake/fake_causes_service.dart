@@ -32,7 +32,7 @@ class FakeCausesService extends ApiService
     Map<String, dynamic> actionData = json.decode(response)["data"];
     return CampaignAction.fromJson(actionData);
   }
-  
+
   Future<Campaign> getCampaign(int id) async {
     String response = await readDataFromFile("campaign.json");
     Map<String, dynamic> data = json.decode(response)["data"];

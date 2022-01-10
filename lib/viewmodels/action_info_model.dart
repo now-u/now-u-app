@@ -9,7 +9,8 @@ import 'package:app/services/navigation_service.dart';
 import 'package:app/models/Action.dart';
 
 class ActionInfoViewModel extends BaseCampaignViewModel {
-  final AuthenticationService _authenticationService = locator<AuthenticationService>();
+  final AuthenticationService _authenticationService =
+      locator<AuthenticationService>();
   final NavigationService _navigationService = locator<NavigationService>();
   final CausesService _causesService = locator<CausesService>();
 

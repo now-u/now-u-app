@@ -16,12 +16,10 @@ class ExploreFilterSelectionItem extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onPressed;
 
-  ExploreFilterSelectionItem({
-    required ExploreFilterOption item,
-    required this.onPressed
-  }):
-    this.text = item.displayName,
-    this.isSelected = item.isSelected;
+  ExploreFilterSelectionItem(
+      {required ExploreFilterOption item, required this.onPressed})
+      : this.text = item.displayName,
+        this.isSelected = item.isSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +27,8 @@ class ExploreFilterSelectionItem extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         decoration: BoxDecoration(
-          color: isSelected ? CustomColors.black1 : CustomColors.greyLight2,
-          borderRadius: BorderRadius.all(Radius.circular(24))
-        ),
+            color: isSelected ? CustomColors.black1 : CustomColors.greyLight2,
+            borderRadius: BorderRadius.all(Radius.circular(24))),
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         child: Center(
           child: Text(
@@ -98,17 +95,21 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                           GestureDetector(
                             onTap: link != null
                                 ? () => pageModel.update(
-                                    title: link!.title, sections: link!.sections)
+                                    title: link!.title,
+                                    sections: link!.sections)
                                 : null,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
                                   title,
-                                  style: Theme.of(context).primaryTextTheme.headline3,
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .headline3,
                                   textAlign: TextAlign.left,
                                 ),
-                                if (link != null) Icon(Icons.chevron_right, size: 30)
+                                if (link != null)
+                                  Icon(Icons.chevron_right, size: 30)
                               ],
                             ),
                           ),
@@ -131,24 +132,26 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                             scrollDirection: Axis.horizontal,
                             itemCount: model.filter!.options.length,
                             itemBuilder: (context, index) {
-                              ExploreFilterOption option = model.filter!.options[index];
+                              ExploreFilterOption option =
+                                  model.filter!.options[index];
                               return Padding(
-                                padding: EdgeInsets.only(
-                                  right: 5,
-                                  left: index == 0 ? horizontalPadding : 0,
-                                ),
-                                child: ExploreFilterSelectionItem(
-                                  item: option,
-                                  onPressed: () => model.toggleFilterOption(option),
-                                )
-                              );
-                            }
-                        ),
+                                  padding: EdgeInsets.only(
+                                    right: 5,
+                                    left: index == 0 ? horizontalPadding : 0,
+                                  ),
+                                  child: ExploreFilterSelectionItem(
+                                    item: option,
+                                    onPressed: () =>
+                                        model.toggleFilterOption(option),
+                                  ));
+                            }),
                       ),
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.only(bottom: CustomPaddingSize.normal, top: CustomPaddingSize.small),
+                  padding: EdgeInsets.only(
+                      bottom: CustomPaddingSize.normal,
+                      top: CustomPaddingSize.small),
                   child: Container(
                     height: tileHeight + tileShadowBlurRadius,
                     child: model.busy

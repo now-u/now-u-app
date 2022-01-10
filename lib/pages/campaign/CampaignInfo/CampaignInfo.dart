@@ -29,7 +29,7 @@ class CampaignInfo extends StatelessWidget {
 
   CampaignInfo({ListCampaign? campaign, int? campaignId})
       : assert(campaign != null || campaignId != null),
-      this.campaignId = campaignId ?? campaign!.id;
+        this.campaignId = campaignId ?? campaign!.id;
 
   @override
   Widget build(BuildContext context) {

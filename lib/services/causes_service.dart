@@ -22,7 +22,7 @@ class CausesService extends ApiService {
         await getListRequest("campaign", params: params);
     return data.map((campData) => ListCampaign.fromJson(campData)).toList();
   }
-  
+
   Future<Campaign> getCampaign(int id) async {
     Map response = await getRequest("campaign/$id");
     return Campaign.fromJson(response["data"]);
