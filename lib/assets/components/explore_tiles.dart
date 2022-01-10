@@ -1,35 +1,43 @@
+import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/custom_network_image.dart';
+import 'package:app/locator.dart';
+import 'package:app/routes.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Cause.dart';
 import 'package:app/models/article.dart';
+import 'package:app/services/navigation_service.dart';
+import 'package:app/pages/action/ActionInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ExploreCampaignTile extends StatelessWidget {
+  final NavigationService _navigationService = locator<NavigationService>();
+
   final String headerImage;
   final String title;
   final ListCause cause;
   final bool completed;
+  final ListCampaign campaign;
 
   ExploreCampaignTile(ListCampaign model, {Key? key})
       : headerImage = model.headerImage,
         title = model.title,
         cause = model.cause,
         completed = model.completed,
+        campaign = model,
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      clipBehavior: Clip.antiAlias,
+    return CustomTile(
       child: AspectRatio(
         aspectRatio: 0.75,
         child: InkWell(
-          onTap: () {
-            // TODO do something
-          },
+          onTap: () => _navigationService.navigateTo(
+            Routes.campaignInfo,
+            arguments: campaign,
+          ),
           child: Column(
             children: [
               Stack(
@@ -70,6 +78,8 @@ class ExploreCampaignTile extends StatelessWidget {
 }
 
 class ExploreActionTile extends StatelessWidget {
+  final NavigationService _navigationService = locator<NavigationService>();
+
   final String title;
   final ActionType type;
   final Color iconColor;
@@ -79,6 +89,7 @@ class ExploreActionTile extends StatelessWidget {
   final ListCause cause;
   final String timeText;
   final bool completed;
+  final ListCauseAction action;
 
   ExploreActionTile(ListCauseAction model, {Key? key})
       : title = model.title,
@@ -90,6 +101,7 @@ class ExploreActionTile extends StatelessWidget {
         cause = model.cause,
         timeText = model.timeText,
         completed = model.completed,
+        action = model,
         super(key: key);
 
   @override
@@ -100,9 +112,10 @@ class ExploreActionTile extends StatelessWidget {
       child: AspectRatio(
         aspectRatio: 1.65,
         child: InkWell(
-          onTap: () {
-            // TODO do something
-          },
+          onTap: () => _navigationService.navigateTo(
+            Routes.actionInfo,
+            arguments: ActionInfoArguments(action: action),
+          ),
           child: Column(
             children: [
               Flexible(
@@ -172,12 +185,15 @@ class ExploreActionTile extends StatelessWidget {
 }
 
 class ExploreNewsTile extends StatelessWidget {
+  final NavigationService _navigationService = locator<NavigationService>();
+
   final String title;
   final String subtitle;
   final String headerImage;
   final String dateString;
   final String url;
   final String shortUrl;
+  final Article article;
 
   ExploreNewsTile(Article model, {Key? key})
       : title = model.title,
@@ -186,6 +202,7 @@ class ExploreNewsTile extends StatelessWidget {
         dateString = model.dateString ?? "",
         url = model.fullArticleLink,
         shortUrl = model.shortUrl,
+        article = model,
         super(key: key);
 
   @override
@@ -197,7 +214,7 @@ class ExploreNewsTile extends StatelessWidget {
         aspectRatio: 0.8,
         child: InkWell(
           onTap: () {
-            // TODO do something
+            _navigationService.launchLink(article.fullArticleLink);
           },
           child: Column(
             children: [

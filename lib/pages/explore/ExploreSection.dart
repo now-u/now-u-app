@@ -148,24 +148,26 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.only(bottom: CustomPaddingSize.large, top: CustomPaddingSize.small),
+                  padding: EdgeInsets.only(bottom: CustomPaddingSize.normal, top: CustomPaddingSize.small),
                   child: Container(
-                    height: tileHeight,
+                    height: tileHeight + tileShadowBlurRadius,
                     child: model.busy
                         ? const Center(child: CircularProgressIndicator())
                         : model.error || model.tiles == null
                             // TODO handle error here
                             ? Container(color: Colors.red)
                             : ListView.builder(
-                                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
                                 scrollDirection: Axis.horizontal,
                                 itemCount: model.tiles!.length,
-                                itemBuilder: (context, index) => Padding(
-                                  padding: EdgeInsets.only(
-                                    right: 2,
-                                    left: index == 0 ? horizontalPadding : 0,
+                                itemBuilder: (context, index) => Container(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                      right: 8,
+                                      left: index == 0 ? horizontalPadding : 0,
+                                      bottom: tileShadowBlurRadius,
+                                    ),
+                                    child: renderTile(model.tiles![index]),
                                   ),
-                                  child: renderTile(model.tiles![index]),
                                 ),
                               ),
                   ),

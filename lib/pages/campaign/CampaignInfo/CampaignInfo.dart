@@ -25,11 +25,11 @@ import 'package:app/viewmodels/campaign_info_model.dart';
 const double H_PADDING = 20;
 
 class CampaignInfo extends StatelessWidget {
-  final Campaign? campaign;
-  final int? campaignId;
+  final int campaignId;
 
-  CampaignInfo({this.campaign, this.campaignId})
-      : assert(campaign != null || campaignId != null);
+  CampaignInfo({ListCampaign? campaign, int? campaignId})
+      : assert(campaign != null || campaignId != null),
+      this.campaignId = campaignId ?? campaign!.id;
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +37,7 @@ class CampaignInfo extends StatelessWidget {
         viewModelBuilder: () => CampaignInfoViewModel(),
         onModelReady: (model) {
           print("Model ready getting campaign");
-          if (campaign != null) {
-            model.setCampaign = campaign;
-          } else {
-            model.fetchCampaign(campaignId);
-          }
+          model.fetchCampaign(campaignId);
         },
         builder: (context, model, child) {
           if (model.campaign != null) {

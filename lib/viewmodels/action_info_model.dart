@@ -1,3 +1,4 @@
+import 'package:app/services/causes_service.dart';
 import 'package:app/viewmodels/base_campaign_model.dart';
 
 import 'package:app/locator.dart';
@@ -8,20 +9,17 @@ import 'package:app/services/navigation_service.dart';
 import 'package:app/models/Action.dart';
 
 class ActionInfoViewModel extends BaseCampaignViewModel {
-  final AuthenticationService _authenticationService =
-      locator<AuthenticationService>();
+  final AuthenticationService _authenticationService = locator<AuthenticationService>();
   final NavigationService _navigationService = locator<NavigationService>();
+  final CausesService _causesService = locator<CausesService>();
 
   CampaignAction? _action;
   CampaignAction? get action => _action;
 
-  bool isLoading = true;
-
   Future<void> fetchAction(ListCauseAction action) async {
     setBusy(true);
     // TODO catch error
-    _action = await action.getAction();
-    isLoading = false;
+    _action = await _causesService.getAction(action.id);
     setBusy(false);
     notifyListeners();
   }
