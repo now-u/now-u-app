@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:app/models/Learning.dart';
 import 'package:app/services/fake/fake_api_service.dart';
 
 import '../causes_service.dart';
@@ -49,5 +50,11 @@ class FakeCausesService extends ApiService
       {Map<String, dynamic>? params}) async {
     Iterable data = await readIterableDataFromFile("campaigns.json");
     return data.map((e) => ListCampaign.fromJson(e)).toList();
+  }
+ 
+  Future<List<LearningResource>> getLearningResources(
+      {Map<String, dynamic>? params}) async {
+    Iterable data = await readIterableDataFromFile("learning_resources.json");
+    return data.map((e) => LearningResource.fromJson(e)).toList();
   }
 }

@@ -1,6 +1,7 @@
 import 'package:app/models/Cause.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
+import 'package:app/models/Learning.dart';
 import 'package:app/services/api_service.dart';
 
 class CausesService extends ApiService {
@@ -39,6 +40,16 @@ class CausesService extends ApiService {
         await getListRequest("action", params: params);
     return data
         .map((actionData) => ListCauseAction.fromJson(actionData))
+        .toList();
+  }
+ 
+  Future<List<LearningResource>> getLearningResources({
+    Map<String, dynamic>? params
+  }) async {
+    List<Map<String, dynamic>> data =
+        await getListRequest("learning/resources", params: params);
+    return data
+        .map((actionData) => LearningResource.fromJson(actionData))
         .toList();
   }
 }

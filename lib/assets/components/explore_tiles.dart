@@ -1,6 +1,7 @@
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/custom_network_image.dart';
 import 'package:app/locator.dart';
+import 'package:app/models/Learning.dart';
 import 'package:app/routes.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
@@ -77,11 +78,63 @@ class ExploreCampaignTile extends StatelessWidget {
   }
 }
 
-class ExploreActionTile extends StatelessWidget {
+class ExploreActionTile extends BaseExploreActionTile {
+  final ListCauseAction action;
+
+  ExploreActionTile(ListCauseAction model, {Key? key})
+    : action = model,
+      super(
+        title: model.title,
+        type: model.superType.name,
+        iconColor: model.primaryColor,
+        headerColor: model.secondaryColor,
+        dividerColor: model.tertiaryColor,
+        icon: model.icon,
+        cause: model.cause,
+        timeText: model.timeText,
+        completed: model.completed,
+        key: key
+      );
+
+  void onTap() {
+    _navigationService.navigateTo(
+      Routes.actionInfo,
+      arguments: ActionInfoArguments(action: action),
+    );
+  }
+}
+
+class ExploreLearningTile extends BaseExploreActionTile {
+  final LearningResource resource;
+
+  ExploreLearningTile(LearningResource model, {Key? key})
+      : resource = model,
+        super(
+          title: model.title,
+          type: model.type.name,
+          iconColor: blue1,
+          headerColor: blue0,
+          dividerColor: blue2,
+          icon: model.icon,
+          cause: model.cause,
+          timeText: model.timeText,
+          completed: model.completed,
+          key: key
+        );
+  
+  void onTap() {
+    _navigationService.launchLink(
+      resource.link,
+    );
+  }
+}
+
+
+abstract class BaseExploreActionTile extends StatelessWidget {
   final NavigationService _navigationService = locator<NavigationService>();
 
   final String title;
-  final ActionType type;
+  final String type;
   final Color iconColor;
   final Color headerColor;
   final Color dividerColor;
@@ -89,20 +142,21 @@ class ExploreActionTile extends StatelessWidget {
   final ListCause cause;
   final String timeText;
   final bool completed;
-  final ListCauseAction action;
 
-  ExploreActionTile(ListCauseAction model, {Key? key})
-      : title = model.title,
-        type = model.superType,
-        iconColor = model.primaryColor,
-        headerColor = model.secondaryColor,
-        dividerColor = model.tertiaryColor,
-        icon = model.icon,
-        cause = model.cause,
-        timeText = model.timeText,
-        completed = model.completed,
-        action = model,
-        super(key: key);
+  BaseExploreActionTile({
+    required this.title,
+    required this.type,
+    required this.iconColor,
+    required this.headerColor,
+    required this.dividerColor,
+    required this.icon,
+    required this.cause,
+    required this.timeText,
+    required this.completed,
+    Key? key
+  });
+
+  void onTap();
 
   @override
   Widget build(BuildContext context) {
@@ -112,10 +166,7 @@ class ExploreActionTile extends StatelessWidget {
       child: AspectRatio(
         aspectRatio: 1.65,
         child: InkWell(
-          onTap: () => _navigationService.navigateTo(
-            Routes.actionInfo,
-            arguments: ActionInfoArguments(action: action),
-          ),
+          onTap: onTap,
           child: Column(
             children: [
               Flexible(
@@ -131,7 +182,7 @@ class ExploreActionTile extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        type.name,
+                        type,
                         textScaleFactor: .8,
                       ),
                       VerticalDivider(

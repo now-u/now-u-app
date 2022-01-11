@@ -1,3 +1,4 @@
+import 'package:app/models/Cause.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -122,6 +123,10 @@ class LearningResource {
   /// String name of the source of the article eg BBC news
   final String? source;
 
+  final bool completed;
+
+  final ListCause cause;
+
   LearningResource.fromJson(Map json)
       : id = json['id'],
         title = json['title'],
@@ -129,6 +134,8 @@ class LearningResource {
         link = json['link'],
         type = getResourceTypeFromString(json['type']),
         createdAt = DateTime.parse(json['created_at']),
+        cause = ListCause.fromJson(json['causes'][0]),
+        completed = json['completed'],
         source = json['source'];
 
   /// Whether the resource has been created in the last 2 days

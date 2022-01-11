@@ -1,4 +1,5 @@
 import 'package:app/assets/icons/customIcons.dart';
+import 'package:app/models/Learning.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
@@ -105,6 +106,28 @@ void main() {
       expect(action.type, CampaignActionType.Learn);
 
       ListCause actionCause = action.cause;
+      expect(actionCause.id, 1);
+    });
+  });
+  
+  group('get learning resources', () {
+    test('returns a List of LearningResources if the request is successful', () async {
+      final client = MockClient();
+      _causesService.client = client;
+
+      when(client.get(Uri.parse('https://api.now-u.com/api/v2/learning/resources'),
+              headers: unauthenticatedHeaders))
+          .thenAnswer((_) async =>
+              http.Response(await readTestData("learning_resources.json"), 200));
+
+      List<LearningResource> resources = await _causesService.getLearningResources();
+      LearningResource resource = resources[0];
+
+      expect(resource.id, 47);
+      expect(resource.title, "Watch 'Why talk toilets?'");
+      expect(resource.type, getResourceTypeFromString("video"));
+
+      ListCause actionCause = resource.cause;
       expect(actionCause.id, 1);
     });
   });
