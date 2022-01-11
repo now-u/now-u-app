@@ -82,19 +82,18 @@ class ExploreActionTile extends BaseExploreActionTile {
   final ListCauseAction action;
 
   ExploreActionTile(ListCauseAction model, {Key? key})
-    : action = model,
-      super(
-        title: model.title,
-        type: model.superType.name,
-        iconColor: model.primaryColor,
-        headerColor: model.secondaryColor,
-        dividerColor: model.tertiaryColor,
-        icon: model.icon,
-        cause: model.cause,
-        timeText: model.timeText,
-        completed: model.completed,
-        key: key
-      );
+      : action = model,
+        super(
+            title: model.title,
+            type: model.superType.name,
+            iconColor: model.primaryColor,
+            headerColor: model.secondaryColor,
+            dividerColor: model.tertiaryColor,
+            icon: model.icon,
+            cause: model.cause,
+            timeText: model.timeText,
+            completed: model.completed,
+            key: key);
 
   void onTap() {
     _navigationService.navigateTo(
@@ -110,25 +109,23 @@ class ExploreLearningTile extends BaseExploreActionTile {
   ExploreLearningTile(LearningResource model, {Key? key})
       : resource = model,
         super(
-          title: model.title,
-          type: model.type.name,
-          iconColor: blue0,
-          headerColor: blue1,
-          dividerColor: blue2,
-          icon: model.icon,
-          cause: model.cause,
-          timeText: model.timeText,
-          completed: model.completed,
-          key: key
-        );
-  
+            title: model.title,
+            type: model.type.name,
+            iconColor: blue0,
+            headerColor: blue1,
+            dividerColor: blue2,
+            icon: model.icon,
+            cause: model.cause,
+            timeText: model.timeText,
+            completed: model.completed,
+            key: key);
+
   void onTap() {
     _navigationService.launchLink(
       resource.link,
     );
   }
 }
-
 
 abstract class BaseExploreActionTile extends StatelessWidget {
   final NavigationService _navigationService = locator<NavigationService>();
@@ -143,18 +140,17 @@ abstract class BaseExploreActionTile extends StatelessWidget {
   final String timeText;
   final bool completed;
 
-  BaseExploreActionTile({
-    required this.title,
-    required this.type,
-    required this.iconColor,
-    required this.headerColor,
-    required this.dividerColor,
-    required this.icon,
-    required this.cause,
-    required this.timeText,
-    required this.completed,
-    Key? key
-  });
+  BaseExploreActionTile(
+      {required this.title,
+      required this.type,
+      required this.iconColor,
+      required this.headerColor,
+      required this.dividerColor,
+      required this.icon,
+      required this.cause,
+      required this.timeText,
+      required this.completed,
+      Key? key});
 
   void onTap();
 

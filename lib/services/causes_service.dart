@@ -42,10 +42,9 @@ class CausesService extends ApiService {
         .map((actionData) => ListCauseAction.fromJson(actionData))
         .toList();
   }
- 
-  Future<List<LearningResource>> getLearningResources({
-    Map<String, dynamic>? params
-  }) async {
+
+  Future<List<LearningResource>> getLearningResources(
+      {Map<String, dynamic>? params}) async {
     List<Map<String, dynamic>> data =
         await getListRequest("learning/resources", params: params);
     return data

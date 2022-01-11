@@ -236,10 +236,11 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
 
 class LearningExploreSection extends ExploreSection<LearningResource> {
   @override
-  LearningResourceExploreSectionViewModel get viewModel => LearningResourceExploreSectionViewModel(
-      params: fetchParams,
-      filter: filter,
-  );
+  LearningResourceExploreSectionViewModel get viewModel =>
+      LearningResourceExploreSectionViewModel(
+        params: fetchParams,
+        filter: filter,
+      );
 
   LearningExploreSection({
     required String title,

@@ -109,18 +109,21 @@ void main() {
       expect(actionCause.id, 1);
     });
   });
-  
+
   group('get learning resources', () {
-    test('returns a List of LearningResources if the request is successful', () async {
+    test('returns a List of LearningResources if the request is successful',
+        () async {
       final client = MockClient();
       _causesService.client = client;
 
-      when(client.get(Uri.parse('https://api.now-u.com/api/v2/learning/resources'),
+      when(client.get(
+              Uri.parse('https://api.now-u.com/api/v2/learning/resources'),
               headers: unauthenticatedHeaders))
-          .thenAnswer((_) async =>
-              http.Response(await readTestData("learning_resources.json"), 200));
+          .thenAnswer((_) async => http.Response(
+              await readTestData("learning_resources.json"), 200));
 
-      List<LearningResource> resources = await _causesService.getLearningResources();
+      List<LearningResource> resources =
+          await _causesService.getLearningResources();
       LearningResource resource = resources[0];
 
       expect(resource.id, 47);
