@@ -4,6 +4,7 @@ import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Explorable.dart';
 import 'package:app/models/article.dart';
+import 'package:app/models/Learning.dart';
 import 'package:app/pages/explore/ExplorePage.dart';
 import 'package:app/viewmodels/explore/explore_section_view_model.dart';
 import 'package:app/viewmodels/explore_page_view_model.dart';
@@ -231,6 +232,32 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
 
   @override
   Widget renderTile(ListCauseAction tile) => ExploreActionTile(tile);
+}
+
+class LearningExploreSection extends ExploreSection<LearningResource> {
+  @override
+  LearningResourceExploreSectionViewModel get viewModel => LearningResourceExploreSectionViewModel(
+      params: fetchParams,
+      filter: filter,
+  );
+
+  LearningExploreSection({
+    required String title,
+    String? description,
+    Map<String, dynamic>? fetchParams,
+    ExplorePage? link,
+    ExploreFilter? filter,
+  }) : super(
+          title: title,
+          description: description,
+          fetchParams: fetchParams,
+          filter: filter,
+          link: link,
+          tileHeight: 160,
+        );
+
+  @override
+  Widget renderTile(LearningResource tile) => ExploreLearningTile(tile);
 }
 
 class NewsExploreSection extends ExploreSection<Article> {

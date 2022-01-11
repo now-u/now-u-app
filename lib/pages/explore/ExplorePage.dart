@@ -126,6 +126,11 @@ ExplorePage home_explore_page = ExplorePage(
         ExploreFilterOption(displayName: "5-10", parameterValue: "def")
       ]),
     ),
+    LearningExploreSection(
+      title: "Learn",
+      description:
+          "Learn more about key topics of pressing social and environmental issues",
+    ),
     NewsExploreSection(
       title: "News",
       description:

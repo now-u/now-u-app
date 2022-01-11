@@ -112,8 +112,8 @@ class ExploreLearningTile extends BaseExploreActionTile {
         super(
           title: model.title,
           type: model.type.name,
-          iconColor: blue1,
-          headerColor: blue0,
+          iconColor: blue0,
+          headerColor: blue1,
           dividerColor: blue2,
           icon: model.icon,
           cause: model.cause,

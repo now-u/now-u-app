@@ -1,6 +1,7 @@
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Cause.dart';
+import 'package:app/models/Learning.dart';
 import 'package:app/models/article.dart';
 import 'package:app/services/causes_service.dart';
 import 'package:app/services/news_service.dart';
@@ -158,6 +159,17 @@ class ActionExploreSectionViewModel
 
   Future<List<ListCauseAction>> fetchTiles() async {
     return await _causesService.getActions(params: queryParams);
+  }
+}
+
+class LearningResourceExploreSectionViewModel
+    extends ExploreSectionViewModel<LearningResource> {
+  LearningResourceExploreSectionViewModel(
+      {Map<String, dynamic>? params, ExploreFilter? filter})
+      : super(params, filter: filter);
+
+  Future<List<LearningResource>> fetchTiles() async {
+    return await _causesService.getLearningResources(params: queryParams);
   }
 }
 

@@ -3,6 +3,7 @@ import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app/assets/icons/customIcons.dart';
+import 'package:app/models/Explorable.dart';
 
 import 'package:app/models/Action.dart';
 
@@ -100,7 +101,7 @@ LearningResourceType getResourceTypeFromString(String typeName) {
 /// Practially a learning resource is just a link with some extra meta data
 /// like the time expected to completed the resource. We also store if the user
 /// has completed the resource. // TODO Do this
-class LearningResource {
+class LearningResource extends Explorable {
   /// Api id
   final int id;
 
