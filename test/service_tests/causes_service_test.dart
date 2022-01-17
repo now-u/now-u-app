@@ -115,18 +115,18 @@ void main() {
       final client = MockClient();
       _causesService.client = client;
 
-      Map body = {'cause_ids': [1, 2]};
+      Map body = {
+        'cause_ids': [1, 2]
+      };
 
-
-      when(client
-          .post(Uri.parse('https://api.now-u.com/api/v2/me/causes'), headers: unauthenticatedHeaders, body: body))
-          .thenAnswer((_) async =>
-          http.Response('{}', 200));
+      when(client.post(Uri.parse('https://api.now-u.com/api/v2/me/causes'),
+              headers: unauthenticatedHeaders, body: body))
+          .thenAnswer((_) async => http.Response('{}', 200));
 
       await _causesService.selectCauses([mockCause(id: 1), mockCause(id: 2)]);
 
-      verify(client
-          .post(Uri.parse('https://api.now-u.com/api/v2/me/causes'), headers: unauthenticatedHeaders, body: body))
+      verify(client.post(Uri.parse('https://api.now-u.com/api/v2/me/causes'),
+              headers: unauthenticatedHeaders, body: body))
           .called(1);
     });
   });

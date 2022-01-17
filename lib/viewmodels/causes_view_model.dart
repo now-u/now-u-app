@@ -17,6 +17,7 @@ class CausesViewModel extends BaseModel {
   List<ListCause> get causesList => _causes.keys.toList();
   bool get areCausesDisabled => !_causes.values.toList().any((value) => value);
 
+
   Future fetchCauses() async {
     setBusy(true);
 
@@ -27,7 +28,7 @@ class CausesViewModel extends BaseModel {
     notifyListeners();
   }
 
-  bool isCauseSelected(ListCause cause){
+  bool isCauseSelected(ListCause cause) {
     return _causes[cause] ?? false;
   }
 
@@ -47,20 +48,24 @@ class CausesViewModel extends BaseModel {
       }
     }
   }
-}
 
-class SelectCausesViewModel extends CausesViewModel {
   void selectCauses() async {
     List<ListCause> selectedCauses = causesList.where((cause) => isCauseSelected(cause)).toList();
     _causesService.selectCauses(selectedCauses);
+  }
+}
+
+
+class SelectCausesViewModel extends CausesViewModel {
+  void selectCauses() async {
+    super.selectCauses();
     _navigationService.navigateTo(Routes.login);
   }
 }
 
 class ChangeCausesViewModel extends CausesViewModel {
   void selectCauses() async {
-    List<ListCause> selectedCauses = causesList.where((cause) => isCauseSelected(cause)).toList();
-    _causesService.selectCauses(selectedCauses);
+    super.selectCauses();
     _navigationService.navigateTo(Routes.home);
   }
 

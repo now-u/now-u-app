@@ -63,6 +63,6 @@ class CausesService extends ApiService {
   /// Posts the ids of these causes to the API
   Future<void> selectCauses(List<ListCause> selectedCauses) async {
     List<int> ids = selectedCauses.map((cause) => cause.id).toList();
-    await postRequest('me/causes', body:{'cause_ids': ids});
+    await postRequest('me/causes', body: {'cause_ids': ids});
   }
 }

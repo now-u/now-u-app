@@ -5,7 +5,7 @@ import 'package:app/assets/components/causes/causeTile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stacked/stacked.dart';
 
-class causeTileGrid extends StatelessWidget {
+class CauseTileGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<CausesViewModel>.reactive(
