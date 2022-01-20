@@ -48,7 +48,7 @@ class ExplorePage extends StatelessWidget {
                 children: [_header(context, model)] +
                     model.sections
                         .map((ExploreSection section) =>
-                            section.render(context, model))
+                            section.build(context, pageModel: model))
                         .toList()),
           );
         });
@@ -59,7 +59,7 @@ ExplorePage campaigns_explore_page = ExplorePage(title: "Campaigns", sections: [
   CampaignExploreSection(title: "Campaigns of the month", fetchParams: {
     "of_the_month": true,
   }),
-  CampaignExploreSection(title: "Recommened campaigns", fetchParams: {
+  CampaignExploreSection(title: "Recommended campaigns", fetchParams: {
     "recommended": true,
   }),
   CampaignExploreByCauseSection(

@@ -56,4 +56,9 @@ class HomeViewModel extends BaseModel with CampaignRO {
             "To suggest causes for future campaigns, fill in this Google Form",
         buttonText: "Go");
   }
+
+  void goToExplorePage() {
+    _navigationService.navigateTo('explore');
+  }
+
 }

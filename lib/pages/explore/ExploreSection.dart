@@ -44,7 +44,7 @@ class ExploreFilterSelectionItem extends StatelessWidget {
   }
 }
 
-abstract class ExploreSection<ExplorableType extends Explorable> {
+abstract class ExploreSection<ExplorableType extends Explorable> extends StatelessWidget {
   ExploreSectionViewModel<ExplorableType> get viewModel;
 
   /// Title of the section
@@ -76,7 +76,8 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
 
   Widget renderTile(ExplorableType tile);
 
-  Widget render(BuildContext context, ExplorePageViewModel pageModel) {
+  @override
+  Widget build(BuildContext context, {ExplorePageViewModel? pageModel}) {
     return ViewModelBuilder<ExploreSectionViewModel<ExplorableType>>.reactive(
         viewModelBuilder: () => viewModel,
         onModelReady: (model) => model.init(),
@@ -94,8 +95,8 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                       child: Column(
                         children: [
                           GestureDetector(
-                            onTap: link != null
-                                ? () => pageModel.update(
+                            onTap: link != null && pageModel != null
+                                ? () => pageModel!.update(
                                     title: link!.title,
                                     sections: link!.sections)
                                 : null,
