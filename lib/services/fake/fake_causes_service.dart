@@ -52,6 +52,11 @@ class FakeCausesService extends ApiService
     return data.map((e) => ListCampaign.fromJson(e)).toList();
   }
 
+  @override
+  Future<void> selectCauses(List<ListCause> selectedCauses) async {
+    await Future.delayed(Duration(seconds: 1));
+  }
+
   Future<List<LearningResource>> getLearningResources(
       {Map<String, dynamic>? params}) async {
     Iterable data = await readIterableDataFromFile("learning_resources.json");
