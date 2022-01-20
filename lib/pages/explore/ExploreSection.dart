@@ -234,15 +234,17 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
   Widget renderTile(ListCauseAction tile) => ExploreActionTile(tile);
 }
 
-class LearningExploreSection extends ExploreSection<LearningResource> {
+class LearningResourceExploreSection extends ExploreSection<LearningResource> {
   @override
-  LearningResourceExploreSectionViewModel get viewModel =>
-      LearningResourceExploreSectionViewModel(
+  LearningResourceExploreSectionViewModel get viewModel {
+    print("Filter is $filter");
+    return LearningResourceExploreSectionViewModel(
         params: fetchParams,
         filter: filter,
       );
+  }
 
-  LearningExploreSection({
+  LearningResourceExploreSection({
     required String title,
     String? description,
     Map<String, dynamic>? fetchParams,
@@ -313,6 +315,26 @@ class ActionExploreByCauseSection extends ActionExploreSection {
       ActionExploreByCauseSectionViewModel();
 
   ActionExploreByCauseSection({
+    required String title,
+    String? description,
+    Map<String, dynamic>? fetchParams,
+    ExplorePage? link,
+    ExploreFilter? filter,
+  }) : super(
+          title: title,
+          description: description,
+          fetchParams: fetchParams,
+          filter: filter,
+          link: link,
+        );
+}
+
+class LearningResourceExploreByCauseSection extends LearningResourceExploreSection {
+  @override
+  LearningResourceExploreByCauseSectionViewModel get viewModel =>
+      LearningResourceExploreByCauseSectionViewModel();
+
+  LearningResourceExploreByCauseSection({
     required String title,
     String? description,
     Map<String, dynamic>? fetchParams,
