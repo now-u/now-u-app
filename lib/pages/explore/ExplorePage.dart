@@ -107,6 +107,34 @@ ExplorePage actions_explore_page = ExplorePage(
   ],
 );
 
+ExplorePage learning_explore_page = ExplorePage(
+  title: "Learn",
+  sections: [
+    LearningResourceExploreSection(title: "Learning resources"),
+    LearningResourceExploreByCauseSection(
+      title: "Learning resource by cause",
+    ),
+    LearningResourceExploreSection(
+      title: "Learning resources by time2",
+      filter: ExploreFilter(
+        parameterName: "time",
+        options: timeBrackets
+            .map((bracket) => ExploreFilterOption(
+                  displayName: bracket['text'],
+                  parameterValue: bracket['text'],
+                ))
+            .toList(),
+      ),
+    ),
+    LearningResourceExploreSection(
+      title: "Completed learning",
+      fetchParams: {
+        "completed": true,
+      },
+    ),
+  ],
+);
+
 ExplorePage home_explore_page = ExplorePage(
   title: "Explore",
   sections: [
@@ -121,13 +149,10 @@ ExplorePage home_explore_page = ExplorePage(
       link: actions_explore_page,
       description:
           "Take a wide range of actions to drive lasting change for issues you care about",
-      filter: ExploreFilter(parameterName: "abc", options: [
-        ExploreFilterOption(displayName: "1-5", parameterValue: "abc"),
-        ExploreFilterOption(displayName: "5-10", parameterValue: "def")
-      ]),
     ),
-    LearningExploreSection(
+    LearningResourceExploreSection(
       title: "Learn",
+      link: learning_explore_page,
       description:
           "Learn more about key topics of pressing social and environmental issues",
     ),

@@ -90,7 +90,9 @@ abstract class ExploreSectionViewModel<ExplorableType extends Explorable>
   ExploreSectionViewModel(
     this.params, {
     this.filter,
-  });
+  }) {
+    print("Creating view model with filter: $filter");
+  }
 
   Map<String, dynamic>? get queryParams {
     if (filter == null) return params;
@@ -171,6 +173,12 @@ class LearningResourceExploreSectionViewModel
   Future<List<LearningResource>> fetchTiles() async {
     return await _causesService.getLearningResources(params: queryParams);
   }
+}
+
+class LearningResourceExploreByCauseSectionViewModel
+    extends LearningResourceExploreSectionViewModel
+    with ByCauseFilterMixin<LearningResource> {
+  LearningResourceExploreByCauseSectionViewModel() : super();
 }
 
 class ActionExploreByCauseSectionViewModel extends ActionExploreSectionViewModel
