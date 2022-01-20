@@ -9,12 +9,12 @@ import 'package:app/services/dialog_service.dart';
 import 'package:app/services/analytics.dart';
 
 class AccountDetailsViewModel extends BaseModel {
-  final AuthenticationService? _authenticationService =
+  final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
-  final GoogleLocationSearchService? _googleLocationSearchService =
+  final GoogleLocationSearchService _googleLocationSearchService =
       locator<GoogleLocationSearchService>();
-  final AnalyticsService? _analyticsService = locator<AnalyticsService>();
-  final DialogService? _dialogService = locator<DialogService>();
+  final AnalyticsService _analyticsService = locator<AnalyticsService>();
+  final DialogService _dialogService = locator<DialogService>();
   //final OrganisationService _organisationService = locator<OrganisationService>();
 
   String? _name;
@@ -34,12 +34,12 @@ class AccountDetailsViewModel extends BaseModel {
   String? _orgCode;
   set orgCode(String orgCode) => _orgCode = orgCode;
 
-  String get placeSearchUuid => _googleLocationSearchService!.sessionToken;
+  String get placeSearchUuid => _googleLocationSearchService.sessionToken;
   // The dob in the form or if null the current known dob
   DateTime? get latestDob => _dob ?? currentUser!.getDateOfBirth();
 
   Organisation? get userOrganisation =>
-      _authenticationService!.currentUser!.organisation;
+      _authenticationService.currentUser!.organisation;
 
   final _formKey = GlobalKey<FormState>();
   GlobalKey get formKey => _formKey;
@@ -55,7 +55,7 @@ class AccountDetailsViewModel extends BaseModel {
 
   Future<void> save() async {
     setBusy(true);
-    bool success = await _authenticationService!.updateUserDetails(
+    bool success = await _authenticationService.updateUserDetails(
         name: _name, dob: _dob, orgCode: _orgCode);
 
     if (success) {
@@ -63,11 +63,11 @@ class AccountDetailsViewModel extends BaseModel {
       setBusy(false);
       notifyListeners();
     } else {
-      _dialogService!.showDialog(
+      _dialogService.showDialog(BasicDialog(
         title: "Error",
         description:
             "Sorry there has been an error whilst updating your details.",
-      );
+      ));
       setBusy(false);
       notifyListeners();
     }
@@ -76,38 +76,44 @@ class AccountDetailsViewModel extends BaseModel {
   Future<void> delete() async {
     setBusy(true);
 
-    String? error = await _authenticationService!.deleteUserAccount();
+    String? error = await _authenticationService.deleteUserAccount();
 
     if (error == null) {
-      _dialogService!.showDialog(
-        title: "All done!",
-        description: "Your account has now been deleted.",
+      _dialogService.showDialog(
+        BasicDialog(
+          title: "All done!",
+          description: "Your account has now been deleted.",
+        ),
       );
-      await _analyticsService!.logUserAccountDeleted();
+      await _analyticsService.logUserAccountDeleted();
       logout();
     } else {
       switch (error) {
         case AuthError.request:
           {
-            _dialogService!.showDialog(
-                title: "Client Error",
-                description:
-                    "Sorry, something went wrong!\nTry restarting your app.");
+            _dialogService.showDialog(BasicDialog(
+              title: "Client Error",
+              description:
+                  "Sorry, something went wrong!\nTry restarting your app.",
+            ));
             break;
           }
         case AuthError.internal:
           {
-            _dialogService!.showDialog(
+            _dialogService.showDialog(BasicDialog(
                 title: "Server Error",
                 description:
-                    "Sorry, there was a server problem.\nTry again later.");
+                    "Sorry, there was a server problem.\nTry again later."));
             break;
           }
         default:
           {
-            _dialogService!.showDialog(
+            _dialogService.showDialog(
+              BasicDialog(
                 title: "Error",
-                description: "Sorry, something went wrong!\nPlease try again.");
+                description: "Sorry, something went wrong!\nPlease try again.",
+              ),
+            );
             break;
           }
       }
@@ -117,18 +123,18 @@ class AccountDetailsViewModel extends BaseModel {
   }
 
   Future<Place> getPlaceDetails(String? placeId) async {
-    return await _googleLocationSearchService!.getPlaceDetailFromId(placeId);
+    return await _googleLocationSearchService.getPlaceDetailFromId(placeId);
   }
 
   Future<List<Suggestion>> fetchSuggestions(String input, String lang) async {
     List<Suggestion>? suggestions =
-        await _googleLocationSearchService!.fetchSuggestions(input, lang);
+        await _googleLocationSearchService.fetchSuggestions(input, lang);
     return suggestions ?? List<Suggestion>.empty();
   }
 
   Future<bool> leaveOrganisation() async {
     setBusy(true);
-    await _authenticationService!.leaveOrganisation();
+    await _authenticationService.leaveOrganisation();
     setBusy(false);
     notifyListeners();
     return true;

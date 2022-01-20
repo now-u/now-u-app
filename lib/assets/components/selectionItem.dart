@@ -130,17 +130,15 @@ class ActionSelectionItem extends StatelessWidget {
                     width: 60,
                     height: 60,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        color: completed ? action.primaryColor : action.secondaryColor,
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      color: completed
+                          ? action.primaryColor
+                          : action.secondaryColor,
                     ),
                     child: Center(
                       child: Icon(
-                        completed
-                            ? Icons.check
-                            : action.icon,
-                        color: completed
-                            ? Colors.white
-                            : action.primaryColor,
+                        completed ? Icons.check : action.icon,
+                        color: completed ? Colors.white : action.primaryColor,
                         size: 30,
                       ),
                     ),
@@ -290,12 +288,11 @@ class LeadingSelectionItem extends StatelessWidget {
                             Container(
                               height: 45,
                               width: MediaQuery.of(context).size.width -
-                                      (outerHpadding ?? defaultOuterHpadding) *
-                                          2 -
-                                      (innerHpadding ?? defaultInnerHpadding) *
-                                          2 -
-                                      (iconWidth ?? defaultIconWidth) -
-                                      10 - (extraOverflow ?? 40),
+                                  (outerHpadding ?? defaultOuterHpadding) * 2 -
+                                  (innerHpadding ?? defaultInnerHpadding) * 2 -
+                                  (iconWidth ?? defaultIconWidth) -
+                                  10 -
+                                  (extraOverflow ?? 40),
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(

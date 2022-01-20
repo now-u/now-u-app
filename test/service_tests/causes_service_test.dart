@@ -1,3 +1,5 @@
+import 'package:app/assets/icons/customIcons.dart';
+import 'package:app/models/Learning.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
@@ -15,39 +17,43 @@ import 'package:app/assets/icons/customIcons.dart';
 void main() {
   setupLocator();
   CausesService _causesService = locator<CausesService>();
-  Map<String, String> unauthenticatedHeaders = {"Content-Type": "application/json; charset=UTF-8"};
+  Map<String, String> unauthenticatedHeaders = {
+    "Content-Type": "application/json; charset=UTF-8"
+  };
 
   group('get causes', () {
-    test('returns a List of ListCauses if the request is successfully', () async {
+    test('returns a List of ListCauses if the request is successfully',
+        () async {
       final client = MockClient();
       _causesService.client = client;
 
-      when(client
-              .get(Uri.parse('https://api.now-u.com/api/v2/causes'), headers: unauthenticatedHeaders))
+      when(client.get(Uri.parse('https://api.now-u.com/api/v2/causes'),
+              headers: unauthenticatedHeaders))
           .thenAnswer((_) async =>
               http.Response(await readTestData("causes.json"), 200));
 
       List<ListCause> causes = await _causesService.getCauses();
-      expect(causes.length, 1);
+      expect(causes.length, 6);
 
       ListCause cause = causes[0];
       expect(cause.id, 1);
-      expect(cause.title, "Cause title");
-      expect(cause.icon, getIconFromString("ic_abc"));
-      expect(cause.description, "Cause description");
+      expect(cause.title, "Environment");
+      expect(cause.icon, getIconFromString("ic_learning"));
+      expect(cause.description,
+          "Get involved with charities and activists locally and across the globe.");
       expect(cause.selected, true);
     });
 
     // TODO error case
   });
-  
+
   group('get cause', () {
-    test('returns a Cause if the request is successfully', () async {
+    test('returns a Cause if the request is successful', () async {
       final client = MockClient();
       _causesService.client = client;
 
-      when(client
-              .get(Uri.parse('https://api.now-u.com/api/v2/cause/1'), headers: unauthenticatedHeaders))
+      when(client.get(Uri.parse('https://api.now-u.com/api/v2/cause/1'),
+              headers: unauthenticatedHeaders))
           .thenAnswer((_) async =>
               http.Response(await readTestData("cause.json"), 200));
 
@@ -59,14 +65,14 @@ void main() {
       expect(cause.selected, true);
     });
   });
-  
+
   group('get action', () {
     test('returns an Action if the request is successfully', () async {
       final client = MockClient();
       _causesService.client = client;
 
-      when(client
-              .get(Uri.parse('https://api.now-u.com/api/v2/action/2'), headers: unauthenticatedHeaders))
+      when(client.get(Uri.parse('https://api.now-u.com/api/v2/action/2'),
+              headers: unauthenticatedHeaders))
           .thenAnswer((_) async =>
               http.Response(await readTestData("action.json"), 200));
 
@@ -76,28 +82,55 @@ void main() {
       expect(action.link, "https://www.youtube.com/watch?v=MS4va1WLaro");
       expect(action.type, CampaignActionType.Learn);
 
-      ListCause actionCause = action.cause!;
+      ListCause actionCause = action.cause;
       expect(actionCause.id, 1);
     });
   });
-  
+
   group('get actions', () {
     test('returns a List of Actions if the request is successful', () async {
       final client = MockClient();
       _causesService.client = client;
 
-      when(client
-              .get(Uri.parse('https://api.now-u.com/api/v2/action'), headers: unauthenticatedHeaders))
+      when(client.get(Uri.parse('https://api.now-u.com/api/v2/action'),
+              headers: unauthenticatedHeaders))
           .thenAnswer((_) async =>
               http.Response(await readTestData("actions.json"), 200));
 
       List<ListCauseAction> actions = await _causesService.getActions();
+
       ListCauseAction action = actions[0];
+
       expect(action.id, 47);
       expect(action.title, "Watch 'Why talk toilets?'");
       expect(action.type, CampaignActionType.Learn);
 
-      ListCause actionCause = action.cause!;
+      ListCause actionCause = action.cause;
+      expect(actionCause.id, 1);
+    });
+  });
+
+  group('get learning resources', () {
+    test('returns a List of LearningResources if the request is successful',
+        () async {
+      final client = MockClient();
+      _causesService.client = client;
+
+      when(client.get(
+              Uri.parse('https://api.now-u.com/api/v2/learning/resources'),
+              headers: unauthenticatedHeaders))
+          .thenAnswer((_) async => http.Response(
+              await readTestData("learning_resources.json"), 200));
+
+      List<LearningResource> resources =
+          await _causesService.getLearningResources();
+      LearningResource resource = resources[0];
+
+      expect(resource.id, 47);
+      expect(resource.title, "Watch 'Why talk toilets?'");
+      expect(resource.type, getResourceTypeFromString("video"));
+
+      ListCause actionCause = resource.cause;
       expect(actionCause.id, 1);
     });
   });

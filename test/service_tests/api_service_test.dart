@@ -18,7 +18,8 @@ void main() {
   setupLocator();
 
   group('test getExceptionForResponse', () {
-    void testExceptionForStatusCode(int statusCode, ApiExceptionType expectedType) {
+    void testExceptionForStatusCode(
+        int statusCode, ApiExceptionType expectedType) {
       // getAndRegisterMockAnalyticsService();
       http.Response response = http.Response("", statusCode);
       ApiService apiService = ApiService();
@@ -31,12 +32,12 @@ void main() {
     test('UNAUTHORIZED when 401', () async {
       testExceptionForStatusCode(401, ApiExceptionType.UNAUTHORIZED);
     });
-    
+
     test('TOKEN_EXPIRED when 419', () async {
       testExceptionForStatusCode(419, ApiExceptionType.TOKEN_EXPIRED);
     });
   });
-  
+
   group('test getRequestHeaders', () {
     test('unauthenticated', () async {
       ApiService apiService = ApiService();
@@ -49,8 +50,8 @@ void main() {
       // Mock auth service
       var mockAuthService = MockAuthenticationService();
       registerMock<AuthenticationService>(mockAuthService);
-      
-      // to show authenticated user 
+
+      // to show authenticated user
       when(mockAuthService.isAuthenticated).thenReturn(true);
       when(mockAuthService.token).thenReturn("abc");
 
@@ -69,40 +70,50 @@ void main() {
       ApiService apiService = ApiService();
       MockClient client = mockHttpClient(apiService);
 
-      when(client.get(any, headers: anyNamed("headers"))).thenAnswer((_) => Future.value(http.Response(
-        '{"abc": "def"}', 200
-      )));
+      when(client.get(any, headers: anyNamed("headers"))).thenAnswer(
+          (_) => Future.value(http.Response('{"abc": "def"}', 200)));
 
       Map response = await apiService.getRequest("causes/stuff");
       expect(response, {"abc": "def"});
 
-      verify(client.get(Uri.parse("https://api.now-u.com/api/v2/causes/stuff"), headers: anyNamed("headers"))).called(1);
+      verify(client.get(Uri.parse("https://api.now-u.com/api/v2/causes/stuff"),
+              headers: anyNamed("headers")))
+          .called(1);
     });
 
     test('with parameters', () async {
       ApiService apiService = ApiService();
       MockClient client = mockHttpClient(apiService);
 
-      when(client.get(any, headers: anyNamed("headers"))).thenAnswer((_) => Future.value(http.Response(
-        '{"abc": "def"}', 200
-      )));
+      when(client.get(any, headers: anyNamed("headers"))).thenAnswer(
+          (_) => Future.value(http.Response('{"abc": "def"}', 200)));
 
-      Map response = await apiService.getRequest("causes/stuff", params: {"limit": 10, "fav": true});
+      Map response = await apiService
+          .getRequest("causes/stuff", params: {"limit": 10, "fav": true});
       expect(response, {"abc": "def"});
 
-      verify(client.get(Uri.parse("https://api.now-u.com/api/v2/causes/stuff?limit=10&fav=true"), headers: anyNamed("headers"))).called(1);
+      verify(client.get(
+              Uri.parse(
+                  "https://api.now-u.com/api/v2/causes/stuff?limit=10&fav=true"),
+              headers: anyNamed("headers")))
+          .called(1);
     });
 
     test('with list parameters', () async {
       ApiService apiService = ApiService();
       MockClient client = mockHttpClient(apiService);
 
-      when(client.get(any, headers: anyNamed("headers"))).thenAnswer((_) => Future.value(http.Response(
-        '{}', 200
-      )));
+      when(client.get(any, headers: anyNamed("headers")))
+          .thenAnswer((_) => Future.value(http.Response('{}', 200)));
 
-      await apiService.getRequest("causes/stuff", params: {"causes": [1,2]});
-      verify(client.get(Uri.parse("https://api.now-u.com/api/v2/causes/stuff?causes=%5B1%2C2%5D"), headers: anyNamed("headers"))).called(1);
+      await apiService.getRequest("causes/stuff", params: {
+        "causes": [1, 2]
+      });
+      verify(client.get(
+              Uri.parse(
+                  "https://api.now-u.com/api/v2/causes/stuff?causes=%5B1%2C2%5D"),
+              headers: anyNamed("headers")))
+          .called(1);
     });
   });
 
@@ -111,13 +122,15 @@ void main() {
       ApiService apiService = ApiService();
       MockClient client = mockHttpClient(apiService);
 
-      when(client.post(any, headers: anyNamed("headers"), body: anyNamed("body"))).thenAnswer((_) => Future.value(http.Response(
-        '{"abc": "def"}', 200
-      )));
+      when(client.post(any,
+              headers: anyNamed("headers"), body: anyNamed("body")))
+          .thenAnswer(
+              (_) => Future.value(http.Response('{"abc": "def"}', 200)));
 
       Map response = await apiService.postRequest("test", body: {"abc": "def"});
       expect(response, {"abc": "def"});
-      verify(client.post(Uri.parse("https://api.now-u.com/api/v2/test"), headers: anyNamed("headers"), body: {"abc": "def"})).called(1);
+      verify(client.post(Uri.parse("https://api.now-u.com/api/v2/test"),
+          headers: anyNamed("headers"), body: {"abc": "def"})).called(1);
     });
   });
 }

@@ -17,13 +17,14 @@ import 'package:uni_links/uni_links.dart';
 
 class DynamicLinkService {
   final NavigationService? _navigationService = locator<NavigationService>();
-  final SecureStorageService? _storageProvider = locator<SecureStorageService>();
+  final SecureStorageService? _storageProvider =
+      locator<SecureStorageService>();
   final DeviceInfoService? _deviceInfoService = locator<DeviceInfoService>();
 
   Future handleDynamicLinks() async {
     bool gotIosLink = false;
     if (await _deviceInfoService!.isIOS13) {
-    await initUniLinks();
+      await initUniLinks();
     }
     if (!gotIosLink) {
       // 1. Get the initial dynamic link if the app is opened with a dynamic link
@@ -55,14 +56,15 @@ class DynamicLinkService {
         EmailSentPageArguments args =
             EmailSentPageArguments(email: email, token: token);
         print("Navigating to emailSent");
-        _navigationService!.navigateTo(Routes.loginLinkClicked, arguments: args);
+        _navigationService!
+            .navigateTo(Routes.loginLinkClicked, arguments: args);
       }
       if (RegExp('campaigns/[0-9]+').hasMatch(deepLink.path)) {
         String campaignNumberString = deepLink.path.substring(11);
         print("_handleDeepLink | campaign number: $campaignNumberString");
         int campaignNumber = int.parse(campaignNumberString);
-        _navigationService!.navigateTo(Routes.campaignInfo,
-            arguments: campaignNumber);
+        _navigationService!
+            .navigateTo(Routes.campaignInfo, arguments: campaignNumber);
       }
     } else {
       print("Deep link was null");

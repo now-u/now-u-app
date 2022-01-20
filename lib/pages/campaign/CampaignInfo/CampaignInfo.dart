@@ -1,4 +1,4 @@
-import 'package:app/assets/components/darkButton.dart';
+import 'package:app/assets/components/buttons/darkButton.dart';
 import 'package:flutter/material.dart';
 
 import 'package:share/share.dart';
@@ -25,11 +25,11 @@ import 'package:app/viewmodels/campaign_info_model.dart';
 const double H_PADDING = 20;
 
 class CampaignInfo extends StatelessWidget {
-  final Campaign? campaign;
-  final int? campaignId;
+  final int campaignId;
 
-  CampaignInfo({this.campaign, this.campaignId})
-      : assert(campaign != null || campaignId != null);
+  CampaignInfo({ListCampaign? campaign, int? campaignId})
+      : assert(campaign != null || campaignId != null),
+        this.campaignId = campaignId ?? campaign!.id;
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +37,7 @@ class CampaignInfo extends StatelessWidget {
         viewModelBuilder: () => CampaignInfoViewModel(),
         onModelReady: (model) {
           print("Model ready getting campaign");
-          if (campaign != null) {
-            model.setCampaign = campaign;
-          } else {
-            model.fetchCampaign(campaignId);
-          }
+          model.fetchCampaign(campaignId);
         },
         builder: (context, model, child) {
           if (model.campaign != null) {
@@ -75,8 +71,7 @@ class CampaignInfoBody extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: customNetworkImageProvider(
-                          _campaign!.headerImage),
+                      image: customNetworkImageProvider(_campaign!.headerImage),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -126,8 +121,8 @@ class CampaignInfoBody extends StatelessWidget {
                               ),
                               Container(
                                 height: 180,
-                                child:
-                                    CustomNetworkImage(_campaign!.infographicUrl),
+                                child: CustomNetworkImage(
+                                    _campaign!.infographicUrl),
                               ),
                               SizedBox(
                                 height: 12,
@@ -248,7 +243,7 @@ class CampaignInfoBody extends StatelessWidget {
                         ),
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: _campaign!.keyAims!.map((aim) {
+                            children: _campaign!.keyAims.map((aim) {
                               return Column(children: [
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -276,7 +271,7 @@ class CampaignInfoBody extends StatelessWidget {
                   )),
 
               // Partners
-              _campaign!.generalPartners!.length == 0
+              _campaign!.generalPartners.length == 0
                   ? Container()
                   : Container(
                       color: Color.fromRGBO(247, 248, 252, 1),
@@ -298,7 +293,7 @@ class CampaignInfoBody extends StatelessWidget {
                               ),
                               Wrap(
                                 children: getOrganistaionTiles(
-                                    _campaign!.generalPartners!, context),
+                                    _campaign!.generalPartners, context),
                                 spacing: 10,
                                 runSpacing: 10,
                                 crossAxisAlignment: WrapCrossAlignment.start,

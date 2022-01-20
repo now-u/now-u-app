@@ -1,5 +1,5 @@
 import 'package:app/assets/StyleFrom.dart';
-import 'package:app/assets/components/darkButton.dart';
+import 'package:app/assets/components/buttons/darkButton.dart';
 import 'package:app/viewmodels/onboarding_model.dart';
 import 'package:flutter/material.dart';
 
@@ -62,10 +62,13 @@ class BasicCarouselPage extends StatelessWidget {
                       text: TextSpan(
                         text: normalText,
                         style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.bodyText1!.copyWith(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400),
+                          Theme.of(context)
+                              .primaryTextTheme
+                              .bodyText1!
+                              .copyWith(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400),
                         ),
                         children: additionalText,
                       ),

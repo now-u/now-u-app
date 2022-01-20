@@ -19,7 +19,7 @@ class StartUpViewModel extends BaseModel {
   Future handleStartUpLogic() async {
     await Firebase.initializeApp();
     registerFirebaseServicesToLocator();
-  
+
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
     final DynamicLinkService _dynamicLinkService =
@@ -38,7 +38,7 @@ class StartUpViewModel extends BaseModel {
     var hasLoggedInUser = await _authenticationService!.isUserLoggedIn();
 
     if (hasLoggedInUser) {
-      _navigationService!.navigateTo(Routes.intro);
+      _navigationService!.navigateTo(Routes.home);
     } else {
       _navigationService!.navigateTo(Routes.onBoarding);
     }

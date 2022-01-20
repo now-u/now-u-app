@@ -1,11 +1,13 @@
+import 'package:app/models/Cause.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:app/assets/icons/customIcons.dart';
+import 'package:app/models/Explorable.dart';
 
 import 'package:app/models/Action.dart';
 
-/// TODO Remove -> The LearningCentre page will be removed in v2 
+/// TODO Remove -> The LearningCentre page will be removed in v2
 class LearningCentre {
   // Id of campaign
   int? campaign;
@@ -23,8 +25,7 @@ class LearningCentre {
   }
 
   bool containsNew() {
-    var c =
-        learningTopics!.firstWhereOrNull((r) => r.containsNew());
+    var c = learningTopics!.firstWhereOrNull((r) => r.containsNew());
     return c != null;
   }
 }
@@ -37,24 +38,28 @@ class LearningCentre {
 class LearningTopic {
   /// Api id
   final int id;
-  /// The title of a the topic, usually a question 
+
+  /// The title of a the topic, usually a question
   final String title;
-  /// Link for header image for this topic 
+
+  /// Link for header image for this topic
   final String imageLink;
+
   /// Our answer to the topic question
   final String ourAnswer;
+
   /// The additional resources associated with this topic
   final List<LearningResource> resources;
 
-  LearningTopic.fromJson(Map json) :
-    id = json['id'],
-    title = json['title'],
-    imageLink = json['image_link'],
-    ourAnswer = json['our_answer'],
-    resources = (json['learning_resources'])
-        .map((e) => LearningResource.fromJson(e))
-        .toList()
-        .cast<LearningResource>();
+  LearningTopic.fromJson(Map json)
+      : id = json['id'],
+        title = json['title'],
+        imageLink = json['image_link'],
+        ourAnswer = json['our_answer'],
+        resources = (json['learning_resources'])
+            .map((e) => LearningResource.fromJson(e))
+            .toList()
+            .cast<LearningResource>();
 
   /// Returns true if the topic has some new resources in it
   // TODO move this logic to api (if still required)
@@ -74,7 +79,8 @@ class LearningResourceType {
   });
 }
 
-LearningResourceType otherType = LearningResourceType(name: "other", icon: FontAwesomeIcons.chalkboardTeacher);
+LearningResourceType otherType = LearningResourceType(
+    name: "other", icon: FontAwesomeIcons.chalkboardTeacher);
 List<LearningResourceType> learningResourceTypes = [
   LearningResourceType(name: "video", icon: CustomIcons.ic_video),
   LearningResourceType(name: "reading", icon: CustomIcons.ic_learning),
@@ -85,7 +91,9 @@ List<LearningResourceType> learningResourceTypes = [
 ];
 
 LearningResourceType getResourceTypeFromString(String typeName) {
-  return learningResourceTypes.firstWhere((LearningResourceType type) => type.name == typeName, orElse: () => otherType);
+  return learningResourceTypes.firstWhere(
+      (LearningResourceType type) => type.name == typeName,
+      orElse: () => otherType);
 }
 
 /// A learning resources is attached to a [LearningTopic] and offers more information on the topic.
@@ -93,35 +101,48 @@ LearningResourceType getResourceTypeFromString(String typeName) {
 /// Practially a learning resource is just a link with some extra meta data
 /// like the time expected to completed the resource. We also store if the user
 /// has completed the resource. // TODO Do this
-class LearningResource {
-  /// Api id 
+class LearningResource extends Explorable {
+  /// Api id
   final int id;
+
   /// Title of the resource
   final String title;
-  /// Time expected to complete the resource (in mins) 
+
+  /// Time expected to complete the resource (in mins)
   final double time;
-  String get timeText => timeBrackets.firstWhere((b) => b['maxTime'] > time)['text'];
+  String get timeText =>
+      timeBrackets.firstWhere((b) => b['maxTime'] > time)['text'];
+
   /// Link to the resource (This could be internal or external see [NavigationService])
   final String link;
+
   /// The type of the resource (eg article/video)
   final LearningResourceType type;
   IconData get icon => type.icon;
   final DateTime createdAt;
+
   /// String name of the source of the article eg BBC news
   final String? source;
 
-  LearningResource.fromJson(Map json) :
-    id = json['id'],
-    title = json['title'],
-    time = json['time'],
-    link = json['link'],
-    type = getResourceTypeFromString(json['type']),
-    createdAt = DateTime.parse(json['created_at']),
-    source = json['source'];
+  final bool completed;
 
-  /// Whether the resource has been created in the last 2 days 
+  final ListCause cause;
+
+  LearningResource.fromJson(Map json)
+      : id = json['id'],
+        title = json['title'],
+        time = json['time'],
+        link = json['link'],
+        type = getResourceTypeFromString(json['type']),
+        createdAt = DateTime.parse(json['created_at']),
+        cause = ListCause.fromJson(json['causes'][0]),
+        completed = json['completed'],
+        source = json['source'];
+
+  /// Whether the resource has been created in the last 2 days
   // TODO move to api
   bool isNew() {
-    return DateTime.now().difference(createdAt).compareTo(Duration(days: 2)) < 0;
+    return DateTime.now().difference(createdAt).compareTo(Duration(days: 2)) <
+        0;
   }
 }

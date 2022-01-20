@@ -1,29 +1,38 @@
-import 'package:app/viewmodels/base_model.dart';
+import 'dart:collection';
+
+import 'package:app/pages/explore/ExplorePage.dart';
 import 'package:app/pages/explore/ExploreSection.dart';
-import 'package:app/pages/explore/ExploreFilter.dart';
-import 'package:app/models/Explorable.dart';
+import 'package:app/viewmodels/base_model.dart';
 
-// TODO rename to explore *section* view model
-class ExplorePageViewModel<ExplorableType extends Explorable> extends BaseModel {
+class ExplorePageViewModel extends BaseModel {
+  List<ExploreSection> sections;
+  String title;
 
-  final ExploreFilter? filter;
-  final Function _fetchTiles;
-  bool isLoading = true;
-  bool error = false;
+  final Queue<ExplorePage> previousPages = Queue();
 
-  List<ExplorableType>? tiles; 
+  ExplorePageViewModel(this.sections, this.title);
 
-  ExplorePageViewModel({required this.filter, required Function fetchTiles}) :
-    _fetchTiles = fetchTiles;
-
-  void selectFilterOption(ExploreFilterOption filterOption) {
-    filterOption.toggleSelect();
-    fetchTiles();
+  void update(
+      {List<ExploreSection>? sections,
+      String? title,
+      bool saveHistory = true}) {
+    if (saveHistory) {
+      previousPages
+          .addLast(ExplorePage(sections: this.sections, title: this.title));
+    }
+    this.sections = sections ?? this.sections;
+    this.title = title ?? this.title;
+    notifyListeners();
   }
 
-  void fetchTiles() async {
-    setBusy(true);
-    this.tiles = await _fetchTiles(filter?.toJson());
-    setBusy(false);
+  bool get canBack => previousPages.length != 0;
+
+  void back() {
+    if (previousPages.length == 0) {
+      return;
+    }
+    ExplorePage page = previousPages.last;
+    previousPages.removeLast();
+    update(sections: page.sections, title: page.title, saveHistory: false);
   }
 }

@@ -1,7 +1,7 @@
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/assets/components/customAppBar.dart';
-import 'package:app/assets/components/darkButton.dart';
 import 'package:app/assets/components/selectionItem.dart';
+import 'package:app/assets/components/buttons/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/icons/customIcons.dart';
 import 'package:app/models/Action.dart';
@@ -43,14 +43,12 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
         builder: (context, model, child) {
           return Scaffold(
               appBar: customAppBar(
-                text: model.isLoading
-                    ? "Loading..."
-                    : model.action!.superType.name,
+                text: model.busy ? "Loading..." : model.action!.superType.name,
                 backButtonText: "Actions",
                 context: context,
               ),
               key: scaffoldKey,
-              body: model.isLoading
+              body: model.busy
                   ? Center(child: CircularProgressIndicator())
                   : Stack(children: [
                       ListView(
@@ -115,7 +113,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                         // TODO This must go to the causes info page
                                         Navigator.of(context).pushNamed(
                                             Routes.home,
-                                            arguments: model.action!.cause!.id);
+                                            arguments: model.action!.cause.id);
                                       },
                                       child: Container(
                                         height: 20,

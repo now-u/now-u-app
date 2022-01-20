@@ -131,7 +131,9 @@ class _CustomSwitchState extends State<CustomSwitch>
                 _animationController.forward();
               }
 
-              !widget.value! ? widget.onChanged!(true) : widget.onChanged!(false);
+              !widget.value!
+                  ? widget.onChanged!(true)
+                  : widget.onChanged!(false);
             }
           },
           child: Container(

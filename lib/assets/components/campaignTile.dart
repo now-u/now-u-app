@@ -5,7 +5,7 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/assets/components/joinedIndicator.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/textButton.dart';
-import 'package:app/assets/components/darkButton.dart';
+import 'package:app/assets/components/buttons/darkButton.dart';
 import 'package:app/assets/components/custom_network_image.dart';
 import 'package:app/assets/StyleFrom.dart';
 import 'package:app/routes.dart';
@@ -177,8 +177,7 @@ class CampaignTileWithJoinButtons extends StatelessWidget {
                 height: 100,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image:
-                        customNetworkImageProvider(campaign.headerImage),
+                    image: customNetworkImageProvider(campaign.headerImage),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -195,8 +194,7 @@ class CampaignTileWithJoinButtons extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  NumberOfCampaignersIndicator(
-                      campaign.numberOfCampaigners),
+                  NumberOfCampaignersIndicator(campaign.numberOfCampaigners),
                 ]),
               ),
               Container(

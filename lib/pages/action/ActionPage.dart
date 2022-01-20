@@ -1,4 +1,4 @@
-import 'package:app/assets/components/darkButton.dart';
+import 'package:app/assets/components/buttons/darkButton.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -479,6 +479,6 @@ class ActiveDoneSelector extends StatefulWidget {
 class _ActiveDoneSelectorState extends State<ActiveDoneSelector> {
   @override
   Widget build(BuildContext context) {
-      return SelectionPill(widget.text, widget.selected, onClick: widget.onClick);
+    return SelectionPill(widget.text, widget.selected, onClick: widget.onClick);
   }
 }

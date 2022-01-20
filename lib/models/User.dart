@@ -332,15 +332,11 @@ class User {
   }
 
   List<Campaign> filterSelectedCampaigns(List<Campaign> campaigns) {
-    return campaigns
-        .where((c) => selectedCampaigns!.contains(c.id))
-        .toList();
+    return campaigns.where((c) => selectedCampaigns!.contains(c.id)).toList();
   }
 
   List<Campaign> filterUnselectedCampaigns(List<Campaign> campaigns) {
-    return campaigns
-        .where((c) => !selectedCampaigns!.contains(c.id))
-        .toList();
+    return campaigns.where((c) => !selectedCampaigns!.contains(c.id)).toList();
   }
 
   int getSelectedCampaignsLength() {
@@ -414,12 +410,12 @@ class User {
 
   double getCampaignProgress(Campaign campaign) {
     return numberOfCompletedActionsForCampaign(campaign) /
-        campaign.actions!.length;
+        campaign.actions.length;
   }
 
   int numberOfCompletedActionsForCampaign(Campaign campaign) {
     int count = 0;
-    List<ListCauseAction> actions = campaign.actions!;
+    List<ListCauseAction> actions = campaign.actions;
     for (int i = 0; i < actions.length; i++) {
       if (this.completedActions!.contains(actions[i].id)) {
         count++;

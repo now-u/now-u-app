@@ -21,6 +21,7 @@ import 'package:app/pages/more/morePages/AccountDetailsPage.dart';
 import 'package:app/pages/more/morePages/FAQPage.dart';
 import 'package:app/pages/more/morePages/PartnersPage.dart';
 import 'package:app/pages/onboarding/onboarding_page.dart';
+import 'package:app/pages/causes/CauseOnboardingPage.dart';
 import 'package:app/pages/other/InfoPage.dart';
 import 'package:app/pages/other/NotificationPage.dart';
 import 'package:app/pages/other/OrganisationPage.dart';
@@ -40,10 +41,14 @@ class Routes {
   static const campaign = "campaign";
   static const actions = "actions";
   static const home = "home";
+  static const explore = "explore";
 
   static const actionInfo = "actionInfo";
   static const campaignInfo = "campaignInfo";
   static const campaignDetails = "campaignDetails";
+
+  // Causes
+  static const causesPage = "causesPage";
 
   // All campaigns (including past)
   static const allCampaigns = "allCampaigns";
@@ -75,6 +80,11 @@ Function initRoutes = (RouteSettings settings) {
       {
         return customRoute(
             builder: (context) => OnBoardingPage(), settings: settings);
+      }
+    case Routes.causesPage:
+      {
+        return customRoute(
+            builder: (context) => CausePage(), settings: settings);
       }
     case Routes.login:
       {
@@ -134,6 +144,11 @@ Function initRoutes = (RouteSettings settings) {
             builder: (context) => TabsPage(currentPage: TabPage.Home),
             settings: settings);
       }
+    case Routes.explore:
+      {
+        return customRoute(
+            builder: (context) => TabsPage(currentPage: TabPage.Explore), settings: settings);
+      }
     case Routes.campaign:
       {
         return customRoute(
@@ -153,7 +168,7 @@ Function initRoutes = (RouteSettings settings) {
                   ),
               settings: settings);
         }
-        if (args is Campaign) {
+        if (args is ListCampaign) {
           return customRoute(
               builder: (context) => CampaignInfo(
                     campaign: args,

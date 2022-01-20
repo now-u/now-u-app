@@ -93,11 +93,9 @@ class _AppState extends State<App> {
       ],
       builder: (context, widget) => Navigator(
         onGenerateRoute: (settings) => MaterialPageRoute(
-            builder: (context) => DialogManager(child: widget)),
+            builder: (context) => DialogManager(child: widget!)),
       ),
-      // home: StartUpView(),
-      home: HomePage(sections: homePageExploreSections),
-      //initialRoute: Routes.intro,
+      home: StartUpView(),
       onGenerateRoute: initRoutes as Route<dynamic>? Function(RouteSettings)?,
       theme: ThemeData(
         // This is the theme of the application.
@@ -117,7 +115,7 @@ class _AppState extends State<App> {
           headline3: TextStyle(
               color: black,
               fontSize: 24,
-              fontWeight: FontWeight.w600 // SemiBold
+              fontWeight: FontWeight.w700 // SemiBold
               ),
           headline4: TextStyle(
               color: black, fontSize: 18, fontWeight: FontWeight.w500 // Regular

@@ -1,5 +1,6 @@
 import 'package:app/services/dynamicLinks.dart';
 import 'package:app/services/auth.dart';
+import 'package:app/services/fake/fake_news_service.dart';
 import 'package:app/services/storage.dart';
 import 'package:app/services/analytics.dart';
 import 'package:app/services/pushNotifications.dart';
@@ -14,8 +15,12 @@ import 'package:app/services/dialog_service.dart';
 import 'package:app/services/google_location_search_service.dart';
 import 'package:app/services/remote_config_service.dart';
 import 'package:app/services/organisation_service.dart';
-import 'package:app/services/causes_service.dart';
 import 'package:app/services/api_service.dart';
+
+import 'package:app/services/causes_service.dart';
+import 'package:app/services/fake/fake_causes_service.dart';
+
+import 'package:app/assets/constants.dart' as constants;
 
 import 'package:get_it/get_it.dart';
 
@@ -29,7 +34,8 @@ void setupLocator() {
   locator.registerLazySingleton(() => SecureStorageService());
   locator.registerLazySingleton(() => SharedPreferencesService());
   locator.registerLazySingleton(() => AuthenticationService());
-  locator.registerLazySingleton(() => NewsService());
+  locator.registerLazySingleton(
+      () => constants.devMode ? FakeNewsService() : NewsService());
   locator.registerLazySingleton(() => FAQService());
   locator.registerLazySingleton(() => InternalNotificationService());
   locator.registerLazySingleton(() => DeviceInfoService());
@@ -37,7 +43,8 @@ void setupLocator() {
   locator.registerLazySingleton(() => GoogleLocationSearchService());
   locator.registerLazySingleton(() => OrganisationService());
   locator.registerLazySingleton(() => AnalyticsService());
-  locator.registerLazySingleton(() => CausesService());
+  locator.registerLazySingleton(
+      () => constants.devMode ? FakeCausesService() : CausesService());
   locator.registerLazySingleton(() => ApiService());
 }
 
