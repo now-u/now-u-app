@@ -147,7 +147,8 @@ Function initRoutes = (RouteSettings settings) {
     case Routes.explore:
       {
         return customRoute(
-            builder: (context) => TabsPage(currentPage: TabPage.Explore), settings: settings);
+            builder: (context) => TabsPage(currentPage: TabPage.Explore),
+            settings: settings);
       }
     case Routes.campaign:
       {
