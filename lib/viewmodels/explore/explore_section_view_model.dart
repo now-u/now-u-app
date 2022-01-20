@@ -1,6 +1,7 @@
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Cause.dart';
+import 'package:app/models/Learning.dart';
 import 'package:app/models/article.dart';
 import 'package:app/services/causes_service.dart';
 import 'package:app/services/news_service.dart';
@@ -89,7 +90,9 @@ abstract class ExploreSectionViewModel<ExplorableType extends Explorable>
   ExploreSectionViewModel(
     this.params, {
     this.filter,
-  });
+  }) {
+    print("Creating view model with filter: $filter");
+  }
 
   Map<String, dynamic>? get queryParams {
     if (filter == null) return params;
@@ -159,6 +162,22 @@ class ActionExploreSectionViewModel
   Future<List<ListCauseAction>> fetchTiles() async {
     return await _causesService.getActions(params: queryParams);
   }
+}
+
+class LearningResourceExploreSectionViewModel
+    extends ExploreSectionViewModel<LearningResource> {
+  LearningResourceExploreSectionViewModel(
+      {Map<String, dynamic>? params, ExploreFilter? filter})
+      : super(params, filter: filter);
+
+  Future<List<LearningResource>> fetchTiles() async {
+    return await _causesService.getLearningResources(params: queryParams);
+  }
+}
+
+class LearningResourceExploreByCauseSectionViewModel extends LearningResourceExploreSectionViewModel
+    with ByCauseFilterMixin<LearningResource> {
+  LearningResourceExploreByCauseSectionViewModel() : super();
 }
 
 class ActionExploreByCauseSectionViewModel extends ActionExploreSectionViewModel

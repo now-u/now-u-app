@@ -63,7 +63,7 @@ class CauseOnboardingPage extends StatelessWidget {
                         ),
                         Expanded(
                           flex: 10,
-                          child: causeTileGrid()
+                          child: CauseTileGrid()
                         ),
                         Expanded(
                           flex: 1,

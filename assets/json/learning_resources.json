@@ -1,0 +1,24 @@
+{
+  "data": [
+    {
+        "id": 47,
+        "title": "Watch 'Why talk toilets?'",
+        "type": "video",
+        "causes": [
+          {
+            "id": 1,
+            "title": "Cause title",
+            "icon": "ic-abc",
+            "description": "Cause description",
+            "selected": true,
+            "header_image": "https://picsum.photos/400/200"
+          }
+        ],
+        "time": 2.0,
+        "completed": true,
+        "link": "https://something.com",
+        "source": "bbc",
+        "created_at": "2020-07-06T20:49:43.892Z"
+      }
+  ]
+}

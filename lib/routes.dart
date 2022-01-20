@@ -157,7 +157,7 @@ Function initRoutes = (RouteSettings settings) {
                   ),
               settings: settings);
         }
-        if (args is Campaign) {
+        if (args is ListCampaign) {
           return customRoute(
               builder: (context) => CampaignInfo(
                     campaign: args,

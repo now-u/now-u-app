@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:app/models/Learning.dart';
 import 'package:app/services/fake/fake_api_service.dart';
 
 import '../causes_service.dart';
@@ -29,8 +30,14 @@ class FakeCausesService extends ApiService
 
   Future<CampaignAction> getAction(int id) async {
     String response = await readDataFromFile("action.json");
-    Map<String, dynamic> causeData = json.decode(response);
-    return CampaignAction.fromJson(causeData);
+    Map<String, dynamic> actionData = json.decode(response)["data"];
+    return CampaignAction.fromJson(actionData);
+  }
+
+  Future<Campaign> getCampaign(int id) async {
+    String response = await readDataFromFile("campaign.json");
+    Map<String, dynamic> data = json.decode(response)["data"];
+    return Campaign.fromJson(data);
   }
 
   Future<List<ListCauseAction>> getActions(
@@ -48,5 +55,11 @@ class FakeCausesService extends ApiService
   @override
   Future<void> selectCauses(List<ListCause> selectedCauses) async {
     await Future.delayed(Duration(seconds: 1));
+  }
+
+  Future<List<LearningResource>> getLearningResources(
+      {Map<String, dynamic>? params}) async {
+    Iterable data = await readIterableDataFromFile("learning_resources.json");
+    return data.map((e) => LearningResource.fromJson(e)).toList();
   }
 }

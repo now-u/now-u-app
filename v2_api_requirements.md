@@ -156,6 +156,31 @@ GET /campaigns/1
   ]
 ```
 
+GET /learning/resources
+
+- Field for completed -> whether the user making the request has completed the action. If user is logged out then false.
+- Add nested causes
+
+```json
+[
+  {
+      "id": 47,
+      "title": "Watch 'Why talk toilets?'",
+      "type": "reading",
+      "causes": [
+        {
+          "id": 1,
+          "title": "Name of the campaign",
+          "icon": "ic-abc"
+        }
+      ],
+      "time": 2.0,
+      "completed": true,
+      "source": "https://something.com"
+    }
+]
+```
+
 
 ## Filters
 
