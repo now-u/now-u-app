@@ -25,10 +25,9 @@ class ScrollableSheetPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     // This is a bit of nasty hack to stop reloading on the
     // DraggableScrollableSheet. See
-    // https://github.com/flutter/flutter/issues/67219 
+    // https://github.com/flutter/flutter/issues/67219
     // for more details.
     Widget? child;
     final sheet = DraggableScrollableSheet(
@@ -38,26 +37,25 @@ class ScrollableSheetPage extends StatelessWidget {
       builder: (context, controller) {
         if (child == null) {
           child = SingleChildScrollView(
-            controller: controller, 
+            controller: controller,
             child: ClipShadowPath(
-                  shadow: shadow ??
-                      Shadow(
-                        blurRadius: 5,
-                        color: Color.fromRGBO(121, 43, 2, 0.3),
-                        offset: Offset(0, -3),
-                      ),
-                  clipper: BezierTopClipper(),
-                  child: Container(
-                    color: sheetBackgroundColor ??
-                        Color.fromRGBO(247, 248, 252, 1),
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 45),
-                      child: Column(
-                        children: children,
-                      ),
-                    ),
+              shadow: shadow ??
+                  Shadow(
+                    blurRadius: 5,
+                    color: Color.fromRGBO(121, 43, 2, 0.3),
+                    offset: Offset(0, -3),
+                  ),
+              clipper: BezierTopClipper(),
+              child: Container(
+                color: sheetBackgroundColor ?? Color.fromRGBO(247, 248, 252, 1),
+                child: Padding(
+                  padding: EdgeInsets.only(top: 45),
+                  child: Column(
+                    children: children,
                   ),
                 ),
+              ),
+            ),
           );
         }
         return child!;
@@ -65,15 +63,18 @@ class ScrollableSheetPage extends StatelessWidget {
     );
 
     return Scaffold(
-        backgroundColor: scaffoldBackgroundColor ??
-            colorFrom(
-              Theme.of(context).primaryColor,
-              opacity: 0.05,
-            ),
-        body: Stack(children: [
+      backgroundColor: scaffoldBackgroundColor ??
+          colorFrom(
+            Theme.of(context).primaryColor,
+            opacity: 0.05,
+          ),
+      body: Stack(
+        children: [
           // Header
           header,
           sheet
-        ],),);
+        ],
+      ),
+    );
   }
 }

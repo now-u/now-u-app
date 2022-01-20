@@ -25,7 +25,6 @@ const double BUTTON_PADDING = 10;
 const PageStorageKey campaignCarouselPageKey = PageStorageKey(1);
 
 class Home extends StatelessWidget {
-
   final _controller = PageController(
     initialPage: 0,
     viewportFraction: 0.93,
