@@ -175,7 +175,8 @@ class LearningResourceExploreSectionViewModel
   }
 }
 
-class LearningResourceExploreByCauseSectionViewModel extends LearningResourceExploreSectionViewModel
+class LearningResourceExploreByCauseSectionViewModel
+    extends LearningResourceExploreSectionViewModel
     with ByCauseFilterMixin<LearningResource> {
   LearningResourceExploreByCauseSectionViewModel() : super();
 }

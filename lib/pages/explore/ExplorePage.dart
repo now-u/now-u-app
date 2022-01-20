@@ -135,7 +135,6 @@ ExplorePage learning_explore_page = ExplorePage(
   ],
 );
 
-
 ExplorePage home_explore_page = ExplorePage(
   title: "Explore",
   sections: [

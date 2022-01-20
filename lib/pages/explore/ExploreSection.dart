@@ -239,9 +239,9 @@ class LearningResourceExploreSection extends ExploreSection<LearningResource> {
   LearningResourceExploreSectionViewModel get viewModel {
     print("Filter is $filter");
     return LearningResourceExploreSectionViewModel(
-        params: fetchParams,
-        filter: filter,
-      );
+      params: fetchParams,
+      filter: filter,
+    );
   }
 
   LearningResourceExploreSection({
@@ -329,7 +329,8 @@ class ActionExploreByCauseSection extends ActionExploreSection {
         );
 }
 
-class LearningResourceExploreByCauseSection extends LearningResourceExploreSection {
+class LearningResourceExploreByCauseSection
+    extends LearningResourceExploreSection {
   @override
   LearningResourceExploreByCauseSectionViewModel get viewModel =>
       LearningResourceExploreByCauseSectionViewModel();
