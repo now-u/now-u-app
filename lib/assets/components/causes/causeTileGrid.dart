@@ -20,19 +20,19 @@ class CauseTileGrid extends StatelessWidget {
                   itemBuilder: (context, rowIndex, colIndex, index) {
                     return Expanded(
                         child: Padding(
-                          padding: EdgeInsets.all(10),
-                          child: CauseTile(
-                            gestureFunction: () => model.toggleSelection(
-                                listCause: model.causesList[index]),
-                            cause: model.causesList[index],
-                            causeIcon: FontAwesomeIcons.leaf,
-                            isSelected:
+                      padding: EdgeInsets.all(10),
+                      child: CauseTile(
+                        gestureFunction: () => model.toggleSelection(
+                            listCause: model.causesList[index]),
+                        cause: model.causesList[index],
+                        causeIcon: FontAwesomeIcons.leaf,
+                        isSelected:
                             model.isCauseSelected(model.causesList[index]),
-                            getInfoFunction: () => model.getCausePopup(
-                                listCause: model.causesList[index],
-                                causeIndex: index),
-                          ),
-                        ));
+                        getInfoFunction: () => model.getCausePopup(
+                            listCause: model.causesList[index],
+                            causeIndex: index),
+                      ),
+                    ));
                   }));
         });
   }

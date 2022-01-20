@@ -18,10 +18,10 @@ class CauseOnboardingPage extends StatelessWidget {
                     height: MediaQuery.of(context).size.height * 0.43,
                     decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          colors: [Color(0XFF011A43), Color(0XFF012B93)],
-                          begin: Alignment.bottomLeft,
-                          end: Alignment.topRight,
-                        )),
+                      colors: [Color(0XFF011A43), Color(0XFF012B93)],
+                      begin: Alignment.bottomLeft,
+                      end: Alignment.topRight,
+                    )),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
@@ -61,19 +61,17 @@ class CauseOnboardingPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Expanded(
-                          flex: 10,
-                          child: CauseTileGrid()
-                        ),
+                        Expanded(flex: 10, child: CauseTileGrid()),
                         Expanded(
                           flex: 1,
                           child: Center(
-                            child: CustomWidthButton('Get started',
+                            child: CustomWidthButton(
+                              'Get started',
                               onPressed: model.areCausesDisabled
                                   ? () {}
                                   : () {
-                              model.selectCauses();
-                              },
+                                      model.selectCauses();
+                                    },
                               backgroundColor: model.areCausesDisabled
                                   ? Colors.grey
                                   : Theme.of(context).primaryColor,
