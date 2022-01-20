@@ -1,5 +1,8 @@
+import 'package:app/services/causes_service.dart';
+import 'package:app/services/dialog_service.dart';
 import 'package:app/viewmodels/base_model.dart';
 import 'package:app/viewmodels/base_campaign_model.dart';
+import 'package:app/models/Cause.dart';
 
 import 'package:app/locator.dart';
 import 'package:app/services/internal_notification_service.dart';
@@ -11,6 +14,27 @@ class HomeViewModel extends BaseModel with CampaignRO {
   final InternalNotificationService _internalNotificationService =
       locator<InternalNotificationService>();
   final NavigationService _navigationService = locator<NavigationService>();
+  final CausesService _causesService = locator<CausesService>();
+  final DialogService _dialogService = locator<DialogService>();
+
+  List<ListCause> _causes = [];
+
+  List<ListCause> get causes => _causes;
+
+  Future fetchCauses() async {
+    setBusy(true);
+
+    _causes = await _causesService.getCauses();
+
+    setBusy(false);
+    notifyListeners();
+  }
+
+  Future getCausePopup(
+      ListCause listCause) async {
+    var dialogResult =
+    await _dialogService.showDialog(CauseDialog(listCause));
+  }
 
   List<InternalNotification>? get notifications =>
       _internalNotificationService.notifications;
@@ -60,5 +84,4 @@ class HomeViewModel extends BaseModel with CampaignRO {
   void goToExplorePage() {
     _navigationService.navigateTo('explore');
   }
-
 }

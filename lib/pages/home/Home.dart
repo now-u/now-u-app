@@ -1,4 +1,6 @@
 import 'package:app/assets/components/buttons/customWidthButton.dart';
+import 'package:app/assets/components/causes/causeTile.dart';
+import 'package:app/assets/components/causes/causeTileGrid.dart';
 import 'package:app/assets/components/progressTile.dart';
 import 'package:app/pages/explore/ExploreSection.dart';
 import 'package:flutter/material.dart';
@@ -55,43 +57,48 @@ class Home extends StatelessWidget {
                       )
                     : HeaderStyle1(name: model.currentUser!.getName()),
                 children: [
-                  Column(
-                    children: <Widget>[
-                      ProgressTile(),
-                      CampaignExploreSection(title: "My Campaigns"),
-                      ActionExploreSection(title: "What can I do today?"),
-                      CustomWidthButton(
-                        'Explore',
-                        onPressed: () {
-                          model.goToExplorePage();
-                        },
-                        backgroundColor: Theme.of(context).primaryColor,
-                        size: ButtonSize.Medium,
-                        fontSize: 20.0,
-                        buttonWidthProportion: 0.8,
-                      ),
-                      CampaignExploreSection(title: "Recommended campaigns", fetchParams: {
-                        "recommended": true,
-                      }),
-                      NewsExploreSection(title: "In the news")
-
-                    ],
-                  ),
+                  Column(children: <Widget>[
+                    ProgressTile(),
+                    CampaignExploreSection(title: "My Campaigns"),
+                    ActionExploreSection(title: "What can I do today?"),
+                    CustomWidthButton(
+                      'Explore',
+                      onPressed: () {
+                        model.goToExplorePage();
+                      },
+                      backgroundColor: Theme.of(context).primaryColor,
+                      size: ButtonSize.Medium,
+                      fontSize: 20.0,
+                      buttonWidthProportion: 0.8,
+                    ),
+                    CampaignExploreSection(
+                        title: "Recommended campaigns",
+                        fetchParams: {
+                          "recommended": true,
+                        }),
+                    NewsExploreSection(title: "In the news"),
+                    model.causes != []
+                        ? GridView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2),
+                            itemCount: model.causes.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Container(height: 100, color: Colors.red);
+                              CauseTile(
+                                  gestureFunction: () => null,
+                                  cause: model.causes[index],
+                                  getInfoFunction: () =>
+                                      model.getCausePopup(model.causes[index]));
+                            })
+                        : CircularProgressIndicator()
+                  ])
                 ],
               );
             }));
   }
-}
-
-Widget sectionTitle(String t, BuildContext context) {
-  return Padding(
-    padding: EdgeInsets.all(10),
-    child: Text(
-      t,
-      style: Theme.of(context).primaryTextTheme.headline3,
-      textAlign: TextAlign.start,
-    ),
-  );
 }
 
 class HeaderStyle1 extends StatelessWidget {

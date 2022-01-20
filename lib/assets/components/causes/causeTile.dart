@@ -8,16 +8,15 @@ import 'package:app/assets/StyleFrom.dart';
 class CauseTile extends StatelessWidget {
   final ListCause cause;
   final bool isSelected;
-  final IconData causeIcon;
   final VoidCallback gestureFunction;
   final VoidCallback getInfoFunction;
 
   CauseTile(
       {required this.cause,
-      required this.isSelected,
+      bool? isSelected,
       required this.gestureFunction,
-      required this.getInfoFunction,
-      required this.causeIcon});
+      required this.getInfoFunction})
+      : this.isSelected = isSelected ?? cause.selected;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +47,7 @@ class CauseTile extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 8, 0, 4),
                       child: Icon(
-                        causeIcon,
+                        cause.icon,
                         size: 24.0,
                         color: isSelected
                             ? Theme.of(context).primaryColor
