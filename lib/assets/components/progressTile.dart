@@ -26,13 +26,24 @@ class ProgressTile extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-                child: Text('My Progress', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24)),
+                child: Text('My Progress',
+                    style:
+                        TextStyle(fontWeight: FontWeight.w700, fontSize: 24)),
               ),
               SizedBox(height: 10),
               Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-                ProgressCircle(progressTitle: 'Campaigns', progressScore: 10,),
-                ProgressCircle(progressTitle: 'Actions Taken', progressScore: 20,),
-                ProgressCircle(progressTitle: 'Learnings', progressScore: 30,),
+                ProgressCircle(
+                  progressTitle: 'Campaigns',
+                  progressScore: 10,
+                ),
+                ProgressCircle(
+                  progressTitle: 'Actions Taken',
+                  progressScore: 20,
+                ),
+                ProgressCircle(
+                  progressTitle: 'Learnings',
+                  progressScore: 30,
+                ),
               ])
             ],
           ),
@@ -63,11 +74,13 @@ class ProgressCircle extends StatelessWidget {
               ],
               color: Colors.white,
               shape: BoxShape.circle),
-          child: Text(progressScore.toString(), style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600))),
+          child: Text(progressScore.toString(),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600))),
       SizedBox(
         height: 20,
       ),
-      Text(progressTitle, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600))
+      Text(progressTitle,
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600))
     ]);
   }
 }

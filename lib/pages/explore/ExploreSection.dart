@@ -44,7 +44,8 @@ class ExploreFilterSelectionItem extends StatelessWidget {
   }
 }
 
-abstract class ExploreSection<ExplorableType extends Explorable> extends StatelessWidget {
+abstract class ExploreSection<ExplorableType extends Explorable>
+    extends StatelessWidget {
   ExploreSectionViewModel<ExplorableType> get viewModel;
 
   /// Title of the section
