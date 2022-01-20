@@ -12,7 +12,7 @@ import 'package:app/pages/explore/ExplorePage.dart';
 //import 'package:app/assets/dynamicLinks.dart';
 
 // These must be in the corect order
-enum TabPage { Home, Actions, Learning, News, Menu }
+enum TabPage { Home, Actions, Learning, News, Explore, Menu }
 
 class TabsPage extends StatefulWidget {
   final TabPage? currentPage;
@@ -41,9 +41,6 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
   }
 
   void changePage(TabPage page, {int? subIndex}) {
-    print("Changing page");
-    print(page);
-    print(subIndex);
     setState(() {
       currentPage = page;
     });
@@ -54,7 +51,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
     // TODO add an enum so pages numbers can change
     List<Map> _pages = <Map>[
       {
-        'page': Home(changePage),
+        'page': Home(),
         'icon': Icon(CustomIcons.ic_home),
         'title': "Home",
       },

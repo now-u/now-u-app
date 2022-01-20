@@ -41,10 +41,14 @@ class Routes {
   static const campaign = "campaign";
   static const actions = "actions";
   static const home = "home";
+  static const explore = "explore";
 
   static const actionInfo = "actionInfo";
   static const campaignInfo = "campaignInfo";
   static const campaignDetails = "campaignDetails";
+
+  // Causes
+  static const causesPage = "causesPage";
 
   // All campaigns (including past)
   static const allCampaigns = "allCampaigns";
@@ -74,8 +78,11 @@ Function initRoutes = (RouteSettings settings) {
     // Into
     case Routes.onBoarding:
       {
-        // return customRoute(
-        //     builder: (context) => OnBoardingPage(), settings: settings);
+        return customRoute(
+            builder: (context) => OnBoardingPage(), settings: settings);
+      }
+    case Routes.causesPage:
+      {
         return customRoute(
             builder: (context) => CausePage(), settings: settings);
       }
@@ -136,6 +143,11 @@ Function initRoutes = (RouteSettings settings) {
         return customRoute(
             builder: (context) => TabsPage(currentPage: TabPage.Home),
             settings: settings);
+      }
+    case Routes.explore:
+      {
+        return customRoute(
+            builder: (context) => TabsPage(currentPage: TabPage.Explore), settings: settings);
       }
     case Routes.campaign:
       {
