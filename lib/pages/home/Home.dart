@@ -58,7 +58,11 @@ class Home extends StatelessWidget {
                     : HeaderStyle1(name: model.currentUser!.getName()),
                 children: [
                   Column(children: <Widget>[
-                    ProgressTile(),
+                    ProgressTile(
+                      campaignsScore: model.numberOfJoinedCampaigns,
+                      actionsScore: model.numberOfCompletedActions,
+                      learningsScore: -1,
+                    ),
                     CampaignExploreSection(title: "My Campaigns"),
                     ActionExploreSection(title: "What can I do today?"),
                     CustomWidthButton(

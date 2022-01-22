@@ -1,7 +1,17 @@
+import 'package:app/viewmodels/home_model.dart';
 import 'package:flutter/material.dart';
+import 'package:stacked/stacked.dart';
 
 class ProgressTile extends StatelessWidget {
-  const ProgressTile({Key? key}) : super(key: key);
+  final int campaignsScore;
+  final int actionsScore;
+  final int learningsScore;
+
+  ProgressTile({
+    required this.campaignsScore,
+    required this.actionsScore,
+    required this.learningsScore,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +36,26 @@ class ProgressTile extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-                child: Text('My Progress', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24)),
+                child: Text('My Progress',
+                    style:
+                        TextStyle(fontWeight: FontWeight.w700, fontSize: 24)),
               ),
               SizedBox(height: 10),
               Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-                ProgressCircle(progressTitle: 'Campaigns', progressScore: 10,),
-                ProgressCircle(progressTitle: 'Actions Taken', progressScore: 20,),
-                ProgressCircle(progressTitle: 'Learnings', progressScore: 30,),
-              ])
+                // TODO: Make a builder for 3 ProgressCircles
+                ProgressCircle(
+                  progressTitle: 'Campaigns',
+                  progressScore: campaignsScore,
+                ),
+                ProgressCircle(
+                  progressTitle: 'Actions Taken',
+                  progressScore: actionsScore,
+                ),
+                ProgressCircle(
+                  progressTitle: 'Learnings',
+                  progressScore: learningsScore
+                ),
+              ]),
             ],
           ),
         ));
@@ -63,11 +85,13 @@ class ProgressCircle extends StatelessWidget {
               ],
               color: Colors.white,
               shape: BoxShape.circle),
-          child: Text(progressScore.toString(), style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600))),
+          child: Text(progressScore.toString(),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600))),
       SizedBox(
         height: 20,
       ),
-      Text(progressTitle, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600))
+      Text(progressTitle,
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600))
     ]);
   }
 }

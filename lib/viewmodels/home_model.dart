@@ -53,6 +53,8 @@ class HomeViewModel extends BaseModel with CampaignRO {
     return currentUser!.getStarredActions()!.length;
   }
 
+  // TODO: Need to access learningsScore (see progressTile.dart)
+
   Future fetchAll() async {
     fetchNotifications();
     fetchCampaigns();
