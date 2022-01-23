@@ -52,9 +52,7 @@ class ProgressTile extends StatelessWidget {
                   progressScore: actionsScore,
                 ),
                 ProgressCircle(
-                  progressTitle: 'Learnings',
-                  progressScore: learningsScore
-                ),
+                    progressTitle: 'Learnings', progressScore: learningsScore),
               ]),
             ],
           ),
