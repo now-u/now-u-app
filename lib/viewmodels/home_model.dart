@@ -30,10 +30,8 @@ class HomeViewModel extends BaseModel with CampaignRO {
     notifyListeners();
   }
 
-  Future getCausePopup(
-      ListCause listCause) async {
-    var dialogResult =
-    await _dialogService.showDialog(CauseDialog(listCause));
+  Future getCausePopup(ListCause listCause) async {
+    var dialogResult = await _dialogService.showDialog(CauseDialog(listCause));
   }
 
   List<InternalNotification>? get notifications =>
