@@ -12,6 +12,8 @@ import 'package:app/pages/action/ActionInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../StyleFrom.dart';
+
 class ExploreCampaignTile extends StatelessWidget {
   final NavigationService _navigationService = locator<NavigationService>();
 
@@ -54,9 +56,8 @@ class ExploreCampaignTile extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: _ExploreTileCheckmark(
-                      completed: completed,
-                    ),
+                    child:
+                        _ExploreTileCheckmark(completed: completed, size: 20),
                   )
                 ],
               ),
@@ -93,6 +94,7 @@ class ExploreActionTile extends BaseExploreActionTile {
             cause: model.cause,
             timeText: model.timeText,
             completed: model.completed,
+            aspectRatio: 2.3,
             key: key);
 
   void onTap() {
@@ -118,6 +120,7 @@ class ExploreLearningTile extends BaseExploreActionTile {
             cause: model.cause,
             timeText: model.timeText,
             completed: model.completed,
+            aspectRatio: 2.3,
             key: key);
 
   void onTap() {
@@ -139,6 +142,7 @@ abstract class BaseExploreActionTile extends StatelessWidget {
   final ListCause cause;
   final String timeText;
   final bool completed;
+  final double aspectRatio;
 
   BaseExploreActionTile(
       {required this.title,
@@ -150,6 +154,7 @@ abstract class BaseExploreActionTile extends StatelessWidget {
       required this.cause,
       required this.timeText,
       required this.completed,
+        required this.aspectRatio,
       Key? key});
 
   void onTap();
@@ -160,7 +165,7 @@ abstract class BaseExploreActionTile extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       clipBehavior: Clip.antiAlias,
       child: AspectRatio(
-        aspectRatio: 1.65,
+        aspectRatio: aspectRatio,
         child: InkWell(
           onTap: onTap,
           child: Column(
@@ -198,9 +203,7 @@ abstract class BaseExploreActionTile extends StatelessWidget {
                         textScaleFactor: .8,
                       ),
                       Expanded(child: Container()),
-                      _ExploreTileCheckmark(
-                        completed: completed,
-                      ),
+                      _ExploreTileCheckmark(completed: completed, size: 20),
                     ],
                   ),
                 ),
@@ -333,10 +336,13 @@ class _ExploreTileTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: Theme.of(context).primaryTextTheme.headline2!,
-      textScaleFactor: .6,
+    return Container(
+      width: 233,
+      child: Text(
+        title,
+        style: Theme.of(context).primaryTextTheme.headline2!,
+        textScaleFactor: .6,
+      ),
     );
   }
 }
@@ -368,9 +374,59 @@ class _ExploreTileCause extends StatelessWidget {
   }
 }
 
+class StackForCompletedExploreTile extends StatelessWidget {
+  final Widget child;
+
+  StackForCompletedExploreTile({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        this.child,
+        Row(
+          children: [
+            SizedBox(width: 233),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              child: Container(
+                  decoration: BoxDecoration(
+                      color: Color(0XFFFBFBFD),
+                      borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(8),
+                          bottomRight: Radius.circular(8))),
+                  width: 120,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Needs Completing',
+                          style: textStyleFrom(
+                            Theme.of(context).primaryTextTheme.button,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 15,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 20),
+                        _ExploreTileCheckmark(completed: true, size: 50),
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+}
+
 class _ExploreTileCheckmark extends StatelessWidget {
   /// If the card has been completed
   final bool completed;
+  final double size;
 
   /// Colors for the checkmark
   static const Color _completedColor = Color.fromRGBO(89, 152, 26, 1);
@@ -378,6 +434,7 @@ class _ExploreTileCheckmark extends StatelessWidget {
 
   const _ExploreTileCheckmark({
     required this.completed,
+    required this.size,
     Key? key,
   }) : super(key: key);
 
@@ -397,7 +454,7 @@ class _ExploreTileCheckmark extends StatelessWidget {
         FaIcon(
           FontAwesomeIcons.solidCheckCircle,
           color: completed ? _completedColor : _uncompletedColor,
-          size: 20,
+          size: size,
         ),
       ],
     );

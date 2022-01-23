@@ -1,4 +1,5 @@
 import 'package:app/assets/components/explore_tiles.dart';
+import 'package:app/assets/components/stackForCompletedExploreTile.dart';
 import 'package:app/assets/constants.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
@@ -170,12 +171,11 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                                       left: index == 0 ? horizontalPadding : 0,
                                       bottom: tileShadowBlurRadius,
                                     ),
-                                    child: renderTile(model.tiles![index]),
+                                    child: renderTile(model.tiles![index])),
                                   ),
                                 ),
                               ),
                   ),
-                ),
               ]);
         });
   }
@@ -231,7 +231,7 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
         );
 
   @override
-  Widget renderTile(ListCauseAction tile) => ExploreActionTile(tile);
+  Widget renderTile(ListCauseAction tile) => StackForCompletedExploreTile(child: ExploreActionTile(tile));
 }
 
 class LearningResourceExploreSection extends ExploreSection<LearningResource> {

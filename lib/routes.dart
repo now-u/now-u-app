@@ -26,6 +26,7 @@ import 'package:app/pages/causes/ChangeCausePage.dart';
 import 'package:app/pages/other/InfoPage.dart';
 import 'package:app/pages/other/NotificationPage.dart';
 import 'package:app/pages/other/OrganisationPage.dart';
+import 'package:app/pages/other/PlaygroundPage.dart';
 import 'package:app/pages/other/WebView.dart';
 import 'package:flutter/material.dart';
 
@@ -64,6 +65,8 @@ class Routes {
   static const info = "info";
   static const webview = "webview";
   static const notification = "notification";
+
+  static const playground = "playground";
 
   // Learning
   static const learningAll = "learning";
@@ -299,6 +302,11 @@ Function initRoutes = (RouteSettings settings) {
               builder: (context) => NotificationPage(args), settings: settings);
         }
         break;
+      }
+    case Routes.playground:
+      {
+        return customRoute(
+            builder: (context) => PlaygroundPage(), settings: settings);
       }
 
     // TODO add a 404 page
