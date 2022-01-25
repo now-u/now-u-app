@@ -230,7 +230,7 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
         );
 
   @override
-  Widget renderTile(ListCauseAction tile) => StackForCompletedExploreTile(child: ExploreActionTile(tile));
+  Widget renderTile(ListCauseAction tile) => (ExtendedExploreActionTile(tile, true));
 }
 
 class LearningResourceExploreSection extends ExploreSection<LearningResource> {
@@ -259,7 +259,7 @@ class LearningResourceExploreSection extends ExploreSection<LearningResource> {
         );
 
   @override
-  Widget renderTile(LearningResource tile) => ExploreLearningTile(tile);
+  Widget renderTile(LearningResource tile) => ExtendedExploreLearningTile(tile, true);
 }
 
 class NewsExploreSection extends ExploreSection<Article> {

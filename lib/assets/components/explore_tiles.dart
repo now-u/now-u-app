@@ -1,6 +1,7 @@
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/custom_network_image.dart';
 import 'package:app/locator.dart';
+import 'package:app/models/Explorable.dart';
 import 'package:app/models/Learning.dart';
 import 'package:app/routes.dart';
 import 'package:app/models/Action.dart';
@@ -94,7 +95,6 @@ class ExploreActionTile extends BaseExploreActionTile {
             cause: model.cause,
             timeText: model.timeText,
             completed: model.completed,
-            aspectRatio: 2.3,
             key: key);
 
   void onTap() {
@@ -120,7 +120,6 @@ class ExploreLearningTile extends BaseExploreActionTile {
             cause: model.cause,
             timeText: model.timeText,
             completed: model.completed,
-            aspectRatio: 2.3,
             key: key);
 
   void onTap() {
@@ -142,7 +141,6 @@ abstract class BaseExploreActionTile extends StatelessWidget {
   final ListCause cause;
   final String timeText;
   final bool completed;
-  final double aspectRatio;
 
   BaseExploreActionTile(
       {required this.title,
@@ -154,7 +152,6 @@ abstract class BaseExploreActionTile extends StatelessWidget {
       required this.cause,
       required this.timeText,
       required this.completed,
-        required this.aspectRatio,
       Key? key});
 
   void onTap();
@@ -165,7 +162,7 @@ abstract class BaseExploreActionTile extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       clipBehavior: Clip.antiAlias,
       child: AspectRatio(
-        aspectRatio: aspectRatio,
+        aspectRatio: 1.5,
         child: InkWell(
           onTap: onTap,
           child: Column(
@@ -374,21 +371,26 @@ class _ExploreTileCause extends StatelessWidget {
   }
 }
 
-class StackForCompletedExploreTile extends StatelessWidget {
-  final Widget child;
 
-  StackForCompletedExploreTile({required this.child});
+// BASE EXTENDED (STACKING) CHECKMARK CLASS
+// Base class for stacking a large checkmark on Action and Learning Explore Tiles
+abstract class BaseExtendedExploreActionTile extends StatelessWidget {
+  final bool completed;
+
+  BaseExtendedExploreActionTile({required this.completed});
+
+  Widget getExploreActionTile();
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        this.child,
+        getExploreActionTile(),
         Row(
           children: [
-            SizedBox(width: 233),
+            SizedBox(width: 200),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              padding: const EdgeInsets.symmetric(vertical: 3.0),
               child: Container(
                   decoration: BoxDecoration(
                       color: Color(0XFFFBFBFD),
@@ -401,7 +403,7 @@ class StackForCompletedExploreTile extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          'Needs Completing',
+                          this.completed ? 'Completed' : 'Needs Completing',
                           style: textStyleFrom(
                             Theme.of(context).primaryTextTheme.button,
                             color: Colors.black,
@@ -411,7 +413,8 @@ class StackForCompletedExploreTile extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(height: 20),
-                        _ExploreTileCheckmark(completed: true, size: 50),
+                        _ExploreTileCheckmark(
+                            completed: this.completed, size: 50),
                       ],
                     ),
                   )),
@@ -420,6 +423,36 @@ class StackForCompletedExploreTile extends StatelessWidget {
         )
       ],
     );
+  }
+}
+
+// Implementation of above base class for Explore Action tiles
+// Takes in a ListCauseAction as the model
+// Defines getExploreActionTile which returns an ExploreActionTile
+class ExtendedExploreActionTile extends BaseExtendedExploreActionTile {
+  final ListCauseAction model;
+
+  ExtendedExploreActionTile(this.model, bool completed)
+      : super(completed: completed);
+
+  @override
+  Widget getExploreActionTile() {
+    return ExploreActionTile(model);
+  }
+}
+
+// Implementation of above base class for Explore Learning tiles
+// Takes in a LearningResource as the model
+// Defines getExploreActionTile which returns an ExploreLearningTile
+class ExtendedExploreLearningTile extends BaseExtendedExploreActionTile {
+  final LearningResource model;
+
+  ExtendedExploreLearningTile(this.model, bool completed)
+      : super(completed: completed);
+
+  @override
+  Widget getExploreActionTile() {
+    return ExploreLearningTile(model);
   }
 }
 
