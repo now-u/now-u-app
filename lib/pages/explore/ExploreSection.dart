@@ -1,5 +1,4 @@
 import 'package:app/assets/components/explore_tiles.dart';
-import 'package:app/assets/components/stackForCompletedExploreTile.dart';
 import 'package:app/assets/constants.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
