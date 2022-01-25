@@ -371,7 +371,6 @@ class _ExploreTileCause extends StatelessWidget {
   }
 }
 
-
 // BASE EXTENDED (STACKING) CHECKMARK CLASS
 // Base class for stacking a large checkmark on Action and Learning Explore Tiles
 abstract class BaseExtendedExploreActionTile extends StatelessWidget {

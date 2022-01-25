@@ -165,16 +165,17 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                                 itemCount: model.tiles!.length,
                                 itemBuilder: (context, index) => Container(
                                   child: Padding(
-                                    padding: EdgeInsets.only(
-                                      right: 8,
-                                      left: index == 0 ? horizontalPadding : 0,
-                                      bottom: tileShadowBlurRadius,
-                                    ),
-                                    child: renderTile(model.tiles![index])),
-                                  ),
+                                      padding: EdgeInsets.only(
+                                        right: 8,
+                                        left:
+                                            index == 0 ? horizontalPadding : 0,
+                                        bottom: tileShadowBlurRadius,
+                                      ),
+                                      child: renderTile(model.tiles![index])),
                                 ),
                               ),
                   ),
+                ),
               ]);
         });
   }
@@ -230,7 +231,8 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
         );
 
   @override
-  Widget renderTile(ListCauseAction tile) => (ExtendedExploreActionTile(tile, true));
+  Widget renderTile(ListCauseAction tile) =>
+      (ExtendedExploreActionTile(tile, true));
 }
 
 class LearningResourceExploreSection extends ExploreSection<LearningResource> {
@@ -259,7 +261,8 @@ class LearningResourceExploreSection extends ExploreSection<LearningResource> {
         );
 
   @override
-  Widget renderTile(LearningResource tile) => ExtendedExploreLearningTile(tile, true);
+  Widget renderTile(LearningResource tile) =>
+      ExtendedExploreLearningTile(tile, true);
 }
 
 class NewsExploreSection extends ExploreSection<Article> {
