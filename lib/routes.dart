@@ -194,21 +194,13 @@ Function initRoutes = (RouteSettings settings) {
         return customRoute(
             builder: (context) => AllCampaignsPage(), settings: settings);
       }
-    case Routes.actions:
-      {
-        return customRoute(
-            builder: (context) => TabsPage(currentPage: TabPage.Actions),
-            settings: settings);
-      }
     case Routes.actionInfo:
       {
         if (args is ActionInfoArguments) {
           return customRoute(
               builder: (context) => ActionInfo(args), settings: settings);
         }
-        return customRoute(
-            builder: (context) => TabsPage(currentPage: TabPage.Actions),
-            settings: settings);
+        break; 
       }
     //PastCampaignActionPage
     case Routes.pastCampaignActionPage:
