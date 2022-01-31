@@ -16,11 +16,60 @@ class FadeRouteBuilder<T> extends PageRouteBuilder<T> {
         );
 }
 
+class IntroPageData {
+  final String title;
+  final String description;
+  final String? image;
+  final String? backgroundImage;
+  final bool showSkip;
+  final bool showLogo;
+
+  IntroPageData ({
+    required this.title,
+    required this.description,
+    this.image,
+    this.backgroundImage,
+    this.showSkip = true,
+    this.showLogo = false,
+  });
+}
+
 class IntroViewModel extends BaseModel {
   final PageController controller;
   final Duration animationDuration = Duration(milliseconds: 500);
   final Duration delay = Duration(milliseconds: 300);
+  final List<IntroPageData> pages = [
+    IntroPageData(
+      title: "Welcome",
+      description:
+          "Our mission is to inform, involve and inspire everyone to help tackle some of the world’s most pressing problems.",
+      backgroundImage: "assets/imgs/intro/OnBoarding1.png",
+      showSkip: false,
+      showLogo: true,
+    ),
+    IntroPageData(
+      title: "Choose causes you care about",
+      description:
+          "We partner with charities to bring you targeted monthly campaigns, highlighting a range of social and environmental issues both locally and around the world. Join as many as you like!",
+      image: 'assets/imgs/intro/On-Boarding illustrations-01.png',
+    ),
+    IntroPageData(
+      title: "Learn and take action",
+      description: "Find ways to make a difference that suit you.",
+      image: 'assets/imgs/intro/On-Boarding illustrations-02.png',
+    ),
+    IntroPageData(
+      title: "Help shape a better world",
+      description:
+          "Join a community of changemakers, connect with fellow campaign contributors, and see how your actions are making a difference.",
+      image: 'assets/imgs/intro/On-Boarding illustrations-04.png',
+    ),
+  ];
+
   int currentIndex = 0;
+  IntroPageData get currentPage => pages[currentIndex];
+  bool get isLastPage => currentIndex == pages.length - 1;
+
   Rect? animationRect;
 
   var skipKey = RectGetter.createGlobalKey();

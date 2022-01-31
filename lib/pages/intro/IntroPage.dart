@@ -9,32 +9,6 @@ import 'package:app/assets/components/buttons/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:stacked/stacked.dart';
 
-List<IntroPageSection> pages = [
-  IntroPageSection(
-    title: "Welcome",
-    description:
-        "Our mission is to inform, involve and inspire everyone to help tackle some of the world’s most pressing problems.",
-    backgroundImage: "assets/imgs/intro/OnBoarding1.png",
-  ),
-  IntroPageSection(
-    title: "Choose causes you care about",
-    description:
-        "We partner with charities to bring you targeted monthly campaigns, highlighting a range of social and environmental issues both locally and around the world. Join as many as you like!",
-    image: 'assets/imgs/intro/On-Boarding illustrations-01.png',
-  ),
-  IntroPageSection(
-    title: "Learn and take action",
-    description: "Find ways to make a difference that suit you.",
-    image: 'assets/imgs/intro/On-Boarding illustrations-02.png',
-  ),
-  IntroPageSection(
-    title: "Help shape a better world",
-    description:
-        "Join a community of changemakers, connect with fellow campaign contributors, and see how your actions are making a difference.",
-    image: 'assets/imgs/intro/On-Boarding illustrations-04.png',
-  ),
-];
-
 const curve = Curves.ease;
 const duration = Duration(milliseconds: 500);
 const Duration animationDuration = Duration(milliseconds: 500);
@@ -50,14 +24,14 @@ class IntroPage extends StatelessWidget {
           children: <Widget>[
             Scaffold(
               body: Container(
-                decoration: pages[model.currentIndex].backgroundImage == null
+                decoration: model.currentPage.backgroundImage == null
                     ? BoxDecoration(
                         color: Theme.of(context).primaryColorDark,
                       )
                     : BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage(
-                            pages[model.currentIndex].backgroundImage!,
+                            model.currentPage.backgroundImage!,
                           ),
                           fit: BoxFit.cover,
                         ),
@@ -68,7 +42,7 @@ class IntroPage extends StatelessWidget {
                     SafeArea(
                       child: Container(),
                     ),
-                    if (pages[model.currentIndex].showSkip)
+                    if (model.currentPage.showSkip)
                       Padding(
                         padding: EdgeInsets.only(top: 20, bottom: 20),
                         child: Row(
@@ -85,12 +59,22 @@ class IntroPage extends StatelessWidget {
                           ],
                         ),
                       ),
+                    if (model.currentPage.showLogo)
+                      Padding(
+                        padding: EdgeInsets.only(top: 20),
+                        child: Container(
+                          child: Center(
+                            child: Image.asset("assets/imgs/intro/now-u-logo-onboarding.png"),
+                          ),
+                        ),
+                      ),
+
                     Expanded(
                       child: PageView(
                         //physics: NeverScrollableScrollPhysics(),
                         onPageChanged: model.setIndex,
                         controller: model.controller,
-                        children: pages,
+                        children: model.pages.map((page) => IntroPageSectionWidget(page)).toList(),
                       ),
                     ),
                     Padding(
@@ -99,7 +83,7 @@ class IntroPage extends StatelessWidget {
                           width: double.infinity,
                           child: Container(
                               height: 45,
-                              child: model.currentIndex != pages.length - 1
+                              child: !model.isLastPage
                                   ? Container()
                                   : RectGetter(
                                       key: model.getStartedKey,
@@ -110,7 +94,7 @@ class IntroPage extends StatelessWidget {
                         )),
                     SmoothPageIndicator(
                       controller: model.controller,
-                      count: pages.length,
+                      count: model.pages.length,
                       effect: ExpandingDotsEffect(
                           dotColor: colorFrom(
                             Colors.white,
@@ -151,19 +135,9 @@ class IntroPage extends StatelessWidget {
   }
 }
 
-class IntroPageSection extends StatelessWidget {
-  final String title;
-  final String description;
-  final String? image;
-  final String? backgroundImage;
-  final bool showSkip;
-
-  IntroPageSection(
-      {required this.title,
-      required this.description,
-      this.image,
-      this.backgroundImage,
-      this.showSkip = true});
+class IntroPageSectionWidget extends StatelessWidget {
+  final IntroPageData data;
+  IntroPageSectionWidget(this.data);
 
   @override
   Widget build(BuildContext context) {
@@ -173,13 +147,13 @@ class IntroPageSection extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.all(20),
             child:
-                image != null ? Image(image: AssetImage(image!)) : Container(),
+                data.image != null ? Image(image: AssetImage(data.image!)) : Container(),
           ),
         ),
         Padding(
             padding: EdgeInsets.symmetric(horizontal: 40),
             child: Text(
-              title,
+              data.title,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize:
@@ -197,7 +171,7 @@ class IntroPageSection extends StatelessWidget {
             child: Container(
               width: MediaQuery.of(context).size.width * 0.9,
               child: Text(
-                description,
+                data.description,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize:
