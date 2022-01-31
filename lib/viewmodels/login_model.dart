@@ -57,7 +57,7 @@ class LoginViewModel extends BaseModel {
   Future login({
     required String? email,
     required String? token,
-    bool? isManul,
+    bool isManual = false,
   }) async {
     setBusy(true);
 
@@ -78,7 +78,7 @@ class LoginViewModel extends BaseModel {
             BasicDialog(title: "Login error", description: errorMsg));
         _navigationService.navigateTo(Routes.login);
       } else if (err == AuthError.unauthorized) {
-        if (isManul!) {
+        if (isManual) {
           errorMsg =
               "Incorrect token, please double check your token from the email";
           await _dialogService.showDialog(
@@ -95,7 +95,7 @@ class LoginViewModel extends BaseModel {
         ));
       }
     } else {
-      _navigationService.navigateTo(Routes.home);
+      _navigationService.navigateTo(Routes.causesOnboardingPage);
     }
   }
 

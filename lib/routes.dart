@@ -50,6 +50,7 @@ class Routes {
 
   // Causes
   static const causesPage = "causesPage";
+  static const causesOnboardingPage = "causesOnboarding";
 
   // All campaigns (including past)
   static const allCampaigns = "allCampaigns";
@@ -86,6 +87,11 @@ Function initRoutes = (RouteSettings settings) {
       {
         return customRoute(
             builder: (context) => ChangeCausePage(), settings: settings);
+      }
+    case Routes.causesOnboardingPage:
+      {
+        return customRoute(
+            builder: (context) => CauseOnboardingPage(), settings: settings);
       }
     case Routes.login:
       {
