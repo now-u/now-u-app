@@ -64,17 +64,19 @@ class IntroPage extends StatelessWidget {
                         padding: EdgeInsets.only(top: 20),
                         child: Container(
                           child: Center(
-                            child: Image.asset("assets/imgs/intro/now-u-logo-onboarding.png"),
+                            child: Image.asset(
+                                "assets/imgs/intro/now-u-logo-onboarding.png"),
                           ),
                         ),
                       ),
-
                     Expanded(
                       child: PageView(
                         //physics: NeverScrollableScrollPhysics(),
                         onPageChanged: model.setIndex,
                         controller: model.controller,
-                        children: model.pages.map((page) => IntroPageSectionWidget(page)).toList(),
+                        children: model.pages
+                            .map((page) => IntroPageSectionWidget(page))
+                            .toList(),
                       ),
                     ),
                     Padding(
@@ -146,8 +148,9 @@ class IntroPageSectionWidget extends StatelessWidget {
         Expanded(
           child: Padding(
             padding: EdgeInsets.all(20),
-            child:
-                data.image != null ? Image(image: AssetImage(data.image!)) : Container(),
+            child: data.image != null
+                ? Image(image: AssetImage(data.image!))
+                : Container(),
           ),
         ),
         Padding(

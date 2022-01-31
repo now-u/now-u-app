@@ -24,7 +24,7 @@ class IntroPageData {
   final bool showSkip;
   final bool showLogo;
 
-  IntroPageData ({
+  IntroPageData({
     required this.title,
     required this.description,
     this.image,
