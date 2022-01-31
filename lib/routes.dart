@@ -20,7 +20,6 @@ import 'package:app/pages/login/login_code_view.dart';
 import 'package:app/pages/more/morePages/AccountDetailsPage.dart';
 import 'package:app/pages/more/morePages/FAQPage.dart';
 import 'package:app/pages/more/morePages/PartnersPage.dart';
-import 'package:app/pages/onboarding/onboarding_page.dart';
 import 'package:app/pages/causes/CauseOnboardingPage.dart';
 import 'package:app/pages/causes/ChangeCausePage.dart';
 import 'package:app/pages/other/InfoPage.dart';
@@ -78,11 +77,6 @@ Function initRoutes = (RouteSettings settings) {
   switch (settings.name) {
 
     // Into
-    case Routes.onBoarding:
-      {
-        return customRoute(
-            builder: (context) => OnBoardingPage(), settings: settings);
-      }
     case Routes.causesPage:
       {
         return customRoute(
