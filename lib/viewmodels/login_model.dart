@@ -95,7 +95,7 @@ class LoginViewModel extends BaseModel {
         ));
       }
     } else {
-      _navigationService.navigateTo(Routes.intro);
+      _navigationService.navigateTo(Routes.home);
     }
   }
 
