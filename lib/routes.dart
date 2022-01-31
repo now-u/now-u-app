@@ -200,7 +200,7 @@ Function initRoutes = (RouteSettings settings) {
           return customRoute(
               builder: (context) => ActionInfo(args), settings: settings);
         }
-        break; 
+        break;
       }
     //PastCampaignActionPage
     case Routes.pastCampaignActionPage:

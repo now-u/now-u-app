@@ -63,9 +63,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
       },
       {
         'page': Container(
-          child: Center(
-            child: Text("Coming soon")
-          ),
+          child: Center(child: Text("Coming soon")),
         ),
         'icon': Icon(CustomIcons.ic_up),
         'title': "Impact",
