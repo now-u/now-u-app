@@ -25,14 +25,14 @@ class IntroViewModel extends BaseModel {
 
   var skipKey = RectGetter.createGlobalKey();
   var getStartedKey = RectGetter.createGlobalKey();
-  
+
   IntroViewModel(int currentIndex)
-    : this.currentIndex = currentIndex,
-      this.controller = PageController(
-        initialPage: currentIndex,
-        viewportFraction: 1,
-      );
- 
+      : this.currentIndex = currentIndex,
+        this.controller = PageController(
+          initialPage: currentIndex,
+          viewportFraction: 1,
+        );
+
   void setIndex(int index) {
     currentIndex = index;
     notifyListeners();
@@ -42,7 +42,7 @@ class IntroViewModel extends BaseModel {
     animationRect = RectGetter.getRectFromKey(getStartedKey)!;
     nextPage(context);
   }
-  
+
   void skip(BuildContext context) {
     animationRect = RectGetter.getRectFromKey(skipKey)!;
     nextPage(context);
@@ -51,7 +51,8 @@ class IntroViewModel extends BaseModel {
   void nextPage(BuildContext context) async {
     notifyListeners();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      animationRect = animationRect!.inflate(1.3 * MediaQuery.of(context).size.longestSide);
+      animationRect =
+          animationRect!.inflate(1.3 * MediaQuery.of(context).size.longestSide);
       notifyListeners();
       Future.delayed(animationDuration + delay, () => _goToNextPage(context));
     });
@@ -59,6 +60,7 @@ class IntroViewModel extends BaseModel {
 
   void _goToNextPage(BuildContext context) {
     // This is very bad dont use MyHomePage need named route
-    Navigator.of(context).push(FadeRouteBuilder(page: LoginPage(LoginPageArguments())));
+    Navigator.of(context)
+        .push(FadeRouteBuilder(page: LoginPage(LoginPageArguments())));
   }
 }
