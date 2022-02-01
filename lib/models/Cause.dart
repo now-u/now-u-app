@@ -40,12 +40,12 @@ class Cause extends ListCause {
     required bool selected,
     required String headerImage,
   }) : super(
-            id: id,
-            title: title,
-            icon: icon,
-            description: description,
-            selected: selected,
-            headerImage: headerImage,
+          id: id,
+          title: title,
+          icon: icon,
+          description: description,
+          selected: selected,
+          headerImage: headerImage,
         );
 
   Cause.fromJson(Map<String, dynamic> json)

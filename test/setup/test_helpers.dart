@@ -2,18 +2,19 @@ import 'package:mockito/mockito.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 import 'dart:io';
-import 'package:flutter/services.dart';
 
 import 'package:app/locator.dart';
-import 'package:app/models/User.dart';
 import 'package:app/services/navigation_service.dart';
 import 'package:app/services/dialog_service.dart';
 import 'package:app/services/api_service.dart';
 import 'test_helpers.mocks.dart';
 
 import 'package:app/services/analytics.dart';
-import 'package:app/services/auth.dart';
 import 'package:app/services/google_location_search_service.dart';
+
+Map<String, String> unauthenticatedHeaders = {
+  "Content-Type": "application/json; charset=UTF-8"
+};
 
 @GenerateMocks([http.Client])
 MockClient mockHttpClient(ApiService service) {
@@ -23,7 +24,7 @@ MockClient mockHttpClient(ApiService service) {
 }
 
 Future<String> readTestData(String fileName,
-    {String filePath = "test/data/"}) async {
+    {String filePath = "assets/json/"}) async {
   final file = File(filePath + fileName);
   return await file.readAsString();
 }

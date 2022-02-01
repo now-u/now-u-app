@@ -5,7 +5,7 @@ import 'package:app/assets/components/header.dart';
 import 'package:app/assets/components/selectionPill.dart';
 import 'package:app/assets/components/custom_network_image.dart';
 
-import 'package:app/models/Article.dart';
+import 'package:app/models/article.dart';
 
 import 'package:stacked/stacked.dart';
 import 'package:app/viewmodels/news_model.dart';
@@ -152,7 +152,7 @@ class NewsTile extends StatelessWidget {
                   height: 160,
                   width: double.infinity,
                   child: CustomNetworkImage(
-                    article.getHeaderImage(),
+                    article.headerImage,
                     fit: BoxFit.cover,
                   )),
 
@@ -165,7 +165,7 @@ class NewsTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        article.getTitle()!,
+                        article.title,
                         style: textStyleFrom(
                           Theme.of(context).primaryTextTheme.headline3,
                           fontSize: 20,
@@ -177,7 +177,7 @@ class NewsTile extends StatelessWidget {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        article.getSubtitle()!,
+                        article.subtitle,
                         style: textStyleFrom(
                             Theme.of(context).primaryTextTheme.headline5,
                             color: Color.fromRGBO(109, 113, 129, 1)),
@@ -185,11 +185,11 @@ class NewsTile extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       SizedBox(height: 5),
-                      article.getReleaseDate() == null
+                      article.releasedAt == null
                           ? Container()
                           : Text(
                               DateFormat('d MMMM yyyy')
-                                  .format(article.getReleaseDate()!),
+                                  .format(article.releasedAt!),
                               style: textStyleFrom(
                                 Theme.of(context).primaryTextTheme.bodyText1,
                                 fontSize: 12,
@@ -201,7 +201,7 @@ class NewsTile extends StatelessWidget {
                 ),
               ),
               // Source
-              article.getSource() == null
+              article.source == null
                   ? Container()
                   : Container(
                       color: Color.fromRGBO(247, 248, 252, 1),
@@ -209,7 +209,7 @@ class NewsTile extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.all(5),
                           child: Text(
-                            article.getSource()!,
+                            article.source!,
                             style: textStyleFrom(
                               Theme.of(context).primaryTextTheme.bodyText1,
                               color: Theme.of(context).primaryColor,

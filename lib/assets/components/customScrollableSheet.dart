@@ -25,45 +25,56 @@ class ScrollableSheetPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: scaffoldBackgroundColor ??
-            colorFrom(
-              Theme.of(context).primaryColor,
-              opacity: 0.05,
+    // This is a bit of nasty hack to stop reloading on the
+    // DraggableScrollableSheet. See
+    // https://github.com/flutter/flutter/issues/67219
+    // for more details.
+    Widget? child;
+    final sheet = DraggableScrollableSheet(
+      initialChildSize: initialChildSize ?? 0.72,
+      minChildSize: minChildSize ?? 0.72,
+      maxChildSize: maxChildSize ?? 1,
+      builder: (context, controller) {
+        if (child == null) {
+          child = SingleChildScrollView(
+            controller: controller,
+            child: ClipShadowPath(
+              shadow: shadow ??
+                  Shadow(
+                    blurRadius: 5,
+                    color: Color.fromRGBO(121, 43, 2, 0.3),
+                    offset: Offset(0, -3),
+                  ),
+              clipper: BezierTopClipper(),
+              child: Container(
+                color: sheetBackgroundColor ?? Color.fromRGBO(247, 248, 252, 1),
+                child: Padding(
+                  padding: EdgeInsets.only(top: 45),
+                  child: Column(
+                    children: children,
+                  ),
+                ),
+              ),
             ),
-        body: Stack(children: [
+          );
+        }
+        return child!;
+      },
+    );
+
+    return Scaffold(
+      backgroundColor: scaffoldBackgroundColor ??
+          colorFrom(
+            Theme.of(context).primaryColor,
+            opacity: 0.05,
+          ),
+      body: Stack(
+        children: [
           // Header
           header,
-          DraggableScrollableSheet(
-            initialChildSize: initialChildSize ?? 0.72,
-            minChildSize: minChildSize ?? 0.72,
-            maxChildSize: maxChildSize ?? 1,
-            builder: (context, controller) {
-              return ListView(controller: controller, children: [
-                ClipShadowPath(
-                    shadow: shadow ??
-                        Shadow(
-                          blurRadius: 5,
-                          color: Color.fromRGBO(121, 43, 2, 0.3),
-                          offset: Offset(0, -3),
-                        ),
-                    clipper: BezierTopClipper(),
-                    child: Container(
-                        color: sheetBackgroundColor ??
-                            Color.fromRGBO(247, 248, 252, 1),
-                        child: ListView(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          children: <Widget>[
-                            SizedBox(height: 70),
-                            Column(
-                              children: children,
-                            )
-                          ],
-                        )))
-              ]);
-            },
-          ),
-        ]));
+          sheet
+        ],
+      ),
+    );
   }
 }

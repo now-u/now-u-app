@@ -44,10 +44,10 @@ class AnalyticsService {
     await _analytics.logEvent(
         name: "learning_resource_clicked",
         parameters: <String, dynamic>{
-          "id": resource.getId(),
-          "title": resource.getTitle(),
-          "time": resource.getTime(),
-          "type": resource.getType()
+          "id": resource.id,
+          "title": resource.title,
+          "time": resource.time,
+          "type": resource.type.name
         });
   }
 }

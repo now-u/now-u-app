@@ -1,100 +1,74 @@
-import 'package:app/assets/icons/my_flutter_app_icons_old.dart';
 import 'package:app/routes.dart';
 import 'package:app/viewmodels/base_model.dart';
 import 'package:app/models/Cause.dart';
 import "dart:async";
 import 'package:app/services/navigation_service.dart';
+import 'package:app/services/causes_service.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/dialog_service.dart';
-import 'package:http/http.dart';
 
 class CausesViewModel extends BaseModel {
   final DialogService _dialogService = locator<DialogService>();
-
-  List<ListCause> _causesList = [];
-  List<ListCause> get causesList => _causesList;
-
-  List<bool> _causesSelectedList = [false, false, false, false, false, false];
-
-  List<bool> get causesSelectedList => _causesSelectedList;
-  bool get isButtonDisabled => !_causesSelectedList.any((element) => element);
-
   final NavigationService _navigationService = locator<NavigationService>();
+  final CausesService _causesService = locator<CausesService>();
+
+  Map<ListCause, bool> _causes = {};
+
+  List<ListCause> get causesList => _causes.keys.toList();
+  bool get areCausesDisabled => !_causes.values.toList().any((value) => value);
 
   Future fetchCauses() async {
-    await Future.delayed(const Duration(seconds: 0));
-    _causesList = [
-      ListCause(
-        id: 1,
-        title: 'Environment',
-        description:
-              'Get involved with charities and activists locally and across the globe.',
-        headerImage: 'https://images.unsplash.com/photo-1498925008800-019c7d59d903?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=968&q=80',
-        selected: true,
-        icon: CustomIcons.icon_quiz_01,
-      ),
-      ListCause(
-        id: 2,
-        title: 'Health & Wellbeing',
-        description: 'ipsum',
-        headerImage: 'https://images.unsplash.com/photo-1498925008800-019c7d59d903?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=968&q=80',
-        selected: true,
-        icon: CustomIcons.icon_quiz_01,
-      ),
-      ListCause(
-        id: 3,
-        title: 'Equality & Human-Rights',
-        description: 'ipsum',
-        headerImage: 'https://images.unsplash.com/photo-1498925008800-019c7d59d903?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=968&q=80',
-        selected: true,
-        icon: CustomIcons.icon_quiz_01,
-      ),
-      ListCause(
-        id: 4,
-        title: 'Education & Citizenship',
-        description: 'ipsum',
-        headerImage: 'https://images.unsplash.com/photo-1498925008800-019c7d59d903?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=968&q=80',
-        selected: true,
-        icon: CustomIcons.icon_quiz_01,
-      ),
-      ListCause(
-        id: 5,
-        title: 'Economic Opportunity',
-        description: 'ipsum',
-        headerImage: 'https://images.unsplash.com/photo-1498925008800-019c7d59d903?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=968&q=80',
-        selected: true,
-        icon: CustomIcons.icon_quiz_01,
-      ),
-      ListCause(
-        id: 6,
-        title: 'Safe Homes & Community',
-        description: 'Get involved with charities and activists locally and across the globe. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi',
-        headerImage: 'https://images.unsplash.com/photo-1498925008800-019c7d59d903?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=968&q=80',
-        selected: true,
-        icon: CustomIcons.icon_quiz_01,
-      )
-    ];
+    setBusy(true);
+
+    List<ListCause> causesList = await _causesService.getCauses();
+    _causes = {for (ListCause cause in causesList) cause: cause.selected};
+
+    setBusy(false);
     notifyListeners();
   }
 
-  void toggleSelection({required int causeIndex}) {
-    _causesSelectedList[causeIndex] = !_causesSelectedList[causeIndex];
+  bool isCauseSelected(ListCause cause) {
+    return _causes[cause] ?? false;
+  }
+
+  void toggleSelection({required ListCause listCause}) {
+    bool isCauseSelected = _causes[listCause] ?? false;
+    _causes[listCause] = !isCauseSelected;
     notifyListeners();
   }
 
-  void getStarted() async {
-    // TODO register selection
-    _navigationService.navigateTo(Routes.login);
-  }
-
-  Future getCausePopup({required int causeIndex}) async {
-    var dialogResult = await _dialogService.showDialog(
-      CauseDialog(causesList[causeIndex])
-    );
+  Future getCausePopup(
+      {required ListCause listCause, required int causeIndex}) async {
+    var dialogResult =
+        await _dialogService.showDialog(CauseDialog(causesList[causeIndex]));
     if (dialogResult.response) {
-      if (_causesSelectedList[causeIndex] == false) {
-        toggleSelection(causeIndex: causeIndex);
+      if (_causes[listCause] == false) {
+        toggleSelection(listCause: listCause);
       }
     }
+  }
+
+  void selectCauses() async {
+    List<ListCause> selectedCauses =
+        causesList.where((cause) => isCauseSelected(cause)).toList();
+    _causesService.selectCauses(selectedCauses);
+  }
+}
+
+class SelectCausesViewModel extends CausesViewModel {
+  void selectCauses() async {
+    super.selectCauses();
+    _navigationService.navigateTo(Routes.home);
+  }
+}
+
+class ChangeCausesViewModel extends CausesViewModel {
+  void selectCauses() async {
+    super.selectCauses();
+    _navigationService.navigateTo(Routes.home);
+  }
+
+  void goToPreviousPage() {
+    _navigationService.goBack();
   }
 }

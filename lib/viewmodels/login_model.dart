@@ -47,7 +47,8 @@ class LoginViewModel extends BaseModel {
       await _dialogService.showDialog(
         BasicDialog(
           title: "Login error",
-          description: "There has been an error, please check you have access to the internet.",
+          description:
+              "There has been an error, please check you have access to the internet.",
         ),
       );
     }
@@ -56,7 +57,7 @@ class LoginViewModel extends BaseModel {
   Future login({
     required String? email,
     required String? token,
-    bool? isManul,
+    bool isManual = false,
   }) async {
     setBusy(true);
 
@@ -74,37 +75,27 @@ class LoginViewModel extends BaseModel {
       if (err == AuthError.tokenExpired) {
         errorMsg = "Your token has expired, please restart the login process";
         await _dialogService.showDialog(
-          BasicDialog(
-            title: "Login error", description: errorMsg
-          )
-        );
+            BasicDialog(title: "Login error", description: errorMsg));
         _navigationService.navigateTo(Routes.login);
       } else if (err == AuthError.unauthorized) {
-        if (isManul!) {
+        if (isManual) {
           errorMsg =
               "Incorrect token, please double check your token from the email";
           await _dialogService.showDialog(
-            BasicDialog(
-              title: "Login error", description: errorMsg
-            )
-          );
+              BasicDialog(title: "Login error", description: errorMsg));
         } else {
           errorMsg = "Incorrect login link, please try again";
           await _dialogService.showDialog(
-            BasicDialog(
-              title: "Login error", description: errorMsg
-            )
-          );
+              BasicDialog(title: "Login error", description: errorMsg));
         }
       } else {
-        await _dialogService.showDialog(
-          BasicDialog(
-            title: "Login error", description: errorMsg,
-          )
-        );
+        await _dialogService.showDialog(BasicDialog(
+          title: "Login error",
+          description: errorMsg,
+        ));
       }
     } else {
-      _navigationService.navigateTo(Routes.intro);
+      _navigationService.navigateTo(Routes.causesOnboardingPage);
     }
   }
 

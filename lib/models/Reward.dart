@@ -44,7 +44,7 @@ class Reward {
     String endingPlural = successNumber > 1 ? "s" : "";
     if (type == RewardType.CompletedTypedActionsNumber) {
       Tuple3<String?, String?, String?> descPrePostFix =
-          generateCampaingActionDesc(actionType);
+          generateCampaignActionDesc(actionType);
       String pre = descPrePostFix.item1!;
       String post = descPrePostFix.item3!;
       return (pre + " ${successNumber} " + post + "${endingPlural}");
@@ -63,7 +63,7 @@ class Reward {
   String generateCompletionText() {
     if (type == RewardType.CompletedTypedActionsNumber) {
       Tuple3<String?, String?, String?> descPrePostFix =
-          generateCampaingActionDesc(actionType);
+          generateCampaignActionDesc(actionType);
       String pre = descPrePostFix.item2!;
       String post = descPrePostFix.item3!;
       String endingPlural = successNumber > 1 ? "s" : "";

@@ -467,7 +467,7 @@ class ListDividor extends StatelessWidget {
 
 class ActiveDoneSelector extends StatefulWidget {
   String text;
-  Function onClick;
+  VoidCallback onClick;
   bool selected;
 
   ActiveDoneSelector(this.text, this.onClick, this.selected);
@@ -479,11 +479,6 @@ class ActiveDoneSelector extends StatefulWidget {
 class _ActiveDoneSelectorState extends State<ActiveDoneSelector> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: widget.onClick as void Function()?,
-        child: Padding(
-          padding: EdgeInsets.only(left: 12, bottom: 10),
-          child: SelectionPill(widget.text, widget.selected),
-        ));
+    return SelectionPill(widget.text, widget.selected, onClick: widget.onClick);
   }
 }

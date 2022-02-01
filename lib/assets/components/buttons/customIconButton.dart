@@ -58,7 +58,9 @@ class CustomIconButton extends StatelessWidget {
           : EdgeInsets.symmetric(horizontal: 60.0, vertical: 15.0),
       child: Icon(
         icon,
-        size: isCircularButton ? buttonStyleStyles[size]["iconSize"] - 10 : buttonStyleStyles[size]["iconSize"],
+        size: isCircularButton
+            ? buttonStyleStyles[size]["iconSize"] - 10
+            : buttonStyleStyles[size]["iconSize"],
         color: iconColor ?? Colors.white,
       ),
     );
@@ -68,42 +70,40 @@ class CustomIconButton extends StatelessWidget {
 class CircularIconButton extends StatelessWidget {
   final VoidCallback onPressed;
   final IconData icon;
-  
+
   final Color? backgroundColor;
   final Color? iconColor;
   final double? height;
   final double? iconSize;
 
-  CircularIconButton({
-    required this.icon,
-    required this.onPressed,
-    this.iconColor,
-    this.backgroundColor,
-    this.height,
-    this.iconSize
-  });
+  CircularIconButton(
+      {required this.icon,
+      required this.onPressed,
+      this.iconColor,
+      this.backgroundColor,
+      this.height,
+      this.iconSize});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: height,
-      child: MaterialButton(
-        height: height,
-        elevation: 0,
-        color: this.backgroundColor ?? Theme.of(context).primaryColor,
-        disabledColor: colorFrom(
-          Theme.of(context).primaryColor,
-          opacity: 0.5,
-        ),
-        onPressed: onPressed,
-        shape: CircleBorder(),
-        padding: EdgeInsets.all(0),
-        child: Icon(
-          icon,
-          size: iconSize, 
-          color: iconColor ?? Colors.white,
-        ),
-      )
-    );
+        width: height,
+        child: MaterialButton(
+          height: height,
+          elevation: 0,
+          color: this.backgroundColor ?? Theme.of(context).primaryColor,
+          disabledColor: colorFrom(
+            Theme.of(context).primaryColor,
+            opacity: 0.5,
+          ),
+          onPressed: onPressed,
+          shape: CircleBorder(),
+          padding: EdgeInsets.all(0),
+          child: Icon(
+            icon,
+            size: iconSize,
+            color: iconColor ?? Colors.white,
+          ),
+        ));
   }
 }

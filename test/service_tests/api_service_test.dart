@@ -116,4 +116,21 @@ void main() {
           .called(1);
     });
   });
+
+  group('test postRequest', () {
+    test('without parameters', () async {
+      ApiService apiService = ApiService();
+      MockClient client = mockHttpClient(apiService);
+
+      when(client.post(any,
+              headers: anyNamed("headers"), body: anyNamed("body")))
+          .thenAnswer(
+              (_) => Future.value(http.Response('{"abc": "def"}', 200)));
+
+      Map response = await apiService.postRequest("test", body: {"abc": "def"});
+      expect(response, {"abc": "def"});
+      verify(client.post(Uri.parse("https://api.now-u.com/api/v2/test"),
+          headers: anyNamed("headers"), body: {"abc": "def"})).called(1);
+    });
+  });
 }

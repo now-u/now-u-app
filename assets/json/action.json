@@ -1,0 +1,28 @@
+{
+  "data": {
+    "id": 2,
+    "title": "Watch 'Why talk toilets?'",
+    "link": "https://www.youtube.com/watch?v=MS4va1WLaro",
+    "type": "learn",
+    "causes": [
+      {
+        "id": 1,
+        "title": "Cause title",
+        "icon": "ic-abc",
+        "description": "Cause description",
+        "selected": true,
+        "header_image": "https://picsum.photos/400/200"
+      }
+    ],
+    "created_at": "2020-07-06T20:49:43.892Z",
+    "updated_at": "2020-07-06T20:51:26.708Z",
+    "what_description": "Watch this short WaterAid video to find out more about access to decent toilets and the impacts of poor sanitation facilities.",
+    "why_description": "Access to decent sanitation facilties is essential for almost every aspect of life. By learning more about the issue we will be in a stronger position to advocate for universal access to WASH and to take effective action.",
+    "time": 2.0,
+    "enabled": true,
+    "release_date": null,
+    "end_date": null,
+    "completed": true,
+    "starred": false
+  }
+}

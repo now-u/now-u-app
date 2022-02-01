@@ -30,71 +30,66 @@ class CauseDialog extends CustomDialog {
       context: context,
       barrierDismissible: true,
       builder: (_) => AlertDialog(
-        contentPadding: EdgeInsets.zero,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        clipBehavior: Clip.hardEdge,
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Stack(
+          contentPadding: EdgeInsets.zero,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          clipBehavior: Clip.hardEdge,
+          content: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                CachedNetworkImage(imageUrl: cause.headerImage),
+                Stack(children: [
+                  CachedNetworkImage(imageUrl: cause.headerImage),
+                  Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Align(
+                        alignment: Alignment.topRight,
+                        child: IconButton(
+                          icon: Icon(Icons.close),
+                          onPressed: () {
+                            complete(false, context);
+                          },
+                          color: Theme.of(context).primaryColor,
+                        )),
+                  )
+                ]),
                 Padding(
-                  padding: EdgeInsets.all(5),
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: IconButton(
-                      icon: Icon(Icons.close),
-                      onPressed: () {
-                        complete(false, context);
-                      },
-                      color: Theme.of(context).primaryColor,
-                    )
+                  padding: EdgeInsets.all(25),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Text(
+                        cause.title,
+                        textAlign: TextAlign.center,
+                        style: textStyleFrom(
+                          Theme.of(context).primaryTextTheme.headline2,
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                      Text(
+                        cause.description,
+                        style: textStyleFrom(
+                          Theme.of(context).primaryTextTheme.bodyText1,
+                          color: Theme.of(context).primaryColorDark,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        width: double.infinity,
+                        child: DarkButton(
+                          'Select Cause',
+                          onPressed: () {
+                            complete(true, context);
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                )
-              ]
-            ),
-            Padding(
-                padding: EdgeInsets.all(25),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Text(
-                      cause.title,
-                      textAlign: TextAlign.center,
-                      style: textStyleFrom(
-                        Theme.of(context).primaryTextTheme.headline2,
-                      ),
-                    ),
-                    SizedBox(height: 15),
-                    Text(
-                      cause.description,
-                      style: textStyleFrom(
-                        Theme.of(context).primaryTextTheme.bodyText1,
-                        color: Theme.of(context).primaryColorDark,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: 20),
-                    Container(
-                      width: double.infinity,
-                      child: DarkButton(
-                        'Select Cause',
-                        onPressed: () {
-                          complete(true, context);
-                        },
-                      ),
-                    ),
-                  ],
                 ),
-            ),
-          ]
-        )
-      ),
+              ])),
     );
   }
 }
@@ -104,61 +99,64 @@ class BasicDialog extends CustomDialog {
   final String description;
   final List? buttons;
   final String? headerImage;
-   
-  BasicDialog({required this.title, required this.description, this.headerImage, this.buttons});
+
+  BasicDialog(
+      {required this.title,
+      required this.description,
+      this.headerImage,
+      this.buttons});
 
   void show(BuildContext context) {
     showDialog(
       context: context,
       barrierDismissible: true,
       builder: (_) => AlertDialog(
-        contentPadding: EdgeInsets.zero,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        clipBehavior: Clip.hardEdge,
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            if(headerImage != null) CachedNetworkImage(imageUrl: headerImage!),
-            SizedBox(height: 15),
-            Padding(
-                padding: EdgeInsets.all(25),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Text(
-                      title,
-                      textAlign: TextAlign.center,
-                      style: textStyleFrom(
-                        Theme.of(context).primaryTextTheme.headline2,
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Padding(
-                      padding: EdgeInsets.all(5),
-                      child: Text(
-                        description,
-                        style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.bodyText1,
-                          color: Theme.of(context).primaryColorDark,
-                        ),
+          contentPadding: EdgeInsets.zero,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          clipBehavior: Clip.hardEdge,
+          content: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                if (headerImage != null)
+                  CachedNetworkImage(imageUrl: headerImage!),
+                SizedBox(height: 15),
+                Padding(
+                  padding: EdgeInsets.all(25),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Text(
+                        title,
                         textAlign: TextAlign.center,
+                        style: textStyleFrom(
+                          Theme.of(context).primaryTextTheme.headline2,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 20),
-                    Column(
-                      children: _getButtons(buttons, context),
-                    ),
-                    SizedBox(height: 20),
-                  ],
+                      SizedBox(height: 20),
+                      Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Text(
+                          description,
+                          style: textStyleFrom(
+                            Theme.of(context).primaryTextTheme.bodyText1,
+                            color: Theme.of(context).primaryColorDark,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Column(
+                        children: _getButtons(buttons, context),
+                      ),
+                      SizedBox(height: 20),
+                    ],
+                  ),
                 ),
-            ),
-          ]
-        )
-      ),
+              ])),
     );
   }
 
@@ -180,15 +178,9 @@ class BasicDialog extends CustomDialog {
     List<Widget> buttonWidgets = [];
     for (final DialogButton button in buttons as Iterable<DialogButton>) {
       buttonWidgets.add(Container(
-        child: CustomWidthButton(
-          button.text,
-          onPressed: () {
-            complete(button.response, context);
-          },
-          buttonWidthProportion: 0.3,
-          fontSize: 30,
-          size: ButtonSize.Medium
-        ),
+        child: CustomWidthButton(button.text, onPressed: () {
+          complete(button.response, context);
+        }, buttonWidthProportion: 0.3, fontSize: 30, size: ButtonSize.Medium),
       ));
       buttonWidgets.add(SizedBox(height: 10));
     }

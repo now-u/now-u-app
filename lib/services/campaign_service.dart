@@ -38,7 +38,7 @@ class CampaignService {
       bool? includeStarred}) {
     List<ListCauseAction> actions = [];
     for (Campaign campaign in _campaigns!) {
-      actions.addAll(campaign.actions!);
+      actions.addAll(campaign.actions);
     }
 
     User? user = _authenticationService!.currentUser;
