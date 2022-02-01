@@ -68,10 +68,10 @@
   await _analytics.logEvent(
       name: &quot;learning_resource_clicked&quot;,
       parameters: &lt;String, dynamic&gt;{
-        &quot;id&quot;: resource.getId(),
-        &quot;title&quot;: resource.getTitle(),
-        &quot;time&quot;: resource.getTime(),
-        &quot;type&quot;: resource.getType()
+        &quot;id&quot;: resource.id,
+        &quot;title&quot;: resource.title,
+        &quot;time&quot;: resource.time,
+        &quot;type&quot;: resource.type.name
       });
 }</code></pre>
 </section>

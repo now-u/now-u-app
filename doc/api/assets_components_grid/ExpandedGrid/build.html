@@ -107,18 +107,17 @@ and</li>
   <pre class="language-dart"><code class="language-dart">@override
 Widget build(BuildContext context) {
   return Column(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    mainAxisSize: MainAxisSize.max,
-    children: items.map((row) =&gt;
-      Expanded(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          mainAxisSize: MainAxisSize.max,
-          children: row
-        )
-      ),
-    ).toList()
-  );
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisSize: MainAxisSize.max,
+      children: items
+          .map(
+            (row) =&gt; Expanded(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisSize: MainAxisSize.max,
+                    children: row)),
+          )
+          .toList());
 }</code></pre>
 </section>
 

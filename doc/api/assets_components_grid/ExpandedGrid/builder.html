@@ -77,14 +77,12 @@
     List&lt;Widget&gt; rowWidgets = [];
     for (int r = 0; r &lt; numberOfRows; r++) {
       rowWidgets.add(Builder(
-        builder: (context) =&gt; itemBuilder(context, r, c, c*numberOfRows + r))
-      );
+          builder: (context) =&gt;
+              itemBuilder(context, r, c, c * numberOfRows + r)));
     }
     widgets.add(rowWidgets);
   }
-  return ExpandedGrid(
-    items: widgets
-  );
+  return ExpandedGrid(items: widgets);
 }</code></pre>
 </section>
 

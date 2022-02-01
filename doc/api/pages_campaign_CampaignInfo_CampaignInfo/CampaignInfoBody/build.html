@@ -166,8 +166,8 @@ Widget build(BuildContext context) {
                             ),
                             Container(
                               height: 180,
-                              child:
-                                  CustomNetworkImage(_campaign!.infographic),
+                              child: CustomNetworkImage(
+                                  _campaign!.infographicUrl),
                             ),
                             SizedBox(
                               height: 12,
@@ -288,7 +288,7 @@ Widget build(BuildContext context) {
                       ),
                       Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: _campaign!.keyAims!.map((aim) {
+                          children: _campaign!.keyAims.map((aim) {
                             return Column(children: [
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -316,7 +316,7 @@ Widget build(BuildContext context) {
                 )),
 
             &#47;&#47; Partners
-            _campaign!.generalPartners!.length == 0
+            _campaign!.generalPartners.length == 0
                 ? Container()
                 : Container(
                     color: Color.fromRGBO(247, 248, 252, 1),
@@ -338,7 +338,7 @@ Widget build(BuildContext context) {
                             ),
                             Wrap(
                               children: getOrganistaionTiles(
-                                  _campaign!.generalPartners!, context),
+                                  _campaign!.generalPartners, context),
                               spacing: 10,
                               runSpacing: 10,
                               crossAxisAlignment: WrapCrossAlignment.start,

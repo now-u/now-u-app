@@ -81,24 +81,19 @@
     switch (error) {
       case AuthError.request:
         {
-          _dialogService.showDialog(
-            BasicDialog(
-              title: &quot;Client Error&quot;,
-              description:
-                  &quot;Sorry, something went wrong!\nTry restarting your app.&quot;,
-            )
-          );
+          _dialogService.showDialog(BasicDialog(
+            title: &quot;Client Error&quot;,
+            description:
+                &quot;Sorry, something went wrong!\nTry restarting your app.&quot;,
+          ));
           break;
         }
       case AuthError.internal:
         {
-          _dialogService.showDialog(
-            BasicDialog(
+          _dialogService.showDialog(BasicDialog(
               title: &quot;Server Error&quot;,
               description:
-                  &quot;Sorry, there was a server problem.\nTry again later.&quot;
-            )
-          );
+                  &quot;Sorry, there was a server problem.\nTry again later.&quot;));
           break;
         }
       default:

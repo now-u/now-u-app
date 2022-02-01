@@ -65,10 +65,9 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future fetchArticles() async {
   setBusy(true);
-  await _newsService!.fetchArticles();
   _category = null;
   _filteredArticles.clear();
-  _filteredArticles.addAll(_newsService!.articles!);
+  _filteredArticles.addAll(await _newsService.getArticles());
   setBusy(false);
   notifyListeners();
 }</code></pre>

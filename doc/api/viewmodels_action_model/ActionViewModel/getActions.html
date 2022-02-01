@@ -81,7 +81,7 @@
         includeTodo: includeToDo,
         includeStarred: includeStarred));
     &#47;&#47; Filter them for the campaign
-    tmpActions.removeWhere((a) =&gt; !campaign!.actions!.contains(a));
+    tmpActions.removeWhere((a) =&gt; !campaign!.actions.contains(a));
     if (hasSelected(selections[&#39;times&#39;]!)) {
       &#47;&#47; Remove the ones with the wrong times
       tmpActions.removeWhere((a) =&gt; !selections[&#39;times&#39;]![a.timeText]);

@@ -63,6 +63,11 @@
 
 
 
+        <dt>Implementers</dt>
+        <dd><ul class="comma-separated clazz-relationships">
+          <li><a href="../viewmodels_causes_view_model/ChangeCausesViewModel-class.html">ChangeCausesViewModel</a></li>
+          <li><a href="../viewmodels_causes_view_model/SelectCausesViewModel-class.html">SelectCausesViewModel</a></li>
+        </ul></dd>
 
 
       </dl>
@@ -85,6 +90,17 @@
       <h2>Properties</h2>
 
       <dl class="properties">
+        <dt id="areCausesDisabled" class="property">
+  <span class="name"><a href="../viewmodels_causes_view_model/CausesViewModel/areCausesDisabled.html">areCausesDisabled</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> 
+
+</dt>
+<dd>
+   
+  <div class="features">read-only</div>
+
+</dd>
+
         <dt id="busy" class="property inherited">
   <span class="name"><a href="../viewmodels_base_model/BaseModel/busy.html">busy</a></span>
   <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> 
@@ -99,17 +115,6 @@
         <dt id="causesList" class="property">
   <span class="name"><a href="../viewmodels_causes_view_model/CausesViewModel/causesList.html">causesList</a></span>
   <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../models_Cause/ListCause-class.html">ListCause</a></span>&gt;</span></span> 
-
-</dt>
-<dd>
-   
-  <div class="features">read-only</div>
-
-</dd>
-
-        <dt id="causesSelectedList" class="property">
-  <span class="name"><a href="../viewmodels_causes_view_model/CausesViewModel/causesSelectedList.html">causesSelectedList</a></span>
-  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>&gt;</span></span> 
 
 </dt>
 <dd>
@@ -148,17 +153,6 @@
 <dd class="inherited">
   Whether any listeners are currently registered. <a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/hasListeners.html">[...]</a>
   <div class="features">@<a href="https://pub.dev/documentation/meta/1.7.0/meta/protected-constant.html">protected</a>, read-only, inherited</div>
-
-</dd>
-
-        <dt id="isButtonDisabled" class="property">
-  <span class="name"><a href="../viewmodels_causes_view_model/CausesViewModel/isButtonDisabled.html">isButtonDisabled</a></span>
-  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> 
-
-</dt>
-<dd>
-   
-  <div class="features">read-only</div>
 
 </dd>
 
@@ -222,7 +216,7 @@ disposed). <a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/di
 </dd>
 
         <dt id="getCausePopup" class="callable">
-  <span class="name"><a href="../viewmodels_causes_view_model/CausesViewModel/getCausePopup.html">getCausePopup</a></span><span class="signature">(<wbr><span class="parameter" id="getCausePopup-param-causeIndex">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">causeIndex</span>}</span>)
+  <span class="name"><a href="../viewmodels_causes_view_model/CausesViewModel/getCausePopup.html">getCausePopup</a></span><span class="signature">(<wbr><span class="parameter" id="getCausePopup-param-listCause">{<span>required</span> <span class="type-annotation"><a href="../models_Cause/ListCause-class.html">ListCause</a></span> <span class="parameter-name">listCause</span>, </span><span class="parameter" id="getCausePopup-param-causeIndex"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">causeIndex</span>}</span>)
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
   </span>
   
@@ -234,9 +228,9 @@ disposed). <a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/di
 
 </dd>
 
-        <dt id="getStarted" class="callable">
-  <span class="name"><a href="../viewmodels_causes_view_model/CausesViewModel/getStarted.html">getStarted</a></span><span class="signature">(<wbr>)
-    <span class="returntype parameter">&#8594; void</span>
+        <dt id="isCauseSelected" class="callable">
+  <span class="name"><a href="../viewmodels_causes_view_model/CausesViewModel/isCauseSelected.html">isCauseSelected</a></span><span class="signature">(<wbr><span class="parameter" id="isCauseSelected-param-cause"><span class="type-annotation"><a href="../models_Cause/ListCause-class.html">ListCause</a></span> <span class="parameter-name">cause</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
   </span>
   
 
@@ -300,6 +294,19 @@ notified when the object changes. <a href="https://api.flutter.dev/flutter/found
 
 </dd>
 
+        <dt id="selectCauses" class="callable">
+  <span class="name"><a href="../viewmodels_causes_view_model/CausesViewModel/selectCauses.html">selectCauses</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+   
+  
+
+</dd>
+
         <dt id="setBusy" class="callable inherited">
   <span class="name"><a href="../viewmodels_base_model/BaseModel/setBusy.html">setBusy</a></span><span class="signature">(<wbr><span class="parameter" id="setBusy-param-value"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">value</span></span>)
     <span class="returntype parameter">&#8594; void</span>
@@ -314,7 +321,7 @@ notified when the object changes. <a href="https://api.flutter.dev/flutter/found
 </dd>
 
         <dt id="toggleSelection" class="callable">
-  <span class="name"><a href="../viewmodels_causes_view_model/CausesViewModel/toggleSelection.html">toggleSelection</a></span><span class="signature">(<wbr><span class="parameter" id="toggleSelection-param-causeIndex">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">causeIndex</span>}</span>)
+  <span class="name"><a href="../viewmodels_causes_view_model/CausesViewModel/toggleSelection.html">toggleSelection</a></span><span class="signature">(<wbr><span class="parameter" id="toggleSelection-param-listCause">{<span>required</span> <span class="type-annotation"><a href="../models_Cause/ListCause-class.html">ListCause</a></span> <span class="parameter-name">listCause</span>}</span>)
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -384,6 +391,8 @@ notified when the object changes. <a href="https://api.flutter.dev/flutter/found
     <ol>
   <li class="section-title"><a href="../viewmodels_causes_view_model/viewmodels_causes_view_model-library.html#classes">Classes</a></li>
   <li><a href="../viewmodels_causes_view_model/CausesViewModel-class.html">CausesViewModel</a></li>
+  <li><a href="../viewmodels_causes_view_model/ChangeCausesViewModel-class.html">ChangeCausesViewModel</a></li>
+  <li><a href="../viewmodels_causes_view_model/SelectCausesViewModel-class.html">SelectCausesViewModel</a></li>
 
 
 
@@ -406,13 +415,12 @@ notified when the object changes. <a href="https://api.flutter.dev/flutter/found
     <li class="section-title">
       <a href="../viewmodels_causes_view_model/CausesViewModel-class.html#instance-properties">Properties</a>
     </li>
+    <li><a href="../viewmodels_causes_view_model/CausesViewModel/areCausesDisabled.html">areCausesDisabled</a></li>
     <li class="inherited"><a href="../viewmodels_base_model/BaseModel/busy.html">busy</a></li>
     <li><a href="../viewmodels_causes_view_model/CausesViewModel/causesList.html">causesList</a></li>
-    <li><a href="../viewmodels_causes_view_model/CausesViewModel/causesSelectedList.html">causesSelectedList</a></li>
     <li class="inherited"><a href="../viewmodels_base_model/BaseModel/currentUser.html">currentUser</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/hasListeners.html">hasListeners</a></li>
-    <li><a href="../viewmodels_causes_view_model/CausesViewModel/isButtonDisabled.html">isButtonDisabled</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
     <li class="section-title"><a href="../viewmodels_causes_view_model/CausesViewModel-class.html#instance-methods">Methods</a></li>
@@ -420,11 +428,12 @@ notified when the object changes. <a href="https://api.flutter.dev/flutter/found
     <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/dispose.html">dispose</a></li>
     <li><a href="../viewmodels_causes_view_model/CausesViewModel/fetchCauses.html">fetchCauses</a></li>
     <li><a href="../viewmodels_causes_view_model/CausesViewModel/getCausePopup.html">getCausePopup</a></li>
-    <li><a href="../viewmodels_causes_view_model/CausesViewModel/getStarted.html">getStarted</a></li>
+    <li><a href="../viewmodels_causes_view_model/CausesViewModel/isCauseSelected.html">isCauseSelected</a></li>
     <li class="inherited"><a href="../viewmodels_base_model/BaseModel/logout.html">logout</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/notifyListeners.html">notifyListeners</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/removeListener.html">removeListener</a></li>
+    <li><a href="../viewmodels_causes_view_model/CausesViewModel/selectCauses.html">selectCauses</a></li>
     <li class="inherited"><a href="../viewmodels_base_model/BaseModel/setBusy.html">setBusy</a></li>
     <li><a href="../viewmodels_causes_view_model/CausesViewModel/toggleSelection.html">toggleSelection</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>

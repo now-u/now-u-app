@@ -64,9 +64,7 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future showDialog(
-  CustomDialog dialog
-) {
+  <pre class="language-dart"><code class="language-dart">Future showDialog(CustomDialog dialog) {
   _dialogCompleter = Completer&lt;AlertResponse&gt;();
   _showDialogListener(dialog);
   return _dialogCompleter!.future;

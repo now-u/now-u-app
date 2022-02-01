@@ -67,19 +67,18 @@
   <pre class="language-dart"><code class="language-dart">void filterArticlesList(String query) {
   if (query.isNotEmpty) {
     List&lt;Article&gt; tempList = List&lt;Article&gt;.empty();
-    _newsService!.articles!.forEach((article) {
-      if (article.getTitle()!.toLowerCase().contains(query.toLowerCase())) {
+    _articles.forEach((article) {
+      if (article.title.toLowerCase().contains(query.toLowerCase())) {
         tempList.add(article);
       }
     });
-    print(&quot;Set searching to true&quot;);
     _searching = true;
     _filteredArticles.clear();
     _filteredArticles.addAll(tempList);
   } else {
     _searching = false;
     _filteredArticles.clear();
-    _filteredArticles.addAll(_newsService!.articles!);
+    _filteredArticles.addAll(_articles);
   }
   notifyListeners();
 }</code></pre>

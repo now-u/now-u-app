@@ -59,18 +59,15 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">LearningTopic.fromJson(Map json) {
-  print(&quot;Getting learning topic from json&quot;);
-  id = json[&#39;id&#39;];
-  title = json[&#39;title&#39;];
-  imageLink = json[&#39;image_link&#39;];
-  ourAnswer = json[&#39;our_answer&#39;];
-  print(&quot;Got the things up till resources&quot;);
-  resources = (json[&#39;learning_resources&#39;])
-      .map((e) =&gt; LearningResource.fromJson(e))
-      .toList()
-      .cast&lt;LearningResource&gt;();
-}</code></pre>
+  <pre class="language-dart"><code class="language-dart">LearningTopic.fromJson(Map json)
+    : id = json[&#39;id&#39;],
+      title = json[&#39;title&#39;],
+      imageLink = json[&#39;image_link&#39;],
+      ourAnswer = json[&#39;our_answer&#39;],
+      resources = (json[&#39;learning_resources&#39;])
+          .map((e) =&gt; LearningResource.fromJson(e))
+          .toList()
+          .cast&lt;LearningResource&gt;();</code></pre>
 </section>
 
 
@@ -111,11 +108,6 @@
 
     <li class="section-title"><a href="../../models_Learning/LearningTopic-class.html#instance-methods">Methods</a></li>
     <li><a href="../../models_Learning/LearningTopic/containsNew.html">containsNew</a></li>
-    <li><a href="../../models_Learning/LearningTopic/getId.html">getId</a></li>
-    <li><a href="../../models_Learning/LearningTopic/getImageLink.html">getImageLink</a></li>
-    <li><a href="../../models_Learning/LearningTopic/getOurAnswer.html">getOurAnswer</a></li>
-    <li><a href="../../models_Learning/LearningTopic/getResources.html">getResources</a></li>
-    <li><a href="../../models_Learning/LearningTopic/getTitle.html">getTitle</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
 

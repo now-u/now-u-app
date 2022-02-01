@@ -178,12 +178,9 @@ Widget build(BuildContext context) {
   Widget loginButton() {
     Future&lt;bool&gt; validateAndSave(LoginViewModel model) async {
       final FormState form = _formKey.currentState!;
-      print(&quot;Hello&quot;);
       if (form.validate()) {
         form.save();
-        print(&quot;Hello 2&quot;);
-        model.login(email: widget.email, token: _token, isManul: true);
-        print(&quot;Hello 4&quot;);
+        model.login(email: widget.email, token: _token, isManual: true);
         return true;
       }
       return false;
@@ -196,8 +193,6 @@ Widget build(BuildContext context) {
           child: DarkButton(
             &quot;Log in&quot;,
             onPressed: () {
-              print(&quot;Button pressed&quot;);
-              print(&quot;Hello 3&quot;);
               validateAndSave(model);
             },
           )),

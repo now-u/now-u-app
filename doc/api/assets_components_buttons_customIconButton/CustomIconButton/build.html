@@ -126,7 +126,9 @@ Widget build(BuildContext context) {
         : EdgeInsets.symmetric(horizontal: 60.0, vertical: 15.0),
     child: Icon(
       icon,
-      size: isCircularButton ? buttonStyleStyles[size][&quot;iconSize&quot;] - 10 : buttonStyleStyles[size][&quot;iconSize&quot;],
+      size: isCircularButton
+          ? buttonStyleStyles[size][&quot;iconSize&quot;] - 10
+          : buttonStyleStyles[size][&quot;iconSize&quot;],
       color: iconColor ?? Colors.white,
     ),
   );

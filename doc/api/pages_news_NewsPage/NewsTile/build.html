@@ -129,7 +129,7 @@ Widget build(BuildContext context) {
                 height: 160,
                 width: double.infinity,
                 child: CustomNetworkImage(
-                  article.getHeaderImage(),
+                  article.headerImage,
                   fit: BoxFit.cover,
                 )),
 
@@ -142,7 +142,7 @@ Widget build(BuildContext context) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      article.getTitle()!,
+                      article.title,
                       style: textStyleFrom(
                         Theme.of(context).primaryTextTheme.headline3,
                         fontSize: 20,
@@ -154,7 +154,7 @@ Widget build(BuildContext context) {
                     ),
                     SizedBox(height: 5),
                     Text(
-                      article.getSubtitle()!,
+                      article.subtitle,
                       style: textStyleFrom(
                           Theme.of(context).primaryTextTheme.headline5,
                           color: Color.fromRGBO(109, 113, 129, 1)),
@@ -162,11 +162,11 @@ Widget build(BuildContext context) {
                       overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(height: 5),
-                    article.getReleaseDate() == null
+                    article.releasedAt == null
                         ? Container()
                         : Text(
                             DateFormat(&#39;d MMMM yyyy&#39;)
-                                .format(article.getReleaseDate()!),
+                                .format(article.releasedAt!),
                             style: textStyleFrom(
                               Theme.of(context).primaryTextTheme.bodyText1,
                               fontSize: 12,
@@ -178,7 +178,7 @@ Widget build(BuildContext context) {
               ),
             ),
             &#47;&#47; Source
-            article.getSource() == null
+            article.source == null
                 ? Container()
                 : Container(
                     color: Color.fromRGBO(247, 248, 252, 1),
@@ -186,7 +186,7 @@ Widget build(BuildContext context) {
                       child: Padding(
                         padding: EdgeInsets.all(5),
                         child: Text(
-                          article.getSource()!,
+                          article.source!,
                           style: textStyleFrom(
                             Theme.of(context).primaryTextTheme.bodyText1,
                             color: Theme.of(context).primaryColor,

@@ -65,7 +65,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future fetchNotifications() async {
   setBusy(true);
-  await _internalNotificationService!.fetchNotifications();
+  await _internalNotificationService.fetchNotifications();
   setBusy(false);
   notifyListeners();
 }</code></pre>

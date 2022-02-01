@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the campaignActionTypeData constant from the Action library, for the Dart programming language.">
+  <title>campaignActionTypeData constant - Action library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../static-assets/github.css">
+  <link rel="stylesheet" href="../static-assets/styles.css">
+  <link rel="icon" href="../static-assets/favicon.png">
+
+  
+</head>
+
+
+<body data-base-href="../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">app</a></li>
+    <li><a href="../models_Action/models_Action-library.html">Action</a></li>
+    <li class="self-crumb">campaignActionTypeData constant</li>
+  </ol>
+  <div class="self-name">campaignActionTypeData</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-top-level-property">campaignActionTypeData</span> top-level constant 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+ 
+</h1></div>
+
+        <section class="multi-line-signature">
+          <a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a>
+          const <span class="name ">campaignActionTypeData</span>
+          
+
+        </section>
+        
+
+        
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">const Map campaignActionTypeData = {
+  CampaignActionType.Volunteer: {
+    &#39;name&#39;: &quot;volunteer&quot;,
+    &#39;verb&#39;: &quot;Volunteer&quot;,
+    &#39;pastVerb&#39;: &quot;Volunteered&quot;,
+    &#39;displayName&#39;: &quot;volunteer&quot;,
+    &#47;&#47;&#39;icon&#39;: CustomIcons.icon_vol_1,
+    &#39;type&#39;: getInvolved,
+  },
+  CampaignActionType.Donation: {
+    &#39;name&#39;: &quot;donate&quot;,
+    &#39;verb&#39;: &quot;Make&quot;,
+    &#39;pastVerb&#39;: &quot;Made&quot;,
+    &#39;displayName&#39;: &quot;donation&quot;,
+    &#47;&#47;&#39;icon&#39;: CustomIcons.icon_donate_01,
+    &#39;type&#39;: raiseMoney,
+  },
+  CampaignActionType.Fundraise: {
+    &#39;name&#39;: &quot;fundraise&quot;,
+    &#39;verb&#39;: &quot;Take part in&quot;,
+    &#39;pastVerb&#39;: &quot;Took part in&quot;,
+    &#39;displayName&#39;: &quot;fundraiser&quot;,
+    &#47;&#47;&#39;icon&#39;: CustomIcons.icon_fundraise_01,
+    &#39;type&#39;: raiseMoney,
+  },
+  CampaignActionType.Awareness: {
+    &#39;name&#39;: &quot;awareness&quot;,
+    &#39;verb&#39;: &quot;Raise awareness&quot;,
+    &#39;pastVerb&#39;: &quot;Raised awareness&quot;,
+    &#39;displayName&#39;: &quot;time&quot;,
+    &#47;&#47;&#39;icon&#39;: CustomIcons.icon_raise_awareness_01_01,
+    &#39;type&#39;: advocate,
+  },
+  CampaignActionType.Petition: {
+    &#39;name&#39;: &quot;sign&quot;,
+    &#39;verb&#39;: &quot;Sign&quot;,
+    &#39;pastVerb&#39;: &quot;Signed&quot;,
+    &#39;displayName&#39;: &quot;petition&quot;,
+    &#47;&#47;&#39;icon&#39;: CustomIcons.icon_petition_01,
+    &#39;type&#39;: advocate,
+  },
+  CampaignActionType.Behaviour: {
+    &#39;name&#39;: &quot;behaviour&quot;,
+    &#39;verb&#39;: &quot;Complete&quot;,
+    &#39;pastVerb&#39;: &quot;Completed&quot;,
+    &#39;displayName&#39;: &quot;behaviour change action&quot;,
+    &#47;&#47;&#39;icon&#39;: CustomIcons.icon_behaviour_01,
+    &#39;type&#39;: getInvolved,
+  },
+  CampaignActionType.Contact: {
+    &#39;name&#39;: &quot;contact&quot;,
+    &#39;verb&#39;: &quot;Complete&quot;,
+    &#39;pastVerb&#39;: &quot;Completed&quot;,
+    &#39;displayName&#39;: &quot;contact change action&quot;,
+    &#47;&#47;&#39;icon&#39;: CustomIcons.icon_contact_01,
+    &#39;type&#39;: advocate,
+  },
+  CampaignActionType.Protest: {
+    &#39;name&#39;: &quot;protest&quot;,
+    &#39;verb&#39;: &quot;Take part in&quot;,
+    &#39;pastVerb&#39;: &quot;Took part in&quot;,
+    &#39;displayName&#39;: &quot;protest&quot;,
+    &#47;&#47;&#39;icon&#39;: CustomIcons.icon_protest_01,
+    &#39;type&#39;: getInvolved,
+  },
+  CampaignActionType.Connect: {
+    &#39;name&#39;: &quot;connect&quot;,
+    &#39;verb&#39;: &quot;Connect&quot;,
+    &#39;pastVerb&#39;: &quot;Connected&quot;,
+    &#39;displayName&#39;: &quot;times&quot;,
+    &#47;&#47;&#39;icon&#39;: FontAwesomeIcons.link,
+    &#47;&#47;&#39;icon&#39;: CustomIcons.icon_connect_01,
+    &#39;type&#39;: getInvolved,
+  },
+  CampaignActionType.Learn: {
+    &#39;name&#39;: &quot;learn&quot;,
+    &#39;verb&#39;: &quot;Complete&quot;,
+    &#39;pastVerb&#39;: &quot;Completed&quot;,
+    &#39;displayName&#39;: &quot;learning action&quot;,
+    &#47;&#47;&#39;icon&#39;: CustomIcons.icon_learning_01,
+    &#39;type&#39;: learn,
+  },
+  CampaignActionType.Quiz: {
+    &#39;name&#39;: &quot;quiz&quot;,
+    &#39;verb&#39;: &quot;Complete&quot;,
+    &#39;pastVerb&#39;: &quot;Completed&quot;,
+    &#39;displayName&#39;: &quot;quiz&quot;,
+    &#47;&#47;&#39;icon&#39;: CustomIcons.icon_quiz_01,
+    &#39;type&#39;: learn,
+  },
+  CampaignActionType.Other: defaultCampaignActionTypeData
+};</code></pre>
+</section>
+
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../index.html">app</a></li>
+  <li><a href="../models_Action/models_Action-library.html">Action</a></li>
+  <li class="self-crumb">campaignActionTypeData constant</li>
+</ol>
+
+
+    <h5>Action library</h5>
+    <ol>
+  <li class="section-title"><a href="../models_Action/models_Action-library.html#classes">Classes</a></li>
+  <li><a href="../models_Action/ActionType-class.html">ActionType</a></li>
+  <li><a href="../models_Action/CampaignAction-class.html">CampaignAction</a></li>
+  <li><a href="../models_Action/ListCauseAction-class.html">ListCauseAction</a></li>
+
+
+
+  <li class="section-title"><a href="../models_Action/models_Action-library.html#constants">Constants</a></li>
+  <li><a href="../models_Action/actionTypes-constant.html">actionTypes</a></li>
+  <li><a href="../models_Action/advocate-constant.html">advocate</a></li>
+  <li><a href="../models_Action/blue0-constant.html">blue0</a></li>
+  <li><a href="../models_Action/blue1-constant.html">blue1</a></li>
+  <li><a href="../models_Action/blue2-constant.html">blue2</a></li>
+  <li><a href="../models_Action/campaignActionTypeData-constant.html">campaignActionTypeData</a></li>
+  <li><a href="../models_Action/defaultCampaignActionTypeData-constant.html">defaultCampaignActionTypeData</a></li>
+  <li><a href="../models_Action/getInvolved-constant.html">getInvolved</a></li>
+  <li><a href="../models_Action/green0-constant.html">green0</a></li>
+  <li><a href="../models_Action/green1-constant.html">green1</a></li>
+  <li><a href="../models_Action/green2-constant.html">green2</a></li>
+  <li><a href="../models_Action/learn-constant.html">learn</a></li>
+  <li><a href="../models_Action/orange0-constant.html">orange0</a></li>
+  <li><a href="../models_Action/orange1-constant.html">orange1</a></li>
+  <li><a href="../models_Action/orange2-constant.html">orange2</a></li>
+  <li><a href="../models_Action/raiseMoney-constant.html">raiseMoney</a></li>
+  <li><a href="../models_Action/rejectionReasons-constant.html">rejectionReasons</a></li>
+  <li><a href="../models_Action/timeBrackets-constant.html">timeBrackets</a></li>
+  <li><a href="../models_Action/yellow0-constant.html">yellow0</a></li>
+  <li><a href="../models_Action/yellow1-constant.html">yellow1</a></li>
+  <li><a href="../models_Action/yellow2-constant.html">yellow2</a></li>
+
+
+  <li class="section-title"><a href="../models_Action/models_Action-library.html#functions">Functions</a></li>
+  <li><a href="../models_Action/campaignActionTypeFromString.html">campaignActionTypeFromString</a></li>
+  <li><a href="../models_Action/generateCampaignActionDesc.html">generateCampaignActionDesc</a></li>
+
+  <li class="section-title"><a href="../models_Action/models_Action-library.html#enums">Enums</a></li>
+  <li><a href="../models_Action/CampaignActionType-class.html">CampaignActionType</a></li>
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-left-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    app
+      1.2.0+34
+  </span>
+
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js"></script>
+<script src="../static-assets/script.js"></script>
+
+
+
+</body>
+
+</html>
+

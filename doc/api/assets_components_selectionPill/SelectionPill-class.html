@@ -74,7 +74,7 @@
 
       <dl class="constructor-summary-list">
         <dt id="SelectionPill" class="callable">
-          <span class="name"><a href="../assets_components_selectionPill/SelectionPill/SelectionPill.html">SelectionPill</a></span><span class="signature">(<span class="parameter" id="-param-text"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">text</span>, </span><span class="parameter" id="-param-selected"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">selected</span>, </span><span class="parameter" id="-param-borderRadius">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">borderRadius</span>, </span><span class="parameter" id="-param-fontSize"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">fontSize</span>}</span>)</span>
+          <span class="name"><a href="../assets_components_selectionPill/SelectionPill/SelectionPill.html">SelectionPill</a></span><span class="signature">(<span class="parameter" id="-param-text"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">text</span>, </span><span class="parameter" id="-param-isSelected"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">isSelected</span>, </span><span class="parameter" id="-param-borderRadius">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">borderRadius</span>, </span><span class="parameter" id="-param-fontSize"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">fontSize</span> = <span class="default-value">20</span>, </span><span class="parameter" id="-param-onClick"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/VoidCallback.html">VoidCallback</a>?</span> <span class="parameter-name">onClick</span>, </span><span class="parameter" id="-param-padding"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/EdgeInsets-class.html">EdgeInsets</a></span> <span class="parameter-name">padding</span> = <span class="default-value">const EdgeInsets.only(left: 12, bottom: 10)</span>}</span>)</span>
         </dt>
         <dd>
            
@@ -92,18 +92,18 @@
 
 </dt>
 <dd>
-   
+  The border radius of the pill 
   <div class="features">final</div>
 
 </dd>
 
         <dt id="fontSize" class="property">
   <span class="name"><a href="../assets_components_selectionPill/SelectionPill/fontSize.html">fontSize</a></span>
-  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span> 
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> 
 
 </dt>
 <dd>
-   
+  The font size of the text on the pill 
   <div class="features">final</div>
 
 </dd>
@@ -119,6 +119,17 @@
 
 </dd>
 
+        <dt id="isSelected" class="property">
+  <span class="name"><a href="../assets_components_selectionPill/SelectionPill/isSelected.html">isSelected</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> 
+
+</dt>
+<dd>
+  Whether the pill is selected or not 
+  <div class="features">final</div>
+
+</dd>
+
         <dt id="key" class="property inherited">
   <span class="name"><a href="https://api.flutter.dev/flutter/widgets/Widget/key.html">key</a></span>
   <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/foundation/Key-class.html">Key</a>?</span> 
@@ -127,6 +138,29 @@
 <dd class="inherited">
   Controls how one widget replaces another widget in the tree. <a href="https://api.flutter.dev/flutter/widgets/Widget/key.html">[...]</a>
   <div class="features">final, inherited</div>
+
+</dd>
+
+        <dt id="onClick" class="property">
+  <span class="name"><a href="../assets_components_selectionPill/SelectionPill/onClick.html">onClick</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-ui/VoidCallback.html">VoidCallback</a>?</span> 
+
+</dt>
+<dd>
+  What to do when the pill is clicked on.
+this should define selection behaviour 
+  <div class="features">final</div>
+
+</dd>
+
+        <dt id="padding" class="property">
+  <span class="name"><a href="../assets_components_selectionPill/SelectionPill/padding.html">padding</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/painting/EdgeInsets-class.html">EdgeInsets</a></span> 
+
+</dt>
+<dd>
+   
+  <div class="features">final</div>
 
 </dd>
 
@@ -141,24 +175,13 @@
 
 </dd>
 
-        <dt id="selected" class="property">
-  <span class="name"><a href="../assets_components_selectionPill/SelectionPill/selected.html">selected</a></span>
-  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> 
-
-</dt>
-<dd>
-   
-  <div class="features">final</div>
-
-</dd>
-
         <dt id="text" class="property">
   <span class="name"><a href="../assets_components_selectionPill/SelectionPill/text.html">text</a></span>
   <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> 
 
 </dt>
 <dd>
-   
+  The text to display on the pill 
   <div class="features">final</div>
 
 </dd>
@@ -371,9 +394,11 @@ tools and by <a href="https://api.flutter.dev/flutter/foundation/DiagnosticsNode
     <li><a href="../assets_components_selectionPill/SelectionPill/borderRadius.html">borderRadius</a></li>
     <li><a href="../assets_components_selectionPill/SelectionPill/fontSize.html">fontSize</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/hashCode.html">hashCode</a></li>
+    <li><a href="../assets_components_selectionPill/SelectionPill/isSelected.html">isSelected</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/key.html">key</a></li>
+    <li><a href="../assets_components_selectionPill/SelectionPill/onClick.html">onClick</a></li>
+    <li><a href="../assets_components_selectionPill/SelectionPill/padding.html">padding</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
-    <li><a href="../assets_components_selectionPill/SelectionPill/selected.html">selected</a></li>
     <li><a href="../assets_components_selectionPill/SelectionPill/text.html">text</a></li>
 
     <li class="section-title"><a href="../assets_components_selectionPill/SelectionPill-class.html#instance-methods">Methods</a></li>

@@ -53,6 +53,12 @@
 
     <section>
       <dl class="dl-horizontal">
+        <dt>Inheritance</dt>
+        <dd><ul class="gt-separated dark clazz-relationships">
+          <li><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></li>
+          <li><a href="../models_Explorable/Explorable-class.html">Explorable</a></li>
+          <li>ListCauseAction</li>
+        </ul></dd>
 
 
 
@@ -90,12 +96,23 @@
       <dl class="properties">
         <dt id="cause" class="property">
   <span class="name"><a href="../models_Action/ListCauseAction/cause.html">cause</a></span>
-  <span class="signature">&#8594; <a href="../models_Cause/ListCause-class.html">ListCause</a>?</span> 
+  <span class="signature">&#8594; <a href="../models_Cause/ListCause-class.html">ListCause</a></span> 
 
 </dt>
 <dd>
-   
-  <div class="features">read-only</div>
+  The cause that this action is part of 
+  <div class="features">final</div>
+
+</dd>
+
+        <dt id="completed" class="property">
+  <span class="name"><a href="../models_Action/ListCauseAction/completed.html">completed</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> 
+
+</dt>
+<dd>
+  Whether the user has completed this action 
+  <div class="features">final</div>
 
 </dd>
 
@@ -128,35 +145,13 @@
 </dt>
 <dd>
    
-  <div class="features">read-only</div>
-
-</dd>
-
-        <dt id="isCompleted" class="property">
-  <span class="name"><a href="../models_Action/ListCauseAction/isCompleted.html">isCompleted</a></span>
-  <span class="signature">&#8594; dynamic</span> 
-
-</dt>
-<dd>
-   
-  <div class="features">read-only</div>
+  <div class="features">final</div>
 
 </dd>
 
         <dt id="isNew" class="property">
   <span class="name"><a href="../models_Action/ListCauseAction/isNew.html">isNew</a></span>
   <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> 
-
-</dt>
-<dd>
-   
-  <div class="features">read-only</div>
-
-</dd>
-
-        <dt id="isStarred" class="property">
-  <span class="name"><a href="../models_Action/ListCauseAction/isStarred.html">isStarred</a></span>
-  <span class="signature">&#8594; dynamic</span> 
 
 </dt>
 <dd>
@@ -182,8 +177,8 @@
 
 </dt>
 <dd>
-  Return when this action was released 
-  <div class="features">read-only</div>
+  When this action was released 
+  <div class="features">final</div>
 
 </dd>
 
@@ -209,6 +204,17 @@
 
 </dd>
 
+        <dt id="starred" class="property">
+  <span class="name"><a href="../models_Action/ListCauseAction/starred.html">starred</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> 
+
+</dt>
+<dd>
+  Whether the user has completed this action 
+  <div class="features">final</div>
+
+</dd>
+
         <dt id="superType" class="property">
   <span class="name"><a href="../models_Action/ListCauseAction/superType.html">superType</a></span>
   <span class="signature">&#8594; <a href="../models_Action/ActionType-class.html">ActionType</a></span> 
@@ -221,6 +227,17 @@ styling.
 
 </dd>
 
+        <dt id="tertiaryColor" class="property">
+  <span class="name"><a href="../models_Action/ListCauseAction/tertiaryColor.html">tertiaryColor</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a></span> 
+
+</dt>
+<dd>
+   
+  <div class="features">read-only</div>
+
+</dd>
+
         <dt id="time" class="property">
   <span class="name"><a href="../models_Action/ListCauseAction/time.html">time</a></span>
   <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> 
@@ -228,7 +245,7 @@ styling.
 </dt>
 <dd>
    
-  <div class="features">read-only</div>
+  <div class="features">final</div>
 
 </dd>
 
@@ -250,7 +267,7 @@ styling.
 </dt>
 <dd>
    
-  <div class="features">read-only</div>
+  <div class="features">final</div>
 
 </dd>
 
@@ -260,8 +277,8 @@ styling.
 
 </dt>
 <dd>
-  Returns the type if its know otherwise return Other 
-  <div class="features">read-only</div>
+  The type of the action 
+  <div class="features">final</div>
 
 </dd>
 
@@ -360,31 +377,33 @@ styling.
 
 
 
+  <li class="section-title"><a href="../models_Action/models_Action-library.html#constants">Constants</a></li>
+  <li><a href="../models_Action/actionTypes-constant.html">actionTypes</a></li>
+  <li><a href="../models_Action/advocate-constant.html">advocate</a></li>
+  <li><a href="../models_Action/blue0-constant.html">blue0</a></li>
+  <li><a href="../models_Action/blue1-constant.html">blue1</a></li>
+  <li><a href="../models_Action/blue2-constant.html">blue2</a></li>
+  <li><a href="../models_Action/campaignActionTypeData-constant.html">campaignActionTypeData</a></li>
+  <li><a href="../models_Action/defaultCampaignActionTypeData-constant.html">defaultCampaignActionTypeData</a></li>
+  <li><a href="../models_Action/getInvolved-constant.html">getInvolved</a></li>
+  <li><a href="../models_Action/green0-constant.html">green0</a></li>
+  <li><a href="../models_Action/green1-constant.html">green1</a></li>
+  <li><a href="../models_Action/green2-constant.html">green2</a></li>
+  <li><a href="../models_Action/learn-constant.html">learn</a></li>
+  <li><a href="../models_Action/orange0-constant.html">orange0</a></li>
+  <li><a href="../models_Action/orange1-constant.html">orange1</a></li>
+  <li><a href="../models_Action/orange2-constant.html">orange2</a></li>
+  <li><a href="../models_Action/raiseMoney-constant.html">raiseMoney</a></li>
+  <li><a href="../models_Action/rejectionReasons-constant.html">rejectionReasons</a></li>
+  <li><a href="../models_Action/timeBrackets-constant.html">timeBrackets</a></li>
+  <li><a href="../models_Action/yellow0-constant.html">yellow0</a></li>
+  <li><a href="../models_Action/yellow1-constant.html">yellow1</a></li>
+  <li><a href="../models_Action/yellow2-constant.html">yellow2</a></li>
 
-  <li class="section-title"><a href="../models_Action/models_Action-library.html#properties">Properties</a></li>
-  <li><a href="../models_Action/actionTypes.html">actionTypes</a></li>
-  <li><a href="../models_Action/advocate.html">advocate</a></li>
-  <li><a href="../models_Action/blue.html">blue</a></li>
-  <li><a href="../models_Action/blueO.html">blueO</a></li>
-  <li><a href="../models_Action/campaignActionTypeData.html">campaignActionTypeData</a></li>
-  <li><a href="../models_Action/defaultCampaignActionTypeData.html">defaultCampaignActionTypeData</a></li>
-  <li><a href="../models_Action/getInvolved.html">getInvolved</a></li>
-  <li><a href="../models_Action/green.html">green</a></li>
-  <li><a href="../models_Action/greenO.html">greenO</a></li>
-  <li><a href="../models_Action/learn.html">learn</a></li>
-  <li><a href="../models_Action/orange.html">orange</a></li>
-  <li><a href="../models_Action/orangeO.html">orangeO</a></li>
-  <li><a href="../models_Action/raiseMoney.html">raiseMoney</a></li>
-  <li><a href="../models_Action/red.html">red</a></li>
-  <li><a href="../models_Action/redO.html">redO</a></li>
-  <li><a href="../models_Action/rejectionReasons.html">rejectionReasons</a></li>
-  <li><a href="../models_Action/timeBrackets.html">timeBrackets</a></li>
-  <li><a href="../models_Action/yellow.html">yellow</a></li>
-  <li><a href="../models_Action/yellowO.html">yellowO</a></li>
 
   <li class="section-title"><a href="../models_Action/models_Action-library.html#functions">Functions</a></li>
   <li><a href="../models_Action/campaignActionTypeFromString.html">campaignActionTypeFromString</a></li>
-  <li><a href="../models_Action/generateCampaingActionDesc.html">generateCampaingActionDesc</a></li>
+  <li><a href="../models_Action/generateCampaignActionDesc.html">generateCampaignActionDesc</a></li>
 
   <li class="section-title"><a href="../models_Action/models_Action-library.html#enums">Enums</a></li>
   <li><a href="../models_Action/CampaignActionType-class.html">CampaignActionType</a></li>
@@ -406,17 +425,18 @@ styling.
       <a href="../models_Action/ListCauseAction-class.html#instance-properties">Properties</a>
     </li>
     <li><a href="../models_Action/ListCauseAction/cause.html">cause</a></li>
+    <li><a href="../models_Action/ListCauseAction/completed.html">completed</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
     <li><a href="../models_Action/ListCauseAction/icon.html">icon</a></li>
     <li><a href="../models_Action/ListCauseAction/id.html">id</a></li>
-    <li><a href="../models_Action/ListCauseAction/isCompleted.html">isCompleted</a></li>
     <li><a href="../models_Action/ListCauseAction/isNew.html">isNew</a></li>
-    <li><a href="../models_Action/ListCauseAction/isStarred.html">isStarred</a></li>
     <li><a href="../models_Action/ListCauseAction/primaryColor.html">primaryColor</a></li>
     <li><a href="../models_Action/ListCauseAction/releaseTime.html">releaseTime</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
     <li><a href="../models_Action/ListCauseAction/secondaryColor.html">secondaryColor</a></li>
+    <li><a href="../models_Action/ListCauseAction/starred.html">starred</a></li>
     <li><a href="../models_Action/ListCauseAction/superType.html">superType</a></li>
+    <li><a href="../models_Action/ListCauseAction/tertiaryColor.html">tertiaryColor</a></li>
     <li><a href="../models_Action/ListCauseAction/time.html">time</a></li>
     <li><a href="../models_Action/ListCauseAction/timeText.html">timeText</a></li>
     <li><a href="../models_Action/ListCauseAction/title.html">title</a></li>

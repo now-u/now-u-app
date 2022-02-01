@@ -58,15 +58,17 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Whether the resource has been created in the last 2 days</p>
+</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">bool isNew() {
-  print(&quot;Checking is new&quot;);
-  print(createdAt);
-  return DateTime.now().difference(createdAt!).compareTo(Duration(days: 2)) &lt;
+  <pre class="language-dart"><code class="language-dart">&#47;&#47; TODO move to api
+bool isNew() {
+  return DateTime.now().difference(createdAt).compareTo(Duration(days: 2)) &lt;
       0;
 }</code></pre>
 </section>
@@ -99,25 +101,21 @@
     <li class="section-title">
       <a href="../../models_Learning/LearningResource-class.html#instance-properties">Properties</a>
     </li>
+    <li><a href="../../models_Learning/LearningResource/cause.html">cause</a></li>
+    <li><a href="../../models_Learning/LearningResource/completed.html">completed</a></li>
     <li><a href="../../models_Learning/LearningResource/createdAt.html">createdAt</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li><a href="../../models_Learning/LearningResource/icon.html">icon</a></li>
     <li><a href="../../models_Learning/LearningResource/id.html">id</a></li>
     <li><a href="../../models_Learning/LearningResource/link.html">link</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
     <li><a href="../../models_Learning/LearningResource/source.html">source</a></li>
     <li><a href="../../models_Learning/LearningResource/time.html">time</a></li>
+    <li><a href="../../models_Learning/LearningResource/timeText.html">timeText</a></li>
     <li><a href="../../models_Learning/LearningResource/title.html">title</a></li>
     <li><a href="../../models_Learning/LearningResource/type.html">type</a></li>
 
     <li class="section-title"><a href="../../models_Learning/LearningResource-class.html#instance-methods">Methods</a></li>
-    <li><a href="../../models_Learning/LearningResource/getId.html">getId</a></li>
-    <li><a href="../../models_Learning/LearningResource/getLink.html">getLink</a></li>
-    <li><a href="../../models_Learning/LearningResource/getSource.html">getSource</a></li>
-    <li><a href="../../models_Learning/LearningResource/getTime.html">getTime</a></li>
-    <li><a href="../../models_Learning/LearningResource/getTimeText.html">getTimeText</a></li>
-    <li><a href="../../models_Learning/LearningResource/getTitle.html">getTitle</a></li>
-    <li><a href="../../models_Learning/LearningResource/getType.html">getType</a></li>
-    <li><a href="../../models_Learning/LearningResource/getTypeIcon.html">getTypeIcon</a></li>
     <li><a href="../../models_Learning/LearningResource/isNew.html">isNew</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>

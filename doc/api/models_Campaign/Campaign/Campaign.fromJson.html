@@ -60,24 +60,24 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Campaign.fromJson(Map&lt;String, dynamic&gt; json)
-    : _description = json[&#39;description_app&#39;],
-      _numberOfCampaigners = json[&#39;number_of_campaigners&#39;],
-      _numberOfActionsCompleted = json[&#39;number_of_completed_actions&#39;],
-      _infographicUrl = json[&#39;infographic_url&#39;],
-      _actions = json[&#39;actions&#39;]
+    : description = json[&#39;description_app&#39;].replaceAll(&#39;\\n&#39;, &#39;\n\n&#39;),
+      numberOfCampaigners = json[&#39;number_of_campaigners&#39;],
+      numberOfActionsCompleted = json[&#39;number_of_completed_actions&#39;],
+      infographicUrl = json[&#39;infographic_url&#39;],
+      actions = json[&#39;actions&#39;]
           .map((e) =&gt; ListCauseAction.fromJson(e))
           .toList()
           .cast&lt;ListCauseAction&gt;(),
-      _campaignPartners = json[&#39;campaign_partners&#39;]
+      campaignPartners = json[&#39;campaign_partners&#39;]
           .map((e) =&gt; Organisation.fromJson(e))
           .toList()
           .cast&lt;Organisation&gt;(),
-      _generalPartners = json[&#39;general_partners&#39;]
+      generalPartners = json[&#39;general_partners&#39;]
           .map((e) =&gt; Organisation.fromJson(e))
           .toList()
           .cast&lt;Organisation&gt;(),
-      _videoLink = json[&#39;video_link&#39;],
-      _keyAims =
+      videoLink = json[&#39;video_link&#39;],
+      keyAims =
           json[&#39;key_aims&#39;].map((a) =&gt; a[&#39;title&#39;]).toList().cast&lt;String&gt;(),
       super.fromJson(json);</code></pre>
 </section>
@@ -114,14 +114,14 @@
     <li><a href="../../models_Campaign/Campaign/actions.html">actions</a></li>
     <li><a href="../../models_Campaign/Campaign/campaignPartners.html">campaignPartners</a></li>
     <li class="inherited"><a href="../../models_Campaign/ListCampaign/cause.html">cause</a></li>
+    <li class="inherited"><a href="../../models_Campaign/ListCampaign/completed.html">completed</a></li>
     <li><a href="../../models_Campaign/Campaign/description.html">description</a></li>
     <li class="inherited"><a href="../../models_Campaign/ListCampaign/endDate.html">endDate</a></li>
     <li><a href="../../models_Campaign/Campaign/generalPartners.html">generalPartners</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
     <li class="inherited"><a href="../../models_Campaign/ListCampaign/headerImage.html">headerImage</a></li>
     <li class="inherited"><a href="../../models_Campaign/ListCampaign/id.html">id</a></li>
-    <li><a href="../../models_Campaign/Campaign/infographic.html">infographic</a></li>
-    <li class="inherited"><a href="../../models_Campaign/ListCampaign/isCompleted.html">isCompleted</a></li>
+    <li><a href="../../models_Campaign/Campaign/infographicUrl.html">infographicUrl</a></li>
     <li class="inherited"><a href="../../models_Campaign/ListCampaign/isPast.html">isPast</a></li>
     <li><a href="../../models_Campaign/Campaign/keyAims.html">keyAims</a></li>
     <li><a href="../../models_Campaign/Campaign/numberOfActionsCompleted.html">numberOfActionsCompleted</a></li>

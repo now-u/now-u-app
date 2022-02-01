@@ -66,7 +66,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">int numberOfCompletedActionsForCampaign(Campaign campaign) {
   int count = 0;
-  List&lt;ListCauseAction&gt; actions = campaign.actions!;
+  List&lt;ListCauseAction&gt; actions = campaign.actions;
   for (int i = 0; i &lt; actions.length; i++) {
     if (this.completedActions!.contains(actions[i].id)) {
       count++;

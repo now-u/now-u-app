@@ -60,8 +60,6 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">LearningCentre.fromJson(List json) {
-  print(&quot;Getting learning centre from json&quot;);
-  &#47;&#47;campaign = json[&#39;campaign&#39;];
   learningTopics = json
       .map((e) =&gt; LearningTopic.fromJson(e))
       .toList()

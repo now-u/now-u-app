@@ -69,71 +69,66 @@
     context: context,
     barrierDismissible: true,
     builder: (_) =&gt; AlertDialog(
-      contentPadding: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      clipBehavior: Clip.hardEdge,
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Stack(
+        contentPadding: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        clipBehavior: Clip.hardEdge,
+        content: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              CachedNetworkImage(imageUrl: cause.headerImage),
+              Stack(children: [
+                CachedNetworkImage(imageUrl: cause.headerImage),
+                Padding(
+                  padding: EdgeInsets.all(5),
+                  child: Align(
+                      alignment: Alignment.topRight,
+                      child: IconButton(
+                        icon: Icon(Icons.close),
+                        onPressed: () {
+                          complete(false, context);
+                        },
+                        color: Theme.of(context).primaryColor,
+                      )),
+                )
+              ]),
               Padding(
-                padding: EdgeInsets.all(5),
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: IconButton(
-                    icon: Icon(Icons.close),
-                    onPressed: () {
-                      complete(false, context);
-                    },
-                    color: Theme.of(context).primaryColor,
-                  )
+                padding: EdgeInsets.all(25),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: &lt;Widget&gt;[
+                    Text(
+                      cause.title,
+                      textAlign: TextAlign.center,
+                      style: textStyleFrom(
+                        Theme.of(context).primaryTextTheme.headline2,
+                      ),
+                    ),
+                    SizedBox(height: 15),
+                    Text(
+                      cause.description,
+                      style: textStyleFrom(
+                        Theme.of(context).primaryTextTheme.bodyText1,
+                        color: Theme.of(context).primaryColorDark,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 20),
+                    Container(
+                      width: double.infinity,
+                      child: DarkButton(
+                        &#39;Select Cause&#39;,
+                        onPressed: () {
+                          complete(true, context);
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              )
-            ]
-          ),
-          Padding(
-              padding: EdgeInsets.all(25),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: &lt;Widget&gt;[
-                  Text(
-                    cause.title,
-                    textAlign: TextAlign.center,
-                    style: textStyleFrom(
-                      Theme.of(context).primaryTextTheme.headline2,
-                    ),
-                  ),
-                  SizedBox(height: 15),
-                  Text(
-                    cause.description,
-                    style: textStyleFrom(
-                      Theme.of(context).primaryTextTheme.bodyText1,
-                      color: Theme.of(context).primaryColorDark,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 20),
-                  Container(
-                    width: double.infinity,
-                    child: DarkButton(
-                      &#39;Select Cause&#39;,
-                      onPressed: () {
-                        complete(true, context);
-                      },
-                    ),
-                  ),
-                ],
               ),
-          ),
-        ]
-      )
-    ),
+            ])),
   );
 }</code></pre>
 </section>

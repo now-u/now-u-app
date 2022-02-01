@@ -58,16 +58,17 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Returns true if the topic has some new resources in it</p>
+</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">bool containsNew() {
-  print(&quot;Checking contains&quot;);
-  print(resources);
-  var r = resources!.firstWhereOrNull((LearningResource r) =&gt; r.isNew());
-  print(&quot;Checked contains&quot;);
+  <pre class="language-dart"><code class="language-dart">&#47;&#47; TODO move this logic to api (if still required)
+bool containsNew() {
+  var r = resources.firstWhereOrNull((LearningResource r) =&gt; r.isNew());
   return r != null;
 }</code></pre>
 </section>
@@ -110,11 +111,6 @@
 
     <li class="section-title"><a href="../../models_Learning/LearningTopic-class.html#instance-methods">Methods</a></li>
     <li><a href="../../models_Learning/LearningTopic/containsNew.html">containsNew</a></li>
-    <li><a href="../../models_Learning/LearningTopic/getId.html">getId</a></li>
-    <li><a href="../../models_Learning/LearningTopic/getImageLink.html">getImageLink</a></li>
-    <li><a href="../../models_Learning/LearningTopic/getOurAnswer.html">getOurAnswer</a></li>
-    <li><a href="../../models_Learning/LearningTopic/getResources.html">getResources</a></li>
-    <li><a href="../../models_Learning/LearningTopic/getTitle.html">getTitle</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
 

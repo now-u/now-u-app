@@ -68,24 +68,17 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">ListCauseAction({
-  required int id,
-  required String title,
-  required CampaignActionType type,
+  required this.id,
+  required this.title,
+  required this.type,
   required List&lt;ListCause&gt; causes,
   required DateTime createdAt,
-  required bool completed,
-  required bool starred,
-  required double time,
+  required this.completed,
+  required this.starred,
+  required this.time,
   DateTime? releasedAt,
-})  : _id = id,
-      _title = title,
-      _type = type,
-      _causes = causes,
-      _time = time,
-      _createdAt = createdAt,
-      _releasedAt = releasedAt,
-      _completed = completed,
-      _starred = starred;</code></pre>
+})  : cause = causes[0],
+      releaseTime = releasedAt ?? createdAt;</code></pre>
 </section>
 
 
@@ -118,17 +111,18 @@
       <a href="../../models_Action/ListCauseAction-class.html#instance-properties">Properties</a>
     </li>
     <li><a href="../../models_Action/ListCauseAction/cause.html">cause</a></li>
+    <li><a href="../../models_Action/ListCauseAction/completed.html">completed</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
     <li><a href="../../models_Action/ListCauseAction/icon.html">icon</a></li>
     <li><a href="../../models_Action/ListCauseAction/id.html">id</a></li>
-    <li><a href="../../models_Action/ListCauseAction/isCompleted.html">isCompleted</a></li>
     <li><a href="../../models_Action/ListCauseAction/isNew.html">isNew</a></li>
-    <li><a href="../../models_Action/ListCauseAction/isStarred.html">isStarred</a></li>
     <li><a href="../../models_Action/ListCauseAction/primaryColor.html">primaryColor</a></li>
     <li><a href="../../models_Action/ListCauseAction/releaseTime.html">releaseTime</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
     <li><a href="../../models_Action/ListCauseAction/secondaryColor.html">secondaryColor</a></li>
+    <li><a href="../../models_Action/ListCauseAction/starred.html">starred</a></li>
     <li><a href="../../models_Action/ListCauseAction/superType.html">superType</a></li>
+    <li><a href="../../models_Action/ListCauseAction/tertiaryColor.html">tertiaryColor</a></li>
     <li><a href="../../models_Action/ListCauseAction/time.html">time</a></li>
     <li><a href="../../models_Action/ListCauseAction/timeText.html">timeText</a></li>
     <li><a href="../../models_Action/ListCauseAction/title.html">title</a></li>

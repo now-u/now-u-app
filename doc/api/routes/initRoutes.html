@@ -65,12 +65,15 @@
   switch (settings.name) {
 
     &#47;&#47; Into
-    case Routes.onBoarding:
+    case Routes.causesPage:
       {
-        &#47;&#47; return customRoute(
-        &#47;&#47;     builder: (context) =&gt; OnBoardingPage(), settings: settings);
         return customRoute(
-            builder: (context) =&gt; CausePage(), settings: settings);
+            builder: (context) =&gt; ChangeCausePage(), settings: settings);
+      }
+    case Routes.causesOnboardingPage:
+      {
+        return customRoute(
+            builder: (context) =&gt; CauseOnboardingPage(), settings: settings);
       }
     case Routes.login:
       {
@@ -130,6 +133,12 @@
             builder: (context) =&gt; TabsPage(currentPage: TabPage.Home),
             settings: settings);
       }
+    case Routes.explore:
+      {
+        return customRoute(
+            builder: (context) =&gt; TabsPage(currentPage: TabPage.Explore),
+            settings: settings);
+      }
     case Routes.campaign:
       {
         return customRoute(
@@ -149,7 +158,7 @@
                   ),
               settings: settings);
         }
-        if (args is Campaign) {
+        if (args is ListCampaign) {
           return customRoute(
               builder: (context) =&gt; CampaignInfo(
                     campaign: args,
@@ -173,21 +182,13 @@
         return customRoute(
             builder: (context) =&gt; AllCampaignsPage(), settings: settings);
       }
-    case Routes.actions:
-      {
-        return customRoute(
-            builder: (context) =&gt; TabsPage(currentPage: TabPage.Actions),
-            settings: settings);
-      }
     case Routes.actionInfo:
       {
         if (args is ActionInfoArguments) {
           return customRoute(
               builder: (context) =&gt; ActionInfo(args), settings: settings);
         }
-        return customRoute(
-            builder: (context) =&gt; TabsPage(currentPage: TabPage.Actions),
-            settings: settings);
+        break;
       }
     &#47;&#47;PastCampaignActionPage
     case Routes.pastCampaignActionPage:

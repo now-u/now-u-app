@@ -78,7 +78,7 @@
   Function? extraOnConfirmFunction,
 }) async {
   AlertResponse exit = await (_dialogService.showDialog(
-      BasicDialog(
+    BasicDialog(
         title: title ?? &quot;You&#39;re about to leave&quot;,
         description: description ??
             &quot;This link will take you out of the app. Are you sure you want to go?&quot;,
@@ -92,9 +92,8 @@
             response: false,
             style: DarkButtonStyle.Secondary,
           ),
-        ]
-      ),
-    ) as Future&lt;AlertResponse&gt;);
+        ]),
+  ) as Future&lt;AlertResponse&gt;);
   if (exit.response) {
     if (extraOnConfirmFunction != null) {
       extraOnConfirmFunction();

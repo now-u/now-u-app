@@ -109,7 +109,7 @@ Widget build(BuildContext context) {
   return LeadingSelectionItem(
     onTap: () {
       _navigationService!.launchLink(
-        resource.getLink()!,
+        resource.link,
         extraOnConfirmFunction: extraOnClick,
       );
     },
@@ -126,7 +126,7 @@ Widget build(BuildContext context) {
           ),
           child: Center(
             child: Icon(
-              resource.getTypeIcon(),
+              resource.icon,
               size: 30,
               color: Theme.of(context).primaryColor,
             ),
@@ -134,8 +134,8 @@ Widget build(BuildContext context) {
         ),
       ),
     ]),
-    text: resource.getTitle(),
-    secondaryText: resource.getSource(),
+    text: resource.title,
+    secondaryText: resource.source,
     extraOverflow: 40,
     isCompleted: completed,
   );

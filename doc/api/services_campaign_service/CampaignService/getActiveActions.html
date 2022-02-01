@@ -76,7 +76,7 @@
     bool? includeStarred}) {
   List&lt;ListCauseAction&gt; actions = [];
   for (Campaign campaign in _campaigns!) {
-    actions.addAll(campaign.actions!);
+    actions.addAll(campaign.actions);
   }
 
   User? user = _authenticationService!.currentUser;

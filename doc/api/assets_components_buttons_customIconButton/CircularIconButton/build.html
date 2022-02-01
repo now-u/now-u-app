@@ -107,25 +107,24 @@ and</li>
   <pre class="language-dart"><code class="language-dart">@override
 Widget build(BuildContext context) {
   return Container(
-    width: height,
-    child: MaterialButton(
-      height: height,
-      elevation: 0,
-      color: this.backgroundColor ?? Theme.of(context).primaryColor,
-      disabledColor: colorFrom(
-        Theme.of(context).primaryColor,
-        opacity: 0.5,
-      ),
-      onPressed: onPressed,
-      shape: CircleBorder(),
-      padding: EdgeInsets.all(0),
-      child: Icon(
-        icon,
-        size: iconSize,
-        color: iconColor ?? Colors.white,
-      ),
-    )
-  );
+      width: height,
+      child: MaterialButton(
+        height: height,
+        elevation: 0,
+        color: this.backgroundColor ?? Theme.of(context).primaryColor,
+        disabledColor: colorFrom(
+          Theme.of(context).primaryColor,
+          opacity: 0.5,
+        ),
+        onPressed: onPressed,
+        shape: CircleBorder(),
+        padding: EdgeInsets.all(0),
+        child: Icon(
+          icon,
+          size: iconSize,
+          color: iconColor ?? Colors.white,
+        ),
+      ));
 }</code></pre>
 </section>
 

@@ -67,7 +67,8 @@
   locator.registerLazySingleton(() =&gt; SecureStorageService());
   locator.registerLazySingleton(() =&gt; SharedPreferencesService());
   locator.registerLazySingleton(() =&gt; AuthenticationService());
-  locator.registerLazySingleton(() =&gt; NewsService());
+  locator.registerLazySingleton(
+      () =&gt; constants.devMode ? FakeNewsService() : NewsService());
   locator.registerLazySingleton(() =&gt; FAQService());
   locator.registerLazySingleton(() =&gt; InternalNotificationService());
   locator.registerLazySingleton(() =&gt; DeviceInfoService());
@@ -75,7 +76,8 @@
   locator.registerLazySingleton(() =&gt; GoogleLocationSearchService());
   locator.registerLazySingleton(() =&gt; OrganisationService());
   locator.registerLazySingleton(() =&gt; AnalyticsService());
-  locator.registerLazySingleton(() =&gt; CausesService());
+  locator.registerLazySingleton(
+      () =&gt; constants.devMode ? FakeCausesService() : CausesService());
   locator.registerLazySingleton(() =&gt; ApiService());
 }</code></pre>
 </section>

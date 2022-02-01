@@ -54,7 +54,7 @@
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
 <span class="name ">login</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="login-param-email">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">email</span>, </span></li>
 <li><span class="parameter" id="login-param-token"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">token</span>, </span></li>
-<li><span class="parameter" id="login-param-isManul"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">isManul</span>}</span></li>
+<li><span class="parameter" id="login-param-isManual"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">isManual</span> = <span class="default-value">false</span>}</span></li>
 </ol>)
 
       
@@ -69,7 +69,7 @@
   <pre class="language-dart"><code class="language-dart">Future login({
   required String? email,
   required String? token,
-  bool? isManul,
+  bool isManual = false,
 }) async {
   setBusy(true);
 
@@ -87,37 +87,27 @@
     if (err == AuthError.tokenExpired) {
       errorMsg = &quot;Your token has expired, please restart the login process&quot;;
       await _dialogService.showDialog(
-        BasicDialog(
-          title: &quot;Login error&quot;, description: errorMsg
-        )
-      );
+          BasicDialog(title: &quot;Login error&quot;, description: errorMsg));
       _navigationService.navigateTo(Routes.login);
     } else if (err == AuthError.unauthorized) {
-      if (isManul!) {
+      if (isManual) {
         errorMsg =
             &quot;Incorrect token, please double check your token from the email&quot;;
         await _dialogService.showDialog(
-          BasicDialog(
-            title: &quot;Login error&quot;, description: errorMsg
-          )
-        );
+            BasicDialog(title: &quot;Login error&quot;, description: errorMsg));
       } else {
         errorMsg = &quot;Incorrect login link, please try again&quot;;
         await _dialogService.showDialog(
-          BasicDialog(
-            title: &quot;Login error&quot;, description: errorMsg
-          )
-        );
+            BasicDialog(title: &quot;Login error&quot;, description: errorMsg));
       }
     } else {
-      await _dialogService.showDialog(
-        BasicDialog(
-          title: &quot;Login error&quot;, description: errorMsg,
-        )
-      );
+      await _dialogService.showDialog(BasicDialog(
+        title: &quot;Login error&quot;,
+        description: errorMsg,
+      ));
     }
   } else {
-    _navigationService.navigateTo(Routes.intro);
+    _navigationService.navigateTo(Routes.causesOnboardingPage);
   }
 }</code></pre>
 </section>

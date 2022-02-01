@@ -110,11 +110,7 @@ Widget build(BuildContext context) {
       viewModelBuilder: () =&gt; CampaignInfoViewModel(),
       onModelReady: (model) {
         print(&quot;Model ready getting campaign&quot;);
-        if (campaign != null) {
-          model.setCampaign = campaign;
-        } else {
-          model.fetchCampaign(campaignId);
-        }
+        model.fetchCampaign(campaignId);
       },
       builder: (context, model, child) {
         if (model.campaign != null) {
@@ -158,7 +154,6 @@ Widget build(BuildContext context) {
     <li class="section-title">
       <a href="../../pages_campaign_CampaignInfo_CampaignInfo/CampaignInfo-class.html#instance-properties">Properties</a>
     </li>
-    <li><a href="../../pages_campaign_CampaignInfo_CampaignInfo/CampaignInfo/campaign.html">campaign</a></li>
     <li><a href="../../pages_campaign_CampaignInfo_CampaignInfo/CampaignInfo/campaignId.html">campaignId</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/hashCode.html">hashCode</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/key.html">key</a></li>

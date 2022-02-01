@@ -67,7 +67,7 @@
   String endingPlural = successNumber &gt; 1 ? &quot;s&quot; : &quot;&quot;;
   if (type == RewardType.CompletedTypedActionsNumber) {
     Tuple3&lt;String?, String?, String?&gt; descPrePostFix =
-        generateCampaingActionDesc(actionType);
+        generateCampaignActionDesc(actionType);
     String pre = descPrePostFix.item1!;
     String post = descPrePostFix.item3!;
     return (pre + &quot; ${successNumber} &quot; + post + &quot;${endingPlural}&quot;);

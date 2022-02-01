@@ -66,9 +66,9 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">void openSDGGoals({SDG? sdg}) {
   if (sdg != null) {
-    _navigationService!.launchLink(sdg.getLink()!);
+    _navigationService.launchLink(sdg.getLink()!);
   } else {
-    _navigationService!.launchLink(&quot;https:&#47;&#47;sustainabledevelopment.un.org&quot;);
+    _navigationService.launchLink(&quot;https:&#47;&#47;sustainabledevelopment.un.org&quot;);
   }
 }</code></pre>
 </section>

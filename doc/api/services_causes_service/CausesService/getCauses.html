@@ -52,23 +52,27 @@
       
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../models_Cause/ListCause-class.html">ListCause</a></span>&gt;</span></span>&gt;</span></span>
-<span class="name ">getCauses</span>(<wbr>)
+<span class="name ">getCauses</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="getCauses-param-params">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">params</span>}</span></li>
+</ol>)
 
       
 
     </section>
     
+<section class="desc markdown">
+  <p>Get request</p>
+<p>Input params
+Returns a list of ListCauses from the API</p>
+</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;List&lt;ListCause&gt;&gt; getCauses() async {
-  Map response = await getRequest(&quot;causes&quot;);
-  List causesData = response[&quot;data&quot;];
-  List&lt;ListCause&gt; causes =
-      causesData.map((causeData) =&gt; ListCause.fromJson(causeData)).toList();
-  return causes;
+  <pre class="language-dart"><code class="language-dart">Future&lt;List&lt;ListCause&gt;&gt; getCauses({Map&lt;String, dynamic&gt;? params}) async {
+  List&lt;Map&lt;String, dynamic&gt;&gt; data =
+      await getListRequest(&quot;causes&quot;, params: params);
+  return data.map((causeData) =&gt; ListCause.fromJson(causeData)).toList();
 }</code></pre>
 </section>
 
@@ -108,12 +112,19 @@
 
     <li class="section-title"><a href="../../services_causes_service/CausesService-class.html#instance-methods">Methods</a></li>
     <li><a href="../../services_causes_service/CausesService/getAction.html">getAction</a></li>
+    <li><a href="../../services_causes_service/CausesService/getActions.html">getActions</a></li>
+    <li><a href="../../services_causes_service/CausesService/getCampaign.html">getCampaign</a></li>
+    <li><a href="../../services_causes_service/CausesService/getCampaigns.html">getCampaigns</a></li>
     <li><a href="../../services_causes_service/CausesService/getCause.html">getCause</a></li>
     <li><a href="../../services_causes_service/CausesService/getCauses.html">getCauses</a></li>
     <li class="inherited"><a href="../../services_api_service/ApiService/getExceptionForResponse.html">getExceptionForResponse</a></li>
+    <li><a href="../../services_causes_service/CausesService/getLearningResources.html">getLearningResources</a></li>
+    <li class="inherited"><a href="../../services_api_service/ApiService/getListRequest.html">getListRequest</a></li>
     <li class="inherited"><a href="../../services_api_service/ApiService/getRequest.html">getRequest</a></li>
     <li class="inherited"><a href="../../services_api_service/ApiService/getRequestHeaders.html">getRequestHeaders</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="../../services_api_service/ApiService/postRequest.html">postRequest</a></li>
+    <li><a href="../../services_causes_service/CausesService/selectCauses.html">selectCauses</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
 
     <li class="section-title inherited"><a href="../../services_causes_service/CausesService-class.html#operators">Operators</a></li>

@@ -107,15 +107,15 @@ and</li>
   <pre class="language-dart"><code class="language-dart">@override
 Widget build(BuildContext context) {
   return ImageSelectionItem(
-    text: topic!.getTitle(),
-    imageUrl: topic!.getImageLink(),
+    text: topic.title,
+    imageUrl: topic.imageLink,
     onTap: () {
       Navigator.of(context).pushNamed(Routes.learningTopic, arguments: topic);
     },
     hpadding: hpadding,
     imageWidth: imageWidth,
     height: height,
-    hasNew: topic!.containsNew(),
+    hasNew: topic.containsNew(),
   );
 }</code></pre>
 </section>
