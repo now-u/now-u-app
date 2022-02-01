@@ -237,7 +237,6 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
 class LearningResourceExploreSection extends ExploreSection<LearningResource> {
   @override
   LearningResourceExploreSectionViewModel get viewModel {
-    print("Filter is $filter");
     return LearningResourceExploreSectionViewModel(
       params: fetchParams,
       filter: filter,
