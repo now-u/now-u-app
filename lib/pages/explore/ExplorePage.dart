@@ -115,7 +115,7 @@ ExplorePage learning_explore_page = ExplorePage(
       title: "Learning resource by cause",
     ),
     LearningResourceExploreSection(
-      title: "Learning resources by time2",
+      title: "Learning resources by time",
       filter: ExploreFilter(
         parameterName: "time",
         options: timeBrackets
