@@ -1,35 +1,10 @@
 class FAQ {
-  // TODO add category to FAQs
-  int? id;
-  String? question;
-  String? answer;
-  bool selected = false;
+  final int id;
+  final String question;
+  final String answer;
 
-  FAQ({this.id, this.question, this.answer});
-
-  FAQ.fromJson(Map json) {
-    id = json['id'];
-    question = json['question'];
-    answer = json['answer'];
-  }
-
-  int? getId() {
-    return id;
-  }
-
-  String? getQuestion() {
-    return question;
-  }
-
-  String? getAnswer() {
-    return answer;
-  }
-
-  bool getSelected() {
-    return selected;
-  }
-
-  void setSelected(bool selected) {
-    selected = selected;
-  }
+  FAQ.fromJson(Map json)
+      : id = json['id'],
+        question = json['question'],
+        answer = json['answer'];
 }

@@ -45,11 +45,7 @@ class _EmailSentPageState extends State<EmailSentPage> {
         viewModelBuilder: () => LoginViewModel(),
         onModelReady: (model) {
           if (token != null) {
-            if (model.currentUser == null || model.currentUser!.token == null) {
-              model.login(email: widget.args.email, token: token);
-            } else {
-              Navigator.of(context).pushNamed(Routes.home);
-            }
+            model.login(email: widget.args.email, token: token);
           }
         },
         builder: (context, model, child) {

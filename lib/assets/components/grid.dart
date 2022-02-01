@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-typedef Widget GridItemBuilder(BuildContext context, int rowIndex, int colIndex, int index);
+typedef Widget GridItemBuilder(
+    BuildContext context, int rowIndex, int colIndex, int index);
 
 class ExpandedGrid extends StatelessWidget {
   /// A list (column) of list (rows) of widgets
@@ -21,30 +22,27 @@ class ExpandedGrid extends StatelessWidget {
       List<Widget> rowWidgets = [];
       for (int r = 0; r < numberOfRows; r++) {
         rowWidgets.add(Builder(
-          builder: (context) => itemBuilder(context, r, c, c*numberOfRows + r))
-        );
+            builder: (context) =>
+                itemBuilder(context, r, c, c * numberOfRows + r)));
       }
       widgets.add(rowWidgets);
     }
-    return ExpandedGrid(
-      items: widgets 
-    );
+    return ExpandedGrid(items: widgets);
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      mainAxisSize: MainAxisSize.max,
-      children: items.map((row) => 
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            mainAxisSize: MainAxisSize.max,
-            children: row
-          )
-        ),
-      ).toList()
-    );
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisSize: MainAxisSize.max,
+        children: items
+            .map(
+              (row) => Expanded(
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisSize: MainAxisSize.max,
+                      children: row)),
+            )
+            .toList());
   }
 }

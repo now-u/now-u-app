@@ -22,9 +22,9 @@ class AuthError {
 
 class AuthenticationService extends ApiService {
   //final NavigationService _navigationService = locator<NavigationService>();
-  final SharedPreferencesService? _sharedPreferencesService =
+  final SharedPreferencesService _sharedPreferencesService =
       locator<SharedPreferencesService>();
-  final DeviceInfoService? _deviceInfoService = locator<DeviceInfoService>();
+  final DeviceInfoService _deviceInfoService = locator<DeviceInfoService>();
 
   User? _currentUser;
   User? get currentUser => _currentUser;
@@ -40,7 +40,7 @@ class AuthenticationService extends ApiService {
   }
 
   Future<bool> isUserLoggedIn() async {
-    User? user = await _sharedPreferencesService!.loadUserFromPrefs();
+    User? user = await _sharedPreferencesService.loadUserFromPrefs();
     if (user != null) {
       await _updateUser(user.token);
     }
@@ -50,7 +50,7 @@ class AuthenticationService extends ApiService {
   Future _updateUser(String? token) async {
     if (token != null) {
       _currentUser = await getUser(token);
-      _sharedPreferencesService!.saveUserToPrefs(_currentUser!);
+      _sharedPreferencesService.saveUserToPrefs(_currentUser!);
     }
   }
 
@@ -83,8 +83,8 @@ class AuthenticationService extends ApiService {
           'email': email,
           'full_name': name,
           'newsletter_signup': acceptNewletter,
-          'platform': _deviceInfoService!.osType,
-          'version': await _deviceInfoService!.osVersion,
+          'platform': _deviceInfoService.osType,
+          'version': await _deviceInfoService.osVersion,
         }),
       );
       return true;
@@ -127,7 +127,7 @@ class AuthenticationService extends ApiService {
 
   bool logout() {
     print("current user: " + _currentUser.toString());
-    _sharedPreferencesService!.removeUserFromPrefs();
+    _sharedPreferencesService.removeUserFromPrefs();
     _currentUser = null;
     print("current user: " + _currentUser.toString());
     return true;

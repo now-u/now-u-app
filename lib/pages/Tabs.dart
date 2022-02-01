@@ -7,11 +7,13 @@ import 'package:app/pages/home/Home.dart';
 import 'package:app/pages/more/MoreMenu.dart';
 import 'package:app/pages/news/NewsPage.dart';
 import 'package:app/pages/action/ActionPage.dart';
+import 'package:app/pages/explore/ExplorePage.dart';
+import 'package:flutter/rendering.dart';
 
 //import 'package:app/assets/dynamicLinks.dart';
 
 // These must be in the corect order
-enum TabPage { Home, Actions, Learning, News, Menu }
+enum TabPage { Home, Explore, Impact, Menu }
 
 class TabsPage extends StatefulWidget {
   final TabPage? currentPage;
@@ -25,17 +27,12 @@ class TabsPage extends StatefulWidget {
 
 class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
   TabPage? currentPage;
-  int? _subIndex;
 
   @override
   void initState() {
     currentPage = widget.currentPage;
-    _subIndex = null;
     super.initState();
     WidgetsBinding.instance!.addObserver(this);
-    //handleDynamicLinks(
-    //  changePage
-    //);
   }
 
   @override
@@ -45,12 +42,8 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
   }
 
   void changePage(TabPage page, {int? subIndex}) {
-    print("Changing page");
-    print(page);
-    print(subIndex);
     setState(() {
       currentPage = page;
-      _subIndex = subIndex;
     });
   }
 
@@ -59,24 +52,21 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
     // TODO add an enum so pages numbers can change
     List<Map> _pages = <Map>[
       {
-        'page': Home(changePage),
+        'page': Home(),
         'icon': Icon(CustomIcons.ic_home),
         'title': "Home",
       },
       {
-        'page': ActionPage(),
-        'icon': Icon(CustomIcons.ic_actions),
-        'title': "Actions",
-      },
-      {
-        'page': LearningCentreAllPage(),
-        'icon': Icon(CustomIcons.ic_learning),
-        'title': "Learning",
-      },
-      {
-        'page': NewsPage(),
+        'page': home_explore_page,
         'icon': Icon(CustomIcons.ic_news),
-        'title': "News",
+        'title': "Explore",
+      },
+      {
+        'page': Container(
+          child: Center(child: Text("Coming soon")),
+        ),
+        'icon': Icon(CustomIcons.ic_up),
+        'title': "Impact",
       },
       {
         'page': Profile(),
@@ -88,24 +78,21 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
       List<BottomNavigationBarItem> items = [];
       for (int i = 0; i < _pages.length; i++) {
         items.add(new BottomNavigationBarItem(
-          activeIcon: ShaderMask(
-            shaderCallback: (Rect bounds) {
-              return LinearGradient(
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
-                  colors: <Color>[
-                    Theme.of(context).errorColor,
-                    Theme.of(context).primaryColor,
-                    Theme.of(context).primaryColor,
-                  ]).createShader(bounds);
-            },
-            child: _pages[i]['icon'],
-          ),
-          icon: _pages[i]['icon'],
-          title: Text(
-            _pages[i]['title'],
-          ),
-        ));
+            activeIcon: ShaderMask(
+              shaderCallback: (Rect bounds) {
+                return LinearGradient(
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.topRight,
+                    colors: <Color>[
+                      Theme.of(context).errorColor,
+                      Theme.of(context).primaryColor,
+                      Theme.of(context).primaryColor,
+                    ]).createShader(bounds);
+              },
+              child: _pages[i]['icon'],
+            ),
+            icon: _pages[i]['icon'],
+            label: _pages[i]['title']));
       }
       return items;
     }
@@ -127,7 +114,6 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
             onTap: (index) {
               setState(() {
                 currentPage = TabPage.values[index];
-                _subIndex = null;
               });
             },
           ),

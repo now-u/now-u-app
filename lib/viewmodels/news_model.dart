@@ -1,5 +1,5 @@
 import 'package:app/viewmodels/base_model.dart';
-import 'package:app/models/Article.dart';
+import 'package:app/models/article.dart';
 import 'package:app/models/Campaign.dart';
 
 import 'package:app/locator.dart';
@@ -8,47 +8,44 @@ import 'package:app/services/campaign_service.dart';
 import 'package:app/services/navigation_service.dart';
 
 class NewsViewModel extends BaseModel {
-  final NewsService? _newsService = locator<NewsService>();
-  final CampaignService? _campaignService = locator<CampaignService>();
-  final NavigationService? _navigationService = locator<NavigationService>();
+  final NewsService _newsService = locator<NewsService>();
+  final CampaignService _campaignService = locator<CampaignService>();
+  final NavigationService _navigationService = locator<NavigationService>();
 
   String? _category;
 
+  List<Article> _articles = [];
   List<Article> _filteredArticles = [];
   List<Article> get filteredArticles => _filteredArticles;
 
-  List<Campaign>? get campaigns => _campaignService!.campaigns;
+  List<Campaign>? get campaigns => _campaignService.campaigns;
 
   bool _searching = false;
   bool get searching => _searching;
 
   Future fetchArticles() async {
     setBusy(true);
-    await _newsService!.fetchArticles();
     _category = null;
     _filteredArticles.clear();
-    _filteredArticles.addAll(_newsService!.articles!);
+    _filteredArticles.addAll(await _newsService.getArticles());
     setBusy(false);
     notifyListeners();
   }
 
   void onTapPill(index) {
     print(_filteredArticles);
-    String? indexCategory = index == _campaignService!.campaigns!.length
+    String? indexCategory = index == _campaignService.campaigns!.length
         ? "general"
-        : _campaignService!.campaigns![index].shortName;
+        : _campaignService.campaigns![index].shortName;
 
     // Retap to deselect
     _category = _category == indexCategory ? null : indexCategory;
 
     _filteredArticles.clear();
-    print(_filteredArticles);
-    _filteredArticles.addAll(_newsService!.articles!);
-    print(_filteredArticles);
-    print(_newsService!.articles);
+    _filteredArticles.addAll(_articles);
     if (_category != null) {
       _filteredArticles.removeWhere((a) =>
-          a.getCategory(campaigns: _campaignService!.campaigns) != _category);
+          a.getCategory(campaigns: _campaignService.campaigns) != _category);
     }
     notifyListeners();
   }
@@ -61,19 +58,18 @@ class NewsViewModel extends BaseModel {
   void filterArticlesList(String query) {
     if (query.isNotEmpty) {
       List<Article> tempList = List<Article>.empty();
-      _newsService!.articles!.forEach((article) {
-        if (article.getTitle()!.toLowerCase().contains(query.toLowerCase())) {
+      _articles.forEach((article) {
+        if (article.title.toLowerCase().contains(query.toLowerCase())) {
           tempList.add(article);
         }
       });
-      print("Set searching to true");
       _searching = true;
       _filteredArticles.clear();
       _filteredArticles.addAll(tempList);
     } else {
       _searching = false;
       _filteredArticles.clear();
-      _filteredArticles.addAll(_newsService!.articles!);
+      _filteredArticles.addAll(_articles);
     }
     notifyListeners();
   }
@@ -83,6 +79,6 @@ class NewsViewModel extends BaseModel {
   }
 
   void openArticle(article) {
-    _navigationService!.launchLink(article.getFullArticleLink());
+    _navigationService.launchLink(article.getFullArticleLink());
   }
 }

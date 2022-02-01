@@ -103,7 +103,8 @@ class NavigationService {
           _campaignService.getAction(id).then((CampaignAction action) {
             navigateTo(route, arguments: action);
           }).catchError((e) {
-            _dialogService.showDialog(BasicDialog(title: "Error", description: "Error navigating to route"));
+            _dialogService.showDialog(BasicDialog(
+                title: "Error", description: "Error navigating to route"));
           });
           return;
         }
@@ -112,9 +113,8 @@ class NavigationService {
           _campaignService.getLearningTopic(id).then((LearningTopic topic) {
             navigateTo(route, arguments: topic);
           }).catchError((e) {
-            _dialogService.showDialog(
-              BasicDialog(title: "Error", description: "Error navigating to route")
-            );
+            _dialogService.showDialog(BasicDialog(
+                title: "Error", description: "Error navigating to route"));
           });
           return;
         }
@@ -145,7 +145,7 @@ class NavigationService {
     Function? extraOnConfirmFunction,
   }) async {
     AlertResponse exit = await (_dialogService.showDialog(
-        BasicDialog(
+      BasicDialog(
           title: title ?? "You're about to leave",
           description: description ??
               "This link will take you out of the app. Are you sure you want to go?",
@@ -159,9 +159,8 @@ class NavigationService {
               response: false,
               style: DarkButtonStyle.Secondary,
             ),
-          ]
-        ),
-      ) as Future<AlertResponse>);
+          ]),
+    ) as Future<AlertResponse>);
     if (exit.response) {
       if (extraOnConfirmFunction != null) {
         extraOnConfirmFunction();

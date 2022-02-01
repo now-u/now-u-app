@@ -1,0 +1,19 @@
+{
+  "data": [   
+    {
+      "id": 233,
+      "title": "Billions risk being without access to water and sanitation services by 2030",
+      "header_image": "https://global.unitednations.entermediadb.net/assets/mediadb/services/module/asset/downloads/preset/Libraries/Production+Library/01-07-2021_UNICEF-280215_Jordan.jpg/image1170x530cropped.jpg",
+      "full_article_link": "https://news.un.org/en/story/2021/07/1095202",
+      "campaign_id": 3,
+      "created_at": "2021-09-15T17:52:26.019Z",
+      "updated_at": "2021-09-15T17:52:26.029Z",
+      "video_of_the_day": false,
+      "subtitle": "Without an urgent injection of cash, billions globally are at risk of still being without lifesaving access to safe drinking water, sanitation and hygiene services by 2030, according to a new UN report published on Thursday.",
+      "source": null,
+      "enabled": true,
+      "release_date": "2021-09-16T11:00:00.000Z",
+      "type": "news"
+    }
+  ]
+}

@@ -33,7 +33,7 @@ class LearningTopicPage extends StatelessWidget {
                     Container(
                       width: double.infinity,
                       height: 180,
-                      child: CustomNetworkImage(topic.getImageLink(),
+                      child: CustomNetworkImage(topic.imageLink,
                           fit: BoxFit.cover),
                     ),
 
@@ -45,7 +45,7 @@ class LearningTopicPage extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 15),
                       child: Text(
-                        topic.getTitle()!,
+                        topic.title,
                         style: textStyleFrom(
                           Theme.of(context).primaryTextTheme.headline3,
                         ),
@@ -57,7 +57,7 @@ class LearningTopicPage extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 15),
                       child: Text(
-                        topic.getOurAnswer()!,
+                        topic.ourAnswer,
                         style: textStyleFrom(
                           Theme.of(context).primaryTextTheme.headline5,
                         ),
@@ -70,17 +70,17 @@ class LearningTopicPage extends StatelessWidget {
                     ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: topic.getResources()!.length,
+                      itemCount: topic.resources.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
                           child: LearningResouceSelectionItem(
-                              resource: topic.getResources()![index],
+                              resource: topic.resources[index],
                               extraOnClick: () {
                                 model.completeLearningResource(
-                                    topic.getResources()![index].getId());
+                                    topic.resources[index].id);
                               },
                               completed: model.learningResourceIsCompleted(
-                                  topic.getResources()![index].getId())),
+                                  topic.resources[index].id)),
                         );
                       },
                     ),

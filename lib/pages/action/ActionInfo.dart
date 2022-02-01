@@ -1,21 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
-
-import 'package:app/models/Action.dart';
-import 'package:app/models/Campaign.dart';
-import 'package:app/routes.dart';
-
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import 'package:app/assets/StyleFrom.dart';
+import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/components/selectionItem.dart';
 import 'package:app/assets/components/buttons/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
-import 'package:app/assets/components/customAppBar.dart';
 import 'package:app/assets/icons/customIcons.dart';
-
-import 'package:stacked/stacked.dart';
+import 'package:app/models/Action.dart';
+import 'package:app/routes.dart';
 import 'package:app/viewmodels/action_info_model.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:stacked/stacked.dart';
 
 final double theHeaderHeight = 200;
 final double hPadding = 10;
@@ -30,7 +24,9 @@ class ActionInfoArguments {
 
 class ActionInfo extends StatefulWidget {
   final ActionInfoArguments args;
+
   ActionInfo(this.args);
+
   @override
   _ActionInfoState createState() => _ActionInfoState();
 }
@@ -47,14 +43,12 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
         builder: (context, model, child) {
           return Scaffold(
               appBar: customAppBar(
-                text: model.isLoading
-                    ? "Loading..."
-                    : model.action!.superType.name,
+                text: model.busy ? "Loading..." : model.action!.superType.name,
                 backButtonText: "Actions",
                 context: context,
               ),
               key: scaffoldKey,
-              body: model.isLoading
+              body: model.busy
                   ? Center(child: CircularProgressIndicator())
                   : Stack(children: [
                       ListView(
@@ -68,9 +62,9 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                 child: Text(model.action!.title)),
                           ),
                           Container(
-                            height: model.action!.isCompleted ? null : 10,
+                            height: model.action!.completed ? null : 10,
                             color: model.action!.primaryColor,
-                            child: model.action!.isCompleted
+                            child: model.action!.completed
                                 ? Row(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -119,7 +113,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                         // TODO This must go to the causes info page
                                         Navigator.of(context).pushNamed(
                                             Routes.home,
-                                            arguments: model.action!.cause!.id);
+                                            arguments: model.action!.cause.id);
                                       },
                                       child: Container(
                                         height: 20,
@@ -192,7 +186,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                             ),
                           ),
 
-                          !model.action!.isCompleted
+                          !model.action!.completed
                               ?
                               // If not completed show the then button
                               Column(
@@ -323,7 +317,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                               mainAxisAlignment: MainAxisAlignment.end,
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                model.action!.isCompleted
+                                model.action!.completed
                                     ? CustomTextButton("Mark as not done",
                                         fontSize: 14, onClick: () {
                                         model.removeActionStatus();
@@ -342,7 +336,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                 SizedBox(width: 10),
                               ]),
                           SizedBox(height: 15),
-                          !model.action!.isCompleted
+                          !model.action!.completed
                               ? Container()
                               : Container(
                                   height: 65,
@@ -359,33 +353,33 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                   ),
                                 ),
                           SizedBox(
-                            height: model.action!.isCompleted ? 0 : 70,
+                            height: model.action!.completed ? 0 : 70,
                           ),
                         ],
                       ),
                       AnimatedPositioned(
-                        bottom: model.action!.isCompleted ? -100 : 0,
+                        bottom: model.action!.completed ? -100 : 0,
                         left: 0,
                         duration: Duration(milliseconds: 300),
                         child: FlatButton(
                           padding: EdgeInsets.all(0),
                           child: Container(
                             width: MediaQuery.of(context).size.width,
-                            height: model.action!.isCompleted ? 45 : 60,
+                            height: model.action!.completed ? 45 : 60,
                             child: Center(
                                 child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Icon(
-                                  model.action!.isStarred
+                                  model.action!.starred
                                       ? CustomIcons.ic_todo_remove
                                       : CustomIcons.ic_todo_add,
                                   color: Colors.white,
                                   size: 30,
                                 ),
                                 SizedBox(width: 12),
-                                model.action!.isCompleted
+                                model.action!.completed
                                     ? Text(
                                         "You completed this action",
                                         style: textStyleFrom(
@@ -397,7 +391,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                             color: Colors.white),
                                       )
                                     : Text(
-                                        model.action!.isStarred
+                                        model.action!.starred
                                             ? "Remove from To-Dos"
                                             : "Add to my to-do list",
                                         style: textStyleFrom(
@@ -412,11 +406,11 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                             )),
                           ),
                           onPressed: () {
-                            model.action!.isStarred
+                            model.action!.starred
                                 ? model.removeActionStatus()
                                 : model.starAction();
                           },
-                          color: model.action!.isCompleted
+                          color: model.action!.completed
                               ? Color.fromRGBO(155, 159, 177, 1)
                               : Theme.of(context).primaryColor,
                         ),
@@ -428,12 +422,14 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
 
 class RejectDialogue extends StatefulWidget {
   final CampaignAction action;
+
   RejectDialogue(this.action);
+
   @override
-  _RejectDialougeState createState() => _RejectDialougeState();
+  _RejectDialogueState createState() => _RejectDialogueState();
 }
 
-class _RejectDialougeState extends State<RejectDialogue> {
+class _RejectDialogueState extends State<RejectDialogue> {
   String selectedReason = "";
 
   @override

@@ -15,7 +15,7 @@ class PastCampaignActionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<ListCauseAction> actions = campaign.actions!;
+    List<ListCauseAction> actions = campaign.actions;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,

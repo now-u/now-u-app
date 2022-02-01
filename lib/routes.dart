@@ -20,8 +20,8 @@ import 'package:app/pages/login/login_code_view.dart';
 import 'package:app/pages/more/morePages/AccountDetailsPage.dart';
 import 'package:app/pages/more/morePages/FAQPage.dart';
 import 'package:app/pages/more/morePages/PartnersPage.dart';
-import 'package:app/pages/onboarding/onboarding_page.dart';
 import 'package:app/pages/causes/CauseOnboardingPage.dart';
+import 'package:app/pages/causes/ChangeCausePage.dart';
 import 'package:app/pages/other/InfoPage.dart';
 import 'package:app/pages/other/NotificationPage.dart';
 import 'package:app/pages/other/OrganisationPage.dart';
@@ -41,10 +41,15 @@ class Routes {
   static const campaign = "campaign";
   static const actions = "actions";
   static const home = "home";
+  static const explore = "explore";
 
   static const actionInfo = "actionInfo";
   static const campaignInfo = "campaignInfo";
   static const campaignDetails = "campaignDetails";
+
+  // Causes
+  static const causesPage = "causesPage";
+  static const causesOnboardingPage = "causesOnboarding";
 
   // All campaigns (including past)
   static const allCampaigns = "allCampaigns";
@@ -72,12 +77,15 @@ Function initRoutes = (RouteSettings settings) {
   switch (settings.name) {
 
     // Into
-    case Routes.onBoarding:
+    case Routes.causesPage:
       {
-        // return customRoute(
-        //     builder: (context) => OnBoardingPage(), settings: settings);
         return customRoute(
-            builder: (context) => CausePage(), settings: settings);
+            builder: (context) => ChangeCausePage(), settings: settings);
+      }
+    case Routes.causesOnboardingPage:
+      {
+        return customRoute(
+            builder: (context) => CauseOnboardingPage(), settings: settings);
       }
     case Routes.login:
       {
@@ -137,6 +145,12 @@ Function initRoutes = (RouteSettings settings) {
             builder: (context) => TabsPage(currentPage: TabPage.Home),
             settings: settings);
       }
+    case Routes.explore:
+      {
+        return customRoute(
+            builder: (context) => TabsPage(currentPage: TabPage.Explore),
+            settings: settings);
+      }
     case Routes.campaign:
       {
         return customRoute(
@@ -156,7 +170,7 @@ Function initRoutes = (RouteSettings settings) {
                   ),
               settings: settings);
         }
-        if (args is Campaign) {
+        if (args is ListCampaign) {
           return customRoute(
               builder: (context) => CampaignInfo(
                     campaign: args,
@@ -180,21 +194,13 @@ Function initRoutes = (RouteSettings settings) {
         return customRoute(
             builder: (context) => AllCampaignsPage(), settings: settings);
       }
-    case Routes.actions:
-      {
-        return customRoute(
-            builder: (context) => TabsPage(currentPage: TabPage.Actions),
-            settings: settings);
-      }
     case Routes.actionInfo:
       {
         if (args is ActionInfoArguments) {
           return customRoute(
               builder: (context) => ActionInfo(args), settings: settings);
         }
-        return customRoute(
-            builder: (context) => TabsPage(currentPage: TabPage.Actions),
-            settings: settings);
+        break;
       }
     //PastCampaignActionPage
     case Routes.pastCampaignActionPage:

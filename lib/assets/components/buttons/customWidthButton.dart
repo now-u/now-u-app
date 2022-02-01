@@ -44,16 +44,14 @@ class CustomWidthButton extends StatelessWidget {
   final Color? backgroundColor;
   final Color? textColor;
 
-  CustomWidthButton(this.text, 
-  {
-    required this.onPressed,
-    required this.size,
-    required this.fontSize,
-    required this.buttonWidthProportion,
-    this.rightIcon,
-    this.backgroundColor,
-    this.textColor
-  });
+  CustomWidthButton(this.text,
+      {required this.onPressed,
+      required this.size,
+      required this.fontSize,
+      required this.buttonWidthProportion,
+      this.rightIcon,
+      this.backgroundColor,
+      this.textColor});
 
   @override
   Widget build(BuildContext context) {
