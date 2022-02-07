@@ -292,8 +292,8 @@ class ListCauseAction extends Explorable {
         time = json['time'].toDouble(),
         releaseTime =
             DateTime.parse(json['release_date'] ?? json['created_at']),
-        completed = json['completed'],
-        starred = json['starred'];
+        completed = json['completed'] == true,
+        starred = json['starred'] == true;
 
   Future<CampaignAction> getAction() async {
     CausesService _causesService = locator<CausesService>();

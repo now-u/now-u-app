@@ -34,6 +34,8 @@ class CausesViewModel extends BaseModel {
   void toggleSelection({required ListCause listCause}) {
     bool isCauseSelected = _causes[listCause] ?? false;
     _causes[listCause] = !isCauseSelected;
+    print("Cause selected");
+    print(areCausesDisabled);
     notifyListeners();
   }
 

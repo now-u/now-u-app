@@ -74,7 +74,7 @@ class ChangeCausePage extends StatelessWidget {
                     ),
                     Expanded(
                       flex: 10,
-                      child: CauseTileGrid(),
+                      child: CauseTileGrid(model),
                     ),
                     Expanded(
                       flex: 1,

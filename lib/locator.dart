@@ -43,8 +43,8 @@ void setupLocator() {
   locator.registerLazySingleton(() => GoogleLocationSearchService());
   locator.registerLazySingleton(() => OrganisationService());
   locator.registerLazySingleton(() => AnalyticsService());
-  locator.registerLazySingleton(
-      () => constants.devMode ? FakeCausesService() : CausesService());
+  // locator.registerLazySingleton(() => constants.devMode ? FakeCausesService() : CausesService());
+  locator.registerLazySingleton(() => CausesService());
   locator.registerLazySingleton(() => ApiService());
 }
 

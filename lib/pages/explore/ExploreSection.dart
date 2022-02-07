@@ -81,6 +81,9 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
         viewModelBuilder: () => viewModel,
         onModelReady: (model) => model.init(),
         builder: (context, model, child) {
+          print("Building explore section: $title");
+          print(model.filter);
+          print(model.tiles);
           return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -98,7 +101,7 @@ abstract class ExploreSection<ExplorableType extends Explorable> {
                                 ? () => pageModel.update(
                                     title: link!.title,
                                     sections: link!.sections)
-                                : null,
+                                : model.notify,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [

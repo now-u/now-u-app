@@ -48,7 +48,7 @@ class ListCampaign extends Explorable {
         headerImage = json['header_image'],
         startDate = DateTime.parse(json['start_date']),
         endDate = DateTime.parse(json['end_date']),
-        completed = json['completed'],
+        completed = json['completed'] == true,
         cause = ListCause.fromJson(json['causes'][0]);
 }
 
@@ -98,24 +98,30 @@ class Campaign extends ListCampaign {
 
   Campaign.fromJson(Map<String, dynamic> json)
       : description = json['description_app'].replaceAll('\\n', '\n\n'),
-        numberOfCampaigners = json['number_of_campaigners'],
-        numberOfActionsCompleted = json['number_of_completed_actions'],
+        // numberOfCampaigners = json['number_of_campaigners'],
+        // numberOfActionsCompleted = json['number_of_completed_actions'],
+        numberOfCampaigners = 0,
+        numberOfActionsCompleted = 0,
         infographicUrl = json['infographic_url'],
-        actions = json['actions']
-            .map((e) => ListCauseAction.fromJson(e))
-            .toList()
-            .cast<ListCauseAction>(),
-        campaignPartners = json['campaign_partners']
-            .map((e) => Organisation.fromJson(e))
-            .toList()
-            .cast<Organisation>(),
-        generalPartners = json['general_partners']
-            .map((e) => Organisation.fromJson(e))
-            .toList()
-            .cast<Organisation>(),
+        // actions = json['actions']
+        //  .map((e) => ListCauseAction.fromJson(e))
+        //  .toList()
+        //  .cast<ListCauseAction>(),
+        actions = [],
+        // campaignPartners = json['campaign_partners']
+        //     .map((e) => Organisation.fromJson(e))
+        //     .toList()
+        //     .cast<Organisation>(),
+        campaignPartners = [],
+        // generalPartners = json['general_partners']
+        //     .map((e) => Organisation.fromJson(e))
+        //     .toList()
+        //     .cast<Organisation>(),
+        generalPartners = [],
         videoLink = json['video_link'],
-        keyAims =
-            json['key_aims'].map((a) => a['title']).toList().cast<String>(),
+        // keyAims =
+        //     json['key_aims'].map((a) => a['title']).toList().cast<String>(),
+        keyAims = [],
         super.fromJson(json);
 
   Future<String> getShareText() async {

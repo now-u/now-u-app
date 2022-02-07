@@ -1,11 +1,11 @@
 {
   "data": {
     "id": 1,
-    "title": "Cause title",
+    "name": "Cause title",
     "icon": "ic-abc",
     "description": "Cause description",
-    "selected": true,
-    "header_image": "https://picsum.photos/400/200",
+    "joined": true,
+    "image": "https://picsum.photos/400/200",
     "actions": [
       {
           "id": 47,

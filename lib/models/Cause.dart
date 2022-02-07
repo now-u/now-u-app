@@ -21,11 +21,11 @@ class ListCause {
 
   ListCause.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        title = json['title'],
+        title = json['name'],
         icon = getIconFromString(json['icon']),
         description = json['description'],
-        selected = json['selected'],
-        headerImage = json['header_image'];
+        selected = json['joined'] == true,
+        headerImage = json['image'];
 }
 
 class Cause extends ListCause {

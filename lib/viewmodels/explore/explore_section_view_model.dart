@@ -107,6 +107,10 @@ abstract class ExploreSectionViewModel<ExplorableType extends Explorable>
     setBusy(false);
   }
 
+  void notify() {
+    notifyListeners();
+  }
+
   void toggleFilterOption(ExploreFilterOption option) {
     filter!.toggleOption(option);
     notifyListeners();

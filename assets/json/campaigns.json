@@ -11,10 +11,10 @@
       "causes": [
         {
             "id": 4,
-            "title": "Education & Citizenship",
+            "name": "Education & Citizenship",
             "description": "Get involved with charities and activists locally and across the globe.",
-            "header_image": "https://images.unsplash.com/photo-1498925008800-019c7d59d903?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=968&q=80",
-            "selected": true,
+            "image": "https://images.unsplash.com/photo-1498925008800-019c7d59d903?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=968&q=80",
+            "joined": true,
             "icon": "ic_learning" 
         }
       ]
@@ -30,10 +30,10 @@
       "causes": [
         {
             "id": 4,
-            "title": "Education & Citizenship",
+            "name": "Education & Citizenship",
             "description": "Get involved with charities and activists locally and across the globe.",
-            "header_image": "https://images.unsplash.com/photo-1498925008800-019c7d59d903?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=968&q=80",
-            "selected": true,
+            "image": "https://images.unsplash.com/photo-1498925008800-019c7d59d903?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=968&q=80",
+            "joined": true,
             "icon": "ic_learning" 
         }
       ]

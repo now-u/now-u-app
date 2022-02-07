@@ -20,7 +20,7 @@ class CausesService extends ApiService {
   /// Input a cause id
   /// Returns cause at that id
   Future<Cause> getCause(int id) async {
-    Map response = await getRequest("cause/$id");
+    Map response = await getRequest("causes/$id");
     return Cause.fromJson(response["data"]);
   }
 
@@ -32,7 +32,7 @@ class CausesService extends ApiService {
       {Map<String, dynamic>? params}) async {
     print("Getting real campaigns");
     List<Map<String, dynamic>> data =
-        await getListRequest("campaign", params: params);
+        await getListRequest("campaigns", params: params);
     return data.map((campData) => ListCampaign.fromJson(campData)).toList();
   }
 
@@ -41,12 +41,12 @@ class CausesService extends ApiService {
   /// Input Action id
   /// Returns the CampaignAction with that id
   Future<Campaign> getCampaign(int id) async {
-    Map response = await getRequest("campaign/$id");
+    Map response = await getRequest("campaigns/$id");
     return Campaign.fromJson(response["data"]);
   }
 
   Future<CampaignAction> getAction(int id) async {
-    Map response = await getRequest("action/$id");
+    Map response = await getRequest("actions/$id");
     return CampaignAction.fromJson(response["data"]);
   }
 
@@ -57,7 +57,7 @@ class CausesService extends ApiService {
   Future<List<ListCauseAction>> getActions(
       {Map<String, dynamic>? params}) async {
     List<Map<String, dynamic>> data =
-        await getListRequest("action", params: params);
+        await getListRequest("actions", params: params);
     return data
         .map((actionData) => ListCauseAction.fromJson(actionData))
         .toList();
@@ -76,6 +76,11 @@ class CausesService extends ApiService {
       {Map<String, dynamic>? params}) async {
     List<Map<String, dynamic>> data =
         await getListRequest("learning/resources", params: params);
+
+    if (params != null) {
+      return [];
+    }
+
     return data
         .map((actionData) => LearningResource.fromJson(actionData))
         .toList();

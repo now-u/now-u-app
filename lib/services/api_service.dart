@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:app/models/User.dart';
 import 'package:app/services/auth.dart';
 import 'package:app/locator.dart';
+import 'package:app/assets/constants.dart' as constants;
 
 /// Types of http errors
 enum ApiExceptionType {
@@ -34,7 +35,7 @@ class ApiService {
   http.Client client = http.Client();
 
   /// Base of url (no slashes)
-  String baseUrl = "api.now-u.com";
+  String baseUrl = constants.devMode ? "staging.api.now-u.com" : "api.now-u.com";
 
   /// The base path of the url (after the baseUrl)
   String baseUrlPath = "api/v2/";
@@ -96,6 +97,10 @@ class ApiService {
       uri,
       headers: getRequestHeaders(),
     );
+    print("RESPONSE");
+    print(uri.toString());
+    print(response.body);
+    print(response.statusCode);
 
     if (response.statusCode != 200) {
       throw getExceptionForResponse(response);
@@ -104,8 +109,20 @@ class ApiService {
     return await json.decode(response.body);
   }
 
-  Future<List<Map<String, dynamic>>> getListRequest(String path,
-      {Map<String, dynamic>? params}) async {
+  Future<List<Map<String, dynamic>>> getListRequest(
+    String path, {
+    Map<String, dynamic>? params,
+    int? limit = 5
+  }) async {
+    if (params == null) {
+      params = {};
+    }
+
+    if (limit != null) {
+      params["limit"] = limit;
+      params["cause__in"] = [1];
+    }
+
     Map response = await getRequest(path, params: params);
     List<Map<String, dynamic>> listData =
         new List<Map<String, dynamic>>.from(response["data"]);

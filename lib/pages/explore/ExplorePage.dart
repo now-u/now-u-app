@@ -110,10 +110,6 @@ ExplorePage actions_explore_page = ExplorePage(
 ExplorePage learning_explore_page = ExplorePage(
   title: "Learn",
   sections: [
-    LearningResourceExploreSection(title: "Learning resources"),
-    LearningResourceExploreByCauseSection(
-      title: "Learning resource by cause",
-    ),
     LearningResourceExploreSection(
       title: "Learning resources by time",
       filter: ExploreFilter(
@@ -126,6 +122,10 @@ ExplorePage learning_explore_page = ExplorePage(
             .toList(),
       ),
     ),
+    LearningResourceExploreByCauseSection(
+      title: "Learning resource by cause",
+    ),
+    LearningResourceExploreSection(title: "Learning resources"),
     LearningResourceExploreSection(
       title: "Completed learning",
       fetchParams: {
