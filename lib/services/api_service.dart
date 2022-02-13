@@ -73,6 +73,7 @@ class ApiService {
   Future<Map> getRequest(String path, {Map<String, dynamic>? params}) async {
     // Convert param values to strings
     Map<String, dynamic>? stringParams;
+    print("Constructing get request to $path");
     if (params != null) {
       // Parse param values
       stringParams = Map.fromIterable(params.keys,
@@ -120,7 +121,6 @@ class ApiService {
 
     if (limit != null) {
       params["limit"] = limit;
-      params["cause__in"] = [1];
     }
 
     Map response = await getRequest(path, params: params);

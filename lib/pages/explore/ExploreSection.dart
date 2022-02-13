@@ -47,11 +47,13 @@ class ExploreFilterSelectionItem extends StatelessWidget {
 
 class ExploreSectionWidget extends StatelessWidget {
   final ExploreSection data;
-  final ExplorePageViewModel model;
+  final Function(ExplorePage page) changePage;
+  final Function(ExploreFilterOption option) toggleFilterOption;
 
   ExploreSectionWidget({
     required this.data,
-    required this.model,
+    required this.changePage,
+    required this.toggleFilterOption,
   });
 
   @override
@@ -70,9 +72,7 @@ class ExploreSectionWidget extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: data.link != null
-                        ? () => model.update(
-                            title: data.link!.title,
-                            sections: data.link!.sections)
+                        ? () => changePage(data.link!)
                         : () {},
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -117,7 +117,7 @@ class ExploreSectionWidget extends StatelessWidget {
                           child: ExploreFilterSelectionItem(
                             item: option,
                             onPressed: () =>
-                                model.toggleFilterOption(data, option),
+                                toggleFilterOption(option),
                           ));
                     }),
               ),

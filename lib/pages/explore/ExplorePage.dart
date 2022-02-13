@@ -49,7 +49,11 @@ class ExplorePage extends StatelessWidget {
               child: Column(
                 children: [_header(context, model)] +
                     model.sections
-                        .map((ExploreSection section) => ExploreSectionWidget(data: section, model: model))
+                        .map((ExploreSection section) => ExploreSectionWidget(
+                          data: section,
+                          changePage: model.changePage,
+                          toggleFilterOption: (ExploreFilterOption option) => model.toggleFilterOption(section, option),
+                        ))
                         .toList()),
             )
           );

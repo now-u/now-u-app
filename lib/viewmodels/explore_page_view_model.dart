@@ -155,6 +155,11 @@ abstract class ExploreSection<T extends Explorable> {
   }
 
   void init(Function notifyListeners) async {
+    // If its already loaded dont reload
+    if (state == ExploreSectionState.Loaded) {
+      return;
+    }
+
     state = ExploreSectionState.Loading;
     notifyListeners();
     if (filter != null) {
@@ -180,6 +185,13 @@ class ExplorePageViewModel extends BaseModel {
 
   ExplorePageViewModel(this.sections, this.title);
 
+  void changePage(ExplorePage page) {
+    update(
+      title: page.title,
+      sections: page.sections,
+    );
+  }
+
   void update(
       {List<ExploreSection>? sections,
       String? title,
@@ -197,6 +209,7 @@ class ExplorePageViewModel extends BaseModel {
   void toggleFilterOption(ExploreSection section, ExploreFilterOption option) {
     section.filter!.toggleOption(option);
     notifyListeners();
+    section.init(notifyListeners);
   }
 
   void init() {
@@ -321,7 +334,7 @@ class NewsExploreSection extends ExploreSection<Article> {
 class ByCauseExploreFilter extends ExploreFilter {
   ByCauseExploreFilter(): 
     super(
-        parameterName: "cause",
+        parameterName: "cause__in",
         multi: true,
         getOptions: () async {
           final CausesService _causesService = locator<CausesService>();
