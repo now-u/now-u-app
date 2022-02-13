@@ -41,31 +41,34 @@ class ExplorePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<ExplorePageViewModel>.reactive(
         viewModelBuilder: () => ExplorePageViewModel(sections, title),
+        onModelReady: (model) => model.init(),
         builder: (context, model, child) {
+          print("Buidling children of explore page");
           return Scaffold(
-            body: ListView(
-                scrollDirection: Axis.vertical,
+            body: SingleChildScrollView(
+              child: Column(
                 children: [_header(context, model)] +
                     model.sections
-                        .map((ExploreSection section) =>
-                            section.render(context, model))
+                        .map((ExploreSection section) => ExploreSectionWidget(data: section, model: model))
                         .toList()),
+            )
           );
         });
   }
 }
 
 ExplorePage campaigns_explore_page = ExplorePage(title: "Campaigns", sections: [
-  CampaignExploreSection(title: "Campaigns of the month", fetchParams: {
+  CampaignExploreSection(title: "Campaigns of the month", baseParams: {
     "of_the_month": true,
   }),
-  CampaignExploreSection(title: "Recommened campaigns", fetchParams: {
+  CampaignExploreSection(title: "Recommened campaigns", baseParams: {
     "recommended": true,
   }),
-  CampaignExploreByCauseSection(
+  CampaignExploreSection(
     title: "Campaigns by cause",
+    filter: ByCauseExploreFilter(),
   ),
-  CampaignExploreSection(title: "Completed campaigns", fetchParams: {
+  CampaignExploreSection(title: "Completed campaigns", baseParams: {
     "completed": true,
   }),
 ]);
@@ -73,11 +76,12 @@ ExplorePage campaigns_explore_page = ExplorePage(title: "Campaigns", sections: [
 ExplorePage actions_explore_page = ExplorePage(
   title: "Actions",
   sections: [
-    ActionExploreSection(title: "Actions of the month", fetchParams: {
+    ActionExploreSection(title: "Actions of the month", baseParams: {
       "of_the_month": true,
     }),
-    ActionExploreByCauseSection(
+    ActionExploreSection(
       title: "Actions by cause",
+      filter: ByCauseExploreFilter(),
     ),
     ActionExploreSection(
         title: "Actions by time",
@@ -101,7 +105,7 @@ ExplorePage actions_explore_page = ExplorePage(
                   ))
               .toList(),
         )),
-    ActionExploreSection(title: "Completed actions", fetchParams: {
+    ActionExploreSection(title: "Completed actions", baseParams: {
       "completed": true,
     }),
   ],
@@ -122,13 +126,14 @@ ExplorePage learning_explore_page = ExplorePage(
             .toList(),
       ),
     ),
-    LearningResourceExploreByCauseSection(
+    LearningResourceExploreSection(
       title: "Learning resource by cause",
+      filter: ByCauseExploreFilter(),
     ),
     LearningResourceExploreSection(title: "Learning resources"),
     LearningResourceExploreSection(
       title: "Completed learning",
-      fetchParams: {
+      baseParams: {
         "completed": true,
       },
     ),

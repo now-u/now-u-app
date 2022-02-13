@@ -7,6 +7,12 @@ import 'package:app/services/dynamicLinks.dart';
 
 final DynamicLinkService _dynamicLinkService = locator<DynamicLinkService>();
 
+class ListCampaignSerializer extends Serializer<ListCampaign> {
+  ListCampaign fromJson(Map<String, dynamic> data) {
+    return ListCampaign.fromJson(data);
+  }
+}
+
 class ListCampaign extends Explorable {
   /// API id for header image
   final int id;
