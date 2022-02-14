@@ -1,4 +1,3 @@
-import 'package:app/assets/change_notifier.dart';
 import 'package:app/assets/components/explore_tiles.dart';
 import 'package:app/assets/constants.dart';
 import 'package:app/models/Action.dart';
