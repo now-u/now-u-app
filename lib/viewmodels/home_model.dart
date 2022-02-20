@@ -9,13 +9,37 @@ import 'package:app/services/internal_notification_service.dart';
 import 'package:app/services/navigation_service.dart';
 
 import 'package:app/models/Notification.dart';
+import 'package:app/viewmodels/explore_page_view_model.dart';
 
-class HomeViewModel extends BaseModel with CampaignRO {
+class HomeViewModel extends BaseModel with CampaignRO,ExploreViewModelMixin {
   final InternalNotificationService _internalNotificationService =
       locator<InternalNotificationService>();
   final NavigationService _navigationService = locator<NavigationService>();
   final CausesService _causesService = locator<CausesService>();
   final DialogService _dialogService = locator<DialogService>();
+
+  final ExploreSection myCampaigns = CampaignExploreSection(
+    title: "My campaigns",
+  );
+
+  final ExploreSection suggestedCampaigns = CampaignExploreSection(
+    title: "Suggested campaigns",
+    baseParams: {
+      "recommended": true,
+    }
+  );
+
+  final ExploreSection myActions = ActionExploreSection(
+    title: "What can I do today?",
+  );
+
+  final ExploreSection inTheNews = NewsExploreSection(
+    title: "In the news",
+  );
+
+  HomeViewModel(){
+    sections = [myCampaigns, suggestedCampaigs, myActions, inTheNews];
+  }
 
   List<ListCause> _causes = [];
 

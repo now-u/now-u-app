@@ -43,7 +43,7 @@ class ExplorePage extends StatelessWidget {
         viewModelBuilder: () => ExplorePageViewModel(sections, title),
         onModelReady: (model) => model.init(),
         builder: (context, model, child) {
-          print("Buidling children of explore page");
+          print("Building children of explore page");
           return Scaffold(
             body: SingleChildScrollView(
               child: Column(
@@ -65,7 +65,7 @@ ExplorePage campaigns_explore_page = ExplorePage(title: "Campaigns", sections: [
   CampaignExploreSection(title: "Campaigns of the month", baseParams: {
     "of_the_month": true,
   }),
-  CampaignExploreSection(title: "Recommened campaigns", baseParams: {
+  CampaignExploreSection(title: "Recommended campaigns", baseParams: {
     "recommended": true,
   }),
   CampaignExploreSection(

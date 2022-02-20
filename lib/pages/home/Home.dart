@@ -63,8 +63,8 @@ class Home extends StatelessWidget {
                       actionsScore: model.numberOfCompletedActions,
                       learningsScore: -1,
                     ),
-                    CampaignExploreSection(title: "My Campaigns"),
-                    ActionExploreSection(title: "What can I do today?"),
+                    ExploreSectionWidget.fromModel(model.myCampaigns, model),
+                    ExploreSectionWidget.fromModel(model.myActions, model),
                     CustomWidthButton(
                       'Explore',
                       onPressed: () {
@@ -75,12 +75,8 @@ class Home extends StatelessWidget {
                       fontSize: 20.0,
                       buttonWidthProportion: 0.8,
                     ),
-                    CampaignExploreSection(
-                        title: "Recommended campaigns",
-                        fetchParams: {
-                          "recommended": true,
-                        }),
-                    NewsExploreSection(title: "In the news"),
+                    ExploreSectionWidget.fromModel(model.suggestedCampaigns, model),
+                    ExploreSectionWidget.fromModel(model.inTheNews, model),
                     model.causes != []
                         ? GridView.builder(
                             shrinkWrap: true,

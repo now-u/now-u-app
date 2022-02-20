@@ -55,6 +55,11 @@ class ExploreSectionWidget extends StatelessWidget {
     required this.toggleFilterOption,
   });
 
+  ExploreSectionWidget.fromModel(ExploreSection section, ExploreViewModelMixin model) :
+      data = section,
+      changePage = (){},
+      toggleFilterOption = (ExploreFilterOption option) => model.toggleFilterOption(section, option);
+
   @override
   Widget build(BuildContext context) {
     return Column(

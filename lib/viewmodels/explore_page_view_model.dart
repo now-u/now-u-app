@@ -190,7 +190,7 @@ mixin ExploreViewModelMixin on BaseModel {
     section.reload(notifyListeners);
   }
 
-  void init() {
+  void initSections() {
     for (ExploreSection section in sections) {
       section.init(notifyListeners);
     }
@@ -199,6 +199,10 @@ mixin ExploreViewModelMixin on BaseModel {
 
 class ExplorePageViewModel extends BaseModel with ExploreViewModelMixin {
   String title;
+
+  void init(){
+    initSections();
+  }
 
   final Queue<ExplorePage> previousPages = Queue();
 
