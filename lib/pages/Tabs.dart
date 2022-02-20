@@ -1,18 +1,16 @@
-import 'package:app/pages/learning/LearningCentreAllPage.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/assets/icons/customIcons.dart';
 
 import 'package:app/pages/home/Home.dart';
 import 'package:app/pages/more/MoreMenu.dart';
-import 'package:app/pages/news/NewsPage.dart';
-import 'package:app/pages/action/ActionPage.dart';
 import 'package:app/pages/explore/ExplorePage.dart';
+import 'package:flutter/rendering.dart';
 
 //import 'package:app/assets/dynamicLinks.dart';
 
 // These must be in the corect order
-enum TabPage { Home, Actions, Learning, News, Explore, Menu }
+enum TabPage { Home, Explore, Impact, Menu }
 
 class TabsPage extends StatefulWidget {
   final TabPage? currentPage;
@@ -56,19 +54,16 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
         'title': "Home",
       },
       {
-        'page': ActionPage(),
-        'icon': Icon(CustomIcons.ic_actions),
-        'title': "Actions",
-      },
-      {
-        'page': LearningCentreAllPage(),
-        'icon': Icon(CustomIcons.ic_learning),
-        'title': "Learning",
-      },
-      {
-        'page': NewsPage(),
+        'page': home_explore_page,
         'icon': Icon(CustomIcons.ic_news),
-        'title': "News",
+        'title': "Explore",
+      },
+      {
+        'page': Container(
+          child: Center(child: Text("Coming soon")),
+        ),
+        'icon': Icon(CustomIcons.ic_up),
+        'title': "Impact",
       },
       {
         'page': home_explore_page,

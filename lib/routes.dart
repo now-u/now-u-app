@@ -20,7 +20,6 @@ import 'package:app/pages/login/login_code_view.dart';
 import 'package:app/pages/more/morePages/AccountDetailsPage.dart';
 import 'package:app/pages/more/morePages/FAQPage.dart';
 import 'package:app/pages/more/morePages/PartnersPage.dart';
-import 'package:app/pages/onboarding/onboarding_page.dart';
 import 'package:app/pages/causes/CauseOnboardingPage.dart';
 import 'package:app/pages/causes/ChangeCausePage.dart';
 import 'package:app/pages/other/InfoPage.dart';
@@ -50,6 +49,7 @@ class Routes {
 
   // Causes
   static const causesPage = "causesPage";
+  static const causesOnboardingPage = "causesOnboarding";
 
   // All campaigns (including past)
   static const allCampaigns = "allCampaigns";
@@ -77,15 +77,15 @@ Function initRoutes = (RouteSettings settings) {
   switch (settings.name) {
 
     // Into
-    case Routes.onBoarding:
-      {
-        return customRoute(
-            builder: (context) => OnBoardingPage(), settings: settings);
-      }
     case Routes.causesPage:
       {
         return customRoute(
             builder: (context) => ChangeCausePage(), settings: settings);
+      }
+    case Routes.causesOnboardingPage:
+      {
+        return customRoute(
+            builder: (context) => CauseOnboardingPage(), settings: settings);
       }
     case Routes.login:
       {
@@ -158,12 +158,7 @@ Function initRoutes = (RouteSettings settings) {
       }
     case Routes.campaignInfo:
       {
-        print("navigating to campaignInfo");
-        print(args);
-        print(args is int);
-        print(args is String);
         if (args is int) {
-          print("navigating to campaignInfo");
           return customRoute(
               builder: (context) => CampaignInfo(
                     campaignId: args,
@@ -194,21 +189,13 @@ Function initRoutes = (RouteSettings settings) {
         return customRoute(
             builder: (context) => AllCampaignsPage(), settings: settings);
       }
-    case Routes.actions:
-      {
-        return customRoute(
-            builder: (context) => TabsPage(currentPage: TabPage.Actions),
-            settings: settings);
-      }
     case Routes.actionInfo:
       {
         if (args is ActionInfoArguments) {
           return customRoute(
               builder: (context) => ActionInfo(args), settings: settings);
         }
-        return customRoute(
-            builder: (context) => TabsPage(currentPage: TabPage.Actions),
-            settings: settings);
+        break;
       }
     //PastCampaignActionPage
     case Routes.pastCampaignActionPage:

@@ -58,7 +58,7 @@ class CausesViewModel extends BaseModel {
 class SelectCausesViewModel extends CausesViewModel {
   void selectCauses() async {
     super.selectCauses();
-    _navigationService.navigateTo(Routes.login);
+    _navigationService.navigateTo(Routes.home);
   }
 }
 

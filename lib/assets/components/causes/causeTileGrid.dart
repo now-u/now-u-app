@@ -25,8 +25,7 @@ class CauseTileGrid extends StatelessWidget {
                         gestureFunction: () => model.toggleSelection(
                             listCause: model.causesList[index]),
                         cause: model.causesList[index],
-                        isSelected:
-                            model.isCauseSelected(model.causesList[index]),
+                        isSelected: model.isCauseSelected(model.causesList[index]),
                         getInfoFunction: () => model.getCausePopup(
                             listCause: model.causesList[index],
                             causeIndex: index),
