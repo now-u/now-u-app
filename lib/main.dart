@@ -2,7 +2,11 @@ import 'dart:convert';
 
 import 'package:app/locator.dart';
 import 'package:app/managers/dialog_manager.dart';
+import 'package:app/pages/explore/ExplorePage.dart';
 import 'package:app/pages/other/startup_view.dart';
+import 'package:app/pages/home/Home.dart';
+import 'package:app/pages/explore/ExplorePage.dart';
+import 'package:app/pages/explore/ExploreSection.dart';
 import 'package:app/routes.dart';
 import 'package:app/services/analytics.dart';
 import 'package:app/services/navigation_service.dart';
