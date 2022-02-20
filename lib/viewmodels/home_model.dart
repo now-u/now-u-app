@@ -44,7 +44,7 @@ class HomeViewModel extends BaseModel with CampaignRO,ExploreViewModelMixin {
   void init() {
     initSections();
     fetchNotifications();
-    fetchCampaigns();
+    fetchCauses();
   }
 
   List<ListCause> _causes = [];
@@ -57,6 +57,8 @@ class HomeViewModel extends BaseModel with CampaignRO,ExploreViewModelMixin {
     _causes = await _causesService.getCauses();
 
     setBusy(false);
+
+    print("Fetched ${_causes.length} causes");
     notifyListeners();
   }
 

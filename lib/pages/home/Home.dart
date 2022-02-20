@@ -41,6 +41,15 @@ class Home extends StatelessWidget {
             viewModelBuilder: () => HomeViewModel(),
             onModelReady: (model) => model.init(),
             builder: (context, model, child) {
+              List<Widget> causeTiles = List.generate(model.causes.length, (index) => CauseTile(
+                gestureFunction: () => null,
+                cause: model.causes[index],
+                getInfoFunction: () =>
+                    model.getCausePopup(model.causes[index]),
+              ));
+              causeTiles = [Container(color: Colors.green)];
+
+              print("Building home page numebr of cauess is ${model.causes.length}");
               return ScrollableSheetPage(
                 header: model.notifications!.length > 0
                     ? HeaderWithNotifications(
@@ -51,11 +60,15 @@ class Home extends StatelessWidget {
                     : HeaderStyle1(name: model.currentUser!.getName()),
                 children: [
                   Column(children: <Widget>[
+
+                    // Campaigns
                     ProgressTile(
                       campaignsScore: model.numberOfJoinedCampaigns,
                       actionsScore: model.numberOfCompletedActions,
                       learningsScore: -1,
                     ),
+
+                    SizedBox(height: 30),
                     ExploreSectionWidget.fromModel(model.myCampaigns, model),
                     ExploreSectionWidget.fromModel(model.myActions, model),
                     CustomWidthButton(
@@ -68,18 +81,34 @@ class Home extends StatelessWidget {
                       fontSize: 20.0,
                       buttonWidthProportion: 0.8,
                     ),
+                    SizedBox(height: 30),
                     ExploreSectionWidget.fromModel(model.suggestedCampaigns, model),
                     ExploreSectionWidget.fromModel(model.inTheNews, model),
-                    model.causes != []
+                   
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("My causes", style: Theme.of(context).primaryTextTheme.headline3,),
+                          CustomTextButton("Edit", onClick: () {})
+                        ],
+                      )
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: model.causes != []
                         ? GridView.builder(
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2),
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 20,
+                              crossAxisSpacing: 30
+                            ),
                             itemCount: model.causes.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return Container(height: 100, color: Colors.blue);
                               return CauseTile(
                                   gestureFunction: () => null,
                                   cause: model.causes[index],
@@ -87,6 +116,7 @@ class Home extends StatelessWidget {
                                       model.getCausePopup(model.causes[index]));
                             })
                         : CircularProgressIndicator()
+                    ),
                   ])
                 ],
               );

@@ -42,8 +42,6 @@ class ExplorePage extends StatelessWidget {
         viewModelBuilder: () => ExplorePageViewModel(title, sections),
         onModelReady: (model) => model.init(),
         builder: (context, model, child) {
-          print("Building children of explore page");
-          print("Drawing widget sections are ${model.sections}");
           return Scaffold(
             body: SingleChildScrollView(
               child: Column(
