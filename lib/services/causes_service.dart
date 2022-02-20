@@ -75,7 +75,7 @@ class CausesService extends ApiService {
   Future<List<LearningResource>> getLearningResources(
       {Map<String, dynamic>? params}) async {
     List<Map<String, dynamic>> data =
-        await getListRequest("learning/resources", params: params);
+        await getListRequest("learning_resources", params: params);
 
     if (params != null) {
       return [];
