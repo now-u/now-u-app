@@ -38,7 +38,13 @@ class HomeViewModel extends BaseModel with CampaignRO,ExploreViewModelMixin {
   );
 
   HomeViewModel(){
-    sections = [myCampaigns, suggestedCampaigs, myActions, inTheNews];
+    sections = [myCampaigns, suggestedCampaigns, myActions, inTheNews];
+  }
+
+  void init() {
+    initSections();
+    fetchNotifications();
+    fetchCampaigns();
   }
 
   List<ListCause> _causes = [];
@@ -73,13 +79,6 @@ class HomeViewModel extends BaseModel with CampaignRO,ExploreViewModelMixin {
   // getActiveStarredActions
   int get numberOfStarredActions {
     return currentUser!.getStarredActions()!.length;
-  }
-
-  // TODO: Need to access learningsScore (see progressTile.dart)
-
-  Future fetchAll() async {
-    fetchNotifications();
-    fetchCampaigns();
   }
 
   // getNotifications

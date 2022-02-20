@@ -6,7 +6,6 @@ import 'package:app/models/Explorable.dart';
 import 'package:app/models/article.dart';
 import 'package:app/models/Learning.dart';
 import 'package:app/pages/explore/ExplorePage.dart';
-import 'package:app/viewmodels/explore/explore_section_view_model.dart';
 import 'package:app/viewmodels/explore_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -51,14 +50,14 @@ class ExploreSectionWidget extends StatelessWidget {
 
   ExploreSectionWidget({
     required this.data,
-    required this.changePage,
     required this.toggleFilterOption,
+    required this.changePage,
   });
 
-  ExploreSectionWidget.fromModel(ExploreSection section, ExploreViewModelMixin model) :
-      data = section,
-      changePage = (){},
-      toggleFilterOption = (ExploreFilterOption option) => model.toggleFilterOption(section, option);
+  ExploreSectionWidget.fromModel(ExploreSection section, ExploreViewModelMixin model)
+      : data = section,
+        changePage = ((_) {}),
+        toggleFilterOption = ((ExploreFilterOption option) => model.toggleFilterOption(section, option));
 
   @override
   Widget build(BuildContext context) {

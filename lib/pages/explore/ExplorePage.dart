@@ -1,7 +1,6 @@
 import 'package:app/assets/constants.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/pages/explore/ExploreSection.dart';
-import 'package:app/viewmodels/explore/explore_section_view_model.dart';
 import 'package:app/viewmodels/explore_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -40,10 +39,11 @@ class ExplorePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ExplorePageViewModel>.reactive(
-        viewModelBuilder: () => ExplorePageViewModel(sections, title),
+        viewModelBuilder: () => ExplorePageViewModel(title, sections),
         onModelReady: (model) => model.init(),
         builder: (context, model, child) {
           print("Building children of explore page");
+          print("Drawing widget sections are ${model.sections}");
           return Scaffold(
             body: SingleChildScrollView(
               child: Column(

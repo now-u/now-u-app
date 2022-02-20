@@ -207,7 +207,8 @@ class ExplorePageViewModel extends BaseModel with ExploreViewModelMixin {
   final Queue<ExplorePage> previousPages = Queue();
 
   ExplorePageViewModel(this.title, List<ExploreSection> sections) {
-    sections = sections;
+    print("Sections are $sections");
+    this.sections = sections;
   }
 
   void changePage(ExplorePage page) {

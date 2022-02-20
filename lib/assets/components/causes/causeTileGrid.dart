@@ -2,7 +2,6 @@ import 'package:app/assets/components/grid.dart';
 import 'package:app/viewmodels/causes_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:app/assets/components/causes/causeTile.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CauseTileGrid extends StatelessWidget {
   final CausesViewModel model;
@@ -23,7 +22,6 @@ class CauseTileGrid extends StatelessWidget {
                 gestureFunction: () => model.toggleSelection(
                     listCause: model.causesList[index]),
                 cause: model.causesList[index],
-                causeIcon: FontAwesomeIcons.leaf,
                 isSelected:
                     model.isCauseSelected(model.causesList[index]),
                 getInfoFunction: () => model.getCausePopup(

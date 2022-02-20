@@ -30,12 +30,6 @@ const double BUTTON_PADDING = 10;
 const PageStorageKey campaignCarouselPageKey = PageStorageKey(1);
 
 class Home extends StatelessWidget {
-  final _controller = PageController(
-    initialPage: 0,
-    viewportFraction: 0.93,
-    keepPage: true,
-  );
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,9 +39,8 @@ class Home extends StatelessWidget {
         ),
         body: ViewModelBuilder<HomeViewModel>.reactive(
             viewModelBuilder: () => HomeViewModel(),
-            onModelReady: (model) => model.fetchAll(),
+            onModelReady: (model) => model.init(),
             builder: (context, model, child) {
-              List<Campaign>? campaigns = model.campaignsWithSelectedFirst;
               return ScrollableSheetPage(
                 header: model.notifications!.length > 0
                     ? HeaderWithNotifications(
@@ -86,8 +79,8 @@ class Home extends StatelessWidget {
                                     crossAxisCount: 2),
                             itemCount: model.causes.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return Container(height: 100, color: Colors.red);
-                              CauseTile(
+                              return Container(height: 100, color: Colors.blue);
+                              return CauseTile(
                                   gestureFunction: () => null,
                                   cause: model.causes[index],
                                   getInfoFunction: () =>
