@@ -160,6 +160,10 @@ abstract class ExploreSection<T extends Explorable> {
       return;
     }
 
+    reload(notifyListeners);
+  }
+
+  void reload(Function notifyListeners) async {
     state = ExploreSectionState.Loading;
     notifyListeners();
     if (filter != null) {
@@ -209,7 +213,7 @@ class ExplorePageViewModel extends BaseModel {
   void toggleFilterOption(ExploreSection section, ExploreFilterOption option) {
     section.filter!.toggleOption(option);
     notifyListeners();
-    section.init(notifyListeners);
+    section.reload(notifyListeners);
   }
 
   void init() {
