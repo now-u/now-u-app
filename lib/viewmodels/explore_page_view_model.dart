@@ -181,13 +181,30 @@ abstract class ExploreSection<T extends Explorable> {
 // Action: 160 ExploreActionTile 
 // Campaign: 300  ExploreCampaignTile
 
-class ExplorePageViewModel extends BaseModel {
-  List<ExploreSection> sections;
+mixin ExploreViewModelMixin on BaseModel {
+  List<ExploreSection> sections = [];
+
+  void toggleFilterOption(ExploreSection section, ExploreFilterOption option) {
+    section.filter!.toggleOption(option);
+    notifyListeners();
+    section.reload(notifyListeners);
+  }
+
+  void init() {
+    for (ExploreSection section in sections) {
+      section.init(notifyListeners);
+    }
+  }
+}
+
+class ExplorePageViewModel extends BaseModel with ExploreViewModelMixin {
   String title;
 
   final Queue<ExplorePage> previousPages = Queue();
 
-  ExplorePageViewModel(this.sections, this.title);
+  ExplorePageViewModel(this.title, List<ExploreSection> sections) {
+    sections = sections;
+  }
 
   void changePage(ExplorePage page) {
     update(
@@ -210,18 +227,6 @@ class ExplorePageViewModel extends BaseModel {
     init();
   }
   
-  void toggleFilterOption(ExploreSection section, ExploreFilterOption option) {
-    section.filter!.toggleOption(option);
-    notifyListeners();
-    section.reload(notifyListeners);
-  }
-
-  void init() {
-    for (ExploreSection section in sections) {
-      section.init(notifyListeners);
-    }
-  }
-
   bool get canBack => previousPages.length != 0;
 
   void back() {
