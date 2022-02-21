@@ -18,13 +18,9 @@ import 'package:app/assets/components/notifications.dart';
 import 'package:app/assets/StyleFrom.dart';
 
 import 'package:app/models/Notification.dart';
-import 'package:app/models/Campaign.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:stacked/stacked.dart';
 import 'package:app/viewmodels/home_model.dart';
-
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 const double BUTTON_PADDING = 10;
 const PageStorageKey campaignCarouselPageKey = PageStorageKey(1);
@@ -41,15 +37,6 @@ class Home extends StatelessWidget {
             viewModelBuilder: () => HomeViewModel(),
             onModelReady: (model) => model.init(),
             builder: (context, model, child) {
-              List<Widget> causeTiles = List.generate(model.causes.length, (index) => CauseTile(
-                gestureFunction: () => null,
-                cause: model.causes[index],
-                getInfoFunction: () =>
-                    model.getCausePopup(model.causes[index]),
-              ));
-              causeTiles = [Container(color: Colors.green)];
-
-              print("Building home page numebr of cauess is ${model.causes.length}");
               return ScrollableSheetPage(
                 header: model.notifications!.length > 0
                     ? HeaderWithNotifications(
