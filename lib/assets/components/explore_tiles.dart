@@ -1,6 +1,7 @@
 import 'package:app/assets/components/cause_indicator.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/custom_network_image.dart';
+import 'package:app/assets/constants.dart';
 import 'package:app/locator.dart';
 import 'package:app/models/Learning.dart';
 import 'package:app/routes.dart';
@@ -331,28 +332,33 @@ class ExploreNewsTile extends StatelessWidget {
 /// Base class for explore action tiles (action or learning resource) with done checkmark
 abstract class BaseExtendedExploreActionTile extends StatelessWidget {
   final bool completed;
+  final double width;
 
-  BaseExtendedExploreActionTile({required this.completed});
+  BaseExtendedExploreActionTile({required this.completed, required this.width});
 
   Widget getExploreActionTile();
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        getExploreActionTile(),
-        Row(
-          children: [
-            SizedBox(width: 200),
-            Padding(
+    return Container(
+      width: width,
+      child: Stack(
+        children: [
+          Container(
+            child: getExploreActionTile(),
+            width: width * 0.7,
+          ),
+          Positioned(
+            right: 10,
+            child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 3.0),
               child: Container(
+                  width: width * 0.3,
                   decoration: BoxDecoration(
-                      color: Color(0XFFFBFBFD),
+                      color: CustomColors.white,
                       borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(8),
                           bottomRight: Radius.circular(8))),
-                  width: 120,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -363,20 +369,21 @@ abstract class BaseExtendedExploreActionTile extends StatelessWidget {
                             Theme.of(context).primaryTextTheme.button,
                             color: Colors.black,
                             fontWeight: FontWeight.w700,
-                            fontSize: 15,
+                            fontSize: 14,
                           ),
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(height: 20),
                         _ExploreTileCheckmark(
-                            completed: this.completed, size: 50),
+                            completed: this.completed, size: 30),
                       ],
                     ),
-                  )),
-            ),
-          ],
-        )
-      ],
+                  ),
+                ),
+          ),
+          ),
+        ],
+      )
     );
   }
 }
@@ -387,8 +394,8 @@ abstract class BaseExtendedExploreActionTile extends StatelessWidget {
 class ExtendedExploreActionTile extends BaseExtendedExploreActionTile {
   final ListCauseAction model;
 
-  ExtendedExploreActionTile(this.model, bool completed)
-      : super(completed: completed);
+  ExtendedExploreActionTile(this.model, bool completed, double width)
+      : super(completed: completed, width: width);
 
   @override
   Widget getExploreActionTile() {
@@ -402,8 +409,8 @@ class ExtendedExploreActionTile extends BaseExtendedExploreActionTile {
 class ExtendedExploreLearningTile extends BaseExtendedExploreActionTile {
   final LearningResource model;
 
-  ExtendedExploreLearningTile(this.model, bool completed)
-      : super(completed: completed);
+  ExtendedExploreLearningTile(this.model, bool completed, double width)
+      : super(completed: completed, width: width);
 
   @override
   Widget getExploreActionTile() {

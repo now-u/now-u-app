@@ -70,13 +70,15 @@ class CampaignPage extends StatelessWidget {
     );
   }
 
-  List<Widget> _resourcesList(Campaign? campaign) {
+  List<Widget> _resourcesList(BuildContext context, Campaign? campaign) {
     if (campaign == null) {
       return [CircularProgressIndicator()];
     }
 
-    List<BaseExtendedExploreActionTile> actions = campaign.actions.map((action) => ExtendedExploreActionTile(action, campaign.completed)).toList();
-    List<BaseExtendedExploreActionTile> learningResources = campaign.learningResources.map((lr) => ExtendedExploreLearningTile(lr, lr.completed)).toList();
+    double tileWidth = (MediaQuery.of(context).size.width - CustomPaddingSize.small * 2);
+
+    List<BaseExtendedExploreActionTile> actions = campaign.actions.map((action) => ExtendedExploreActionTile(action, campaign.completed, tileWidth)).toList();
+    List<BaseExtendedExploreActionTile> learningResources = campaign.learningResources.map((lr) => ExtendedExploreLearningTile(lr, lr.completed, tileWidth)).toList();
     // List<BaseExtendedExploreActionTile> children = actions + learningResources;
     List<BaseExtendedExploreActionTile> children = <BaseExtendedExploreActionTile>[];
     children.addAll(actions);
@@ -85,7 +87,12 @@ class CampaignPage extends StatelessWidget {
     children.shuffle();
     children.sort((a, b) => a.completed ? -1 : 1);
 
-    return children;
+    // TODO move tile heights to explore widget
+    // Wrap widgets in containers with correct height
+    return children.map((resource) => Container(
+        child: resource,
+      )
+    ).toList();
   }
 
   Widget _body(BuildContext context, Campaign? campaign) {
@@ -97,7 +104,7 @@ class CampaignPage extends StatelessWidget {
             "Support this campaign by completing these actions:",
             style: Theme.of(context).primaryTextTheme.headline3,
           ),
-        ] + _resourcesList(campaign),
+        ] + _resourcesList(context, campaign),
       ),
     );
   }
