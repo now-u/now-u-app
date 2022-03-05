@@ -128,14 +128,17 @@ class LearningResource extends Explorable {
 
   final ListCause cause;
 
-  LearningResource.fromJson(Map json)
-      : id = json['id'],
+  LearningResource.fromJson(Map json, {ListCause? cause})
+      : assert (cause != null || json['cause'] != null),
+        id = json['id'],
         title = json['title'],
         time = json['time'],
         link = json['link'],
         type = getResourceTypeFromString(json['type']),
         createdAt = DateTime.parse(json['created_at']),
-        cause = ListCause.fromJson(json['causes'][0]),
+        cause = json['causes'] != null 
+            ? ListCause.fromJson(json['causes'][0])
+            : cause!,
         completed = json['completed'] == true,
         source = json['source'];
 

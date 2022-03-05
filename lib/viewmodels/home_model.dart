@@ -1,7 +1,6 @@
 import 'package:app/services/causes_service.dart';
 import 'package:app/services/dialog_service.dart';
 import 'package:app/viewmodels/base_model.dart';
-import 'package:app/viewmodels/base_campaign_model.dart';
 import 'package:app/models/Cause.dart';
 
 import 'package:app/locator.dart';
@@ -11,7 +10,7 @@ import 'package:app/services/navigation_service.dart';
 import 'package:app/models/Notification.dart';
 import 'package:app/viewmodels/explore_page_view_model.dart';
 
-class HomeViewModel extends BaseModel with CampaignRO,ExploreViewModelMixin {
+class HomeViewModel extends BaseModel with ExploreViewModelMixin {
   final InternalNotificationService _internalNotificationService =
       locator<InternalNotificationService>();
   final NavigationService _navigationService = locator<NavigationService>();

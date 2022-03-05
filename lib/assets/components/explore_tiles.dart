@@ -1,3 +1,4 @@
+import 'package:app/assets/components/cause_indicator.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/custom_network_image.dart';
 import 'package:app/locator.dart';
@@ -11,6 +12,7 @@ import 'package:app/services/navigation_service.dart';
 import 'package:app/pages/action/ActionInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../StyleFrom.dart';
 
 class ExploreCampaignTile extends StatelessWidget {
   final NavigationService _navigationService = locator<NavigationService>();
@@ -36,7 +38,7 @@ class ExploreCampaignTile extends StatelessWidget {
         aspectRatio: 0.75,
         child: InkWell(
           onTap: () => _navigationService.navigateTo(
-            Routes.campaignInfo,
+            Routes.campaign,
             arguments: campaign,
           ),
           child: Column(
@@ -69,7 +71,7 @@ class ExploreCampaignTile extends StatelessWidget {
               ),
               Padding(
                   padding: const EdgeInsets.only(bottom: 8),
-                  child: _ExploreTileCause(cause)),
+                  child: CauseIndicator(cause)),
             ],
           ),
         ),
@@ -217,7 +219,7 @@ abstract class BaseExploreActionTile extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8),
-                      child: _ExploreTileCause(cause),
+                      child: CauseIndicator(cause),
                     )
                   ],
                 ),
@@ -326,6 +328,90 @@ class ExploreNewsTile extends StatelessWidget {
   }
 }
 
+/// Base class for explore action tiles (action or learning resource) with done checkmark
+abstract class BaseExtendedExploreActionTile extends StatelessWidget {
+  final bool completed;
+
+  BaseExtendedExploreActionTile({required this.completed});
+
+  Widget getExploreActionTile();
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        getExploreActionTile(),
+        Row(
+          children: [
+            SizedBox(width: 200),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 3.0),
+              child: Container(
+                  decoration: BoxDecoration(
+                      color: Color(0XFFFBFBFD),
+                      borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(8),
+                          bottomRight: Radius.circular(8))),
+                  width: 120,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          this.completed ? 'Completed' : 'Needs Completing',
+                          style: textStyleFrom(
+                            Theme.of(context).primaryTextTheme.button,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 15,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 20),
+                        _ExploreTileCheckmark(
+                            completed: this.completed, size: 50),
+                      ],
+                    ),
+                  )),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+}
+
+/// Implementation of [ExtendedExploreActionTile] base class for Explore Action tiles
+/// Takes in a ListCauseAction as the model
+/// Defines getExploreActionTile which returns an ExploreActionTile
+class ExtendedExploreActionTile extends BaseExtendedExploreActionTile {
+  final ListCauseAction model;
+
+  ExtendedExploreActionTile(this.model, bool completed)
+      : super(completed: completed);
+
+  @override
+  Widget getExploreActionTile() {
+    return ExploreActionTile(model);
+  }
+}
+
+/// Implementation of [ExtendedExploreActionTile] base class for Explore Learning tiles
+/// Takes in a LearningResource as the model
+/// Defines getExploreActionTile which returns an ExploreLearningTile
+class ExtendedExploreLearningTile extends BaseExtendedExploreActionTile {
+  final LearningResource model;
+
+  ExtendedExploreLearningTile(this.model, bool completed)
+      : super(completed: completed);
+
+  @override
+  Widget getExploreActionTile() {
+    return ExploreLearningTile(model);
+  }
+}
+
+
 class _ExploreTileTitle extends StatelessWidget {
   final String title;
 
@@ -341,36 +427,10 @@ class _ExploreTileTitle extends StatelessWidget {
   }
 }
 
-class _ExploreTileCause extends StatelessWidget {
-  final ListCause cause;
-
-  const _ExploreTileCause(this.cause, {Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.centerLeft,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: Row(
-        children: [
-          Icon(
-            cause.icon,
-            size: 18,
-          ),
-          const SizedBox(width: 6),
-          Text(
-            cause.title,
-            textScaleFactor: .9,
-          )
-        ],
-      ),
-    );
-  }
-}
-
 class _ExploreTileCheckmark extends StatelessWidget {
   /// If the card has been completed
   final bool completed;
+  final double size;
 
   /// Colors for the checkmark
   static const Color _completedColor = Color.fromRGBO(89, 152, 26, 1);
@@ -378,6 +438,7 @@ class _ExploreTileCheckmark extends StatelessWidget {
 
   const _ExploreTileCheckmark({
     required this.completed,
+    this.size = 20,
     Key? key,
   }) : super(key: key);
 
@@ -397,7 +458,7 @@ class _ExploreTileCheckmark extends StatelessWidget {
         FaIcon(
           FontAwesomeIcons.solidCheckCircle,
           color: completed ? _completedColor : _uncompletedColor,
-          size: 20,
+          size: size,
         ),
       ],
     );

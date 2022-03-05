@@ -8,18 +8,16 @@ class CustomNetworkImage extends StatelessWidget {
   final double? height;
 
   final Function? placeholder;
-  final Function? errorWidget;
-  final Function? progressIndicatorBuilder;
   final BaseCacheManager? cacheManager;
+  final ColorFilter? colorFilter;
 
   CustomNetworkImage(
     this.url, {
     this.fit,
     this.height,
     this.placeholder,
-    this.errorWidget,
-    this.progressIndicatorBuilder,
     this.cacheManager,
+    this.colorFilter,
   });
 
   @override
@@ -30,16 +28,20 @@ class CustomNetworkImage extends StatelessWidget {
     }
     return CachedNetworkImage(
       imageUrl: url!,
-      placeholder: placeholder == null && progressIndicatorBuilder == null
+      placeholder: placeholder == null
           ? (context, url) => Center(child: CircularProgressIndicator())
           : placeholder as Widget Function(BuildContext, String)?,
-      errorWidget:
-          errorWidget as Widget Function(BuildContext, String, dynamic)? ??
-              (context, url, error) => Center(child: Icon(Icons.error)),
-      progressIndicatorBuilder: progressIndicatorBuilder as Widget Function(
-          BuildContext, String, DownloadProgress)?,
-      fit: fit,
+      errorWidget: (context, url, error) => Center(child: Icon(Icons.error)),
       height: height,
+      imageBuilder: (context, imageProvider) => Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: imageProvider,
+            fit: fit,
+            colorFilter: colorFilter,
+          ),
+        ),
+      ),
       cacheManager: cacheManager,
     );
   }

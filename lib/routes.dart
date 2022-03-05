@@ -5,11 +5,7 @@ import 'package:app/models/Notification.dart';
 import 'package:app/models/Organisation.dart';
 import 'package:app/pages/Tabs.dart';
 import 'package:app/pages/action/ActionInfo.dart';
-import 'package:app/pages/campaign/AllCampaignsPage.dart';
-import 'package:app/pages/campaign/CampaignInfo/CampaignDetails.dart';
-import 'package:app/pages/campaign/CampaignInfo/CampaignInfo.dart';
-import 'package:app/pages/campaign/CampaignPage.dart';
-import 'package:app/pages/campaign/PastCampaignActionPage.dart';
+import 'package:app/pages/campaign/campaign_page.dart';
 import 'package:app/pages/intro/IntroPage.dart';
 import 'package:app/pages/learning/LearningCentreAllPage.dart';
 import 'package:app/pages/learning/LearningCentrePage.dart';
@@ -50,10 +46,6 @@ class Routes {
   // Causes
   static const causesPage = "causesPage";
   static const causesOnboardingPage = "causesOnboarding";
-
-  // All campaigns (including past)
-  static const allCampaigns = "allCampaigns";
-  static const pastCampaignActionPage = "pastCampaignActionPage";
 
   // Other
   static const accountDetails = "accountDetails";
@@ -153,41 +145,11 @@ Function initRoutes = (RouteSettings settings) {
       }
     case Routes.campaign:
       {
-        return customRoute(
-            builder: (context) => CampaignPage(), settings: settings);
-      }
-    case Routes.campaignInfo:
-      {
-        if (args is int) {
-          return customRoute(
-              builder: (context) => CampaignInfo(
-                    campaignId: args,
-                  ),
-              settings: settings);
-        }
         if (args is ListCampaign) {
           return customRoute(
-              builder: (context) => CampaignInfo(
-                    campaign: args,
-                  ),
-              settings: settings);
+              builder: (context) => CampaignPage(args), settings: settings);
         }
-        return customRoute(
-            builder: (context) => CampaignPage(), settings: settings);
-      }
-    case Routes.campaignDetails:
-      {
-        if (args is Campaign) {
-          return customRoute(
-              builder: (context) => CampaignDetails(args), settings: settings);
-        }
-        return customRoute(
-            builder: (context) => CampaignPage(), settings: settings);
-      }
-    case Routes.allCampaigns:
-      {
-        return customRoute(
-            builder: (context) => AllCampaignsPage(), settings: settings);
+        break;
       }
     case Routes.actionInfo:
       {
@@ -197,21 +159,6 @@ Function initRoutes = (RouteSettings settings) {
         }
         break;
       }
-    //PastCampaignActionPage
-    case Routes.pastCampaignActionPage:
-      {
-        if (args is Campaign) {
-          return customRoute(
-            builder: (context) => PastCampaignActionPage(args),
-            settings: settings,
-          );
-        }
-        //what do i return here ? atleast for now ?
-        return customRoute(
-            builder: (context) => TabsPage(currentPage: TabPage.Home),
-            settings: settings);
-      }
-
     // Learning
     case Routes.learningAll:
       {

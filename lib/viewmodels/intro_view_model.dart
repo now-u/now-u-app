@@ -2,7 +2,6 @@ import 'package:app/pages/login/login.dart';
 import 'package:app/viewmodels/base_model.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rect_getter/rect_getter.dart';
-import 'package:app/pages/campaign/CampaignPage.dart';
 
 class FadeRouteBuilder<T> extends PageRouteBuilder<T> {
   final Widget page;

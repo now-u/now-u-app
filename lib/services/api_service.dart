@@ -92,6 +92,8 @@ class ApiService {
             return params[k].toString();
           });
     }
+    
+    print("Making request");
 
     final uri = Uri.https(baseUrl, baseUrlPath + path, stringParams);
     http.Response response = await client.get(

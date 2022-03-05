@@ -2,6 +2,7 @@ import 'package:app/locator.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Cause.dart';
 import 'package:app/models/Explorable.dart';
+import 'package:app/models/Learning.dart';
 import 'package:app/models/Organisation.dart';
 import 'package:app/services/dynamicLinks.dart';
 
@@ -66,8 +67,10 @@ class Campaign extends ListCampaign {
   final List<Organisation> generalPartners;
   final List<Organisation> campaignPartners;
 
-  final List<ListCauseAction> actions;
   final List<String> keyAims;
+  
+  final List<ListCauseAction> actions;
+  final List<LearningResource> learningResources;
 
   final int numberOfCampaigners;
   final int numberOfActionsCompleted;
@@ -84,6 +87,7 @@ class Campaign extends ListCampaign {
     DateTime? endDate,
     required this.description,
     required this.actions,
+    required this.learningResources,
     required this.videoLink,
     required this.infographicUrl,
     required this.numberOfCampaigners,
@@ -109,25 +113,28 @@ class Campaign extends ListCampaign {
         numberOfCampaigners = 0,
         numberOfActionsCompleted = 0,
         infographicUrl = json['infographic_url'],
-        // actions = json['actions']
-        //  .map((e) => ListCauseAction.fromJson(e))
-        //  .toList()
-        //  .cast<ListCauseAction>(),
-        actions = [],
-        // campaignPartners = json['campaign_partners']
-        //     .map((e) => Organisation.fromJson(e))
-        //     .toList()
-        //     .cast<Organisation>(),
-        campaignPartners = [],
+        actions = json['campaign_actions']
+         .map((e) => ListCauseAction.fromJson(e, cause: ListCause.fromJson(json['causes'][0])))
+         .toList()
+         .cast<ListCauseAction>(),
+        learningResources = json['learning_resources']
+         .map((e) => LearningResource.fromJson(e, cause: ListCause.fromJson(json['causes'][0])))
+         .toList()
+         .cast<LearningResource>(),
+        videoLink = json['video_link'],
         // generalPartners = json['general_partners']
         //     .map((e) => Organisation.fromJson(e))
         //     .toList()
         //     .cast<Organisation>(),
-        generalPartners = [],
-        videoLink = json['video_link'],
         // keyAims =
         //     json['key_aims'].map((a) => a['title']).toList().cast<String>(),
+        // campaignPartners = json['campaign_partners']
+        //     .map((e) => Organisation.fromJson(e))
+        //     .toList()
+        //     .cast<Organisation>(),
         keyAims = [],
+        campaignPartners = [],
+        generalPartners = [],
         super.fromJson(json);
 
   Future<String> getShareText() async {
