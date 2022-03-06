@@ -129,7 +129,7 @@ class LearningResource extends Explorable {
   final ListCause cause;
 
   LearningResource.fromJson(Map json, {ListCause? cause})
-      : assert (cause != null || json['cause'] != null),
+      : assert (cause != null || json['causes'] != null),
         id = json['id'],
         title = json['title'],
         time = json['time'],

@@ -15,7 +15,91 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../StyleFrom.dart';
 
-class ExploreCampaignTile extends StatelessWidget {
+enum ExploreTileStyle {
+  Extended,
+  Standard,
+}
+
+abstract class ExploreTile extends StatelessWidget {
+  final ExploreTileStyle style;
+  final bool? completed;
+
+  ExploreTile({ExploreTileStyle? style, this.completed, Key? key}) 
+      // If the style is extended then we need to know if the tile is completed
+    : assert(style != ExploreTileStyle.Extended || completed != null),
+      this.style = style ?? ExploreTileStyle.Standard
+    ;
+
+  Widget render(BuildContext context);
+  
+  Widget _standardWrapper(Widget child) {
+    // return Card(
+    //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+    //   clipBehavior: Clip.antiAlias,
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      clipBehavior: Clip.antiAlias,
+      child: child,
+    );
+  }
+  
+  Widget _extendedWrapper(BuildContext context, Widget child) {
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      clipBehavior: Clip.antiAlias,
+      child: AspectRatio(
+        aspectRatio: 2,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            child,
+            Positioned(
+              right: 0,
+              child: Container(
+                width: 110,
+                decoration: BoxDecoration(
+                    color: CustomColors.white,
+                    borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(8),
+                        bottomRight: Radius.circular(8))),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        completed! ? 'Completed' : 'Needs Completing',
+                        style: textStyleFrom(
+                          Theme.of(context).primaryTextTheme.button,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 20),
+                      _ExploreTileCheckmark(
+                          completed: completed!, size: 30),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Widget child = render(context);
+    if (style == ExploreTileStyle.Extended) return _extendedWrapper(context, child);
+    return _standardWrapper(child);
+  }
+}
+
+class ExploreCampaignTile extends ExploreTile {
   final NavigationService _navigationService = locator<NavigationService>();
 
   final String headerImage;
@@ -32,59 +116,56 @@ class ExploreCampaignTile extends StatelessWidget {
         campaign = model,
         super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return CustomTile(
-      child: AspectRatio(
-        aspectRatio: 0.75,
-        child: InkWell(
-          onTap: () => _navigationService.navigateTo(
-            Routes.campaign,
-            arguments: campaign,
-          ),
-          child: Column(
-            children: [
-              Stack(
-                alignment: Alignment.topRight,
-                children: [
-                  AspectRatio(
-                    aspectRatio: 1.5,
-                    // FIXME ink animation doesn't cover image
-                    child: CustomNetworkImage(
-                      headerImage,
-                      fit: BoxFit.cover,
-                    ),
+  Widget render(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 0.75,
+      child: InkWell(
+        onTap: () => _navigationService.navigateTo(
+          Routes.campaign,
+          arguments: campaign,
+        ),
+        child: Column(
+          children: [
+            Stack(
+              alignment: Alignment.topRight,
+              children: [
+                AspectRatio(
+                  aspectRatio: 1.5,
+                  // FIXME ink animation doesn't cover image
+                  child: CustomNetworkImage(
+                    headerImage,
+                    fit: BoxFit.cover,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: _ExploreTileCheckmark(
-                      completed: completed,
-                    ),
-                  )
-                ],
-              ),
-              Expanded(
-                child: Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: _ExploreTileTitle(title),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: _ExploreTileCheckmark(
+                    completed: completed,
+                  ),
+                )
+              ],
+            ),
+            Expanded(
+              child: Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: _ExploreTileTitle(title),
               ),
-              Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: CauseIndicator(cause)),
-            ],
-          ),
+            ),
+            Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: CauseIndicator(cause)),
+          ],
         ),
       ),
     );
   }
 }
 
-class ExploreActionTile extends BaseExploreActionTile {
+class ExploreActionTile extends BaseExploreResourceTile {
   final ListCauseAction action;
 
-  ExploreActionTile(ListCauseAction model, {Key? key})
+  ExploreActionTile(ListCauseAction model, {ExploreTileStyle? style, Key? key})
       : action = model,
         super(
             title: model.title,
@@ -96,7 +177,9 @@ class ExploreActionTile extends BaseExploreActionTile {
             cause: model.cause,
             timeText: model.timeText,
             completed: model.completed,
-            key: key);
+            style: style,
+            key: key,
+          );
 
   void onTap() {
     _navigationService.navigateTo(
@@ -106,10 +189,10 @@ class ExploreActionTile extends BaseExploreActionTile {
   }
 }
 
-class ExploreLearningTile extends BaseExploreActionTile {
+class ExploreLearningTile extends BaseExploreResourceTile {
   final LearningResource resource;
 
-  ExploreLearningTile(LearningResource model, {Key? key})
+  ExploreLearningTile(LearningResource model, {ExploreTileStyle? style, Key? key})
       : resource = model,
         super(
             title: model.title,
@@ -121,7 +204,9 @@ class ExploreLearningTile extends BaseExploreActionTile {
             cause: model.cause,
             timeText: model.timeText,
             completed: model.completed,
-            key: key);
+            key: key,
+            style: style 
+        );
 
   void onTap() {
     _navigationService.launchLink(
@@ -130,7 +215,7 @@ class ExploreLearningTile extends BaseExploreActionTile {
   }
 }
 
-abstract class BaseExploreActionTile extends StatelessWidget {
+abstract class BaseExploreResourceTile extends ExploreTile {
   final NavigationService _navigationService = locator<NavigationService>();
 
   final String title;
@@ -143,98 +228,96 @@ abstract class BaseExploreActionTile extends StatelessWidget {
   final String timeText;
   final bool completed;
 
-  BaseExploreActionTile(
-      {required this.title,
-      required this.type,
-      required this.iconColor,
-      required this.headerColor,
-      required this.dividerColor,
-      required this.icon,
-      required this.cause,
-      required this.timeText,
-      required this.completed,
-      Key? key});
+  BaseExploreResourceTile({
+    required this.title,
+    required this.type,
+    required this.iconColor,
+    required this.headerColor,
+    required this.dividerColor,
+    required this.icon,
+    required this.cause,
+    required this.timeText,
+    required this.completed,
+    ExploreTileStyle? style,
+    Key? key
+  }) 
+    : super(style: style, completed: completed, key: key);
 
   void onTap();
 
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      clipBehavior: Clip.antiAlias,
-      child: AspectRatio(
-        aspectRatio: 1.65,
-        child: InkWell(
-          onTap: onTap,
-          child: Column(
-            children: [
-              Flexible(
-                child: Ink(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  color: headerColor,
-                  child: Row(
-                    children: [
-                      Icon(
-                        icon,
-                        size: 18,
-                        color: iconColor,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        type,
-                        textScaleFactor: .8,
-                      ),
-                      VerticalDivider(
-                        color: dividerColor,
-                        indent: 12,
-                        endIndent: 12,
-                      ),
-                      const FaIcon(
-                        // Use FaIcon to center icons properly
-                        FontAwesomeIcons.clock,
-                        size: 16,
-                        color: Color.fromRGBO(55, 58, 74, 1),
-                      ),
-                      const SizedBox(width: 6),
-                      Text(
-                        timeText,
-                        textScaleFactor: .8,
-                      ),
-                      Expanded(child: Container()),
-                      _ExploreTileCheckmark(
-                        completed: completed,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Flexible(
-                child: Column(
+  Widget render(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 1.65,
+      child: InkWell(
+        onTap: onTap,
+        child: Column(
+          children: [
+            Flexible(
+              child: Ink(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                color: headerColor,
+                child: Row(
                   children: [
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: _ExploreTileTitle(title),
-                      ),
+                    Icon(
+                      icon,
+                      size: 18,
+                      color: iconColor,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: CauseIndicator(cause),
-                    )
+                    const SizedBox(width: 4),
+                    Text(
+                      type,
+                      textScaleFactor: .8,
+                    ),
+                    VerticalDivider(
+                      color: dividerColor,
+                      indent: 12,
+                      endIndent: 12,
+                    ),
+                    const FaIcon(
+                      // Use FaIcon to center icons properly
+                      FontAwesomeIcons.clock,
+                      size: 16,
+                      color: Color.fromRGBO(55, 58, 74, 1),
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      timeText,
+                      textScaleFactor: .8,
+                    ),
+                    Expanded(child: Container()),
+                    _ExploreTileCheckmark(
+                      completed: completed,
+                    ),
                   ],
                 ),
-                flex: 3,
               ),
-            ],
-          ),
+            ),
+            Flexible(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: _ExploreTileTitle(title),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: CauseIndicator(cause),
+                  )
+                ],
+              ),
+              flex: 3,
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-class ExploreNewsTile extends StatelessWidget {
+class ExploreNewsTile extends ExploreTile {
   final NavigationService _navigationService = locator<NavigationService>();
 
   final String title;
@@ -255,166 +338,72 @@ class ExploreNewsTile extends StatelessWidget {
         article = model,
         super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      clipBehavior: Clip.antiAlias,
-      child: AspectRatio(
-        aspectRatio: 0.8,
-        child: InkWell(
-          onTap: () {
-            _navigationService.launchLink(article.fullArticleLink);
-          },
-          child: Column(
-            children: [
-              AspectRatio(
-                aspectRatio: 1.8,
-                // FIXME ink animation doesn't cover image
-                child: CustomNetworkImage(
-                  headerImage,
-                  fit: BoxFit.cover,
+  Widget render(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 0.8,
+      child: InkWell(
+        onTap: () {
+          _navigationService.launchLink(article.fullArticleLink);
+        },
+        child: Column(
+          children: [
+            AspectRatio(
+              aspectRatio: 1.8,
+              // FIXME ink animation doesn't cover image
+              child: CustomNetworkImage(
+                headerImage,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: Theme.of(context).primaryTextTheme.headline2!,
+                      textScaleFactor: .7,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
+                      subtitle,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .bodyText2!
+                          .apply(fontStyle: FontStyle.normal),
+                    ),
+                    Text(
+                      dateString,
+                    )
+                  ],
                 ),
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: Theme.of(context).primaryTextTheme.headline2!,
-                        textScaleFactor: .7,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+            ),
+            Ink(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              decoration: const BoxDecoration(
+                  color: Color.fromRGBO(247, 248, 252, 1)),
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  shortUrl,
+                  style: Theme.of(context).primaryTextTheme.bodyText1?.apply(
+                        color: const Color.fromRGBO(255, 136, 0, 1),
                       ),
-                      Text(
-                        subtitle,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context)
-                            .primaryTextTheme
-                            .bodyText2!
-                            .apply(fontStyle: FontStyle.normal),
-                      ),
-                      Text(
-                        dateString,
-                      )
-                    ],
-                  ),
+                  textScaleFactor: .7,
                 ),
               ),
-              Ink(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                decoration: const BoxDecoration(
-                    color: Color.fromRGBO(247, 248, 252, 1)),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    shortUrl,
-                    style: Theme.of(context).primaryTextTheme.bodyText1?.apply(
-                          color: const Color.fromRGBO(255, 136, 0, 1),
-                        ),
-                    textScaleFactor: .7,
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
-  }
-}
-
-/// Base class for explore action tiles (action or learning resource) with done checkmark
-abstract class BaseExtendedExploreActionTile extends StatelessWidget {
-  final bool completed;
-  final double width;
-
-  BaseExtendedExploreActionTile({required this.completed, required this.width});
-
-  Widget getExploreActionTile();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      child: Stack(
-        children: [
-          Container(
-            child: getExploreActionTile(),
-            width: width * 0.7,
-          ),
-          Positioned(
-            right: 10,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 3.0),
-              child: Container(
-                  width: width * 0.3,
-                  decoration: BoxDecoration(
-                      color: CustomColors.white,
-                      borderRadius: const BorderRadius.only(
-                          topRight: Radius.circular(8),
-                          bottomRight: Radius.circular(8))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Text(
-                          this.completed ? 'Completed' : 'Needs Completing',
-                          style: textStyleFrom(
-                            Theme.of(context).primaryTextTheme.button,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(height: 20),
-                        _ExploreTileCheckmark(
-                            completed: this.completed, size: 30),
-                      ],
-                    ),
-                  ),
-                ),
-          ),
-          ),
-        ],
-      )
-    );
-  }
-}
-
-/// Implementation of [ExtendedExploreActionTile] base class for Explore Action tiles
-/// Takes in a ListCauseAction as the model
-/// Defines getExploreActionTile which returns an ExploreActionTile
-class ExtendedExploreActionTile extends BaseExtendedExploreActionTile {
-  final ListCauseAction model;
-
-  ExtendedExploreActionTile(this.model, bool completed, double width)
-      : super(completed: completed, width: width);
-
-  @override
-  Widget getExploreActionTile() {
-    return ExploreActionTile(model);
-  }
-}
-
-/// Implementation of [ExtendedExploreActionTile] base class for Explore Learning tiles
-/// Takes in a LearningResource as the model
-/// Defines getExploreActionTile which returns an ExploreLearningTile
-class ExtendedExploreLearningTile extends BaseExtendedExploreActionTile {
-  final LearningResource model;
-
-  ExtendedExploreLearningTile(this.model, bool completed, double width)
-      : super(completed: completed, width: width);
-
-  @override
-  Widget getExploreActionTile() {
-    return ExploreLearningTile(model);
   }
 }
 

@@ -77,19 +77,20 @@ class CampaignPage extends StatelessWidget {
 
     double tileWidth = (MediaQuery.of(context).size.width - CustomPaddingSize.small * 2);
 
-    List<BaseExtendedExploreActionTile> actions = campaign.actions.map((action) => ExtendedExploreActionTile(action, campaign.completed, tileWidth)).toList();
-    List<BaseExtendedExploreActionTile> learningResources = campaign.learningResources.map((lr) => ExtendedExploreLearningTile(lr, lr.completed, tileWidth)).toList();
+    List<ExploreTile> actions = campaign.actions.map((action) => ExploreActionTile(action, style: ExploreTileStyle.Extended)).toList();
+    List<ExploreTile> learningResources = campaign.learningResources.map((lr) => ExploreLearningTile(lr, style: ExploreTileStyle.Extended)).toList();
     // List<BaseExtendedExploreActionTile> children = actions + learningResources;
-    List<BaseExtendedExploreActionTile> children = <BaseExtendedExploreActionTile>[];
+    List<ExploreTile> children = <ExploreTile>[];
     children.addAll(actions);
     children.addAll(learningResources);
 
     children.shuffle();
-    children.sort((a, b) => a.completed ? -1 : 1);
+    children.sort((a, b) => a.completed! ? -1 : 1);
 
     // TODO move tile heights to explore widget
     // Wrap widgets in containers with correct height
-    return children.map((resource) => Container(
+    return children.map((resource) => Padding(
+        padding: EdgeInsets.symmetric(vertical: 5),
         child: resource,
       )
     ).toList();
