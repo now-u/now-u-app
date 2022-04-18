@@ -14,8 +14,6 @@ const String INTERNAL_PREFIX = "internal:";
 
 const List ID_ROUTES = [
   Routes.campaignInfo,
-  Routes.learningTopic,
-  Routes.learningSingle,
   Routes.actionInfo
 ];
 
@@ -94,7 +92,7 @@ class NavigationService {
       if (ID_ROUTES.contains(route)) {
         int? id = int.tryParse(parameters!['id']);
 
-        if (route == Routes.campaignInfo || route == Routes.learningSingle) {
+        if (route == Routes.campaignInfo ) {
           navigateTo(route, arguments: id);
           return;
         }
@@ -102,16 +100,6 @@ class NavigationService {
         if (route == Routes.actionInfo) {
           _campaignService.getAction(id).then((CampaignAction action) {
             navigateTo(route, arguments: action);
-          }).catchError((e) {
-            _dialogService.showDialog(BasicDialog(
-                title: "Error", description: "Error navigating to route"));
-          });
-          return;
-        }
-
-        if (route == Routes.learningTopic) {
-          _campaignService.getLearningTopic(id).then((LearningTopic topic) {
-            navigateTo(route, arguments: topic);
           }).catchError((e) {
             _dialogService.showDialog(BasicDialog(
                 title: "Error", description: "Error navigating to route"));

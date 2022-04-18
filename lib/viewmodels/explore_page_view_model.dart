@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:math';
 import 'package:app/assets/components/explore_tiles.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
@@ -16,7 +17,44 @@ import 'package:app/models/Explorable.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/causes_service.dart';
 
-class ExploreFilterOption<T> extends Equatable {
+abstract class BaseExploreFilterOption extends Equatable {
+  /// What is displayed to the user
+  String get displayName;
+  bool get isSelected;
+  set isSelected(bool value);
+
+  @override
+  List<Object> get props => [displayName];
+}
+
+abstract class BaseExploreFilter {
+  List<BaseExploreFilterOption> get options;
+
+  /// Whether multiple filter options can be selected at once
+  bool get multi;
+  ExploreFilterState get state;
+
+  /// Deselect all options
+  void clearSelections() {
+    options.forEach((option) {
+      option.isSelected = false;
+    });
+  }
+  
+  void toggleOption(BaseExploreFilterOption option) {
+    // If an option is being selected and you cannot have multiple selections,
+    // then clear current selections first.
+    if (!option.isSelected && !multi) {
+      clearSelections();
+    }
+    option.isSelected = !option.isSelected;
+  }
+
+  Map<String, dynamic> toJson();
+  void init(Function notifyListeners);
+}
+
+class ExploreFilterOption<T> extends BaseExploreFilterOption {
   /// What is displayed to the user
   final String displayName;
 
@@ -30,9 +68,6 @@ class ExploreFilterOption<T> extends Equatable {
       {required this.displayName,
       required this.parameterValue,
       this.isSelected = false});
-
-  @override
-  List<Object> get props => [displayName];
 }
 
 enum ExploreFilterState {
@@ -41,7 +76,7 @@ enum ExploreFilterState {
   Loaded,
 }
 
-class ExploreFilter {
+class ExploreFilter extends BaseExploreFilter {
   /// The name of the parameter to be posted to the api
   String parameterName;
 
@@ -49,10 +84,8 @@ class ExploreFilter {
   List<ExploreFilterOption>? staticOptions;
   Future<List<ExploreFilterOption>> Function()? getOptions;
 
-  /// Whether multiple filter options can be selected at once
-  bool multi;
-
   ExploreFilterState state;
+  bool multi;
 
   List<ExploreFilterOption> get options => staticOptions!;
 
@@ -77,34 +110,72 @@ class ExploreFilter {
     }
   }
 
-  /// Deselect all options
-  void clearSelections() {
-    options.forEach((option) {
-      option.isSelected = false;
-    });
-  }
-  
-  void toggleOption(ExploreFilterOption option) {
-    // If an option is being selected and you cannot have multiple selections,
-    // then clear current selections first.
-    if (!option.isSelected && !multi) {
-      clearSelections();
-    }
-    option.isSelected = !option.isSelected;
-  }
-
   Map<String, dynamic> toJson() {
     // If many can be selected return a list
     dynamic value = multi
-        ? options
-            .where((option) => option.isSelected)
-            .map((option) => option.parameterValue)
-            .toList()
-        : options
-            .firstWhereOrNull((option) => option.isSelected)
-            ?.parameterValue;
+        ? staticOptions == null
+          ? []
+          : options
+              .where((option) => option.isSelected)
+              .map((option) => option.parameterValue)
+              .toList()
+        : staticOptions == null
+          ? null
+          : options
+              .firstWhereOrNull((option) => option.isSelected)
+              ?.parameterValue;
 
     return {parameterName: value};
+  }
+}
+
+// TimeExploreFilter
+class TimeExploreFilterOption extends BaseExploreFilterOption {
+  /// What is displayed to the user
+  final String displayName;
+
+  /// Whether the filter is selected
+  bool isSelected;
+  double minValue;
+  double maxValue;
+
+  TimeExploreFilterOption({
+    required this.displayName,
+    required this.minValue,
+    required this.maxValue,
+    this.isSelected = false,
+  });
+}
+
+class TimeExploreFilter extends BaseExploreFilter {
+  /// The name of the parameter to be posted to the api
+  final List<TimeExploreFilterOption> options = timeBrackets
+    .map((bracket) => TimeExploreFilterOption(
+          displayName: bracket['text'],
+          minValue: bracket['minTime'].toDouble(),
+          maxValue: bracket['maxTime'].toDouble(),
+        ))
+    .toList();
+
+  bool multi = true;
+  ExploreFilterState state = ExploreFilterState.Loaded;
+
+  void init(Function notifyListeners) {}
+
+  List<TimeExploreFilterOption> get selectedOptions => options.where((option) => option.isSelected).toList();
+  Map<String, dynamic> toJson() {
+    double minTime = selectedOptions.map((option) => option.minValue).fold(0, min);
+    double maxTime = selectedOptions.map((option) => option.maxValue).fold(0, max);
+    if (maxTime == double.infinity) {
+      return {
+        "time__gte": minTime,
+      };
+    }
+
+    return {
+      "time__lte": maxTime,
+      "time__gte": minTime,
+    };
   }
 }
 
@@ -143,7 +214,7 @@ abstract class ExploreSection<T extends Explorable> {
   Map<String, dynamic>? baseParams;
 
   ///
-  ExploreFilter? filter;
+  BaseExploreFilter? filter;
   List<T>? tiles;
 
   ExploreSectionState state = ExploreSectionState.Loading;
@@ -184,7 +255,7 @@ abstract class ExploreSection<T extends Explorable> {
 mixin ExploreViewModelMixin on BaseModel {
   List<ExploreSection> sections = [];
 
-  void toggleFilterOption(ExploreSection section, ExploreFilterOption option) {
+  void toggleFilterOption(ExploreSection section, BaseExploreFilterOption option) {
     section.filter!.toggleOption(option);
     notifyListeners();
     section.reload(notifyListeners);
@@ -254,7 +325,7 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
     String? description,
     ExplorePage? link,
     Map<String, dynamic>? baseParams,
-    ExploreFilter? filter,
+    BaseExploreFilter? filter,
   }) : super(
     title: title,
     description: description,
@@ -278,7 +349,7 @@ class LearningResourceExploreSection extends ExploreSection<LearningResource> {
     String? description,
     ExplorePage? link,
     Map<String, dynamic>? baseParams,
-    ExploreFilter? filter,
+    BaseExploreFilter? filter,
   }) : super(
     title: title,
     description: description,
@@ -302,7 +373,7 @@ class CampaignExploreSection extends ExploreSection<ListCampaign> {
     String? description,
     ExplorePage? link,
     Map<String, dynamic>? baseParams,
-    ExploreFilter? filter,
+    BaseExploreFilter? filter,
   }) : super(
     title: title,
     description: description,
@@ -326,7 +397,7 @@ class NewsExploreSection extends ExploreSection<Article> {
     String? description,
     ExplorePage? link,
     Map<String, dynamic>? baseParams,
-    ExploreFilter? filter,
+    BaseExploreFilter? filter,
   }) : super(
     title: title,
     description: description,

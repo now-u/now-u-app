@@ -133,7 +133,10 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
           //  model.switchToStagingBranch();
           //}
           model.email(
-              email: _email, name: _name, newsletterSignup: _newsletterSignup);
+            email: _email!,
+            name: _name!,
+            newsletterSignup: _newsletterSignup!
+          );
           return true;
         }
         return false;

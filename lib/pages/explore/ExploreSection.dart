@@ -17,7 +17,7 @@ class ExploreFilterSelectionItem extends StatelessWidget {
   final VoidCallback onPressed;
 
   ExploreFilterSelectionItem(
-      {required ExploreFilterOption item, required this.onPressed})
+      {required BaseExploreFilterOption item, required this.onPressed})
       : this.text = item.displayName,
         this.isSelected = item.isSelected;
 
@@ -46,7 +46,7 @@ class ExploreFilterSelectionItem extends StatelessWidget {
 class ExploreSectionWidget extends StatelessWidget {
   final ExploreSection data;
   final Function(ExplorePage page) changePage;
-  final Function(ExploreFilterOption option) toggleFilterOption;
+  final Function(BaseExploreFilterOption option) toggleFilterOption;
 
   ExploreSectionWidget({
     required this.data,
@@ -57,7 +57,7 @@ class ExploreSectionWidget extends StatelessWidget {
   ExploreSectionWidget.fromModel(ExploreSection section, ExploreViewModelMixin model)
       : data = section,
         changePage = ((_) {}),
-        toggleFilterOption = ((ExploreFilterOption option) => model.toggleFilterOption(section, option));
+        toggleFilterOption = ((BaseExploreFilterOption option) => model.toggleFilterOption(section, option));
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +103,7 @@ class ExploreSectionWidget extends StatelessWidget {
               ),
             ),
             SizedBox(height: 2),
-            if (data.filter != null)
+            if (data.filter != null && data.filter!.state == ExploreFilterState.Loaded)
               Container(
                 height: 40,
                 child: ListView.builder(
@@ -111,7 +111,7 @@ class ExploreSectionWidget extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: data.filter!.options.length,
                     itemBuilder: (context, index) {
-                      ExploreFilterOption option = data.filter!.options[index];
+                      BaseExploreFilterOption option = data.filter!.options[index];
                       return Padding(
                           padding: EdgeInsets.only(
                             right: 5,

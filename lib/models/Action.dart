@@ -289,7 +289,7 @@ class ListCauseAction extends Explorable {
         id = json['id'],
         title = json['title'],
         type = campaignActionTypeFromString(json['type']),
-        cause = json['cause'] != null
+        cause = json['causes'] != null
           ? ListCause.fromJson(json['causes'][0])
           : cause!,
         time = json['time'].toDouble(),

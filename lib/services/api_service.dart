@@ -19,8 +19,9 @@ enum ApiExceptionType {
 class ApiException implements Exception {
   ApiExceptionType type;
   int statusCode;
+  String message;
 
-  ApiException({required this.type, required this.statusCode});
+  ApiException({required this.type, required this.statusCode, required this.message});
 }
 
 /// Map showing the translation from http response code to an
@@ -38,14 +39,16 @@ class ApiService {
   String baseUrl = constants.devMode ? "staging.api.now-u.com" : "api.now-u.com";
 
   /// The base path of the url (after the baseUrl)
-  String baseUrlPath = "api/v2/";
+  String baseUrlPath = "api/";
 
   /// Generate appropriate [ApiException] from http response.
   ApiException getExceptionForResponse(http.Response response) {
     ApiExceptionType exceptionType =
         responseCodeExceptionMapping[response.statusCode] ??
             ApiExceptionType.UNKNOWN;
-    return ApiException(type: exceptionType, statusCode: response.statusCode);
+    
+    print("Request error: Body: ${response.body}, Code: ${response.statusCode}");
+    return ApiException(type: exceptionType, statusCode: response.statusCode, message: response.body);
   }
 
   /// Get headers for standard API request
@@ -66,6 +69,21 @@ class ApiService {
     return headers;
   }
 
+
+  dynamic formatRequestParamter(dynamic value) {
+    if (value is List) {
+      return "[" + value.map((item) => formatRequestParamter(item)).join(",") + "]";
+    }
+    if (value is Iterable) {
+      return value;
+    }
+    if (value is String) {
+      return "\"" + value + "\"";
+    }
+    // Otherwise cast it to a string
+    return value.toString();
+  }
+
   /// Make get request to api
   ///
   /// Returns Map of the response. Throws an [ApiException] if the request is
@@ -78,19 +96,8 @@ class ApiService {
       // Parse param values
       stringParams = Map.fromIterable(params.keys,
           key: (k) => k,
-          value: (k) {
-            dynamic value = params[k];
-            // If the value is already iterable (this includes strings and lists)
-            // return it
-            if (value is List) {
-              return "[" + value.map((item) => item.toString()).join(",") + "]";
-            }
-            if (value is Iterable) {
-              return value;
-            }
-            // Otherwise cast it to a string
-            return params[k].toString();
-          });
+          value: (k) => formatRequestParamter(params[k]),
+      );
     }
     
     print("Making request");
@@ -105,7 +112,7 @@ class ApiService {
     print(response.body);
     print(response.statusCode);
 
-    if (response.statusCode != 200) {
+    if (response.statusCode >= 400) {
       throw getExceptionForResponse(response);
     }
 
@@ -135,15 +142,55 @@ class ApiService {
   ///
   /// Returns Map of the response. Throws an [ApiException] if the request is
   /// unsuccessful.
-  Future<Map> postRequest(String path, {Map<String, dynamic>? body}) async {
+  Future<Map<String, dynamic>> postRequest(String path, {Map<String, dynamic>? body}) async {
     final uri = Uri.https(baseUrl, baseUrlPath + path);
+    print("Making request: ${uri.toString()}, body: $body");
+
+
     http.Response response = await client.post(
       uri,
       headers: getRequestHeaders(),
-      body: body,
+      body: json.encode(body),
     );
 
-    if (response.statusCode != 200) {
+    if (response.statusCode >= 400) {
+      throw getExceptionForResponse(response);
+    }
+
+    return await json.decode(response.body);
+  }
+  
+  /// Make put request to api
+  ///
+  /// Returns Map of the response. Throws an [ApiException] if the request is
+  /// unsuccessful.
+  Future<Map> putRequest(String path, {Map<String, dynamic>? body}) async {
+    final uri = Uri.https(baseUrl, baseUrlPath + path);
+    http.Response response = await client.put(
+      uri,
+      headers: getRequestHeaders(),
+      body: json.encode(body),
+    );
+
+    if (response.statusCode >= 400) {
+      throw getExceptionForResponse(response);
+    }
+
+    return await json.decode(response.body);
+  }
+  
+  /// Make delete request to api
+  ///
+  /// Returns Map of the response. Throws an [ApiException] if the request is
+  /// unsuccessful.
+  Future<Map> deleteRequest(String path) async {
+    final uri = Uri.https(baseUrl, baseUrlPath + path);
+    http.Response response = await client.put(
+      uri,
+      headers: getRequestHeaders(),
+    );
+
+    if (response.statusCode >= 400) {
       throw getExceptionForResponse(response);
     }
 

@@ -62,4 +62,8 @@ class FakeCausesService extends ApiService
     Iterable data = await readIterableDataFromFile("learning_resources.json");
     return data.map((e) => LearningResource.fromJson(e)).toList();
   }
+
+  Future completeAction(int id) async {}
+  Future removeActionStatus(int id) async {}
+  Future completeLearningResource(int id) async {}
 }

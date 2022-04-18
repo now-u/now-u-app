@@ -50,7 +50,7 @@ class ExplorePage extends StatelessWidget {
                         .map((ExploreSection section) => ExploreSectionWidget(
                           data: section,
                           changePage: model.changePage,
-                          toggleFilterOption: (ExploreFilterOption option) => model.toggleFilterOption(section, option),
+                          toggleFilterOption: (BaseExploreFilterOption option) => model.toggleFilterOption(section, option),
                         ))
                         .toList()),
             )
@@ -87,19 +87,13 @@ ExplorePage actions_explore_page = ExplorePage(
     ),
     ActionExploreSection(
         title: "Actions by time",
-        filter: ExploreFilter(
-          parameterName: "time",
-          options: timeBrackets
-              .map((bracket) => ExploreFilterOption(
-                    displayName: bracket['text'],
-                    parameterValue: bracket['text'],
-                  ))
-              .toList(),
-        )),
+        filter: TimeExploreFilter(),
+    ),
     ActionExploreSection(
         title: "Actions by type",
         filter: ExploreFilter(
           parameterName: "type",
+          multi: false,
           options: actionTypes
               .map((type) => ExploreFilterOption(
                     displayName: type.name,
@@ -118,15 +112,7 @@ ExplorePage learning_explore_page = ExplorePage(
   sections: [
     LearningResourceExploreSection(
       title: "Learning resources by time",
-      filter: ExploreFilter(
-        parameterName: "time",
-        options: timeBrackets
-            .map((bracket) => ExploreFilterOption(
-                  displayName: bracket['text'],
-                  parameterValue: bracket['text'],
-                ))
-            .toList(),
-      ),
+      filter: TimeExploreFilter(),
     ),
     LearningResourceExploreSection(
       title: "Learning resource by cause",

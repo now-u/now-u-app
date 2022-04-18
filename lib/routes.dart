@@ -7,9 +7,6 @@ import 'package:app/pages/Tabs.dart';
 import 'package:app/pages/action/ActionInfo.dart';
 import 'package:app/pages/campaign/campaign_page.dart';
 import 'package:app/pages/intro/IntroPage.dart';
-import 'package:app/pages/learning/LearningCentreAllPage.dart';
-import 'package:app/pages/learning/LearningCentrePage.dart';
-import 'package:app/pages/learning/LearningTopicPage.dart';
 import 'package:app/pages/login/emailSentPage.dart';
 import 'package:app/pages/login/login.dart';
 import 'package:app/pages/login/login_code_view.dart';
@@ -56,11 +53,6 @@ class Routes {
   static const info = "info";
   static const webview = "webview";
   static const notification = "notification";
-
-  // Learning
-  static const learningAll = "learning";
-  static const learningSingle = "learningSingle";
-  static const learningTopic = "learningTopic";
 }
 
 Function initRoutes = (RouteSettings settings) {
@@ -158,32 +150,6 @@ Function initRoutes = (RouteSettings settings) {
               builder: (context) => ActionInfo(args), settings: settings);
         }
         break;
-      }
-    // Learning
-    case Routes.learningAll:
-      {
-        return customRoute(
-            builder: (context) => LearningCentreAllPage(), settings: settings);
-      }
-    case Routes.learningSingle:
-      {
-        if (args is int) {
-          return customRoute(
-              builder: (context) => LearningCentrePage(args),
-              settings: settings);
-        }
-        return customRoute(
-            builder: (context) => LearningCentreAllPage(), settings: settings);
-      }
-    case Routes.learningTopic:
-      {
-        if (args is LearningTopic) {
-          return customRoute(
-              builder: (context) => LearningTopicPage(args),
-              settings: settings);
-        }
-        return customRoute(
-            builder: (context) => LearningCentreAllPage(), settings: settings);
       }
 
     // Other

@@ -10,7 +10,6 @@ import 'package:app/pages/login/emailSentPage.dart';
 
 import 'package:app/routes.dart';
 
-import 'package:meta/meta.dart';
 import 'package:uni_links/uni_links.dart';
 
 // The holy grail link https://nowu.page.link/?link=https://now-u.com/campaigns?id=1&apn=com.nowu.app
@@ -51,10 +50,12 @@ class DynamicLinkService {
       print('_handleDeepLink | deeplink: $deepLink');
       print('_handleDeepLink | deepLink path: ${deepLink.path}');
       if (deepLink.path == "/loginMobile" || deepLink.host == 'loginmobile') {
+
         String? email = await _storageProvider!.getEmail();
+        if (email == null) return;
+
         String? token = deepLink.queryParameters['token'];
-        EmailSentPageArguments args =
-            EmailSentPageArguments(email: email, token: token);
+        EmailSentPageArguments args = EmailSentPageArguments(email: email, token: token);
         print("Navigating to emailSent");
         _navigationService!
             .navigateTo(Routes.loginLinkClicked, arguments: args);

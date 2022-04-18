@@ -44,7 +44,7 @@ class LoginCodePageState extends State<LoginCodePage>
         final FormState form = _formKey.currentState!;
         if (form.validate()) {
           form.save();
-          model.login(email: widget.email, token: _token, isManual: true);
+          model.login(email: widget.email, token: _token!, isManual: true);
           return true;
         }
         return false;
