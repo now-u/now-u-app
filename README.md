@@ -31,6 +31,14 @@ TLDR guide:
 
 To find out what needs doing checkout the [issues](https://github.com/now-u/now-u-app/issues). Select an issue that looks interesting to you and double check its not been assigned/in-progress. Issues have priorities but the real priority is what you find interesting.
 
+### Testing
+
+To generate mockito mocks run 
+
+```
+flutter pub run build_runner build
+```
+
 ### Documentation :book:
 
 For more detailed documentation checkout the [wiki](https://github.com/now-u/now-u-app/wiki)!
