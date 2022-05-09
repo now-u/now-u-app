@@ -56,16 +56,16 @@ class AuthenticationService extends ApiService {
     );
   }
 
-  Future login(String email, String token) async {
+  Future login(String email, String emailToken) async {
     Map<String, dynamic> response = await postRequest(
       'v1/users/login',
       body: {
         'email': email,
-        'token': token,
+        'token': emailToken,
       },
     );
 
-    token = (response['data']['token']);
+    this.token = response['data']['token'];
     syncUser();
   }
 
@@ -76,6 +76,7 @@ class AuthenticationService extends ApiService {
   }
 
   Future<User>? getUser(String token) async {
+    print("Getting user with token $token");
     Map userResponse = await getRequest('v1/users/me');
     return User.fromJson(userResponse["data"]);
   }

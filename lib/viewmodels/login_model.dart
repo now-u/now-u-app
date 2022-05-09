@@ -1,3 +1,4 @@
+import 'package:app/pages/login/emailSentPage.dart';
 import 'package:app/routes.dart';
 import 'base_model.dart';
 import 'package:app/locator.dart';
@@ -25,6 +26,8 @@ class LoginViewModel extends BaseModel {
         newsletterSignup,
       );
       setBusy(false);
+      _navigationService.navigateTo(Routes.emailSent, arguments: EmailSentPageArguments(email: email));
+
     }
     on ApiException catch (e) {
       setBusy(false);
@@ -42,6 +45,7 @@ class LoginViewModel extends BaseModel {
     required String token,
     bool isManual = false,
   }) async {
+    print("Logging in");
     setBusy(true);
 
     try {
@@ -49,7 +53,15 @@ class LoginViewModel extends BaseModel {
         email,
         token,
       );
+      setBusy(false);
+
+      if (currentUser!.selectedCauses.length == 0) {
+        _navigationService.navigateTo(Routes.causesOnboardingPage);
+      } else {
+        _navigationService.navigateTo(Routes.home);
+      }
     } on ApiException catch(e) {
+      print("Got api exception");
       String errorMessage = e.message;
       if (e.type == ApiExceptionType.TOKEN_EXPIRED) {
         errorMessage = "Your token has expired, please restart the login process";

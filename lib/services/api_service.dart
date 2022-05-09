@@ -152,6 +152,8 @@ class ApiService {
       headers: getRequestHeaders(),
       body: json.encode(body),
     );
+    
+    print("Response: ${response.statusCode}, ${response.toString()}");
 
     if (response.statusCode >= 400) {
       throw getExceptionForResponse(response);

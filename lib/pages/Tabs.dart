@@ -76,20 +76,29 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
       for (int i = 0; i < _pages.length; i++) {
         items.add(new BottomNavigationBarItem(
             activeIcon: ShaderMask(
-              shaderCallback: (Rect bounds) {
-                return LinearGradient(
-                    begin: Alignment.bottomLeft,
-                    end: Alignment.topRight,
-                    colors: <Color>[
-                      Theme.of(context).errorColor,
-                      Theme.of(context).primaryColor,
-                      Theme.of(context).primaryColor,
-                    ]).createShader(bounds);
-              },
-              child: _pages[i]['icon'],
+                shaderCallback: (bounds) => LinearGradient(
+                  begin: Alignment.bottomLeft,
+                  end: Alignment.topRight,
+                  colors: [Theme.of(context).errorColor, Theme.of(context).primaryColor, Theme.of(context).primaryColor],
+                ).createShader(bounds),
+                child: _pages[i]['icon'],
             ),
+            // ShaderMask(
+            //   shaderCallback: (Rect bounds) {
+            //     return LinearGradient(
+            //         begin: Alignment.bottomLeft,
+            //         end: Alignment.topRight,
+            //         colors: <Color>[
+            //           Theme.of(context).errorColor,
+            //           Theme.of(context).primaryColor,
+            //           Theme.of(context).primaryColor,
+            //         ]).createShader(bounds);
+            //   },
+            //   child: _pages[i]['icon'],
+            // ),
             icon: _pages[i]['icon'],
-            label: _pages[i]['title']));
+            label: _pages[i]['title']
+        ));
       }
       return items;
     }
@@ -105,8 +114,10 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
             iconSize: 25,
             unselectedLabelStyle: TextStyle(
                 color: Color.fromRGBO(155, 159, 177, 1), fontSize: 10),
-            selectedLabelStyle: TextStyle(color: Colors.red, fontSize: 12),
             unselectedItemColor: Color.fromRGBO(155, 159, 177, 1),
+            selectedItemColor: Theme.of(context).primaryColor,
+            selectedIconTheme: IconThemeData(color: Colors.white),
+            selectedLabelStyle: TextStyle(fontSize: 12),
             items: generateBottomNavBarItems(),
             onTap: (index) {
               setState(() {
