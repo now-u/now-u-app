@@ -70,6 +70,9 @@ jobs:
     
     # Run flutter doctor.
     - run: flutter doctor
+    
+    # Run flutter version.
+    - run: flutter --version 
 
     # Get flutter dependencies.
     - run: flutter pub get
