@@ -45,6 +45,11 @@ jobs:
         mv ${{ steps.write_file_key.outputs.filePath }} ./android/app/
         mv ${{ steps.write_file_key_properties.outputs.filePath }} ./android/
 
+    - name: Create firebase google-service.json
+      env:
+        FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG_PROD }}
+      run: echo $FIREBASE_CONFIG > ./android/app/google-services.json
+
     # Setup Java environment in order to build the Android app.
     - uses: actions/setup-java@v1
       with:
