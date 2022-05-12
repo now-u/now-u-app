@@ -51,10 +51,10 @@ jobs:
         java-version: '8.x'
      
     # Setup the flutter environment.
-    - uses: subosito/flutter-action@v2.14.4
+    - uses: subosito/flutter-action
       with:
         channel: 'stable' # 'dev', 'alpha', default to: 'stable'
-        # flutter-version: '1.12.x' # you can also specify exact version of flutter
+        flutter-version: '2.5.x'
       # env:
         # ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         # env:
