@@ -14,7 +14,7 @@ class CampaignViewModel extends BaseModel {
   ListCampaign get listCampaign => campaign ?? _listCampaign;
 
   CampaignViewModel(ListCampaign listCampaign)
-    : this._listCampaign = listCampaign;
+      : this._listCampaign = listCampaign;
 
   void init() {
     fetchCampaign();

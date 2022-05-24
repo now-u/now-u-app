@@ -76,12 +76,16 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
       for (int i = 0; i < _pages.length; i++) {
         items.add(new BottomNavigationBarItem(
             activeIcon: ShaderMask(
-                shaderCallback: (bounds) => LinearGradient(
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
-                  colors: [Theme.of(context).errorColor, Theme.of(context).primaryColor, Theme.of(context).primaryColor],
-                ).createShader(bounds),
-                child: _pages[i]['icon'],
+              shaderCallback: (bounds) => LinearGradient(
+                begin: Alignment.bottomLeft,
+                end: Alignment.topRight,
+                colors: [
+                  Theme.of(context).errorColor,
+                  Theme.of(context).primaryColor,
+                  Theme.of(context).primaryColor
+                ],
+              ).createShader(bounds),
+              child: _pages[i]['icon'],
             ),
             // ShaderMask(
             //   shaderCallback: (Rect bounds) {
@@ -97,8 +101,7 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
             //   child: _pages[i]['icon'],
             // ),
             icon: _pages[i]['icon'],
-            label: _pages[i]['title']
-        ));
+            label: _pages[i]['title']));
       }
       return items;
     }

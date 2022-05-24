@@ -134,10 +134,9 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
           //}
           print("Done login");
           model.email(
-            email: _email!,
-            name: _name!,
-            newsletterSignup: _newsletterSignup!
-          );
+              email: _email!,
+              name: _name!,
+              newsletterSignup: _newsletterSignup!);
           return true;
         }
         return false;

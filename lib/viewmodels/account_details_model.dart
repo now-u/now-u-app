@@ -83,17 +83,16 @@ class AccountDetailsViewModel extends BaseModel {
       _dialogService.showDialog(
         BasicDialog(
           title: "Error",
-          description: "Sorry, something went wrong!\nPlease try again. ${e.message}",
+          description:
+              "Sorry, something went wrong!\nPlease try again. ${e.message}",
         ),
       );
     }
 
-    await _dialogService.showDialog(
-      BasicDialog(
-        title: "All done!",
-        description: "Your account has now been deleted.",
-      )
-    );
+    await _dialogService.showDialog(BasicDialog(
+      title: "All done!",
+      description: "Your account has now been deleted.",
+    ));
     await _analyticsService.logUserAccountDeleted();
     logout();
     setBusy(false);

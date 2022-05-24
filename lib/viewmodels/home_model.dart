@@ -22,12 +22,10 @@ class HomeViewModel extends BaseModel with ExploreViewModelMixin {
     title: "My campaigns",
   );
 
-  final ExploreSection suggestedCampaigns = CampaignExploreSection(
-    title: "Suggested campaigns",
-    baseParams: {
-      "recommended": true,
-    }
-  );
+  final ExploreSection suggestedCampaigns =
+      CampaignExploreSection(title: "Suggested campaigns", baseParams: {
+    "recommended": true,
+  });
 
   final ExploreSection myActions = ActionExploreSection(
     title: "What can I do today?",
@@ -37,7 +35,7 @@ class HomeViewModel extends BaseModel with ExploreViewModelMixin {
     title: "In the news",
   );
 
-  HomeViewModel(){
+  HomeViewModel() {
     sections = [myCampaigns, suggestedCampaigns, myActions, inTheNews];
   }
 

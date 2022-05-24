@@ -21,7 +21,8 @@ class ApiException implements Exception {
   int statusCode;
   String message;
 
-  ApiException({required this.type, required this.statusCode, required this.message});
+  ApiException(
+      {required this.type, required this.statusCode, required this.message});
 }
 
 /// Map showing the translation from http response code to an
@@ -36,7 +37,8 @@ class ApiService {
   http.Client client = http.Client();
 
   /// Base of url (no slashes)
-  String baseUrl = constants.devMode ? "staging.api.now-u.com" : "api.now-u.com";
+  String baseUrl =
+      constants.devMode ? "staging.api.now-u.com" : "api.now-u.com";
 
   /// The base path of the url (after the baseUrl)
   String baseUrlPath = "api/";
@@ -46,9 +48,13 @@ class ApiService {
     ApiExceptionType exceptionType =
         responseCodeExceptionMapping[response.statusCode] ??
             ApiExceptionType.UNKNOWN;
-    
-    print("Request error: Body: ${response.body}, Code: ${response.statusCode}");
-    return ApiException(type: exceptionType, statusCode: response.statusCode, message: response.body);
+
+    print(
+        "Request error: Body: ${response.body}, Code: ${response.statusCode}");
+    return ApiException(
+        type: exceptionType,
+        statusCode: response.statusCode,
+        message: response.body);
   }
 
   /// Get headers for standard API request
@@ -69,10 +75,11 @@ class ApiService {
     return headers;
   }
 
-
   dynamic formatRequestParamter(dynamic value) {
     if (value is List) {
-      return "[" + value.map((item) => formatRequestParamter(item)).join(",") + "]";
+      return "[" +
+          value.map((item) => formatRequestParamter(item)).join(",") +
+          "]";
     }
     if (value is Iterable) {
       return value;
@@ -94,12 +101,13 @@ class ApiService {
     print("Constructing get request to $path");
     if (params != null) {
       // Parse param values
-      stringParams = Map.fromIterable(params.keys,
-          key: (k) => k,
-          value: (k) => formatRequestParamter(params[k]),
+      stringParams = Map.fromIterable(
+        params.keys,
+        key: (k) => k,
+        value: (k) => formatRequestParamter(params[k]),
       );
     }
-    
+
     print("Making request");
 
     final uri = Uri.https(baseUrl, baseUrlPath + path, stringParams);
@@ -119,11 +127,8 @@ class ApiService {
     return await json.decode(response.body);
   }
 
-  Future<List<Map<String, dynamic>>> getListRequest(
-    String path, {
-    Map<String, dynamic>? params,
-    int? limit = 5
-  }) async {
+  Future<List<Map<String, dynamic>>> getListRequest(String path,
+      {Map<String, dynamic>? params, int? limit = 5}) async {
     if (params == null) {
       params = {};
     }
@@ -142,17 +147,17 @@ class ApiService {
   ///
   /// Returns Map of the response. Throws an [ApiException] if the request is
   /// unsuccessful.
-  Future<Map<String, dynamic>> postRequest(String path, {Map<String, dynamic>? body}) async {
+  Future<Map<String, dynamic>> postRequest(String path,
+      {Map<String, dynamic>? body}) async {
     final uri = Uri.https(baseUrl, baseUrlPath + path);
     print("Making request: ${uri.toString()}, body: $body");
-
 
     http.Response response = await client.post(
       uri,
       headers: getRequestHeaders(),
       body: json.encode(body),
     );
-    
+
     print("Response: ${response.statusCode}, ${response.toString()}");
 
     if (response.statusCode >= 400) {
@@ -161,7 +166,7 @@ class ApiService {
 
     return await json.decode(response.body);
   }
-  
+
   /// Make put request to api
   ///
   /// Returns Map of the response. Throws an [ApiException] if the request is
@@ -180,7 +185,7 @@ class ApiService {
 
     return await json.decode(response.body);
   }
-  
+
   /// Make delete request to api
   ///
   /// Returns Map of the response. Throws an [ApiException] if the request is

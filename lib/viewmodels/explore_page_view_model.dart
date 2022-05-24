@@ -40,7 +40,7 @@ abstract class BaseExploreFilter {
       option.isSelected = false;
     });
   }
-  
+
   void toggleOption(BaseExploreFilterOption option) {
     // If an option is being selected and you cannot have multiple selections,
     // then clear current selections first.
@@ -94,11 +94,11 @@ class ExploreFilter extends BaseExploreFilter {
     List<ExploreFilterOption>? options,
     this.getOptions,
     this.multi = true,
-  }): 
-    assert (options != null || getOptions != null),
-    state = options == null ? ExploreFilterState.Loading : ExploreFilterState.Loaded,
-    staticOptions = options;
-
+  })  : assert(options != null || getOptions != null),
+        state = options == null
+            ? ExploreFilterState.Loading
+            : ExploreFilterState.Loaded,
+        staticOptions = options;
 
   void init(Function notifyListeners) async {
     if (staticOptions == null) {
@@ -114,16 +114,16 @@ class ExploreFilter extends BaseExploreFilter {
     // If many can be selected return a list
     dynamic value = multi
         ? staticOptions == null
-          ? []
-          : options
-              .where((option) => option.isSelected)
-              .map((option) => option.parameterValue)
-              .toList()
+            ? []
+            : options
+                .where((option) => option.isSelected)
+                .map((option) => option.parameterValue)
+                .toList()
         : staticOptions == null
-          ? null
-          : options
-              .firstWhereOrNull((option) => option.isSelected)
-              ?.parameterValue;
+            ? null
+            : options
+                .firstWhereOrNull((option) => option.isSelected)
+                ?.parameterValue;
 
     return {parameterName: value};
   }
@@ -150,22 +150,25 @@ class TimeExploreFilterOption extends BaseExploreFilterOption {
 class TimeExploreFilter extends BaseExploreFilter {
   /// The name of the parameter to be posted to the api
   final List<TimeExploreFilterOption> options = timeBrackets
-    .map((bracket) => TimeExploreFilterOption(
-          displayName: bracket['text'],
-          minValue: bracket['minTime'].toDouble(),
-          maxValue: bracket['maxTime'].toDouble(),
-        ))
-    .toList();
+      .map((bracket) => TimeExploreFilterOption(
+            displayName: bracket['text'],
+            minValue: bracket['minTime'].toDouble(),
+            maxValue: bracket['maxTime'].toDouble(),
+          ))
+      .toList();
 
   bool multi = true;
   ExploreFilterState state = ExploreFilterState.Loaded;
 
   void init(Function notifyListeners) {}
 
-  List<TimeExploreFilterOption> get selectedOptions => options.where((option) => option.isSelected).toList();
+  List<TimeExploreFilterOption> get selectedOptions =>
+      options.where((option) => option.isSelected).toList();
   Map<String, dynamic> toJson() {
-    double minTime = selectedOptions.map((option) => option.minValue).fold(0, min);
-    double maxTime = selectedOptions.map((option) => option.maxValue).fold(0, max);
+    double minTime =
+        selectedOptions.map((option) => option.minValue).fold(0, min);
+    double maxTime =
+        selectedOptions.map((option) => option.maxValue).fold(0, max);
     if (maxTime == double.infinity) {
       return {
         "time__gte": minTime,
@@ -218,7 +221,7 @@ abstract class ExploreSection<T extends Explorable> {
   List<T>? tiles;
 
   ExploreSectionState state = ExploreSectionState.Loading;
-  
+
   Map<String, dynamic>? get queryParams {
     if (filter == null) return baseParams;
     if (baseParams == null) return filter!.toJson();
@@ -248,14 +251,15 @@ abstract class ExploreSection<T extends Explorable> {
 
 // News: 330 ExploreNewsTile
 // Campaign: 300 ExploreCampaignTile
-// LearningResource: 160 ExploreLearningTile 
-// Action: 160 ExploreActionTile 
+// LearningResource: 160 ExploreLearningTile
+// Action: 160 ExploreActionTile
 // Campaign: 300  ExploreCampaignTile
 
 mixin ExploreViewModelMixin on BaseModel {
   List<ExploreSection> sections = [];
 
-  void toggleFilterOption(ExploreSection section, BaseExploreFilterOption option) {
+  void toggleFilterOption(
+      ExploreSection section, BaseExploreFilterOption option) {
     section.filter!.toggleOption(option);
     notifyListeners();
     section.reload(notifyListeners);
@@ -271,7 +275,7 @@ mixin ExploreViewModelMixin on BaseModel {
 class ExplorePageViewModel extends BaseModel with ExploreViewModelMixin {
   String title;
 
-  void init(){
+  void init() {
     initSections();
   }
 
@@ -302,7 +306,7 @@ class ExplorePageViewModel extends BaseModel with ExploreViewModelMixin {
     notifyListeners();
     init();
   }
-  
+
   bool get canBack => previousPages.length != 0;
 
   void back() {
@@ -327,12 +331,12 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
     Map<String, dynamic>? baseParams,
     BaseExploreFilter? filter,
   }) : super(
-    title: title,
-    description: description,
-    link: link,
-    baseParams: baseParams,
-    filter: filter,
-  );
+          title: title,
+          description: description,
+          link: link,
+          baseParams: baseParams,
+          filter: filter,
+        );
 
   Future<List<ListCauseAction>> fetchTiles(Map<String, dynamic> params) {
     return _causesService.getActions(params: queryParams);
@@ -351,12 +355,12 @@ class LearningResourceExploreSection extends ExploreSection<LearningResource> {
     Map<String, dynamic>? baseParams,
     BaseExploreFilter? filter,
   }) : super(
-    title: title,
-    description: description,
-    link: link,
-    baseParams: baseParams,
-    filter: filter,
-  );
+          title: title,
+          description: description,
+          link: link,
+          baseParams: baseParams,
+          filter: filter,
+        );
 
   Future<List<LearningResource>> fetchTiles(Map<String, dynamic> params) {
     return _causesService.getLearningResources(params: queryParams);
@@ -375,12 +379,12 @@ class CampaignExploreSection extends ExploreSection<ListCampaign> {
     Map<String, dynamic>? baseParams,
     BaseExploreFilter? filter,
   }) : super(
-    title: title,
-    description: description,
-    link: link,
-    baseParams: baseParams,
-    filter: filter,
-  );
+          title: title,
+          description: description,
+          link: link,
+          baseParams: baseParams,
+          filter: filter,
+        );
 
   Future<List<ListCampaign>> fetchTiles(Map<String, dynamic> params) {
     return _causesService.getCampaigns(params: queryParams);
@@ -399,12 +403,12 @@ class NewsExploreSection extends ExploreSection<Article> {
     Map<String, dynamic>? baseParams,
     BaseExploreFilter? filter,
   }) : super(
-    title: title,
-    description: description,
-    link: link,
-    baseParams: baseParams,
-    filter: filter,
-  );
+          title: title,
+          description: description,
+          link: link,
+          baseParams: baseParams,
+          filter: filter,
+        );
 
   Future<List<Article>> fetchTiles(Map<String, dynamic> params) {
     NewsService _newsService = locator<NewsService>();
@@ -417,17 +421,19 @@ class NewsExploreSection extends ExploreSection<Article> {
 //-- Explore Filters --//
 
 class ByCauseExploreFilter extends ExploreFilter {
-  ByCauseExploreFilter(): 
-    super(
-        parameterName: "cause__in",
-        multi: true,
-        getOptions: () async {
-          final CausesService _causesService = locator<CausesService>();
-          List<ListCause> causes = await _causesService.getCauses();
-          return causes.map(
-            (ListCause cause) => ExploreFilterOption(
-              displayName: cause.title, parameterValue: cause.id),
-            ).toList();
-        },
-    );
+  ByCauseExploreFilter()
+      : super(
+          parameterName: "cause__in",
+          multi: true,
+          getOptions: () async {
+            final CausesService _causesService = locator<CausesService>();
+            List<ListCause> causes = await _causesService.getCauses();
+            return causes
+                .map(
+                  (ListCause cause) => ExploreFilterOption(
+                      displayName: cause.title, parameterValue: cause.id),
+                )
+                .toList();
+          },
+        );
 }

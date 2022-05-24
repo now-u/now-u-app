@@ -43,18 +43,19 @@ class ExplorePage extends StatelessWidget {
         onModelReady: (model) => model.init(),
         builder: (context, model, child) {
           return Scaffold(
-            body: SingleChildScrollView(
-              child: Column(
+              body: SingleChildScrollView(
+            child: Column(
                 children: [_header(context, model)] +
                     model.sections
                         .map((ExploreSection section) => ExploreSectionWidget(
-                          data: section,
-                          changePage: model.changePage,
-                          toggleFilterOption: (BaseExploreFilterOption option) => model.toggleFilterOption(section, option),
-                        ))
+                              data: section,
+                              changePage: model.changePage,
+                              toggleFilterOption:
+                                  (BaseExploreFilterOption option) =>
+                                      model.toggleFilterOption(section, option),
+                            ))
                         .toList()),
-            )
-          );
+          ));
         });
   }
 }
@@ -86,8 +87,8 @@ ExplorePage actions_explore_page = ExplorePage(
       filter: ByCauseExploreFilter(),
     ),
     ActionExploreSection(
-        title: "Actions by time",
-        filter: TimeExploreFilter(),
+      title: "Actions by time",
+      filter: TimeExploreFilter(),
     ),
     ActionExploreSection(
         title: "Actions by type",

@@ -47,7 +47,6 @@ class Home extends StatelessWidget {
                     : HeaderStyle1(name: model.currentUser!.getName()),
                 children: [
                   Column(children: <Widget>[
-
                     // Campaigns
                     ProgressTile(
                       campaignsScore: model.numberOfJoinedCampaigns,
@@ -69,43 +68,46 @@ class Home extends StatelessWidget {
                       buttonWidthProportion: 0.8,
                     ),
                     SizedBox(height: 30),
-                    ExploreSectionWidget.fromModel(model.suggestedCampaigns, model),
+                    ExploreSectionWidget.fromModel(
+                        model.suggestedCampaigns, model),
                     ExploreSectionWidget.fromModel(model.inTheNews, model),
-                   
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("My causes", style: Theme.of(context).primaryTextTheme.headline3,),
-                          CustomTextButton("Edit", onClick: () {
-                            model.goToEditCausesPage();
-                          })
-                        ],
-                      )
-                    ),
 
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: model.causes != []
-                        ? GridView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisSpacing: 20,
-                              crossAxisSpacing: 30
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "My causes",
+                              style:
+                                  Theme.of(context).primaryTextTheme.headline3,
                             ),
-                            itemCount: model.causes.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return CauseTile(
-                                  gestureFunction: () => null,
-                                  cause: model.causes[index],
-                                  getInfoFunction: () =>
-                                      model.getCausePopup(model.causes[index]));
+                            CustomTextButton("Edit", onClick: () {
+                              model.goToEditCausesPage();
                             })
-                        : CircularProgressIndicator()
-                    ),
+                          ],
+                        )),
+
+                    Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: model.causes != []
+                            ? GridView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        mainAxisSpacing: 20,
+                                        crossAxisSpacing: 30),
+                                itemCount: model.causes.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return CauseTile(
+                                      gestureFunction: () => null,
+                                      cause: model.causes[index],
+                                      getInfoFunction: () => model
+                                          .getCausePopup(model.causes[index]));
+                                })
+                            : CircularProgressIndicator()),
                   ])
                 ],
               );
