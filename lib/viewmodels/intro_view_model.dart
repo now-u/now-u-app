@@ -98,7 +98,7 @@ class IntroViewModel extends BaseModel {
 
   void nextPage(BuildContext context) async {
     notifyListeners();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       animationRect =
           animationRect!.inflate(1.3 * MediaQuery.of(context).size.longestSide);
       notifyListeners();

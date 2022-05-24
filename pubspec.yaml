@@ -25,7 +25,7 @@ dependencies:
   share: ^2.0.4
   uuid: ^3.0.5
 
-  stacked: ^2.2.7
+  stacked: ^2.3.6
 
   shared_preferences: ^2.0.8
   path_provider: ^2.0.5

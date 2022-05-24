@@ -5,7 +5,6 @@ import 'package:app/assets/icons/customIcons.dart';
 import 'package:app/pages/home/Home.dart';
 import 'package:app/pages/more/MoreMenu.dart';
 import 'package:app/pages/explore/ExplorePage.dart';
-import 'package:flutter/rendering.dart';
 
 //import 'package:app/assets/dynamicLinks.dart';
 
@@ -29,12 +28,12 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
   void initState() {
     currentPage = widget.currentPage;
     super.initState();
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
