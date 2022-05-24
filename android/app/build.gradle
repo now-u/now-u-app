@@ -59,7 +59,7 @@ android {
 
     signingConfigs {
       release {
-          storeFile file("../key.jks")
+          storeFile file("./key.jks")
           storePassword = "$System.env.ANDROID_KEY_PASSWORD"
           keyAlias = "key"
           keyPassword = "$System.env.ANDROID_KEY_PASSWORD"
@@ -72,14 +72,6 @@ android {
             ndk {
                 abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
             }
-        }
-    }
-
-    buildTypes {
-        release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
         }
     }
 }
