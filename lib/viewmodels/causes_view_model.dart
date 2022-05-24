@@ -27,7 +27,7 @@ class CausesViewModel extends BaseModel {
 
     setBusy(false);
     notifyListeners();
-    
+
     print(_causes);
   }
 

@@ -26,15 +26,15 @@ class LoginViewModel extends BaseModel {
         newsletterSignup,
       );
       setBusy(false);
-      _navigationService.navigateTo(Routes.emailSent, arguments: EmailSentPageArguments(email: email));
-
-    }
-    on ApiException catch (e) {
+      _navigationService.navigateTo(Routes.emailSent,
+          arguments: EmailSentPageArguments(email: email));
+    } on ApiException catch (e) {
       setBusy(false);
       await _dialogService.showDialog(
         BasicDialog(
           title: "Login error",
-          description: "The following error has occured please try again. ${e.message}",
+          description:
+              "The following error has occured please try again. ${e.message}",
         ),
       );
     }
@@ -60,22 +60,25 @@ class LoginViewModel extends BaseModel {
       } else {
         _navigationService.navigateTo(Routes.home);
       }
-    } on ApiException catch(e) {
+    } on ApiException catch (e) {
       print("Got api exception");
       String errorMessage = e.message;
       if (e.type == ApiExceptionType.TOKEN_EXPIRED) {
-        errorMessage = "Your token has expired, please restart the login process";
+        errorMessage =
+            "Your token has expired, please restart the login process";
       }
       if (e.type == ApiExceptionType.UNAUTHORIZED) {
         if (isManual) {
-          errorMessage = "Incorrect token, please double check your token from the email";
+          errorMessage =
+              "Incorrect token, please double check your token from the email";
         } else {
           errorMessage = "Incorrect login link, please double check your email";
         }
       }
 
       setBusy(false);
-      await _dialogService.showDialog(BasicDialog(title: "Login error", description: errorMessage));
+      await _dialogService.showDialog(
+          BasicDialog(title: "Login error", description: errorMessage));
     }
   }
 

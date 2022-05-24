@@ -24,9 +24,11 @@ class User {
   bool? homeOwner;
 
   // Progress (All data stored as ids)
-  List<int> selectedCampaigns = []; // Stores all campaings that have been selected (including old ones)
-  List<int> selectedCauses = []; // Causes the user has selected 
-  List<int> completedCampaigns = []; // Stores campaings where all actions have been completed (maybe we should do 80% of something)
+  List<int> selectedCampaigns =
+      []; // Stores all campaings that have been selected (including old ones)
+  List<int> selectedCauses = []; // Causes the user has selected
+  List<int> completedCampaigns =
+      []; // Stores campaings where all actions have been completed (maybe we should do 80% of something)
   //List<int> completedRewards = [];
   List<int> completedActions = [];
   List<int> completedLearningResources = [];
@@ -129,11 +131,11 @@ class User {
             json['completed_learning_resources'].isEmpty
         ? <int>[]
         : json['completed_learning_resources'].cast<int>();
-    
-    selectedCauses = json['selected_causes'] == null ||
-            json['selected_causes'].isEmpty
-        ? <int>[]
-        : json['selected_causes'].cast<int>();
+
+    selectedCauses =
+        json['selected_causes'] == null || json['selected_causes'].isEmpty
+            ? <int>[]
+            : json['selected_causes'].cast<int>();
 
     completedActionsType = json['completed_actions_type'] == null
         ? this.initCompletedAction()

@@ -12,10 +12,7 @@ import 'package:app/models/Action.dart';
 
 const String INTERNAL_PREFIX = "internal:";
 
-const List ID_ROUTES = [
-  Routes.campaignInfo,
-  Routes.actionInfo
-];
+const List ID_ROUTES = [Routes.campaignInfo, Routes.actionInfo];
 
 class NavigationService {
   final DialogService _dialogService = locator<DialogService>();
@@ -92,7 +89,7 @@ class NavigationService {
       if (ID_ROUTES.contains(route)) {
         int? id = int.tryParse(parameters!['id']);
 
-        if (route == Routes.campaignInfo ) {
+        if (route == Routes.campaignInfo) {
           navigateTo(route, arguments: id);
           return;
         }

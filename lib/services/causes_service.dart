@@ -80,36 +80,36 @@ class CausesService extends ApiService {
         .toList();
   }
 
-  /// Set user's selected causes 
+  /// Set user's selected causes
   ///
   /// Input causes that the user has selected
   /// Posts the ids of these causes to the API
   Future<void> selectCauses(List<ListCause> selectedCauses) async {
     List<int> ids = selectedCauses.map((cause) => cause.id).toList();
     await postRequest('v1/me/causes', body: {'cause_ids': ids});
-    
+
     // Update user after request
     await locator<AuthenticationService>().syncUser();
   }
 
-  /// Complete an action 
+  /// Complete an action
   ///
-  /// Used so a user can set an action as completed 
+  /// Used so a user can set an action as completed
   Future completeAction(int id) async {
     await postRequest('v1/users/me/actions/$id/complete');
-    
+
     // Update user after request
     await locator<AuthenticationService>().syncUser();
   }
-  
-  /// Uncomlete an action 
+
+  /// Uncomlete an action
   ///
-  /// Sets an action as uncompleted 
+  /// Sets an action as uncompleted
   Future removeActionStatus(int id) async {
     await deleteRequest(
       'v1/users/me/actions/$id',
     );
-   
+
     // Update user after request
     await locator<AuthenticationService>().syncUser();
   }

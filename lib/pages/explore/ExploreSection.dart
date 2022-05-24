@@ -54,105 +54,100 @@ class ExploreSectionWidget extends StatelessWidget {
     required this.changePage,
   });
 
-  ExploreSectionWidget.fromModel(ExploreSection section, ExploreViewModelMixin model)
+  ExploreSectionWidget.fromModel(
+      ExploreSection section, ExploreViewModelMixin model)
       : data = section,
         changePage = ((_) {}),
-        toggleFilterOption = ((BaseExploreFilterOption option) => model.toggleFilterOption(section, option));
+        toggleFilterOption = ((BaseExploreFilterOption option) =>
+            model.toggleFilterOption(section, option));
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        // Section header
-        Column(
-          children: [
-            // Text header
-            Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: horizontalPadding),
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: data.link != null
-                        ? () => changePage(data.link!)
-                        : () {},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          data.title,
-                          style: Theme.of(context)
-                              .primaryTextTheme
-                              .headline3,
-                          textAlign: TextAlign.left,
-                        ),
-                        if (data.link != null)
-                          Icon(Icons.chevron_right, size: 30)
-                      ],
-                    ),
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
+        Widget>[
+      // Section header
+      Column(
+        children: [
+          // Text header
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap:
+                      data.link != null ? () => changePage(data.link!) : () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        data.title,
+                        style: Theme.of(context).primaryTextTheme.headline3,
+                        textAlign: TextAlign.left,
+                      ),
+                      if (data.link != null) Icon(Icons.chevron_right, size: 30)
+                    ],
                   ),
-                  if (data.description != null)
-                    Text(
-                      data.description!,
-                      style:
-                          Theme.of(context).primaryTextTheme.headline4,
-                      textAlign: TextAlign.left,
-                    ),
-                ],
-              ),
+                ),
+                if (data.description != null)
+                  Text(
+                    data.description!,
+                    style: Theme.of(context).primaryTextTheme.headline4,
+                    textAlign: TextAlign.left,
+                  ),
+              ],
             ),
-            SizedBox(height: 2),
-            if (data.filter != null && data.filter!.state == ExploreFilterState.Loaded)
-              Container(
-                height: 40,
-                child: ListView.builder(
-                    padding: EdgeInsets.only(bottom: 8, top: 6),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: data.filter!.options.length,
-                    itemBuilder: (context, index) {
-                      BaseExploreFilterOption option = data.filter!.options[index];
-                      return Padding(
+          ),
+          SizedBox(height: 2),
+          if (data.filter != null &&
+              data.filter!.state == ExploreFilterState.Loaded)
+            Container(
+              height: 40,
+              child: ListView.builder(
+                  padding: EdgeInsets.only(bottom: 8, top: 6),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: data.filter!.options.length,
+                  itemBuilder: (context, index) {
+                    BaseExploreFilterOption option =
+                        data.filter!.options[index];
+                    return Padding(
+                        padding: EdgeInsets.only(
+                          right: 5,
+                          left: index == 0 ? horizontalPadding : 0,
+                        ),
+                        child: ExploreFilterSelectionItem(
+                          item: option,
+                          onPressed: () => toggleFilterOption(option),
+                        ));
+                  }),
+            ),
+        ],
+      ),
+      Padding(
+        padding: EdgeInsets.only(
+            bottom: CustomPaddingSize.normal, top: CustomPaddingSize.small),
+        child: Container(
+          height: data.tileHeight + tileShadowBlurRadius,
+          child: data.state == ExploreSectionState.Loading
+              ? const Center(child: CircularProgressIndicator())
+              : data.state == ExploreSectionState.Errored || data.tiles == null
+                  // TODO handle error here
+                  ? Container(color: Colors.red)
+                  : ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: data.tiles!.length,
+                      itemBuilder: (context, index) => Container(
+                        child: Padding(
                           padding: EdgeInsets.only(
-                            right: 5,
+                            right: 8,
                             left: index == 0 ? horizontalPadding : 0,
+                            bottom: tileShadowBlurRadius,
                           ),
-                          child: ExploreFilterSelectionItem(
-                            item: option,
-                            onPressed: () =>
-                                toggleFilterOption(option),
-                          ));
-                    }),
-              ),
-          ],
-        ),
-        Padding(
-          padding: EdgeInsets.only(
-              bottom: CustomPaddingSize.normal,
-              top: CustomPaddingSize.small),
-          child: Container(
-            height: data.tileHeight + tileShadowBlurRadius,
-            child: data.state == ExploreSectionState.Loading
-                ? const Center(child: CircularProgressIndicator())
-                : data.state == ExploreSectionState.Errored || data.tiles == null
-                    // TODO handle error here
-                    ? Container(color: Colors.red)
-                    : ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: data.tiles!.length,
-                        itemBuilder: (context, index) => Container(
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              right: 8,
-                              left: index == 0 ? horizontalPadding : 0,
-                              bottom: tileShadowBlurRadius,
-                            ),
-                            child: data.renderTile(data.tiles![index]),
-                          ),
+                          child: data.renderTile(data.tiles![index]),
                         ),
                       ),
-          ),
+                    ),
         ),
-      ]);
+      ),
+    ]);
   }
 }

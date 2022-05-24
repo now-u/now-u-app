@@ -17,8 +17,7 @@ class CauseTile extends StatelessWidget {
     required this.gestureFunction,
     required this.getInfoFunction,
     bool? isSelected,
-  })
-      : this.isSelected = isSelected ?? cause.selected,
+  })  : this.isSelected = isSelected ?? cause.selected,
         this.icon = cause.icon;
 
   @override

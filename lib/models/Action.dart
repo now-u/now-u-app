@@ -285,13 +285,13 @@ class ListCauseAction extends Explorable {
         releaseTime = releasedAt ?? createdAt;
 
   ListCauseAction.fromJson(Map<String, dynamic> json, {ListCause? cause})
-      : assert (cause != null || json['causes'] != null),
+      : assert(cause != null || json['causes'] != null),
         id = json['id'],
         title = json['title'],
         type = campaignActionTypeFromString(json['type']),
         cause = json['causes'] != null
-          ? ListCause.fromJson(json['causes'][0])
-          : cause!,
+            ? ListCause.fromJson(json['causes'][0])
+            : cause!,
         time = json['time'].toDouble(),
         releaseTime =
             DateTime.parse(json['release_date'] ?? json['created_at']),

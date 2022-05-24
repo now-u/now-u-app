@@ -9,16 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class CampaignPage extends StatelessWidget {
-
   final ListCampaign listCampaign;
   CampaignPage(this.listCampaign);
 
   // TODO share this with the explore page header
   Widget _title(void Function() backFunction) {
     return SafeArea(
-      child: Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: CustomPaddingSize.small, vertical: 20),
+        child: Padding(
+      padding: EdgeInsets.symmetric(
+          horizontal: CustomPaddingSize.small, vertical: 20),
       child: GestureDetector(
         onTap: backFunction,
         child: Row(
@@ -75,10 +74,16 @@ class CampaignPage extends StatelessWidget {
       return [CircularProgressIndicator()];
     }
 
-    double tileWidth = (MediaQuery.of(context).size.width - CustomPaddingSize.small * 2);
+    double tileWidth =
+        (MediaQuery.of(context).size.width - CustomPaddingSize.small * 2);
 
-    List<ExploreTile> actions = campaign.actions.map((action) => ExploreActionTile(action, style: ExploreTileStyle.Extended)).toList();
-    List<ExploreTile> learningResources = campaign.learningResources.map((lr) => ExploreLearningTile(lr, style: ExploreTileStyle.Extended)).toList();
+    List<ExploreTile> actions = campaign.actions
+        .map((action) =>
+            ExploreActionTile(action, style: ExploreTileStyle.Extended))
+        .toList();
+    List<ExploreTile> learningResources = campaign.learningResources
+        .map((lr) => ExploreLearningTile(lr, style: ExploreTileStyle.Extended))
+        .toList();
     // List<BaseExtendedExploreActionTile> children = actions + learningResources;
     List<ExploreTile> children = <ExploreTile>[];
     children.addAll(actions);
@@ -89,23 +94,27 @@ class CampaignPage extends StatelessWidget {
 
     // TODO move tile heights to explore widget
     // Wrap widgets in containers with correct height
-    return children.map((resource) => Padding(
-        padding: EdgeInsets.symmetric(vertical: 5),
-        child: resource,
-      )
-    ).toList();
+    return children
+        .map((resource) => Padding(
+              padding: EdgeInsets.symmetric(vertical: 5),
+              child: resource,
+            ))
+        .toList();
   }
 
   Widget _body(BuildContext context, Campaign? campaign) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: CustomPaddingSize.small, vertical: CustomPaddingSize.normal),
+      padding: EdgeInsets.symmetric(
+          horizontal: CustomPaddingSize.small,
+          vertical: CustomPaddingSize.normal),
       child: Column(
         children: <Widget>[
-          Text(
-            "Support this campaign by completing these actions:",
-            style: Theme.of(context).primaryTextTheme.headline3,
-          ),
-        ] + _resourcesList(context, campaign),
+              Text(
+                "Support this campaign by completing these actions:",
+                style: Theme.of(context).primaryTextTheme.headline3,
+              ),
+            ] +
+            _resourcesList(context, campaign),
       ),
     );
   }
@@ -113,20 +122,18 @@ class CampaignPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: ViewModelBuilder<CampaignViewModel>.reactive(
-          viewModelBuilder: () => CampaignViewModel(listCampaign),
-          onModelReady: (model) => model.init(),
-          builder: (context, model, child) {
-            return ListView(
-              children: [
-                _title(model.back),
-                _heading(context, model.listCampaign),
-                _causeIndicator(model.listCampaign.cause),
-                _body(context, model.campaign),
-              ]
-            );
-          },
-        ),
+      body: ViewModelBuilder<CampaignViewModel>.reactive(
+        viewModelBuilder: () => CampaignViewModel(listCampaign),
+        onModelReady: (model) => model.init(),
+        builder: (context, model, child) {
+          return ListView(children: [
+            _title(model.back),
+            _heading(context, model.listCampaign),
+            _causeIndicator(model.listCampaign.cause),
+            _body(context, model.campaign),
+          ]);
+        },
+      ),
     );
   }
 }

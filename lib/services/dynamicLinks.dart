@@ -48,12 +48,12 @@ class DynamicLinkService {
       print('_handleDeepLink | deeplink: $deepLink');
       print('_handleDeepLink | deepLink path: ${deepLink.path}');
       if (deepLink.path == "/loginMobile" || deepLink.host == 'loginmobile') {
-
         String? email = await _storageProvider!.getEmail();
         if (email == null) return;
 
         String? token = deepLink.queryParameters['token'];
-        EmailSentPageArguments args = EmailSentPageArguments(email: email, token: token);
+        EmailSentPageArguments args =
+            EmailSentPageArguments(email: email, token: token);
         print("Navigating to emailSent");
         _navigationService!
             .navigateTo(Routes.loginLinkClicked, arguments: args);
@@ -108,7 +108,8 @@ class DynamicLinkService {
     }
     // Short is either null or true
     else {
-      final ShortDynamicLink shortLink = await FirebaseDynamicLinks.instance.buildShortLink(parameters);
+      final ShortDynamicLink shortLink =
+          await FirebaseDynamicLinks.instance.buildShortLink(parameters);
       print(shortLink.toString());
       url = shortLink.shortUrl;
     }

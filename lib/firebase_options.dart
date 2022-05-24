@@ -70,7 +70,8 @@ class DefaultFirebaseOptions {
     projectId: 'now-u-d140a',
     databaseURL: 'https://now-u-d140a.firebaseio.com',
     storageBucket: 'now-u-d140a.appspot.com',
-    iosClientId: '938145287148-3b96qect9a9drnhsio206ld9go22fk1h.apps.googleusercontent.com',
+    iosClientId:
+        '938145287148-3b96qect9a9drnhsio206ld9go22fk1h.apps.googleusercontent.com',
     iosBundleId: 'com.nowu.app',
   );
 
@@ -81,7 +82,8 @@ class DefaultFirebaseOptions {
     projectId: 'now-u-d140a',
     databaseURL: 'https://now-u-d140a.firebaseio.com',
     storageBucket: 'now-u-d140a.appspot.com',
-    iosClientId: '938145287148-3b96qect9a9drnhsio206ld9go22fk1h.apps.googleusercontent.com',
+    iosClientId:
+        '938145287148-3b96qect9a9drnhsio206ld9go22fk1h.apps.googleusercontent.com',
     iosBundleId: 'com.nowu.app',
   );
 }

@@ -123,10 +123,14 @@ void main() {
           .thenAnswer(
               (_) => Future.value(http.Response('{"abc": "def"}', 200)));
 
-      Map response = await apiService.postRequest("test", body: {"test": "payload"});
+      Map response =
+          await apiService.postRequest("test", body: {"test": "payload"});
       expect(response, {"abc": "def"});
       verify(client.post(Uri.parse("https://example.com/api/test"),
-          headers: anyNamed("headers"), body: json.encode({"test": "payload"}), encoding: null)).called(1);
+              headers: anyNamed("headers"),
+              body: json.encode({"test": "payload"}),
+              encoding: null))
+          .called(1);
     });
   });
 }

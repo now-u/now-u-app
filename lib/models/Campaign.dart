@@ -68,7 +68,7 @@ class Campaign extends ListCampaign {
   final List<Organisation> campaignPartners;
 
   final List<String> keyAims;
-  
+
   final List<ListCauseAction> actions;
   final List<LearningResource> learningResources;
 
@@ -114,13 +114,15 @@ class Campaign extends ListCampaign {
         numberOfActionsCompleted = 0,
         infographicUrl = json['infographic_url'],
         actions = json['campaign_actions']
-         .map((e) => ListCauseAction.fromJson(e, cause: ListCause.fromJson(json['causes'][0])))
-         .toList()
-         .cast<ListCauseAction>(),
+            .map((e) => ListCauseAction.fromJson(e,
+                cause: ListCause.fromJson(json['causes'][0])))
+            .toList()
+            .cast<ListCauseAction>(),
         learningResources = json['learning_resources']
-         .map((e) => LearningResource.fromJson(e, cause: ListCause.fromJson(json['causes'][0])))
-         .toList()
-         .cast<LearningResource>(),
+            .map((e) => LearningResource.fromJson(e,
+                cause: ListCause.fromJson(json['causes'][0])))
+            .toList()
+            .cast<LearningResource>(),
         videoLink = json['video_link'],
         // generalPartners = json['general_partners']
         //     .map((e) => Organisation.fromJson(e))
