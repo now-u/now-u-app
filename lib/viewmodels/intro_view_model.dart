@@ -49,7 +49,7 @@ class IntroViewModel extends BaseModel {
     IntroPageData(
       title: "Choose causes you care about",
       description:
-          "We partner with charities to bring you targeted monthly campaigns, highlighting a range of social and environmental issues both locally and around the world. Join as many as you like!",
+          "Select and support the social and environmental issues important to you.",
       image: 'assets/imgs/intro/On-Boarding illustrations-01.png',
     ),
     IntroPageData(
@@ -60,7 +60,7 @@ class IntroViewModel extends BaseModel {
     IntroPageData(
       title: "Help shape a better world",
       description:
-          "Join a community of changemakers, connect with fellow campaign contributors, and see how your actions are making a difference.",
+          "Join our growing community driving lasting change.",
       image: 'assets/imgs/intro/On-Boarding illustrations-04.png',
     ),
   ];

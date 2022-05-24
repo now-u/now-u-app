@@ -66,7 +66,7 @@ class AuthenticationService extends ApiService {
     );
 
     this.token = response['data']['token'];
-    syncUser();
+    await syncUser();
   }
 
   bool logout() {

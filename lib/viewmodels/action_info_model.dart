@@ -1,4 +1,5 @@
 import 'package:app/services/causes_service.dart';
+import 'package:app/services/dialog_service.dart';
 import 'package:app/viewmodels/base_model.dart';
 
 import 'package:app/locator.dart';
@@ -10,6 +11,7 @@ import 'package:app/models/Action.dart';
 class ActionInfoViewModel extends BaseModel {
   final NavigationService _navigationService = locator<NavigationService>();
   final CausesService _causesService = locator<CausesService>();
+  final DialogService _dialogService = locator<DialogService>();
 
   CampaignAction? _action;
   CampaignAction? get action => _action;
@@ -24,11 +26,15 @@ class ActionInfoViewModel extends BaseModel {
 
   Future completeAction() async {
     setBusy(true);
-    bool success = await _causesService.completeAction(_action!.id);
-    setBusy(false);
-    if (success) {
+    await _causesService.completeAction(_action!.id).then((_) {
+      setBusy(false);
       _navigationService.navigateTo(Routes.actions);
-    }
+    }).onError((err, _) {
+      setBusy(false);
+      _dialogService.showDialog(BasicDialog(
+        title: "Error", description: "Failed to complete action"),
+      );
+    });
   }
 
   Future removeActionStatus() async {
