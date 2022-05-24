@@ -23,7 +23,11 @@ class ExpandedGrid extends StatelessWidget {
       for (int r = 0; r < numberOfRows; r++) {
         rowWidgets.add(Builder(
             builder: (context) =>
-                itemBuilder(context, r, c, c * numberOfRows + r)));
+              Expanded(child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Container(color: Color.fromRGBO(r * 20, c * 20, 100, 1),)
+              ))));
+              // itemBuilder(context, r, c, c * numberOfRows + r)));
       }
       widgets.add(rowWidgets);
     }
@@ -41,7 +45,9 @@ class ExpandedGrid extends StatelessWidget {
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       mainAxisSize: MainAxisSize.max,
-                      children: row)),
+                      children: row,
+                  ),
+              ),
             )
             .toList());
   }

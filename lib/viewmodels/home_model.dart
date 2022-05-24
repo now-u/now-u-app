@@ -9,6 +9,7 @@ import 'package:app/services/navigation_service.dart';
 
 import 'package:app/models/Notification.dart';
 import 'package:app/viewmodels/explore_page_view_model.dart';
+import 'package:app/routes.dart';
 
 class HomeViewModel extends BaseModel with ExploreViewModelMixin {
   final InternalNotificationService _internalNotificationService =
@@ -106,6 +107,10 @@ class HomeViewModel extends BaseModel with ExploreViewModelMixin {
   }
 
   void goToExplorePage() {
-    _navigationService.navigateTo('explore');
+    _navigationService.navigateTo(Routes.explore);
+  }
+
+  void goToEditCausesPage() {
+    _navigationService.navigateTo(Routes.causesEditPage);
   }
 }

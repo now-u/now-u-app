@@ -41,7 +41,7 @@ class Routes {
   static const campaignDetails = "campaignDetails";
 
   // Causes
-  static const causesPage = "causesPage";
+  static const causesEditPage = "causesEditPage";
   static const causesOnboardingPage = "causesOnboarding";
 
   // Other
@@ -61,7 +61,7 @@ Function initRoutes = (RouteSettings settings) {
   switch (settings.name) {
 
     // Into
-    case Routes.causesPage:
+    case Routes.causesEditPage:
       {
         return customRoute(
             builder: (context) => ChangeCausePage(), settings: settings);

@@ -8,6 +8,7 @@
 .buildlog/
 .history
 .svn/
+migrate_working_dir/
 
 # IntelliJ related
 *.iml
@@ -22,6 +23,7 @@
 
 # Flutter/Dart/Pub related
 **/doc/api/
+**/ios/Flutter/.last_build_id
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
@@ -33,7 +35,7 @@
 # Web related
 lib/generated_plugin_registrant.dart
 
-## Symbolication related
+# Symbolication related
 app.*.symbols
 
 # Obfuscation related
@@ -43,18 +45,3 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-
-# Exceptions to above rules.
-!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
-
-# Firebase
-android/app/google-services.json
-
-#Key-store
-android/app/key.jks
-android/key.jks
-android/key.properties
-
-#secrets
-assets/json/secrets.json
-

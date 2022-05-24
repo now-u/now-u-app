@@ -13,92 +13,57 @@ if (flutterRoot == null) {
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = '1.1'
+    flutterVersionCode = '1'
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '1.1'
+    flutterVersionName = '1.0'
 }
 
 apply plugin: 'com.android.application'
+// START: FlutterFire Configuration
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
+// END: FlutterFire Configuration
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
-def keystoreProperties = new Properties()
-def keystorePropertiesFile = rootProject.file('key.properties')
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-}
-
 android {
-    compileSdkVersion 30
+    compileSdkVersion flutter.compileSdkVersion
+    ndkVersion flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-    lintOptions {
-        disable 'InvalidPackage'
-    }
-
-    ndkVersion "22.1.7171670"
-
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.nowu.app"
-        minSdkVersion 19
-        targetSdkVersion 29
+        // You can update the following values to match your application needs.
+        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
+        minSdkVersion 21 
+        targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        multiDexEnabled true
     }
 
-    signingConfigs {
-      release {
-          storeFile file("../key.jks")
-          storePassword = "$System.env.ANDROID_KEY_PASSWORD"
-          keyAlias = "key"
-          keyPassword = "$System.env.ANDROID_KEY_PASSWORD"
-      }
-    }
-    
     buildTypes {
         release {
-            signingConfig signingConfigs.release
-            ndk {
-                abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
-            }
+            // TODO: Add your own signing config for the release build.
+            // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig signingConfigs.debug
         }
     }
-
-    signingConfigs {
-       release {
-           keyAlias keystoreProperties['keyAlias']
-           keyPassword keystoreProperties['keyPassword']
-           storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-           storePassword keystoreProperties['storePassword']
-       }
-    }
-    buildTypes {
-        release {
-        // TODO change back to release
-            signingConfig signingConfigs.release
-            //signingConfig signingConfigs.debug
-            ndk {
-                abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
-            }
-        }
-    }
-
-//   buildTypes {
-//       release {
-//           // TODO: Add your own signing config for the release build.
-//           // Signing with the debug keys for now, so `flutter run --release` works.
-//           signingConfig signingConfigs.debug
-//       }
-//   }
 }
 
 flutter {
@@ -107,15 +72,4 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    implementation 'com.google.android.gms:play-services-base:17.5.0'
-    implementation 'com.google.firebase:firebase-analytics:18.0.0'
-    implementation 'com.google.guava:guava:27.0.1-android'
-    implementation 'androidx.multidex:multidex:2.0.1' // for the multidex , exceed 64k something
-
 }
-
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'io.fabric'

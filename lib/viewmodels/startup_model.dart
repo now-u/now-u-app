@@ -17,7 +17,6 @@ class StartUpViewModel extends BaseModel {
   final NavigationService? _navigationService = locator<NavigationService>();
 
   Future handleStartUpLogic() async {
-    await Firebase.initializeApp();
     registerFirebaseServicesToLocator();
 
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;

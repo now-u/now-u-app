@@ -78,7 +78,9 @@ class Home extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("My causes", style: Theme.of(context).primaryTextTheme.headline3,),
-                          CustomTextButton("Edit", onClick: () {})
+                          CustomTextButton("Edit", onClick: () {
+                            model.goToEditCausesPage();
+                          })
                         ],
                       )
                     ),

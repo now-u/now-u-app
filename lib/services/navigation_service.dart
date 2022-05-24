@@ -137,7 +137,7 @@ class NavigationService {
           title: title ?? "You're about to leave",
           description: description ??
               "This link will take you out of the app. Are you sure you want to go?",
-          buttons: [
+          buttons: <DialogButton>[
             DialogButton(
               text: buttonText ?? "Let's go",
               response: true,

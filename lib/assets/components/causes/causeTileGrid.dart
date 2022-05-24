@@ -1,4 +1,3 @@
-import 'package:app/assets/components/grid.dart';
 import 'package:app/viewmodels/causes_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:app/assets/components/causes/causeTile.dart';
@@ -9,15 +8,17 @@ class CauseTileGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(15.0),
-      child: ExpandedGrid.builder(
-          numberOfRows: 2,
-          itemCount: model.causesList.length,
-          itemBuilder: (context, rowIndex, colIndex, index) {
-            return Expanded(
-                child: Padding(
-              padding: EdgeInsets.all(10),
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 1,
+      ),
+      padding: EdgeInsets.all(20),
+      itemCount: model.causesList.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Expanded(
+          child: Padding(
+            padding: EdgeInsets.all(10),
               child: CauseTile(
                 gestureFunction: () => model.toggleSelection(
                     listCause: model.causesList[index]),
@@ -28,10 +29,9 @@ class CauseTileGrid extends StatelessWidget {
                     listCause: model.causesList[index],
                     causeIndex: index),
               ),
-            ),
-          );
-        },
-      ),
+          ),
+        );
+      }
     );
   }
 }

@@ -7,7 +7,7 @@ import 'package:app/models/Learning.dart';
 import 'package:app/models/User.dart';
 
 class AnalyticsService {
-  final FirebaseAnalytics _analytics = FirebaseAnalytics();
+  final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
 
   FirebaseAnalyticsObserver getAnalyticsObserver() =>
       FirebaseAnalyticsObserver(analytics: _analytics);

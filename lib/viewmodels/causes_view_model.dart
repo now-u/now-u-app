@@ -20,11 +20,15 @@ class CausesViewModel extends BaseModel {
   Future fetchCauses() async {
     setBusy(true);
 
+    print("Fetching cuases");
     List<ListCause> causesList = await _causesService.getCauses();
     _causes = {for (ListCause cause in causesList) cause: cause.selected};
+    print("Fetched cuases");
 
     setBusy(false);
     notifyListeners();
+    
+    print(_causes);
   }
 
   bool isCauseSelected(ListCause cause) {

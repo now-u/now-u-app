@@ -39,16 +39,16 @@ class CustomWidthButton extends StatelessWidget {
   final String text;
   final IconData? rightIcon;
   final ButtonSize size;
-  final double fontSize;
   final double buttonWidthProportion;
   final Color? backgroundColor;
   final Color? textColor;
+  final double? fontSize;
 
   CustomWidthButton(this.text,
       {required this.onPressed,
       required this.size,
-      required this.fontSize,
       required this.buttonWidthProportion,
+      this.fontSize,
       this.rightIcon,
       this.backgroundColor,
       this.textColor});
@@ -81,7 +81,7 @@ class CustomWidthButton extends StatelessWidget {
               style: textStyleFrom(
                 Theme.of(context).primaryTextTheme.button,
                 color: textColor ?? Colors.white,
-                fontSize: fontSize,
+                fontSize: fontSize ?? buttonStyleStyles[size]['fontSize'],
               ),
             ),
           ),
