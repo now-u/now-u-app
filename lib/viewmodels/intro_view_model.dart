@@ -59,8 +59,7 @@ class IntroViewModel extends BaseModel {
     ),
     IntroPageData(
       title: "Help shape a better world",
-      description:
-          "Join our growing community driving lasting change.",
+      description: "Join our growing community driving lasting change.",
       image: 'assets/imgs/intro/On-Boarding illustrations-04.png',
     ),
   ];
