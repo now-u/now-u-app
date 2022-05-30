@@ -51,7 +51,7 @@ class Home extends StatelessWidget {
                     ProgressTile(
                       campaignsScore: model.numberOfJoinedCampaigns,
                       actionsScore: model.numberOfCompletedActions,
-                      learningsScore: -1,
+                      learningsScore: model.numberOfCompletedLearningResources,
                     ),
 
                     SizedBox(height: 30),

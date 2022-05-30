@@ -139,7 +139,7 @@ class LearningResource extends Explorable {
         cause = json['causes'] != null
             ? ListCause.fromJson(json['causes'][0])
             : cause!,
-        completed = json['completed'] == "completed",
+        completed = json['completed'],
         source = json['source'];
 
   /// Whether the resource has been created in the last 2 days

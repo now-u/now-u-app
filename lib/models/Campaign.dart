@@ -55,7 +55,7 @@ class ListCampaign extends Explorable {
         headerImage = json['header_image'],
         startDate = DateTime.parse(json['start_date']),
         endDate = DateTime.parse(json['end_date']),
-        completed = json['completed'] == true,
+        completed = json['completed'],
         cause = ListCause.fromJson(json['causes'][0]);
 }
 
