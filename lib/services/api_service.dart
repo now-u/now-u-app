@@ -108,9 +108,8 @@ class ApiService {
       );
     }
 
-    print("Making request");
-
     final uri = Uri.https(baseUrl, baseUrlPath + path, stringParams);
+    print("Making request: ${uri.toString()}, headers: ${getRequestHeaders()}");
     http.Response response = await client.get(
       uri,
       headers: getRequestHeaders(),
@@ -150,7 +149,7 @@ class ApiService {
   Future<Map<String, dynamic>> postRequest(String path,
       {Map<String, dynamic>? body}) async {
     final uri = Uri.https(baseUrl, baseUrlPath + path);
-    print("Making request: ${uri.toString()}, body: $body");
+    print("Making request: ${uri.toString()}, body: $body, headers: ${getRequestHeaders()}");
 
     http.Response response = await client.post(
       uri,
@@ -173,6 +172,7 @@ class ApiService {
   /// unsuccessful.
   Future<Map> putRequest(String path, {Map<String, dynamic>? body}) async {
     final uri = Uri.https(baseUrl, baseUrlPath + path);
+    print("Making request: ${uri.toString()}, body: $body, headers: ${getRequestHeaders()}");
     http.Response response = await client.put(
       uri,
       headers: getRequestHeaders(),
@@ -192,6 +192,7 @@ class ApiService {
   /// unsuccessful.
   Future<Map> deleteRequest(String path) async {
     final uri = Uri.https(baseUrl, baseUrlPath + path);
+    print("Making request: ${uri.toString()}, headers: ${getRequestHeaders()}");
     http.Response response = await client.put(
       uri,
       headers: getRequestHeaders(),

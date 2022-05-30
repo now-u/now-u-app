@@ -244,6 +244,7 @@ abstract class BaseExploreResourceTile extends ExploreTile {
   void onTap();
 
   Widget render(BuildContext context) {
+    print("Rendering tile ${completed}");
     return AspectRatio(
       aspectRatio: 1.65,
       child: InkWell(

@@ -74,9 +74,8 @@ class CampaignPage extends StatelessWidget {
       return [CircularProgressIndicator()];
     }
 
-    double tileWidth =
-        (MediaQuery.of(context).size.width - CustomPaddingSize.small * 2);
-
+    // Collect all actions and learning materials into a 2 lists of shuffled
+    // explore tile widgets.
     List<ExploreTile> actions = campaign.actions
         .map((action) =>
             ExploreActionTile(action, style: ExploreTileStyle.Extended))
@@ -84,16 +83,17 @@ class CampaignPage extends StatelessWidget {
     List<ExploreTile> learningResources = campaign.learningResources
         .map((lr) => ExploreLearningTile(lr, style: ExploreTileStyle.Extended))
         .toList();
-    // List<BaseExtendedExploreActionTile> children = actions + learningResources;
+
+    // Combine the lists
     List<ExploreTile> children = <ExploreTile>[];
     children.addAll(actions);
     children.addAll(learningResources);
 
+    // Shuffle and then place completed at the end of the list
     children.shuffle();
     children.sort((a, b) => a.completed! ? -1 : 1);
 
-    // TODO move tile heights to explore widget
-    // Wrap widgets in containers with correct height
+    // Add padding to all the elements
     return children
         .map((resource) => Padding(
               padding: EdgeInsets.symmetric(vertical: 5),
