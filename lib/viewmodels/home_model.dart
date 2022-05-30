@@ -75,7 +75,7 @@ class HomeViewModel extends BaseModel with ExploreViewModelMixin {
   int get numberOfCompletedActions {
     return currentUser!.getCompletedActions()!.length;
   }
-  
+
   int get numberOfCompletedLearningResources {
     return currentUser!.getCompletedLearningResources()!.length;
   }
