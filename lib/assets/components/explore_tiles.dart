@@ -9,6 +9,7 @@ import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Cause.dart';
 import 'package:app/models/article.dart';
+import 'package:app/services/causes_service.dart';
 import 'package:app/services/navigation_service.dart';
 import 'package:app/pages/action/ActionInfo.dart';
 import 'package:flutter/material.dart';
@@ -189,6 +190,8 @@ class ExploreActionTile extends BaseExploreResourceTile {
 }
 
 class ExploreLearningTile extends BaseExploreResourceTile {
+  final CausesService _causesService = locator<CausesService>();
+
   final LearningResource resource;
 
   ExploreLearningTile(LearningResource model,
@@ -207,7 +210,8 @@ class ExploreLearningTile extends BaseExploreResourceTile {
             key: key,
             style: style);
 
-  void onTap() {
+  void onTap() async {
+    await _causesService.completeLearningResource(resource.id);
     _navigationService.launchLink(
       resource.link,
     );

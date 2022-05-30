@@ -8,7 +8,6 @@ import 'package:app/services/pushNotifications.dart';
 import 'package:app/services/remote_config_service.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:app/viewmodels/base_model.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class StartUpViewModel extends BaseModel {

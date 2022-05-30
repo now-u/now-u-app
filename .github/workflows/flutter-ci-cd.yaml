@@ -128,11 +128,10 @@ jobs:
       run: ./.github/secrets/decrypt_secrets.sh
 
     # Setup the flutter environment.
-    - name: Flutter action
-      uses: subosito/flutter-action@v1.4.0
+    - uses: subosito/flutter-action@v2
       with:
         channel: 'stable' # 'dev', 'alpha', default to: 'stable'
-        # flutter-version: '1.12.x' # you can also specify exact version of flutter
+        flutter-version: '3.0.x'
     
     - name: Flutter doctor
       run: flutter doctor
