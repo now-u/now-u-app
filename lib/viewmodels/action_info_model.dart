@@ -31,8 +31,8 @@ class ActionInfoViewModel extends BaseModel {
       _navigationService.navigateTo(Routes.actions);
     }).onError((err, _) {
       setBusy(false);
-      _dialogService.showDialog(BasicDialog(
-        title: "Error", description: "Failed to complete action"),
+      _dialogService.showDialog(
+        BasicDialog(title: "Error", description: "Failed to complete action"),
       );
     });
   }
