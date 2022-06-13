@@ -110,9 +110,6 @@ jobs:
   build_ios:
     runs-on: macos-latest
     timeout-minutes: 30
-    steps:  
-      build:
-    runs-on: macos-latest
     steps:
       # Checks-out our repository under $GITHUB_WORKSPACE, so our job can access it
       - name: Checkout repository
