@@ -143,11 +143,13 @@ jobs:
           # apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
-      # Install flutter
-      - name: Flutter get
-        uses: subosito/flutter-action@v1
+
+      # Setup the flutter environment.
+      - name: Setup flutter 
+        uses: subosito/flutter-action@v2
         with:
-          flutter-version: '2.10.1'
+          channel: 'stable' # 'dev', 'alpha', default to: 'stable'
+          flutter-version: '3.0.x'
 
       # Install your project's dependencies
       - run: flutter pub get
