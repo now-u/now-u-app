@@ -110,9 +110,6 @@ jobs:
   build_ios:
     runs-on: macos-latest
     timeout-minutes: 30
-    steps:  
-      build:
-    runs-on: macos-latest
     steps:
       # Checks-out our repository under $GITHUB_WORKSPACE, so our job can access it
       - name: Checkout repository
@@ -172,13 +169,6 @@ jobs:
         run: |
           security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
           rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision
-
-    # Upload generated ipa to the artifacts.
-    - name: Upload IPA artifact
-      uses: actions/upload-artifact@v1
-      with:
-        name: release-ios
-        path: ./build/ios/ipa/nowu.ipa
 
   release_ios:
     name: Release ipa to Testflight 
