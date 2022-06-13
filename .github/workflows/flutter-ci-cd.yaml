@@ -168,13 +168,6 @@ jobs:
           security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
           rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision
 
-    # Upload generated ipa to the artifacts.
-    - name: Upload IPA artifact
-      uses: actions/upload-artifact@v1
-      with:
-        name: release-ios
-        path: ./build/ios/ipa/nowu.ipa
-
   release_ios:
     name: Release ipa to Testflight 
     runs-on: ubuntu-latest
