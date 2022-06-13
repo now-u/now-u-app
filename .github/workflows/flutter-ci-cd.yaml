@@ -107,7 +107,7 @@ jobs:
  
 
   # TODO https://damienaicheh.github.io/flutter/github/actions/2021/04/22/build-sign-flutter-ios-github-actions-en.html
-  ios:
+  build_ios:
     runs-on: macos-latest
     timeout-minutes: 30
     steps:  
@@ -178,10 +178,22 @@ jobs:
         name: release-ios
         path: ./build/ios/ipa/nowu.ipa
 
+  release_ios:
+    name: Release ipa to Testflight 
+    runs-on: ubuntu-latest
+    needs: [ build_ios ]
+    steps:
+
+    # Retrieve ipa file from GitHub artifacts
+    - uses: actions/checkout@v2
+    - name: Get release-ipa from artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: release-ipa
+
     - name: Publishing app to TestFlight
-      if: success()
       env:
         APPLEID_USERNAME: ${{ secrets.APPLEID_USERNAME }}
         APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
-        IPA_PATH: ./build/ios/ipa/nowu.ipa
+        IPA_PATH: app.ipa 
       run: ./.github/scripts/publish_testflight.sh
