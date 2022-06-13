@@ -9,7 +9,7 @@
 	<key>provisioningProfiles</key>
 	<dict>
 		<key>com.nowu.app</key>
-		<string>now-u</string>
+		<string>nowu</string>
 	</dict>
 	<key>signingCertificate</key>
 	<string>Apple Distribution</string>
