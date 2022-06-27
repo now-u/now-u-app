@@ -64,8 +64,8 @@ class CauseOnboardingPage extends StatelessWidget {
                           ),
                         ),
                         Expanded(
-                            flex: 10,
-                            child: CauseTileGrid(model),
+                          flex: 10,
+                          child: CauseTileGrid(model),
                         ),
                         Expanded(
                           flex: 1,
