@@ -107,8 +107,7 @@ class ExploreSectionWidget extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: data.filter!.options.length,
                 itemBuilder: (context, index) {
-                  BaseExploreFilterOption option =
-                      data.filter!.options[index];
+                  BaseExploreFilterOption option = data.filter!.options[index];
                   return Padding(
                       padding: EdgeInsets.only(
                         right: 5,
@@ -133,22 +132,22 @@ class ExploreSectionWidget extends StatelessWidget {
               : data.state == ExploreSectionState.Errored || data.tiles == null
                   // TODO handle error here
                   ? Container(color: Colors.red)
-                  : data.tiles!.length == 0 
-                    ? Center(child: Text("No results"))
-                    : ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: data.tiles!.length,
-                      itemBuilder: (context, index) => Container(
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            right: 8,
-                            left: index == 0 ? horizontalPadding : 0,
-                            bottom: tileShadowBlurRadius,
+                  : data.tiles!.length == 0
+                      ? Center(child: Text("No results"))
+                      : ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: data.tiles!.length,
+                          itemBuilder: (context, index) => Container(
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                right: 8,
+                                left: index == 0 ? horizontalPadding : 0,
+                                bottom: tileShadowBlurRadius,
+                              ),
+                              child: data.renderTile(data.tiles![index]),
+                            ),
                           ),
-                          child: data.renderTile(data.tiles![index]),
                         ),
-                      ),
-                    ),
         ),
       ),
     ]);
