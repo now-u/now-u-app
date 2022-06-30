@@ -34,6 +34,8 @@ abstract class BaseExploreFilter {
   bool get multi;
   ExploreFilterState get state;
 
+  int get numOptionsSelected => options.where((option) => option.isSelected).length;
+
   /// Deselect all options
   void clearSelections() {
     options.forEach((option) {
@@ -42,6 +44,12 @@ abstract class BaseExploreFilter {
   }
 
   void toggleOption(BaseExploreFilterOption option) {
+    // If an option is being deselected and there is only one selected option
+    // then force this option to stay selected.
+    if (option.isSelected && numOptionsSelected == 1) {
+      return;
+    }
+
     // If an option is being selected and you cannot have multiple selections,
     // then clear current selections first.
     if (!option.isSelected && !multi) {
@@ -51,7 +59,14 @@ abstract class BaseExploreFilter {
   }
 
   Map<String, dynamic> toJson();
-  void init(Function notifyListeners);
+  Future<void> init(Function notifyListeners) async {
+    // If there are options select the first one
+    if (options.length != 0 && numOptionsSelected == 0) {
+      options[0].isSelected = true;
+    }
+    print("Options are: ");
+    print(options);
+  }
 }
 
 class ExploreFilterOption<T> extends BaseExploreFilterOption {
@@ -64,10 +79,11 @@ class ExploreFilterOption<T> extends BaseExploreFilterOption {
   /// Whether the filter is selected
   bool isSelected;
 
-  ExploreFilterOption(
-      {required this.displayName,
-      required this.parameterValue,
-      this.isSelected = false});
+  ExploreFilterOption({
+    required this.displayName,
+    required this.parameterValue,
+    this.isSelected = false,
+  });
 }
 
 enum ExploreFilterState {
@@ -100,7 +116,7 @@ class ExploreFilter extends BaseExploreFilter {
             : ExploreFilterState.Loaded,
         staticOptions = options;
 
-  void init(Function notifyListeners) async {
+  Future<void> init(Function notifyListeners) async {
     if (staticOptions == null) {
       state = ExploreFilterState.Loading;
       notifyListeners();
@@ -108,6 +124,7 @@ class ExploreFilter extends BaseExploreFilter {
       state = ExploreFilterState.Loaded;
       notifyListeners();
     }
+    await super.init(notifyListeners);
   }
 
   Map<String, dynamic> toJson() {
@@ -160,20 +177,23 @@ class TimeExploreFilter extends BaseExploreFilter {
   bool multi = true;
   ExploreFilterState state = ExploreFilterState.Loaded;
 
-  void init(Function notifyListeners) {}
-
   List<TimeExploreFilterOption> get selectedOptions =>
       options.where((option) => option.isSelected).toList();
+
   Map<String, dynamic> toJson() {
     double minTime =
-        selectedOptions.map((option) => option.minValue).fold(0, min);
+        selectedOptions.map((option) => option.minValue).reduce(min);
     double maxTime =
-        selectedOptions.map((option) => option.maxValue).fold(0, max);
+        selectedOptions.map((option) => option.maxValue).reduce(max);
     if (maxTime == double.infinity) {
       return {
         "time__gte": minTime,
       };
     }
+
+    print("Converting to JSON");
+    print("Max is: ${maxTime}");
+    print("Min is: ${minTime}");
 
     return {
       "time__lte": maxTime,
@@ -241,7 +261,7 @@ abstract class ExploreSection<T extends Explorable> {
     state = ExploreSectionState.Loading;
     notifyListeners();
     if (filter != null) {
-      filter!.init(notifyListeners);
+      await filter!.init(notifyListeners);
     }
     tiles = await fetchTiles(queryParams ?? {});
     state = ExploreSectionState.Loaded;

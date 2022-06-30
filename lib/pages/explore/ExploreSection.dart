@@ -103,22 +103,23 @@ class ExploreSectionWidget extends StatelessWidget {
             Container(
               height: 40,
               child: ListView.builder(
-                  padding: EdgeInsets.only(bottom: 8, top: 6),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: data.filter!.options.length,
-                  itemBuilder: (context, index) {
-                    BaseExploreFilterOption option =
-                        data.filter!.options[index];
-                    return Padding(
-                        padding: EdgeInsets.only(
-                          right: 5,
-                          left: index == 0 ? horizontalPadding : 0,
-                        ),
-                        child: ExploreFilterSelectionItem(
-                          item: option,
-                          onPressed: () => toggleFilterOption(option),
-                        ));
-                  }),
+                padding: EdgeInsets.only(bottom: 8, top: 6),
+                scrollDirection: Axis.horizontal,
+                itemCount: data.filter!.options.length,
+                itemBuilder: (context, index) {
+                  BaseExploreFilterOption option =
+                      data.filter!.options[index];
+                  return Padding(
+                      padding: EdgeInsets.only(
+                        right: 5,
+                        left: index == 0 ? horizontalPadding : 0,
+                      ),
+                      child: ExploreFilterSelectionItem(
+                        item: option,
+                        onPressed: () => toggleFilterOption(option),
+                      ));
+                },
+              ),
             ),
         ],
       ),
@@ -132,7 +133,9 @@ class ExploreSectionWidget extends StatelessWidget {
               : data.state == ExploreSectionState.Errored || data.tiles == null
                   // TODO handle error here
                   ? Container(color: Colors.red)
-                  : ListView.builder(
+                  : data.tiles!.length == 0 
+                    ? Center(child: Text("No results"))
+                    : ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: data.tiles!.length,
                       itemBuilder: (context, index) => Container(
