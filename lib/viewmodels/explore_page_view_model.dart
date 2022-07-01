@@ -34,7 +34,8 @@ abstract class BaseExploreFilter {
   bool get multi;
   ExploreFilterState get state;
 
-  int get numOptionsSelected => options.where((option) => option.isSelected).length;
+  int get numOptionsSelected =>
+      options.where((option) => option.isSelected).length;
 
   /// Deselect all options
   void clearSelections() {
