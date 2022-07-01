@@ -16,7 +16,7 @@ class CauseTileGrid extends StatelessWidget {
         padding: EdgeInsets.all(20),
         itemCount: model.causesList.length,
         itemBuilder: (BuildContext context, int index) {
-          return Expanded(
+          return Container(
             child: Padding(
               padding: EdgeInsets.all(10),
               child: CauseTile(

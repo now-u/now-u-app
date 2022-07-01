@@ -37,8 +37,9 @@ class ApiService {
   http.Client client = http.Client();
 
   /// Base of url (no slashes)
-  String baseUrl =
-      constants.devMode ? "staging.api.now-u.com" : "api.now-u.com";
+  // String baseUrl =
+  //     constants.devMode ? "staging.api.now-u.com" : "api.now-u.com";
+  String baseUrl = "staging.api.now-u.com";
 
   /// The base path of the url (after the baseUrl)
   String baseUrlPath = "api/";
