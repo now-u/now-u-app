@@ -128,17 +128,17 @@ class ExploreLearningTile extends ExploreResourceTile {
       {ExploreTileStyle? style, Key? key})
       : resource = model,
         super(
-            title: model.title,
-            type: model.type.name,
-            iconColor: blue0,
-            headerColor: blue1,
-            dividerColor: blue2,
-            icon: model.icon,
-            cause: model.cause,
-            timeText: model.timeText,
-            completed: model.completed,
-            key: key,
-            style: style,
+          title: model.title,
+          type: model.type.name,
+          iconColor: blue0,
+          headerColor: blue1,
+          dividerColor: blue2,
+          icon: model.icon,
+          cause: model.cause,
+          timeText: model.timeText,
+          completed: model.completed,
+          key: key,
+          style: style,
         );
 
   void onTap() async {
@@ -293,15 +293,15 @@ abstract class ExploreResourceTile extends ExploreTile {
                 children: [
                   Expanded(
                     child: Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: style == ExploreTileStyle.Standard 
-                        ? _ExploreTileTitle(title)
-                        : Padding(
-                            padding: EdgeInsets.only(right: COMPLETED_EXTENSION_WIDTH - 50),
-                            child: _ExploreTileTitle(title),
-                          )
-                    ),
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: style == ExploreTileStyle.Standard
+                            ? _ExploreTileTitle(title)
+                            : Padding(
+                                padding: EdgeInsets.only(
+                                    right: COMPLETED_EXTENSION_WIDTH - 50),
+                                child: _ExploreTileTitle(title),
+                              )),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8),
