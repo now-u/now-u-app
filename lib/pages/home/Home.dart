@@ -88,11 +88,11 @@ class Home extends StatelessWidget {
                           ],
                         )),
 
-                    Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                    Container(
                         child: model.causes != []
                             ? GridView.builder(
                                 shrinkWrap: true,
+                                padding: EdgeInsets.all(20),
                                 physics: NeverScrollableScrollPhysics(),
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
@@ -108,7 +108,8 @@ class Home extends StatelessWidget {
                                           .getCausePopup(model.causes[index]));
                                 })
                             : CircularProgressIndicator()),
-                  ])
+                  ]),
+                  SizedBox(height: 10),
                 ],
               );
             }));

@@ -76,22 +76,22 @@ class CampaignPage extends StatelessWidget {
 
     // Collect all actions and learning materials into a 2 lists of shuffled
     // explore tile widgets.
-    List<ExploreTile> actions = campaign.actions
+    List<ExploreResourceTile> actions = campaign.actions
         .map((action) =>
             ExploreActionTile(action, style: ExploreTileStyle.Extended))
         .toList();
-    List<ExploreTile> learningResources = campaign.learningResources
+    List<ExploreResourceTile> learningResources = campaign.learningResources
         .map((lr) => ExploreLearningTile(lr, style: ExploreTileStyle.Extended))
         .toList();
 
     // Combine the lists
-    List<ExploreTile> children = <ExploreTile>[];
+    List<ExploreResourceTile> children = <ExploreResourceTile>[];
     children.addAll(actions);
     children.addAll(learningResources);
 
     // Shuffle and then place completed at the end of the list
     children.shuffle();
-    children.sort((a, b) => a.completed! ? -1 : 1);
+    children.sort((a, b) => a.completed ? -1 : 1);
 
     // Add padding to all the elements
     return children

@@ -22,81 +22,10 @@ enum ExploreTileStyle {
 }
 
 abstract class ExploreTile extends StatelessWidget {
-  final ExploreTileStyle style;
-  final bool? completed;
-
-  ExploreTile({ExploreTileStyle? style, this.completed, Key? key})
-      // If the style is extended then we need to know if the tile is completed
-      : assert(style != ExploreTileStyle.Extended || completed != null),
-        this.style = style ?? ExploreTileStyle.Standard;
-
-  Widget render(BuildContext context);
-
-  Widget _standardWrapper(Widget child) {
-    // return Card(
-    //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-    //   clipBehavior: Clip.antiAlias,
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      clipBehavior: Clip.antiAlias,
-      child: child,
-    );
-  }
-
-  Widget _extendedWrapper(BuildContext context, Widget child) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      clipBehavior: Clip.antiAlias,
-      child: AspectRatio(
-        aspectRatio: 2,
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            child,
-            Positioned(
-              right: 0,
-              child: Container(
-                width: 110,
-                decoration: BoxDecoration(
-                    color: CustomColors.white,
-                    borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(8),
-                        bottomRight: Radius.circular(8))),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        completed! ? 'Completed' : 'Needs Completing',
-                        style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.button,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 20),
-                      _ExploreTileCheckmark(completed: completed!, size: 30),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  ExploreTile({key});
 
   @override
-  Widget build(BuildContext context) {
-    Widget child = render(context);
-    if (style == ExploreTileStyle.Extended)
-      return _extendedWrapper(context, child);
-    return _standardWrapper(child);
-  }
+  Widget build(BuildContext context);
 }
 
 class ExploreCampaignTile extends ExploreTile {
@@ -116,7 +45,8 @@ class ExploreCampaignTile extends ExploreTile {
         campaign = model,
         super(key: key);
 
-  Widget render(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 0.75,
       child: InkWell(
@@ -162,7 +92,7 @@ class ExploreCampaignTile extends ExploreTile {
   }
 }
 
-class ExploreActionTile extends BaseExploreResourceTile {
+class ExploreActionTile extends ExploreResourceTile {
   final ListCauseAction action;
 
   ExploreActionTile(ListCauseAction model, {ExploreTileStyle? style, Key? key})
@@ -189,7 +119,7 @@ class ExploreActionTile extends BaseExploreResourceTile {
   }
 }
 
-class ExploreLearningTile extends BaseExploreResourceTile {
+class ExploreLearningTile extends ExploreResourceTile {
   final CausesService _causesService = locator<CausesService>();
 
   final LearningResource resource;
@@ -208,7 +138,8 @@ class ExploreLearningTile extends BaseExploreResourceTile {
             timeText: model.timeText,
             completed: model.completed,
             key: key,
-            style: style);
+            style: style,
+        );
 
   void onTap() async {
     await _causesService.completeLearningResource(resource.id);
@@ -218,7 +149,9 @@ class ExploreLearningTile extends BaseExploreResourceTile {
   }
 }
 
-abstract class BaseExploreResourceTile extends ExploreTile {
+abstract class ExploreResourceTile extends ExploreTile {
+  final double COMPLETED_EXTENSION_WIDTH = 110;
+
   final NavigationService _navigationService = locator<NavigationService>();
 
   final String title;
@@ -230,8 +163,9 @@ abstract class BaseExploreResourceTile extends ExploreTile {
   final ListCause cause;
   final String timeText;
   final bool completed;
+  final ExploreTileStyle style;
 
-  BaseExploreResourceTile(
+  ExploreResourceTile(
       {required this.title,
       required this.type,
       required this.iconColor,
@@ -243,11 +177,70 @@ abstract class BaseExploreResourceTile extends ExploreTile {
       required this.completed,
       ExploreTileStyle? style,
       Key? key})
-      : super(style: style, completed: completed, key: key);
+      : this.style = style ?? ExploreTileStyle.Standard,
+        super(key: key);
 
   void onTap();
 
-  Widget render(BuildContext context) {
+  Widget _standardWrapper(Widget child) {
+    // return Card(
+    //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+    //   clipBehavior: Clip.antiAlias,
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      clipBehavior: Clip.antiAlias,
+      child: child,
+    );
+  }
+
+  Widget _extendedWrapper(BuildContext context, Widget child) {
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      clipBehavior: Clip.antiAlias,
+      child: AspectRatio(
+        aspectRatio: 2,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            child,
+            Positioned(
+              right: 0,
+              child: Container(
+                width: COMPLETED_EXTENSION_WIDTH,
+                decoration: BoxDecoration(
+                    color: CustomColors.white,
+                    borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(8),
+                        bottomRight: Radius.circular(8))),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        completed ? 'Completed' : 'Needs Completing',
+                        style: textStyleFrom(
+                          Theme.of(context).primaryTextTheme.button,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 20),
+                      _ExploreTileCheckmark(completed: completed, size: 30),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _innerTile(BuildContext context) {
     print("Rendering tile ${completed}");
     return AspectRatio(
       aspectRatio: 1.65,
@@ -266,7 +259,7 @@ abstract class BaseExploreResourceTile extends ExploreTile {
                       size: 18,
                       color: iconColor,
                     ),
-                    const SizedBox(width: 4),
+                    const SizedBox(width: 8),
                     Text(
                       type,
                       textScaleFactor: .8,
@@ -302,7 +295,12 @@ abstract class BaseExploreResourceTile extends ExploreTile {
                     child: Container(
                       alignment: Alignment.centerLeft,
                       padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: _ExploreTileTitle(title),
+                      child: style == ExploreTileStyle.Standard 
+                        ? _ExploreTileTitle(title)
+                        : Padding(
+                            padding: EdgeInsets.only(right: COMPLETED_EXTENSION_WIDTH - 50),
+                            child: _ExploreTileTitle(title),
+                          )
                     ),
                   ),
                   Padding(
@@ -317,6 +315,14 @@ abstract class BaseExploreResourceTile extends ExploreTile {
         ),
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Widget child = _innerTile(context);
+    if (style == ExploreTileStyle.Extended)
+      return _extendedWrapper(context, child);
+    return _standardWrapper(child);
   }
 }
 
@@ -341,7 +347,7 @@ class ExploreNewsTile extends ExploreTile {
         article = model,
         super(key: key);
 
-  Widget render(BuildContext context) {
+  Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 0.8,
       child: InkWell(
@@ -421,6 +427,8 @@ class _ExploreTileTitle extends StatelessWidget {
       title,
       style: Theme.of(context).primaryTextTheme.headline2!,
       textScaleFactor: .6,
+      maxLines: 3,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }
