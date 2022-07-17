@@ -39,7 +39,7 @@ dependencies:
   time: ^2.0.0
   intl: ^0.17.0 # Date formatting
   flutter_markdown: ^0.6.7
-  cached_network_image: ^3.2.0
+  cached_network_image: ^3.2.1
   equatable: ^2.0.3
   
   rflutter_alert: ^2.0.4
@@ -64,6 +64,7 @@ dependencies:
   firebase_remote_config: ^2.0.7
   firebase_core: ^1.17.0
   collection: ^1.15.0-nullsafety.4
+  json_serializable: ^4.1.4
 
 dev_dependencies:
   flutter_test:

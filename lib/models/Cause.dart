@@ -1,11 +1,16 @@
 import 'package:app/assets/icons/customIcons.dart';
 import 'package:app/models/Action.dart';
 import 'package:flutter/widgets.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+// @JsonSerializable()
 class ListCause {
   final int id;
   final String title;
+
+  // @JsonKey(fromJson: getIconFromString)
   final IconData icon;
+
   final String description;
   final bool selected;
   final String headerImage;
@@ -28,6 +33,7 @@ class ListCause {
         headerImage = json['image'];
 }
 
+// @JsonSerializable()
 class Cause extends ListCause {
   final List<ListCauseAction> actions;
 

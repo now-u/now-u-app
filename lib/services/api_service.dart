@@ -6,6 +6,8 @@ import 'package:app/services/auth.dart';
 import 'package:app/locator.dart';
 import 'package:app/assets/constants.dart' as constants;
 
+typedef T JsonDeserializer<T> (Map<String, dynamic> data);
+
 /// Types of http errors
 enum ApiExceptionType {
   UNAUTHORIZED,
@@ -141,6 +143,16 @@ class ApiService {
     List<Map<String, dynamic>> listData =
         new List<Map<String, dynamic>>.from(response["data"]);
     return listData;
+  }
+  
+  Future<T> getModelRequest<T>(String path, JsonDeserializer<T> deserializer, {Map<String, dynamic>? params}) async {
+    final response = await getRequest(path, params: params);
+    return deserializer(response["data"]);
+  }
+
+  Future<List<T>> getModelListRequest<T>(String path, JsonDeserializer<T> deserializer, {Map<String, dynamic>? params, int? limit = 5}) async {
+    final data = await getListRequest(path, params: params);
+    return data.map((item) => deserializer(item)).toList();
   }
 
   /// Make post request to api

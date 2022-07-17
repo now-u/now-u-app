@@ -3,13 +3,12 @@
 // Do not manually edit this file.
 
 import 'dart:async' as _i5;
-import 'dart:convert' as _i6;
-import 'dart:typed_data' as _i7;
 
-import 'package:http/src/base_request.dart' as _i8;
-import 'package:http/src/client.dart' as _i4;
-import 'package:http/src/response.dart' as _i2;
-import 'package:http/src/streamed_response.dart' as _i3;
+import 'package:app/models/Action.dart' as _i7;
+import 'package:app/models/Cause.dart' as _i6;
+import 'package:app/services/api_service.dart' as _i3;
+import 'package:flutter/widgets.dart' as _i4;
+import 'package:http/http.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values
@@ -20,89 +19,127 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: unnecessary_parenthesis
 
-class _FakeResponse_0 extends _i1.Fake implements _i2.Response {}
+class _FakeClient_0 extends _i1.Fake implements _i2.Client {}
 
-class _FakeStreamedResponse_1 extends _i1.Fake implements _i3.StreamedResponse {
-}
+class _FakeApiException_1 extends _i1.Fake implements _i3.ApiException {}
 
-/// A class which mocks [Client].
+class _FakeIconData_2 extends _i1.Fake implements _i4.IconData {}
+
+/// A class which mocks [ApiService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockClient extends _i1.Mock implements _i4.Client {
-  MockClient() {
+class MockApiService extends _i1.Mock implements _i3.ApiService {
+  MockApiService() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i5.Future<_i2.Response> head(Uri? url, {Map<String, String>? headers}) =>
-      (super.noSuchMethod(Invocation.method(#head, [url], {#headers: headers}),
-              returnValue: Future<_i2.Response>.value(_FakeResponse_0()))
-          as _i5.Future<_i2.Response>);
+  _i2.Client get client => (super.noSuchMethod(Invocation.getter(#client),
+      returnValue: _FakeClient_0()) as _i2.Client);
   @override
-  _i5.Future<_i2.Response> get(Uri? url, {Map<String, String>? headers}) =>
-      (super.noSuchMethod(Invocation.method(#get, [url], {#headers: headers}),
-              returnValue: Future<_i2.Response>.value(_FakeResponse_0()))
-          as _i5.Future<_i2.Response>);
+  set client(_i2.Client? _client) =>
+      super.noSuchMethod(Invocation.setter(#client, _client),
+          returnValueForMissingStub: null);
   @override
-  _i5.Future<_i2.Response> post(Uri? url,
-          {Map<String, String>? headers,
-          Object? body,
-          _i6.Encoding? encoding}) =>
+  String get baseUrl =>
+      (super.noSuchMethod(Invocation.getter(#baseUrl), returnValue: '')
+          as String);
+  @override
+  set baseUrl(String? _baseUrl) =>
+      super.noSuchMethod(Invocation.setter(#baseUrl, _baseUrl),
+          returnValueForMissingStub: null);
+  @override
+  String get baseUrlPath =>
+      (super.noSuchMethod(Invocation.getter(#baseUrlPath), returnValue: '')
+          as String);
+  @override
+  set baseUrlPath(String? _baseUrlPath) =>
+      super.noSuchMethod(Invocation.setter(#baseUrlPath, _baseUrlPath),
+          returnValueForMissingStub: null);
+  @override
+  _i3.ApiException getExceptionForResponse(_i2.Response? response) => (super
+      .noSuchMethod(Invocation.method(#getExceptionForResponse, [response]),
+          returnValue: _FakeApiException_1()) as _i3.ApiException);
+  @override
+  Map<String, String> getRequestHeaders() =>
+      (super.noSuchMethod(Invocation.method(#getRequestHeaders, []),
+          returnValue: <String, String>{}) as Map<String, String>);
+  @override
+  _i5.Future<Map<dynamic, dynamic>> getRequest(String? path,
+          {Map<String, dynamic>? params}) =>
       (super.noSuchMethod(
-              Invocation.method(#post, [url],
-                  {#headers: headers, #body: body, #encoding: encoding}),
-              returnValue: Future<_i2.Response>.value(_FakeResponse_0()))
-          as _i5.Future<_i2.Response>);
-  @override
-  _i5.Future<_i2.Response> put(Uri? url,
-          {Map<String, String>? headers,
-          Object? body,
-          _i6.Encoding? encoding}) =>
-      (super.noSuchMethod(
-              Invocation.method(#put, [url],
-                  {#headers: headers, #body: body, #encoding: encoding}),
-              returnValue: Future<_i2.Response>.value(_FakeResponse_0()))
-          as _i5.Future<_i2.Response>);
-  @override
-  _i5.Future<_i2.Response> patch(Uri? url,
-          {Map<String, String>? headers,
-          Object? body,
-          _i6.Encoding? encoding}) =>
-      (super.noSuchMethod(
-              Invocation.method(#patch, [url],
-                  {#headers: headers, #body: body, #encoding: encoding}),
-              returnValue: Future<_i2.Response>.value(_FakeResponse_0()))
-          as _i5.Future<_i2.Response>);
-  @override
-  _i5.Future<_i2.Response> delete(Uri? url,
-          {Map<String, String>? headers,
-          Object? body,
-          _i6.Encoding? encoding}) =>
-      (super.noSuchMethod(
-              Invocation.method(#delete, [url],
-                  {#headers: headers, #body: body, #encoding: encoding}),
-              returnValue: Future<_i2.Response>.value(_FakeResponse_0()))
-          as _i5.Future<_i2.Response>);
-  @override
-  _i5.Future<String> read(Uri? url, {Map<String, String>? headers}) =>
-      (super.noSuchMethod(Invocation.method(#read, [url], {#headers: headers}),
-          returnValue: Future<String>.value('')) as _i5.Future<String>);
-  @override
-  _i5.Future<_i7.Uint8List> readBytes(Uri? url,
-          {Map<String, String>? headers}) =>
-      (super.noSuchMethod(
-              Invocation.method(#readBytes, [url], {#headers: headers}),
-              returnValue: Future<_i7.Uint8List>.value(_i7.Uint8List(0)))
-          as _i5.Future<_i7.Uint8List>);
-  @override
-  _i5.Future<_i3.StreamedResponse> send(_i8.BaseRequest? request) =>
-      (super.noSuchMethod(Invocation.method(#send, [request]),
+              Invocation.method(#getRequest, [path], {#params: params}),
               returnValue:
-                  Future<_i3.StreamedResponse>.value(_FakeStreamedResponse_1()))
-          as _i5.Future<_i3.StreamedResponse>);
+                  Future<Map<dynamic, dynamic>>.value(<dynamic, dynamic>{}))
+          as _i5.Future<Map<dynamic, dynamic>>);
   @override
-  void close() => super.noSuchMethod(Invocation.method(#close, []),
-      returnValueForMissingStub: null);
+  _i5.Future<List<Map<String, dynamic>>> getListRequest(String? path,
+          {Map<String, dynamic>? params, int? limit = 5}) =>
+      (super.noSuchMethod(
+              Invocation.method(
+                  #getListRequest, [path], {#params: params, #limit: limit}),
+              returnValue: Future<List<Map<String, dynamic>>>.value(
+                  <Map<String, dynamic>>[]))
+          as _i5.Future<List<Map<String, dynamic>>>);
+  @override
+  _i5.Future<Map<String, dynamic>> postRequest(String? path,
+          {Map<String, dynamic>? body}) =>
+      (super.noSuchMethod(
+              Invocation.method(#postRequest, [path], {#body: body}),
+              returnValue:
+                  Future<Map<String, dynamic>>.value(<String, dynamic>{}))
+          as _i5.Future<Map<String, dynamic>>);
+  @override
+  _i5.Future<Map<dynamic, dynamic>> putRequest(String? path,
+          {Map<String, dynamic>? body}) =>
+      (super.noSuchMethod(Invocation.method(#putRequest, [path], {#body: body}),
+              returnValue:
+                  Future<Map<dynamic, dynamic>>.value(<dynamic, dynamic>{}))
+          as _i5.Future<Map<dynamic, dynamic>>);
+  @override
+  _i5.Future<Map<dynamic, dynamic>> deleteRequest(String? path) =>
+      (super.noSuchMethod(Invocation.method(#deleteRequest, [path]),
+              returnValue:
+                  Future<Map<dynamic, dynamic>>.value(<dynamic, dynamic>{}))
+          as _i5.Future<Map<dynamic, dynamic>>);
+  @override
+  String toString() => super.toString();
+}
+
+/// A class which mocks [Cause].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockCause extends _i1.Mock implements _i6.Cause {
+  MockCause() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  List<_i7.ListCauseAction> get actions =>
+      (super.noSuchMethod(Invocation.getter(#actions),
+          returnValue: <_i7.ListCauseAction>[]) as List<_i7.ListCauseAction>);
+  @override
+  int get id =>
+      (super.noSuchMethod(Invocation.getter(#id), returnValue: 0) as int);
+  @override
+  String get title =>
+      (super.noSuchMethod(Invocation.getter(#title), returnValue: '')
+          as String);
+  @override
+  _i4.IconData get icon => (super.noSuchMethod(Invocation.getter(#icon),
+      returnValue: _FakeIconData_2()) as _i4.IconData);
+  @override
+  String get description =>
+      (super.noSuchMethod(Invocation.getter(#description), returnValue: '')
+          as String);
+  @override
+  bool get selected =>
+      (super.noSuchMethod(Invocation.getter(#selected), returnValue: false)
+          as bool);
+  @override
+  String get headerImage =>
+      (super.noSuchMethod(Invocation.getter(#headerImage), returnValue: '')
+          as String);
   @override
   String toString() => super.toString();
 }
