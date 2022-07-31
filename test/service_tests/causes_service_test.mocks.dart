@@ -82,6 +82,22 @@ class MockApiService extends _i1.Mock implements _i3.ApiService {
                   <Map<String, dynamic>>[]))
           as _i5.Future<List<Map<String, dynamic>>>);
   @override
+  _i5.Future<T> getModelRequest<T>(
+          String? path, _i3.JsonDeserializer<T>? deserializer,
+          {Map<String, dynamic>? params}) =>
+      (super.noSuchMethod(
+          Invocation.method(
+              #getModelRequest, [path, deserializer], {#params: params}),
+          returnValue: Future<T>.value(null)) as _i5.Future<T>);
+  @override
+  _i5.Future<List<T>> getModelListRequest<T>(
+          String? path, _i3.JsonDeserializer<T>? deserializer,
+          {Map<String, dynamic>? params, int? limit = 5}) =>
+      (super.noSuchMethod(
+          Invocation.method(#getModelListRequest, [path, deserializer],
+              {#params: params, #limit: limit}),
+          returnValue: Future<List<T>>.value(<T>[])) as _i5.Future<List<T>>);
+  @override
   _i5.Future<Map<String, dynamic>> postRequest(String? path,
           {Map<String, dynamic>? body}) =>
       (super.noSuchMethod(

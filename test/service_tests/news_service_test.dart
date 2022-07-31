@@ -4,27 +4,32 @@ import 'package:app/services/news_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:http/http.dart' as http;
+import 'package:app/services/api_service.dart';
 
 import '../setup/test_helpers.dart';
 import '../setup/test_helpers.mocks.dart';
 
+@GenerateMocks([ApiService])
 void main() {
-  setupLocator();
+  locator.registerSingleton<ApiService>(mockApiService);
   NewsService _newsService = locator<NewsService>();
 
   group('get causes', () {
     test('returns a List of ListCauses if the request is successfully',
         () async {
-      final client = MockClient();
-      _newsService.client = client;
+      // final client = MockClient();
+      // _newsService.client = client;
+      
+      when(mockApiService.getListRequest(any, params: anyNamed("params")))
+        .thenAnswer((_) async => [{"dummy": "data1"}, {"dummy": "data2"}]);
 
-      when(client.get(Uri.parse('https://api.now-u.com/api/v2/articles'),
-              headers: unauthenticatedHeaders))
-          .thenAnswer(
-              (_) async => http.Response(await readTestData("news.json"), 200));
+      // when(client.get(Uri.parse('https://api.now-u.com/api/v2/articles'),
+      //         headers: unauthenticatedHeaders))
+      //     .thenAnswer(
+      //         (_) async => http.Response(await readTestData("news.json"), 200));
 
       List<Article> articles = await _newsService.getArticles();
-      expect(articles.length, 1);
+      expect(articles.length, 2);
 
       Article article = articles[0];
       expect(article.id, 233);
