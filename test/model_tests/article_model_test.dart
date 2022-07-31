@@ -3,15 +3,13 @@ import 'package:app/assets/icons/customIcons.dart';
 import 'package:app/models/article.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../setup/test_helpers.dart';
+import './helpers.dart';
 
 void main() {
   group('Article from json -', () {
     test('Happy Article json test', () async {
-      final data  = await readTestData("news.json");
-      List<Map<String, dynamic>> listData = new List<Map<String, dynamic>>.from(json.decode(data)["data"]);
-
-      final article = Article.fromJson(listData[0]);
+      final data = await readTestDataList("news.json");
+      final article = Article.fromJson(data[0]);
 
       expect(article.id, 233);
       expect(article.title,
