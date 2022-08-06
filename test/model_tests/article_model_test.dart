@@ -1,7 +1,5 @@
-import 'dart:convert';
-import 'package:app/assets/icons/customIcons.dart';
-import 'package:app/models/article.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:app/models/article.dart';
 
 import './helpers.dart';
 

@@ -6,6 +6,7 @@ import 'package:app/models/Explorable.dart';
 import 'package:app/services/causes_service.dart';
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 enum CampaignActionType {
   Volunteer,
@@ -226,6 +227,11 @@ Tuple3<String?, String?, String?> generateCampaignActionDesc(
   return const Tuple3("Complete", "Completed", "special action");
 }
 
+ListCause causeFromJson(List<Map<String, dynamic>> causes) {
+  return ListCause.fromJson(causes[0]);
+}
+
+@JsonSerializable()
 class ListCauseAction extends Explorable {
   final int id;
 
@@ -249,6 +255,7 @@ class ListCauseAction extends Explorable {
   /// The cause that this action is part of
   // Although at the api level an action can be in many causes, for now we are
   // only showing a single cause in the UI.
+  @JsonKey(fromJson: causeFromJson)
   final ListCause cause;
 
   final double time;
@@ -275,14 +282,12 @@ class ListCauseAction extends Explorable {
     required this.id,
     required this.title,
     required this.type,
-    required List<ListCause> causes,
-    required DateTime createdAt,
+    required this.cause,
     required this.completed,
     required this.starred,
     required this.time,
-    DateTime? releasedAt,
-  })  : cause = causes[0],
-        releaseTime = releasedAt ?? createdAt;
+    required this.releaseTime,
+  });
 
   ListCauseAction.fromJson(Map<String, dynamic> json, {ListCause? cause})
       : assert(cause != null || json['causes'] != null),
@@ -304,6 +309,7 @@ class ListCauseAction extends Explorable {
   }
 }
 
+@JsonSerializable()
 class CampaignAction extends ListCauseAction {
   final String? whatDescription;
   final String? whyDescription;
@@ -313,7 +319,7 @@ class CampaignAction extends ListCauseAction {
     required int id,
     required String title,
     required CampaignActionType type,
-    required List<ListCause> causes,
+    required ListCause cause,
     required DateTime createdAt,
     required bool completed,
     required bool starred,
@@ -326,7 +332,7 @@ class CampaignAction extends ListCauseAction {
           id: id,
           title: title,
           type: type,
-          causes: causes,
+          cause: cause,
           createdAt: createdAt,
           completed: completed,
           starred: starred,
