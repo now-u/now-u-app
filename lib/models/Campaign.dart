@@ -113,11 +113,13 @@ class Campaign extends ListCampaign {
         numberOfCampaigners = 0,
         numberOfActionsCompleted = 0,
         infographicUrl = json['infographic_url'],
-        actions = json['campaign_actions']
-            .map((e) => ListCauseAction.fromJson(e,
-                cause: ListCause.fromJson(json['causes'][0])))
-            .toList()
-            .cast<ListCauseAction>(),
+	// TODO remove 
+	actions = [],
+        // actions = json['campaign_actions']
+        //     .map((e) => ListCauseAction.fromJson(e,
+        //         cause: ListCause.fromJson(json['causes'][0])))
+        //     .toList()
+        //     .cast<ListCauseAction>(),
         learningResources = json['learning_resources']
             .map((e) => LearningResource.fromJson(e,
                 cause: ListCause.fromJson(json['causes'][0])))
