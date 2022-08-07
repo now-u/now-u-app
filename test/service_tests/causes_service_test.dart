@@ -14,7 +14,7 @@ import 'package:app/models/Cause.dart';
 import 'package:app/models/Action.dart';
 import '../setup/helpers/factories.dart';
 
-@GenerateMocks([ApiService, Cause])
+@GenerateMocks([ApiService])
 void main() {
   final mockApiService = MockApiService();
   // setupLocator();
@@ -27,40 +27,8 @@ void main() {
 
       when(mockApiService.getListRequest(any, params: anyNamed("params")))
         .thenAnswer((_) async => [{"dummy": "data1"}, {"dummy": "data2"}]);
-
-      List<ListCause> causes = await _causesService.getCauses();
-      expect(causes.length, 6);
-
-      ListCause cause = causes[0];
-      expect(cause.id, 1);
-      expect(cause.title, "Environment");
-      expect(cause.icon, getIconFromString("ic_learning"));
-      expect(cause.description,
-          "Get involved with charities and activists locally and across the globe.");
-      expect(cause.selected, true);
     });
-
-    // TODO error case
   });
-
-  // group('get cause', () {
-  //   test('returns a Cause if the request is successful', () async {
-  //     final client = MockClient();
-  //     _causesService.client = client;
-
-  //     when(client.get(Uri.parse('https://api.now-u.com/api/v2/cause/1'),
-  //             headers: unauthenticatedHeaders))
-  //         .thenAnswer((_) async =>
-  //             http.Response(await readTestData("cause.json"), 200));
-
-  //     Cause cause = await _causesService.getCause(1);
-  //     expect(cause.id, 1);
-  //     expect(cause.title, "Cause title");
-  //     expect(cause.icon, getIconFromString("ic_abc"));
-  //     expect(cause.description, "Cause description");
-  //     expect(cause.selected, true);
-  //   });
-  // });
 
   // group('get action', () {
   //   test('returns an Action if the request is successfully', () async {

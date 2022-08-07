@@ -229,10 +229,6 @@ Tuple3<String?, String?, String?> generateCampaignActionDesc(
   return const Tuple3("Complete", "Completed", "special action");
 }
 
-ListCause causeFromJson(List<dynamic> causes) {
-  return ListCause.fromJson(causes[0]);
-}
-
 @JsonSerializable()
 class ListCauseAction extends Explorable {
   final int id;

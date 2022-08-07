@@ -3,12 +3,9 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
+import 'dart:async' as _i4;
 
-import 'package:app/models/Action.dart' as _i7;
-import 'package:app/models/Cause.dart' as _i6;
 import 'package:app/services/api_service.dart' as _i3;
-import 'package:flutter/widgets.dart' as _i4;
 import 'package:http/http.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -30,11 +27,6 @@ class _FakeClient_0 extends _i1.SmartFake implements _i2.Client {
 
 class _FakeApiException_1 extends _i1.SmartFake implements _i3.ApiException {
   _FakeApiException_1(Object parent, Invocation parentInvocation)
-      : super(parent, parentInvocation);
-}
-
-class _FakeIconData_2 extends _i1.SmartFake implements _i4.IconData {
-  _FakeIconData_2(Object parent, Invocation parentInvocation)
       : super(parent, parentInvocation);
 }
 
@@ -81,95 +73,58 @@ class MockApiService extends _i1.Mock implements _i3.ApiService {
       (super.noSuchMethod(Invocation.method(#getRequestHeaders, []),
           returnValue: <String, String>{}) as Map<String, String>);
   @override
-  _i5.Future<Map<dynamic, dynamic>> getRequest(String? path,
+  _i4.Future<Map<dynamic, dynamic>> getRequest(String? path,
           {Map<String, dynamic>? params}) =>
       (super.noSuchMethod(
               Invocation.method(#getRequest, [path], {#params: params}),
               returnValue:
-                  _i5.Future<Map<dynamic, dynamic>>.value(<dynamic, dynamic>{}))
-          as _i5.Future<Map<dynamic, dynamic>>);
+                  _i4.Future<Map<dynamic, dynamic>>.value(<dynamic, dynamic>{}))
+          as _i4.Future<Map<dynamic, dynamic>>);
   @override
-  _i5.Future<List<Map<String, dynamic>>> getListRequest(String? path,
+  _i4.Future<List<Map<String, dynamic>>> getListRequest(String? path,
           {Map<String, dynamic>? params, int? limit = 5}) =>
       (super.noSuchMethod(
               Invocation.method(
                   #getListRequest, [path], {#params: params, #limit: limit}),
-              returnValue: _i5.Future<List<Map<String, dynamic>>>.value(
+              returnValue: _i4.Future<List<Map<String, dynamic>>>.value(
                   <Map<String, dynamic>>[]))
-          as _i5.Future<List<Map<String, dynamic>>>);
+          as _i4.Future<List<Map<String, dynamic>>>);
   @override
-  _i5.Future<T> getModelRequest<T>(
+  _i4.Future<T> getModelRequest<T>(
           String? path, _i3.JsonDeserializer<T>? deserializer,
           {Map<String, dynamic>? params}) =>
       (super.noSuchMethod(
           Invocation.method(
               #getModelRequest, [path, deserializer], {#params: params}),
-          returnValue: _i5.Future<T>.value(null)) as _i5.Future<T>);
+          returnValue: _i4.Future<T>.value(null)) as _i4.Future<T>);
   @override
-  _i5.Future<List<T>> getModelListRequest<T>(
+  _i4.Future<List<T>> getModelListRequest<T>(
           String? path, _i3.JsonDeserializer<T>? deserializer,
           {Map<String, dynamic>? params, int? limit = 5}) =>
       (super.noSuchMethod(
               Invocation.method(#getModelListRequest, [path, deserializer],
                   {#params: params, #limit: limit}),
-              returnValue: _i5.Future<List<T>>.value(<T>[]))
-          as _i5.Future<List<T>>);
+              returnValue: _i4.Future<List<T>>.value(<T>[]))
+          as _i4.Future<List<T>>);
   @override
-  _i5.Future<Map<String, dynamic>> postRequest(String? path,
+  _i4.Future<Map<String, dynamic>> postRequest(String? path,
           {Map<String, dynamic>? body}) =>
       (super.noSuchMethod(
               Invocation.method(#postRequest, [path], {#body: body}),
               returnValue:
-                  _i5.Future<Map<String, dynamic>>.value(<String, dynamic>{}))
-          as _i5.Future<Map<String, dynamic>>);
+                  _i4.Future<Map<String, dynamic>>.value(<String, dynamic>{}))
+          as _i4.Future<Map<String, dynamic>>);
   @override
-  _i5.Future<Map<dynamic, dynamic>> putRequest(String? path,
+  _i4.Future<Map<dynamic, dynamic>> putRequest(String? path,
           {Map<String, dynamic>? body}) =>
       (super.noSuchMethod(Invocation.method(#putRequest, [path], {#body: body}),
               returnValue:
-                  _i5.Future<Map<dynamic, dynamic>>.value(<dynamic, dynamic>{}))
-          as _i5.Future<Map<dynamic, dynamic>>);
+                  _i4.Future<Map<dynamic, dynamic>>.value(<dynamic, dynamic>{}))
+          as _i4.Future<Map<dynamic, dynamic>>);
   @override
-  _i5.Future<Map<dynamic, dynamic>> deleteRequest(String? path) =>
+  _i4.Future<Map<dynamic, dynamic>> deleteRequest(String? path) =>
       (super.noSuchMethod(Invocation.method(#deleteRequest, [path]),
               returnValue:
-                  _i5.Future<Map<dynamic, dynamic>>.value(<dynamic, dynamic>{}))
-          as _i5.Future<Map<dynamic, dynamic>>);
-}
-
-/// A class which mocks [Cause].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockCause extends _i1.Mock implements _i6.Cause {
-  MockCause() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  List<_i7.ListCauseAction> get actions =>
-      (super.noSuchMethod(Invocation.getter(#actions),
-          returnValue: <_i7.ListCauseAction>[]) as List<_i7.ListCauseAction>);
-  @override
-  int get id =>
-      (super.noSuchMethod(Invocation.getter(#id), returnValue: 0) as int);
-  @override
-  String get title =>
-      (super.noSuchMethod(Invocation.getter(#title), returnValue: '')
-          as String);
-  @override
-  _i4.IconData get icon => (super.noSuchMethod(Invocation.getter(#icon),
-          returnValue: _FakeIconData_2(this, Invocation.getter(#icon)))
-      as _i4.IconData);
-  @override
-  String get description =>
-      (super.noSuchMethod(Invocation.getter(#description), returnValue: '')
-          as String);
-  @override
-  bool get selected =>
-      (super.noSuchMethod(Invocation.getter(#selected), returnValue: false)
-          as bool);
-  @override
-  String get headerImage =>
-      (super.noSuchMethod(Invocation.getter(#headerImage), returnValue: '')
-          as String);
+                  _i4.Future<Map<dynamic, dynamic>>.value(<dynamic, dynamic>{}))
+          as _i4.Future<Map<dynamic, dynamic>>);
 }

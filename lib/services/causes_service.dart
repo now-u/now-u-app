@@ -19,15 +19,6 @@ class CausesService {
     return data.map((causeData) => ListCause.fromJson(causeData)).toList();
   }
 
-  /// Get a cause by id 
-  ///
-  /// Input a cause id
-  /// Returns cause at that id
-  Future<Cause> getCause(int id) async {
-    Map response = await _apiService.getRequest("v2/causes/$id");
-    return Cause.fromJson(response["data"]);
-  }
-
   /// Get a list of campaigns 
   ///
   /// Input params

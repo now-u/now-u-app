@@ -19,12 +19,6 @@ class FakeCausesService with FakeApiService implements CausesService {
         .toList();
   }
 
-  Future<Cause> getCause(int id) async {
-    String response = await readDataFromFile("cause.json");
-    Map<String, dynamic> causeData = json.decode(response);
-    return Cause.fromJson(causeData);
-  }
-
   Future<CampaignAction> getAction(int id) async {
     String response = await readDataFromFile("action.json");
     Map<String, dynamic> actionData = json.decode(response)["data"];

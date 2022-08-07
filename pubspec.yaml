@@ -65,7 +65,7 @@ dependencies:
   firebase_core: ^1.17.0
   collection: ^1.15.0-nullsafety.4
   json_serializable: ^6.3.1
-  freezed: ^2.1.0+1
+  json_annotation: ^4.6.0
 
 dev_dependencies:
   flutter_test:
