@@ -14,7 +14,7 @@ LearningResource _$LearningResourceFromJson(Map<String, dynamic> json) =>
       link: json['link'] as String,
       type: getResourceTypeFromString(json['type'] as String?),
       createdAt: DateTime.parse(json['created_at'] as String),
-      completed: json['completed'] as bool,
+      completed: authBooleanSerializer(json['completed']),
       cause: causeFromJson(json['causes'] as List),
       source: json['source'] as String?,
     );

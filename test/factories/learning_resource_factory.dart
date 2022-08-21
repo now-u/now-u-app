@@ -1,6 +1,7 @@
 import 'package:app/models/Learning.dart';
 import 'package:flutter/material.dart';
 
+import './cause_factory.dart'; 
 import './factory.dart'; 
 
 class LearningResourceTypeFactory extends ModelFactory<LearningResourceType> {
@@ -22,6 +23,9 @@ class LearningResourceFactory extends ModelFactory<LearningResource> {
 			time: faker.randomGenerator.decimal(scale: 10),
 			link: faker.internet.httpUrl(),
 			type: LearningResourceTypeFactory().generate(),
+            createdAt: faker.date.dateTime(),
+            completed: faker.randomGenerator.boolean(),
+            cause: ListCauseFactory().generate(),
 		);
 	}
 }

@@ -65,16 +65,6 @@ class Article extends Explorable {
     this.releasedAt,
   });
 
-  // Article.fromJson(Map json)
-  //     : id = json['id'],
-  //       title = json['title'],
-  //       subtitle = json['subtitle'],
-  //       headerImage = json['header_image'],
-  //       releasedAt = DateTime.parse(json['release_date']),
-  //       fullArticleLink = json['full_article_link'],
-  //       source = json['source'],
-  //       type = articleTypeFromName(json['type']),
-  //       linkedCampaignId = json['campaign_id'];
   factory Article.fromJson(Map<String,dynamic> data) => _$ArticleFromJson(data);
 
   String? getCategory({List<Campaign>? campaigns}) {

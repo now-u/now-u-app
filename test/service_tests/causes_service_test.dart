@@ -1,122 +1,187 @@
-import 'package:app/assets/icons/customIcons.dart';
+import 'package:app/models/Action.dart';
+import 'package:app/models/Campaign.dart';
+import 'package:app/models/Cause.dart';
 import 'package:app/models/Learning.dart';
 import 'package:app/services/api_service.dart';
+import 'package:app/services/auth.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
-import 'package:mockito/annotations.dart';
-import 'causes_service_test.mocks.dart';
-import 'package:http/http.dart' as http;
+import '../factories/action_factory.dart';
+import '../factories/campaign_factory.dart';
+import '../factories/cause_factory.dart';
+import 'package:mocktail/mocktail.dart';
 
 import 'package:app/services/causes_service.dart';
-import '../setup/test_helpers.dart';
 import 'package:app/locator.dart';
-import 'package:app/models/Cause.dart';
-import 'package:app/models/Action.dart';
-import '../setup/helpers/factories.dart';
 
-@GenerateMocks([ApiService])
+import '../factories/learning_resource_factory.dart';
+import '../setup/test_helpers.dart';
+
+class MockApiService extends Mock implements ApiService {}
+
+class MockAuthenticationService extends Mock implements AuthenticationService {}
+
 void main() {
-  final mockApiService = MockApiService();
-  // setupLocator();
-  locator.registerSingleton<ApiService>(mockApiService);
-  CausesService _causesService = CausesService();
+  late ApiService mockApiService;
+  late AuthenticationService mockAuthenticationService;
+  late CausesService causesService;
 
-  group('get causes', () {
-    test('calls getRequest with correct path and iteratively calls Cause.fromJson on response',
-        () async {
+  final listCause = ListCauseFactory().generate();
+  final listAction = ListCauseActionFactory().generate();
+  final action = CampaignActionFactory().generate();
+  final listCampaign = ListCampaignFactory().generate();
+  final campaign = CampaignFactory().generate();
+  final learningResource = LearningResourceFactory().generate();
 
-      when(mockApiService.getListRequest(any, params: anyNamed("params")))
-        .thenAnswer((_) async => [{"dummy": "data1"}, {"dummy": "data2"}]);
+  const inputParams = {"test": "params"};
+
+  void mockModelListRequestResponseValue<T>(List<T> value) {
+    when(() => mockApiService.getModelListRequest<T>(any(), any(),
+        params: any(named: "params"),
+        limit: any(named: "limit"))).thenAnswer((_) async => value);
+  }
+
+  void mockModelRequestResponseValue<T>(T value) {
+    when(() => mockApiService.getModelRequest<T>(any(), any(),
+        params: any(named: "params"))).thenAnswer((_) async => value);
+  }
+
+  setUp(() {
+    locator.reset();
+    setupLocator();
+    mockApiService = MockApiService();
+    mockAuthenticationService = MockAuthenticationService();
+    registerMock<ApiService>(mockApiService);
+    registerMock<AuthenticationService>(mockAuthenticationService);
+    causesService = locator<CausesService>();
+
+    when(() => mockAuthenticationService.syncUser())
+        .thenAnswer((_) async => {});
+  });
+
+  group('causes', () {
+    test('getCauses calls getModelListRequest', () async {
+      mockModelListRequestResponseValue([listCause]);
+      List<ListCause> causes =
+          await causesService.getCauses(params: inputParams);
+      expect(causes, [listCause]);
+
+      verify(() => mockApiService.getModelListRequest(
+          "v2/causes", ListCause.fromJson,
+          params: inputParams)).called(1);
     });
   });
 
-  // group('get action', () {
-  //   test('returns an Action if the request is successfully', () async {
-  //     final client = MockClient();
-  //     _causesService.client = client;
+  group('actions', () {
+    test('getAction calls getModelRequest', () async {
+      final testId = 123;
+      mockModelRequestResponseValue(action);
+      CampaignAction response = await causesService.getAction(testId);
+      expect(response, action);
 
-  //     when(client.get(Uri.parse('https://api.now-u.com/api/v2/action/2'),
-  //             headers: unauthenticatedHeaders))
-  //         .thenAnswer((_) async =>
-  //             http.Response(await readTestData("action.json"), 200));
+      verify(() => mockApiService.getModelRequest(
+          "v2/actions/123", CampaignAction.fromJson)).called(1);
+    });
 
-  //     CampaignAction action = await _causesService.getAction(2);
-  //     expect(action.id, 2);
-  //     expect(action.title, "Watch 'Why talk toilets?'");
-  //     expect(action.link, "https://www.youtube.com/watch?v=MS4va1WLaro");
-  //     expect(action.type, CampaignActionType.Learn);
+    test('getActions calls getModelListRequest', () async {
+      mockModelListRequestResponseValue([listAction]);
+      List<ListCauseAction> actions =
+          await causesService.getActions(params: inputParams);
+      expect(actions, [listAction]);
 
-  //     ListCause actionCause = action.cause;
-  //     expect(actionCause.id, 1);
-  //   });
-  // });
+      verify(() => mockApiService.getModelListRequest(
+              "v2/actions", ListCauseAction.fromJson, params: inputParams))
+          .called(1);
+    });
+  });
 
-  // group('get actions', () {
-  //   test('returns a List of Actions if the request is successful', () async {
-  //     final client = MockClient();
-  //     _causesService.client = client;
+  group('campaigns', () {
+    test('getCampaign calls getModelRequest', () async {
+      final testId = 123;
+      mockModelRequestResponseValue(campaign);
+      Campaign response = await causesService.getCampaign(testId);
+      expect(response, campaign);
 
-  //     when(client.get(Uri.parse('https://api.now-u.com/api/v2/action'),
-  //             headers: unauthenticatedHeaders))
-  //         .thenAnswer((_) async =>
-  //             http.Response(await readTestData("actions.json"), 200));
+      verify(() => mockApiService.getModelRequest(
+          "v2/campaigns/123", Campaign.fromJson)).called(1);
+    });
 
-  //     List<ListCauseAction> actions = await _causesService.getActions();
+    test('getCampaigns calls getModelListRequest', () async {
+      mockModelListRequestResponseValue([listCampaign]);
+      List<ListCampaign> response =
+          await causesService.getCampaigns(params: inputParams);
+      expect(response, [listCampaign]);
 
-  //     ListCauseAction action = actions[0];
+      verify(() => mockApiService.getModelListRequest(
+              "v2/campaigns", ListCampaign.fromJson, params: inputParams))
+          .called(1);
+    });
+  });
 
-  //     expect(action.id, 47);
-  //     expect(action.title, "Watch 'Why talk toilets?'");
-  //     expect(action.type, CampaignActionType.Learn);
+  group('learning resources', () {
+    test('getLearningResources calls getModelListRequest', () async {
+      mockModelListRequestResponseValue([learningResource]);
+      List<LearningResource> response =
+          await causesService.getLearningResources(params: inputParams);
+      expect(response, [learningResource]);
 
-  //     ListCause actionCause = action.cause;
-  //     expect(actionCause.id, 1);
-  //   });
-  // });
+      verify(() => mockApiService.getModelListRequest(
+          "v2/learning_resources", LearningResource.fromJson,
+          params: inputParams)).called(1);
+    });
+  });
 
-  // group('join causes', () {
-  //   test('sends correct ids when causes are selected', () async {
-  //     final client = MockClient();
-  //     _causesService.client = client;
+  group('join causes', () {
+    test('sends correct cause ids', () async {
+      when(() => mockApiService.postRequest(any(), body: any(named: "body")))
+          .thenAnswer((_) async => {});
 
-  //     Map body = {
-  //       'cause_ids': [1, 2]
-  //     };
+      await causesService.selectCauses([listCause]);
 
-  //     when(client.post(Uri.parse('https://api.now-u.com/api/v2/me/causes'),
-  //             headers: unauthenticatedHeaders, body: body))
-  //         .thenAnswer((_) async => http.Response('{}', 200));
+      verify(() => mockApiService.postRequest("v2/me/causes", body: {
+            'cause_ids': [listCause.id]
+          })).called(1);
 
-  //     await _causesService.selectCauses([mockCause(id: 1), mockCause(id: 2)]);
+      verify(() => mockAuthenticationService.syncUser()).called(1);
+    });
+  });
 
-  //     verify(client.post(Uri.parse('https://api.now-u.com/api/v2/me/causes'),
-  //             headers: unauthenticatedHeaders, body: body))
-  //         .called(1);
-  //   });
-  // });
+  group('completeAction', () {
+    test('calls corrrect endpoint', () async {
+      when(() => mockApiService.postRequest(any(), body: any(named: "body")))
+          .thenAnswer((_) async => {});
 
-  // group('get learning resources', () {
-  //   test('returns a List of LearningResources if the request is successful',
-  //       () async {
-  //     final client = MockClient();
-  //     _causesService.client = client;
+      await causesService.completeAction(123);
 
-  //     when(client.get(
-  //             Uri.parse('https://api.now-u.com/api/v2/learning/resources'),
-  //             headers: unauthenticatedHeaders))
-  //         .thenAnswer((_) async => http.Response(
-  //             await readTestData("learning_resources.json"), 200));
+      verify(() =>
+              mockApiService.postRequest("v1/users/me/actions/123/complete"))
+          .called(1);
+      verify(() => mockAuthenticationService.syncUser()).called(1);
+    });
+  });
 
-  //     List<LearningResource> resources =
-  //         await _causesService.getLearningResources();
-  //     LearningResource resource = resources[0];
+  group('removeActionStatus', () {
+    test('calls corrrect endpoint', () async {
+      when(() => mockApiService.deleteRequest(any()))
+          .thenAnswer((_) async => {});
 
-  //     expect(resource.id, 47);
-  //     expect(resource.title, "Watch 'Why talk toilets?'");
-  //     expect(resource.type, getResourceTypeFromString("video"));
+      await causesService.removeActionStatus(123);
 
-  //     ListCause actionCause = resource.cause;
-  //     expect(actionCause.id, 1);
-  //   });
-  // });
+      verify(() => mockApiService.deleteRequest("v1/users/me/actions/123"))
+          .called(1);
+      verify(() => mockAuthenticationService.syncUser()).called(1);
+    });
+  });
+
+  group('completeLearningResources', () {
+    test('calls corrrect endpoint', () async {
+      when(() => mockApiService.postRequest(any(), body: any(named: "body")))
+          .thenAnswer((_) async => {});
+
+      await causesService.completeLearningResource(123);
+
+      verify(() => mockApiService
+          .postRequest("v1/users/me/learning_resources/123")).called(1);
+      verify(() => mockAuthenticationService.syncUser()).called(1);
+    });
+  });
 }

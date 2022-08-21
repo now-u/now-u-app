@@ -8,6 +8,8 @@ import 'package:app/models/Explorable.dart';
 import 'package:app/models/Action.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import 'utils.dart';
+
 part 'Learning.g.dart';
 
 /// TODO Remove -> The LearningCentre page will be removed in v2
@@ -129,6 +131,7 @@ class LearningResource extends Explorable {
   /// String name of the source of the article eg BBC news
   final String? source;
 
+  @JsonKey(fromJson: authBooleanSerializer, name: "completed")
   final bool completed;
 
   @JsonKey(fromJson: causeFromJson, name: "causes")

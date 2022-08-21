@@ -12,5 +12,5 @@ ListCause _$ListCauseFromJson(Map<String, dynamic> json) => ListCause(
       icon: getIconFromString(json['icon'] as String),
       description: json['description'] as String,
       headerImage: json['image'] as String,
-      selected: json['joined'] as bool,
+      selected: authBooleanSerializer(json['completed']),
     );

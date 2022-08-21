@@ -5,34 +5,29 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:app/services/api_service.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../factories/article_factory.dart';
+import '../setup/test_helpers.dart';
+
 class MockApiService extends Mock implements ApiService {}
 
 void main() {
   late NewsService newsService;
   late ApiService mockApiService;
 
-  final article = Article(
-    id: 1,
-    title: "",
-    subtitle: "",
-    type: articleTypes[0],
-    headerImage: "",
-    fullArticleLink: "",
-  );
+  final article = ArticleFactory().generate();
 
   setUp(() {
     setupLocator();
     mockApiService = MockApiService();
-    locator.unregister<ApiService>();
-    locator.registerSingleton<ApiService>(mockApiService);
+    registerMock<ApiService>(mockApiService);
     newsService = locator<NewsService>();
 
     when(() => mockApiService.getModelListRequest<Article>(any(), any(), params: any(named: "params"), limit: any(named:"limit")))
           .thenAnswer((_) async => [article]);
   });
 
-  group('get causes', () {
-    test('calls getMoelListRequest', () async {
+  group('get articles', () {
+    test('calls getModelListRequest', () async {
       const inputParams = {"test": "params"};
       List<Article> articles = await newsService.getArticles(params: inputParams);
       expect(articles, [article]);

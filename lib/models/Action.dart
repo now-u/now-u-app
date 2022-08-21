@@ -3,6 +3,7 @@ import 'package:app/assets/icons/customIcons.dart';
 import 'package:app/locator.dart';
 import 'package:app/models/Cause.dart';
 import 'package:app/models/Explorable.dart';
+import 'package:app/models/utils.dart';
 import 'package:app/services/causes_service.dart';
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
@@ -270,6 +271,7 @@ class ListCauseAction extends Explorable {
       0;
 
   /// Whether the user has completed this action
+  @JsonKey(fromJson: authBooleanSerializer, name: "completed")
   final bool completed;
 
   @JsonKey(name: "release_date")

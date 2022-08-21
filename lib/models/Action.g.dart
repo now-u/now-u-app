@@ -12,7 +12,7 @@ ListCauseAction _$ListCauseActionFromJson(Map<String, dynamic> json) =>
       title: json['title'] as String,
       type: campaignActionTypeFromString(json['type'] as String?),
       cause: causeFromJson(json['causes'] as List),
-      completed: json['completed'] as bool,
+      completed: authBooleanSerializer(json['completed']),
       time: (json['time'] as num).toDouble(),
       createdAt: DateTime.parse(json['created_at'] as String),
       releasedAt: json['release_date'] == null
@@ -26,7 +26,7 @@ CampaignAction _$CampaignActionFromJson(Map<String, dynamic> json) =>
       title: json['title'] as String,
       type: campaignActionTypeFromString(json['type'] as String?),
       cause: causeFromJson(json['causes'] as List),
-      completed: json['completed'] as bool,
+      completed: authBooleanSerializer(json['completed']),
       time: (json['time'] as num).toDouble(),
       createdAt: DateTime.parse(json['created_at'] as String),
       releasedAt: json['release_date'] == null

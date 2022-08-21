@@ -1,18 +1,19 @@
 import 'package:app/assets/icons/customIcons.dart';
-import 'package:app/models/Action.dart';
 import 'package:flutter/widgets.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import 'utils.dart';
 
 part 'Cause.g.dart';
 
 @JsonSerializable()
 class ListCause {
   final int id;
-  // TODO rname
+  // TODO rename
   @JsonKey(name: "name")
   final String title;
   
-  @JsonKey(name: "joined")
+  @JsonKey(fromJson: authBooleanSerializer, name: "completed")
   final bool selected;
 
   @JsonKey(fromJson: getIconFromString)

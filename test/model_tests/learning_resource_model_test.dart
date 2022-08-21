@@ -19,8 +19,8 @@ void main() {
       expect(resource.cause.id, 1);
     });
     
-	test('fromJson serializes correctly', () {
-		isNew()
+	test('isNew', () {
+		// isNew()
     });
   });
 }
