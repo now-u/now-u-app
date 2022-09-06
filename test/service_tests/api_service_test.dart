@@ -133,4 +133,8 @@ void main() {
           .called(1);
     });
   });
+
+  group('test getModelRequest', () {});
+
+  group('test getModelListRequest', () {});
 }

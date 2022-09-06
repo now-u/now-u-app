@@ -38,6 +38,9 @@ class CustomColors {
   static Color greyDark2 = Color.fromRGBO(109, 113, 129, 1);
   static Color black1 = Color.fromRGBO(55, 58, 74, 1);
   static Color black2 = Color.fromRGBO(23, 23, 26, 1);
+
+  //-- Shadow colors --//
+
 }
 
 //-- Fonts --//
@@ -69,8 +72,7 @@ TextStyle exploreHeading = TextStyle(
 
 const Offset tileShadowOffset = Offset(0, 3);
 const double tileShadowBlurRadius = 20;
-const BorderRadius tileBorderRadius =
-    const BorderRadius.all(Radius.circular(8));
+final BorderRadius tileBorderRadius = BorderRadius.circular(8);
 const BoxShadow tileBoxShadowLight = const BoxShadow(
   color: Color.fromRGBO(0, 45, 96, 0.08),
   offset: tileShadowOffset,
@@ -81,3 +83,29 @@ const BoxShadow tileBoxShadowDark = const BoxShadow(
   offset: tileShadowOffset,
   blurRadius: tileShadowBlurRadius,
 );
+
+const double tileElevation = 10;
+
+//-- Themes --//
+
+final ligthThemeBaseTextStyle = TextStyle(
+  color: CustomColors.black1,
+);
+
+// Used through majority of app
+final lightTheme = ThemeData(
+  fontFamily: 'Nunito',
+  textTheme: TextTheme(
+    bodyMedium: ligthThemeBaseTextStyle.copyWith(
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+    ),
+    headlineMedium: ligthThemeBaseTextStyle.copyWith(
+      fontSize: 20,
+      fontWeight: FontWeight.w700,
+    ),
+  ),
+);
+
+// Used during on boarding
+final darkTheme = ThemeData();

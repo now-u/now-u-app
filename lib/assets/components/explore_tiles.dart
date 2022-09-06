@@ -1,5 +1,5 @@
+import 'package:app/assets/components/card.dart';
 import 'package:app/assets/components/cause_indicator.dart';
-import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/custom_network_image.dart';
 import 'package:app/assets/constants.dart';
 import 'package:app/locator.dart';
@@ -24,8 +24,14 @@ enum ExploreTileStyle {
 abstract class ExploreTile extends StatelessWidget {
   ExploreTile({key});
 
+  Widget buildBody(BuildContext context);
+
   @override
-  Widget build(BuildContext context);
+  Widget build(BuildContext context) {
+    return BaseCard(
+      buildBody(context),
+    );
+  }
 }
 
 class ExploreCampaignTile extends ExploreTile {
@@ -46,7 +52,7 @@ class ExploreCampaignTile extends ExploreTile {
         super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildBody(BuildContext context) {
     return AspectRatio(
       aspectRatio: 0.75,
       child: InkWell(
@@ -182,60 +188,45 @@ abstract class ExploreResourceTile extends ExploreTile {
 
   void onTap();
 
-  Widget _standardWrapper(Widget child) {
-    // return Card(
-    //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-    //   clipBehavior: Clip.antiAlias,
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      clipBehavior: Clip.antiAlias,
-      child: child,
-    );
-  }
-
   Widget _extendedWrapper(BuildContext context, Widget child) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      clipBehavior: Clip.antiAlias,
-      child: AspectRatio(
-        aspectRatio: 2,
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            child,
-            Positioned(
-              right: 0,
-              child: Container(
-                width: COMPLETED_EXTENSION_WIDTH,
-                decoration: BoxDecoration(
-                    color: CustomColors.white,
-                    borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(8),
-                        bottomRight: Radius.circular(8))),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        completed ? 'Completed' : 'Needs Completing',
-                        style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.button,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                        ),
-                        textAlign: TextAlign.center,
+    return AspectRatio(
+      aspectRatio: 2,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          child,
+          Positioned(
+            right: 0,
+            child: Container(
+              width: COMPLETED_EXTENSION_WIDTH,
+              decoration: BoxDecoration(
+                  color: CustomColors.white,
+                  borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(8),
+                      bottomRight: Radius.circular(8))),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      completed ? 'Completed' : 'Needs Completing',
+                      style: textStyleFrom(
+                        Theme.of(context).primaryTextTheme.button,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14,
                       ),
-                      SizedBox(height: 20),
-                      _ExploreTileCheckmark(completed: completed, size: 30),
-                    ],
-                  ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 20),
+                    _ExploreTileCheckmark(completed: completed, size: 30),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -318,11 +309,11 @@ abstract class ExploreResourceTile extends ExploreTile {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildBody(BuildContext context) {
     Widget child = _innerTile(context);
     if (style == ExploreTileStyle.Extended)
       return _extendedWrapper(context, child);
-    return _standardWrapper(child);
+    return child;
   }
 }
 
@@ -347,7 +338,7 @@ class ExploreNewsTile extends ExploreTile {
         article = model,
         super(key: key);
 
-  Widget build(BuildContext context) {
+  Widget buildBody(BuildContext context) {
     return AspectRatio(
       aspectRatio: 0.8,
       child: InkWell(

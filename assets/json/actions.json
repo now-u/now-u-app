@@ -1,25 +1,35 @@
 {
   "data": [
     {
-        "id": 47,
-        "title": "Watch 'Why talk toilets?'",
-        "type": "learn",
-        "causes": [
-          {
-            "id": 1,
-            "name": "Cause title",
-            "icon": "ic-abc",
-            "description": "Cause description",
-            "image": "https://picsum.photos/400/200"
-          }
-        ],
-        "time": 2.0,
-        "end_date": null,
-        "created_at": "2020-07-06T20:49:43.892Z",
-        "release_date": "2020-07-06T20:51:26.708Z",
-        "enabled": true,
-        "completed": true,
-        "starred": true
-      }
+      "id": 597,
+      "title": "Become a friend of FreePress Unlimited",
+      "link": "https://www.freepressunlimited.org/en/donate",
+      "type": "donate",
+      "campaign_id": 20,
+      "created_at": "2021-04-13T20:02:57.521Z",
+      "updated_at": "2021-04-13T20:02:57.529Z",
+      "what_description": "Become a friend of the free press and make a donation starting at 5€.",
+      "why_description": "Your contribution will help provide the support to journalists in need, helping media in conflict areas, and develop techniques to circumvent censorship and protect sources. By becoming a friend, you will also receive priority invitations to debates, workshops, festivals and film evenings, as well as updates how this organisation spends your donation. ",
+      "time": 5.0,
+      "enabled": true,
+      "release_date": "2021-04-30T23:00:00.000Z",
+      "end_date": null,
+      "of_the_month": null,
+      "recommended": null,
+      "causes": [
+        {
+          "id": 61,
+          "image": "https://images.unsplash.com/photo-1656490268345-db5139f42497?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80",
+          "icon": "ic_getinvolved",
+          "name": "Water",
+          "description": "Some campaign thing about water with a dog as the photo",
+          "joiners": null,
+          "created_at": "2022-06-29T20:22:44.977Z",
+          "updated_at": "2022-06-29T21:09:34.558Z",
+		  "joined": true
+        }
+      ],
+      "completed": false
+    }
   ]
 }

@@ -1,18 +1,14 @@
 import 'package:app/models/User.dart';
-
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-
 import 'package:app/locator.dart';
 import 'package:app/services/api_service.dart';
 import 'package:app/services/shared_preferences_service.dart';
 import 'package:app/services/device_info_service.dart';
 
-class AuthenticationService extends ApiService {
-  //final NavigationService _navigationService = locator<NavigationService>();
+class AuthenticationService {
   final SharedPreferencesService _sharedPreferencesService =
       locator<SharedPreferencesService>();
   final DeviceInfoService _deviceInfoService = locator<DeviceInfoService>();
+  final ApiService _apiService = locator<ApiService>();
 
   String? token;
   User? _currentUser;
@@ -21,7 +17,7 @@ class AuthenticationService extends ApiService {
   bool get isAuthenticated => token != null;
 
   Future<bool> isUserLoggedIn() async {
-    // TODO: Dont have whole user in shared prefs
+    // TODO: Dont save the whole user in shared prefs
     User? user = await _sharedPreferencesService.loadUserFromPrefs();
     if (user != null && user.token != null) {
       token = user.token;
@@ -44,7 +40,7 @@ class AuthenticationService extends ApiService {
     String name,
     bool acceptNewletter,
   ) async {
-    await postRequest(
+    await _apiService.postRequest(
       'v1/users',
       body: {
         'email': email,
@@ -57,7 +53,7 @@ class AuthenticationService extends ApiService {
   }
 
   Future login(String email, String emailToken) async {
-    Map<String, dynamic> response = await postRequest(
+    Map<String, dynamic> response = await _apiService.postRequest(
       'v1/users/login',
       body: {
         'email': email,
@@ -77,7 +73,7 @@ class AuthenticationService extends ApiService {
 
   Future<User>? getUser(String token) async {
     print("Getting user with token $token");
-    Map userResponse = await getRequest('v1/users/me');
+    Map userResponse = await _apiService.getRequest('v1/users/me');
     return User.fromJson(userResponse["data"]);
   }
 
@@ -97,7 +93,7 @@ class AuthenticationService extends ApiService {
       if (orgCode != null) {
         userDetials["organisation_code"] = orgCode;
       }
-      Map response = await putRequest(
+      Map response = await _apiService.putRequest(
         'v1/users/me',
         body: userDetials,
       );
@@ -113,6 +109,6 @@ class AuthenticationService extends ApiService {
   }
 
   Future deleteUserAccount() async {
-    await deleteRequest('v1/users/me');
+    await _apiService.deleteRequest('v1/users/me');
   }
 }

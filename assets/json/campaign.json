@@ -10,15 +10,15 @@
     "causes": [
       {
           "id": 4,
-          "title": "Education & Citizenship",
+          "name": "Education & Citizenship",
           "description": "Get involved with charities and activists locally and across the globe.",
-          "header_image": "https://images.unsplash.com/photo-1498925008800-019c7d59d903?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=968&q=80",
-          "selected": true,
+          "image": "https://images.unsplash.com/photo-1498925008800-019c7d59d903?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=968&q=80",
+          "joined": true,
           "icon": "ic_learning" 
       }
     ],
     "description_app": "George Floyd’s death sparked an anti-racism movement on a global scale. However, structural racism has existed for generations, and is certainly not limited to the United States. In the UK, 47% of Black children live in poverty (Runnymede) and Black people are vastly overrepresented in the prison population (The Lammy Review). We need to look in the mirror if we are serious about putting an end to racism.\\nBy joining this campaign, you can learn more about the issues disproportionately impacting Black people in the UK, access learning materials about structural racism, and take actions that will support the BLM movement. \n",
-    "actions": [
+    "campaign_actions": [
       {
           "id": 47,
           "title": "Watch 'Why talk toilets?'",
@@ -26,11 +26,11 @@
           "causes": [
             {
               "id": 1,
-              "title": "Cause title",
+              "name": "Cause title",
               "icon": "ic-abc",
               "description": "Cause description",
-              "selected": true,
-              "header_image": "https://picsum.photos/400/200"
+              "joined": true,
+              "image": "https://picsum.photos/400/200"
             }
           ],
           "time": 2.0,
@@ -41,6 +41,28 @@
           "completed": true,
           "starred": true
         }
+    ],
+	"learning_resources": [
+		{
+    	    "id": 47,
+    	    "title": "Watch 'Why talk toilets?'",
+    	    "type": "video",
+    	    "causes": [
+    	      {
+    	        "id": 1,
+    	        "name": "Cause title",
+    	        "icon": "ic-abc",
+    	        "description": "Cause description",
+    	        "joined": true,
+    	        "image": "https://picsum.photos/400/200"
+    	      }
+    	    ],
+    	    "time": 2.0,
+    	    "completed": true,
+    	    "link": "https://something.com",
+    	    "source": "bbc",
+    	    "created_at": "2020-07-06T20:49:43.892Z"
+		}
     ],
     "video_link": "https://youtu.be/EBfIH6dN3fk",
     "infographic_url": "https://now-u.s3.eu-west-2.amazonaws.com/blm_campaign_illustration_f5ede3b48c.png",

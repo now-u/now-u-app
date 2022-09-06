@@ -5,15 +5,13 @@ import 'package:app/models/Explorable.dart';
 import 'package:app/models/Learning.dart';
 import 'package:app/models/Organisation.dart';
 import 'package:app/services/dynamicLinks.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'Campaign.g.dart';
 
 final DynamicLinkService _dynamicLinkService = locator<DynamicLinkService>();
 
-class ListCampaignSerializer extends Serializer<ListCampaign> {
-  ListCampaign fromJson(Map<String, dynamic> data) {
-    return ListCampaign.fromJson(data);
-  }
-}
-
+@JsonSerializable()
 class ListCampaign extends Explorable {
   /// API id for header image
   final int id;
@@ -31,6 +29,7 @@ class ListCampaign extends Explorable {
   /// The cause that this campaign is part of
   // Although at the api level a campaign can be in many causes, for now we are
   // only showing a single cause in the UI.
+  @JsonKey(fromJson: causeFromJson, name: "causes")
   final ListCause cause;
 
   /// Returns whether the campaign has ended
@@ -43,23 +42,31 @@ class ListCampaign extends Explorable {
     required this.shortName,
     required this.headerImage,
     required this.completed,
-    required List<ListCause> causes,
+    required this.cause,
     this.startDate,
     this.endDate,
-  }) : cause = causes[0];
+  });
 
-  ListCampaign.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        title = json['title'],
-        shortName = json['short_name'],
-        headerImage = json['header_image'],
-        startDate = DateTime.parse(json['start_date']),
-        endDate = DateTime.parse(json['end_date']),
-        completed = json['completed'],
-        cause = ListCause.fromJson(json['causes'][0]);
+  factory ListCampaign.fromJson(Map<String, dynamic> data) =>
+      _$ListCampaignFromJson(data);
+  // ListCampaign.fromJson(Map<String, dynamic> json)
+  //     : id = json['id'],
+  //       title = json['title'],
+  //       shortName = json['short_name'],
+  //       headerImage = json['header_image'],
+  //       startDate = DateTime.parse(json['start_date']),
+  //       endDate = DateTime.parse(json['end_date']),
+  //       completed = json['completed'],
+  //       cause = ListCause.fromJson(json['causes'][0]);
 }
 
+String descriptionFromJson(String value) {
+  return value.replaceAll('\\n', '\n\n');
+}
+
+@JsonSerializable()
 class Campaign extends ListCampaign {
+  @JsonKey(fromJson: descriptionFromJson, name: "description_app")
   final String description;
   final String videoLink;
   final String infographicUrl;
@@ -69,11 +76,13 @@ class Campaign extends ListCampaign {
 
   final List<String> keyAims;
 
+  @JsonKey(name: "campaign_actions")
   final List<ListCauseAction> actions;
   final List<LearningResource> learningResources;
 
-  final int numberOfCampaigners;
-  final int numberOfActionsCompleted;
+  // TODO populate from API
+  final int numberOfCampaigners = 0;
+  final int numberOfActionsCompleted = 0;
 
   Campaign({
     // Super attributes
@@ -82,7 +91,7 @@ class Campaign extends ListCampaign {
     required String headerImage,
     required String shortName,
     required bool completed,
-    required List<ListCause> causes,
+    required ListCause cause,
     DateTime? startDate,
     DateTime? endDate,
     required this.description,
@@ -90,8 +99,6 @@ class Campaign extends ListCampaign {
     required this.learningResources,
     required this.videoLink,
     required this.infographicUrl,
-    required this.numberOfCampaigners,
-    required this.numberOfActionsCompleted,
     this.generalPartners = const [],
     this.campaignPartners = const [],
     this.keyAims = const [],
@@ -103,41 +110,43 @@ class Campaign extends ListCampaign {
           startDate: startDate,
           endDate: endDate,
           completed: completed,
-          causes: causes,
+          cause: cause,
         );
 
-  Campaign.fromJson(Map<String, dynamic> json)
-      : description = json['description_app'].replaceAll('\\n', '\n\n'),
-        // numberOfCampaigners = json['number_of_campaigners'],
-        // numberOfActionsCompleted = json['number_of_completed_actions'],
-        numberOfCampaigners = 0,
-        numberOfActionsCompleted = 0,
-        infographicUrl = json['infographic_url'],
-        actions = json['campaign_actions']
-            .map((e) => ListCauseAction.fromJson(e,
-                cause: ListCause.fromJson(json['causes'][0])))
-            .toList()
-            .cast<ListCauseAction>(),
-        learningResources = json['learning_resources']
-            .map((e) => LearningResource.fromJson(e,
-                cause: ListCause.fromJson(json['causes'][0])))
-            .toList()
-            .cast<LearningResource>(),
-        videoLink = json['video_link'],
-        // generalPartners = json['general_partners']
-        //     .map((e) => Organisation.fromJson(e))
-        //     .toList()
-        //     .cast<Organisation>(),
-        // keyAims =
-        //     json['key_aims'].map((a) => a['title']).toList().cast<String>(),
-        // campaignPartners = json['campaign_partners']
-        //     .map((e) => Organisation.fromJson(e))
-        //     .toList()
-        //     .cast<Organisation>(),
-        keyAims = [],
-        campaignPartners = [],
-        generalPartners = [],
-        super.fromJson(json);
+  factory Campaign.fromJson(Map<String, dynamic> data) =>
+      _$CampaignFromJson(data);
+  // Campaign.fromJson(Map<String, dynamic> json)
+  //     : description = json['description_app'].replaceAll('\\n', '\n\n'),
+  //       // numberOfCampaigners = json['number_of_campaigners'],
+  //       // numberOfActionsCompleted = json['number_of_completed_actions'],
+  //       infographicUrl = json['infographic_url'],
+  //   // TODO remove
+  //   actions = [],
+  //       // actions = json['campaign_actions']
+  //       //     .map((e) => ListCauseAction.fromJson(e,
+  //       //         cause: ListCause.fromJson(json['causes'][0])))
+  //       //     .toList()
+  //       //     .cast<ListCauseAction>(),
+  //       learningResources = json['learning_resources']
+  //           .map((e) => LearningResource.fromJson(e,
+  //               cause: ListCause.fromJson(json['causes'][0])))
+  //           .toList()
+  //           .cast<LearningResource>(),
+  //       videoLink = json['video_link'],
+  //       // generalPartners = json['general_partners']
+  //       //     .map((e) => Organisation.fromJson(e))
+  //       //     .toList()
+  //       //     .cast<Organisation>(),
+  //       // keyAims =
+  //       //     json['key_aims'].map((a) => a['title']).toList().cast<String>(),
+  //       // campaignPartners = json['campaign_partners']
+  //       //     .map((e) => Organisation.fromJson(e))
+  //       //     .toList()
+  //       //     .cast<Organisation>(),
+  //       keyAims = [],
+  //       campaignPartners = [],
+  //       generalPartners = [],
+  //       super.fromJson(json);
 
   Future<String> getShareText() async {
     Uri uri = await _dynamicLinkService.createDynamicLink(

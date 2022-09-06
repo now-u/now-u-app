@@ -54,23 +54,23 @@ class CausesViewModel extends BaseModel {
     }
   }
 
-  void selectCauses() async {
+  Future<void> selectCauses() async {
     List<ListCause> selectedCauses =
         causesList.where((cause) => isCauseSelected(cause)).toList();
-    _causesService.selectCauses(selectedCauses);
+    return await _causesService.selectCauses(selectedCauses);
   }
 }
 
 class SelectCausesViewModel extends CausesViewModel {
-  void selectCauses() async {
-    super.selectCauses();
+  Future<void> selectCauses() async {
+    await super.selectCauses();
     _navigationService.navigateTo(Routes.home);
   }
 }
 
 class ChangeCausesViewModel extends CausesViewModel {
-  void selectCauses() async {
-    super.selectCauses();
+  Future<void> selectCauses() async {
+    await super.selectCauses();
     _navigationService.navigateTo(Routes.home);
   }
 
