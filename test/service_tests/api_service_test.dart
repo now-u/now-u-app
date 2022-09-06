@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -16,13 +17,15 @@ import 'package:app/locator.dart';
 @GenerateMocks([AuthenticationService])
 void main() {
   setupLocator();
+  ApiService apiService = ApiService();
+  apiService.baseUrl = "example.com";
+  apiService.baseUrlPath = "api/";
 
   group('test getExceptionForResponse', () {
     void testExceptionForStatusCode(
         int statusCode, ApiExceptionType expectedType) {
       // getAndRegisterMockAnalyticsService();
       http.Response response = http.Response("", statusCode);
-      ApiService apiService = ApiService();
 
       ApiException excpetion = apiService.getExceptionForResponse(response);
       expect(excpetion.type, expectedType);
@@ -40,7 +43,6 @@ void main() {
 
   group('test getRequestHeaders', () {
     test('unauthenticated', () async {
-      ApiService apiService = ApiService();
       expect(apiService.getRequestHeaders(), {
         'Content-Type': 'application/json; charset=UTF-8',
       });
@@ -55,8 +57,6 @@ void main() {
       when(mockAuthService.isAuthenticated).thenReturn(true);
       when(mockAuthService.token).thenReturn("abc");
 
-      ApiService apiService = ApiService();
-
       // Expect token to be included in the response
       expect(apiService.getRequestHeaders(), {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -67,7 +67,6 @@ void main() {
 
   group('test getRequest', () {
     test('without parameters', () async {
-      ApiService apiService = ApiService();
       MockClient client = mockHttpClient(apiService);
 
       when(client.get(any, headers: anyNamed("headers"))).thenAnswer(
@@ -76,13 +75,12 @@ void main() {
       Map response = await apiService.getRequest("causes/stuff");
       expect(response, {"abc": "def"});
 
-      verify(client.get(Uri.parse("https://api.now-u.com/api/v2/causes/stuff"),
+      verify(client.get(Uri.parse("https://example.com/api/causes/stuff"),
               headers: anyNamed("headers")))
           .called(1);
     });
 
     test('with parameters', () async {
-      ApiService apiService = ApiService();
       MockClient client = mockHttpClient(apiService);
 
       when(client.get(any, headers: anyNamed("headers"))).thenAnswer(
@@ -94,13 +92,12 @@ void main() {
 
       verify(client.get(
               Uri.parse(
-                  "https://api.now-u.com/api/v2/causes/stuff?limit=10&fav=true"),
+                  "https://example.com/api/causes/stuff?limit=10&fav=true"),
               headers: anyNamed("headers")))
           .called(1);
     });
 
     test('with list parameters', () async {
-      ApiService apiService = ApiService();
       MockClient client = mockHttpClient(apiService);
 
       when(client.get(any, headers: anyNamed("headers")))
@@ -111,7 +108,7 @@ void main() {
       });
       verify(client.get(
               Uri.parse(
-                  "https://api.now-u.com/api/v2/causes/stuff?causes=%5B1%2C2%5D"),
+                  "https://example.com/api/causes/stuff?causes=%5B1%2C2%5D"),
               headers: anyNamed("headers")))
           .called(1);
     });
@@ -119,7 +116,6 @@ void main() {
 
   group('test postRequest', () {
     test('without parameters', () async {
-      ApiService apiService = ApiService();
       MockClient client = mockHttpClient(apiService);
 
       when(client.post(any,
@@ -127,10 +123,14 @@ void main() {
           .thenAnswer(
               (_) => Future.value(http.Response('{"abc": "def"}', 200)));
 
-      Map response = await apiService.postRequest("test", body: {"abc": "def"});
+      Map response =
+          await apiService.postRequest("test", body: {"test": "payload"});
       expect(response, {"abc": "def"});
-      verify(client.post(Uri.parse("https://api.now-u.com/api/v2/test"),
-          headers: anyNamed("headers"), body: {"abc": "def"})).called(1);
+      verify(client.post(Uri.parse("https://example.com/api/test"),
+              headers: anyNamed("headers"),
+              body: json.encode({"test": "payload"}),
+              encoding: null))
+          .called(1);
     });
   });
 }

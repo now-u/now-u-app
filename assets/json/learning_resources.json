@@ -7,11 +7,11 @@
         "causes": [
           {
             "id": 1,
-            "title": "Cause title",
+            "name": "Cause title",
             "icon": "ic-abc",
             "description": "Cause description",
             "selected": true,
-            "header_image": "https://picsum.photos/400/200"
+            "image": "https://picsum.photos/400/200"
           }
         ],
         "time": 2.0,

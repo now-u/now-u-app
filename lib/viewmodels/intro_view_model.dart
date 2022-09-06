@@ -2,7 +2,6 @@ import 'package:app/pages/login/login.dart';
 import 'package:app/viewmodels/base_model.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rect_getter/rect_getter.dart';
-import 'package:app/pages/campaign/CampaignPage.dart';
 
 class FadeRouteBuilder<T> extends PageRouteBuilder<T> {
   final Widget page;
@@ -50,7 +49,7 @@ class IntroViewModel extends BaseModel {
     IntroPageData(
       title: "Choose causes you care about",
       description:
-          "We partner with charities to bring you targeted monthly campaigns, highlighting a range of social and environmental issues both locally and around the world. Join as many as you like!",
+          "Select and support the social and environmental issues important to you.",
       image: 'assets/imgs/intro/On-Boarding illustrations-01.png',
     ),
     IntroPageData(
@@ -60,8 +59,7 @@ class IntroViewModel extends BaseModel {
     ),
     IntroPageData(
       title: "Help shape a better world",
-      description:
-          "Join a community of changemakers, connect with fellow campaign contributors, and see how your actions are making a difference.",
+      description: "Join our growing community driving lasting change.",
       image: 'assets/imgs/intro/On-Boarding illustrations-04.png',
     ),
   ];
@@ -99,7 +97,7 @@ class IntroViewModel extends BaseModel {
 
   void nextPage(BuildContext context) async {
     notifyListeners();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       animationRect =
           animationRect!.inflate(1.3 * MediaQuery.of(context).size.longestSide);
       notifyListeners();

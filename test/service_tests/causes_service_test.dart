@@ -1,5 +1,6 @@
 import 'package:app/assets/icons/customIcons.dart';
 import 'package:app/models/Learning.dart';
+import 'package:app/services/api_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
@@ -26,7 +27,6 @@ void main() {
     test('returns a List of ListCauses if the request is successfully',
         () async {
       final client = MockClient();
-      _causesService.client = client;
 
       when(client.get(Uri.parse('https://api.now-u.com/api/v2/causes'),
               headers: unauthenticatedHeaders))

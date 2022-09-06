@@ -2,6 +2,7 @@ final double defaultBorderRadius = 8.0;
 final double defaultPadding = 14.0;
 
 enum ButtonSize { Small, Medium, Large }
+
 enum ButtonStyle { Primary, Secondary, Outline }
 
 Map buttonStyleStyles = {

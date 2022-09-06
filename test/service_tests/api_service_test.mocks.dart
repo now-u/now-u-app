@@ -32,12 +32,8 @@ class MockAuthenticationService extends _i1.Mock
   }
 
   @override
-  String get domainPrefix =>
-      (super.noSuchMethod(Invocation.getter(#domainPrefix), returnValue: '')
-          as String);
-  @override
-  set domainPrefix(String? _domainPrefix) =>
-      super.noSuchMethod(Invocation.setter(#domainPrefix, _domainPrefix),
+  set token(String? _token) =>
+      super.noSuchMethod(Invocation.setter(#token, _token),
           returnValueForMissingStub: null);
   @override
   bool get isAuthenticated => (super
@@ -67,17 +63,13 @@ class MockAuthenticationService extends _i1.Mock
       super.noSuchMethod(Invocation.setter(#baseUrlPath, _baseUrlPath),
           returnValueForMissingStub: null);
   @override
-  void switchToStagingBranch() =>
-      super.noSuchMethod(Invocation.method(#switchToStagingBranch, []),
-          returnValueForMissingStub: null);
-  @override
   _i5.Future<bool> isUserLoggedIn() =>
       (super.noSuchMethod(Invocation.method(#isUserLoggedIn, []),
           returnValue: Future<bool>.value(false)) as _i5.Future<bool>);
   @override
-  _i5.Future<dynamic>? handleAuthRequestErrors(_i2.Response? response) => (super
-          .noSuchMethod(Invocation.method(#handleAuthRequestErrors, [response]))
-      as _i5.Future<dynamic>?);
+  _i5.Future<dynamic> syncUser() =>
+      (super.noSuchMethod(Invocation.method(#syncUser, []),
+          returnValue: Future<dynamic>.value()) as _i5.Future<dynamic>);
   @override
   _i5.Future<dynamic> sendSignInWithEmailLink(
           String? email, String? name, bool? acceptNewletter) =>
@@ -86,9 +78,9 @@ class MockAuthenticationService extends _i1.Mock
               #sendSignInWithEmailLink, [email, name, acceptNewletter]),
           returnValue: Future<dynamic>.value()) as _i5.Future<dynamic>);
   @override
-  _i5.Future<String?> login(String? email, String? token) =>
-      (super.noSuchMethod(Invocation.method(#login, [email, token]),
-          returnValue: Future<String?>.value()) as _i5.Future<String?>);
+  _i5.Future<dynamic> login(String? email, String? emailToken) =>
+      (super.noSuchMethod(Invocation.method(#login, [email, emailToken]),
+          returnValue: Future<dynamic>.value()) as _i5.Future<dynamic>);
   @override
   bool logout() =>
       (super.noSuchMethod(Invocation.method(#logout, []), returnValue: false)
@@ -105,44 +97,9 @@ class MockAuthenticationService extends _i1.Mock
               {#name: name, #dob: dob, #orgCode: orgCode}),
           returnValue: Future<bool>.value(false)) as _i5.Future<bool>);
   @override
-  _i5.Future<String?> deleteUserAccount() =>
+  _i5.Future<dynamic> deleteUserAccount() =>
       (super.noSuchMethod(Invocation.method(#deleteUserAccount, []),
-          returnValue: Future<String?>.value()) as _i5.Future<String?>);
-  @override
-  _i5.Future<bool> leaveOrganisation() =>
-      (super.noSuchMethod(Invocation.method(#leaveOrganisation, []),
-          returnValue: Future<bool>.value(false)) as _i5.Future<bool>);
-  @override
-  _i5.Future<bool> completeAction(int? actionId) =>
-      (super.noSuchMethod(Invocation.method(#completeAction, [actionId]),
-          returnValue: Future<bool>.value(false)) as _i5.Future<bool>);
-  @override
-  _i5.Future<bool> starAction(int? actionId) =>
-      (super.noSuchMethod(Invocation.method(#starAction, [actionId]),
-          returnValue: Future<bool>.value(false)) as _i5.Future<bool>);
-  @override
-  _i5.Future<bool> removeActionStatus(int? actionId) =>
-      (super.noSuchMethod(Invocation.method(#removeActionStatus, [actionId]),
-          returnValue: Future<bool>.value(false)) as _i5.Future<bool>);
-  @override
-  _i5.Future<_i6.User>? rejectAction(
-          String? token, int? actionId, String? reason) =>
-      (super.noSuchMethod(
-              Invocation.method(#rejectAction, [token, actionId, reason]))
-          as _i5.Future<_i6.User>?);
-  @override
-  _i5.Future<bool> joinCampaign(int? campaignId) =>
-      (super.noSuchMethod(Invocation.method(#joinCampaign, [campaignId]),
-          returnValue: Future<bool>.value(false)) as _i5.Future<bool>);
-  @override
-  _i5.Future<bool> leaveCampaign(int? campaignId) =>
-      (super.noSuchMethod(Invocation.method(#leaveCampaign, [campaignId]),
-          returnValue: Future<bool>.value(false)) as _i5.Future<bool>);
-  @override
-  _i5.Future<bool> completeLearningResource(int? learningResourceId) =>
-      (super.noSuchMethod(
-          Invocation.method(#completeLearningResource, [learningResourceId]),
-          returnValue: Future<bool>.value(false)) as _i5.Future<bool>);
+          returnValue: Future<dynamic>.value()) as _i5.Future<dynamic>);
   @override
   _i3.ApiException getExceptionForResponse(_i2.Response? response) => (super
       .noSuchMethod(Invocation.method(#getExceptionForResponse, [response]),
@@ -156,6 +113,36 @@ class MockAuthenticationService extends _i1.Mock
           {Map<String, dynamic>? params}) =>
       (super.noSuchMethod(
               Invocation.method(#getRequest, [path], {#params: params}),
+              returnValue:
+                  Future<Map<dynamic, dynamic>>.value(<dynamic, dynamic>{}))
+          as _i5.Future<Map<dynamic, dynamic>>);
+  @override
+  _i5.Future<List<Map<String, dynamic>>> getListRequest(String? path,
+          {Map<String, dynamic>? params, int? limit = 5}) =>
+      (super.noSuchMethod(
+              Invocation.method(
+                  #getListRequest, [path], {#params: params, #limit: limit}),
+              returnValue: Future<List<Map<String, dynamic>>>.value(
+                  <Map<String, dynamic>>[]))
+          as _i5.Future<List<Map<String, dynamic>>>);
+  @override
+  _i5.Future<Map<String, dynamic>> postRequest(String? path,
+          {Map<String, dynamic>? body}) =>
+      (super.noSuchMethod(
+              Invocation.method(#postRequest, [path], {#body: body}),
+              returnValue:
+                  Future<Map<String, dynamic>>.value(<String, dynamic>{}))
+          as _i5.Future<Map<String, dynamic>>);
+  @override
+  _i5.Future<Map<dynamic, dynamic>> putRequest(String? path,
+          {Map<String, dynamic>? body}) =>
+      (super.noSuchMethod(Invocation.method(#putRequest, [path], {#body: body}),
+              returnValue:
+                  Future<Map<dynamic, dynamic>>.value(<dynamic, dynamic>{}))
+          as _i5.Future<Map<dynamic, dynamic>>);
+  @override
+  _i5.Future<Map<dynamic, dynamic>> deleteRequest(String? path) =>
+      (super.noSuchMethod(Invocation.method(#deleteRequest, [path]),
               returnValue:
                   Future<Map<dynamic, dynamic>>.value(<dynamic, dynamic>{}))
           as _i5.Future<Map<dynamic, dynamic>>);

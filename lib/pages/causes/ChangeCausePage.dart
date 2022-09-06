@@ -72,9 +72,9 @@ class ChangeCausePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Expanded(
-                      flex: 10,
-                      child: CauseTileGrid(),
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.7,
+                      child: CauseTileGrid(model),
                     ),
                     Expanded(
                       flex: 1,

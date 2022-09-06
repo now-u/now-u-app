@@ -12,12 +12,7 @@ import 'package:app/models/Action.dart';
 
 const String INTERNAL_PREFIX = "internal:";
 
-const List ID_ROUTES = [
-  Routes.campaignInfo,
-  Routes.learningTopic,
-  Routes.learningSingle,
-  Routes.actionInfo
-];
+const List ID_ROUTES = [Routes.campaignInfo, Routes.actionInfo];
 
 class NavigationService {
   final DialogService _dialogService = locator<DialogService>();
@@ -94,7 +89,7 @@ class NavigationService {
       if (ID_ROUTES.contains(route)) {
         int? id = int.tryParse(parameters!['id']);
 
-        if (route == Routes.campaignInfo || route == Routes.learningSingle) {
+        if (route == Routes.campaignInfo) {
           navigateTo(route, arguments: id);
           return;
         }
@@ -102,16 +97,6 @@ class NavigationService {
         if (route == Routes.actionInfo) {
           _campaignService.getAction(id).then((CampaignAction action) {
             navigateTo(route, arguments: action);
-          }).catchError((e) {
-            _dialogService.showDialog(BasicDialog(
-                title: "Error", description: "Error navigating to route"));
-          });
-          return;
-        }
-
-        if (route == Routes.learningTopic) {
-          _campaignService.getLearningTopic(id).then((LearningTopic topic) {
-            navigateTo(route, arguments: topic);
           }).catchError((e) {
             _dialogService.showDialog(BasicDialog(
                 title: "Error", description: "Error navigating to route"));
@@ -149,7 +134,7 @@ class NavigationService {
           title: title ?? "You're about to leave",
           description: description ??
               "This link will take you out of the app. Are you sure you want to go?",
-          buttons: [
+          buttons: <DialogButton>[
             DialogButton(
               text: buttonText ?? "Let's go",
               response: true,

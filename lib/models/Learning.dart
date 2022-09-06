@@ -90,7 +90,7 @@ List<LearningResourceType> learningResourceTypes = [
   otherType,
 ];
 
-LearningResourceType getResourceTypeFromString(String typeName) {
+LearningResourceType getResourceTypeFromString(String? typeName) {
   return learningResourceTypes.firstWhere(
       (LearningResourceType type) => type.name == typeName,
       orElse: () => otherType);
@@ -128,14 +128,17 @@ class LearningResource extends Explorable {
 
   final ListCause cause;
 
-  LearningResource.fromJson(Map json)
-      : id = json['id'],
+  LearningResource.fromJson(Map json, {ListCause? cause})
+      : assert(cause != null || json['causes'] != null),
+        id = json['id'],
         title = json['title'],
         time = json['time'],
         link = json['link'],
         type = getResourceTypeFromString(json['type']),
         createdAt = DateTime.parse(json['created_at']),
-        cause = ListCause.fromJson(json['causes'][0]),
+        cause = json['causes'] != null
+            ? ListCause.fromJson(json['causes'][0])
+            : cause!,
         completed = json['completed'],
         source = json['source'];
 

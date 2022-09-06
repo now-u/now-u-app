@@ -12,6 +12,8 @@ class CauseOnboardingPage extends StatelessWidget {
             viewModelBuilder: () => SelectCausesViewModel(),
             onModelReady: (model) => model.fetchCauses(),
             builder: (context, model, child) {
+              print("Building");
+              print(model.areCausesDisabled);
               return Stack(
                 children: [
                   Container(
@@ -61,7 +63,10 @@ class CauseOnboardingPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Expanded(flex: 10, child: CauseTileGrid()),
+                        Expanded(
+                          flex: 10,
+                          child: CauseTileGrid(model),
+                        ),
                         Expanded(
                           flex: 1,
                           child: Center(

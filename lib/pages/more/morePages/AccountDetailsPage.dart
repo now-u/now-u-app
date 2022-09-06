@@ -139,68 +139,6 @@ class AccountDetailsPage extends StatelessWidget {
                         // CustomToggleButton(),
                       ],
                     ),
-                    // TODO: Organisation Code
-                    // TODO: CustomSwitch in inputs.dart
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 20, 0, 8),
-                      child: Text(
-                        "Organisation",
-                        style: textStyleFrom(
-                          Theme.of(context).primaryTextTheme.headline4,
-                        ),
-                      ),
-                    ),
-                    Column(
-                        children: model.userOrganisation != null
-                            ? [
-                                Row(
-                                  children: [
-                                    Image.network(
-                                      model.userOrganisation!.getLogoLink()!,
-                                      width: 60,
-                                    ),
-                                    SizedBox(width: 10),
-                                    Expanded(
-                                      child: Text(
-                                        model.userOrganisation!.getName()!,
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 2,
-                                      ),
-                                    ),
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.remove_circle,
-                                        color: Theme.of(context).errorColor,
-                                      ),
-                                      onPressed: () {
-                                        model.leaveOrganisation();
-                                      },
-                                    )
-                                  ],
-                                )
-                              ]
-                            : [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 0, 0, 21),
-                                  child: Text(
-                                    "If you work for one of our business partners, you can enter the organisation code below so they can see the actions you’ve taken.",
-                                    style: textStyleFrom(
-                                      Theme.of(context)
-                                          .primaryTextTheme
-                                          .bodyText2,
-                                    ),
-                                  ),
-                                ),
-                                CustomTextFormField(
-                                    autofocus: false,
-                                    hintText: 'Enter organisation code',
-                                    style: CustomFormFieldStyle.Light,
-                                    onChanged: (String code) {
-                                      model.orgCode = code;
-                                    }),
-                              ]),
-                    // TODO: Ok button
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 21, 0, 0),
                       child: DarkButton(

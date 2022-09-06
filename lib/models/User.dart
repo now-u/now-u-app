@@ -24,19 +24,20 @@ class User {
   bool? homeOwner;
 
   // Progress (All data stored as ids)
-  List<int>? selectedCampaigns =
+  List<int> selectedCampaigns =
       []; // Stores all campaings that have been selected (including old ones)
-  List<int>? completedCampaigns =
+  List<int> selectedCauses = []; // Causes the user has selected
+  List<int> completedCampaigns =
       []; // Stores campaings where all actions have been completed (maybe we should do 80% of something)
   //List<int> completedRewards = [];
-  List<int?>? completedActions = [];
-  List<int>? completedLearningResources = [];
+  List<int> completedActions = [];
+  List<int> completedLearningResources = [];
 
   // Key is rejected id
   // Map stores rejection time and rejection reason
-  List<int?>? rejectedActions = [];
+  List<int> rejectedActions = [];
 
-  List<int>? starredActions = [];
+  List<int> starredActions = [];
 
   Map<CampaignActionType?, int>? completedActionsType;
 
@@ -52,14 +53,15 @@ class User {
   bool get isStagingUser => stagingUsers.contains(this.email);
 
   User({
-    id,
+    this.id,
     token,
-    fullName,
-    email,
-    dateOfBirth,
-    location,
-    monthlyDonationLimit,
-    homeOwner,
+    this.fullName,
+    this.email,
+    this.dateOfBirth,
+    this.location,
+    this.monthlyDonationLimit,
+    this.homeOwner,
+    selectedCauses,
     selectedCampaigns,
     completedCampaigns,
     completedActions,
@@ -71,18 +73,11 @@ class User {
     points,
     organisation,
   }) {
-    this.id = id;
-    this.fullName = fullName;
-    this.email = email;
-    this.dateOfBirth = dateOfBirth;
-    this.location = location;
-    this.monthlyDonationLimit = monthlyDonationLimit;
-    this.homeOwner = homeOwner;
-
     this.selectedCampaigns = selectedCampaigns ?? [];
     this.completedActions = completedActions ?? [];
     this.rejectedActions = rejectedActions ?? [];
     this.starredActions = starredActions ?? [];
+    this.selectedCauses = selectedCauses ?? [];
     //this.completedRewards = completedRewards ?? [];
 
     this.completedLearningResources = completedLearningResources ?? [];
@@ -91,72 +86,6 @@ class User {
 
     this._token = token;
     _organisation = organisation;
-  }
-
-  // This will be removed real soon cause if the user token is null then we need to login again
-  User.empty() {
-    id = -1;
-    fullName = "unknown";
-    email = "unknown";
-    dateOfBirth = DateTime(1990, 1, 1);
-    location = "uknown";
-    monthlyDonationLimit = -1;
-    homeOwner = false;
-    selectedCampaigns = [];
-    completedCampaigns = [];
-    //completedRewards = [];
-    completedActions = [];
-    rejectedActions = [];
-    starredActions = [];
-    completedLearningResources = [];
-    completedActionsType = initCompletedAction();
-    _token = null;
-  }
-
-  User copyWith({
-    int? id,
-    //FirebaseUser firebaseUser,
-    String? fullName,
-    String? email,
-    DateTime? dateOfBirth,
-
-    // TODO make some attributes class that can take any attrribute so I dont need this
-    String? location,
-    double? monthlyDonationLimit,
-    bool? homeOwner,
-
-    // Progress
-    List<int>? selectedCampaigns,
-    List<int>? completedCampaigns,
-    //List<int> completedRewards,
-    List<int?>? completedActions,
-    List<int?>? rejectedActions,
-    List<int>? starredActions,
-    List<int>? completedLearningResources,
-    Map<CampaignActionType, int>? completedActionsType,
-    String? token,
-    Organisation? organisation,
-  }) {
-    return User(
-      id: id ?? this.id,
-      fullName: fullName ?? this.fullName,
-      email: email ?? this.email,
-      dateOfBirth: dateOfBirth ?? this.dateOfBirth,
-      location: location ?? this.location,
-      monthlyDonationLimit: monthlyDonationLimit ?? this.monthlyDonationLimit,
-      homeOwner: homeOwner ?? this.homeOwner,
-      selectedCampaigns: selectedCampaigns ?? this.selectedCampaigns,
-      completedCampaigns: completedCampaigns ?? this.completedCampaigns,
-      //completedRewards: completedRewards ?? this.completedRewards,
-      completedActions: completedActions ?? this.completedActions,
-      rejectedActions: rejectedActions ?? this.rejectedActions,
-      starredActions: starredActions ?? this.starredActions,
-      completedLearningResources:
-          completedLearningResources ?? this.completedLearningResources,
-      completedActionsType: completedActionsType ?? this.completedActionsType,
-      token: token ?? this._token,
-      organisation: organisation ?? _organisation,
-    );
   }
 
   User.fromJson(
@@ -202,6 +131,11 @@ class User {
             json['completed_learning_resources'].isEmpty
         ? <int>[]
         : json['completed_learning_resources'].cast<int>();
+
+    selectedCauses =
+        json['selected_causes'] == null || json['selected_causes'].isEmpty
+            ? <int>[]
+            : json['selected_causes'].cast<int>();
 
     completedActionsType = json['completed_actions_type'] == null
         ? this.initCompletedAction()
@@ -328,22 +262,19 @@ class User {
   }
 
   List<int> getSelectedCampaigns() {
-    return selectedCampaigns ?? [];
+    return selectedCampaigns;
   }
 
   List<Campaign> filterSelectedCampaigns(List<Campaign> campaigns) {
-    return campaigns.where((c) => selectedCampaigns!.contains(c.id)).toList();
+    return campaigns.where((c) => selectedCampaigns.contains(c.id)).toList();
   }
 
   List<Campaign> filterUnselectedCampaigns(List<Campaign> campaigns) {
-    return campaigns.where((c) => !selectedCampaigns!.contains(c.id)).toList();
+    return campaigns.where((c) => !selectedCampaigns.contains(c.id)).toList();
   }
 
   int getSelectedCampaignsLength() {
-    if (selectedCampaigns == null)
-      return 0;
-    else
-      return selectedCampaigns!.length;
+    return selectedCampaigns.length;
   }
 
   List<int?>? getCompletedActions() {
@@ -386,7 +317,7 @@ class User {
     this.homeOwner = homeOwner;
   }
 
-  void setCompletedActions(List<int?>? actions) {
+  void setCompletedActions(List<int> actions) {
     this.completedActions = actions;
   }
 
@@ -395,17 +326,13 @@ class User {
   }
 
   void addSelectedCamaping(int id) {
-    if (!selectedCampaigns!.contains(id)) {
-      if (this.selectedCampaigns == null) {
-        this.selectedCampaigns = [id];
-      } else {
-        this.selectedCampaigns!.add(id);
-      }
+    if (!selectedCampaigns.contains(id)) {
+      this.selectedCampaigns.add(id);
     }
   }
 
   void removeSelectedCamaping(int id) {
-    this.selectedCampaigns!.remove(id);
+    this.selectedCampaigns.remove(id);
   }
 
   double getCampaignProgress(Campaign campaign) {
@@ -417,7 +344,7 @@ class User {
     int count = 0;
     List<ListCauseAction> actions = campaign.actions;
     for (int i = 0; i < actions.length; i++) {
-      if (this.completedActions!.contains(actions[i].id)) {
+      if (this.completedActions.contains(actions[i].id)) {
         count++;
       }
     }
@@ -425,19 +352,19 @@ class User {
   }
 
   void completeAction(CampaignAction a, {Function? onCompleteReward}) {
-    if (completedActions!.contains(a.id)) {
+    if (completedActions.contains(a.id)) {
       return;
     }
-    completedActions!.add(a.id);
+    completedActions.add(a.id);
     completedActionsType!.update(a.type, (int x) => x + 1);
   }
 
   void rejectAction(CampaignAction a) {
-    rejectedActions!.add(a.id);
+    rejectedActions.add(a.id);
   }
 
   bool isCompleted(CampaignAction a) {
-    return completedActions!.contains(a.id);
+    return completedActions.contains(a.id);
   }
 
   Map<CampaignActionType?, int> initCompletedAction() {
