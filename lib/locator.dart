@@ -6,7 +6,6 @@ import 'package:app/services/analytics.dart';
 import 'package:app/services/pushNotifications.dart';
 import 'package:app/services/navigation_service.dart';
 import 'package:app/services/news_service.dart';
-import 'package:app/services/campaign_service.dart';
 import 'package:app/services/faq_service.dart';
 import 'package:app/services/shared_preferences_service.dart';
 import 'package:app/services/internal_notification_service.dart';
@@ -30,7 +29,6 @@ GetIt locator = GetIt.instance;
 
 void setupLocator() {
   locator.registerLazySingleton(() => NavigationService());
-  locator.registerLazySingleton(() => CampaignService());
   locator.registerLazySingleton(() => SecureStorageService());
   locator.registerLazySingleton(() => SharedPreferencesService());
   locator.registerLazySingleton(() => AuthenticationService());

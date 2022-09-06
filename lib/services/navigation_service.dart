@@ -1,9 +1,9 @@
+import 'package:app/services/causes_service.dart';
 import 'package:flutter/material.dart';
 import 'package:app/routes.dart';
 
 import 'package:app/locator.dart';
 import 'package:app/services/dialog_service.dart';
-import 'package:app/services/campaign_service.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:app/assets/components/buttons/darkButton.dart';
@@ -16,8 +16,7 @@ const List ID_ROUTES = [Routes.campaignInfo, Routes.actionInfo];
 
 class NavigationService {
   final DialogService _dialogService = locator<DialogService>();
-
-  final CampaignService _campaignService = locator<CampaignService>();
+  final CausesService _causesService = locator<CausesService>();
 
   final GlobalKey<NavigatorState> navigatorKey =
       new GlobalKey<NavigatorState>();
@@ -95,7 +94,11 @@ class NavigationService {
         }
 
         if (route == Routes.actionInfo) {
-          _campaignService.getAction(id).then((CampaignAction action) {
+          if (id == null) {
+              navigateTo(Routes.explore);
+              return;
+          }
+          _causesService.getAction(id).then((CampaignAction action) {
             navigateTo(route, arguments: action);
           }).catchError((e) {
             _dialogService.showDialog(BasicDialog(
