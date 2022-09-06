@@ -10,7 +10,6 @@ import 'package:app/pages/login/emailSentPage.dart';
 
 import 'package:app/routes.dart';
 
-import 'package:meta/meta.dart';
 import 'package:uni_links/uni_links.dart';
 
 // The holy grail link https://nowu.page.link/?link=https://now-u.com/campaigns?id=1&apn=com.nowu.app
@@ -37,11 +36,9 @@ class DynamicLinkService {
     }
     // 3. Register a link callback to fire if the app is opened up from the background
     // using a dynamic link.
-    FirebaseDynamicLinks.instance.onLink(
-        onSuccess: (PendingDynamicLinkData? dynamicLink) async {
-      // 3a. handle link that has been retrieved
-      _handleDeepLink(dynamicLink!.link);
-    }, onError: (OnLinkErrorException e) async {
+    FirebaseDynamicLinks.instance.onLink.listen((dynamicLinkData) {
+      _handleDeepLink(dynamicLinkData.link);
+    }, onError: (e) async {
       print('Link Failed: ${e.message}');
     });
   }
@@ -52,6 +49,8 @@ class DynamicLinkService {
       print('_handleDeepLink | deepLink path: ${deepLink.path}');
       if (deepLink.path == "/loginMobile" || deepLink.host == 'loginmobile') {
         String? email = await _storageProvider!.getEmail();
+        if (email == null) return;
+
         String? token = deepLink.queryParameters['token'];
         EmailSentPageArguments args =
             EmailSentPageArguments(email: email, token: token);
@@ -94,7 +93,7 @@ class DynamicLinkService {
           minimumVersion: 0,
         ),
         //TODO IOS needs fixing
-        iosParameters: IosParameters(
+        iosParameters: IOSParameters(
           bundleId: "com.google.FirebaseCppDynamicLinksTestApp.dev",
           minimumVersion: '0',
         ),
@@ -105,11 +104,12 @@ class DynamicLinkService {
         ));
     Uri url;
     if (short == false) {
-      url = await parameters.buildUrl();
+      url = await FirebaseDynamicLinks.instance.buildLink(parameters);
     }
     // Short is either null or true
     else {
-      final ShortDynamicLink shortLink = await parameters.buildShortLink();
+      final ShortDynamicLink shortLink =
+          await FirebaseDynamicLinks.instance.buildShortLink(parameters);
       print(shortLink.toString());
       url = shortLink.shortUrl;
     }

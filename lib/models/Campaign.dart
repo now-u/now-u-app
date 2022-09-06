@@ -2,10 +2,17 @@ import 'package:app/locator.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Cause.dart';
 import 'package:app/models/Explorable.dart';
+import 'package:app/models/Learning.dart';
 import 'package:app/models/Organisation.dart';
 import 'package:app/services/dynamicLinks.dart';
 
 final DynamicLinkService _dynamicLinkService = locator<DynamicLinkService>();
+
+class ListCampaignSerializer extends Serializer<ListCampaign> {
+  ListCampaign fromJson(Map<String, dynamic> data) {
+    return ListCampaign.fromJson(data);
+  }
+}
 
 class ListCampaign extends Explorable {
   /// API id for header image
@@ -60,8 +67,10 @@ class Campaign extends ListCampaign {
   final List<Organisation> generalPartners;
   final List<Organisation> campaignPartners;
 
-  final List<ListCauseAction> actions;
   final List<String> keyAims;
+
+  final List<ListCauseAction> actions;
+  final List<LearningResource> learningResources;
 
   final int numberOfCampaigners;
   final int numberOfActionsCompleted;
@@ -78,6 +87,7 @@ class Campaign extends ListCampaign {
     DateTime? endDate,
     required this.description,
     required this.actions,
+    required this.learningResources,
     required this.videoLink,
     required this.infographicUrl,
     required this.numberOfCampaigners,
@@ -98,24 +108,35 @@ class Campaign extends ListCampaign {
 
   Campaign.fromJson(Map<String, dynamic> json)
       : description = json['description_app'].replaceAll('\\n', '\n\n'),
-        numberOfCampaigners = json['number_of_campaigners'],
-        numberOfActionsCompleted = json['number_of_completed_actions'],
+        // numberOfCampaigners = json['number_of_campaigners'],
+        // numberOfActionsCompleted = json['number_of_completed_actions'],
+        numberOfCampaigners = 0,
+        numberOfActionsCompleted = 0,
         infographicUrl = json['infographic_url'],
-        actions = json['actions']
-            .map((e) => ListCauseAction.fromJson(e))
+        actions = json['campaign_actions']
+            .map((e) => ListCauseAction.fromJson(e,
+                cause: ListCause.fromJson(json['causes'][0])))
             .toList()
             .cast<ListCauseAction>(),
-        campaignPartners = json['campaign_partners']
-            .map((e) => Organisation.fromJson(e))
+        learningResources = json['learning_resources']
+            .map((e) => LearningResource.fromJson(e,
+                cause: ListCause.fromJson(json['causes'][0])))
             .toList()
-            .cast<Organisation>(),
-        generalPartners = json['general_partners']
-            .map((e) => Organisation.fromJson(e))
-            .toList()
-            .cast<Organisation>(),
+            .cast<LearningResource>(),
         videoLink = json['video_link'],
-        keyAims =
-            json['key_aims'].map((a) => a['title']).toList().cast<String>(),
+        // generalPartners = json['general_partners']
+        //     .map((e) => Organisation.fromJson(e))
+        //     .toList()
+        //     .cast<Organisation>(),
+        // keyAims =
+        //     json['key_aims'].map((a) => a['title']).toList().cast<String>(),
+        // campaignPartners = json['campaign_partners']
+        //     .map((e) => Organisation.fromJson(e))
+        //     .toList()
+        //     .cast<Organisation>(),
+        keyAims = [],
+        campaignPartners = [],
+        generalPartners = [],
         super.fromJson(json);
 
   Future<String> getShareText() async {

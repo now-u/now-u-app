@@ -1,7 +1,6 @@
 import 'package:app/assets/constants.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/pages/explore/ExploreSection.dart';
-import 'package:app/viewmodels/explore/explore_section_view_model.dart';
 import 'package:app/viewmodels/explore_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -40,32 +39,39 @@ class ExplorePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ExplorePageViewModel>.reactive(
-        viewModelBuilder: () => ExplorePageViewModel(sections, title),
+        viewModelBuilder: () => ExplorePageViewModel(title, sections),
+        onModelReady: (model) => model.init(),
         builder: (context, model, child) {
           return Scaffold(
-            body: ListView(
-                scrollDirection: Axis.vertical,
+              body: SingleChildScrollView(
+            child: Column(
                 children: [_header(context, model)] +
                     model.sections
-                        .map((ExploreSection section) =>
-                            section.render(context, model))
+                        .map((ExploreSection section) => ExploreSectionWidget(
+                              data: section,
+                              changePage: model.changePage,
+                              toggleFilterOption:
+                                  (BaseExploreFilterOption option) =>
+                                      model.toggleFilterOption(section, option),
+                            ))
                         .toList()),
-          );
+          ));
         });
   }
 }
 
 ExplorePage campaigns_explore_page = ExplorePage(title: "Campaigns", sections: [
-  CampaignExploreSection(title: "Campaigns of the month", fetchParams: {
+  CampaignExploreSection(title: "Campaigns of the month", baseParams: {
     "of_the_month": true,
   }),
-  CampaignExploreSection(title: "Recommened campaigns", fetchParams: {
+  CampaignExploreSection(title: "Recommended campaigns", baseParams: {
     "recommended": true,
   }),
-  CampaignExploreByCauseSection(
+  CampaignExploreSection(
     title: "Campaigns by cause",
+    filter: ByCauseExploreFilter(),
   ),
-  CampaignExploreSection(title: "Completed campaigns", fetchParams: {
+  CampaignExploreSection(title: "Completed campaigns", baseParams: {
     "completed": true,
   }),
 ]);
@@ -73,27 +79,22 @@ ExplorePage campaigns_explore_page = ExplorePage(title: "Campaigns", sections: [
 ExplorePage actions_explore_page = ExplorePage(
   title: "Actions",
   sections: [
-    ActionExploreSection(title: "Actions of the month", fetchParams: {
+    ActionExploreSection(title: "Actions of the month", baseParams: {
       "of_the_month": true,
     }),
-    ActionExploreByCauseSection(
+    ActionExploreSection(
       title: "Actions by cause",
+      filter: ByCauseExploreFilter(),
     ),
     ActionExploreSection(
-        title: "Actions by time",
-        filter: ExploreFilter(
-          parameterName: "time",
-          options: timeBrackets
-              .map((bracket) => ExploreFilterOption(
-                    displayName: bracket['text'],
-                    parameterValue: bracket['text'],
-                  ))
-              .toList(),
-        )),
+      title: "Actions by time",
+      filter: TimeExploreFilter(),
+    ),
     ActionExploreSection(
         title: "Actions by type",
         filter: ExploreFilter(
           parameterName: "type",
+          multi: false,
           options: actionTypes
               .map((type) => ExploreFilterOption(
                     displayName: type.name,
@@ -101,7 +102,7 @@ ExplorePage actions_explore_page = ExplorePage(
                   ))
               .toList(),
         )),
-    ActionExploreSection(title: "Completed actions", fetchParams: {
+    ActionExploreSection(title: "Completed actions", baseParams: {
       "completed": true,
     }),
   ],
@@ -110,25 +111,18 @@ ExplorePage actions_explore_page = ExplorePage(
 ExplorePage learning_explore_page = ExplorePage(
   title: "Learn",
   sections: [
-    LearningResourceExploreSection(title: "Learning resources"),
-    LearningResourceExploreByCauseSection(
-      title: "Learning resource by cause",
-    ),
     LearningResourceExploreSection(
       title: "Learning resources by time",
-      filter: ExploreFilter(
-        parameterName: "time",
-        options: timeBrackets
-            .map((bracket) => ExploreFilterOption(
-                  displayName: bracket['text'],
-                  parameterValue: bracket['text'],
-                ))
-            .toList(),
-      ),
+      filter: TimeExploreFilter(),
     ),
     LearningResourceExploreSection(
+      title: "Learning resource by cause",
+      filter: ByCauseExploreFilter(),
+    ),
+    LearningResourceExploreSection(title: "Learning resources"),
+    LearningResourceExploreSection(
       title: "Completed learning",
-      fetchParams: {
+      baseParams: {
         "completed": true,
       },
     ),

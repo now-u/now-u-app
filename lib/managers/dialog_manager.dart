@@ -97,7 +97,7 @@ class CauseDialog extends CustomDialog {
 class BasicDialog extends CustomDialog {
   final String title;
   final String description;
-  final List? buttons;
+  final List<DialogButton>? buttons;
   final String? headerImage;
 
   BasicDialog(
@@ -160,7 +160,7 @@ class BasicDialog extends CustomDialog {
     );
   }
 
-  List<Widget> _getButtons(List? buttons, BuildContext context) {
+  List<Widget> _getButtons(List<DialogButton>? buttons, BuildContext context) {
     if (buttons == null) {
       return <Widget>[
         Container(
@@ -176,11 +176,11 @@ class BasicDialog extends CustomDialog {
     }
 
     List<Widget> buttonWidgets = [];
-    for (final DialogButton button in buttons as Iterable<DialogButton>) {
+    for (final DialogButton button in buttons) {
       buttonWidgets.add(Container(
         child: CustomWidthButton(button.text, onPressed: () {
           complete(button.response, context);
-        }, buttonWidthProportion: 0.3, fontSize: 30, size: ButtonSize.Medium),
+        }, buttonWidthProportion: 0.7, size: ButtonSize.Medium),
       ));
       buttonWidgets.add(SizedBox(height: 10));
     }

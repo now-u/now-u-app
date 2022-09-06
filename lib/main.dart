@@ -2,16 +2,22 @@ import 'dart:convert';
 
 import 'package:app/locator.dart';
 import 'package:app/managers/dialog_manager.dart';
+import 'package:app/pages/explore/ExplorePage.dart';
 import 'package:app/pages/other/startup_view.dart';
+import 'package:app/pages/home/Home.dart';
+import 'package:app/pages/explore/ExplorePage.dart';
+import 'package:app/pages/explore/ExploreSection.dart';
 import 'package:app/routes.dart';
 import 'package:app/services/analytics.dart';
 import 'package:app/services/navigation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await Firebase.initializeApp();
   runApp(App());
 }
 

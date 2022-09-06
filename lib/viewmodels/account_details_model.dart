@@ -1,4 +1,5 @@
 import 'package:app/models/Organisation.dart';
+import 'package:app/services/api_service.dart';
 import 'package:app/viewmodels/base_model.dart';
 
 import 'package:flutter/material.dart';
@@ -76,48 +77,24 @@ class AccountDetailsViewModel extends BaseModel {
   Future<void> delete() async {
     setBusy(true);
 
-    String? error = await _authenticationService.deleteUserAccount();
-
-    if (error == null) {
+    try {
+      await _authenticationService.deleteUserAccount();
+    } on ApiException catch (e) {
       _dialogService.showDialog(
         BasicDialog(
-          title: "All done!",
-          description: "Your account has now been deleted.",
+          title: "Error",
+          description:
+              "Sorry, something went wrong!\nPlease try again. ${e.message}",
         ),
       );
-      await _analyticsService.logUserAccountDeleted();
-      logout();
-    } else {
-      switch (error) {
-        case AuthError.request:
-          {
-            _dialogService.showDialog(BasicDialog(
-              title: "Client Error",
-              description:
-                  "Sorry, something went wrong!\nTry restarting your app.",
-            ));
-            break;
-          }
-        case AuthError.internal:
-          {
-            _dialogService.showDialog(BasicDialog(
-                title: "Server Error",
-                description:
-                    "Sorry, there was a server problem.\nTry again later."));
-            break;
-          }
-        default:
-          {
-            _dialogService.showDialog(
-              BasicDialog(
-                title: "Error",
-                description: "Sorry, something went wrong!\nPlease try again.",
-              ),
-            );
-            break;
-          }
-      }
     }
+
+    await _dialogService.showDialog(BasicDialog(
+      title: "All done!",
+      description: "Your account has now been deleted.",
+    ));
+    await _analyticsService.logUserAccountDeleted();
+    logout();
     setBusy(false);
     notifyListeners();
   }
@@ -130,14 +107,6 @@ class AccountDetailsViewModel extends BaseModel {
     List<Suggestion>? suggestions =
         await _googleLocationSearchService.fetchSuggestions(input, lang);
     return suggestions ?? List<Suggestion>.empty();
-  }
-
-  Future<bool> leaveOrganisation() async {
-    setBusy(true);
-    await _authenticationService.leaveOrganisation();
-    setBusy(false);
-    notifyListeners();
-    return true;
   }
 }
 

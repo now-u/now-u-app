@@ -1,5 +1,7 @@
+import 'package:app/assets/components/cause_indicator.dart';
 import 'package:app/assets/components/customTile.dart';
 import 'package:app/assets/components/custom_network_image.dart';
+import 'package:app/assets/constants.dart';
 import 'package:app/locator.dart';
 import 'package:app/models/Learning.dart';
 import 'package:app/routes.dart';
@@ -7,12 +9,26 @@ import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Cause.dart';
 import 'package:app/models/article.dart';
+import 'package:app/services/causes_service.dart';
 import 'package:app/services/navigation_service.dart';
 import 'package:app/pages/action/ActionInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../StyleFrom.dart';
 
-class ExploreCampaignTile extends StatelessWidget {
+enum ExploreTileStyle {
+  Extended,
+  Standard,
+}
+
+abstract class ExploreTile extends StatelessWidget {
+  ExploreTile({key});
+
+  @override
+  Widget build(BuildContext context);
+}
+
+class ExploreCampaignTile extends ExploreTile {
   final NavigationService _navigationService = locator<NavigationService>();
 
   final String headerImage;
@@ -31,69 +47,69 @@ class ExploreCampaignTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomTile(
-      child: AspectRatio(
-        aspectRatio: 0.75,
-        child: InkWell(
-          onTap: () => _navigationService.navigateTo(
-            Routes.campaignInfo,
-            arguments: campaign,
-          ),
-          child: Column(
-            children: [
-              Stack(
-                alignment: Alignment.topRight,
-                children: [
-                  AspectRatio(
-                    aspectRatio: 1.5,
-                    // FIXME ink animation doesn't cover image
-                    child: CustomNetworkImage(
-                      headerImage,
-                      fit: BoxFit.cover,
-                    ),
+    return AspectRatio(
+      aspectRatio: 0.75,
+      child: InkWell(
+        onTap: () => _navigationService.navigateTo(
+          Routes.campaign,
+          arguments: campaign,
+        ),
+        child: Column(
+          children: [
+            Stack(
+              alignment: Alignment.topRight,
+              children: [
+                AspectRatio(
+                  aspectRatio: 1.5,
+                  // FIXME ink animation doesn't cover image
+                  child: CustomNetworkImage(
+                    headerImage,
+                    fit: BoxFit.cover,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: _ExploreTileCheckmark(
-                      completed: completed,
-                    ),
-                  )
-                ],
-              ),
-              Expanded(
-                child: Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: _ExploreTileTitle(title),
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: _ExploreTileCheckmark(
+                    completed: completed,
+                  ),
+                )
+              ],
+            ),
+            Expanded(
+              child: Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: _ExploreTileTitle(title),
               ),
-              Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: _ExploreTileCause(cause)),
-            ],
-          ),
+            ),
+            Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: CauseIndicator(cause)),
+          ],
         ),
       ),
     );
   }
 }
 
-class ExploreActionTile extends BaseExploreActionTile {
+class ExploreActionTile extends ExploreResourceTile {
   final ListCauseAction action;
 
-  ExploreActionTile(ListCauseAction model, {Key? key})
+  ExploreActionTile(ListCauseAction model, {ExploreTileStyle? style, Key? key})
       : action = model,
         super(
-            title: model.title,
-            type: model.superType.name,
-            iconColor: model.primaryColor,
-            headerColor: model.secondaryColor,
-            dividerColor: model.tertiaryColor,
-            icon: model.icon,
-            cause: model.cause,
-            timeText: model.timeText,
-            completed: model.completed,
-            key: key);
+          title: model.title,
+          type: model.superType.name,
+          iconColor: model.primaryColor,
+          headerColor: model.secondaryColor,
+          dividerColor: model.tertiaryColor,
+          icon: model.icon,
+          cause: model.cause,
+          timeText: model.timeText,
+          completed: model.completed,
+          style: style,
+          key: key,
+        );
 
   void onTap() {
     _navigationService.navigateTo(
@@ -103,31 +119,39 @@ class ExploreActionTile extends BaseExploreActionTile {
   }
 }
 
-class ExploreLearningTile extends BaseExploreActionTile {
+class ExploreLearningTile extends ExploreResourceTile {
+  final CausesService _causesService = locator<CausesService>();
+
   final LearningResource resource;
 
-  ExploreLearningTile(LearningResource model, {Key? key})
+  ExploreLearningTile(LearningResource model,
+      {ExploreTileStyle? style, Key? key})
       : resource = model,
         super(
-            title: model.title,
-            type: model.type.name,
-            iconColor: blue0,
-            headerColor: blue1,
-            dividerColor: blue2,
-            icon: model.icon,
-            cause: model.cause,
-            timeText: model.timeText,
-            completed: model.completed,
-            key: key);
+          title: model.title,
+          type: model.type.name,
+          iconColor: blue0,
+          headerColor: blue1,
+          dividerColor: blue2,
+          icon: model.icon,
+          cause: model.cause,
+          timeText: model.timeText,
+          completed: model.completed,
+          key: key,
+          style: style,
+        );
 
-  void onTap() {
+  void onTap() async {
+    await _causesService.completeLearningResource(resource.id);
     _navigationService.launchLink(
       resource.link,
     );
   }
 }
 
-abstract class BaseExploreActionTile extends StatelessWidget {
+abstract class ExploreResourceTile extends ExploreTile {
+  final double COMPLETED_EXTENSION_WIDTH = 110;
+
   final NavigationService _navigationService = locator<NavigationService>();
 
   final String title;
@@ -139,8 +163,9 @@ abstract class BaseExploreActionTile extends StatelessWidget {
   final ListCause cause;
   final String timeText;
   final bool completed;
+  final ExploreTileStyle style;
 
-  BaseExploreActionTile(
+  ExploreResourceTile(
       {required this.title,
       required this.type,
       required this.iconColor,
@@ -150,88 +175,158 @@ abstract class BaseExploreActionTile extends StatelessWidget {
       required this.cause,
       required this.timeText,
       required this.completed,
-      Key? key});
+      ExploreTileStyle? style,
+      Key? key})
+      : this.style = style ?? ExploreTileStyle.Standard,
+        super(key: key);
 
   void onTap();
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _standardWrapper(Widget child) {
+    // return Card(
+    //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+    //   clipBehavior: Clip.antiAlias,
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      clipBehavior: Clip.antiAlias,
+      child: child,
+    );
+  }
+
+  Widget _extendedWrapper(BuildContext context, Widget child) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       clipBehavior: Clip.antiAlias,
       child: AspectRatio(
-        aspectRatio: 1.65,
-        child: InkWell(
-          onTap: onTap,
-          child: Column(
-            children: [
-              Flexible(
-                child: Ink(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  color: headerColor,
-                  child: Row(
+        aspectRatio: 2,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            child,
+            Positioned(
+              right: 0,
+              child: Container(
+                width: COMPLETED_EXTENSION_WIDTH,
+                decoration: BoxDecoration(
+                    color: CustomColors.white,
+                    borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(8),
+                        bottomRight: Radius.circular(8))),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        icon,
-                        size: 18,
-                        color: iconColor,
-                      ),
-                      const SizedBox(width: 4),
                       Text(
-                        type,
-                        textScaleFactor: .8,
+                        completed ? 'Completed' : 'Needs Completing',
+                        style: textStyleFrom(
+                          Theme.of(context).primaryTextTheme.button,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      VerticalDivider(
-                        color: dividerColor,
-                        indent: 12,
-                        endIndent: 12,
-                      ),
-                      const FaIcon(
-                        // Use FaIcon to center icons properly
-                        FontAwesomeIcons.clock,
-                        size: 16,
-                        color: Color.fromRGBO(55, 58, 74, 1),
-                      ),
-                      const SizedBox(width: 6),
-                      Text(
-                        timeText,
-                        textScaleFactor: .8,
-                      ),
-                      Expanded(child: Container()),
-                      _ExploreTileCheckmark(
-                        completed: completed,
-                      ),
+                      SizedBox(height: 20),
+                      _ExploreTileCheckmark(completed: completed, size: 30),
                     ],
                   ),
                 ),
               ),
-              Flexible(
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: _ExploreTileTitle(title),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: _ExploreTileCause(cause),
-                    )
-                  ],
-                ),
-                flex: 3,
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
+
+  Widget _innerTile(BuildContext context) {
+    print("Rendering tile ${completed}");
+    return AspectRatio(
+      aspectRatio: 1.65,
+      child: InkWell(
+        onTap: onTap,
+        child: Column(
+          children: [
+            Flexible(
+              child: Ink(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                color: headerColor,
+                child: Row(
+                  children: [
+                    Icon(
+                      icon,
+                      size: 18,
+                      color: iconColor,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      type,
+                      textScaleFactor: .8,
+                    ),
+                    VerticalDivider(
+                      color: dividerColor,
+                      indent: 12,
+                      endIndent: 12,
+                    ),
+                    const FaIcon(
+                      // Use FaIcon to center icons properly
+                      FontAwesomeIcons.clock,
+                      size: 16,
+                      color: Color.fromRGBO(55, 58, 74, 1),
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      timeText,
+                      textScaleFactor: .8,
+                    ),
+                    Expanded(child: Container()),
+                    _ExploreTileCheckmark(
+                      completed: completed,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Flexible(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: style == ExploreTileStyle.Standard
+                            ? _ExploreTileTitle(title)
+                            : Padding(
+                                padding: EdgeInsets.only(
+                                    right: COMPLETED_EXTENSION_WIDTH - 50),
+                                child: _ExploreTileTitle(title),
+                              )),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: CauseIndicator(cause),
+                  )
+                ],
+              ),
+              flex: 3,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Widget child = _innerTile(context);
+    if (style == ExploreTileStyle.Extended)
+      return _extendedWrapper(context, child);
+    return _standardWrapper(child);
+  }
 }
 
-class ExploreNewsTile extends StatelessWidget {
+class ExploreNewsTile extends ExploreTile {
   final NavigationService _navigationService = locator<NavigationService>();
 
   final String title;
@@ -252,74 +347,69 @@ class ExploreNewsTile extends StatelessWidget {
         article = model,
         super(key: key);
 
-  @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      clipBehavior: Clip.antiAlias,
-      child: AspectRatio(
-        aspectRatio: 0.8,
-        child: InkWell(
-          onTap: () {
-            _navigationService.launchLink(article.fullArticleLink);
-          },
-          child: Column(
-            children: [
-              AspectRatio(
-                aspectRatio: 1.8,
-                // FIXME ink animation doesn't cover image
-                child: CustomNetworkImage(
-                  headerImage,
-                  fit: BoxFit.cover,
+    return AspectRatio(
+      aspectRatio: 0.8,
+      child: InkWell(
+        onTap: () {
+          _navigationService.launchLink(article.fullArticleLink);
+        },
+        child: Column(
+          children: [
+            AspectRatio(
+              aspectRatio: 1.8,
+              // FIXME ink animation doesn't cover image
+              child: CustomNetworkImage(
+                headerImage,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: Theme.of(context).primaryTextTheme.headline2!,
+                      textScaleFactor: .7,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
+                      subtitle,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .bodyText2!
+                          .apply(fontStyle: FontStyle.normal),
+                    ),
+                    Text(
+                      dateString,
+                    )
+                  ],
                 ),
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: Theme.of(context).primaryTextTheme.headline2!,
-                        textScaleFactor: .7,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+            ),
+            Ink(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              decoration:
+                  const BoxDecoration(color: Color.fromRGBO(247, 248, 252, 1)),
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  shortUrl,
+                  style: Theme.of(context).primaryTextTheme.bodyText1?.apply(
+                        color: const Color.fromRGBO(255, 136, 0, 1),
                       ),
-                      Text(
-                        subtitle,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context)
-                            .primaryTextTheme
-                            .bodyText2!
-                            .apply(fontStyle: FontStyle.normal),
-                      ),
-                      Text(
-                        dateString,
-                      )
-                    ],
-                  ),
+                  textScaleFactor: .7,
                 ),
               ),
-              Ink(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                decoration: const BoxDecoration(
-                    color: Color.fromRGBO(247, 248, 252, 1)),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    shortUrl,
-                    style: Theme.of(context).primaryTextTheme.bodyText1?.apply(
-                          color: const Color.fromRGBO(255, 136, 0, 1),
-                        ),
-                    textScaleFactor: .7,
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -337,33 +427,8 @@ class _ExploreTileTitle extends StatelessWidget {
       title,
       style: Theme.of(context).primaryTextTheme.headline2!,
       textScaleFactor: .6,
-    );
-  }
-}
-
-class _ExploreTileCause extends StatelessWidget {
-  final ListCause cause;
-
-  const _ExploreTileCause(this.cause, {Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.centerLeft,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: Row(
-        children: [
-          Icon(
-            cause.icon,
-            size: 18,
-          ),
-          const SizedBox(width: 6),
-          Text(
-            cause.title,
-            textScaleFactor: .9,
-          )
-        ],
-      ),
+      maxLines: 3,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }
@@ -371,6 +436,7 @@ class _ExploreTileCause extends StatelessWidget {
 class _ExploreTileCheckmark extends StatelessWidget {
   /// If the card has been completed
   final bool completed;
+  final double size;
 
   /// Colors for the checkmark
   static const Color _completedColor = Color.fromRGBO(89, 152, 26, 1);
@@ -378,6 +444,7 @@ class _ExploreTileCheckmark extends StatelessWidget {
 
   const _ExploreTileCheckmark({
     required this.completed,
+    this.size = 20,
     Key? key,
   }) : super(key: key);
 
@@ -397,7 +464,7 @@ class _ExploreTileCheckmark extends StatelessWidget {
         FaIcon(
           FontAwesomeIcons.solidCheckCircle,
           color: completed ? _completedColor : _uncompletedColor,
-          size: 20,
+          size: size,
         ),
       ],
     );

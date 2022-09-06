@@ -35,7 +35,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
@@ -132,8 +132,11 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
           //if (stagingUsers.contains(_email)) {
           //  model.switchToStagingBranch();
           //}
+          print("Done login");
           model.email(
-              email: _email, name: _name, newsletterSignup: _newsletterSignup);
+              email: _email!,
+              name: _name!,
+              newsletterSignup: _newsletterSignup!);
           return true;
         }
         return false;

@@ -14,7 +14,7 @@ import 'package:app/routes.dart';
 import 'package:app/pages/login/login.dart';
 
 class EmailSentPageArguments {
-  final String? email;
+  final String email;
   final String? token;
   EmailSentPageArguments({
     required this.email,
@@ -22,30 +22,17 @@ class EmailSentPageArguments {
   });
 }
 
-class EmailSentPage extends StatefulWidget {
+class EmailSentPage extends StatelessWidget {
   final EmailSentPageArguments args;
   EmailSentPage(this.args);
-
-  @override
-  _EmailSentPageState createState() => _EmailSentPageState();
-}
-
-class _EmailSentPageState extends State<EmailSentPage> {
-  String? token;
-
-  @override
-  void initState() {
-    token = widget.args.token;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<LoginViewModel>.reactive(
         viewModelBuilder: () => LoginViewModel(),
         onModelReady: (model) {
-          if (token != null) {
-            model.login(email: widget.args.email, token: token);
+          if (args.token != null) {
+            model.login(email: args.email, token: args.token!);
           }
         },
         builder: (context, model, child) {
@@ -64,7 +51,7 @@ class _EmailSentPageState extends State<EmailSentPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           ),
                         ),
-                        token == null
+                        args.token == null
                             ? Container()
                             : Container(
                                 height: 40, child: CircularProgressIndicator()),
@@ -154,7 +141,7 @@ class _EmailSentPageState extends State<EmailSentPage> {
                                 // TODO open email
                                 Navigator.of(context).pushNamed(
                                     Routes.loginCodeInput,
-                                    arguments: widget.args.email);
+                                    arguments: args.email);
                               },
                               style: DarkButtonStyle.Outline,
                             ),

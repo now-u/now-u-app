@@ -6,6 +6,7 @@ final double defaultBorderRadius = 8.0;
 final double defaultPadding = 14.0;
 
 enum DarkButtonSize { Small, Medium, Large }
+
 enum DarkButtonStyle { Primary, Secondary, Outline }
 
 Map darkButtonStyleStyles = {

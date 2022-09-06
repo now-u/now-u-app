@@ -31,8 +31,8 @@ class ScrollableSheetPage extends StatelessWidget {
     // for more details.
     Widget? child;
     final sheet = DraggableScrollableSheet(
-      initialChildSize: initialChildSize ?? 0.72,
-      minChildSize: minChildSize ?? 0.72,
+      initialChildSize: initialChildSize ?? 0.82,
+      minChildSize: minChildSize ?? 0.82,
       maxChildSize: maxChildSize ?? 1,
       builder: (context, controller) {
         if (child == null) {
@@ -49,7 +49,7 @@ class ScrollableSheetPage extends StatelessWidget {
               child: Container(
                 color: sheetBackgroundColor ?? Color.fromRGBO(247, 248, 252, 1),
                 child: Padding(
-                  padding: EdgeInsets.only(top: 45),
+                  padding: EdgeInsets.only(top: 60),
                   child: Column(
                     children: children,
                   ),
