@@ -16,7 +16,7 @@ Map<String, String> unauthenticatedHeaders = {
   "Content-Type": "application/json; charset=UTF-8"
 };
 
-@GenerateMocks([http.Client])
+@GenerateMocks([http.Client, ApiService])
 MockClient mockHttpClient(ApiService service) {
   MockClient mockClient = MockClient();
   service.client = mockClient;

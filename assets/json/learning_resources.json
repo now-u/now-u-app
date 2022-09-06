@@ -10,7 +10,7 @@
             "name": "Cause title",
             "icon": "ic-abc",
             "description": "Cause description",
-            "selected": true,
+            "joined": true,
             "image": "https://picsum.photos/400/200"
           }
         ],

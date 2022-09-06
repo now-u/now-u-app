@@ -3,6 +3,9 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/models/Explorable.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'article.g.dart';
 
 class ArticleType {
   final String name;
@@ -23,15 +26,24 @@ ArticleType articleTypeFromName(String name) {
   return articleTypes.firstWhere((ArticleType type) => type.name == name);
 }
 
+@JsonSerializable()
 class Article extends Explorable {
   final int id;
+
   final String title;
   final String subtitle;
+
+  @JsonKey(fromJson: articleTypeFromName)
   final ArticleType type;
+
   final String headerImage;
+
+  @JsonKey(name: "release_date")
   final DateTime? releasedAt;
   final String? source;
   final String fullArticleLink;
+
+  @JsonKey(name: "campaignId")
   final int? linkedCampaignId;
 
   String? get dateString {
@@ -53,16 +65,8 @@ class Article extends Explorable {
     this.releasedAt,
   });
 
-  Article.fromJson(Map json)
-      : id = json['id'],
-        title = json['title'],
-        subtitle = json['subtitle'],
-        headerImage = json['header_image'],
-        releasedAt = DateTime.parse(json['release_date']),
-        fullArticleLink = json['full_article_link'],
-        source = json['source'],
-        type = articleTypeFromName(json['type']),
-        linkedCampaignId = json['campaign_id'];
+  factory Article.fromJson(Map<String, dynamic> data) =>
+      _$ArticleFromJson(data);
 
   String? getCategory({List<Campaign>? campaigns}) {
     if (linkedCampaignId != null && campaigns != null) {

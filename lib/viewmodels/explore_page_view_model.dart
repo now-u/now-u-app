@@ -270,12 +270,6 @@ abstract class ExploreSection<T extends Explorable> {
   }
 }
 
-// News: 330 ExploreNewsTile
-// Campaign: 300 ExploreCampaignTile
-// LearningResource: 160 ExploreLearningTile
-// Action: 160 ExploreActionTile
-// Campaign: 300  ExploreCampaignTile
-
 mixin ExploreViewModelMixin on BaseModel {
   List<ExploreSection> sections = [];
 

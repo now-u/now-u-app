@@ -1,57 +1,37 @@
 import 'package:app/assets/icons/customIcons.dart';
-import 'package:app/models/Action.dart';
 import 'package:flutter/widgets.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+import 'utils.dart';
+
+part 'Cause.g.dart';
+
+@JsonSerializable()
 class ListCause {
   final int id;
+  // TODO rename
+  @JsonKey(name: "name")
   final String title;
-  final IconData icon;
-  final String description;
+
+  @JsonKey(fromJson: authBooleanSerializer, name: "joined")
   final bool selected;
+
+  @JsonKey(fromJson: getIconFromString)
+  final IconData icon;
+
+  final String description;
+  @JsonKey(name: "image")
   final String headerImage;
 
-  ListCause({
+  const ListCause({
     required this.id,
     required this.title,
     required this.icon,
     required this.description,
-    required this.selected,
     required this.headerImage,
+    required this.selected,
   });
 
-  ListCause.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        title = json['name'],
-        icon = getIconFromString(json['icon']),
-        description = json['description'],
-        selected = json['joined'] == true,
-        headerImage = json['image'];
-}
-
-class Cause extends ListCause {
-  final List<ListCauseAction> actions;
-
-  Cause({
-    required this.actions,
-    required int id,
-    required String title,
-    required IconData icon,
-    required String description,
-    required bool selected,
-    required String headerImage,
-  }) : super(
-          id: id,
-          title: title,
-          icon: icon,
-          description: description,
-          selected: selected,
-          headerImage: headerImage,
-        );
-
-  Cause.fromJson(Map<String, dynamic> json)
-      : actions = json['actions']
-            .map((actionData) => ListCauseAction.fromJson(actionData))
-            .toList()
-            .cast<ListCauseAction>(),
-        super.fromJson(json);
+  factory ListCause.fromJson(Map<String, dynamic> data) =>
+      _$ListCauseFromJson(data);
 }

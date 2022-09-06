@@ -6,6 +6,11 @@ import 'package:app/assets/icons/customIcons.dart';
 import 'package:app/models/Explorable.dart';
 
 import 'package:app/models/Action.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+import 'utils.dart';
+
+part 'Learning.g.dart';
 
 /// TODO Remove -> The LearningCentre page will be removed in v2
 class LearningCentre {
@@ -101,6 +106,7 @@ LearningResourceType getResourceTypeFromString(String? typeName) {
 /// Practially a learning resource is just a link with some extra meta data
 /// like the time expected to completed the resource. We also store if the user
 /// has completed the resource. // TODO Do this
+@JsonSerializable()
 class LearningResource extends Explorable {
   /// Api id
   final int id;
@@ -117,6 +123,7 @@ class LearningResource extends Explorable {
   final String link;
 
   /// The type of the resource (eg article/video)
+  @JsonKey(fromJson: getResourceTypeFromString)
   final LearningResourceType type;
   IconData get icon => type.icon;
   final DateTime createdAt;
@@ -124,23 +131,26 @@ class LearningResource extends Explorable {
   /// String name of the source of the article eg BBC news
   final String? source;
 
+  @JsonKey(fromJson: authBooleanSerializer, name: "completed")
   final bool completed;
 
+  @JsonKey(fromJson: causeFromJson, name: "causes")
   final ListCause cause;
 
-  LearningResource.fromJson(Map json, {ListCause? cause})
-      : assert(cause != null || json['causes'] != null),
-        id = json['id'],
-        title = json['title'],
-        time = json['time'],
-        link = json['link'],
-        type = getResourceTypeFromString(json['type']),
-        createdAt = DateTime.parse(json['created_at']),
-        cause = json['causes'] != null
-            ? ListCause.fromJson(json['causes'][0])
-            : cause!,
-        completed = json['completed'],
-        source = json['source'];
+  const LearningResource({
+    required this.id,
+    required this.title,
+    required this.time,
+    required this.link,
+    required this.type,
+    required this.createdAt,
+    required this.completed,
+    required this.cause,
+    this.source,
+  });
+
+  factory LearningResource.fromJson(Map<String, dynamic> data) =>
+      _$LearningResourceFromJson(data);
 
   /// Whether the resource has been created in the last 2 days
   // TODO move to api

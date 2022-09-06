@@ -3,9 +3,13 @@ import 'package:app/assets/icons/customIcons.dart';
 import 'package:app/locator.dart';
 import 'package:app/models/Cause.dart';
 import 'package:app/models/Explorable.dart';
+import 'package:app/models/utils.dart';
 import 'package:app/services/causes_service.dart';
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'Action.g.dart';
 
 enum CampaignActionType {
   Volunteer,
@@ -226,12 +230,15 @@ Tuple3<String?, String?, String?> generateCampaignActionDesc(
   return const Tuple3("Complete", "Completed", "special action");
 }
 
+@JsonSerializable()
 class ListCauseAction extends Explorable {
   final int id;
 
   final String title;
 
   /// The type of the action
+  // TODO this function should not be required
+  @JsonKey(fromJson: campaignActionTypeFromString)
   final CampaignActionType type;
 
   /// The super type is a bigger category than the type - This is used for the
@@ -249,15 +256,13 @@ class ListCauseAction extends Explorable {
   /// The cause that this action is part of
   // Although at the api level an action can be in many causes, for now we are
   // only showing a single cause in the UI.
+  @JsonKey(fromJson: causeFromJson, name: "causes")
   final ListCause cause;
 
   final double time;
 
   String get timeText =>
       timeBrackets.firstWhere((b) => b['maxTime'] > time)['text'];
-
-  /// When this action was released
-  final DateTime releaseTime;
 
   bool get isNew =>
       DateTime.now()
@@ -266,37 +271,41 @@ class ListCauseAction extends Explorable {
       0;
 
   /// Whether the user has completed this action
+  @JsonKey(fromJson: authBooleanSerializer, name: "completed")
   final bool completed;
 
-  /// Whether the user has completed this action
-  final bool starred;
+  @JsonKey(name: "release_date")
+  final DateTime? releasedAt;
+  final DateTime createdAt;
+
+  /// When this action was released
+  DateTime get releaseTime => releasedAt ?? createdAt;
 
   ListCauseAction({
     required this.id,
     required this.title,
     required this.type,
-    required List<ListCause> causes,
-    required DateTime createdAt,
+    required this.cause,
     required this.completed,
-    required this.starred,
     required this.time,
-    DateTime? releasedAt,
-  })  : cause = causes[0],
-        releaseTime = releasedAt ?? createdAt;
+    required this.createdAt,
+    this.releasedAt,
+  });
 
-  ListCauseAction.fromJson(Map<String, dynamic> json, {ListCause? cause})
-      : assert(cause != null || json['causes'] != null),
-        id = json['id'],
-        title = json['title'],
-        type = campaignActionTypeFromString(json['type']),
-        cause = json['causes'] != null
-            ? ListCause.fromJson(json['causes'][0])
-            : cause!,
-        time = json['time'].toDouble(),
-        releaseTime =
-            DateTime.parse(json['release_date'] ?? json['created_at']),
-        completed = json['completed'],
-        starred = json['starred'] == true;
+  factory ListCauseAction.fromJson(Map<String, dynamic> data) =>
+      _$ListCauseActionFromJson(data);
+  // ListCauseAction.fromJson(Map<String, dynamic> json, {ListCause? cause})
+  //     : assert(cause != null || json['causes'] != null),
+  //       id = json['id'],
+  //       title = json['title'],
+  //       type = campaignActionTypeFromString(json['type']),
+  //       cause = json['causes'] != null
+  //           ? ListCause.fromJson(json['causes'][0])
+  //           : cause!,
+  //       time = json['time'].toDouble(),
+  //       releaseTime =
+  //           DateTime.parse(json['release_date'] ?? json['created_at']),
+  //       completed = json['completed'],
 
   Future<CampaignAction> getAction() async {
     CausesService _causesService = locator<CausesService>();
@@ -304,6 +313,7 @@ class ListCauseAction extends Explorable {
   }
 }
 
+@JsonSerializable()
 class CampaignAction extends ListCauseAction {
   final String? whatDescription;
   final String? whyDescription;
@@ -313,11 +323,10 @@ class CampaignAction extends ListCauseAction {
     required int id,
     required String title,
     required CampaignActionType type,
-    required List<ListCause> causes,
-    required DateTime createdAt,
+    required ListCause cause,
     required bool completed,
-    required bool starred,
     required double time,
+    required DateTime createdAt,
     DateTime? releasedAt,
     this.whatDescription,
     this.whyDescription,
@@ -326,17 +335,18 @@ class CampaignAction extends ListCauseAction {
           id: id,
           title: title,
           type: type,
-          causes: causes,
-          createdAt: createdAt,
+          cause: cause,
           completed: completed,
-          starred: starred,
+          createdAt: createdAt,
           releasedAt: releasedAt,
           time: time,
         );
 
-  CampaignAction.fromJson(Map<String, dynamic> json)
-      : whatDescription = json['what_description'],
-        whyDescription = json['why_description'],
-        link = json['link'],
-        super.fromJson(json);
+  factory CampaignAction.fromJson(Map<String, dynamic> data) =>
+      _$CampaignActionFromJson(data);
+  // CampaignAction.fromJson(Map<String, dynamic> json)
+  //     : whatDescription = json['what_description'],
+  //       whyDescription = json['why_description'],
+  //       link = json['link'],
+  //       super.fromJson(json);
 }
