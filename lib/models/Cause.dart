@@ -13,7 +13,7 @@ class ListCause {
   @JsonKey(name: "name")
   final String title;
   
-  @JsonKey(fromJson: authBooleanSerializer, name: "completed")
+  @JsonKey(fromJson: authBooleanSerializer, name: "joined")
   final bool selected;
 
   @JsonKey(fromJson: getIconFromString)

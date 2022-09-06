@@ -2,22 +2,22 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
-
-import '../setup/test_helpers.dart';
+import 'package:mocktail/mocktail.dart';
 
 import 'package:app/services/navigation_service.dart';
 import 'package:app/services/dialog_service.dart';
 import 'package:app/locator.dart';
 
+class MockDialogService extends Mock implements DialogService {}
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  NavigationService? _navigationService = locator<NavigationService>();
+  NavigationService navigationService = locator<NavigationService>();
 
   group('InternalLinkingTests -', () {
     group('isInternalLink tests -', () {
       void testIsInternalLink(String input, bool output) {
-        expect(_navigationService.isInternalLink(input), output);
+        expect(navigationService.isInternalLink(input), output);
       }
 
       test('Valid internal link isInternalLink', () {
@@ -35,7 +35,7 @@ void main() {
 
     group('getInternalLinkRoute -', () {
       void testInternalLinkRoute(String input, String expected) {
-        expect(_navigationService.getInternalLinkRoute(input), expected);
+        expect(navigationService.getInternalLinkRoute(input), expected);
       }
 
       test('Link with no parameters gets correct route', () {
@@ -52,7 +52,7 @@ void main() {
 
     group('getInternalLinkParameters -', () {
       void testInternalLinkParameters(String input, Map? expected) {
-        expect(_navigationService.getInternalLinkParameters(input), expected);
+        expect(navigationService.getInternalLinkParameters(input), expected);
       }
 
       test('Link with no parameters gets correct parameters', () {
@@ -75,7 +75,7 @@ void main() {
   group('External urls tests -', () {
     group('isPDF tests -', () {
       void testIsPDF(String input, bool output) {
-        expect(_navigationService.isPDF(input), output);
+        expect(navigationService.isPDF(input), output);
       }
 
       test('Pdf link is a pdf', () {
@@ -94,7 +94,7 @@ void main() {
 
     group('isMailTo tests -', () {
       void testIsMailto(String input, bool output) {
-        expect(_navigationService.isMailTo(input), output);
+        expect(navigationService.isMailTo(input), output);
       }
 
       test('Mailto link is a mailto', () {
@@ -119,14 +119,8 @@ void main() {
           log.add(methodCall);
         });
 
-        // Mock dialog service so it doesnt do a popup
-        MockDialogService mockDialogService =
-            getAndRegisterMockDialogService() as MockDialogService;
-        when(mockDialogService.showDialog(
-                buttons: anyNamed('buttons'),
-                title: anyNamed('title'),
-                description: anyNamed('description')))
-            .thenAnswer((_) => Future.value(AlertResponse(response: true)));
+        when(() => mockDialogService.showDialog(any()))
+            .thenAnswer((_) => new Future(() => true));
 
         print("Creating mock service");
         final NavigationService _mockNavigationService =
