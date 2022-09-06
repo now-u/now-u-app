@@ -138,18 +138,19 @@ class LearningResource extends Explorable {
   final ListCause cause;
 
   const LearningResource({
-	required this.id,
-	required this.title,
-	required this.time,
-	required this.link,
-	required this.type,
-	required this.createdAt,
-	required this.completed,
-	required this.cause,
-	this.source,
+    required this.id,
+    required this.title,
+    required this.time,
+    required this.link,
+    required this.type,
+    required this.createdAt,
+    required this.completed,
+    required this.cause,
+    this.source,
   });
 
-  factory LearningResource.fromJson(Map<String,dynamic> data) => _$LearningResourceFromJson(data);
+  factory LearningResource.fromJson(Map<String, dynamic> data) =>
+      _$LearningResourceFromJson(data);
 
   /// Whether the resource has been created in the last 2 days
   // TODO move to api

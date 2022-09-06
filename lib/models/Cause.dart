@@ -12,7 +12,7 @@ class ListCause {
   // TODO rename
   @JsonKey(name: "name")
   final String title;
-  
+
   @JsonKey(fromJson: authBooleanSerializer, name: "joined")
   final bool selected;
 
@@ -29,8 +29,9 @@ class ListCause {
     required this.icon,
     required this.description,
     required this.headerImage,
-	required this.selected,
+    required this.selected,
   });
 
-  factory ListCause.fromJson(Map<String,dynamic> data) => _$ListCauseFromJson(data);
+  factory ListCause.fromJson(Map<String, dynamic> data) =>
+      _$ListCauseFromJson(data);
 }

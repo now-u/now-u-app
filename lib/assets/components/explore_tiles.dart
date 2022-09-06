@@ -29,7 +29,7 @@ abstract class ExploreTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseCard(
-        buildBody(context),
+      buildBody(context),
     );
   }
 }

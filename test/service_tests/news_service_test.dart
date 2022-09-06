@@ -22,18 +22,21 @@ void main() {
     registerMock<ApiService>(mockApiService);
     newsService = locator<NewsService>();
 
-    when(() => mockApiService.getModelListRequest<Article>(any(), any(), params: any(named: "params"), limit: any(named:"limit")))
-          .thenAnswer((_) async => [article]);
+    when(() => mockApiService.getModelListRequest<Article>(any(), any(),
+        params: any(named: "params"),
+        limit: any(named: "limit"))).thenAnswer((_) async => [article]);
   });
 
   group('get articles', () {
     test('calls getModelListRequest', () async {
       const inputParams = {"test": "params"};
-      List<Article> articles = await newsService.getArticles(params: inputParams);
+      List<Article> articles =
+          await newsService.getArticles(params: inputParams);
       expect(articles, [article]);
 
-      verify(() => mockApiService.getModelListRequest("articles",
-              Article.fromJson, params: inputParams)).called(1);
+      verify(() => mockApiService.getModelListRequest(
+          "articles", Article.fromJson,
+          params: inputParams)).called(1);
     });
   });
 }

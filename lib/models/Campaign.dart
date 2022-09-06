@@ -47,7 +47,8 @@ class ListCampaign extends Explorable {
     this.endDate,
   });
 
-  factory ListCampaign.fromJson(Map<String,dynamic> data) => _$ListCampaignFromJson(data);
+  factory ListCampaign.fromJson(Map<String, dynamic> data) =>
+      _$ListCampaignFromJson(data);
   // ListCampaign.fromJson(Map<String, dynamic> json)
   //     : id = json['id'],
   //       title = json['title'],
@@ -60,7 +61,7 @@ class ListCampaign extends Explorable {
 }
 
 String descriptionFromJson(String value) {
-	return value.replaceAll('\\n', '\n\n');
+  return value.replaceAll('\\n', '\n\n');
 }
 
 @JsonSerializable()
@@ -112,13 +113,14 @@ class Campaign extends ListCampaign {
           cause: cause,
         );
 
-  factory Campaign.fromJson(Map<String,dynamic> data) => _$CampaignFromJson(data);
+  factory Campaign.fromJson(Map<String, dynamic> data) =>
+      _$CampaignFromJson(data);
   // Campaign.fromJson(Map<String, dynamic> json)
   //     : description = json['description_app'].replaceAll('\\n', '\n\n'),
   //       // numberOfCampaigners = json['number_of_campaigners'],
   //       // numberOfActionsCompleted = json['number_of_completed_actions'],
   //       infographicUrl = json['infographic_url'],
-  //   // TODO remove 
+  //   // TODO remove
   //   actions = [],
   //       // actions = json['campaign_actions']
   //       //     .map((e) => ListCauseAction.fromJson(e,

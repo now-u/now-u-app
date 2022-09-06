@@ -179,8 +179,9 @@ void main() {
 
       await causesService.completeLearningResource(123);
 
-      verify(() => mockApiService
-          .postRequest("v1/users/me/learning_resources/123")).called(1);
+      verify(() =>
+              mockApiService.postRequest("v1/users/me/learning_resources/123"))
+          .called(1);
       verify(() => mockAuthenticationService.syncUser()).called(1);
     });
   });

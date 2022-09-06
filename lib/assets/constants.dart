@@ -89,8 +89,7 @@ const double tileElevation = 10;
 //-- Themes --//
 
 final ligthThemeBaseTextStyle = TextStyle(
-    color: CustomColors.black1,
-
+  color: CustomColors.black1,
 );
 
 // Used through majority of app

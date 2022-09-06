@@ -9,5 +9,5 @@ ListCause causeFromJson(List<dynamic> causes) {
 }
 
 abstract class Explorable {
-	const Explorable();
+  const Explorable();
 }

@@ -8,11 +8,11 @@ Future<String> _readTestData(String fileName,
 }
 
 Future<Map<String, dynamic>> readTestDataObject(path) async {
-  final data  = await _readTestData(path);
+  final data = await _readTestData(path);
   return json.decode(data)["data"];
 }
 
 Future<List<Map<String, dynamic>>> readTestDataList(String path) async {
-  final data  = await _readTestData(path);
+  final data = await _readTestData(path);
   return new List<Map<String, dynamic>>.from(json.decode(data)["data"]);
 }

@@ -6,6 +6,7 @@ class NewsService {
   final ApiService _apiService = locator<ApiService>();
 
   Future<List<Article>> getArticles({Map<String, dynamic>? params}) async {
-    return _apiService.getModelListRequest("articles", Article.fromJson, params: params);
+    return _apiService.getModelListRequest("articles", Article.fromJson,
+        params: params);
   }
 }

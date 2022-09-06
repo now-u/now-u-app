@@ -237,7 +237,7 @@ class ListCauseAction extends Explorable {
   final String title;
 
   /// The type of the action
-  // TODO this function should not be required 
+  // TODO this function should not be required
   @JsonKey(fromJson: campaignActionTypeFromString)
   final CampaignActionType type;
 
@@ -277,6 +277,7 @@ class ListCauseAction extends Explorable {
   @JsonKey(name: "release_date")
   final DateTime? releasedAt;
   final DateTime createdAt;
+
   /// When this action was released
   DateTime get releaseTime => releasedAt ?? createdAt;
 
@@ -291,7 +292,8 @@ class ListCauseAction extends Explorable {
     this.releasedAt,
   });
 
-  factory ListCauseAction.fromJson(Map<String,dynamic> data) => _$ListCauseActionFromJson(data);
+  factory ListCauseAction.fromJson(Map<String, dynamic> data) =>
+      _$ListCauseActionFromJson(data);
   // ListCauseAction.fromJson(Map<String, dynamic> json, {ListCause? cause})
   //     : assert(cause != null || json['causes'] != null),
   //       id = json['id'],
@@ -340,7 +342,8 @@ class CampaignAction extends ListCauseAction {
           time: time,
         );
 
-  factory CampaignAction.fromJson(Map<String,dynamic> data) => _$CampaignActionFromJson(data);
+  factory CampaignAction.fromJson(Map<String, dynamic> data) =>
+      _$CampaignActionFromJson(data);
   // CampaignAction.fromJson(Map<String, dynamic> json)
   //     : whatDescription = json['what_description'],
   //       whyDescription = json['why_description'],

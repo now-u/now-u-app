@@ -2,8 +2,8 @@
 /// - A boolean -> true/false
 /// - A string -> If authentifaction failed
 bool authBooleanSerializer(dynamic value) {
-    if (value == true) {
-        return true;
-    }
-    return false;
+  if (value == true) {
+    return true;
+  }
+  return false;
 }

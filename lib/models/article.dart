@@ -37,7 +37,7 @@ class Article extends Explorable {
   final ArticleType type;
 
   final String headerImage;
-  
+
   @JsonKey(name: "release_date")
   final DateTime? releasedAt;
   final String? source;
@@ -65,7 +65,8 @@ class Article extends Explorable {
     this.releasedAt,
   });
 
-  factory Article.fromJson(Map<String,dynamic> data) => _$ArticleFromJson(data);
+  factory Article.fromJson(Map<String, dynamic> data) =>
+      _$ArticleFromJson(data);
 
   String? getCategory({List<Campaign>? campaigns}) {
     if (linkedCampaignId != null && campaigns != null) {

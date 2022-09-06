@@ -18,9 +18,9 @@ void main() {
       expect(resource.createdAt, DateTime.utc(2020, 7, 6, 20, 49, 43, 892));
       expect(resource.cause.id, 1);
     });
-    
-	test('isNew', () {
-		// isNew()
+
+    test('isNew', () {
+      // isNew()
     });
   });
 }

@@ -9,24 +9,27 @@ import 'package:app/services/auth.dart';
 class CausesService {
   final ApiService _apiService = locator<ApiService>();
 
-  /// Get a list of causes 
+  /// Get a list of causes
   ///
   /// Input params
   /// Returns a list of ListCauses from the API
   Future<List<ListCause>> getCauses({Map<String, dynamic>? params}) async {
-    return _apiService.getModelListRequest("v2/causes", ListCause.fromJson, params: params);
+    return _apiService.getModelListRequest("v2/causes", ListCause.fromJson,
+        params: params);
   }
 
-  /// Get a list of campaigns 
+  /// Get a list of campaigns
   ///
   /// Input params
   /// Returns List of ListCampaign
   Future<List<ListCampaign>> getCampaigns(
       {Map<String, dynamic>? params}) async {
-    return _apiService.getModelListRequest("v2/campaigns", ListCampaign.fromJson, params: params);
+    return _apiService.getModelListRequest(
+        "v2/campaigns", ListCampaign.fromJson,
+        params: params);
   }
 
-  /// Get a campaign by id 
+  /// Get a campaign by id
   ///
   /// Input Action id
   /// Returns the CampaignAction with that id
@@ -40,15 +43,18 @@ class CausesService {
   /// Return a List of ListCauseActions
   Future<List<ListCauseAction>> getActions(
       {Map<String, dynamic>? params}) async {
-    return _apiService.getModelListRequest("v2/actions", ListCauseAction.fromJson, params: params);
+    return _apiService.getModelListRequest(
+        "v2/actions", ListCauseAction.fromJson,
+        params: params);
   }
-  
-  /// Get an action by id 
+
+  /// Get an action by id
   ///
   /// Input params
   /// Return a List of ListCauseActions
   Future<CampaignAction> getAction(int id) async {
-    return _apiService.getModelRequest("v2/actions/$id", CampaignAction.fromJson);
+    return _apiService.getModelRequest(
+        "v2/actions/$id", CampaignAction.fromJson);
   }
 
   /// Get a list of learnig resources
@@ -57,7 +63,9 @@ class CausesService {
   /// Return a List of ListCauseActions
   Future<List<LearningResource>> getLearningResources(
       {Map<String, dynamic>? params}) async {
-    return _apiService.getModelListRequest("v2/learning_resources", LearningResource.fromJson, params: params);
+    return _apiService.getModelListRequest(
+        "v2/learning_resources", LearningResource.fromJson,
+        params: params);
   }
 
   /// Set user's selected causes
