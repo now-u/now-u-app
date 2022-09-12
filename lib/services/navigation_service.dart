@@ -5,21 +5,28 @@ import 'package:app/routes.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/dialog_service.dart';
 
-import 'package:url_launcher/url_launcher.dart';
 import 'package:app/assets/components/buttons/darkButton.dart';
-import 'package:app/models/Learning.dart';
 import 'package:app/models/Action.dart';
+
+import 'package:url_launcher/url_launcher.dart';
 
 const String INTERNAL_PREFIX = "internal:";
 
 const List ID_ROUTES = [Routes.campaignInfo, Routes.actionInfo];
 
+class UrlLauncher{
+    void openUrl(Uri url) {
+        launchUrl(url);
+    }
+}
+
 class NavigationService {
   final DialogService _dialogService = locator<DialogService>();
   final CausesService _causesService = locator<CausesService>();
 
-  final GlobalKey<NavigatorState> navigatorKey =
-      new GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> navigatorKey;
+  final UrlLauncher urlLauncher;
+  NavigationService(this.navigatorKey, this.urlLauncher);
 
   Future<dynamic> navigateTo(String routeName, {arguments}) {
     return navigatorKey.currentState!
@@ -110,7 +117,7 @@ class NavigationService {
 
       navigateTo(route);
     } else if ((isExternal ?? false) || isPDF(url) || isMailTo(url)) {
-      launchLinkExternal(
+      await launchLinkExternal(
         url,
         title: title,
         description: description,
@@ -124,7 +131,7 @@ class NavigationService {
     }
   }
 
-  void launchLinkExternal(
+  Future<void> launchLinkExternal(
     String url, {
     String? title,
     String? description,
@@ -132,6 +139,7 @@ class NavigationService {
     String? closeButtonText,
     Function? extraOnConfirmFunction,
   }) async {
+    print("Launching external link");
     AlertResponse exit = await (_dialogService.showDialog(
       BasicDialog(
           title: title ?? "You're about to leave",
@@ -149,11 +157,13 @@ class NavigationService {
             ),
           ]),
     ) as Future<AlertResponse>);
+    print("Exit response is: ${exit.response}");
     if (exit.response) {
       if (extraOnConfirmFunction != null) {
         extraOnConfirmFunction();
       }
-      launch(url);
+      print("Calling url launcher");
+      urlLauncher.openUrl(Uri.parse(url));
     }
   }
 

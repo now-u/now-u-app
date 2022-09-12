@@ -15,12 +15,14 @@ import 'package:app/services/google_location_search_service.dart';
 import 'package:app/services/remote_config_service.dart';
 import 'package:app/services/organisation_service.dart';
 import 'package:app/services/api_service.dart';
-
 import 'package:app/services/causes_service.dart';
-import 'package:app/services/fake/fake_causes_service.dart';
 
 import 'package:app/assets/constants.dart' as constants;
 
+import 'package:app/services/fake/fake_causes_service.dart';
+
+import 'package:http/http.dart' as http;
+import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 
 /* This allows us to create a fake api if we wish */
@@ -28,7 +30,7 @@ import 'package:get_it/get_it.dart';
 GetIt locator = GetIt.instance;
 
 void setupLocator() {
-  locator.registerLazySingleton(() => NavigationService());
+  locator.registerLazySingleton(() => NavigationService(new GlobalKey<NavigatorState>(), new UrlLauncher()));
   locator.registerLazySingleton(() => SecureStorageService());
   locator.registerLazySingleton(() => SharedPreferencesService());
   locator.registerLazySingleton(() => AuthenticationService());
@@ -43,7 +45,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => AnalyticsService());
   // locator.registerLazySingleton(() => constants.devMode ? FakeCausesService() : CausesService());
   locator.registerLazySingleton(() => CausesService());
-  locator.registerLazySingleton(() => ApiService());
+  locator.registerLazySingleton(() => ApiService(new http.Client()));
 }
 
 void registerFirebaseServicesToLocator() {
