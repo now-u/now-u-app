@@ -1,18 +1,10 @@
 import 'package:app/assets/components/buttons/customWidthButton.dart';
 import 'package:app/assets/components/causes/causeTile.dart';
-import 'package:app/assets/components/causes/causeTileGrid.dart';
 import 'package:app/assets/components/progressTile.dart';
 import 'package:app/pages/explore/ExploreSection.dart';
 import 'package:flutter/material.dart';
 
-import 'package:app/routes.dart';
-
-import 'package:app/assets/components/campaignTile.dart';
-import 'package:app/pages/other/InfoPage.dart';
-
-import 'package:app/assets/components/buttons/darkButton.dart';
 import 'package:app/assets/components/customScrollableSheet.dart';
-import 'package:app/assets/components/smoothPageIndicatorEffect.dart';
 import 'package:app/assets/components/textButton.dart';
 import 'package:app/assets/components/notifications.dart';
 import 'package:app/assets/StyleFrom.dart';

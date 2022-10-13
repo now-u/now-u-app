@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app/assets/components/customTile.dart';
-import 'package:app/assets/components/campaignTile.dart';
 import 'package:app/assets/components/custom_network_image.dart';
 import 'package:app/assets/StyleFrom.dart';
 
@@ -59,29 +58,29 @@ class OraganisationInfoPage extends StatelessWidget {
               Text(
                 organisation.getDescription(),
               ),
-              organisation.getCampaigns()!.length > 0
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                          SizedBox(height: BETWEEN_SECTION_PADDING),
-                          SectionTitle(
-                            "Associated campaigns",
-                            vpadding: SECTION_TITLE_BOTTOM_PADDING,
-                          ),
-                          Container(
-                            height: 120,
-                            child: PageView.builder(
-                              itemCount: organisation.getCampaigns()!.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return CampaignSelectionTile(
-                                  organisation.getCampaigns()![index],
-                                  height: 120,
-                                );
-                              },
-                            ),
-                          ),
-                        ])
-                  : Container(),
+              // organisation.getCampaigns()!.length > 0
+              //     ? Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //             SizedBox(height: BETWEEN_SECTION_PADDING),
+              //             SectionTitle(
+              //               "Associated campaigns",
+              //               vpadding: SECTION_TITLE_BOTTOM_PADDING,
+              //             ),
+              //             Container(
+              //               height: 120,
+              //               child: PageView.builder(
+              //                 itemCount: organisation.getCampaigns()!.length,
+              //                 itemBuilder: (BuildContext context, int index) {
+              //                   return CampaignSelectionTile(
+              //                     organisation.getCampaigns()![index],
+              //                     height: 120,
+              //                   );
+              //                 },
+              //               ),
+              //             ),
+              //           ])
+              //     : Container(),
               SizedBox(height: BETWEEN_SECTION_PADDING),
               organisation.getGeographicReach() == null
                   ? Container()

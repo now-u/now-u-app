@@ -1,6 +1,5 @@
 import 'package:app/assets/routes/customRoute.dart';
 import 'package:app/models/Campaign.dart';
-import 'package:app/models/Learning.dart';
 import 'package:app/models/Notification.dart';
 import 'package:app/models/Organisation.dart';
 import 'package:app/pages/Tabs.dart';
