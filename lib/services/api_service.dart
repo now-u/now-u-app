@@ -36,7 +36,7 @@ Map<int, ApiExceptionType> responseCodeExceptionMapping = {
 };
 
 class ApiService {
-  final http.Client client; 
+  final http.Client client;
   ApiService(this.client);
 
   /// Base of url (no slashes)
