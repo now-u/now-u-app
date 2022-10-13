@@ -1,4 +1,3 @@
-import 'package:app/models/Reward.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Organisation.dart';
@@ -29,7 +28,6 @@ class User {
   List<int> selectedCauses = []; // Causes the user has selected
   List<int> completedCampaigns =
       []; // Stores campaings where all actions have been completed (maybe we should do 80% of something)
-  //List<int> completedRewards = [];
   List<int> completedActions = [];
   List<int> completedLearningResources = [];
 
@@ -67,7 +65,6 @@ class User {
     completedActions,
     rejectedActions,
     starredActions,
-    completedRewards,
     completedActionsType,
     completedLearningResources,
     points,
@@ -78,7 +75,6 @@ class User {
     this.rejectedActions = rejectedActions ?? [];
     this.starredActions = starredActions ?? [];
     this.selectedCauses = selectedCauses ?? [];
-    //this.completedRewards = completedRewards ?? [];
 
     this.completedLearningResources = completedLearningResources ?? [];
 

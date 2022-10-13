@@ -16,13 +16,6 @@ Map<String, String> unauthenticatedHeaders = {
   "Content-Type": "application/json; charset=UTF-8"
 };
 
-@GenerateMocks([http.Client, ApiService])
-MockClient mockHttpClient(ApiService service) {
-  MockClient mockClient = MockClient();
-  service.client = mockClient;
-  return mockClient;
-}
-
 Future<String> readTestData(String fileName,
     {String filePath = "assets/json/"}) async {
   final file = File(filePath + fileName);

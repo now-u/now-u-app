@@ -1,15 +1,13 @@
 import 'package:app/services/causes_service.dart';
 import 'package:app/viewmodels/base_model.dart';
-import 'package:app/viewmodels/base_campaign_model.dart';
 
 import 'package:app/locator.dart';
-import 'package:app/services/campaign_service.dart';
 import 'package:app/services/navigation_service.dart';
 
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/SDG.dart';
 
-class CampaignInfoViewModel extends BaseModel with CampaignWrite {
+class CampaignInfoViewModel extends BaseModel {
   final CausesService _causesService = locator<CausesService>();
   final NavigationService _navigationService = locator<NavigationService>();
 

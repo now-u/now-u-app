@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -8,11 +7,53 @@ import 'package:app/services/navigation_service.dart';
 import 'package:app/services/dialog_service.dart';
 import 'package:app/locator.dart';
 
+import '../setup/test_helpers.dart';
+
 class MockDialogService extends Mock implements DialogService {}
+class MockUrlLauncher extends Mock implements UrlLauncher {}
+class UriFake extends Fake implements Uri {}
+
+class MockNavigatorState extends Mock implements NavigatorState {
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
+    return super.toString();
+  }
+}
+class MockNavigationKey extends Mock implements GlobalKey<NavigatorState> {
+    final NavigatorState navigatorState;
+    MockNavigationKey({ NavigatorState? navigatorState }):
+        this.navigatorState = navigatorState ?? new MockNavigatorState();
+
+    @override
+    NavigatorState? get currentState => navigatorState;
+}
+class CustomDialogFake extends Fake implements CustomDialog {}
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  NavigationService navigationService = locator<NavigationService>();
+  late NavigationService navigationService;
+  late UrlLauncher mockUrlLauncher;
+  late DialogService mockDialogService;
+  late NavigatorState mockNavigatorState;
+
+  setUpAll(() {
+    registerFallbackValue(CustomDialogFake());
+    registerFallbackValue(UriFake());
+  });
+
+  setUp(() {
+    locator.reset();
+    setupLocator();
+    mockDialogService = MockDialogService();
+    mockUrlLauncher = MockUrlLauncher();
+    registerMock<DialogService>(mockDialogService);
+
+    // Register the real NavigationService with a mock global key
+    var mockNavigationKey = MockNavigationKey();
+    mockNavigatorState = mockNavigationKey.currentState!;
+
+    navigationService = new NavigationService(mockNavigationKey, mockUrlLauncher);
+  });
 
   group('InternalLinkingTests -', () {
     group('isInternalLink tests -', () {
@@ -112,30 +153,19 @@ void main() {
 
     group('launchLink uses launch package for external links -', () {
       void testCallToLaunch(String url, bool launch) async {
-        final List<MethodCall> log = <MethodCall>[];
-        MethodChannel channel =
-            const MethodChannel('plugins.flutter.io/url_launcher');
-        channel.setMockMethodCallHandler((MethodCall methodCall) async {
-          log.add(methodCall);
-        });
+        when(() => mockNavigatorState.pushNamed<Object?>(any(), arguments: any(named: "arguments")))
+            .thenAnswer((_) => Future.value({}));
 
         when(() => mockDialogService.showDialog(any()))
-            .thenAnswer((_) => new Future(() => true));
+            .thenAnswer((_) => new Future<AlertResponse>(() => new AlertResponse(response: true)));
 
-        print("Creating mock service");
-        final NavigationService _mockNavigationService =
-            getAndRegisterMockNavigationService();
-        await _mockNavigationService.launchLink(url);
-        print("Launched link");
+        await navigationService.launchLink(url);
 
         if (launch) {
-          expect(log.length, equals(1));
-          expect(log[0].arguments["url"], equals(url));
+          verify(() => mockUrlLauncher.openUrl(Uri.parse(url))).called(1);
         } else {
-          expect(log.length, equals(0));
+          verifyNever(() => mockUrlLauncher.openUrl(any()));
         }
-
-        channel.setMockMethodCallHandler(null);
       }
 
       test('for PDF link', () async {

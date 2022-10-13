@@ -1,6 +1,4 @@
-import 'package:app/viewmodels/home_model.dart';
 import 'package:flutter/material.dart';
-import 'package:stacked/stacked.dart';
 
 class ProgressTile extends StatelessWidget {
   final int campaignsScore;
