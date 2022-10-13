@@ -12,16 +12,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="../../static-assets/github.css">
-  <link rel="stylesheet" href="../../static-assets/styles.css">
-  <link rel="icon" href="../../static-assets/favicon.png">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
 
   
 </head>
 
 
-<body data-base-href="../../"
-      data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false">
 
 <div id="overlay-under-drawer"></div>
 
@@ -113,139 +113,83 @@ Widget build(BuildContext context) {
       ),
       body: ViewModelBuilder&lt;HomeViewModel&gt;.reactive(
           viewModelBuilder: () =&gt; HomeViewModel(),
-          onModelReady: (model) =&gt; model.fetchAll(),
+          onModelReady: (model) =&gt; model.init(),
           builder: (context, model, child) {
-            List&lt;Campaign&gt;? campaigns = model.campaignsWithSelectedFirst;
             return ScrollableSheetPage(
-                header: model.notifications!.length &gt; 0
-                    ? HeaderWithNotifications(
-                        name: model.currentUser!.getName(),
-                        notification: model.notifications![0],
-                        dismissNotification: model.dismissNotification,
-                      )
-                    : HeaderStyle1(model.currentUser!.getName()),
-                children: &lt;Widget&gt;[
-                  HomeTitle(
-                    &quot;Current campaigns&quot;,
-                    infoTitle: &quot;Campaigns&quot;,
-                    infoText:
-                        &quot;The impact of our campaigns is crucial. Our aim is to create campaigns that are as effective and impactful as possible, and we are designing new ways to measure the impact of now-u’s community on our campaign issues.\n We will keep you updated on your personal progress in the app, and share regular community impact reports on our blog, news feed and social media!\n At the end of each campaign, you will receive a quick survey about your experience of the campaign. We will use this data, along with other app use metrics, to create campaign impact reports to share with you and our charity partners.\n We hope to learn from these impact assessments so that we can continue to improve our campaigns, and help you keep making a difference!&quot;,
+              header: model.notifications!.length &gt; 0
+                  ? HeaderWithNotifications(
+                      name: model.currentUser!.getName(),
+                      notification: model.notifications![0],
+                      dismissNotification: model.dismissNotification,
+                    )
+                  : HeaderStyle1(name: model.currentUser!.getName()),
+              children: [
+                Column(children: &lt;Widget&gt;[
+                  &#47;&#47; Campaigns
+                  ProgressTile(
+                    campaignsScore: model.numberOfJoinedCampaigns,
+                    actionsScore: model.numberOfCompletedActions,
+                    learningsScore: model.numberOfCompletedLearningResources,
                   ),
 
-                  model.campaigns == []
-                      ? Container(
-                          child: Center(child: CircularProgressIndicator()))
-                      : CampaignCarosel(campaigns, _controller),
-
-                  Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CustomTextButton(
-                          &quot;See all campaigns&quot;,
-                          onClick: () {
-                            Navigator.of(context)
-                                .pushNamed(Routes.allCampaigns);
-                          },
-                        ),
-                      ]),
-
-                  SizedBox(height: 20),
-
-                  Container(
-                      width: double.infinity,
-                      color: Color.fromRGBO(255, 243, 230, 1),
-                      child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 35, horizontal: 15),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              HomeTitle(
-                                &quot;Take action now!&quot;,
-                                subtitle:
-                                    &quot;Find out what you can start doing to support your campaigns:&quot;,
-                                textAlign: TextAlign.center,
-                              ),
-                              Padding(
-                                  padding: EdgeInsets.all(15),
-                                  child: DarkButton(
-                                    &quot;Go to actions&quot;,
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .pushNamed(Routes.actions);
-                                    },
-                                  ))
-                            ],
-                          ))),
-
-                  SizedBox(height: 10),
-
-                  Container(
-                    child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 35, horizontal: 25),
-                        child: Column(
-                          children: [
-                            Text(&quot;What cause do you want to support next?&quot;,
-                                textAlign: TextAlign.center,
-                                style: textStyleFrom(
-                                  Theme.of(context)
-                                      .primaryTextTheme
-                                      .headline4,
-                                  fontSize: 24,
-                                )),
-                            Padding(
-                              padding: EdgeInsets.all(15),
-                              child: DarkButton(
-                                &quot;Suggest a campaign&quot;,
-                                onPressed: model.onPressCampaignButton,
-                                style: DarkButtonStyle.Secondary,
-                              ),
-                            )
-                          ],
-                        )),
+                  SizedBox(height: 30),
+                  ExploreSectionWidget.fromModel(model.myCampaigns, model),
+                  ExploreSectionWidget.fromModel(model.myActions, model),
+                  CustomWidthButton(
+                    &#39;Explore&#39;,
+                    onPressed: () {
+                      model.goToExplorePage();
+                    },
+                    backgroundColor: Theme.of(context).primaryColor,
+                    size: ButtonSize.Medium,
+                    fontSize: 20.0,
+                    buttonWidthProportion: 0.8,
                   ),
+                  SizedBox(height: 30),
+                  ExploreSectionWidget.fromModel(
+                      model.suggestedCampaigns, model),
+                  ExploreSectionWidget.fromModel(model.inTheNews, model),
 
-                  &#47;&#47; Impact Section
-                  Container(
-                    child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Column(
+                  Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Stack(children: [
-                            &#47;&#47;Image.asset(),
-                            &#47;&#47;BadgeIndicator(),
-                            HomeTitle(
-                              &quot;My impact&quot;,
-                              infoTitle: &quot;My Impact&quot;,
-                              infoText:
-                                  &quot;The impact of our campaigns is crucial. Our aim is to create campaigns that do as much good as possible, so we’re working hard to design ways to measure the impact that now-u users have through our campaigns.\n We will keep you updated on your personal progress in the app, and share regular now-u community progress updates on our blog, news feed and social media.\n At the end of each campaign you joined, we will give you a quick survey about your experience of the campaign. We will use this data, as well as a wide range of other metrics, to create impact reports to share with you and our charity partners.\n We will try to learn as much as possible from these impact assessments so that we can keep improving our campaigns and helping you to do good!&quot;,
-                            ),
-                          ]),
-                          ImpactTile(
-                            model.numberOfJoinedCampaigns,
-                            &quot;Campaigns joined&quot;,
-                            route: Routes.campaign,
+                          Text(
+                            &quot;My causes&quot;,
+                            style:
+                                Theme.of(context).primaryTextTheme.headline3,
                           ),
-                          SizedBox(height: 10),
-                          ImpactTile(
-                            model.numberOfCompletedActions,
-                            &quot;Actions taken&quot;,
-                            route: Routes.actions,
-                          ),
-                          SizedBox(height: 10),
-                          ImpactTile(
-                            model.numberOfStarredActions,
-                            &quot;Actions in to-do list&quot;,
-                            route: Routes.actions,
-                          )
+                          CustomTextButton(&quot;Edit&quot;, onClick: () {
+                            model.goToEditCausesPage();
+                          })
                         ],
-                      ),
-                    ),
-                  )
-                ]);
+                      )),
+
+                  Container(
+                      child: model.causes != []
+                          ? GridView.builder(
+                              shrinkWrap: true,
+                              padding: EdgeInsets.all(20),
+                              physics: NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 20,
+                                      crossAxisSpacing: 30),
+                              itemCount: model.causes.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return CauseTile(
+                                    gestureFunction: () =&gt; null,
+                                    cause: model.causes[index],
+                                    getInfoFunction: () =&gt; model
+                                        .getCausePopup(model.causes[index]));
+                              })
+                          : CircularProgressIndicator()),
+                ]),
+                SizedBox(height: 10),
+              ],
+            );
           }));
 }</code></pre>
 </section>
@@ -271,8 +215,8 @@ Widget build(BuildContext context) {
     <h5>Home class</h5>
     <ol>
 
-    <li class="section-title"><a href="../../pages_home_Home/Home-class.html#constructors">Constructors</a></li>
-    <li><a href="../../pages_home_Home/Home/Home.html">Home</a></li>
+        <li class="section-title"><a href="../../pages_home_Home/Home-class.html#constructors">Constructors</a></li>
+          <li><a href="../../pages_home_Home/Home/Home.html">Home</a></li>
 
 
     <li class="section-title inherited">
@@ -312,15 +256,16 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     app
-      1.2.0+34
+      2.0.0-dev+42
   </span>
 
   
 </footer>
 
 
-<script src="../../static-assets/highlight.pack.js"></script>
-<script src="../../static-assets/script.js"></script>
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
 
 
 

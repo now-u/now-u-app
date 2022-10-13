@@ -4,24 +4,24 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the ListCause.fromJson constructor from the Class ListCause class from the Cause library, for the Dart programming language.">
-  <title>ListCause.fromJson constructor - ListCause class - Cause library - Dart API</title>
+  <meta name="description" content="API docs for the ListCause.fromJson constructor from Class ListCause from the Cause library, for the Dart programming language.">
+  <title>ListCause.fromJson constructor - ListCause - Cause library - Dart API</title>
 
 
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="../../static-assets/github.css">
-  <link rel="stylesheet" href="../../static-assets/styles.css">
-  <link rel="icon" href="../../static-assets/favicon.png">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
 
   
 </head>
 
 
-<body data-base-href="../../"
-      data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false">
 
 <div id="overlay-under-drawer"></div>
 
@@ -31,7 +31,7 @@
     <li><a href="../../index.html">app</a></li>
     <li><a href="../../models_Cause/models_Cause-library.html">Cause</a></li>
     <li><a href="../../models_Cause/ListCause-class.html">ListCause</a></li>
-    <li class="self-crumb">ListCause.fromJson constructor</li>
+    <li class="self-crumb">ListCause.fromJson factory constructor</li>
   </ol>
   <div class="self-name">ListCause.fromJson</div>
   <form class="search navbar-right" role="search">
@@ -49,7 +49,7 @@
 </h1></div>
 
     <section class="multi-line-signature">
-      <span class="name ">ListCause.fromJson</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="fromJson-param-json"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span></span> <span class="parameter-name">json</span></span></li>
+      <span class="name ">ListCause.fromJson</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="fromJson-param-data"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span></span> <span class="parameter-name">data</span></span></li>
 </ol>)
     </section>
 
@@ -59,13 +59,8 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">ListCause.fromJson(Map&lt;String, dynamic&gt; json)
-    : id = json[&#39;id&#39;],
-      title = json[&#39;title&#39;],
-      icon = getIconFromString(json[&#39;icon&#39;]),
-      description = json[&#39;description&#39;],
-      selected = json[&#39;selected&#39;],
-      headerImage = json[&#39;header_image&#39;];</code></pre>
+  <pre class="language-dart"><code class="language-dart">factory ListCause.fromJson(Map&lt;String, dynamic&gt; data) =&gt;
+    _$ListCauseFromJson(data);</code></pre>
 </section>
 
 
@@ -82,16 +77,16 @@
   <li><a href="../../index.html">app</a></li>
   <li><a href="../../models_Cause/models_Cause-library.html">Cause</a></li>
   <li><a href="../../models_Cause/ListCause-class.html">ListCause</a></li>
-  <li class="self-crumb">ListCause.fromJson constructor</li>
+  <li class="self-crumb">ListCause.fromJson factory constructor</li>
 </ol>
 
 
     <h5>ListCause class</h5>
     <ol>
 
-    <li class="section-title"><a href="../../models_Cause/ListCause-class.html#constructors">Constructors</a></li>
-    <li><a href="../../models_Cause/ListCause/ListCause.html">ListCause</a></li>
-    <li><a href="../../models_Cause/ListCause/ListCause.fromJson.html">fromJson</a></li>
+        <li class="section-title"><a href="../../models_Cause/ListCause-class.html#constructors">Constructors</a></li>
+          <li><a href="../../models_Cause/ListCause/ListCause.html">ListCause</a></li>
+          <li><a href="../../models_Cause/ListCause/ListCause.fromJson.html">fromJson</a></li>
 
 
     <li class="section-title">
@@ -128,15 +123,16 @@
 <footer>
   <span class="no-break">
     app
-      1.2.0+34
+      2.0.0-dev+42
   </span>
 
   
 </footer>
 
 
-<script src="../../static-assets/highlight.pack.js"></script>
-<script src="../../static-assets/script.js"></script>
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
 
 
 

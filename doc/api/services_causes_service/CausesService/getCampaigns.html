@@ -12,16 +12,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="../../static-assets/github.css">
-  <link rel="stylesheet" href="../../static-assets/styles.css">
-  <link rel="icon" href="../../static-assets/favicon.png">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
 
   
 </head>
 
 
-<body data-base-href="../../"
-      data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false">
 
 <div id="overlay-under-drawer"></div>
 
@@ -60,7 +60,7 @@
     </section>
     
 <section class="desc markdown">
-  <p>Get request</p>
+  <p>Get a list of campaigns</p>
 <p>Input params
 Returns List of ListCampaign</p>
 </section>
@@ -71,10 +71,9 @@ Returns List of ListCampaign</p>
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;List&lt;ListCampaign&gt;&gt; getCampaigns(
     {Map&lt;String, dynamic&gt;? params}) async {
-  print(&quot;Getting real campaigns&quot;);
-  List&lt;Map&lt;String, dynamic&gt;&gt; data =
-      await getListRequest(&quot;campaign&quot;, params: params);
-  return data.map((campData) =&gt; ListCampaign.fromJson(campData)).toList();
+  return _apiService.getModelListRequest(
+      &quot;v2&#47;campaigns&quot;, ListCampaign.fromJson,
+      params: params);
 }</code></pre>
 </section>
 
@@ -99,33 +98,27 @@ Returns List of ListCampaign</p>
     <h5>CausesService class</h5>
     <ol>
 
-    <li class="section-title"><a href="../../services_causes_service/CausesService-class.html#constructors">Constructors</a></li>
-    <li><a href="../../services_causes_service/CausesService/CausesService.html">CausesService</a></li>
+        <li class="section-title"><a href="../../services_causes_service/CausesService-class.html#constructors">Constructors</a></li>
+          <li><a href="../../services_causes_service/CausesService/CausesService.html">CausesService</a></li>
 
 
     <li class="section-title inherited">
       <a href="../../services_causes_service/CausesService-class.html#instance-properties">Properties</a>
     </li>
-    <li class="inherited"><a href="../../services_api_service/ApiService/baseUrl.html">baseUrl</a></li>
-    <li class="inherited"><a href="../../services_api_service/ApiService/baseUrlPath.html">baseUrlPath</a></li>
-    <li class="inherited"><a href="../../services_api_service/ApiService/client.html">client</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
     <li class="section-title"><a href="../../services_causes_service/CausesService-class.html#instance-methods">Methods</a></li>
+    <li><a href="../../services_causes_service/CausesService/completeAction.html">completeAction</a></li>
+    <li><a href="../../services_causes_service/CausesService/completeLearningResource.html">completeLearningResource</a></li>
     <li><a href="../../services_causes_service/CausesService/getAction.html">getAction</a></li>
     <li><a href="../../services_causes_service/CausesService/getActions.html">getActions</a></li>
     <li><a href="../../services_causes_service/CausesService/getCampaign.html">getCampaign</a></li>
     <li><a href="../../services_causes_service/CausesService/getCampaigns.html">getCampaigns</a></li>
-    <li><a href="../../services_causes_service/CausesService/getCause.html">getCause</a></li>
     <li><a href="../../services_causes_service/CausesService/getCauses.html">getCauses</a></li>
-    <li class="inherited"><a href="../../services_api_service/ApiService/getExceptionForResponse.html">getExceptionForResponse</a></li>
     <li><a href="../../services_causes_service/CausesService/getLearningResources.html">getLearningResources</a></li>
-    <li class="inherited"><a href="../../services_api_service/ApiService/getListRequest.html">getListRequest</a></li>
-    <li class="inherited"><a href="../../services_api_service/ApiService/getRequest.html">getRequest</a></li>
-    <li class="inherited"><a href="../../services_api_service/ApiService/getRequestHeaders.html">getRequestHeaders</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li class="inherited"><a href="../../services_api_service/ApiService/postRequest.html">postRequest</a></li>
+    <li><a href="../../services_causes_service/CausesService/removeActionStatus.html">removeActionStatus</a></li>
     <li><a href="../../services_causes_service/CausesService/selectCauses.html">selectCauses</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
 
@@ -147,15 +140,16 @@ Returns List of ListCampaign</p>
 <footer>
   <span class="no-break">
     app
-      1.2.0+34
+      2.0.0-dev+42
   </span>
 
   
 </footer>
 
 
-<script src="../../static-assets/highlight.pack.js"></script>
-<script src="../../static-assets/script.js"></script>
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
 
 
 

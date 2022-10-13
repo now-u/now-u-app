@@ -12,16 +12,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="../../static-assets/github.css">
-  <link rel="stylesheet" href="../../static-assets/styles.css">
-  <link rel="icon" href="../../static-assets/favicon.png">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
 
   
 </head>
 
 
-<body data-base-href="../../"
-      data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false">
 
 <div id="overlay-under-drawer"></div>
 
@@ -138,29 +138,29 @@ Widget build(BuildContext context) {
             Text(
               organisation.getDescription(),
             ),
-            organisation.getCampaigns()!.length &gt; 0
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                        SizedBox(height: BETWEEN_SECTION_PADDING),
-                        SectionTitle(
-                          &quot;Associated campaigns&quot;,
-                          vpadding: SECTION_TITLE_BOTTOM_PADDING,
-                        ),
-                        Container(
-                          height: 120,
-                          child: PageView.builder(
-                            itemCount: organisation.getCampaigns()!.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return CampaignSelectionTile(
-                                organisation.getCampaigns()![index],
-                                height: 120,
-                              );
-                            },
-                          ),
-                        ),
-                      ])
-                : Container(),
+            &#47;&#47; organisation.getCampaigns()!.length &gt; 0
+            &#47;&#47;     ? Column(
+            &#47;&#47;         crossAxisAlignment: CrossAxisAlignment.start,
+            &#47;&#47;         children: [
+            &#47;&#47;             SizedBox(height: BETWEEN_SECTION_PADDING),
+            &#47;&#47;             SectionTitle(
+            &#47;&#47;               &quot;Associated campaigns&quot;,
+            &#47;&#47;               vpadding: SECTION_TITLE_BOTTOM_PADDING,
+            &#47;&#47;             ),
+            &#47;&#47;             Container(
+            &#47;&#47;               height: 120,
+            &#47;&#47;               child: PageView.builder(
+            &#47;&#47;                 itemCount: organisation.getCampaigns()!.length,
+            &#47;&#47;                 itemBuilder: (BuildContext context, int index) {
+            &#47;&#47;                   return CampaignSelectionTile(
+            &#47;&#47;                     organisation.getCampaigns()![index],
+            &#47;&#47;                     height: 120,
+            &#47;&#47;                   );
+            &#47;&#47;                 },
+            &#47;&#47;               ),
+            &#47;&#47;             ),
+            &#47;&#47;           ])
+            &#47;&#47;     : Container(),
             SizedBox(height: BETWEEN_SECTION_PADDING),
             organisation.getGeographicReach() == null
                 ? Container()
@@ -242,8 +242,8 @@ Widget build(BuildContext context) {
     <h5>OraganisationInfoPage class</h5>
     <ol>
 
-    <li class="section-title"><a href="../../pages_other_OrganisationPage/OraganisationInfoPage-class.html#constructors">Constructors</a></li>
-    <li><a href="../../pages_other_OrganisationPage/OraganisationInfoPage/OraganisationInfoPage.html">OraganisationInfoPage</a></li>
+        <li class="section-title"><a href="../../pages_other_OrganisationPage/OraganisationInfoPage-class.html#constructors">Constructors</a></li>
+          <li><a href="../../pages_other_OrganisationPage/OraganisationInfoPage/OraganisationInfoPage.html">OraganisationInfoPage</a></li>
 
 
     <li class="section-title">
@@ -284,15 +284,16 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     app
-      1.2.0+34
+      2.0.0-dev+42
   </span>
 
   
 </footer>
 
 
-<script src="../../static-assets/highlight.pack.js"></script>
-<script src="../../static-assets/script.js"></script>
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
 
 
 

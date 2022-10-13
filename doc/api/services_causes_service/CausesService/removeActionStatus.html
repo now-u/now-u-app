@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the removeActionStatus method from the CausesService class, for the Dart programming language.">
+  <title>removeActionStatus method - CausesService class - causes_service library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../" data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">app</a></li>
+    <li><a href="../../services_causes_service/services_causes_service-library.html">causes_service</a></li>
+    <li><a href="../../services_causes_service/CausesService-class.html">CausesService</a></li>
+    <li class="self-crumb">removeActionStatus method</li>
+  </ol>
+  <div class="self-name">removeActionStatus</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-method">removeActionStatus</span> method 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
+<span class="name ">removeActionStatus</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="removeActionStatus-param-id"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">id</span></span></li>
+</ol>)
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Uncomlete an action</p>
+<p>Sets an action as uncompleted</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Future removeActionStatus(int id) async {
+  await _apiService.deleteRequest(
+    &#39;v1&#47;users&#47;me&#47;actions&#47;$id&#39;,
+  );
+
+  &#47;&#47; Update user after request
+  await locator&lt;AuthenticationService&gt;().syncUser();
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../../index.html">app</a></li>
+  <li><a href="../../services_causes_service/services_causes_service-library.html">causes_service</a></li>
+  <li><a href="../../services_causes_service/CausesService-class.html">CausesService</a></li>
+  <li class="self-crumb">removeActionStatus method</li>
+</ol>
+
+
+    <h5>CausesService class</h5>
+    <ol>
+
+        <li class="section-title"><a href="../../services_causes_service/CausesService-class.html#constructors">Constructors</a></li>
+          <li><a href="../../services_causes_service/CausesService/CausesService.html">CausesService</a></li>
+
+
+    <li class="section-title inherited">
+      <a href="../../services_causes_service/CausesService-class.html#instance-properties">Properties</a>
+    </li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+
+    <li class="section-title"><a href="../../services_causes_service/CausesService-class.html#instance-methods">Methods</a></li>
+    <li><a href="../../services_causes_service/CausesService/completeAction.html">completeAction</a></li>
+    <li><a href="../../services_causes_service/CausesService/completeLearningResource.html">completeLearningResource</a></li>
+    <li><a href="../../services_causes_service/CausesService/getAction.html">getAction</a></li>
+    <li><a href="../../services_causes_service/CausesService/getActions.html">getActions</a></li>
+    <li><a href="../../services_causes_service/CausesService/getCampaign.html">getCampaign</a></li>
+    <li><a href="../../services_causes_service/CausesService/getCampaigns.html">getCampaigns</a></li>
+    <li><a href="../../services_causes_service/CausesService/getCauses.html">getCauses</a></li>
+    <li><a href="../../services_causes_service/CausesService/getLearningResources.html">getLearningResources</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li><a href="../../services_causes_service/CausesService/removeActionStatus.html">removeActionStatus</a></li>
+    <li><a href="../../services_causes_service/CausesService/selectCauses.html">selectCauses</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+
+    <li class="section-title inherited"><a href="../../services_causes_service/CausesService-class.html#operators">Operators</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    app
+      2.0.0-dev+42
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+

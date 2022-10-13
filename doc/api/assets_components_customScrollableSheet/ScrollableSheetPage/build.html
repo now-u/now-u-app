@@ -12,16 +12,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="../../static-assets/github.css">
-  <link rel="stylesheet" href="../../static-assets/styles.css">
-  <link rel="icon" href="../../static-assets/favicon.png">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
 
   
 </head>
 
 
-<body data-base-href="../../"
-      data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false">
 
 <div id="overlay-under-drawer"></div>
 
@@ -112,8 +112,8 @@ Widget build(BuildContext context) {
   &#47;&#47; for more details.
   Widget? child;
   final sheet = DraggableScrollableSheet(
-    initialChildSize: initialChildSize ?? 0.72,
-    minChildSize: minChildSize ?? 0.72,
+    initialChildSize: initialChildSize ?? 0.82,
+    minChildSize: minChildSize ?? 0.82,
     maxChildSize: maxChildSize ?? 1,
     builder: (context, controller) {
       if (child == null) {
@@ -130,7 +130,7 @@ Widget build(BuildContext context) {
             child: Container(
               color: sheetBackgroundColor ?? Color.fromRGBO(247, 248, 252, 1),
               child: Padding(
-                padding: EdgeInsets.only(top: 45),
+                padding: EdgeInsets.only(top: 60),
                 child: Column(
                   children: children,
                 ),
@@ -181,8 +181,8 @@ Widget build(BuildContext context) {
     <h5>ScrollableSheetPage class</h5>
     <ol>
 
-    <li class="section-title"><a href="../../assets_components_customScrollableSheet/ScrollableSheetPage-class.html#constructors">Constructors</a></li>
-    <li><a href="../../assets_components_customScrollableSheet/ScrollableSheetPage/ScrollableSheetPage.html">ScrollableSheetPage</a></li>
+        <li class="section-title"><a href="../../assets_components_customScrollableSheet/ScrollableSheetPage-class.html#constructors">Constructors</a></li>
+          <li><a href="../../assets_components_customScrollableSheet/ScrollableSheetPage/ScrollableSheetPage.html">ScrollableSheetPage</a></li>
 
 
     <li class="section-title">
@@ -230,15 +230,16 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     app
-      1.2.0+34
+      2.0.0-dev+42
   </span>
 
   
 </footer>
 
 
-<script src="../../static-assets/highlight.pack.js"></script>
-<script src="../../static-assets/script.js"></script>
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
 
 
 

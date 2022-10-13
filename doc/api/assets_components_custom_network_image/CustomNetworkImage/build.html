@@ -12,16 +12,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="../../static-assets/github.css">
-  <link rel="stylesheet" href="../../static-assets/styles.css">
-  <link rel="icon" href="../../static-assets/favicon.png">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
 
   
 </head>
 
 
-<body data-base-href="../../"
-      data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false">
 
 <div id="overlay-under-drawer"></div>
 
@@ -112,16 +112,20 @@ Widget build(BuildContext context) {
   }
   return CachedNetworkImage(
     imageUrl: url!,
-    placeholder: placeholder == null &amp;&amp; progressIndicatorBuilder == null
+    placeholder: placeholder == null
         ? (context, url) =&gt; Center(child: CircularProgressIndicator())
         : placeholder as Widget Function(BuildContext, String)?,
-    errorWidget:
-        errorWidget as Widget Function(BuildContext, String, dynamic)? ??
-            (context, url, error) =&gt; Center(child: Icon(Icons.error)),
-    progressIndicatorBuilder: progressIndicatorBuilder as Widget Function(
-        BuildContext, String, DownloadProgress)?,
-    fit: fit,
+    errorWidget: (context, url, error) =&gt; Center(child: Icon(Icons.error)),
     height: height,
+    imageBuilder: (context, imageProvider) =&gt; Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: imageProvider,
+          fit: fit,
+          colorFilter: colorFilter,
+        ),
+      ),
+    ),
     cacheManager: cacheManager,
   );
 }</code></pre>
@@ -148,21 +152,20 @@ Widget build(BuildContext context) {
     <h5>CustomNetworkImage class</h5>
     <ol>
 
-    <li class="section-title"><a href="../../assets_components_custom_network_image/CustomNetworkImage-class.html#constructors">Constructors</a></li>
-    <li><a href="../../assets_components_custom_network_image/CustomNetworkImage/CustomNetworkImage.html">CustomNetworkImage</a></li>
+        <li class="section-title"><a href="../../assets_components_custom_network_image/CustomNetworkImage-class.html#constructors">Constructors</a></li>
+          <li><a href="../../assets_components_custom_network_image/CustomNetworkImage/CustomNetworkImage.html">CustomNetworkImage</a></li>
 
 
     <li class="section-title">
       <a href="../../assets_components_custom_network_image/CustomNetworkImage-class.html#instance-properties">Properties</a>
     </li>
     <li><a href="../../assets_components_custom_network_image/CustomNetworkImage/cacheManager.html">cacheManager</a></li>
-    <li><a href="../../assets_components_custom_network_image/CustomNetworkImage/errorWidget.html">errorWidget</a></li>
+    <li><a href="../../assets_components_custom_network_image/CustomNetworkImage/colorFilter.html">colorFilter</a></li>
     <li><a href="../../assets_components_custom_network_image/CustomNetworkImage/fit.html">fit</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/hashCode.html">hashCode</a></li>
     <li><a href="../../assets_components_custom_network_image/CustomNetworkImage/height.html">height</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/key.html">key</a></li>
     <li><a href="../../assets_components_custom_network_image/CustomNetworkImage/placeholder.html">placeholder</a></li>
-    <li><a href="../../assets_components_custom_network_image/CustomNetworkImage/progressIndicatorBuilder.html">progressIndicatorBuilder</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
     <li><a href="../../assets_components_custom_network_image/CustomNetworkImage/url.html">url</a></li>
 
@@ -196,15 +199,16 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     app
-      1.2.0+34
+      2.0.0-dev+42
   </span>
 
   
 </footer>
 
 
-<script src="../../static-assets/highlight.pack.js"></script>
-<script src="../../static-assets/script.js"></script>
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
 
 
 

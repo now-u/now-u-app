@@ -12,16 +12,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="../../static-assets/github.css">
-  <link rel="stylesheet" href="../../static-assets/styles.css">
-  <link rel="icon" href="../../static-assets/favicon.png">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
 
   
 </head>
 
 
-<body data-base-href="../../"
-      data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false">
 
 <div id="overlay-under-drawer"></div>
 
@@ -90,7 +90,7 @@ route from the top of the screen back to the bottom.</p>
 <p>We've used <a href="https://api.flutter.dev/flutter/widgets/PageRouteBuilder-class.html">PageRouteBuilder</a> to demonstrate the <a href="../../assets_routes_customRoute/CustomAndroidRoute/buildTransitions.html">buildTransitions</a> method
 here. The body of an override of the <a href="../../assets_routes_customRoute/CustomAndroidRoute/buildTransitions.html">buildTransitions</a> method would be
 defined in the same way.</p>
-<pre class="language-dart"><code class="language-dart">PageRouteBuilder(
+<pre class="language-dart"><code class="language-dart">PageRouteBuilder&lt;void&gt;(
   pageBuilder: (BuildContext context,
       Animation&lt;double&gt; animation,
       Animation&lt;double&gt; secondaryAnimation,
@@ -133,7 +133,7 @@ The example below adds a transition that's driven by the
 been pushed on top of it, it translates in the opposite direction of
 the new route. Likewise when the route is exposed because the topmost
 route has been popped off.</p>
-<pre class="language-dart"><code class="language-dart">PageRouteBuilder(
+<pre class="language-dart"><code class="language-dart">PageRouteBuilder&lt;void&gt;(
   pageBuilder: (BuildContext context,
       Animation&lt;double&gt; animation,
       Animation&lt;double&gt; secondaryAnimation,
@@ -224,8 +224,8 @@ Widget buildTransitions(BuildContext context, Animation&lt;double&gt; animation,
     <h5>CustomAndroidRoute class</h5>
     <ol>
 
-    <li class="section-title"><a href="../../assets_routes_customRoute/CustomAndroidRoute-class.html#constructors">Constructors</a></li>
-    <li><a href="../../assets_routes_customRoute/CustomAndroidRoute/CustomAndroidRoute.html">CustomAndroidRoute</a></li>
+        <li class="section-title"><a href="../../assets_routes_customRoute/CustomAndroidRoute-class.html#constructors">Constructors</a></li>
+          <li><a href="../../assets_routes_customRoute/CustomAndroidRoute/CustomAndroidRoute.html">CustomAndroidRoute</a></li>
 
 
     <li class="section-title inherited">
@@ -248,6 +248,7 @@ Widget buildTransitions(BuildContext context, Animation&lt;double&gt; animation,
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Route/hasActiveRouteBelow.html">hasActiveRouteBelow</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/ModalRoute/hasScopedWillPopCallback.html">hasScopedWillPopCallback</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/ModalRoute/impliesAppBarDismissal.html">impliesAppBarDismissal</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Route/isActive.html">isActive</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Route/isCurrent.html">isCurrent</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Route/isFirst.html">isFirst</a></li>
@@ -316,15 +317,16 @@ Widget buildTransitions(BuildContext context, Animation&lt;double&gt; animation,
 <footer>
   <span class="no-break">
     app
-      1.2.0+34
+      2.0.0-dev+42
   </span>
 
   
 </footer>
 
 
-<script src="../../static-assets/highlight.pack.js"></script>
-<script src="../../static-assets/script.js"></script>
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
 
 
 

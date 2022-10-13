@@ -12,16 +12,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="../../static-assets/github.css">
-  <link rel="stylesheet" href="../../static-assets/styles.css">
-  <link rel="icon" href="../../static-assets/favicon.png">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
 
   
 </head>
 
 
-<body data-base-href="../../"
-      data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false">
 
 <div id="overlay-under-drawer"></div>
 
@@ -106,32 +106,27 @@ and</li>
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
 Widget build(BuildContext context) {
-  return ViewModelBuilder&lt;CausesViewModel&gt;.reactive(
-      viewModelBuilder: () =&gt; CausesViewModel(),
-      onModelReady: (model) =&gt; model.fetchCauses(),
-      builder: (context, model, child) {
+  return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 1,
+      ),
+      padding: EdgeInsets.all(20),
+      itemCount: model.causesList.length,
+      itemBuilder: (BuildContext context, int index) {
         return Container(
-            padding: const EdgeInsets.all(15.0),
-            child: ExpandedGrid.builder(
-                numberOfRows: 2,
-                itemCount: model.causesList.length,
-                itemBuilder: (context, rowIndex, colIndex, index) {
-                  return Expanded(
-                      child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: CauseTile(
-                      gestureFunction: () =&gt; model.toggleSelection(
-                          listCause: model.causesList[index]),
-                      cause: model.causesList[index],
-                      causeIcon: FontAwesomeIcons.leaf,
-                      isSelected:
-                          model.isCauseSelected(model.causesList[index]),
-                      getInfoFunction: () =&gt; model.getCausePopup(
-                          listCause: model.causesList[index],
-                          causeIndex: index),
-                    ),
-                  ));
-                }));
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: CauseTile(
+              gestureFunction: () =&gt;
+                  model.toggleSelection(listCause: model.causesList[index]),
+              cause: model.causesList[index],
+              isSelected: model.isCauseSelected(model.causesList[index]),
+              getInfoFunction: () =&gt; model.getCausePopup(
+                  listCause: model.causesList[index], causeIndex: index),
+            ),
+          ),
+        );
       });
 }</code></pre>
 </section>
@@ -157,15 +152,16 @@ Widget build(BuildContext context) {
     <h5>CauseTileGrid class</h5>
     <ol>
 
-    <li class="section-title"><a href="../../assets_components_causes_causeTileGrid/CauseTileGrid-class.html#constructors">Constructors</a></li>
-    <li><a href="../../assets_components_causes_causeTileGrid/CauseTileGrid/CauseTileGrid.html">CauseTileGrid</a></li>
+        <li class="section-title"><a href="../../assets_components_causes_causeTileGrid/CauseTileGrid-class.html#constructors">Constructors</a></li>
+          <li><a href="../../assets_components_causes_causeTileGrid/CauseTileGrid/CauseTileGrid.html">CauseTileGrid</a></li>
 
 
-    <li class="section-title inherited">
+    <li class="section-title">
       <a href="../../assets_components_causes_causeTileGrid/CauseTileGrid-class.html#instance-properties">Properties</a>
     </li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/hashCode.html">hashCode</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/key.html">key</a></li>
+    <li><a href="../../assets_components_causes_causeTileGrid/CauseTileGrid/model.html">model</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
     <li class="section-title"><a href="../../assets_components_causes_causeTileGrid/CauseTileGrid-class.html#instance-methods">Methods</a></li>
@@ -198,15 +194,16 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     app
-      1.2.0+34
+      2.0.0-dev+42
   </span>
 
   
 </footer>
 
 
-<script src="../../static-assets/highlight.pack.js"></script>
-<script src="../../static-assets/script.js"></script>
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
 
 
 

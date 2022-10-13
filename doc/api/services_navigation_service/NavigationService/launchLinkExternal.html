@@ -12,16 +12,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="../../static-assets/github.css">
-  <link rel="stylesheet" href="../../static-assets/styles.css">
-  <link rel="icon" href="../../static-assets/favicon.png">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
 
   
 </head>
 
 
-<body data-base-href="../../"
-      data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false">
 
 <div id="overlay-under-drawer"></div>
 
@@ -51,7 +51,7 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype">void</span>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
 <span class="name ">launchLinkExternal</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="launchLinkExternal-param-url"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">url</span>, </span></li>
 <li><span class="parameter" id="launchLinkExternal-param-title">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">title</span>, </span></li>
 <li><span class="parameter" id="launchLinkExternal-param-description"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">description</span>, </span></li>
@@ -69,7 +69,7 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">void launchLinkExternal(
+  <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; launchLinkExternal(
   String url, {
   String? title,
   String? description,
@@ -77,12 +77,13 @@
   String? closeButtonText,
   Function? extraOnConfirmFunction,
 }) async {
+  print(&quot;Launching external link&quot;);
   AlertResponse exit = await (_dialogService.showDialog(
     BasicDialog(
         title: title ?? &quot;You&#39;re about to leave&quot;,
         description: description ??
             &quot;This link will take you out of the app. Are you sure you want to go?&quot;,
-        buttons: [
+        buttons: &lt;DialogButton&gt;[
           DialogButton(
             text: buttonText ?? &quot;Let&#39;s go&quot;,
             response: true,
@@ -94,11 +95,13 @@
           ),
         ]),
   ) as Future&lt;AlertResponse&gt;);
+  print(&quot;Exit response is: ${exit.response}&quot;);
   if (exit.response) {
     if (extraOnConfirmFunction != null) {
       extraOnConfirmFunction();
     }
-    launch(url);
+    print(&quot;Calling url launcher&quot;);
+    urlLauncher.openUrl(Uri.parse(url));
   }
 }</code></pre>
 </section>
@@ -124,8 +127,8 @@
     <h5>NavigationService class</h5>
     <ol>
 
-    <li class="section-title"><a href="../../services_navigation_service/NavigationService-class.html#constructors">Constructors</a></li>
-    <li><a href="../../services_navigation_service/NavigationService/NavigationService.html">NavigationService</a></li>
+        <li class="section-title"><a href="../../services_navigation_service/NavigationService-class.html#constructors">Constructors</a></li>
+          <li><a href="../../services_navigation_service/NavigationService/NavigationService.html">NavigationService</a></li>
 
 
     <li class="section-title">
@@ -134,6 +137,7 @@
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
     <li><a href="../../services_navigation_service/NavigationService/navigatorKey.html">navigatorKey</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li><a href="../../services_navigation_service/NavigationService/urlLauncher.html">urlLauncher</a></li>
 
     <li class="section-title"><a href="../../services_navigation_service/NavigationService-class.html#instance-methods">Methods</a></li>
     <li><a href="../../services_navigation_service/NavigationService/getInternalLinkParameters.html">getInternalLinkParameters</a></li>
@@ -168,15 +172,16 @@
 <footer>
   <span class="no-break">
     app
-      1.2.0+34
+      2.0.0-dev+42
   </span>
 
   
 </footer>
 
 
-<script src="../../static-assets/highlight.pack.js"></script>
-<script src="../../static-assets/script.js"></script>
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
 
 
 

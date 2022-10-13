@@ -12,16 +12,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="../../static-assets/github.css">
-  <link rel="stylesheet" href="../../static-assets/styles.css">
-  <link rel="icon" href="../../static-assets/favicon.png">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
 
   
 </head>
 
 
-<body data-base-href="../../"
-      data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false">
 
 <div id="overlay-under-drawer"></div>
 
@@ -51,7 +51,7 @@
         <section class="multi-line-signature">
           <a href="https://api.flutter.dev/flutter/dart-core/DateTime-class.html">DateTime</a>?
           <span class="name ">releasedAt</span>
-          <div class="features">final</div>
+          <div class="features">@<a href="https://pub.dev/documentation/json_annotation/4.6.0/json_annotation/JsonKey-class.html">JsonKey</a>(name: &quot;release_date&quot;), final</div>
 
         </section>
         
@@ -59,7 +59,8 @@
         
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">final DateTime? releasedAt;
+  <pre class="language-dart"><code class="language-dart">@JsonKey(name: &quot;release_date&quot;)
+final DateTime? releasedAt;
 
 </code></pre>
 </section>
@@ -85,9 +86,9 @@
     <h5>Article class</h5>
     <ol>
 
-    <li class="section-title"><a href="../../models_article/Article-class.html#constructors">Constructors</a></li>
-    <li><a href="../../models_article/Article/Article.html">Article</a></li>
-    <li><a href="../../models_article/Article/Article.fromJson.html">fromJson</a></li>
+        <li class="section-title"><a href="../../models_article/Article-class.html#constructors">Constructors</a></li>
+          <li><a href="../../models_article/Article/Article.html">Article</a></li>
+          <li><a href="../../models_article/Article/Article.fromJson.html">fromJson</a></li>
 
 
     <li class="section-title">
@@ -130,15 +131,16 @@
 <footer>
   <span class="no-break">
     app
-      1.2.0+34
+      2.0.0-dev+42
   </span>
 
   
 </footer>
 
 
-<script src="../../static-assets/highlight.pack.js"></script>
-<script src="../../static-assets/script.js"></script>
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
 
 
 

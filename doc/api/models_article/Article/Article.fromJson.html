@@ -4,24 +4,24 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the Article.fromJson constructor from the Class Article class from the article library, for the Dart programming language.">
-  <title>Article.fromJson constructor - Article class - article library - Dart API</title>
+  <meta name="description" content="API docs for the Article.fromJson constructor from Class Article from the article library, for the Dart programming language.">
+  <title>Article.fromJson constructor - Article - article library - Dart API</title>
 
 
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="../../static-assets/github.css">
-  <link rel="stylesheet" href="../../static-assets/styles.css">
-  <link rel="icon" href="../../static-assets/favicon.png">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
 
   
 </head>
 
 
-<body data-base-href="../../"
-      data-using-base-href="false">
+<body data-base-href="../../" data-using-base-href="false">
 
 <div id="overlay-under-drawer"></div>
 
@@ -31,7 +31,7 @@
     <li><a href="../../index.html">app</a></li>
     <li><a href="../../models_article/models_article-library.html">article</a></li>
     <li><a href="../../models_article/Article-class.html">Article</a></li>
-    <li class="self-crumb">Article.fromJson constructor</li>
+    <li class="self-crumb">Article.fromJson factory constructor</li>
   </ol>
   <div class="self-name">Article.fromJson</div>
   <form class="search navbar-right" role="search">
@@ -49,7 +49,7 @@
 </h1></div>
 
     <section class="multi-line-signature">
-      <span class="name ">Article.fromJson</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="fromJson-param-json"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a></span> <span class="parameter-name">json</span></span></li>
+      <span class="name ">Article.fromJson</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="fromJson-param-data"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span></span> <span class="parameter-name">data</span></span></li>
 </ol>)
     </section>
 
@@ -59,16 +59,8 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Article.fromJson(Map json)
-    : id = json[&#39;id&#39;],
-      title = json[&#39;title&#39;],
-      subtitle = json[&#39;subtitle&#39;],
-      headerImage = json[&#39;header_image&#39;],
-      releasedAt = DateTime.parse(json[&#39;release_date&#39;]),
-      fullArticleLink = json[&#39;full_article_link&#39;],
-      source = json[&#39;source&#39;],
-      type = articleTypeFromName(json[&#39;type&#39;]),
-      linkedCampaignId = json[&#39;campaign_id&#39;];</code></pre>
+  <pre class="language-dart"><code class="language-dart">factory Article.fromJson(Map&lt;String, dynamic&gt; data) =&gt;
+    _$ArticleFromJson(data);</code></pre>
 </section>
 
 
@@ -85,16 +77,16 @@
   <li><a href="../../index.html">app</a></li>
   <li><a href="../../models_article/models_article-library.html">article</a></li>
   <li><a href="../../models_article/Article-class.html">Article</a></li>
-  <li class="self-crumb">Article.fromJson constructor</li>
+  <li class="self-crumb">Article.fromJson factory constructor</li>
 </ol>
 
 
     <h5>Article class</h5>
     <ol>
 
-    <li class="section-title"><a href="../../models_article/Article-class.html#constructors">Constructors</a></li>
-    <li><a href="../../models_article/Article/Article.html">Article</a></li>
-    <li><a href="../../models_article/Article/Article.fromJson.html">fromJson</a></li>
+        <li class="section-title"><a href="../../models_article/Article-class.html#constructors">Constructors</a></li>
+          <li><a href="../../models_article/Article/Article.html">Article</a></li>
+          <li><a href="../../models_article/Article/Article.fromJson.html">fromJson</a></li>
 
 
     <li class="section-title">
@@ -137,15 +129,16 @@
 <footer>
   <span class="no-break">
     app
-      1.2.0+34
+      2.0.0-dev+42
   </span>
 
   
 </footer>
 
 
-<script src="../../static-assets/highlight.pack.js"></script>
-<script src="../../static-assets/script.js"></script>
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
 
 
 

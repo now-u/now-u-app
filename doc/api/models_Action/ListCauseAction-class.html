@@ -12,16 +12,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="../static-assets/github.css">
-  <link rel="stylesheet" href="../static-assets/styles.css">
-  <link rel="icon" href="../static-assets/favicon.png">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
 
   
 </head>
 
 
-<body data-base-href="../"
-      data-using-base-href="false">
+<body data-base-href="../" data-using-base-href="false">
 
 <div id="overlay-under-drawer"></div>
 
@@ -53,14 +53,18 @@
 
     <section>
       <dl class="dl-horizontal">
-        <dt>Inheritance</dt>
-        <dd><ul class="gt-separated dark clazz-relationships">
-          <li><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></li>
-          <li><a href="../models_Explorable/Explorable-class.html">Explorable</a></li>
-          <li>ListCauseAction</li>
-        </ul></dd>
+        
+  <dt>Inheritance</dt>
+  <dd>
+    <ul class="gt-separated dark clazz-relationships">
+      <li><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></li>
+        <li><a href="../models_Explorable/Explorable-class.html">Explorable</a></li>
+      <li>ListCauseAction</li>
+    </ul>
+  </dd>
 
-
+        
+        
 
         <dt>Implementers</dt>
         <dd><ul class="comma-separated clazz-relationships">
@@ -68,27 +72,36 @@
         </ul></dd>
 
 
+        
+  <dt>Annotations</dt>
+  <dd>
+    <ul class="annotation-list clazz-relationships">
+        <li>@<a href="https://pub.dev/documentation/json_annotation/4.6.0/json_annotation/JsonSerializable-class.html">JsonSerializable</a>()</li>
+    </ul>
+  </dd>
       </dl>
     </section>
 
-    <section class="summary offset-anchor" id="constructors">
-      <h2>Constructors</h2>
+    
+  <section class="summary offset-anchor" id="constructors">
+    <h2>Constructors</h2>
 
-      <dl class="constructor-summary-list">
+    <dl class="constructor-summary-list">
         <dt id="ListCauseAction" class="callable">
-          <span class="name"><a href="../models_Action/ListCauseAction/ListCauseAction.html">ListCauseAction</a></span><span class="signature">(<span class="parameter" id="-param-id">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">id</span>, </span><span class="parameter" id="-param-title"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">title</span>, </span><span class="parameter" id="-param-type"><span>required</span> <span class="type-annotation"><a href="../models_Action/CampaignActionType-class.html">CampaignActionType</a></span> <span class="parameter-name">type</span>, </span><span class="parameter" id="-param-causes"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../models_Cause/ListCause-class.html">ListCause</a></span>&gt;</span></span> <span class="parameter-name">causes</span>, </span><span class="parameter" id="-param-createdAt"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/DateTime-class.html">DateTime</a></span> <span class="parameter-name">createdAt</span>, </span><span class="parameter" id="-param-completed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">completed</span>, </span><span class="parameter" id="-param-starred"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">starred</span>, </span><span class="parameter" id="-param-time"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">time</span>, </span><span class="parameter" id="-param-releasedAt"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/DateTime-class.html">DateTime</a>?</span> <span class="parameter-name">releasedAt</span>}</span>)</span>
+          <span class="name"><a href="../models_Action/ListCauseAction/ListCauseAction.html">ListCauseAction</a></span><span class="signature">(<span class="parameter" id="-param-id">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">id</span>, </span><span class="parameter" id="-param-title"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">title</span>, </span><span class="parameter" id="-param-type"><span>required</span> <span class="type-annotation"><a href="../models_Action/CampaignActionType.html">CampaignActionType</a></span> <span class="parameter-name">type</span>, </span><span class="parameter" id="-param-cause"><span>required</span> <span class="type-annotation"><a href="../models_Cause/ListCause-class.html">ListCause</a></span> <span class="parameter-name">cause</span>, </span><span class="parameter" id="-param-completed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">completed</span>, </span><span class="parameter" id="-param-time"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">time</span>, </span><span class="parameter" id="-param-createdAt"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/DateTime-class.html">DateTime</a></span> <span class="parameter-name">createdAt</span>, </span><span class="parameter" id="-param-releasedAt"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/DateTime-class.html">DateTime</a>?</span> <span class="parameter-name">releasedAt</span>}</span>)</span>
         </dt>
         <dd>
-           
+          
         </dd>
         <dt id="ListCauseAction.fromJson" class="callable">
-          <span class="name"><a href="../models_Action/ListCauseAction/ListCauseAction.fromJson.html">ListCauseAction.fromJson</a></span><span class="signature">(<span class="parameter" id="fromJson-param-json"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span></span> <span class="parameter-name">json</span></span>)</span>
+          <span class="name"><a href="../models_Action/ListCauseAction/ListCauseAction.fromJson.html">ListCauseAction.fromJson</a></span><span class="signature">(<span class="parameter" id="fromJson-param-data"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span></span> <span class="parameter-name">data</span></span>)</span>
         </dt>
         <dd>
-           
+          
+            <div class="constructor-modifier features">factory</div>
         </dd>
-      </dl>
-    </section>
+    </dl>
+  </section>
 
     <section class="summary offset-anchor" id="instance-properties">
       <h2>Properties</h2>
@@ -100,8 +113,8 @@
 
 </dt>
 <dd>
-  The cause that this action is part of 
-  <div class="features">final</div>
+  The cause that this action is part of
+  <div class="features">@<a href="https://pub.dev/documentation/json_annotation/4.6.0/json_annotation/JsonKey-class.html">JsonKey</a>(fromJson: causeFromJson, name: &quot;causes&quot;), final</div>
 
 </dd>
 
@@ -111,7 +124,18 @@
 
 </dt>
 <dd>
-  Whether the user has completed this action 
+  Whether the user has completed this action
+  <div class="features">@<a href="https://pub.dev/documentation/json_annotation/4.6.0/json_annotation/JsonKey-class.html">JsonKey</a>(fromJson: authBooleanSerializer, name: &quot;completed&quot;), final</div>
+
+</dd>
+
+        <dt id="createdAt" class="property">
+  <span class="name"><a href="../models_Action/ListCauseAction/createdAt.html">createdAt</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/DateTime-class.html">DateTime</a></span> 
+
+</dt>
+<dd>
+  
   <div class="features">final</div>
 
 </dd>
@@ -122,7 +146,7 @@
 
 </dt>
 <dd class="inherited">
-  The hash code for this object. <a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">[...]</a>
+  The hash code for this object.
   <div class="features">read-only, inherited</div>
 
 </dd>
@@ -133,7 +157,7 @@
 
 </dt>
 <dd>
-   
+  
   <div class="features">read-only</div>
 
 </dd>
@@ -144,7 +168,7 @@
 
 </dt>
 <dd>
-   
+  
   <div class="features">final</div>
 
 </dd>
@@ -155,7 +179,7 @@
 
 </dt>
 <dd>
-   
+  
   <div class="features">read-only</div>
 
 </dd>
@@ -166,8 +190,19 @@
 
 </dt>
 <dd>
-   
+  
   <div class="features">read-only</div>
+
+</dd>
+
+        <dt id="releasedAt" class="property">
+  <span class="name"><a href="../models_Action/ListCauseAction/releasedAt.html">releasedAt</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/DateTime-class.html">DateTime</a>?</span> 
+
+</dt>
+<dd>
+  
+  <div class="features">@<a href="https://pub.dev/documentation/json_annotation/4.6.0/json_annotation/JsonKey-class.html">JsonKey</a>(name: &quot;release_date&quot;), final</div>
 
 </dd>
 
@@ -177,8 +212,8 @@
 
 </dt>
 <dd>
-  When this action was released 
-  <div class="features">final</div>
+  When this action was released
+  <div class="features">read-only</div>
 
 </dd>
 
@@ -188,7 +223,7 @@
 
 </dt>
 <dd class="inherited">
-  A representation of the runtime type of the object. 
+  A representation of the runtime type of the object.
   <div class="features">read-only, inherited</div>
 
 </dd>
@@ -199,19 +234,8 @@
 
 </dt>
 <dd>
-   
+  
   <div class="features">read-only</div>
-
-</dd>
-
-        <dt id="starred" class="property">
-  <span class="name"><a href="../models_Action/ListCauseAction/starred.html">starred</a></span>
-  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> 
-
-</dt>
-<dd>
-  Whether the user has completed this action 
-  <div class="features">final</div>
 
 </dd>
 
@@ -222,7 +246,7 @@
 </dt>
 <dd>
   The super type is a bigger category than the type - This is used for the
-styling. 
+styling.
   <div class="features">read-only</div>
 
 </dd>
@@ -233,7 +257,7 @@ styling.
 
 </dt>
 <dd>
-   
+  
   <div class="features">read-only</div>
 
 </dd>
@@ -244,7 +268,7 @@ styling.
 
 </dt>
 <dd>
-   
+  
   <div class="features">final</div>
 
 </dd>
@@ -255,7 +279,7 @@ styling.
 
 </dt>
 <dd>
-   
+  
   <div class="features">read-only</div>
 
 </dd>
@@ -266,28 +290,31 @@ styling.
 
 </dt>
 <dd>
-   
+  
   <div class="features">final</div>
 
 </dd>
 
         <dt id="type" class="property">
   <span class="name"><a href="../models_Action/ListCauseAction/type.html">type</a></span>
-  <span class="signature">&#8594; <a href="../models_Action/CampaignActionType-class.html">CampaignActionType</a></span> 
+  <span class="signature">&#8594; <a href="../models_Action/CampaignActionType.html">CampaignActionType</a></span> 
 
 </dt>
 <dd>
-  The type of the action 
-  <div class="features">final</div>
+  The type of the action
+  <div class="features">@<a href="https://pub.dev/documentation/json_annotation/4.6.0/json_annotation/JsonKey-class.html">JsonKey</a>(fromJson: campaignActionTypeFromString), final</div>
 
 </dd>
 
       </dl>
     </section>
 
-    <section class="summary offset-anchor" id="instance-methods">
-      <h2>Methods</h2>
-      <dl class="callables">
+    
+  <section
+      class="summary offset-anchor"
+      id="instance-methods">
+    <h2>Methods</h2>
+    <dl class="callables">
         <dt id="getAction" class="callable">
   <span class="name"><a href="../models_Action/ListCauseAction/getAction.html">getAction</a></span><span class="signature">(<wbr>)
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../models_Action/CampaignAction-class.html">CampaignAction</a></span>&gt;</span></span>
@@ -296,7 +323,7 @@ styling.
 
 </dt>
 <dd>
-   
+  
   
 
 </dd>
@@ -309,7 +336,7 @@ styling.
 
 </dt>
 <dd class="inherited">
-  Invoked when a non-existent method or property is accessed. <a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">[...]</a>
+  Invoked when a non-existent method or property is accessed.
   <div class="features">inherited</div>
 
 </dd>
@@ -322,17 +349,19 @@ styling.
 
 </dt>
 <dd class="inherited">
-  A string representation of this object. <a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">[...]</a>
+  A string representation of this object.
   <div class="features">inherited</div>
 
 </dd>
 
-      </dl>
-    </section>
-
-    <section class="summary offset-anchor inherited" id="operators">
-      <h2>Operators</h2>
-      <dl class="callables">
+    </dl>
+  </section>
+    
+  <section
+      class="summary offset-anchor inherited"
+      id="operators">
+    <h2>Operators</h2>
+    <dl class="callables">
         <dt id="operator ==" class="callable inherited">
   <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
@@ -341,15 +370,16 @@ styling.
 
 </dt>
 <dd class="inherited">
-  The equality operator. <a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">[...]</a>
+  The equality operator.
   <div class="features">inherited</div>
 
 </dd>
 
-      </dl>
-    </section>
-
-
+    </dl>
+  </section>
+    
+    
+    
 
 
   </div> <!-- /.main-content -->
@@ -406,7 +436,7 @@ styling.
   <li><a href="../models_Action/generateCampaignActionDesc.html">generateCampaignActionDesc</a></li>
 
   <li class="section-title"><a href="../models_Action/models_Action-library.html#enums">Enums</a></li>
-  <li><a href="../models_Action/CampaignActionType-class.html">CampaignActionType</a></li>
+  <li><a href="../models_Action/CampaignActionType.html">CampaignActionType</a></li>
 
 
 </ol>
@@ -416,9 +446,9 @@ styling.
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
     <ol>
 
-    <li class="section-title"><a href="../models_Action/ListCauseAction-class.html#constructors">Constructors</a></li>
-    <li><a href="../models_Action/ListCauseAction/ListCauseAction.html">ListCauseAction</a></li>
-    <li><a href="../models_Action/ListCauseAction/ListCauseAction.fromJson.html">fromJson</a></li>
+        <li class="section-title"><a href="../models_Action/ListCauseAction-class.html#constructors">Constructors</a></li>
+          <li><a href="../models_Action/ListCauseAction/ListCauseAction.html">ListCauseAction</a></li>
+          <li><a href="../models_Action/ListCauseAction/ListCauseAction.fromJson.html">fromJson</a></li>
 
 
     <li class="section-title">
@@ -426,15 +456,16 @@ styling.
     </li>
     <li><a href="../models_Action/ListCauseAction/cause.html">cause</a></li>
     <li><a href="../models_Action/ListCauseAction/completed.html">completed</a></li>
+    <li><a href="../models_Action/ListCauseAction/createdAt.html">createdAt</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
     <li><a href="../models_Action/ListCauseAction/icon.html">icon</a></li>
     <li><a href="../models_Action/ListCauseAction/id.html">id</a></li>
     <li><a href="../models_Action/ListCauseAction/isNew.html">isNew</a></li>
     <li><a href="../models_Action/ListCauseAction/primaryColor.html">primaryColor</a></li>
+    <li><a href="../models_Action/ListCauseAction/releasedAt.html">releasedAt</a></li>
     <li><a href="../models_Action/ListCauseAction/releaseTime.html">releaseTime</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
     <li><a href="../models_Action/ListCauseAction/secondaryColor.html">secondaryColor</a></li>
-    <li><a href="../models_Action/ListCauseAction/starred.html">starred</a></li>
     <li><a href="../models_Action/ListCauseAction/superType.html">superType</a></li>
     <li><a href="../models_Action/ListCauseAction/tertiaryColor.html">tertiaryColor</a></li>
     <li><a href="../models_Action/ListCauseAction/time.html">time</a></li>
@@ -462,15 +493,16 @@ styling.
 <footer>
   <span class="no-break">
     app
-      1.2.0+34
+      2.0.0-dev+42
   </span>
 
   
 </footer>
 
 
-<script src="../static-assets/highlight.pack.js"></script>
-<script src="../static-assets/script.js"></script>
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
 
 
 
