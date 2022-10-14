@@ -10,7 +10,9 @@ import '../setup/test_helpers.dart';
 import 'package:app/locator.dart';
 
 class MockAuthenticationService extends Mock implements AuthenticationService {}
+
 class MockHttpClient extends Mock implements http.Client {}
+
 class UriFake extends Fake implements Uri {}
 
 void main() {
@@ -79,31 +81,31 @@ void main() {
   group('test getRequest', () {
     test('without parameters', () async {
       when(() => mockAuthService.isAuthenticated).thenReturn(false);
-      when(() => mockHttpClient.get(any(), headers: any(named: "headers"))).thenAnswer(
-          (_) => Future.value(http.Response('{"abc": "def"}', 200)));
+      when(() => mockHttpClient.get(any(), headers: any(named: "headers")))
+          .thenAnswer(
+              (_) => Future.value(http.Response('{"abc": "def"}', 200)));
 
       Map response = await apiService.getRequest("causes/stuff");
       expect(response, {"abc": "def"});
 
-      verify(() => mockHttpClient.get(Uri.parse("https://example.com/api/causes/stuff"),
-              headers: any(named: "headers")))
-          .called(1);
+      verify(() => mockHttpClient.get(
+          Uri.parse("https://example.com/api/causes/stuff"),
+          headers: any(named: "headers"))).called(1);
     });
 
     test('with parameters', () async {
       when(() => mockAuthService.isAuthenticated).thenReturn(false);
-      when(() => mockHttpClient.get(any(), headers: any(named: "headers"))).thenAnswer(
-          (_) => Future.value(http.Response('{"abc": "def"}', 200)));
+      when(() => mockHttpClient.get(any(), headers: any(named: "headers")))
+          .thenAnswer(
+              (_) => Future.value(http.Response('{"abc": "def"}', 200)));
 
       Map response = await apiService
           .getRequest("causes/stuff", params: {"limit": 10, "fav": true});
       expect(response, {"abc": "def"});
 
       verify(() => mockHttpClient.get(
-              Uri.parse(
-                  "https://example.com/api/causes/stuff?limit=10&fav=true"),
-              headers: any(named: "headers")))
-          .called(1);
+          Uri.parse("https://example.com/api/causes/stuff?limit=10&fav=true"),
+          headers: any(named: "headers"))).called(1);
     });
 
     test('with list parameters', () async {
@@ -115,10 +117,8 @@ void main() {
         "causes": [1, 2]
       });
       verify(() => mockHttpClient.get(
-              Uri.parse(
-                  "https://example.com/api/causes/stuff?causes=%5B1%2C2%5D"),
-              headers: any(named: "headers")))
-          .called(1);
+          Uri.parse("https://example.com/api/causes/stuff?causes=%5B1%2C2%5D"),
+          headers: any(named: "headers"))).called(1);
     });
   });
 
@@ -133,11 +133,11 @@ void main() {
       Map response =
           await apiService.postRequest("test", body: {"test": "payload"});
       expect(response, {"abc": "def"});
-      verify(() => mockHttpClient.post(Uri.parse("https://example.com/api/test"),
-              headers: any(named: "headers"),
-              body: json.encode({"test": "payload"}),
-              encoding: null))
-          .called(1);
+      verify(() => mockHttpClient.post(
+          Uri.parse("https://example.com/api/test"),
+          headers: any(named: "headers"),
+          body: json.encode({"test": "payload"}),
+          encoding: null)).called(1);
     });
   });
 

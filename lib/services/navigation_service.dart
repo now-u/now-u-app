@@ -14,10 +14,10 @@ const String INTERNAL_PREFIX = "internal:";
 
 const List ID_ROUTES = [Routes.campaignInfo, Routes.actionInfo];
 
-class UrlLauncher{
-    void openUrl(Uri url) {
-        launchUrl(url);
-    }
+class UrlLauncher {
+  void openUrl(Uri url) {
+    launchUrl(url);
+  }
 }
 
 class NavigationService {
@@ -102,8 +102,8 @@ class NavigationService {
 
         if (route == Routes.actionInfo) {
           if (id == null) {
-              navigateTo(Routes.explore);
-              return;
+            navigateTo(Routes.explore);
+            return;
           }
           _causesService.getAction(id).then((CampaignAction action) {
             navigateTo(route, arguments: action);
