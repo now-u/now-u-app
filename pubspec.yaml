@@ -52,7 +52,7 @@ dependencies:
   cupertino_icons: ^1.0.3
 
   flutter_secure_storage: ^4.2.1
-  webview_flutter: ^3.0.4
+  flutter_inappwebview: 5.5.0+2
   uni_links: ^0.5.1
   device_info: ^2.0.2
   
@@ -60,7 +60,7 @@ dependencies:
   firebase_analytics: ^9.3.8
   firebase_crashlytics: ^2.8.0
   firebase_messaging: ^11.4.0
-  firebase_dynamic_links: ^4.2.4
+  firebase_dynamic_links: ^4.3.11
   firebase_remote_config: ^2.0.7
   firebase_core: ^1.17.0
   collection: ^1.15.0-nullsafety.4
@@ -107,6 +107,7 @@ flutter:
    - assets/imgs/sdg/
    - assets/imgs/graphics/
    - assets/json/
+   - assets/ca/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
