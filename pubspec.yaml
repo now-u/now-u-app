@@ -35,7 +35,7 @@ dependencies:
   tuple: ^2.0.0
   smooth_page_indicator: ^1.0.0+2
   rect_getter: ^1.0.0
-  permission_handler: ^9.2.0
+  permission_handler: ^10.1.0
   time: ^2.0.0
   intl: ^0.17.0 # Date formatting
   flutter_markdown: ^0.6.7
