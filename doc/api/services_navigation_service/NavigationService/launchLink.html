@@ -93,8 +93,8 @@
 
       if (route == Routes.actionInfo) {
         if (id == null) {
-            navigateTo(Routes.explore);
-            return;
+          navigateTo(Routes.explore);
+          return;
         }
         _causesService.getAction(id).then((CampaignAction action) {
           navigateTo(route, arguments: action);

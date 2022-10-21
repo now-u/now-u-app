@@ -62,7 +62,8 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">void setupLocator() {
-  locator.registerLazySingleton(() =&gt; NavigationService(new GlobalKey&lt;NavigatorState&gt;(), new UrlLauncher()));
+  locator.registerLazySingleton(() =&gt;
+      NavigationService(new GlobalKey&lt;NavigatorState&gt;(), new UrlLauncher()));
   locator.registerLazySingleton(() =&gt; SecureStorageService());
   locator.registerLazySingleton(() =&gt; SharedPreferencesService());
   locator.registerLazySingleton(() =&gt; AuthenticationService());
