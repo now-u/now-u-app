@@ -38,10 +38,10 @@ final profileTiles = <Map>[
     'profileTile': ProfileTile("FAQ", CustomIcons.ic_faq),
     'page': Routes.faq,
   },
-  {
-    'profileTile': ProfileTile("Account Details", Icons.edit),
-    'page': Routes.accountDetails,
-  },
+  // {
+  //   'profileTile': ProfileTile("Account Details", Icons.edit),
+  //   'page': Routes.accountDetails,
+  // },
   {'sectionHeading': "Feedback"},
   {
     'profileTile':
