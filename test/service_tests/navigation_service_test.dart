@@ -10,7 +10,9 @@ import 'package:app/locator.dart';
 import '../setup/test_helpers.dart';
 
 class MockDialogService extends Mock implements DialogService {}
+
 class MockUrlLauncher extends Mock implements UrlLauncher {}
+
 class UriFake extends Fake implements Uri {}
 
 class MockNavigatorState extends Mock implements NavigatorState {
@@ -19,14 +21,16 @@ class MockNavigatorState extends Mock implements NavigatorState {
     return super.toString();
   }
 }
-class MockNavigationKey extends Mock implements GlobalKey<NavigatorState> {
-    final NavigatorState navigatorState;
-    MockNavigationKey({ NavigatorState? navigatorState }):
-        this.navigatorState = navigatorState ?? new MockNavigatorState();
 
-    @override
-    NavigatorState? get currentState => navigatorState;
+class MockNavigationKey extends Mock implements GlobalKey<NavigatorState> {
+  final NavigatorState navigatorState;
+  MockNavigationKey({NavigatorState? navigatorState})
+      : this.navigatorState = navigatorState ?? new MockNavigatorState();
+
+  @override
+  NavigatorState? get currentState => navigatorState;
 }
+
 class CustomDialogFake extends Fake implements CustomDialog {}
 
 void main() {
@@ -52,7 +56,8 @@ void main() {
     var mockNavigationKey = MockNavigationKey();
     mockNavigatorState = mockNavigationKey.currentState!;
 
-    navigationService = new NavigationService(mockNavigationKey, mockUrlLauncher);
+    navigationService =
+        new NavigationService(mockNavigationKey, mockUrlLauncher);
   });
 
   group('InternalLinkingTests -', () {
@@ -153,11 +158,12 @@ void main() {
 
     group('launchLink uses launch package for external links -', () {
       void testCallToLaunch(String url, bool launch) async {
-        when(() => mockNavigatorState.pushNamed<Object?>(any(), arguments: any(named: "arguments")))
+        when(() => mockNavigatorState.pushNamed<Object?>(any(),
+                arguments: any(named: "arguments")))
             .thenAnswer((_) => Future.value({}));
 
-        when(() => mockDialogService.showDialog(any()))
-            .thenAnswer((_) => new Future<AlertResponse>(() => new AlertResponse(response: true)));
+        when(() => mockDialogService.showDialog(any())).thenAnswer((_) =>
+            new Future<AlertResponse>(() => new AlertResponse(response: true)));
 
         await navigationService.launchLink(url);
 
