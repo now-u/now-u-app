@@ -146,7 +146,7 @@ class ExploreSectionWidget extends StatelessWidget {
   }
 
   Widget _buildTiles(BuildContext context) {
-    final sectionHeight = data.tileHeight + tileShadowBlurRadius;
+    final sectionHeight = data.tileHeight;
 
     if (data.state == ExploreSectionState.Loading) {
       return Container(
@@ -161,15 +161,17 @@ class ExploreSectionWidget extends StatelessWidget {
     }
     return Container(
       height: sectionHeight,
+      clipBehavior: Clip.none,
       child: ListView.builder(
+        clipBehavior: Clip.none,
         scrollDirection: Axis.horizontal,
         itemCount: data.tiles!.length,
         itemBuilder: (context, index) => Container(
+          clipBehavior: Clip.none,
           child: Padding(
             padding: EdgeInsets.only(
               right: 8,
               left: index == 0 ? horizontalPadding : 0,
-              bottom: tileShadowBlurRadius,
             ),
             child: data.renderTile(data.tiles![index]),
           ),
@@ -180,25 +182,31 @@ class ExploreSectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        // Section header
-        Column(
-          children: [
-            // Text header
-            _buildSectionHeader(context),
-            SizedBox(height: 2),
-            if (data.filter != null &&
-                data.filter!.state == ExploreFilterState.Loaded)
-              _buildSectionFilters(),
+    return Container(
+      color: data.backgroundColor,
+      child: Padding(
+        padding: EdgeInsets.only(top: data.backgroundColor != null ? 12 : 0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            // Section header
+            Column(
+              children: [
+                // Text header
+                _buildSectionHeader(context),
+                SizedBox(height: 2),
+                if (data.filter != null &&
+                    data.filter!.state == ExploreFilterState.Loaded)
+                  _buildSectionFilters(),
 
-            SizedBox(height: CustomPaddingSize.small),
-            _buildTiles(context),
-            SizedBox(height: CustomPaddingSize.normal),
+                SizedBox(height: CustomPaddingSize.small),
+                _buildTiles(context),
+                SizedBox(height: CustomPaddingSize.normal),
+              ],
+            ),
           ],
         ),
-      ],
+      )
     );
   }
 }

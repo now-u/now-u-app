@@ -71,9 +71,13 @@ ExplorePage campaigns_explore_page = ExplorePage(title: "Campaigns", sections: [
     title: "Campaigns by cause",
     filter: ByCauseExploreFilter(),
   ),
-  CampaignExploreSection(title: "Completed campaigns", baseParams: {
-    "completed": true,
-  }),
+  CampaignExploreSection(
+    title: "Completed campaigns",
+    baseParams: {
+      "completed": true,
+    },
+    backgroundColor: CustomColors.lightOrange,
+  ),
 ]);
 
 ExplorePage actions_explore_page = ExplorePage(
@@ -102,9 +106,13 @@ ExplorePage actions_explore_page = ExplorePage(
                   ))
               .toList(),
         )),
-    ActionExploreSection(title: "Completed actions", baseParams: {
-      "completed": true,
-    }),
+    ActionExploreSection(
+      title: "Completed actions",
+      baseParams: {
+        "completed": true,
+      },
+      backgroundColor: CustomColors.lightOrange,  
+    ),
   ],
 );
 
@@ -125,6 +133,7 @@ ExplorePage learning_explore_page = ExplorePage(
       baseParams: {
         "completed": true,
       },
+      backgroundColor: CustomColors.lightOrange,  
     ),
   ],
 );
@@ -132,12 +141,6 @@ ExplorePage learning_explore_page = ExplorePage(
 ExplorePage home_explore_page = ExplorePage(
   title: "Explore",
   sections: [
-    CampaignExploreSection(
-      title: "Campaigns",
-      link: campaigns_explore_page,
-      description:
-          "Join members of the now-u community in coordinated campaigns to make a difference",
-    ),
     ActionExploreSection(
       title: "Actions",
       link: actions_explore_page,
@@ -149,6 +152,12 @@ ExplorePage home_explore_page = ExplorePage(
       link: learning_explore_page,
       description:
           "Learn more about key topics of pressing social and environmental issues",
+    ),
+    CampaignExploreSection(
+      title: "Campaigns",
+      link: campaigns_explore_page,
+      description:
+          "Join members of the now-u community in coordinated campaigns to make a difference",
     ),
     NewsExploreSection(
       title: "News",
