@@ -41,11 +41,12 @@ class CustomChromeSafariBrowser extends ChromeSafariBrowser {
 class NavigationService {
   final DialogService _dialogService = locator<DialogService>();
   final CausesService _causesService = locator<CausesService>();
-  final ChromeSafariBrowser _browser = new CustomChromeSafariBrowser();
 
   final GlobalKey<NavigatorState> navigatorKey;
   final UrlLauncher urlLauncher;
-  NavigationService(this.navigatorKey, this.urlLauncher);
+  final ChromeSafariBrowser browser;
+
+  NavigationService(this.navigatorKey, this.urlLauncher, this.browser);
 
   Future<dynamic> navigateTo(String routeName, {arguments}) {
     return navigatorKey.currentState!
@@ -146,7 +147,7 @@ class NavigationService {
       );
     } else {
       if (extraOnConfirmFunction != null) extraOnConfirmFunction();
-      await _browser.open(
+      await browser.open(
         url: Uri.parse(url),
       );
     }
@@ -160,7 +161,6 @@ class NavigationService {
     String? closeButtonText,
     Function? extraOnConfirmFunction,
   }) async {
-    print("Launching external link");
     AlertResponse exit = await (_dialogService.showDialog(
       BasicDialog(
           title: title ?? "You're about to leave",
@@ -178,12 +178,11 @@ class NavigationService {
             ),
           ]),
     ) as Future<AlertResponse>);
-    print("Exit response is: ${exit.response}");
+
     if (exit.response) {
       if (extraOnConfirmFunction != null) {
         extraOnConfirmFunction();
       }
-      print("Calling url launcher");
       urlLauncher.openUrl(Uri.parse(url));
     }
   }
