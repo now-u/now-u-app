@@ -17,7 +17,6 @@ import 'package:app/pages/causes/ChangeCausePage.dart';
 import 'package:app/pages/other/InfoPage.dart';
 import 'package:app/pages/other/NotificationPage.dart';
 import 'package:app/pages/other/OrganisationPage.dart';
-import 'package:app/pages/other/WebView.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
@@ -50,7 +49,6 @@ class Routes {
   static const parteners = "parteners";
   static const organisationPage = "organisationPage";
   static const info = "info";
-  static const webview = "webview";
   static const notification = "notification";
 }
 
@@ -172,23 +170,6 @@ Function initRoutes = (RouteSettings settings) {
         }
         return customRoute(
             builder: (context) => PartnersPage(), settings: settings);
-      }
-
-    // Webview
-    case Routes.webview:
-      {
-        if (args is WebViewArguments) {
-          return customRoute(
-              builder: (context) => WebViewPage(args), settings: settings);
-        }
-        if (args is String) {
-          return customRoute(
-              builder: (context) => WebViewPage(WebViewArguments(args)),
-              settings: settings);
-        }
-        return customRoute(
-            builder: (context) => TabsPage(currentPage: TabPage.Home),
-            settings: settings);
       }
 
     case Routes.notification:

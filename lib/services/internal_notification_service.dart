@@ -15,7 +15,7 @@ class InternalNotificationService {
     return _notifications;
   }
 
-  String domainPrefix = "https://api.now-u.com/api/v1/";
+  String domainPrefix = "https://staging.api.now-u.com/api/v1/";
 
   Future fetchNotifications() async {
     try {

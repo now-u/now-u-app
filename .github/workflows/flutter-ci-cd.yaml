@@ -60,7 +60,7 @@ jobs:
     - uses: subosito/flutter-action@v2
       with:
         channel: 'stable' # 'dev', 'alpha', default to: 'stable'
-        flutter-version: '3.0.x'
+        flutter-version: '3.3.x'
       # env:
         # ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         # env:
@@ -146,7 +146,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable' # 'dev', 'alpha', default to: 'stable'
-          flutter-version: '3.0.x'
+          flutter-version: '3.3.x'
 
       # Install your project's dependencies
       - run: flutter pub get
