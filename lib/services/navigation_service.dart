@@ -9,6 +9,7 @@ import 'package:app/assets/components/buttons/darkButton.dart';
 import 'package:app/models/Action.dart';
 
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 const String INTERNAL_PREFIX = "internal:";
 
@@ -20,9 +21,27 @@ class UrlLauncher {
   }
 }
 
+class CustomChromeSafariBrowser extends ChromeSafariBrowser {
+  @override
+  void onOpened() {
+    print("ChromeSafari browser opened");
+  }
+
+  @override
+  void onCompletedInitialLoad() {
+    print("ChromeSafari browser initial load completed");
+  }
+
+  @override
+  void onClosed() {
+    print("ChromeSafari browser closed");
+  }
+}
+
 class NavigationService {
   final DialogService _dialogService = locator<DialogService>();
   final CausesService _causesService = locator<CausesService>();
+  final ChromeSafariBrowser _browser = new CustomChromeSafariBrowser();
 
   final GlobalKey<NavigatorState> navigatorKey;
   final UrlLauncher urlLauncher;
@@ -127,7 +146,9 @@ class NavigationService {
       );
     } else {
       if (extraOnConfirmFunction != null) extraOnConfirmFunction();
-      navigateTo(Routes.webview, arguments: url);
+      await _browser.open(
+        url: Uri.parse(url),
+      );
     }
   }
 

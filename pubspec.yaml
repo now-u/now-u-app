@@ -20,8 +20,6 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.13.4
-  #youtube_player_flutter: ^6.1.0+7
-  youtube_player_flutter: ^8.0.0
   share: ^2.0.4
   uuid: ^3.0.5
 
@@ -35,7 +33,7 @@ dependencies:
   tuple: ^2.0.0
   smooth_page_indicator: ^1.0.0+2
   rect_getter: ^1.0.0
-  permission_handler: ^9.2.0
+  permission_handler: ^10.1.0
   time: ^2.0.0
   intl: ^0.17.0 # Date formatting
   flutter_markdown: ^0.6.7
@@ -52,17 +50,17 @@ dependencies:
   cupertino_icons: ^1.0.3
 
   flutter_secure_storage: ^4.2.1
-  webview_flutter: ^3.0.4
+  flutter_inappwebview: 5.4.4+3 
   uni_links: ^0.5.1
   device_info: ^2.0.2
   
   # Firebase
-  firebase_analytics: ^9.1.8
-  firebase_crashlytics: ^2.8.0
-  firebase_messaging: ^11.4.0
-  firebase_dynamic_links: ^4.2.4
-  firebase_remote_config: ^2.0.7
-  firebase_core: ^1.17.0
+  firebase_analytics: ^10.0.3
+  firebase_crashlytics: ^3.0.3
+  firebase_messaging: ^14.0.3
+  firebase_dynamic_links: ^5.0.3
+  firebase_remote_config: ^3.0.3
+  firebase_core: ^2.1.1
   collection: ^1.15.0-nullsafety.4
   json_serializable: ^6.3.1
   json_annotation: ^4.6.0
@@ -107,6 +105,7 @@ flutter:
    - assets/imgs/sdg/
    - assets/imgs/graphics/
    - assets/json/
+   - assets/ca/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
