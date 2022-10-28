@@ -212,7 +212,9 @@ enum ExploreSectionState {
 abstract class ExploreSection<T extends Explorable> {
   CausesService _causesService = locator<CausesService>();
 
-  double tileHeight = 160;
+  final double tileHeight = 160;
+  final Color? backgroundColor;
+
   Future<List<T>> fetchTiles(Map<String, dynamic> params);
   Widget renderTile(T tile);
 
@@ -223,6 +225,7 @@ abstract class ExploreSection<T extends Explorable> {
     this.baseParams,
     this.filter,
     this.state = ExploreSectionState.Loading,
+    this.backgroundColor,
   });
 
   /// Title of the section
@@ -337,7 +340,7 @@ class ExplorePageViewModel extends BaseModel with ExploreViewModelMixin {
 //-- Explore Sections --//
 
 class ActionExploreSection extends ExploreSection<ListCauseAction> {
-  double tileHeight = 160;
+  final double tileHeight = 160;
 
   ActionExploreSection({
     required String title,
@@ -345,12 +348,14 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
     ExplorePage? link,
     Map<String, dynamic>? baseParams,
     BaseExploreFilter? filter,
+    Color? backgroundColor,
   }) : super(
           title: title,
           description: description,
           link: link,
           baseParams: baseParams,
           filter: filter,
+          backgroundColor: backgroundColor,
         );
 
   Future<List<ListCauseAction>> fetchTiles(Map<String, dynamic> params) {
@@ -369,12 +374,14 @@ class LearningResourceExploreSection extends ExploreSection<LearningResource> {
     ExplorePage? link,
     Map<String, dynamic>? baseParams,
     BaseExploreFilter? filter,
+    Color? backgroundColor,
   }) : super(
           title: title,
           description: description,
           link: link,
           baseParams: baseParams,
           filter: filter,
+          backgroundColor: backgroundColor,
         );
 
   Future<List<LearningResource>> fetchTiles(Map<String, dynamic> params) {
@@ -393,12 +400,14 @@ class CampaignExploreSection extends ExploreSection<ListCampaign> {
     ExplorePage? link,
     Map<String, dynamic>? baseParams,
     BaseExploreFilter? filter,
+    Color? backgroundColor,
   }) : super(
           title: title,
           description: description,
           link: link,
           baseParams: baseParams,
           filter: filter,
+          backgroundColor: backgroundColor,
         );
 
   Future<List<ListCampaign>> fetchTiles(Map<String, dynamic> params) {
@@ -417,12 +426,14 @@ class NewsExploreSection extends ExploreSection<Article> {
     ExplorePage? link,
     Map<String, dynamic>? baseParams,
     BaseExploreFilter? filter,
+    Color? backgroundColor,
   }) : super(
           title: title,
           description: description,
           link: link,
           baseParams: baseParams,
           filter: filter,
+          backgroundColor: backgroundColor,
         );
 
   Future<List<Article>> fetchTiles(Map<String, dynamic> params) {

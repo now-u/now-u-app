@@ -38,6 +38,9 @@ class CustomColors {
   static Color greyDark2 = Color.fromRGBO(109, 113, 129, 1);
   static Color black1 = Color.fromRGBO(55, 58, 74, 1);
   static Color black2 = Color.fromRGBO(23, 23, 26, 1);
+  
+  //-- Background --//
+  static Color lightOrange = Color.fromRGBO(255, 243, 230, 0.5);
 
   //-- Shadow colors --//
 

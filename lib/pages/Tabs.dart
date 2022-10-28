@@ -9,20 +9,27 @@ import 'package:app/pages/explore/ExplorePage.dart';
 //import 'package:app/assets/dynamicLinks.dart';
 
 // These must be in the corect order
-enum TabPage { Home, Explore, Impact, Menu }
+enum TabPage { Home, Explore, Menu }
+class TabPageDetails {
+    final Widget widget;
+    final IconData icon;
+    final String title;
+
+    TabPageDetails({ required this.widget, required this.icon, required this.title });
+}
 
 class TabsPage extends StatefulWidget {
-  final TabPage? currentPage;
+  final TabPage currentPage;
   final dynamic arguments;
 
-  TabsPage({this.currentPage, this.arguments});
+  TabsPage({required this.currentPage, this.arguments});
 
   @override
   _TabsPageState createState() => _TabsPageState();
 }
 
 class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
-  TabPage? currentPage;
+  late TabPage currentPage;
 
   @override
   void initState() {
@@ -45,35 +52,27 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    // TODO add an enum so pages numbers can change
-    List<Map> _pages = <Map>[
-      {
-        'page': Home(),
-        'icon': Icon(CustomIcons.ic_home),
-        'title': "Home",
-      },
-      {
-        'page': home_explore_page,
-        'icon': Icon(CustomIcons.ic_news),
-        'title': "Explore",
-      },
-      {
-        'page': Container(
-          child: Center(child: Text("Coming soon")),
-        ),
-        'icon': Icon(CustomIcons.ic_up),
-        'title': "Impact",
-      },
-      {
-        'page': Profile(),
-        'icon': Icon(CustomIcons.ic_more),
-        'title': "More",
-      },
-    ];
+    Map<TabPage, TabPageDetails> _pages = {
+      TabPage.Home: TabPageDetails(
+        widget: Home(),
+        icon: CustomIcons.ic_home,
+        title: "Home",
+      ),
+      TabPage.Explore: TabPageDetails(
+        widget: home_explore_page,
+        icon: CustomIcons.ic_news,
+        title: "Explore",
+      ),
+      TabPage.Menu: TabPageDetails(
+        widget: Profile(),
+        icon: CustomIcons.ic_more,
+        title: "More",
+      )
+    };
+
     List<BottomNavigationBarItem> generateBottomNavBarItems() {
-      List<BottomNavigationBarItem> items = [];
-      for (int i = 0; i < _pages.length; i++) {
-        items.add(new BottomNavigationBarItem(
+      return _pages.values.map((pageDetails) =>
+        BottomNavigationBarItem(
             activeIcon: ShaderMask(
               shaderCallback: (bounds) => LinearGradient(
                 begin: Alignment.bottomLeft,
@@ -84,33 +83,19 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
                   Theme.of(context).primaryColor
                 ],
               ).createShader(bounds),
-              child: _pages[i]['icon'],
+              child: Icon(pageDetails.icon),
             ),
-            // ShaderMask(
-            //   shaderCallback: (Rect bounds) {
-            //     return LinearGradient(
-            //         begin: Alignment.bottomLeft,
-            //         end: Alignment.topRight,
-            //         colors: <Color>[
-            //           Theme.of(context).errorColor,
-            //           Theme.of(context).primaryColor,
-            //           Theme.of(context).primaryColor,
-            //         ]).createShader(bounds);
-            //   },
-            //   child: _pages[i]['icon'],
-            // ),
-            icon: _pages[i]['icon'],
-            label: _pages[i]['title']));
-      }
-      return items;
+            icon: Icon(pageDetails.icon),
+            label: pageDetails.title)
+      ).toList().cast<BottomNavigationBarItem>();
     }
 
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-          body: _pages[currentPage!.index]['page'],
+          body: _pages[currentPage]!.widget,
           bottomNavigationBar: BottomNavigationBar(
-            currentIndex: currentPage!.index,
+            currentIndex: currentPage.index,
             type: BottomNavigationBarType.fixed,
             elevation: 3,
             iconSize: 25,
