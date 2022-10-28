@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../static-assets/github.css?v1">
   <link rel="stylesheet" href="../static-assets/styles.css?v1">
@@ -21,12 +21,12 @@
 </head>
 
 
-<body data-base-href="../" data-using-base-href="false">
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
 
 <div id="overlay-under-drawer"></div>
 
 <header id="title">
-  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">app</a></li>
     <li><a href="../services_dialog_service/services_dialog_service-library.html">dialog_service</a></li>
@@ -36,10 +36,16 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span class="material-symbols-outlined">
+        brightness_4
+      </span>
+    </label>
+  </div>
 </header>
-
 <main>
-
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
@@ -77,7 +83,7 @@
 </dt>
 <dd class="inherited">
   The hash code for this object.
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -88,7 +94,7 @@
 </dt>
 <dd>
   
-  <div class="features">final</div>
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -99,7 +105,7 @@
 </dt>
 <dd class="inherited">
   A representation of the runtime type of the object.
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -121,7 +127,7 @@
 </dt>
 <dd class="inherited">
   Invoked when a non-existent method or property is accessed.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -134,7 +140,7 @@
 </dt>
 <dd class="inherited">
   A string representation of this object.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -155,7 +161,7 @@
 </dt>
 <dd class="inherited">
   The equality operator.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -184,14 +190,14 @@
 
     <h5>dialog_service library</h5>
     <ol>
-  <li class="section-title"><a href="../services_dialog_service/services_dialog_service-library.html#classes">Classes</a></li>
-  <li><a href="../services_dialog_service/AlertResponse-class.html">AlertResponse</a></li>
-  <li><a href="../managers_dialog_manager/BasicDialog-class.html">BasicDialog</a></li>
-  <li><a href="../managers_dialog_manager/CauseDialog-class.html">CauseDialog</a></li>
-  <li><a href="../managers_dialog_manager/CustomDialog-class.html">CustomDialog</a></li>
-  <li><a href="../services_dialog_service/DialogButton-class.html">DialogButton</a></li>
-  <li><a href="../managers_dialog_manager/DialogManager-class.html">DialogManager</a></li>
-  <li><a href="../services_dialog_service/DialogService-class.html">DialogService</a></li>
+      <li class="section-title"><a href="../services_dialog_service/services_dialog_service-library.html#classes">Classes</a></li>
+        <li><a href="../services_dialog_service/AlertResponse-class.html">AlertResponse</a></li>
+        <li><a href="../managers_dialog_manager/BasicDialog-class.html">BasicDialog</a></li>
+        <li><a href="../managers_dialog_manager/CauseDialog-class.html">CauseDialog</a></li>
+        <li><a href="../managers_dialog_manager/CustomDialog-class.html">CustomDialog</a></li>
+        <li><a href="../services_dialog_service/DialogButton-class.html">DialogButton</a></li>
+        <li><a href="../managers_dialog_manager/DialogManager-class.html">DialogManager</a></li>
+        <li><a href="../services_dialog_service/DialogService-class.html">DialogService</a></li>
 
 
 
@@ -211,19 +217,19 @@
           <li><a href="../services_dialog_service/AlertResponse/AlertResponse.html">AlertResponse</a></li>
 
 
-    <li class="section-title">
-      <a href="../services_dialog_service/AlertResponse-class.html#instance-properties">Properties</a>
-    </li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
-    <li><a href="../services_dialog_service/AlertResponse/response.html">response</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+        <li class="section-title">
+          <a href="../services_dialog_service/AlertResponse-class.html#instance-properties">Properties</a>
+        </li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+          <li><a href="../services_dialog_service/AlertResponse/response.html">response</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
-    <li class="section-title inherited"><a href="../services_dialog_service/AlertResponse-class.html#instance-methods">Methods</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+        <li class="section-title inherited"><a href="../services_dialog_service/AlertResponse-class.html#instance-methods">Methods</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
 
-    <li class="section-title inherited"><a href="../services_dialog_service/AlertResponse-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+        <li class="section-title inherited"><a href="../services_dialog_service/AlertResponse-class.html#operators">Operators</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 

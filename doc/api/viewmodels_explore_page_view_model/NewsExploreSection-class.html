@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../static-assets/github.css?v1">
   <link rel="stylesheet" href="../static-assets/styles.css?v1">
@@ -21,12 +21,12 @@
 </head>
 
 
-<body data-base-href="../" data-using-base-href="false">
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
 
 <div id="overlay-under-drawer"></div>
 
 <header id="title">
-  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">app</a></li>
     <li><a href="../viewmodels_explore_page_view_model/viewmodels_explore_page_view_model-library.html">explore_page_view_model</a></li>
@@ -36,10 +36,16 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span class="material-symbols-outlined">
+        brightness_4
+      </span>
+    </label>
+  </div>
 </header>
-
 <main>
-
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
@@ -97,7 +103,7 @@
 </dt>
 <dd class="inherited">
   
-  <div class="features">read / write, inherited</div>
+  <div class="features"><span class="feature">read / write</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -108,7 +114,7 @@
 </dt>
 <dd class="inherited">
   Description of the section
-  <div class="features">read / write, inherited</div>
+  <div class="features"><span class="feature">read / write</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -119,7 +125,7 @@
 </dt>
 <dd class="inherited">
   
-  <div class="features">read / write, inherited</div>
+  <div class="features"><span class="feature">read / write</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -130,7 +136,7 @@
 </dt>
 <dd class="inherited">
   The hash code for this object.
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -141,7 +147,7 @@
 </dt>
 <dd class="inherited">
   Where clicking on the title should go
-  <div class="features">read / write, inherited</div>
+  <div class="features"><span class="feature">read / write</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -152,7 +158,7 @@
 </dt>
 <dd class="inherited">
   
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -163,7 +169,7 @@
 </dt>
 <dd class="inherited">
   A representation of the runtime type of the object.
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -174,7 +180,7 @@
 </dt>
 <dd class="inherited">
   
-  <div class="features">read / write, inherited</div>
+  <div class="features"><span class="feature">read / write</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -185,7 +191,7 @@
 </dt>
 <dd>
   
-  <div class="features">read / write, override</div>
+  <div class="features"><span class="feature">read / write</span><span class="feature">override</span></div>
 
 </dd>
 
@@ -196,7 +202,7 @@
 </dt>
 <dd class="inherited">
   
-  <div class="features">read / write, inherited</div>
+  <div class="features"><span class="feature">read / write</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -207,7 +213,7 @@
 </dt>
 <dd class="inherited">
   Title of the section
-  <div class="features">read / write, inherited</div>
+  <div class="features"><span class="feature">read / write</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -229,7 +235,7 @@
 </dt>
 <dd>
   
-  <div class="features">override</div>
+  <div class="features"><span class="feature">override</span></div>
 
 </dd>
 
@@ -242,7 +248,7 @@
 </dt>
 <dd class="inherited">
   
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -255,7 +261,7 @@
 </dt>
 <dd class="inherited">
   Invoked when a non-existent method or property is accessed.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -268,7 +274,7 @@
 </dt>
 <dd class="inherited">
   
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -281,7 +287,7 @@
 </dt>
 <dd>
   
-  <div class="features">override</div>
+  <div class="features"><span class="feature">override</span></div>
 
 </dd>
 
@@ -294,7 +300,7 @@
 </dt>
 <dd class="inherited">
   A string representation of this object.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -315,7 +321,7 @@
 </dt>
 <dd class="inherited">
   The equality operator.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -344,31 +350,31 @@
 
     <h5>explore_page_view_model library</h5>
     <ol>
-  <li class="section-title"><a href="../viewmodels_explore_page_view_model/viewmodels_explore_page_view_model-library.html#classes">Classes</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/ActionExploreSection-class.html">ActionExploreSection</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/BaseExploreFilter-class.html">BaseExploreFilter</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/BaseExploreFilterOption-class.html">BaseExploreFilterOption</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/ByCauseExploreFilter-class.html">ByCauseExploreFilter</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/CampaignExploreSection-class.html">CampaignExploreSection</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/ExploreFilter-class.html">ExploreFilter</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/ExploreFilterOption-class.html">ExploreFilterOption</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel-class.html">ExplorePageViewModel</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/ExploreSection-class.html">ExploreSection</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/LearningResourceExploreSection-class.html">LearningResourceExploreSection</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/NewsExploreSection-class.html">NewsExploreSection</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/TimeExploreFilter-class.html">TimeExploreFilter</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/TimeExploreFilterOption-class.html">TimeExploreFilterOption</a></li>
+      <li class="section-title"><a href="../viewmodels_explore_page_view_model/viewmodels_explore_page_view_model-library.html#classes">Classes</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/ActionExploreSection-class.html">ActionExploreSection</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/BaseExploreFilter-class.html">BaseExploreFilter</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/BaseExploreFilterOption-class.html">BaseExploreFilterOption</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/ByCauseExploreFilter-class.html">ByCauseExploreFilter</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/CampaignExploreSection-class.html">CampaignExploreSection</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/ExploreFilter-class.html">ExploreFilter</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/ExploreFilterOption-class.html">ExploreFilterOption</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel-class.html">ExplorePageViewModel</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/ExploreSection-class.html">ExploreSection</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/LearningResourceExploreSection-class.html">LearningResourceExploreSection</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/NewsExploreSection-class.html">NewsExploreSection</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/TimeExploreFilter-class.html">TimeExploreFilter</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/TimeExploreFilterOption-class.html">TimeExploreFilterOption</a></li>
 
 
-  <li class="section-title"><a href="../viewmodels_explore_page_view_model/viewmodels_explore_page_view_model-library.html#mixins">Mixins</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/ExploreViewModelMixin-mixin.html">ExploreViewModelMixin</a></li>
+      <li class="section-title"><a href="../viewmodels_explore_page_view_model/viewmodels_explore_page_view_model-library.html#mixins">Mixins</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/ExploreViewModelMixin-mixin.html">ExploreViewModelMixin</a></li>
 
 
 
 
-  <li class="section-title"><a href="../viewmodels_explore_page_view_model/viewmodels_explore_page_view_model-library.html#enums">Enums</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/ExploreFilterState.html">ExploreFilterState</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/ExploreSectionState.html">ExploreSectionState</a></li>
+      <li class="section-title"><a href="../viewmodels_explore_page_view_model/viewmodels_explore_page_view_model-library.html#enums">Enums</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/ExploreFilterState.html">ExploreFilterState</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/ExploreSectionState.html">ExploreSectionState</a></li>
 
 
 </ol>
@@ -382,31 +388,31 @@
           <li><a href="../viewmodels_explore_page_view_model/NewsExploreSection/NewsExploreSection.html">NewsExploreSection</a></li>
 
 
-    <li class="section-title">
-      <a href="../viewmodels_explore_page_view_model/NewsExploreSection-class.html#instance-properties">Properties</a>
-    </li>
-    <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreSection/baseParams.html">baseParams</a></li>
-    <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreSection/description.html">description</a></li>
-    <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreSection/filter.html">filter</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
-    <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreSection/link.html">link</a></li>
-    <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreSection/queryParams.html">queryParams</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
-    <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreSection/state.html">state</a></li>
-    <li><a href="../viewmodels_explore_page_view_model/NewsExploreSection/tileHeight.html">tileHeight</a></li>
-    <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreSection/tiles.html">tiles</a></li>
-    <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreSection/title.html">title</a></li>
+        <li class="section-title">
+          <a href="../viewmodels_explore_page_view_model/NewsExploreSection-class.html#instance-properties">Properties</a>
+        </li>
+          <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreSection/baseParams.html">baseParams</a></li>
+          <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreSection/description.html">description</a></li>
+          <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreSection/filter.html">filter</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+          <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreSection/link.html">link</a></li>
+          <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreSection/queryParams.html">queryParams</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+          <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreSection/state.html">state</a></li>
+          <li><a href="../viewmodels_explore_page_view_model/NewsExploreSection/tileHeight.html">tileHeight</a></li>
+          <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreSection/tiles.html">tiles</a></li>
+          <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreSection/title.html">title</a></li>
 
-    <li class="section-title"><a href="../viewmodels_explore_page_view_model/NewsExploreSection-class.html#instance-methods">Methods</a></li>
-    <li><a href="../viewmodels_explore_page_view_model/NewsExploreSection/fetchTiles.html">fetchTiles</a></li>
-    <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreSection/init.html">init</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreSection/reload.html">reload</a></li>
-    <li><a href="../viewmodels_explore_page_view_model/NewsExploreSection/renderTile.html">renderTile</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+        <li class="section-title"><a href="../viewmodels_explore_page_view_model/NewsExploreSection-class.html#instance-methods">Methods</a></li>
+          <li><a href="../viewmodels_explore_page_view_model/NewsExploreSection/fetchTiles.html">fetchTiles</a></li>
+          <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreSection/init.html">init</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+          <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreSection/reload.html">reload</a></li>
+          <li><a href="../viewmodels_explore_page_view_model/NewsExploreSection/renderTile.html">renderTile</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
 
-    <li class="section-title inherited"><a href="../viewmodels_explore_page_view_model/NewsExploreSection-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+        <li class="section-title inherited"><a href="../viewmodels_explore_page_view_model/NewsExploreSection-class.html#operators">Operators</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 

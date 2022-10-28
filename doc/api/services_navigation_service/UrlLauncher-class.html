@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../static-assets/github.css?v1">
   <link rel="stylesheet" href="../static-assets/styles.css?v1">
@@ -21,12 +21,12 @@
 </head>
 
 
-<body data-base-href="../" data-using-base-href="false">
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
 
 <div id="overlay-under-drawer"></div>
 
 <header id="title">
-  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">app</a></li>
     <li><a href="../services_navigation_service/services_navigation_service-library.html">navigation_service</a></li>
@@ -36,10 +36,16 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span class="material-symbols-outlined">
+        brightness_4
+      </span>
+    </label>
+  </div>
 </header>
-
 <main>
-
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
@@ -77,7 +83,7 @@
 </dt>
 <dd class="inherited">
   The hash code for this object.
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -88,7 +94,7 @@
 </dt>
 <dd class="inherited">
   A representation of the runtime type of the object.
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -110,7 +116,7 @@
 </dt>
 <dd class="inherited">
   Invoked when a non-existent method or property is accessed.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -136,7 +142,7 @@
 </dt>
 <dd class="inherited">
   A string representation of this object.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -157,7 +163,7 @@
 </dt>
 <dd class="inherited">
   The equality operator.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -186,15 +192,16 @@
 
     <h5>navigation_service library</h5>
     <ol>
-  <li class="section-title"><a href="../services_navigation_service/services_navigation_service-library.html#classes">Classes</a></li>
-  <li><a href="../services_navigation_service/NavigationService-class.html">NavigationService</a></li>
-  <li><a href="../services_navigation_service/UrlLauncher-class.html">UrlLauncher</a></li>
+      <li class="section-title"><a href="../services_navigation_service/services_navigation_service-library.html#classes">Classes</a></li>
+        <li><a href="../services_navigation_service/CustomChromeSafariBrowser-class.html">CustomChromeSafariBrowser</a></li>
+        <li><a href="../services_navigation_service/NavigationService-class.html">NavigationService</a></li>
+        <li><a href="../services_navigation_service/UrlLauncher-class.html">UrlLauncher</a></li>
 
 
 
-  <li class="section-title"><a href="../services_navigation_service/services_navigation_service-library.html#constants">Constants</a></li>
-  <li><a href="../services_navigation_service/ID_ROUTES-constant.html">ID_ROUTES</a></li>
-  <li><a href="../services_navigation_service/INTERNAL_PREFIX-constant.html">INTERNAL_PREFIX</a></li>
+      <li class="section-title"><a href="../services_navigation_service/services_navigation_service-library.html#constants">Constants</a></li>
+        <li><a href="../services_navigation_service/ID_ROUTES-constant.html">ID_ROUTES</a></li>
+        <li><a href="../services_navigation_service/INTERNAL_PREFIX-constant.html">INTERNAL_PREFIX</a></li>
 
 
 
@@ -211,19 +218,19 @@
           <li><a href="../services_navigation_service/UrlLauncher/UrlLauncher.html">UrlLauncher</a></li>
 
 
-    <li class="section-title inherited">
-      <a href="../services_navigation_service/UrlLauncher-class.html#instance-properties">Properties</a>
-    </li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+        <li class="section-title inherited">
+          <a href="../services_navigation_service/UrlLauncher-class.html#instance-properties">Properties</a>
+        </li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
-    <li class="section-title"><a href="../services_navigation_service/UrlLauncher-class.html#instance-methods">Methods</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li><a href="../services_navigation_service/UrlLauncher/openUrl.html">openUrl</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+        <li class="section-title"><a href="../services_navigation_service/UrlLauncher-class.html#instance-methods">Methods</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+          <li><a href="../services_navigation_service/UrlLauncher/openUrl.html">openUrl</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
 
-    <li class="section-title inherited"><a href="../services_navigation_service/UrlLauncher-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+        <li class="section-title inherited"><a href="../services_navigation_service/UrlLauncher-class.html#operators">Operators</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 

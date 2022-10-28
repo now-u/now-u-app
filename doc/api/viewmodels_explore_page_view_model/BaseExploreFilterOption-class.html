@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../static-assets/github.css?v1">
   <link rel="stylesheet" href="../static-assets/styles.css?v1">
@@ -21,12 +21,12 @@
 </head>
 
 
-<body data-base-href="../" data-using-base-href="false">
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
 
 <div id="overlay-under-drawer"></div>
 
 <header id="title">
-  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">app</a></li>
     <li><a href="../viewmodels_explore_page_view_model/viewmodels_explore_page_view_model-library.html">explore_page_view_model</a></li>
@@ -36,10 +36,16 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span class="material-symbols-outlined">
+        brightness_4
+      </span>
+    </label>
+  </div>
 </header>
-
 <main>
-
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
@@ -58,7 +64,7 @@
   <dd>
     <ul class="gt-separated dark clazz-relationships">
       <li><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></li>
-        <li><a href="https://pub.dev/documentation/equatable/2.0.3/equatable/Equatable-class.html">Equatable</a></li>
+        <li><a href="https://pub.dev/documentation/equatable/2.0.5/equatable/Equatable-class.html">Equatable</a></li>
       <li>BaseExploreFilterOption</li>
     </ul>
   </dd>
@@ -102,18 +108,18 @@
 </dt>
 <dd>
   What is displayed to the user
-  <div class="features">read-only</div>
+  <div class="features"><span class="feature">read-only</span></div>
 
 </dd>
 
         <dt id="hashCode" class="property inherited">
-  <span class="name"><a href="https://pub.dev/documentation/equatable/2.0.3/equatable/Equatable/hashCode.html">hashCode</a></span>
+  <span class="name"><a href="https://pub.dev/documentation/equatable/2.0.5/equatable/Equatable/hashCode.html">hashCode</a></span>
   <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> 
 
 </dt>
 <dd class="inherited">
   The hash code for this object.
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -124,7 +130,7 @@
 </dt>
 <dd>
   
-  <div class="features">read / write</div>
+  <div class="features"><span class="feature">read / write</span></div>
 
 </dd>
 
@@ -136,7 +142,7 @@
 <dd>
   The list of properties that will be used to determine whether
 two instances are equal.
-  <div class="features">read-only, override</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">override</span></div>
 
 </dd>
 
@@ -147,19 +153,19 @@ two instances are equal.
 </dt>
 <dd class="inherited">
   A representation of the runtime type of the object.
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="stringify" class="property inherited">
-  <span class="name"><a href="https://pub.dev/documentation/equatable/2.0.3/equatable/Equatable/stringify.html">stringify</a></span>
+  <span class="name"><a href="https://pub.dev/documentation/equatable/2.0.5/equatable/Equatable/stringify.html">stringify</a></span>
   <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> 
 
 </dt>
 <dd class="inherited">
-  If set to <code>true</code>, the <a href="https://pub.dev/documentation/equatable/2.0.3/equatable/Equatable/toString.html">toString</a> method will be overridden to output
+  If set to <code>true</code>, the <a href="https://pub.dev/documentation/equatable/2.0.5/equatable/Equatable/toString.html">toString</a> method will be overridden to output
 this instance's <a href="../viewmodels_explore_page_view_model/BaseExploreFilterOption/props.html">props</a>.
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -181,12 +187,12 @@ this instance's <a href="../viewmodels_explore_page_view_model/BaseExploreFilter
 </dt>
 <dd class="inherited">
   Invoked when a non-existent method or property is accessed.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="toString" class="callable inherited">
-  <span class="name"><a href="https://pub.dev/documentation/equatable/2.0.3/equatable/Equatable/toString.html">toString</a></span><span class="signature">(<wbr>)
+  <span class="name"><a href="https://pub.dev/documentation/equatable/2.0.5/equatable/Equatable/toString.html">toString</a></span><span class="signature">(<wbr>)
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
   </span>
   
@@ -194,7 +200,7 @@ this instance's <a href="../viewmodels_explore_page_view_model/BaseExploreFilter
 </dt>
 <dd class="inherited">
   A string representation of this object.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -207,7 +213,7 @@ this instance's <a href="../viewmodels_explore_page_view_model/BaseExploreFilter
     <h2>Operators</h2>
     <dl class="callables">
         <dt id="operator ==" class="callable inherited">
-  <span class="name"><a href="https://pub.dev/documentation/equatable/2.0.3/equatable/Equatable/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
+  <span class="name"><a href="https://pub.dev/documentation/equatable/2.0.5/equatable/Equatable/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
   </span>
   
@@ -215,7 +221,7 @@ this instance's <a href="../viewmodels_explore_page_view_model/BaseExploreFilter
 </dt>
 <dd class="inherited">
   The equality operator.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -244,31 +250,31 @@ this instance's <a href="../viewmodels_explore_page_view_model/BaseExploreFilter
 
     <h5>explore_page_view_model library</h5>
     <ol>
-  <li class="section-title"><a href="../viewmodels_explore_page_view_model/viewmodels_explore_page_view_model-library.html#classes">Classes</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/ActionExploreSection-class.html">ActionExploreSection</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/BaseExploreFilter-class.html">BaseExploreFilter</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/BaseExploreFilterOption-class.html">BaseExploreFilterOption</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/ByCauseExploreFilter-class.html">ByCauseExploreFilter</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/CampaignExploreSection-class.html">CampaignExploreSection</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/ExploreFilter-class.html">ExploreFilter</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/ExploreFilterOption-class.html">ExploreFilterOption</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel-class.html">ExplorePageViewModel</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/ExploreSection-class.html">ExploreSection</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/LearningResourceExploreSection-class.html">LearningResourceExploreSection</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/NewsExploreSection-class.html">NewsExploreSection</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/TimeExploreFilter-class.html">TimeExploreFilter</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/TimeExploreFilterOption-class.html">TimeExploreFilterOption</a></li>
+      <li class="section-title"><a href="../viewmodels_explore_page_view_model/viewmodels_explore_page_view_model-library.html#classes">Classes</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/ActionExploreSection-class.html">ActionExploreSection</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/BaseExploreFilter-class.html">BaseExploreFilter</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/BaseExploreFilterOption-class.html">BaseExploreFilterOption</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/ByCauseExploreFilter-class.html">ByCauseExploreFilter</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/CampaignExploreSection-class.html">CampaignExploreSection</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/ExploreFilter-class.html">ExploreFilter</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/ExploreFilterOption-class.html">ExploreFilterOption</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel-class.html">ExplorePageViewModel</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/ExploreSection-class.html">ExploreSection</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/LearningResourceExploreSection-class.html">LearningResourceExploreSection</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/NewsExploreSection-class.html">NewsExploreSection</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/TimeExploreFilter-class.html">TimeExploreFilter</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/TimeExploreFilterOption-class.html">TimeExploreFilterOption</a></li>
 
 
-  <li class="section-title"><a href="../viewmodels_explore_page_view_model/viewmodels_explore_page_view_model-library.html#mixins">Mixins</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/ExploreViewModelMixin-mixin.html">ExploreViewModelMixin</a></li>
+      <li class="section-title"><a href="../viewmodels_explore_page_view_model/viewmodels_explore_page_view_model-library.html#mixins">Mixins</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/ExploreViewModelMixin-mixin.html">ExploreViewModelMixin</a></li>
 
 
 
 
-  <li class="section-title"><a href="../viewmodels_explore_page_view_model/viewmodels_explore_page_view_model-library.html#enums">Enums</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/ExploreFilterState.html">ExploreFilterState</a></li>
-  <li><a href="../viewmodels_explore_page_view_model/ExploreSectionState.html">ExploreSectionState</a></li>
+      <li class="section-title"><a href="../viewmodels_explore_page_view_model/viewmodels_explore_page_view_model-library.html#enums">Enums</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/ExploreFilterState.html">ExploreFilterState</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/ExploreSectionState.html">ExploreSectionState</a></li>
 
 
 </ol>
@@ -282,22 +288,22 @@ this instance's <a href="../viewmodels_explore_page_view_model/BaseExploreFilter
           <li><a href="../viewmodels_explore_page_view_model/BaseExploreFilterOption/BaseExploreFilterOption.html">BaseExploreFilterOption</a></li>
 
 
-    <li class="section-title">
-      <a href="../viewmodels_explore_page_view_model/BaseExploreFilterOption-class.html#instance-properties">Properties</a>
-    </li>
-    <li><a href="../viewmodels_explore_page_view_model/BaseExploreFilterOption/displayName.html">displayName</a></li>
-    <li class="inherited"><a href="https://pub.dev/documentation/equatable/2.0.3/equatable/Equatable/hashCode.html">hashCode</a></li>
-    <li><a href="../viewmodels_explore_page_view_model/BaseExploreFilterOption/isSelected.html">isSelected</a></li>
-    <li><a href="../viewmodels_explore_page_view_model/BaseExploreFilterOption/props.html">props</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
-    <li class="inherited"><a href="https://pub.dev/documentation/equatable/2.0.3/equatable/Equatable/stringify.html">stringify</a></li>
+        <li class="section-title">
+          <a href="../viewmodels_explore_page_view_model/BaseExploreFilterOption-class.html#instance-properties">Properties</a>
+        </li>
+          <li><a href="../viewmodels_explore_page_view_model/BaseExploreFilterOption/displayName.html">displayName</a></li>
+          <li class="inherited"><a href="https://pub.dev/documentation/equatable/2.0.5/equatable/Equatable/hashCode.html">hashCode</a></li>
+          <li><a href="../viewmodels_explore_page_view_model/BaseExploreFilterOption/isSelected.html">isSelected</a></li>
+          <li><a href="../viewmodels_explore_page_view_model/BaseExploreFilterOption/props.html">props</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+          <li class="inherited"><a href="https://pub.dev/documentation/equatable/2.0.5/equatable/Equatable/stringify.html">stringify</a></li>
 
-    <li class="section-title inherited"><a href="../viewmodels_explore_page_view_model/BaseExploreFilterOption-class.html#instance-methods">Methods</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li class="inherited"><a href="https://pub.dev/documentation/equatable/2.0.3/equatable/Equatable/toString.html">toString</a></li>
+        <li class="section-title inherited"><a href="../viewmodels_explore_page_view_model/BaseExploreFilterOption-class.html#instance-methods">Methods</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+          <li class="inherited"><a href="https://pub.dev/documentation/equatable/2.0.5/equatable/Equatable/toString.html">toString</a></li>
 
-    <li class="section-title inherited"><a href="../viewmodels_explore_page_view_model/BaseExploreFilterOption-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://pub.dev/documentation/equatable/2.0.3/equatable/Equatable/operator_equals.html">operator ==</a></li>
+        <li class="section-title inherited"><a href="../viewmodels_explore_page_view_model/BaseExploreFilterOption-class.html#operators">Operators</a></li>
+          <li class="inherited"><a href="https://pub.dev/documentation/equatable/2.0.5/equatable/Equatable/operator_equals.html">operator ==</a></li>
 
 
 

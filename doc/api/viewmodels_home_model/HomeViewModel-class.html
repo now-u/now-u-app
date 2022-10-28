@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../static-assets/github.css?v1">
   <link rel="stylesheet" href="../static-assets/styles.css?v1">
@@ -21,12 +21,12 @@
 </head>
 
 
-<body data-base-href="../" data-using-base-href="false">
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
 
 <div id="overlay-under-drawer"></div>
 
 <header id="title">
-  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">app</a></li>
     <li><a href="../viewmodels_home_model/viewmodels_home_model-library.html">home_model</a></li>
@@ -36,10 +36,16 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span class="material-symbols-outlined">
+        brightness_4
+      </span>
+    </label>
+  </div>
 </header>
-
 <main>
-
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
@@ -104,7 +110,7 @@
 </dt>
 <dd class="inherited">
   
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -115,7 +121,7 @@
 </dt>
 <dd>
   
-  <div class="features">read-only</div>
+  <div class="features"><span class="feature">read-only</span></div>
 
 </dd>
 
@@ -126,7 +132,7 @@
 </dt>
 <dd class="inherited">
   
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -137,7 +143,7 @@
 </dt>
 <dd class="inherited">
   The hash code for this object.
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -148,7 +154,7 @@
 </dt>
 <dd class="inherited">
   Whether any listeners are currently registered.
-  <div class="features">@<a href="https://pub.dev/documentation/meta/1.8.0/meta/protected-constant.html">protected</a>, read-only, inherited</div>
+  <div class="features"><span class="">@<a href="https://pub.dev/documentation/meta/1.8.0/meta/protected-constant.html">protected</a></span><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -159,7 +165,7 @@
 </dt>
 <dd>
   
-  <div class="features">final</div>
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -170,7 +176,7 @@
 </dt>
 <dd>
   
-  <div class="features">final</div>
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -181,7 +187,7 @@
 </dt>
 <dd>
   
-  <div class="features">final</div>
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -192,7 +198,7 @@
 </dt>
 <dd>
   
-  <div class="features">read-only</div>
+  <div class="features"><span class="feature">read-only</span></div>
 
 </dd>
 
@@ -203,7 +209,7 @@
 </dt>
 <dd>
   
-  <div class="features">read-only</div>
+  <div class="features"><span class="feature">read-only</span></div>
 
 </dd>
 
@@ -214,7 +220,7 @@
 </dt>
 <dd>
   
-  <div class="features">read-only</div>
+  <div class="features"><span class="feature">read-only</span></div>
 
 </dd>
 
@@ -225,7 +231,7 @@
 </dt>
 <dd>
   
-  <div class="features">read-only</div>
+  <div class="features"><span class="feature">read-only</span></div>
 
 </dd>
 
@@ -236,7 +242,7 @@
 </dt>
 <dd>
   
-  <div class="features">read-only</div>
+  <div class="features"><span class="feature">read-only</span></div>
 
 </dd>
 
@@ -247,7 +253,7 @@
 </dt>
 <dd class="inherited">
   A representation of the runtime type of the object.
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -258,7 +264,7 @@
 </dt>
 <dd class="inherited">
   
-  <div class="features">read / write, inherited</div>
+  <div class="features"><span class="feature">read / write</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -269,7 +275,7 @@
 </dt>
 <dd>
   
-  <div class="features">final</div>
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -291,7 +297,7 @@
 </dt>
 <dd class="inherited">
   Register a closure to be called when the object changes.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -319,7 +325,7 @@
   Discards any resources used by the object. After this is called, the
 object is not in a usable state and should be discarded (calls to
 <a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/addListener.html">addListener</a> will throw after the object is disposed).
-  <div class="features">@<a href="https://pub.dev/documentation/meta/1.8.0/meta/mustCallSuper-constant.html">mustCallSuper</a>, inherited</div>
+  <div class="features"><span class="">@<a href="https://pub.dev/documentation/meta/1.8.0/meta/mustCallSuper-constant.html">mustCallSuper</a></span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -410,7 +416,7 @@ object is not in a usable state and should be discarded (calls to
 </dt>
 <dd class="inherited">
   
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -423,7 +429,7 @@ object is not in a usable state and should be discarded (calls to
 </dt>
 <dd class="inherited">
   
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -436,7 +442,7 @@ object is not in a usable state and should be discarded (calls to
 </dt>
 <dd class="inherited">
   Invoked when a non-existent method or property is accessed.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -449,7 +455,7 @@ object is not in a usable state and should be discarded (calls to
 </dt>
 <dd class="inherited">
   Call all the registered listeners.
-  <div class="features">@<a href="https://pub.dev/documentation/meta/1.8.0/meta/protected-constant.html">protected</a>, @<a href="https://pub.dev/documentation/meta/1.8.0/meta/visibleForTesting-constant.html">visibleForTesting</a>, inherited</div>
+  <div class="features"><span class="">@<a href="https://pub.dev/documentation/meta/1.8.0/meta/protected-constant.html">protected</a></span><span class="">@<a href="https://pub.dev/documentation/meta/1.8.0/meta/visibleForTesting-constant.html">visibleForTesting</a></span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -476,7 +482,7 @@ object is not in a usable state and should be discarded (calls to
 <dd class="inherited">
   Remove a previously registered closure from the list of closures that are
 notified when the object changes.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -489,7 +495,7 @@ notified when the object changes.
 </dt>
 <dd class="inherited">
   
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -502,7 +508,7 @@ notified when the object changes.
 </dt>
 <dd class="inherited">
   
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -515,7 +521,7 @@ notified when the object changes.
 </dt>
 <dd class="inherited">
   A string representation of this object.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -536,7 +542,7 @@ notified when the object changes.
 </dt>
 <dd class="inherited">
   The equality operator.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -565,8 +571,8 @@ notified when the object changes.
 
     <h5>home_model library</h5>
     <ol>
-  <li class="section-title"><a href="../viewmodels_home_model/viewmodels_home_model-library.html#classes">Classes</a></li>
-  <li><a href="../viewmodels_home_model/HomeViewModel-class.html">HomeViewModel</a></li>
+      <li class="section-title"><a href="../viewmodels_home_model/viewmodels_home_model-library.html#classes">Classes</a></li>
+        <li><a href="../viewmodels_home_model/HomeViewModel-class.html">HomeViewModel</a></li>
 
 
 
@@ -586,48 +592,48 @@ notified when the object changes.
           <li><a href="../viewmodels_home_model/HomeViewModel/HomeViewModel.html">HomeViewModel</a></li>
 
 
-    <li class="section-title">
-      <a href="../viewmodels_home_model/HomeViewModel-class.html#instance-properties">Properties</a>
-    </li>
-    <li class="inherited"><a href="../viewmodels_base_model/BaseModel/busy.html">busy</a></li>
-    <li><a href="../viewmodels_home_model/HomeViewModel/causes.html">causes</a></li>
-    <li class="inherited"><a href="../viewmodels_base_model/BaseModel/currentUser.html">currentUser</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/hasListeners.html">hasListeners</a></li>
-    <li><a href="../viewmodels_home_model/HomeViewModel/inTheNews.html">inTheNews</a></li>
-    <li><a href="../viewmodels_home_model/HomeViewModel/myActions.html">myActions</a></li>
-    <li><a href="../viewmodels_home_model/HomeViewModel/myCampaigns.html">myCampaigns</a></li>
-    <li><a href="../viewmodels_home_model/HomeViewModel/notifications.html">notifications</a></li>
-    <li><a href="../viewmodels_home_model/HomeViewModel/numberOfCompletedActions.html">numberOfCompletedActions</a></li>
-    <li><a href="../viewmodels_home_model/HomeViewModel/numberOfCompletedLearningResources.html">numberOfCompletedLearningResources</a></li>
-    <li><a href="../viewmodels_home_model/HomeViewModel/numberOfJoinedCampaigns.html">numberOfJoinedCampaigns</a></li>
-    <li><a href="../viewmodels_home_model/HomeViewModel/numberOfStarredActions.html">numberOfStarredActions</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
-    <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreViewModelMixin/sections.html">sections</a></li>
-    <li><a href="../viewmodels_home_model/HomeViewModel/suggestedCampaigns.html">suggestedCampaigns</a></li>
+        <li class="section-title">
+          <a href="../viewmodels_home_model/HomeViewModel-class.html#instance-properties">Properties</a>
+        </li>
+          <li class="inherited"><a href="../viewmodels_base_model/BaseModel/busy.html">busy</a></li>
+          <li><a href="../viewmodels_home_model/HomeViewModel/causes.html">causes</a></li>
+          <li class="inherited"><a href="../viewmodels_base_model/BaseModel/currentUser.html">currentUser</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/hasListeners.html">hasListeners</a></li>
+          <li><a href="../viewmodels_home_model/HomeViewModel/inTheNews.html">inTheNews</a></li>
+          <li><a href="../viewmodels_home_model/HomeViewModel/myActions.html">myActions</a></li>
+          <li><a href="../viewmodels_home_model/HomeViewModel/myCampaigns.html">myCampaigns</a></li>
+          <li><a href="../viewmodels_home_model/HomeViewModel/notifications.html">notifications</a></li>
+          <li><a href="../viewmodels_home_model/HomeViewModel/numberOfCompletedActions.html">numberOfCompletedActions</a></li>
+          <li><a href="../viewmodels_home_model/HomeViewModel/numberOfCompletedLearningResources.html">numberOfCompletedLearningResources</a></li>
+          <li><a href="../viewmodels_home_model/HomeViewModel/numberOfJoinedCampaigns.html">numberOfJoinedCampaigns</a></li>
+          <li><a href="../viewmodels_home_model/HomeViewModel/numberOfStarredActions.html">numberOfStarredActions</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+          <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreViewModelMixin/sections.html">sections</a></li>
+          <li><a href="../viewmodels_home_model/HomeViewModel/suggestedCampaigns.html">suggestedCampaigns</a></li>
 
-    <li class="section-title"><a href="../viewmodels_home_model/HomeViewModel-class.html#instance-methods">Methods</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/addListener.html">addListener</a></li>
-    <li><a href="../viewmodels_home_model/HomeViewModel/dismissNotification.html">dismissNotification</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/dispose.html">dispose</a></li>
-    <li><a href="../viewmodels_home_model/HomeViewModel/fetchCauses.html">fetchCauses</a></li>
-    <li><a href="../viewmodels_home_model/HomeViewModel/fetchNotifications.html">fetchNotifications</a></li>
-    <li><a href="../viewmodels_home_model/HomeViewModel/getCausePopup.html">getCausePopup</a></li>
-    <li><a href="../viewmodels_home_model/HomeViewModel/goToEditCausesPage.html">goToEditCausesPage</a></li>
-    <li><a href="../viewmodels_home_model/HomeViewModel/goToExplorePage.html">goToExplorePage</a></li>
-    <li><a href="../viewmodels_home_model/HomeViewModel/init.html">init</a></li>
-    <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreViewModelMixin/initSections.html">initSections</a></li>
-    <li class="inherited"><a href="../viewmodels_base_model/BaseModel/logout.html">logout</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/notifyListeners.html">notifyListeners</a></li>
-    <li><a href="../viewmodels_home_model/HomeViewModel/onPressCampaignButton.html">onPressCampaignButton</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/removeListener.html">removeListener</a></li>
-    <li class="inherited"><a href="../viewmodels_base_model/BaseModel/setBusy.html">setBusy</a></li>
-    <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreViewModelMixin/toggleFilterOption.html">toggleFilterOption</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+        <li class="section-title"><a href="../viewmodels_home_model/HomeViewModel-class.html#instance-methods">Methods</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/addListener.html">addListener</a></li>
+          <li><a href="../viewmodels_home_model/HomeViewModel/dismissNotification.html">dismissNotification</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/dispose.html">dispose</a></li>
+          <li><a href="../viewmodels_home_model/HomeViewModel/fetchCauses.html">fetchCauses</a></li>
+          <li><a href="../viewmodels_home_model/HomeViewModel/fetchNotifications.html">fetchNotifications</a></li>
+          <li><a href="../viewmodels_home_model/HomeViewModel/getCausePopup.html">getCausePopup</a></li>
+          <li><a href="../viewmodels_home_model/HomeViewModel/goToEditCausesPage.html">goToEditCausesPage</a></li>
+          <li><a href="../viewmodels_home_model/HomeViewModel/goToExplorePage.html">goToExplorePage</a></li>
+          <li><a href="../viewmodels_home_model/HomeViewModel/init.html">init</a></li>
+          <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreViewModelMixin/initSections.html">initSections</a></li>
+          <li class="inherited"><a href="../viewmodels_base_model/BaseModel/logout.html">logout</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/notifyListeners.html">notifyListeners</a></li>
+          <li><a href="../viewmodels_home_model/HomeViewModel/onPressCampaignButton.html">onPressCampaignButton</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/removeListener.html">removeListener</a></li>
+          <li class="inherited"><a href="../viewmodels_base_model/BaseModel/setBusy.html">setBusy</a></li>
+          <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreViewModelMixin/toggleFilterOption.html">toggleFilterOption</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
 
-    <li class="section-title inherited"><a href="../viewmodels_home_model/HomeViewModel-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+        <li class="section-title inherited"><a href="../viewmodels_home_model/HomeViewModel-class.html#operators">Operators</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 

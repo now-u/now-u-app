@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../static-assets/github.css?v1">
   <link rel="stylesheet" href="../static-assets/styles.css?v1">
@@ -21,12 +21,12 @@
 </head>
 
 
-<body data-base-href="../" data-using-base-href="false">
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
 
 <div id="overlay-under-drawer"></div>
 
 <header id="title">
-  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">app</a></li>
     <li><a href="../models_Action/models_Action-library.html">Action</a></li>
@@ -36,10 +36,16 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span class="material-symbols-outlined">
+        brightness_4
+      </span>
+    </label>
+  </div>
 </header>
-
 <main>
-
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
@@ -291,7 +297,7 @@
 </dt>
 <dd class="inherited">
   The hash code for this object.
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -302,7 +308,7 @@
 </dt>
 <dd class="inherited">
   A numeric identifier for the enumerated value.
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -313,7 +319,7 @@
 </dt>
 <dd class="inherited">
   A representation of the runtime type of the object.
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -335,7 +341,7 @@
 </dt>
 <dd class="inherited">
   Invoked when a non-existent method or property is accessed.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -348,7 +354,7 @@
 </dt>
 <dd class="inherited">
   A string representation of this object.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -369,7 +375,7 @@
 </dt>
 <dd class="inherited">
   The equality operator.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -418,43 +424,43 @@
 
     <h5>Action library</h5>
     <ol>
-  <li class="section-title"><a href="../models_Action/models_Action-library.html#classes">Classes</a></li>
-  <li><a href="../models_Action/ActionType-class.html">ActionType</a></li>
-  <li><a href="../models_Action/CampaignAction-class.html">CampaignAction</a></li>
-  <li><a href="../models_Action/ListCauseAction-class.html">ListCauseAction</a></li>
+      <li class="section-title"><a href="../models_Action/models_Action-library.html#classes">Classes</a></li>
+        <li><a href="../models_Action/ActionType-class.html">ActionType</a></li>
+        <li><a href="../models_Action/CampaignAction-class.html">CampaignAction</a></li>
+        <li><a href="../models_Action/ListCauseAction-class.html">ListCauseAction</a></li>
 
 
 
-  <li class="section-title"><a href="../models_Action/models_Action-library.html#constants">Constants</a></li>
-  <li><a href="../models_Action/actionTypes-constant.html">actionTypes</a></li>
-  <li><a href="../models_Action/advocate-constant.html">advocate</a></li>
-  <li><a href="../models_Action/blue0-constant.html">blue0</a></li>
-  <li><a href="../models_Action/blue1-constant.html">blue1</a></li>
-  <li><a href="../models_Action/blue2-constant.html">blue2</a></li>
-  <li><a href="../models_Action/campaignActionTypeData-constant.html">campaignActionTypeData</a></li>
-  <li><a href="../models_Action/defaultCampaignActionTypeData-constant.html">defaultCampaignActionTypeData</a></li>
-  <li><a href="../models_Action/getInvolved-constant.html">getInvolved</a></li>
-  <li><a href="../models_Action/green0-constant.html">green0</a></li>
-  <li><a href="../models_Action/green1-constant.html">green1</a></li>
-  <li><a href="../models_Action/green2-constant.html">green2</a></li>
-  <li><a href="../models_Action/learn-constant.html">learn</a></li>
-  <li><a href="../models_Action/orange0-constant.html">orange0</a></li>
-  <li><a href="../models_Action/orange1-constant.html">orange1</a></li>
-  <li><a href="../models_Action/orange2-constant.html">orange2</a></li>
-  <li><a href="../models_Action/raiseMoney-constant.html">raiseMoney</a></li>
-  <li><a href="../models_Action/rejectionReasons-constant.html">rejectionReasons</a></li>
-  <li><a href="../models_Action/timeBrackets-constant.html">timeBrackets</a></li>
-  <li><a href="../models_Action/yellow0-constant.html">yellow0</a></li>
-  <li><a href="../models_Action/yellow1-constant.html">yellow1</a></li>
-  <li><a href="../models_Action/yellow2-constant.html">yellow2</a></li>
+      <li class="section-title"><a href="../models_Action/models_Action-library.html#constants">Constants</a></li>
+        <li><a href="../models_Action/actionTypes-constant.html">actionTypes</a></li>
+        <li><a href="../models_Action/advocate-constant.html">advocate</a></li>
+        <li><a href="../models_Action/blue0-constant.html">blue0</a></li>
+        <li><a href="../models_Action/blue1-constant.html">blue1</a></li>
+        <li><a href="../models_Action/blue2-constant.html">blue2</a></li>
+        <li><a href="../models_Action/campaignActionTypeData-constant.html">campaignActionTypeData</a></li>
+        <li><a href="../models_Action/defaultCampaignActionTypeData-constant.html">defaultCampaignActionTypeData</a></li>
+        <li><a href="../models_Action/getInvolved-constant.html">getInvolved</a></li>
+        <li><a href="../models_Action/green0-constant.html">green0</a></li>
+        <li><a href="../models_Action/green1-constant.html">green1</a></li>
+        <li><a href="../models_Action/green2-constant.html">green2</a></li>
+        <li><a href="../models_Action/learn-constant.html">learn</a></li>
+        <li><a href="../models_Action/orange0-constant.html">orange0</a></li>
+        <li><a href="../models_Action/orange1-constant.html">orange1</a></li>
+        <li><a href="../models_Action/orange2-constant.html">orange2</a></li>
+        <li><a href="../models_Action/raiseMoney-constant.html">raiseMoney</a></li>
+        <li><a href="../models_Action/rejectionReasons-constant.html">rejectionReasons</a></li>
+        <li><a href="../models_Action/timeBrackets-constant.html">timeBrackets</a></li>
+        <li><a href="../models_Action/yellow0-constant.html">yellow0</a></li>
+        <li><a href="../models_Action/yellow1-constant.html">yellow1</a></li>
+        <li><a href="../models_Action/yellow2-constant.html">yellow2</a></li>
 
 
-  <li class="section-title"><a href="../models_Action/models_Action-library.html#functions">Functions</a></li>
-  <li><a href="../models_Action/campaignActionTypeFromString.html">campaignActionTypeFromString</a></li>
-  <li><a href="../models_Action/generateCampaignActionDesc.html">generateCampaignActionDesc</a></li>
+      <li class="section-title"><a href="../models_Action/models_Action-library.html#functions">Functions</a></li>
+        <li><a href="../models_Action/campaignActionTypeFromString.html">campaignActionTypeFromString</a></li>
+        <li><a href="../models_Action/generateCampaignActionDesc.html">generateCampaignActionDesc</a></li>
 
-  <li class="section-title"><a href="../models_Action/models_Action-library.html#enums">Enums</a></li>
-  <li><a href="../models_Action/CampaignActionType.html">CampaignActionType</a></li>
+      <li class="section-title"><a href="../models_Action/models_Action-library.html#enums">Enums</a></li>
+        <li><a href="../models_Action/CampaignActionType.html">CampaignActionType</a></li>
 
 
 </ol>
@@ -467,33 +473,33 @@
         <li class="section-title"><a href="../models_Action/CampaignActionType.html#constructors">Constructors</a></li>
           <li><a href="../models_Action/CampaignActionType/CampaignActionType.html">CampaignActionType</a></li>
 
-    <li class="section-title"><a href="../models_Action/CampaignActionType.html#values">Values</a></li>
-    <li><a href="../models_Action/CampaignActionType.html#Volunteer">Volunteer</a></li>
-    <li><a href="../models_Action/CampaignActionType.html#Donation">Donation</a></li>
-    <li><a href="../models_Action/CampaignActionType.html#Fundraise">Fundraise</a></li>
-    <li><a href="../models_Action/CampaignActionType.html#Awareness">Awareness</a></li>
-    <li><a href="../models_Action/CampaignActionType.html#Petition">Petition</a></li>
-    <li><a href="../models_Action/CampaignActionType.html#Behaviour">Behaviour</a></li>
-    <li><a href="../models_Action/CampaignActionType.html#Contact">Contact</a></li>
-    <li><a href="../models_Action/CampaignActionType.html#Protest">Protest</a></li>
-    <li><a href="../models_Action/CampaignActionType.html#Connect">Connect</a></li>
-    <li><a href="../models_Action/CampaignActionType.html#Learn">Learn</a></li>
-    <li><a href="../models_Action/CampaignActionType.html#Quiz">Quiz</a></li>
-    <li><a href="../models_Action/CampaignActionType.html#Other">Other</a></li>
+        <li class="section-title"><a href="../models_Action/CampaignActionType.html#values">Values</a></li>
+          <li><a href="../models_Action/CampaignActionType.html#Volunteer">Volunteer</a></li>
+          <li><a href="../models_Action/CampaignActionType.html#Donation">Donation</a></li>
+          <li><a href="../models_Action/CampaignActionType.html#Fundraise">Fundraise</a></li>
+          <li><a href="../models_Action/CampaignActionType.html#Awareness">Awareness</a></li>
+          <li><a href="../models_Action/CampaignActionType.html#Petition">Petition</a></li>
+          <li><a href="../models_Action/CampaignActionType.html#Behaviour">Behaviour</a></li>
+          <li><a href="../models_Action/CampaignActionType.html#Contact">Contact</a></li>
+          <li><a href="../models_Action/CampaignActionType.html#Protest">Protest</a></li>
+          <li><a href="../models_Action/CampaignActionType.html#Connect">Connect</a></li>
+          <li><a href="../models_Action/CampaignActionType.html#Learn">Learn</a></li>
+          <li><a href="../models_Action/CampaignActionType.html#Quiz">Quiz</a></li>
+          <li><a href="../models_Action/CampaignActionType.html#Other">Other</a></li>
 
-    <li class="section-title inherited">
-      <a href="../models_Action/CampaignActionType.html#instance-properties">Properties</a>
-    </li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Enum/index.html">index</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+        <li class="section-title inherited">
+          <a href="../models_Action/CampaignActionType.html#instance-properties">Properties</a>
+        </li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Enum/index.html">index</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
-    <li class="section-title inherited"><a href="../models_Action/CampaignActionType.html#instance-methods">Methods</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+        <li class="section-title inherited"><a href="../models_Action/CampaignActionType.html#instance-methods">Methods</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
 
-    <li class="section-title inherited"><a href="../models_Action/CampaignActionType.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+        <li class="section-title inherited"><a href="../models_Action/CampaignActionType.html#operators">Operators</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 

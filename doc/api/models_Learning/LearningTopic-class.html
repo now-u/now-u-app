@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../static-assets/github.css?v1">
   <link rel="stylesheet" href="../static-assets/styles.css?v1">
@@ -21,12 +21,12 @@
 </head>
 
 
-<body data-base-href="../" data-using-base-href="false">
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
 
 <div id="overlay-under-drawer"></div>
 
 <header id="title">
-  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">app</a></li>
     <li><a href="../models_Learning/models_Learning-library.html">Learning</a></li>
@@ -36,10 +36,16 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span class="material-symbols-outlined">
+        brightness_4
+      </span>
+    </label>
+  </div>
 </header>
-
 <main>
-
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
@@ -83,7 +89,7 @@ which the user can use to find out more information about this topic.</p>
 </dt>
 <dd class="inherited">
   The hash code for this object.
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -94,7 +100,7 @@ which the user can use to find out more information about this topic.</p>
 </dt>
 <dd>
   Api id
-  <div class="features">final</div>
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -105,7 +111,7 @@ which the user can use to find out more information about this topic.</p>
 </dt>
 <dd>
   Link for header image for this topic
-  <div class="features">final</div>
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -116,7 +122,7 @@ which the user can use to find out more information about this topic.</p>
 </dt>
 <dd>
   Our answer to the topic question
-  <div class="features">final</div>
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -127,7 +133,7 @@ which the user can use to find out more information about this topic.</p>
 </dt>
 <dd>
   The additional resources associated with this topic
-  <div class="features">final</div>
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -138,7 +144,7 @@ which the user can use to find out more information about this topic.</p>
 </dt>
 <dd class="inherited">
   A representation of the runtime type of the object.
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -149,7 +155,7 @@ which the user can use to find out more information about this topic.</p>
 </dt>
 <dd>
   The title of a the topic, usually a question
-  <div class="features">final</div>
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -184,7 +190,7 @@ which the user can use to find out more information about this topic.</p>
 </dt>
 <dd class="inherited">
   Invoked when a non-existent method or property is accessed.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -197,7 +203,7 @@ which the user can use to find out more information about this topic.</p>
 </dt>
 <dd class="inherited">
   A string representation of this object.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -218,7 +224,7 @@ which the user can use to find out more information about this topic.</p>
 </dt>
 <dd class="inherited">
   The equality operator.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -247,21 +253,21 @@ which the user can use to find out more information about this topic.</p>
 
     <h5>Learning library</h5>
     <ol>
-  <li class="section-title"><a href="../models_Learning/models_Learning-library.html#classes">Classes</a></li>
-  <li><a href="../models_Learning/LearningCentre-class.html">LearningCentre</a></li>
-  <li><a href="../models_Learning/LearningResource-class.html">LearningResource</a></li>
-  <li><a href="../models_Learning/LearningResourceType-class.html">LearningResourceType</a></li>
-  <li><a href="../models_Learning/LearningTopic-class.html">LearningTopic</a></li>
+      <li class="section-title"><a href="../models_Learning/models_Learning-library.html#classes">Classes</a></li>
+        <li><a href="../models_Learning/LearningCentre-class.html">LearningCentre</a></li>
+        <li><a href="../models_Learning/LearningResource-class.html">LearningResource</a></li>
+        <li><a href="../models_Learning/LearningResourceType-class.html">LearningResourceType</a></li>
+        <li><a href="../models_Learning/LearningTopic-class.html">LearningTopic</a></li>
 
 
 
 
-  <li class="section-title"><a href="../models_Learning/models_Learning-library.html#properties">Properties</a></li>
-  <li><a href="../models_Learning/learningResourceTypes.html">learningResourceTypes</a></li>
-  <li><a href="../models_Learning/otherType.html">otherType</a></li>
+      <li class="section-title"><a href="../models_Learning/models_Learning-library.html#properties">Properties</a></li>
+        <li><a href="../models_Learning/learningResourceTypes.html">learningResourceTypes</a></li>
+        <li><a href="../models_Learning/otherType.html">otherType</a></li>
 
-  <li class="section-title"><a href="../models_Learning/models_Learning-library.html#functions">Functions</a></li>
-  <li><a href="../models_Learning/getResourceTypeFromString.html">getResourceTypeFromString</a></li>
+      <li class="section-title"><a href="../models_Learning/models_Learning-library.html#functions">Functions</a></li>
+        <li><a href="../models_Learning/getResourceTypeFromString.html">getResourceTypeFromString</a></li>
 
 
 
@@ -276,24 +282,24 @@ which the user can use to find out more information about this topic.</p>
           <li><a href="../models_Learning/LearningTopic/LearningTopic.fromJson.html">fromJson</a></li>
 
 
-    <li class="section-title">
-      <a href="../models_Learning/LearningTopic-class.html#instance-properties">Properties</a>
-    </li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
-    <li><a href="../models_Learning/LearningTopic/id.html">id</a></li>
-    <li><a href="../models_Learning/LearningTopic/imageLink.html">imageLink</a></li>
-    <li><a href="../models_Learning/LearningTopic/ourAnswer.html">ourAnswer</a></li>
-    <li><a href="../models_Learning/LearningTopic/resources.html">resources</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
-    <li><a href="../models_Learning/LearningTopic/title.html">title</a></li>
+        <li class="section-title">
+          <a href="../models_Learning/LearningTopic-class.html#instance-properties">Properties</a>
+        </li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+          <li><a href="../models_Learning/LearningTopic/id.html">id</a></li>
+          <li><a href="../models_Learning/LearningTopic/imageLink.html">imageLink</a></li>
+          <li><a href="../models_Learning/LearningTopic/ourAnswer.html">ourAnswer</a></li>
+          <li><a href="../models_Learning/LearningTopic/resources.html">resources</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+          <li><a href="../models_Learning/LearningTopic/title.html">title</a></li>
 
-    <li class="section-title"><a href="../models_Learning/LearningTopic-class.html#instance-methods">Methods</a></li>
-    <li><a href="../models_Learning/LearningTopic/containsNew.html">containsNew</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+        <li class="section-title"><a href="../models_Learning/LearningTopic-class.html#instance-methods">Methods</a></li>
+          <li><a href="../models_Learning/LearningTopic/containsNew.html">containsNew</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
 
-    <li class="section-title inherited"><a href="../models_Learning/LearningTopic-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+        <li class="section-title inherited"><a href="../models_Learning/LearningTopic-class.html#operators">Operators</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 
