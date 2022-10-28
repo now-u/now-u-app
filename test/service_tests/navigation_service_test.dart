@@ -166,7 +166,8 @@ void main() {
       group('externally opens', () {
         Future<void> assertOpensLinkExternally(String url) async {
           when(() => mockDialogService.showDialog(any())).thenAnswer((_) =>
-              new Future<AlertResponse>(() => new AlertResponse(response: true)));
+              new Future<AlertResponse>(
+                  () => new AlertResponse(response: true)));
 
           await navigationService.launchLink(url);
           verify(() => mockUrlLauncher.openUrl(Uri.parse(url))).called(1);
@@ -174,18 +175,20 @@ void main() {
         }
 
         test('PDF links', () async {
-          await assertOpensLinkExternally("https://share.now-u.com/legal/now-u_privacy_policy.pdf");
+          await assertOpensLinkExternally(
+              "https://share.now-u.com/legal/now-u_privacy_policy.pdf");
         });
 
         test('mailto links', () async {
-          await assertOpensLinkExternally("mailto:someone@yoursite.com?subject=Mail from Our Site");
+          await assertOpensLinkExternally(
+              "mailto:someone@yoursite.com?subject=Mail from Our Site");
         });
       });
-      
+
       group('opens in internal browser', () {
         Future<void> assertOpensLinkInternally(String url) async {
-          when(() => mockBroswer.open(url: any(named: "url"))).thenAnswer((_) =>
-              new Future<void>(() => null));
+          when(() => mockBroswer.open(url: any(named: "url")))
+              .thenAnswer((_) => new Future<void>(() => null));
 
           await navigationService.launchLink(url);
 
@@ -194,23 +197,23 @@ void main() {
         }
 
         test('https links', () async {
-          await assertOpensLinkInternally("https://css-tricks.com/snippets/html/mailto-links/");
+          await assertOpensLinkInternally(
+              "https://css-tricks.com/snippets/html/mailto-links/");
         });
       });
-      
+
       group('resolves internal links', () {
         test('opens internal links internally', () async {
           const url = "internal:home";
           when(() => mockNavigatorState.pushNamed<Object?>(any(),
                   arguments: any(named: "arguments")))
               .thenAnswer((_) => Future.value({}));
-          
+
           await navigationService.launchLink(url);
-          
+
           verify(() => mockNavigatorState.pushNamed(Routes.home)).called(1);
         });
       });
-
     });
   });
 }

@@ -29,8 +29,10 @@ import 'package:get_it/get_it.dart';
 GetIt locator = GetIt.instance;
 
 void setupLocator() {
-  locator.registerLazySingleton(() =>
-      NavigationService(new GlobalKey<NavigatorState>(), new UrlLauncher(), new CustomChromeSafariBrowser()));
+  locator.registerLazySingleton(() => NavigationService(
+      new GlobalKey<NavigatorState>(),
+      new UrlLauncher(),
+      new CustomChromeSafariBrowser()));
   locator.registerLazySingleton(() => SecureStorageService());
   locator.registerLazySingleton(() => SharedPreferencesService());
   locator.registerLazySingleton(() => AuthenticationService());

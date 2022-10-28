@@ -13,13 +13,17 @@ import '../setup/test_helpers.dart';
 import 'package:app/viewmodels/account_details_model.dart';
 
 class MockAuthenticationService extends Mock implements AuthenticationService {}
-class MockGoogleLocationService extends Mock implements GoogleLocationSearchService {}
+
+class MockGoogleLocationService extends Mock
+    implements GoogleLocationSearchService {}
+
 class MockDialogService extends Mock implements DialogService {}
+
 class MockNavigationService extends Mock implements NavigationService {}
+
 class MockAnalyticsService extends Mock implements AnalyticsService {}
 
 void main() {
-
   late AuthenticationService mockAuthService;
   late GoogleLocationSearchService mockGoogleLocationService;
   late DialogService mockDialogService;
@@ -34,8 +38,8 @@ void main() {
     mockGoogleLocationService = MockGoogleLocationService();
     mockDialogService = MockDialogService();
     mockNavigationService = MockNavigationService();
-    mockAnalyticsService = MockAnalyticsService(); 
-    
+    mockAnalyticsService = MockAnalyticsService();
+
     registerMock<AuthenticationService>(mockAuthService);
     registerMock<GoogleLocationSearchService>(mockGoogleLocationService);
     registerMock<DialogService>(mockDialogService);
@@ -92,14 +96,15 @@ void main() {
         model.save();
 
         // Verify that updateUserDetails function is called with correct parameters when we save
-        verify(() => mockAuthService.updateUserDetails(name: "jelgar", dob: now));
+        verify(
+            () => mockAuthService.updateUserDetails(name: "jelgar", dob: now));
       });
     });
 
     // group("delete tests - ", () {
     //   void testDeleteUserAccountDialogs(ApiExceptionType? exceptionType,
     //       String dialogTitle, String dialogDescription) async {
-    //     // Mock api response 
+    //     // Mock api response
     //     if (exceptionType != null) {
     //         when(() => mockAuthService.deleteUserAccount()).thenThrow((_) async => ApiException(type: exceptionType, statusCode: 500, message: "Error"));
     //     } else {
