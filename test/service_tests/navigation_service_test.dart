@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -6,12 +7,15 @@ import 'package:mocktail/mocktail.dart';
 import 'package:app/services/navigation_service.dart';
 import 'package:app/services/dialog_service.dart';
 import 'package:app/locator.dart';
+import 'package:app/routes.dart';
 
 import '../setup/test_helpers.dart';
 
 class MockDialogService extends Mock implements DialogService {}
 
 class MockUrlLauncher extends Mock implements UrlLauncher {}
+
+class MockBroswer extends Mock implements ChromeSafariBrowser {}
 
 class UriFake extends Fake implements Uri {}
 
@@ -39,6 +43,7 @@ void main() {
   late UrlLauncher mockUrlLauncher;
   late DialogService mockDialogService;
   late NavigatorState mockNavigatorState;
+  late ChromeSafariBrowser mockBroswer;
 
   setUpAll(() {
     registerFallbackValue(CustomDialogFake());
@@ -50,6 +55,7 @@ void main() {
     setupLocator();
     mockDialogService = MockDialogService();
     mockUrlLauncher = MockUrlLauncher();
+    mockBroswer = MockBroswer();
     registerMock<DialogService>(mockDialogService);
 
     // Register the real NavigationService with a mock global key
@@ -57,7 +63,7 @@ void main() {
     mockNavigatorState = mockNavigationKey.currentState!;
 
     navigationService =
-        new NavigationService(mockNavigationKey, mockUrlLauncher);
+        new NavigationService(mockNavigationKey, mockUrlLauncher, mockBroswer);
   });
 
   group('InternalLinkingTests -', () {
@@ -156,41 +162,57 @@ void main() {
       });
     });
 
-    group('launchLink uses launch package for external links -', () {
-      void testCallToLaunch(String url, bool launch) async {
-        when(() => mockNavigatorState.pushNamed<Object?>(any(),
-                arguments: any(named: "arguments")))
-            .thenAnswer((_) => Future.value({}));
+    group('launchLink', () {
+      group('externally opens', () {
+        Future<void> assertOpensLinkExternally(String url) async {
+          when(() => mockDialogService.showDialog(any())).thenAnswer((_) =>
+              new Future<AlertResponse>(
+                  () => new AlertResponse(response: true)));
 
-        when(() => mockDialogService.showDialog(any())).thenAnswer((_) =>
-            new Future<AlertResponse>(() => new AlertResponse(response: true)));
-
-        await navigationService.launchLink(url);
-
-        if (launch) {
+          await navigationService.launchLink(url);
           verify(() => mockUrlLauncher.openUrl(Uri.parse(url))).called(1);
-        } else {
+          verifyNever(() => mockBroswer.open(url: any(named: "url")));
+        }
+
+        test('PDF links', () async {
+          await assertOpensLinkExternally(
+              "https://share.now-u.com/legal/now-u_privacy_policy.pdf");
+        });
+
+        test('mailto links', () async {
+          await assertOpensLinkExternally(
+              "mailto:someone@yoursite.com?subject=Mail from Our Site");
+        });
+      });
+
+      group('opens in internal browser', () {
+        Future<void> assertOpensLinkInternally(String url) async {
+          when(() => mockBroswer.open(url: any(named: "url")))
+              .thenAnswer((_) => new Future<void>(() => null));
+
+          await navigationService.launchLink(url);
+
+          verify(() => mockBroswer.open(url: Uri.parse(url))).called(1);
           verifyNever(() => mockUrlLauncher.openUrl(any()));
         }
-      }
 
-      test('for PDF link', () async {
-        testCallToLaunch(
-            "https://share.now-u.com/legal/now-u_privacy_policy.pdf", true);
+        test('https links', () async {
+          await assertOpensLinkInternally(
+              "https://css-tricks.com/snippets/html/mailto-links/");
+        });
       });
 
-      test('for mailto link', () async {
-        testCallToLaunch(
-            "mailto:someone@yoursite.com?subject=Mail from Our Site", true);
-      });
+      group('resolves internal links', () {
+        test('opens internal links internally', () async {
+          const url = "internal:home";
+          when(() => mockNavigatorState.pushNamed<Object?>(any(),
+                  arguments: any(named: "arguments")))
+              .thenAnswer((_) => Future.value({}));
 
-      test('not for regular https link', () async {
-        testCallToLaunch(
-            "https://css-tricks.com/snippets/html/mailto-links/", false);
-      });
+          await navigationService.launchLink(url);
 
-      test('not for internal link', () async {
-        testCallToLaunch("interal:home", false);
+          verify(() => mockNavigatorState.pushNamed(Routes.home)).called(1);
+        });
       });
     });
   });

@@ -26,12 +26,13 @@ import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 
 /* This allows us to create a fake api if we wish */
-
 GetIt locator = GetIt.instance;
 
 void setupLocator() {
-  locator.registerLazySingleton(() =>
-      NavigationService(new GlobalKey<NavigatorState>(), new UrlLauncher()));
+  locator.registerLazySingleton(() => NavigationService(
+      new GlobalKey<NavigatorState>(),
+      new UrlLauncher(),
+      new CustomChromeSafariBrowser()));
   locator.registerLazySingleton(() => SecureStorageService());
   locator.registerLazySingleton(() => SharedPreferencesService());
   locator.registerLazySingleton(() => AuthenticationService());
