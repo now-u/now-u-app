@@ -41,17 +41,17 @@ class ExplorePage extends StatelessWidget {
               child: ListView(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
-                  children: model.sections.where((section) => section.link != null).map((section) =>
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: DarkButton(
-                            section.title,
-                          onPressed: () => model.changePage(section.link!),
-                          size: DarkButtonSize.Large,
-                        ),
-                      )).toList()
-              )
-          )
+                  children: model.sections
+                      .where((section) => section.link != null)
+                      .map((section) => Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: DarkButton(
+                              section.title,
+                              onPressed: () => model.changePage(section.link!),
+                              size: DarkButtonSize.Large,
+                            ),
+                          ))
+                      .toList()))
         ],
       ),
     ));
@@ -132,7 +132,7 @@ ExplorePage actions_explore_page = ExplorePage(
       baseParams: {
         "completed": true,
       },
-      backgroundColor: CustomColors.lightOrange,  
+      backgroundColor: CustomColors.lightOrange,
     ),
   ],
 );
@@ -154,7 +154,7 @@ ExplorePage learning_explore_page = ExplorePage(
       baseParams: {
         "completed": true,
       },
-      backgroundColor: CustomColors.lightOrange,  
+      backgroundColor: CustomColors.lightOrange,
     ),
   ],
 );
