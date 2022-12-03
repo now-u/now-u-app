@@ -33,7 +33,7 @@ class StartUpViewModel extends BaseModel {
     final RemoteConfigService _remoteConfigService =
         locator<RemoteConfigService>();
     await _remoteConfigService.init();
-    
+
     final SharedPreferencesService _sharedPreferencesService =
         locator<SharedPreferencesService>();
     await _sharedPreferencesService.init();

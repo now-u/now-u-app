@@ -8,7 +8,8 @@ class SharedPreferencesService {
 
   SharedPreferences _getInstance() {
     if (_instance == null) {
-        throw Exception("[SharedPreferencesService]: Instance accessed before initalized. Please ensure init is called before using the service.");
+      throw Exception(
+          "[SharedPreferencesService]: Instance accessed before initalized. Please ensure init is called before using the service.");
     }
     return _instance!;
   }

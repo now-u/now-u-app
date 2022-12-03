@@ -22,7 +22,7 @@ class User {
 
   @JsonKey(name: "cause_ids")
   List<int> selectedCauseIds;
-  
+
   @JsonKey(name: "completed_campaigns")
   List<int> completedCampaignIds;
   @JsonKey(name: "completed_actions")
@@ -46,7 +46,6 @@ class User {
 
   bool get isStagingUser => stagingUsers.contains(this.email);
 
-
   User({
     required this.id,
     required this.fullName,
@@ -64,9 +63,8 @@ class User {
   }) {
     _organisation = organisation;
   }
-  
-  factory User.fromJson(Map<String, dynamic> data) =>
-      _$UserFromJson(data);
+
+  factory User.fromJson(Map<String, dynamic> data) => _$UserFromJson(data);
 
   Map getAttributes() {
     return {

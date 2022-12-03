@@ -249,10 +249,11 @@ abstract class ExploreSection<T extends Explorable> {
   ExploreSectionState state = ExploreSectionState.Loading;
 
   Map<String, dynamic> get queryParams {
-    Map<String, dynamic> params = mergeMaps(baseParams ?? {}, filter != null ? filter!.toJson() : {});
+    Map<String, dynamic> params =
+        mergeMaps(baseParams ?? {}, filter != null ? filter!.toJson() : {});
     // By default all sections should be filtered by the user's selected causes
     if (!params.containsKey("cause__in") && _authService.currentUser != null) {
-        params["cause__in"] = _authService.currentUser!.selectedCauseIds;
+      params["cause__in"] = _authService.currentUser!.selectedCauseIds;
     }
     return params;
   }

@@ -111,7 +111,7 @@ ExplorePage actions_explore_page = ExplorePage(
       baseParams: {
         "completed": true,
       },
-      backgroundColor: CustomColors.lightOrange,  
+      backgroundColor: CustomColors.lightOrange,
     ),
   ],
 );
@@ -133,7 +133,7 @@ ExplorePage learning_explore_page = ExplorePage(
       baseParams: {
         "completed": true,
       },
-      backgroundColor: CustomColors.lightOrange,  
+      backgroundColor: CustomColors.lightOrange,
     ),
   ],
 );
