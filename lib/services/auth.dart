@@ -47,7 +47,7 @@ class AuthenticationService {
     );
 
     await _sharedPreferencesService.saveUserToken(response['data']['token']);
-    await fetchUser(); 
+    await fetchUser();
   }
 
   Future<void> logout() async {
@@ -57,7 +57,7 @@ class AuthenticationService {
 
   Future<User?> fetchUser() async {
     if (!isUserLoggedIn()) {
-        return null;
+      return null;
     }
     Map userResponse = await _apiService.getRequest('v1/users/me');
     _currentUser = User.fromJson(userResponse["data"]);
