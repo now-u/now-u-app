@@ -17,7 +17,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../StyleFrom.dart';
 
 enum ExploreTileStyle {
-  Extended,
+  Small,
   Standard,
 }
 
@@ -188,51 +188,7 @@ abstract class ExploreResourceTile extends ExploreTile {
 
   void onTap();
 
-  Widget _extendedWrapper(BuildContext context, Widget child) {
-    return AspectRatio(
-      aspectRatio: 2,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          child,
-          Positioned(
-            right: 0,
-            child: Container(
-              width: COMPLETED_EXTENSION_WIDTH,
-              decoration: BoxDecoration(
-                  color: CustomColors.white,
-                  borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(8),
-                      bottomRight: Radius.circular(8))),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      completed ? 'Completed' : 'Needs Completing',
-                      style: textStyleFrom(
-                        Theme.of(context).primaryTextTheme.button,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: 20),
-                    _ExploreTileCheckmark(completed: completed, size: 30),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _innerTile(BuildContext context) {
-    print("Rendering tile ${completed}");
     return AspectRatio(
       aspectRatio: 1.65,
       child: InkWell(
@@ -310,10 +266,7 @@ abstract class ExploreResourceTile extends ExploreTile {
 
   @override
   Widget buildBody(BuildContext context) {
-    Widget child = _innerTile(context);
-    if (style == ExploreTileStyle.Extended)
-      return _extendedWrapper(context, child);
-    return child;
+    return _innerTile(context);
   }
 }
 

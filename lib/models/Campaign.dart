@@ -49,15 +49,6 @@ class ListCampaign extends Explorable {
 
   factory ListCampaign.fromJson(Map<String, dynamic> data) =>
       _$ListCampaignFromJson(data);
-  // ListCampaign.fromJson(Map<String, dynamic> json)
-  //     : id = json['id'],
-  //       title = json['title'],
-  //       shortName = json['short_name'],
-  //       headerImage = json['header_image'],
-  //       startDate = DateTime.parse(json['start_date']),
-  //       endDate = DateTime.parse(json['end_date']),
-  //       completed = json['completed'],
-  //       cause = ListCause.fromJson(json['causes'][0]);
 }
 
 String descriptionFromJson(String value) {
@@ -115,38 +106,6 @@ class Campaign extends ListCampaign {
 
   factory Campaign.fromJson(Map<String, dynamic> data) =>
       _$CampaignFromJson(data);
-  // Campaign.fromJson(Map<String, dynamic> json)
-  //     : description = json['description_app'].replaceAll('\\n', '\n\n'),
-  //       // numberOfCampaigners = json['number_of_campaigners'],
-  //       // numberOfActionsCompleted = json['number_of_completed_actions'],
-  //       infographicUrl = json['infographic_url'],
-  //   // TODO remove
-  //   actions = [],
-  //       // actions = json['campaign_actions']
-  //       //     .map((e) => ListCauseAction.fromJson(e,
-  //       //         cause: ListCause.fromJson(json['causes'][0])))
-  //       //     .toList()
-  //       //     .cast<ListCauseAction>(),
-  //       learningResources = json['learning_resources']
-  //           .map((e) => LearningResource.fromJson(e,
-  //               cause: ListCause.fromJson(json['causes'][0])))
-  //           .toList()
-  //           .cast<LearningResource>(),
-  //       videoLink = json['video_link'],
-  //       // generalPartners = json['general_partners']
-  //       //     .map((e) => Organisation.fromJson(e))
-  //       //     .toList()
-  //       //     .cast<Organisation>(),
-  //       // keyAims =
-  //       //     json['key_aims'].map((a) => a['title']).toList().cast<String>(),
-  //       // campaignPartners = json['campaign_partners']
-  //       //     .map((e) => Organisation.fromJson(e))
-  //       //     .toList()
-  //       //     .cast<Organisation>(),
-  //       keyAims = [],
-  //       campaignPartners = [],
-  //       generalPartners = [],
-  //       super.fromJson(json);
 
   Future<String> getShareText() async {
     Uri uri = await _dynamicLinkService.createDynamicLink(

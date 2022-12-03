@@ -6,6 +6,7 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/models/Cause.dart';
 import 'package:app/models/Learning.dart';
 import 'package:app/models/article.dart';
+import 'package:app/services/auth.dart';
 import 'package:app/services/news_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:collection/collection.dart';
@@ -211,6 +212,7 @@ enum ExploreSectionState {
 
 abstract class ExploreSection<T extends Explorable> {
   CausesService _causesService = locator<CausesService>();
+  AuthenticationService _authService = locator<AuthenticationService>();
 
   final double tileHeight = 160;
   final Color? backgroundColor;
@@ -246,10 +248,13 @@ abstract class ExploreSection<T extends Explorable> {
 
   ExploreSectionState state = ExploreSectionState.Loading;
 
-  Map<String, dynamic>? get queryParams {
-    if (filter == null) return baseParams;
-    if (baseParams == null) return filter!.toJson();
-    return mergeMaps(baseParams!, filter!.toJson());
+  Map<String, dynamic> get queryParams {
+    Map<String, dynamic> params = mergeMaps(baseParams ?? {}, filter != null ? filter!.toJson() : {});
+    // By default all sections should be filtered by the user's selected causes
+    if (!params.containsKey("cause__in") && _authService.currentUser != null) {
+        params["cause__in"] = _authService.currentUser!.selectedCauseIds;
+    }
+    return params;
   }
 
   void init(Function notifyListeners) async {
@@ -267,7 +272,7 @@ abstract class ExploreSection<T extends Explorable> {
     if (filter != null) {
       await filter!.init(notifyListeners);
     }
-    tiles = await fetchTiles(queryParams ?? {});
+    tiles = await fetchTiles(queryParams);
     state = ExploreSectionState.Loaded;
     notifyListeners();
   }

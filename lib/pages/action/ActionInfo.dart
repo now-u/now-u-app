@@ -110,6 +110,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                   GestureDetector(
                                       onTap: () {
                                         // TODO This must go to the causes info page
+                                        // For now this can be the home explore page filtered by a single cause
                                         Navigator.of(context).pushNamed(
                                             Routes.home,
                                             arguments: model.action!.cause.id);

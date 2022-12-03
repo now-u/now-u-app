@@ -1,7 +1,11 @@
 import 'package:app/models/Action.dart';
 import 'package:app/models/Campaign.dart';
 import 'package:app/models/Organisation.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'User.g.dart';
+
+// TODO replace with roles
 List<String> stagingUsers = [
   "james@now-u.com",
   "dave@now-u.com",
@@ -10,10 +14,22 @@ List<String> stagingUsers = [
   "charlieblindsay@gmail.com"
 ];
 
+@JsonSerializable()
 class User {
-  int? id;
+  int id;
   //FirebaseUser firebaseUser;
-  String? fullName;
+  String fullName;
+
+  @JsonKey(name: "cause_ids")
+  List<int> selectedCauseIds;
+  
+  @JsonKey(name: "completed_campaigns")
+  List<int> completedCampaignIds;
+  @JsonKey(name: "completed_actions")
+  List<int> completedActionIds;
+  @JsonKey(name: "completed_learning_resources")
+  List<int> completedLearningResourceIds;
+
   String? email;
   DateTime? dateOfBirth;
 
@@ -22,146 +38,35 @@ class User {
   double? monthlyDonationLimit;
   bool? homeOwner;
 
-  // Progress (All data stored as ids)
-  List<int> selectedCampaigns =
-      []; // Stores all campaings that have been selected (including old ones)
-  List<int> selectedCauses = []; // Causes the user has selected
-  List<int> completedCampaigns =
-      []; // Stores campaings where all actions have been completed (maybe we should do 80% of something)
-  List<int> completedActions = [];
-  List<int> completedLearningResources = [];
-
-  // Key is rejected id
-  // Map stores rejection time and rejection reason
-  List<int> rejectedActions = [];
-
-  List<int> starredActions = [];
-
-  Map<CampaignActionType?, int>? completedActionsType;
-
   int? points;
 
   Organisation? _organisation;
   Organisation? get organisation => _organisation;
   set setOrganisation(Organisation? org) => _organisation = org;
 
-  String? _token;
-  String? get token => this._token;
-
   bool get isStagingUser => stagingUsers.contains(this.email);
 
+
   User({
-    this.id,
-    token,
-    this.fullName,
+    required this.id,
+    required this.fullName,
+    required this.selectedCauseIds,
+    required this.completedCampaignIds,
+    required this.completedActionIds,
+    required this.completedLearningResourceIds,
     this.email,
     this.dateOfBirth,
     this.location,
     this.monthlyDonationLimit,
     this.homeOwner,
-    selectedCauses,
-    selectedCampaigns,
-    completedCampaigns,
-    completedActions,
-    rejectedActions,
-    starredActions,
-    completedActionsType,
-    completedLearningResources,
     points,
     organisation,
   }) {
-    this.selectedCampaigns = selectedCampaigns ?? [];
-    this.completedActions = completedActions ?? [];
-    this.rejectedActions = rejectedActions ?? [];
-    this.starredActions = starredActions ?? [];
-    this.selectedCauses = selectedCauses ?? [];
-
-    this.completedLearningResources = completedLearningResources ?? [];
-
-    this.completedActionsType = completedActionsType ?? initCompletedAction();
-
-    this._token = token;
     _organisation = organisation;
   }
-
-  User.fromJson(
-    Map json,
-  ) {
-    print("Getting user deets");
-    id = json['id'];
-    fullName = json['full_name'];
-    email = json['email'];
-    print("Getting up to email");
-    dateOfBirth = json['date_of_birth'] == null || json['date_of_birth'] == ""
-        ? null
-        : DateTime.tryParse(json['date_of_birth']);
-    location = json['location'];
-    monthlyDonationLimit = json['monthly_donation_limit'];
-    homeOwner = json['home_owner'] ?? false;
-    print("Getting up to selectedCampaigns");
-    // For cast not to throw null exception must be a default value of [] in User class
-    selectedCampaigns =
-        json['selected_campaigns'] == null || json['selected_campaigns'].isEmpty
-            ? <int>[]
-            : json['selected_campaigns'].cast<int>();
-    print("Getting up to completed campaigns");
-    completedCampaigns = json['completed_campaigns'] == null ||
-            json['completed_campaigns'].isEmpty
-        ? <int>[]
-        : json['completed_campaigns'].cast<int>();
-    print("Getting up to completed actions");
-    completedActions =
-        json['completed_actions'] == null || json['completed_actions'].isEmpty
-            ? <int>[]
-            : json['completed_actions'].cast<int>();
-    rejectedActions =
-        json['rejected_actions'] == null || json['rejected_actions'].isEmpty
-            ? <int>[]
-            : json['rejected_actions'].cast<int>();
-    starredActions =
-        json['favourited_actions'] == null || json['favourited_actions'].isEmpty
-            ? <int>[]
-            : json['favourited_actions'].cast<int>();
-
-    completedLearningResources = json['completed_learning_resources'] == null ||
-            json['completed_learning_resources'].isEmpty
-        ? <int>[]
-        : json['completed_learning_resources'].cast<int>();
-
-    selectedCauses =
-        json['selected_causes'] == null || json['selected_causes'].isEmpty
-            ? <int>[]
-            : json['selected_causes'].cast<int>();
-
-    completedActionsType = json['completed_actions_type'] == null
-        ? this.initCompletedAction()
-        : campaignActionTypesDecode(json['completed_actions_type'].cast<int>());
-
-    _token = json['token'];
-    _organisation = json['organisation'] == null
-        ? null
-        : Organisation.fromJson(json['organisation']);
-    print("Got new user");
-  }
-  Map toJson() => {
-        'id': id,
-        'full_name': fullName,
-        'email': email,
-        'date_of_birth':
-            dateOfBirth == null ? null : dateOfBirth!.toIso8601String(),
-        'location': location,
-        'monthly_donation_limit': monthlyDonationLimit,
-        'home_owner': homeOwner,
-        'selected_campaigns': selectedCampaigns,
-        'completed_campaigns': completedCampaigns,
-        'completed_actions': completedActions,
-        'rejected_actions': rejectedActions,
-        'favourited_actions': starredActions,
-        'completed_learning_resources': completedLearningResources,
-        'completed_actions_type':
-            campaignActionTypesEncode(completedActionsType),
-        'token': _token,
-      };
+  
+  factory User.fromJson(Map<String, dynamic> data) =>
+      _$UserFromJson(data);
 
   Map getAttributes() {
     return {
@@ -224,11 +129,7 @@ class User {
     }
   }
 
-  int? getId() {
-    return id;
-  }
-
-  String? getName() {
+  String getName() {
     return fullName;
   }
 
@@ -240,56 +141,11 @@ class User {
     return dateOfBirth;
   }
 
-  int getAge() {
-    //TODO calculate from dob
-    return -1;
-  }
-
   String? getLocation() {
     return location;
   }
 
-  double? getMonthlyDonationLimit() {
-    return monthlyDonationLimit;
-  }
-
-  bool? getHomeOwner() {
-    return homeOwner;
-  }
-
-  List<int> getSelectedCampaigns() {
-    return selectedCampaigns;
-  }
-
-  List<Campaign> filterSelectedCampaigns(List<Campaign> campaigns) {
-    return campaigns.where((c) => selectedCampaigns.contains(c.id)).toList();
-  }
-
-  List<Campaign> filterUnselectedCampaigns(List<Campaign> campaigns) {
-    return campaigns.where((c) => !selectedCampaigns.contains(c.id)).toList();
-  }
-
-  int getSelectedCampaignsLength() {
-    return selectedCampaigns.length;
-  }
-
-  List<int?>? getCompletedActions() {
-    return completedActions;
-  }
-
-  List<int?>? getRejectedActions() {
-    return rejectedActions;
-  }
-
-  List<int>? getStarredActions() {
-    return starredActions;
-  }
-
-  List<int>? getCompletedLearningResources() {
-    return completedLearningResources;
-  }
-
-  void setName(String? name) {
+  void setName(String name) {
     this.fullName = name;
   }
 
@@ -312,86 +168,4 @@ class User {
   void setHomeOwner(bool homeOwner) {
     this.homeOwner = homeOwner;
   }
-
-  void setCompletedActions(List<int> actions) {
-    this.completedActions = actions;
-  }
-
-  void setToken(String token) {
-    this._token = token;
-  }
-
-  void addSelectedCamaping(int id) {
-    if (!selectedCampaigns.contains(id)) {
-      this.selectedCampaigns.add(id);
-    }
-  }
-
-  void removeSelectedCamaping(int id) {
-    this.selectedCampaigns.remove(id);
-  }
-
-  double getCampaignProgress(Campaign campaign) {
-    return numberOfCompletedActionsForCampaign(campaign) /
-        campaign.actions.length;
-  }
-
-  int numberOfCompletedActionsForCampaign(Campaign campaign) {
-    int count = 0;
-    List<ListCauseAction> actions = campaign.actions;
-    for (int i = 0; i < actions.length; i++) {
-      if (this.completedActions.contains(actions[i].id)) {
-        count++;
-      }
-    }
-    return count;
-  }
-
-  void completeAction(CampaignAction a, {Function? onCompleteReward}) {
-    if (completedActions.contains(a.id)) {
-      return;
-    }
-    completedActions.add(a.id);
-    completedActionsType!.update(a.type, (int x) => x + 1);
-  }
-
-  void rejectAction(CampaignAction a) {
-    rejectedActions.add(a.id);
-  }
-
-  bool isCompleted(CampaignAction a) {
-    return completedActions.contains(a.id);
-  }
-
-  Map<CampaignActionType?, int> initCompletedAction() {
-    Map<CampaignActionType?, int> cas = {};
-    List<CampaignActionType> types = CampaignActionType.values;
-    for (int i = 0; i < CampaignActionType.values.length; i++) {
-      print(i);
-      CampaignActionType t = types[i];
-      cas[t] = 0;
-    }
-    print(cas);
-    return cas;
-  }
-}
-
-// TODO this feels very fragile. Find out what happens if I delete/add a CampaignActionType
-List<int?> campaignActionTypesEncode(Map<CampaignActionType?, int>? cats) {
-  List<int?> encodable = <int?>[];
-  List<CampaignActionType> list = CampaignActionType.values;
-  for (int i = 0; i < list.length; i++) {
-    encodable.add(cats![list[i]]);
-  }
-  return encodable;
-}
-
-Map<CampaignActionType, int> campaignActionTypesDecode(List<int> ints) {
-  Map<CampaignActionType, int> cats = {};
-  List<CampaignActionType> types = CampaignActionType.values;
-  for (int i = 0; i < ints.length; i++) {
-    CampaignActionType t = types[i];
-    cats[t] = ints[i];
-  }
-  return cats;
 }
