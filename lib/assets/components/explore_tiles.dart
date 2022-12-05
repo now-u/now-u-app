@@ -1,7 +1,6 @@
 import 'package:app/assets/components/card.dart';
 import 'package:app/assets/components/cause_indicator.dart';
 import 'package:app/assets/components/custom_network_image.dart';
-import 'package:app/assets/constants.dart';
 import 'package:app/locator.dart';
 import 'package:app/models/Learning.dart';
 import 'package:app/routes.dart';
@@ -14,10 +13,8 @@ import 'package:app/services/navigation_service.dart';
 import 'package:app/pages/action/ActionInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../StyleFrom.dart';
 
 enum ExploreTileStyle {
-  Small,
   Standard,
 }
 
@@ -188,7 +185,8 @@ abstract class ExploreResourceTile extends ExploreTile {
 
   void onTap();
 
-  Widget _innerTile(BuildContext context) {
+  @override
+  Widget buildBody(BuildContext context) {
     return AspectRatio(
       aspectRatio: 1.65,
       child: InkWell(
@@ -262,11 +260,6 @@ abstract class ExploreResourceTile extends ExploreTile {
         ),
       ),
     );
-  }
-
-  @override
-  Widget buildBody(BuildContext context) {
-    return _innerTile(context);
   }
 }
 

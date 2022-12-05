@@ -17,7 +17,6 @@ List<String> stagingUsers = [
 @JsonSerializable()
 class User {
   int id;
-  //FirebaseUser firebaseUser;
   String fullName;
 
   @JsonKey(name: "cause_ids")
