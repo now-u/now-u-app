@@ -57,7 +57,7 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
 <span class="name ">logout</span>(<wbr>)
 
       
@@ -69,10 +69,9 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">bool logout() {
-  _sharedPreferencesService.removeUserFromPrefs();
+  <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; logout() async {
+  await _sharedPreferencesService.clearUserToken();
   _currentUser = null;
-  return true;
 }</code></pre>
 </section>
 
@@ -112,13 +111,12 @@
 
         <li class="section-title"><a href="../../services_auth/AuthenticationService-class.html#instance-methods">Methods</a></li>
           <li><a href="../../services_auth/AuthenticationService/deleteUserAccount.html">deleteUserAccount</a></li>
-          <li><a href="../../services_auth/AuthenticationService/getUser.html">getUser</a></li>
+          <li><a href="../../services_auth/AuthenticationService/fetchUser.html">fetchUser</a></li>
           <li><a href="../../services_auth/AuthenticationService/isUserLoggedIn.html">isUserLoggedIn</a></li>
           <li><a href="../../services_auth/AuthenticationService/login.html">login</a></li>
           <li><a href="../../services_auth/AuthenticationService/logout.html">logout</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
           <li><a href="../../services_auth/AuthenticationService/sendSignInWithEmailLink.html">sendSignInWithEmailLink</a></li>
-          <li><a href="../../services_auth/AuthenticationService/syncUser.html">syncUser</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
           <li><a href="../../services_auth/AuthenticationService/updateUserDetails.html">updateUserDetails</a></li>
 

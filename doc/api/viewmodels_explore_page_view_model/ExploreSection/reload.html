@@ -76,7 +76,7 @@
   if (filter != null) {
     await filter!.init(notifyListeners);
   }
-  tiles = await fetchTiles(queryParams ?? {});
+  tiles = await fetchTiles(queryParams);
   state = ExploreSectionState.Loaded;
   notifyListeners();
 }</code></pre>

@@ -81,7 +81,7 @@ Posts the ids of these causes to the API</p>
   await _apiService.postRequest(&#39;v2&#47;me&#47;causes&#39;, body: {&#39;cause_ids&#39;: ids});
 
   &#47;&#47; Update user after request
-  await locator&lt;AuthenticationService&gt;().syncUser();
+  await locator&lt;AuthenticationService&gt;().fetchUser();
 }</code></pre>
 </section>
 

@@ -87,12 +87,16 @@
       locator&lt;RemoteConfigService&gt;();
   await _remoteConfigService.init();
 
-  var hasLoggedInUser = await _authenticationService!.isUserLoggedIn();
+  final SharedPreferencesService _sharedPreferencesService =
+      locator&lt;SharedPreferencesService&gt;();
+  await _sharedPreferencesService.init();
 
-  if (hasLoggedInUser) {
-    _navigationService!.navigateTo(Routes.home);
+  var currentUser = await _authenticationService.fetchUser();
+
+  if (currentUser != null) {
+    _navigationService.navigateTo(Routes.home);
   } else {
-    _navigationService!.navigateTo(Routes.intro);
+    _navigationService.navigateTo(Routes.intro);
   }
 }</code></pre>
 </section>

@@ -77,10 +77,79 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
 Widget buildBody(BuildContext context) {
-  Widget child = _innerTile(context);
-  if (style == ExploreTileStyle.Extended)
-    return _extendedWrapper(context, child);
-  return child;
+  return AspectRatio(
+    aspectRatio: 1.65,
+    child: InkWell(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Flexible(
+            child: Ink(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              color: headerColor,
+              child: Row(
+                children: [
+                  Icon(
+                    icon,
+                    size: 18,
+                    color: iconColor,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    type,
+                    textScaleFactor: .8,
+                  ),
+                  VerticalDivider(
+                    color: dividerColor,
+                    indent: 12,
+                    endIndent: 12,
+                  ),
+                  const FaIcon(
+                    &#47;&#47; Use FaIcon to center icons properly
+                    FontAwesomeIcons.clock,
+                    size: 16,
+                    color: Color.fromRGBO(55, 58, 74, 1),
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    timeText,
+                    textScaleFactor: .8,
+                  ),
+                  Expanded(child: Container()),
+                  _ExploreTileCheckmark(
+                    completed: completed,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Flexible(
+            child: Column(
+              children: [
+                Expanded(
+                  child: Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: style == ExploreTileStyle.Standard
+                          ? _ExploreTileTitle(title)
+                          : Padding(
+                              padding: EdgeInsets.only(
+                                  right: COMPLETED_EXTENSION_WIDTH - 50),
+                              child: _ExploreTileTitle(title),
+                            )),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: CauseIndicator(cause),
+                )
+              ],
+            ),
+            flex: 3,
+          ),
+        ],
+      ),
+    ),
+  );
 }</code></pre>
 </section>
 

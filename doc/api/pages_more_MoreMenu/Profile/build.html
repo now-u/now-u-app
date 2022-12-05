@@ -205,8 +205,8 @@ Widget build(BuildContext context) {
                           GestureDetector(
                               child: ProfileTile(
                                   &quot;Log out&quot;, FontAwesomeIcons.code),
-                              onTap: () {
-                                model.logout();
+                              onTap: () async {
+                                await model.logout();
                               }),
                           GestureDetector(
                               child: ProfileTile(

@@ -78,7 +78,7 @@
   await _apiService.postRequest(&#39;v1&#47;users&#47;me&#47;actions&#47;$id&#47;complete&#39;);
 
   &#47;&#47; Update user after request
-  await locator&lt;AuthenticationService&gt;().syncUser();
+  await locator&lt;AuthenticationService&gt;().fetchUser();
 }</code></pre>
 </section>
 
