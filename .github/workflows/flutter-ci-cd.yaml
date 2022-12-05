@@ -179,5 +179,5 @@ jobs:
         env:
           APPLEID_USERNAME: ${{ secrets.APPLEID_USERNAME }}
           APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
-          IPA_PATH: build/ios/ipa/app.ipa 
+          IPA_PATH: build/ios/ipa/now-u.ipa 
         run: ./.github/scripts/publish_testflight.sh
