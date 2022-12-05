@@ -54,8 +54,8 @@ void main() {
     registerMock<AuthenticationService>(mockAuthenticationService);
     causesService = locator<CausesService>();
 
-    when(() => mockAuthenticationService.syncUser())
-        .thenAnswer((_) async => {});
+    when(() => mockAuthenticationService.fetchUser())
+        .thenAnswer((_) async => null);
   });
 
   group('causes', () {
@@ -141,7 +141,7 @@ void main() {
             'cause_ids': [listCause.id]
           })).called(1);
 
-      verify(() => mockAuthenticationService.syncUser()).called(1);
+      verify(() => mockAuthenticationService.fetchUser()).called(1);
     });
   });
 
@@ -155,7 +155,7 @@ void main() {
       verify(() =>
               mockApiService.postRequest("v1/users/me/actions/123/complete"))
           .called(1);
-      verify(() => mockAuthenticationService.syncUser()).called(1);
+      verify(() => mockAuthenticationService.fetchUser()).called(1);
     });
   });
 
@@ -168,7 +168,7 @@ void main() {
 
       verify(() => mockApiService.deleteRequest("v1/users/me/actions/123"))
           .called(1);
-      verify(() => mockAuthenticationService.syncUser()).called(1);
+      verify(() => mockAuthenticationService.fetchUser()).called(1);
     });
   });
 
@@ -182,7 +182,7 @@ void main() {
       verify(() =>
               mockApiService.postRequest("v1/users/me/learning_resources/123"))
           .called(1);
-      verify(() => mockAuthenticationService.syncUser()).called(1);
+      verify(() => mockAuthenticationService.fetchUser()).called(1);
     });
   });
 }

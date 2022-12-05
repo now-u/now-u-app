@@ -183,30 +183,29 @@ class ExploreSectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: data.backgroundColor,
-      child: Padding(
-        padding: EdgeInsets.only(top: data.backgroundColor != null ? 12 : 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            // Section header
-            Column(
-              children: [
-                // Text header
-                _buildSectionHeader(context),
-                SizedBox(height: 2),
-                if (data.filter != null &&
-                    data.filter!.state == ExploreFilterState.Loaded)
-                  _buildSectionFilters(),
+        color: data.backgroundColor,
+        child: Padding(
+          padding: EdgeInsets.only(top: data.backgroundColor != null ? 12 : 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              // Section header
+              Column(
+                children: [
+                  // Text header
+                  _buildSectionHeader(context),
+                  SizedBox(height: 2),
+                  if (data.filter != null &&
+                      data.filter!.state == ExploreFilterState.Loaded)
+                    _buildSectionFilters(),
 
-                SizedBox(height: CustomPaddingSize.small),
-                _buildTiles(context),
-                SizedBox(height: CustomPaddingSize.normal),
-              ],
-            ),
-          ],
-        ),
-      )
-    );
+                  SizedBox(height: CustomPaddingSize.small),
+                  _buildTiles(context),
+                  SizedBox(height: CustomPaddingSize.normal),
+                ],
+              ),
+            ],
+          ),
+        ));
   }
 }

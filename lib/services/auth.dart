@@ -10,29 +10,14 @@ class AuthenticationService {
   final DeviceInfoService _deviceInfoService = locator<DeviceInfoService>();
   final ApiService _apiService = locator<ApiService>();
 
-  String? token;
   User? _currentUser;
   User? get currentUser => _currentUser;
+  String? get token => _sharedPreferencesService.getUserToken();
 
   bool get isAuthenticated => token != null;
 
-  Future<bool> isUserLoggedIn() async {
-    // TODO: Dont save the whole user in shared prefs
-    User? user = await _sharedPreferencesService.loadUserFromPrefs();
-    if (user != null && user.token != null) {
-      token = user.token;
-      try {
-        await syncUser();
-      } on ApiException {
-        return false;
-      }
-    }
-    return _currentUser != null;
-  }
-
-  Future syncUser() async {
-    _currentUser = await getUser(token!);
-    _sharedPreferencesService.saveUserToPrefs(_currentUser!);
+  bool isUserLoggedIn() {
+    return token != null;
   }
 
   Future sendSignInWithEmailLink(
@@ -61,20 +46,22 @@ class AuthenticationService {
       },
     );
 
-    this.token = response['data']['token'];
-    await syncUser();
+    await _sharedPreferencesService.saveUserToken(response['data']['token']);
+    await fetchUser();
   }
 
-  bool logout() {
-    _sharedPreferencesService.removeUserFromPrefs();
+  Future<void> logout() async {
+    await _sharedPreferencesService.clearUserToken();
     _currentUser = null;
-    return true;
   }
 
-  Future<User>? getUser(String token) async {
-    print("Getting user with token $token");
+  Future<User?> fetchUser() async {
+    if (!isUserLoggedIn()) {
+      return null;
+    }
     Map userResponse = await _apiService.getRequest('v1/users/me');
-    return User.fromJson(userResponse["data"]);
+    _currentUser = User.fromJson(userResponse["data"]);
+    return _currentUser;
   }
 
   Future<bool> updateUserDetails({

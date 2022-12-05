@@ -41,7 +41,7 @@ class Home extends StatelessWidget {
                   Column(children: <Widget>[
                     // Campaigns
                     ProgressTile(
-                      campaignsScore: model.numberOfJoinedCampaigns,
+                      campaignsScore: model.numberOfCompletedCampaigns,
                       actionsScore: model.numberOfCompletedActions,
                       learningsScore: model.numberOfCompletedLearningResources,
                     ),

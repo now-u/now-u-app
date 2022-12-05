@@ -78,7 +78,7 @@ class CausesService {
     await _apiService.postRequest('v2/me/causes', body: {'cause_ids': ids});
 
     // Update user after request
-    await locator<AuthenticationService>().syncUser();
+    await locator<AuthenticationService>().fetchUser();
   }
 
   /// Complete an action
@@ -88,7 +88,7 @@ class CausesService {
     await _apiService.postRequest('v1/users/me/actions/$id/complete');
 
     // Update user after request
-    await locator<AuthenticationService>().syncUser();
+    await locator<AuthenticationService>().fetchUser();
   }
 
   /// Uncomlete an action
@@ -100,7 +100,7 @@ class CausesService {
     );
 
     // Update user after request
-    await locator<AuthenticationService>().syncUser();
+    await locator<AuthenticationService>().fetchUser();
   }
 
   /// Complete a learning resource
@@ -112,6 +112,6 @@ class CausesService {
     );
 
     // Update user after request
-    await locator<AuthenticationService>().syncUser();
+    await locator<AuthenticationService>().fetchUser();
   }
 }

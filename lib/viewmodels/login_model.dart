@@ -55,7 +55,7 @@ class LoginViewModel extends BaseModel {
       );
       setBusy(false);
 
-      if (currentUser!.selectedCauses.length == 0) {
+      if (currentUser!.selectedCauseIds.length == 0) {
         _navigationService.navigateTo(Routes.causesOnboardingPage);
       } else {
         _navigationService.navigateTo(Routes.home);

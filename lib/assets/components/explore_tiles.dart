@@ -1,7 +1,6 @@
 import 'package:app/assets/components/card.dart';
 import 'package:app/assets/components/cause_indicator.dart';
 import 'package:app/assets/components/custom_network_image.dart';
-import 'package:app/assets/constants.dart';
 import 'package:app/locator.dart';
 import 'package:app/models/Learning.dart';
 import 'package:app/routes.dart';
@@ -14,10 +13,8 @@ import 'package:app/services/navigation_service.dart';
 import 'package:app/pages/action/ActionInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../StyleFrom.dart';
 
 enum ExploreTileStyle {
-  Extended,
   Standard,
 }
 
@@ -188,51 +185,8 @@ abstract class ExploreResourceTile extends ExploreTile {
 
   void onTap();
 
-  Widget _extendedWrapper(BuildContext context, Widget child) {
-    return AspectRatio(
-      aspectRatio: 2,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          child,
-          Positioned(
-            right: 0,
-            child: Container(
-              width: COMPLETED_EXTENSION_WIDTH,
-              decoration: BoxDecoration(
-                  color: CustomColors.white,
-                  borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(8),
-                      bottomRight: Radius.circular(8))),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      completed ? 'Completed' : 'Needs Completing',
-                      style: textStyleFrom(
-                        Theme.of(context).primaryTextTheme.button,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: 20),
-                    _ExploreTileCheckmark(completed: completed, size: 30),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _innerTile(BuildContext context) {
-    print("Rendering tile ${completed}");
+  @override
+  Widget buildBody(BuildContext context) {
     return AspectRatio(
       aspectRatio: 1.65,
       child: InkWell(
@@ -306,14 +260,6 @@ abstract class ExploreResourceTile extends ExploreTile {
         ),
       ),
     );
-  }
-
-  @override
-  Widget buildBody(BuildContext context) {
-    Widget child = _innerTile(context);
-    if (style == ExploreTileStyle.Extended)
-      return _extendedWrapper(context, child);
-    return child;
   }
 }
 
