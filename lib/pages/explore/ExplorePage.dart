@@ -1,3 +1,4 @@
+import 'package:app/assets/components/buttons/darkButton.dart';
 import 'package:app/assets/constants.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/pages/explore/ExploreSection.dart';
@@ -19,19 +20,39 @@ class ExplorePage extends StatelessWidget {
         child: Padding(
       padding:
           EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 20),
-      child: GestureDetector(
-        onTap: model.canBack ? () => model.back() : null,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            if (model.canBack) Icon(Icons.chevron_left, size: 30),
-            Text(
-              model.title,
-              style: exploreHeading,
-              textAlign: TextAlign.left,
+      child: Column(
+        children: [
+          GestureDetector(
+            onTap: model.canBack ? () => model.back() : null,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                if (model.canBack) Icon(Icons.chevron_left, size: 30),
+                Text(
+                  model.title,
+                  style: exploreHeading,
+                  textAlign: TextAlign.left,
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          Container(
+              height: 50,
+              child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  children: model.sections
+                      .where((section) => section.link != null)
+                      .map((section) => Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: DarkButton(
+                              section.title,
+                              onPressed: () => model.changePage(section.link!),
+                              size: DarkButtonSize.Large,
+                            ),
+                          ))
+                      .toList()))
+        ],
       ),
     ));
   }
