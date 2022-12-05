@@ -196,8 +196,8 @@ class Profile extends StatelessWidget {
                             GestureDetector(
                                 child: ProfileTile(
                                     "Log out", FontAwesomeIcons.code),
-                                onTap: () {
-                                  model.logout();
+                                onTap: () async {
+                                  await model.logout();
                                 }),
                             GestureDetector(
                                 child: ProfileTile(

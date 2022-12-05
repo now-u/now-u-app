@@ -13,8 +13,6 @@ class CampaignInfoViewModel extends BaseModel {
 
   Campaign? _campaign;
   Campaign? get campaign => _campaign;
-  bool get campaignIsJoined =>
-      currentUser!.getSelectedCampaigns().contains(_campaign!.id);
   set setCampaign(Campaign? campaign) => _campaign = campaign;
 
   Future fetchCampaign(int campaignId) async {

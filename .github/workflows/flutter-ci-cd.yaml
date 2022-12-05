@@ -141,6 +141,11 @@ jobs:
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
+      - name: Create firebase GoogleService-Info.plist
+        env:
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_IOS_CONFIG_PROD }}
+        run: echo $FIREBASE_CONFIG > ./ios/Runner/GoogleService-Info.plist
+
       # Setup the flutter environment.
       - name: Setup flutter 
         uses: subosito/flutter-action@v2

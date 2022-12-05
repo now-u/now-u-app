@@ -20,8 +20,8 @@ class BaseModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void logout() {
-    _authenticationService!.logout();
+  Future<void> logout() async {
+    await _authenticationService!.logout();
     _navigationService!.navigateTo(Routes.login);
   }
 }

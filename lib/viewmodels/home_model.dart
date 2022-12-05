@@ -1,3 +1,4 @@
+import 'package:app/services/auth.dart';
 import 'package:app/services/causes_service.dart';
 import 'package:app/services/dialog_service.dart';
 import 'package:app/viewmodels/base_model.dart';
@@ -17,6 +18,7 @@ class HomeViewModel extends BaseModel with ExploreViewModelMixin {
   final NavigationService _navigationService = locator<NavigationService>();
   final CausesService _causesService = locator<CausesService>();
   final DialogService _dialogService = locator<DialogService>();
+  final AuthenticationService _authService = locator<AuthenticationService>();
 
   final ExploreSection myCampaigns = CampaignExploreSection(
     title: "My campaigns",
@@ -67,22 +69,16 @@ class HomeViewModel extends BaseModel with ExploreViewModelMixin {
   List<InternalNotification>? get notifications =>
       _internalNotificationService.notifications;
 
-  int get numberOfJoinedCampaigns {
-    return currentUser!.getSelectedCampaigns().length;
+  int get numberOfCompletedCampaigns {
+    return _authService.currentUser!.completedCampaignIds.length;
   }
 
-  // getCompletedActions
   int get numberOfCompletedActions {
-    return currentUser!.getCompletedActions()!.length;
+    return _authService.currentUser!.completedActionIds.length;
   }
 
   int get numberOfCompletedLearningResources {
-    return currentUser!.getCompletedLearningResources()!.length;
-  }
-
-  // getActiveStarredActions
-  int get numberOfStarredActions {
-    return currentUser!.getStarredActions()!.length;
+    return _authService.currentUser!.completedLearningResourceIds.length;
   }
 
   // getNotifications
