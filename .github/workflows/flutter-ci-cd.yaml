@@ -6,7 +6,7 @@ on:
   push: 
     # branches: [staging, master]
     branches: [staging]
-  # pull_request:
+  pull_request:
   #  branches: [ dev ]
   workflow_dispatch: # to manually run this workflow
     
