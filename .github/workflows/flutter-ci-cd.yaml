@@ -91,6 +91,13 @@ jobs:
       with:
         name: release-android
         path: build/app/outputs/bundle/release/app-release.aab
+    
+    - name: Upload app to action artifacts 
+      uses: actions/upload-artifact@v3
+      with:
+        name: app-release.aab 
+        path: /home/runner/work/now-u-app/now-u-app/build/app/outputs/bundle/release/app-release.aab
+
 
     - name: Upload to Play Store # Finish setting this up
       uses: r0adkll/upload-google-play@v1
@@ -110,6 +117,7 @@ jobs:
   # TODO https://damienaicheh.github.io/flutter/github/actions/2021/04/22/build-sign-flutter-ios-github-actions-en.html
   build_ios:
     runs-on: macos-latest
+    if: ${{ 1 == 2 }}
     timeout-minutes: 30
     steps:
       # Checks-out our repository under $GITHUB_WORKSPACE, so our job can access it
