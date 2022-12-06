@@ -100,6 +100,7 @@ jobs:
         releaseFiles: /home/runner/work/now-u-app/now-u-app/build/app/outputs/bundle/release/app-release.aab
         track: beta
         status: completed
+        changesNotSentForReview: true
         # inAppUpdatePriority: 2
         # userFraction: 0.33
         # whatsNewDirectory: distribution/whatsnew
