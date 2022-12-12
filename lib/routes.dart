@@ -17,6 +17,7 @@ import 'package:app/pages/causes/ChangeCausePage.dart';
 import 'package:app/pages/other/InfoPage.dart';
 import 'package:app/pages/other/NotificationPage.dart';
 import 'package:app/pages/other/OrganisationPage.dart';
+import 'package:app/viewmodels/explore_page_view_model.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
@@ -123,13 +124,13 @@ Function initRoutes = (RouteSettings settings) {
     case Routes.home:
       {
         return customRoute(
-            builder: (context) => TabsPage(currentPage: TabPage.Home),
+            builder: (context) => TabsPage(TabsPageArguments(initialPage: TabPage.Home)),
             settings: settings);
       }
     case Routes.explore:
       {
         return customRoute(
-            builder: (context) => TabsPage(currentPage: TabPage.Explore),
+            builder: (context) => TabsPage(TabsPageArguments(initialPage: TabPage.Explore, explorePageArgs: args is ExplorePageArguments ? args : null)),
             settings: settings);
       }
     case Routes.campaign:
@@ -157,7 +158,7 @@ Function initRoutes = (RouteSettings settings) {
               builder: (context) => InfoPage(args), settings: settings);
         }
         return customRoute(
-            builder: (context) => TabsPage(currentPage: TabPage.Home),
+            builder: (context) => TabsPage(TabsPageArguments(initialPage: TabPage.Home)),
             settings: settings);
       }
     // Other
@@ -185,7 +186,7 @@ Function initRoutes = (RouteSettings settings) {
     default:
       {
         return customRoute(
-            builder: (context) => TabsPage(currentPage: TabPage.Home),
+            builder: (context) => TabsPage(TabsPageArguments(initialPage: TabPage.Home)),
             settings: settings);
       }
   }

@@ -39,7 +39,7 @@ class ExploreFilterSelectionItem extends StatelessWidget {
 
 class ExploreSectionWidget extends StatelessWidget {
   final ExploreSection data;
-  final Function(ExplorePage page) changePage;
+  final Function(ExplorePageArguments page) changePage;
   final Function(BaseExploreFilterOption option) toggleFilterOption;
 
   ExploreSectionWidget({
@@ -61,22 +61,22 @@ class ExploreSectionWidget extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            onTap: data.link != null ? () => changePage(data.link!) : () {},
+            onTap: data.args.link != null ? () => changePage(data.args.link!) : () {},
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  data.title,
+                  data.args.title,
                   style: Theme.of(context).primaryTextTheme.headline3,
                   textAlign: TextAlign.left,
                 ),
-                if (data.link != null) Icon(Icons.chevron_right, size: 30)
+                if (data.args.link != null) Icon(Icons.chevron_right, size: 30)
               ],
             ),
           ),
-          if (data.description != null)
+          if (data.args.description != null)
             Text(
-              data.description!,
+              data.args.description!,
               style: Theme.of(context).primaryTextTheme.headline4,
               textAlign: TextAlign.left,
             ),
@@ -129,7 +129,7 @@ class ExploreSectionWidget extends StatelessWidget {
               ),
               SizedBox(height: CustomPaddingSize.small),
               Text(
-                "Looks like we don’t have any ‘${data.title}’ to recommend right now. Check out our ‘Explore’ page to get involved another way.",
+                "Looks like we don’t have any ‘${data.args.title}’ to recommend right now. Check out our ‘Explore’ page to get involved another way.",
                 style: lightTheme.textTheme.bodyMedium,
                 textAlign: TextAlign.center,
               ),
@@ -183,9 +183,9 @@ class ExploreSectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: data.backgroundColor,
+        color: data.args.backgroundColor,
         child: Padding(
-          padding: EdgeInsets.only(top: data.backgroundColor != null ? 12 : 0),
+          padding: EdgeInsets.only(top: data.args.backgroundColor != null ? 12 : 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
