@@ -59,7 +59,8 @@ class ExplorePage extends StatelessWidget {
                   child: ListView(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
-                      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: horizontalPadding),
                       // Map section arguments into real sections
                       children: model.sections
                           .where((section) => section.args.link != null)

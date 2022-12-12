@@ -48,14 +48,17 @@ class NavigationService {
 
   NavigationService(this.navigatorKey, this.urlLauncher, this.browser);
 
-  Future<dynamic> navigateTo(String routeName, {arguments, clearHistory = false}) {
+  Future<dynamic> navigateTo(String routeName,
+      {arguments, clearHistory = false}) {
     if (clearHistory) {
-      return navigatorKey.currentState!.pushNamedAndRemoveUntil(routeName, (route) => false, arguments: arguments);
+      return navigatorKey.currentState!.pushNamedAndRemoveUntil(
+          routeName, (route) => false,
+          arguments: arguments);
     }
     return navigatorKey.currentState!
         .pushNamed(routeName, arguments: arguments);
   }
-  
+
   void goBack() {
     return navigatorKey.currentState!.pop();
   }

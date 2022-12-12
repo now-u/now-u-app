@@ -391,7 +391,7 @@ class ExplorePageViewModel extends BaseModel with ExploreViewModelMixin {
 
   bool hasLinks() {
     return sections.any((section) => section.args.link != null);
-  } 
+  }
 }
 
 //-- Explore Sections --//

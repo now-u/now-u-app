@@ -40,6 +40,8 @@ class StartUpViewModel extends BaseModel {
 
     var currentUser = await _authenticationService.fetchUser();
 
-    _navigationService.navigateTo(currentUser != null ? Routes.home : Routes.intro, clearHistory: true);
+    _navigationService.navigateTo(
+        currentUser != null ? Routes.home : Routes.intro,
+        clearHistory: true);
   }
 }

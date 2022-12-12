@@ -53,6 +53,12 @@ class ActionInfoViewModel extends BaseModel {
 
   void navigateToCauseExplorePage() {
     ListCause cause = this.action!.cause;
-    _navigationService.navigateTo(Routes.explore, arguments: ExplorePageArguments(sections: home_explore_page.sections, title: "Explore ${cause.title} cause", baseParams: { "cause__in": [this.action!.cause.id] }));
+    _navigationService.navigateTo(Routes.explore,
+        arguments: ExplorePageArguments(
+            sections: home_explore_page.sections,
+            title: "Explore ${cause.title} cause",
+            baseParams: {
+              "cause__in": [this.action!.cause.id]
+            }));
   }
 }

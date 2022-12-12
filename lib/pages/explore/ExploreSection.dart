@@ -61,7 +61,9 @@ class ExploreSectionWidget extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            onTap: data.args.link != null ? () => changePage(data.args.link!) : () {},
+            onTap: data.args.link != null
+                ? () => changePage(data.args.link!)
+                : () {},
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -185,7 +187,8 @@ class ExploreSectionWidget extends StatelessWidget {
     return Container(
         color: data.args.backgroundColor,
         child: Padding(
-          padding: EdgeInsets.only(top: data.args.backgroundColor != null ? 12 : 0),
+          padding:
+              EdgeInsets.only(top: data.args.backgroundColor != null ? 12 : 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

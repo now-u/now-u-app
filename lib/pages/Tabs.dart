@@ -25,7 +25,7 @@ class TabPageDetails {
 class TabsPageArguments {
   final TabPage? initialPage;
   final ExplorePageArguments? explorePageArgs;
-  
+
   TabsPageArguments({this.initialPage, this.explorePageArgs});
 }
 
@@ -43,7 +43,9 @@ class TabsPage extends StatelessWidget with WidgetsBindingObserver {
         title: "Home",
       ),
       TabPage.Explore: TabPageDetails(
-        widget: ExplorePage(args.explorePageArgs != null ? args.explorePageArgs! : home_explore_page),
+        widget: ExplorePage(args.explorePageArgs != null
+            ? args.explorePageArgs!
+            : home_explore_page),
         icon: CustomIcons.ic_news,
         title: "Explore",
       ),
@@ -98,7 +100,6 @@ class TabsPage extends StatelessWidget with WidgetsBindingObserver {
               ),
             );
           },
-        )
-    );
+        ));
   }
 }

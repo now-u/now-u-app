@@ -39,7 +39,9 @@ class Home extends StatelessWidget {
                     : HeaderStyle1(name: model.currentUser!.getName()),
                 children: [
                   Column(children: <Widget>[
-                    SizedBox(height: 10,),
+                    SizedBox(
+                      height: 10,
+                    ),
                     ExploreSectionWidget.fromModel(model.myActions, model),
                     ExploreSectionWidget.fromModel(
                         model.suggestedCampaigns, model),
