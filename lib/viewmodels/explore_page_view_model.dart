@@ -6,17 +6,79 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/models/Cause.dart';
 import 'package:app/models/Learning.dart';
 import 'package:app/models/article.dart';
+import 'package:app/routes.dart';
 import 'package:app/services/auth.dart';
+import 'package:app/services/navigation_service.dart';
 import 'package:app/services/news_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
-import 'package:app/pages/explore/ExplorePage.dart';
 import 'package:app/viewmodels/base_model.dart';
 import 'package:app/models/Explorable.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/causes_service.dart';
+
+class ExplorePageArguments {
+  final List<ExploreSectionArguments> sections;
+  final String title;
+  final Map<String, dynamic>? baseParams;
+
+  ExplorePageArguments(
+      {required this.sections, required this.title, this.baseParams});
+
+  ExplorePageArguments addBaseParams(Map<String, dynamic> baseParams) {
+    return ExplorePageArguments(
+        sections: sections,
+        title: title,
+        baseParams: mergeMaps(baseParams, this.baseParams ?? {}));
+  }
+}
+
+class ExploreSectionArguments {
+  /// Title of the section
+  final String title;
+
+  /// Where clicking on the title should go
+  final ExplorePageArguments? link;
+
+  /// Description of the section
+  final String? description;
+
+  // Params to provide to fetch query
+  final Map<String, dynamic>? baseParams;
+
+  ///
+  final BaseExploreFilter? filter;
+
+  final Color? backgroundColor;
+
+  final ExploreSectionType type;
+
+  ExploreSectionArguments({
+    required this.title,
+    required this.type,
+    this.description,
+    this.link,
+    this.baseParams,
+    this.filter,
+    this.backgroundColor,
+  });
+
+  ExploreSectionArguments addBaseParams(Map<String, dynamic> baseParams) {
+    return ExploreSectionArguments(
+      title: title,
+      // TODO This doesnt quite work as we also need to update the title
+      // link: link != null ? link!.addBaseParams(baseParams) : null,
+      link: link,
+      description: description,
+      baseParams: mergeMaps(baseParams, this.baseParams ?? {}),
+      filter: filter,
+      backgroundColor: backgroundColor,
+      type: type,
+    );
+  }
+}
 
 abstract class BaseExploreFilterOption extends Equatable {
   /// What is displayed to the user
@@ -210,48 +272,38 @@ enum ExploreSectionState {
   Loaded,
 }
 
+enum ExploreSectionType {
+  Action,
+  Learning,
+  Campaign,
+  News,
+}
+
 abstract class ExploreSection<T extends Explorable> {
   CausesService _causesService = locator<CausesService>();
   AuthenticationService _authService = locator<AuthenticationService>();
 
   final double tileHeight = 160;
-  final Color? backgroundColor;
 
+  List<T>? tiles;
   Future<List<T>> fetchTiles(Map<String, dynamic> params);
   Widget renderTile(T tile);
 
-  ExploreSection({
-    required this.title,
-    this.description,
-    this.link,
-    this.baseParams,
-    this.filter,
+  BaseExploreFilter? get filter => this.args.filter;
+
+  ExploreSection(
+    this.args, {
     this.state = ExploreSectionState.Loading,
-    this.backgroundColor,
   });
 
-  /// Title of the section
-  String title;
-
-  /// Where clicking on the title should go
-  ExplorePage? link;
-
-  /// Description of the section
-  String? description;
-
-  // Params to provide to fetch query
-  Map<String, dynamic>? baseParams;
-
-  ///
-  BaseExploreFilter? filter;
-  List<T>? tiles;
-
+  final ExploreSectionArguments args;
   ExploreSectionState state = ExploreSectionState.Loading;
 
   Map<String, dynamic> get queryParams {
-    Map<String, dynamic> params =
-        mergeMaps(baseParams ?? {}, filter != null ? filter!.toJson() : {});
+    Map<String, dynamic> params = mergeMaps(args.baseParams ?? {},
+        args.filter != null ? args.filter!.toJson() : {});
     // By default all sections should be filtered by the user's selected causes
+    print("Getting params ${params}");
     if (!params.containsKey("cause__in") && _authService.currentUser != null) {
       params["cause__in"] = _authService.currentUser!.selectedCauseIds;
     }
@@ -270,8 +322,8 @@ abstract class ExploreSection<T extends Explorable> {
   void reload(Function notifyListeners) async {
     state = ExploreSectionState.Loading;
     notifyListeners();
-    if (filter != null) {
-      await filter!.init(notifyListeners);
+    if (args.filter != null) {
+      await args.filter!.init(notifyListeners);
     }
     tiles = await fetchTiles(queryParams);
     state = ExploreSectionState.Loaded;
@@ -296,50 +348,49 @@ mixin ExploreViewModelMixin on BaseModel {
   }
 }
 
+ExploreSection exploreSectionFromArgs(ExploreSectionArguments args) {
+  switch (args.type) {
+    case ExploreSectionType.Campaign:
+      return CampaignExploreSection(args);
+    case ExploreSectionType.Learning:
+      return LearningResourceExploreSection(args);
+    case ExploreSectionType.Action:
+      return ActionExploreSection(args);
+    case ExploreSectionType.News:
+      return NewsExploreSection(args);
+  }
+}
+
 class ExplorePageViewModel extends BaseModel with ExploreViewModelMixin {
-  String title;
+  NavigationService _navigationService = locator<NavigationService>();
+  final String title;
 
   void init() {
     initSections();
   }
 
-  final Queue<ExplorePage> previousPages = Queue();
-
-  ExplorePageViewModel(this.title, List<ExploreSection> sections) {
-    print("Sections are $sections");
-    this.sections = sections;
+  ExplorePageViewModel(this.title, List<ExploreSectionArguments> sections,
+      {Map<String, dynamic>? baseParams}) {
+    // Add the base parameters to the sections
+    this.sections = sections.map((args) {
+      return exploreSectionFromArgs(args.addBaseParams(baseParams ?? {}));
+    }).toList();
   }
 
-  void changePage(ExplorePage page) {
-    update(
-      title: page.title,
-      sections: page.sections,
-    );
+  void changePage(ExplorePageArguments args) {
+    _navigationService.navigateTo(Routes.explore, arguments: args);
   }
 
-  void update(
-      {List<ExploreSection>? sections,
-      String? title,
-      bool saveHistory = true}) {
-    if (saveHistory) {
-      previousPages
-          .addLast(ExplorePage(sections: this.sections, title: this.title));
-    }
-    this.sections = sections ?? this.sections;
-    this.title = title ?? this.title;
-    notifyListeners();
-    init();
+  bool get canGoBack {
+    return _navigationService.canGoBack();
   }
-
-  bool get canBack => previousPages.length != 0;
 
   void back() {
-    if (previousPages.length == 0) {
-      return;
-    }
-    ExplorePage page = previousPages.last;
-    previousPages.removeLast();
-    update(sections: page.sections, title: page.title, saveHistory: false);
+    _navigationService.goBack();
+  }
+
+  bool hasLinks() {
+    return sections.any((section) => section.args.link != null);
   }
 }
 
@@ -348,21 +399,7 @@ class ExplorePageViewModel extends BaseModel with ExploreViewModelMixin {
 class ActionExploreSection extends ExploreSection<ListCauseAction> {
   final double tileHeight = 160;
 
-  ActionExploreSection({
-    required String title,
-    String? description,
-    ExplorePage? link,
-    Map<String, dynamic>? baseParams,
-    BaseExploreFilter? filter,
-    Color? backgroundColor,
-  }) : super(
-          title: title,
-          description: description,
-          link: link,
-          baseParams: baseParams,
-          filter: filter,
-          backgroundColor: backgroundColor,
-        );
+  ActionExploreSection(ExploreSectionArguments args) : super(args);
 
   Future<List<ListCauseAction>> fetchTiles(Map<String, dynamic> params) {
     return _causesService.getActions(params: queryParams);
@@ -374,21 +411,7 @@ class ActionExploreSection extends ExploreSection<ListCauseAction> {
 class LearningResourceExploreSection extends ExploreSection<LearningResource> {
   double tileHeight = 160;
 
-  LearningResourceExploreSection({
-    required String title,
-    String? description,
-    ExplorePage? link,
-    Map<String, dynamic>? baseParams,
-    BaseExploreFilter? filter,
-    Color? backgroundColor,
-  }) : super(
-          title: title,
-          description: description,
-          link: link,
-          baseParams: baseParams,
-          filter: filter,
-          backgroundColor: backgroundColor,
-        );
+  LearningResourceExploreSection(ExploreSectionArguments args) : super(args);
 
   Future<List<LearningResource>> fetchTiles(Map<String, dynamic> params) {
     return _causesService.getLearningResources(params: queryParams);
@@ -400,21 +423,7 @@ class LearningResourceExploreSection extends ExploreSection<LearningResource> {
 class CampaignExploreSection extends ExploreSection<ListCampaign> {
   double tileHeight = 300;
 
-  CampaignExploreSection({
-    required String title,
-    String? description,
-    ExplorePage? link,
-    Map<String, dynamic>? baseParams,
-    BaseExploreFilter? filter,
-    Color? backgroundColor,
-  }) : super(
-          title: title,
-          description: description,
-          link: link,
-          baseParams: baseParams,
-          filter: filter,
-          backgroundColor: backgroundColor,
-        );
+  CampaignExploreSection(ExploreSectionArguments args) : super(args);
 
   Future<List<ListCampaign>> fetchTiles(Map<String, dynamic> params) {
     return _causesService.getCampaigns(params: queryParams);
@@ -426,21 +435,7 @@ class CampaignExploreSection extends ExploreSection<ListCampaign> {
 class NewsExploreSection extends ExploreSection<Article> {
   double tileHeight = 330;
 
-  NewsExploreSection({
-    required String title,
-    String? description,
-    ExplorePage? link,
-    Map<String, dynamic>? baseParams,
-    BaseExploreFilter? filter,
-    Color? backgroundColor,
-  }) : super(
-          title: title,
-          description: description,
-          link: link,
-          baseParams: baseParams,
-          filter: filter,
-          backgroundColor: backgroundColor,
-        );
+  NewsExploreSection(ExploreSectionArguments args) : super(args);
 
   Future<List<Article>> fetchTiles(Map<String, dynamic> params) {
     NewsService _newsService = locator<NewsService>();

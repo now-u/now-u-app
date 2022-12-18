@@ -1,3 +1,7 @@
+import 'package:app/locator.dart';
+import 'package:app/services/navigation_service.dart';
+import 'package:app/viewmodels/explore_page_view_model.dart';
+import 'package:app/viewmodels/tabs_view_model.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/assets/icons/customIcons.dart';
@@ -5,11 +9,9 @@ import 'package:app/assets/icons/customIcons.dart';
 import 'package:app/pages/home/Home.dart';
 import 'package:app/pages/more/MoreMenu.dart';
 import 'package:app/pages/explore/ExplorePage.dart';
+import 'package:stacked/stacked.dart';
 
-//import 'package:app/assets/dynamicLinks.dart';
-
-// These must be in the corect order
-enum TabPage { Home, Explore, Menu }
+export 'package:app/viewmodels/tabs_view_model.dart';
 
 class TabPageDetails {
   final Widget widget;
@@ -20,37 +22,17 @@ class TabPageDetails {
       {required this.widget, required this.icon, required this.title});
 }
 
-class TabsPage extends StatefulWidget {
-  final TabPage currentPage;
-  final dynamic arguments;
+class TabsPageArguments {
+  final TabPage? initialPage;
+  final ExplorePageArguments? explorePageArgs;
 
-  TabsPage({required this.currentPage, this.arguments});
-
-  @override
-  _TabsPageState createState() => _TabsPageState();
+  TabsPageArguments({this.initialPage, this.explorePageArgs});
 }
 
-class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
-  late TabPage currentPage;
+class TabsPage extends StatelessWidget with WidgetsBindingObserver {
+  final TabsPageArguments args;
 
-  @override
-  void initState() {
-    currentPage = widget.currentPage;
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  void changePage(TabPage page, {int? subIndex}) {
-    setState(() {
-      currentPage = page;
-    });
-  }
+  TabsPage(this.args);
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +43,9 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
         title: "Home",
       ),
       TabPage.Explore: TabPageDetails(
-        widget: home_explore_page,
+        widget: ExplorePage(args.explorePageArgs != null
+            ? args.explorePageArgs!
+            : home_explore_page),
         icon: CustomIcons.ic_news,
         title: "Explore",
       ),
@@ -94,27 +78,28 @@ class _TabsPageState extends State<TabsPage> with WidgetsBindingObserver {
     }
 
     return WillPopScope(
-        onWillPop: () async => false,
-        child: Scaffold(
-          body: _pages[currentPage]!.widget,
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: currentPage.index,
-            type: BottomNavigationBarType.fixed,
-            elevation: 3,
-            iconSize: 25,
-            unselectedLabelStyle: TextStyle(
-                color: Color.fromRGBO(155, 159, 177, 1), fontSize: 10),
-            unselectedItemColor: Color.fromRGBO(155, 159, 177, 1),
-            selectedItemColor: Theme.of(context).primaryColor,
-            selectedIconTheme: IconThemeData(color: Colors.white),
-            selectedLabelStyle: TextStyle(fontSize: 12),
-            items: generateBottomNavBarItems(),
-            onTap: (index) {
-              setState(() {
-                currentPage = TabPage.values[index];
-              });
-            },
-          ),
+        onWillPop: () async => locator<NavigationService>().canGoBack(),
+        child: ViewModelBuilder<TabsViewModel>.reactive(
+          viewModelBuilder: () => TabsViewModel(args.initialPage),
+          builder: (context, model, child) {
+            return Scaffold(
+              body: _pages[model.currentPage]!.widget,
+              bottomNavigationBar: BottomNavigationBar(
+                currentIndex: model.currentPage.index,
+                type: BottomNavigationBarType.fixed,
+                elevation: 3,
+                iconSize: 25,
+                unselectedLabelStyle: TextStyle(
+                    color: Color.fromRGBO(155, 159, 177, 1), fontSize: 10),
+                unselectedItemColor: Color.fromRGBO(155, 159, 177, 1),
+                selectedItemColor: Theme.of(context).primaryColor,
+                selectedIconTheme: IconThemeData(color: Colors.white),
+                selectedLabelStyle: TextStyle(fontSize: 12),
+                items: generateBottomNavBarItems(),
+                onTap: (index) => model.setPage(TabPage.values[index]),
+              ),
+            );
+          },
         ));
   }
 }
