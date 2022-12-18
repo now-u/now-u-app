@@ -65,9 +65,10 @@
         
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">final ExploreSection myActions = ActionExploreSection(
+  <pre class="language-dart"><code class="language-dart">final myActions = exploreSectionFromArgs(ExploreSectionArguments(
   title: &quot;What can I do today?&quot;,
-);</code></pre>
+  type: ExploreSectionType.Action,
+));</code></pre>
 </section>
 
 
@@ -152,7 +153,7 @@
 <footer>
   <span class="no-break">
     app
-      2.0.0-dev+43
+      2.0.0-dev+44
   </span>
 
   

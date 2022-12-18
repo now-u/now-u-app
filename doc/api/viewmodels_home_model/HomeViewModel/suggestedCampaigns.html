@@ -65,10 +65,13 @@
         
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">final ExploreSection suggestedCampaigns =
-    CampaignExploreSection(title: &quot;Suggested campaigns&quot;, baseParams: {
-  &quot;recommended&quot;: true,
-});</code></pre>
+  <pre class="language-dart"><code class="language-dart">final suggestedCampaigns = exploreSectionFromArgs(ExploreSectionArguments(
+  title: &quot;Suggested campaigns&quot;,
+  baseParams: {
+    &quot;recommended&quot;: true,
+  },
+  type: ExploreSectionType.Campaign,
+));</code></pre>
 </section>
 
 
@@ -153,7 +156,7 @@
 <footer>
   <span class="no-break">
     app
-      2.0.0-dev+43
+      2.0.0-dev+44
   </span>
 
   

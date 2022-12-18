@@ -55,7 +55,7 @@
 </h1></div>
 
         <section class="multi-line-signature">
-          <a href="../pages_explore_ExplorePage/ExplorePage-class.html">ExplorePage</a>
+          <a href="../viewmodels_explore_page_view_model/ExplorePageArguments-class.html">ExplorePageArguments</a>
           <span class="name ">campaigns_explore_page</span>
           <div class="features"><span class="feature">read / write</span></div>
 
@@ -65,23 +65,32 @@
         
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">ExplorePage campaigns_explore_page = ExplorePage(title: &quot;Campaigns&quot;, sections: [
-  CampaignExploreSection(title: &quot;Campaigns of the month&quot;, baseParams: {
-    &quot;of_the_month&quot;: true,
-  }),
-  CampaignExploreSection(title: &quot;Recommended campaigns&quot;, baseParams: {
-    &quot;recommended&quot;: true,
-  }),
-  CampaignExploreSection(
+  <pre class="language-dart"><code class="language-dart">ExplorePageArguments campaigns_explore_page =
+    ExplorePageArguments(title: &quot;Campaigns&quot;, sections: [
+  ExploreSectionArguments(
+      title: &quot;Campaigns of the month&quot;,
+      baseParams: {
+        &quot;of_the_month&quot;: true,
+      },
+      type: ExploreSectionType.Campaign),
+  ExploreSectionArguments(
+      title: &quot;Recommended campaigns&quot;,
+      baseParams: {
+        &quot;recommended&quot;: true,
+      },
+      type: ExploreSectionType.Campaign),
+  ExploreSectionArguments(
     title: &quot;Campaigns by cause&quot;,
     filter: ByCauseExploreFilter(),
+    type: ExploreSectionType.Campaign,
   ),
-  CampaignExploreSection(
+  ExploreSectionArguments(
     title: &quot;Completed campaigns&quot;,
     baseParams: {
       &quot;completed&quot;: true,
     },
     backgroundColor: CustomColors.lightOrange,
+    type: ExploreSectionType.Campaign,
   ),
 ]);</code></pre>
 </section>
@@ -134,7 +143,7 @@
 <footer>
   <span class="no-break">
     app
-      2.0.0-dev+43
+      2.0.0-dev+44
   </span>
 
   

@@ -55,7 +55,7 @@
 </h1></div>
 
         <section class="multi-line-signature">
-          <a href="../pages_explore_ExplorePage/ExplorePage-class.html">ExplorePage</a>
+          <a href="../viewmodels_explore_page_view_model/ExplorePageArguments-class.html">ExplorePageArguments</a>
           <span class="name ">learning_explore_page</span>
           <div class="features"><span class="feature">read / write</span></div>
 
@@ -65,24 +65,30 @@
         
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">ExplorePage learning_explore_page = ExplorePage(
+  <pre class="language-dart"><code class="language-dart">ExplorePageArguments learning_explore_page = ExplorePageArguments(
   title: &quot;Learn&quot;,
   sections: [
-    LearningResourceExploreSection(
+    ExploreSectionArguments(
       title: &quot;Learning resources by time&quot;,
       filter: TimeExploreFilter(),
+      type: ExploreSectionType.Learning,
     ),
-    LearningResourceExploreSection(
+    ExploreSectionArguments(
       title: &quot;Learning resource by cause&quot;,
       filter: ByCauseExploreFilter(),
+      type: ExploreSectionType.Learning,
     ),
-    LearningResourceExploreSection(title: &quot;Learning resources&quot;),
-    LearningResourceExploreSection(
+    ExploreSectionArguments(
+      title: &quot;Learning resources&quot;,
+      type: ExploreSectionType.Learning,
+    ),
+    ExploreSectionArguments(
       title: &quot;Completed learning&quot;,
       baseParams: {
         &quot;completed&quot;: true,
       },
       backgroundColor: CustomColors.lightOrange,
+      type: ExploreSectionType.Learning,
     ),
   ],
 );</code></pre>
@@ -136,7 +142,7 @@
 <footer>
   <span class="no-break">
     app
-      2.0.0-dev+43
+      2.0.0-dev+44
   </span>
 
   

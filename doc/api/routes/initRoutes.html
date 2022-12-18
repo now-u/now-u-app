@@ -136,13 +136,16 @@
     case Routes.home:
       {
         return customRoute(
-            builder: (context) =&gt; TabsPage(currentPage: TabPage.Home),
+            builder: (context) =&gt;
+                TabsPage(TabsPageArguments(initialPage: TabPage.Home)),
             settings: settings);
       }
     case Routes.explore:
       {
         return customRoute(
-            builder: (context) =&gt; TabsPage(currentPage: TabPage.Explore),
+            builder: (context) =&gt; TabsPage(TabsPageArguments(
+                initialPage: TabPage.Explore,
+                explorePageArgs: args is ExplorePageArguments ? args : null)),
             settings: settings);
       }
     case Routes.campaign:
@@ -170,7 +173,8 @@
               builder: (context) =&gt; InfoPage(args), settings: settings);
         }
         return customRoute(
-            builder: (context) =&gt; TabsPage(currentPage: TabPage.Home),
+            builder: (context) =&gt;
+                TabsPage(TabsPageArguments(initialPage: TabPage.Home)),
             settings: settings);
       }
     &#47;&#47; Other
@@ -198,7 +202,8 @@
     default:
       {
         return customRoute(
-            builder: (context) =&gt; TabsPage(currentPage: TabPage.Home),
+            builder: (context) =&gt;
+                TabsPage(TabsPageArguments(initialPage: TabPage.Home)),
             settings: settings);
       }
   }
@@ -249,7 +254,7 @@
 <footer>
   <span class="no-break">
     app
-      2.0.0-dev+43
+      2.0.0-dev+44
   </span>
 
   

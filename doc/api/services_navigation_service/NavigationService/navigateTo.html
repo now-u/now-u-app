@@ -59,7 +59,8 @@
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
 <span class="name ">navigateTo</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="navigateTo-param-routeName"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">routeName</span>, </span></li>
-<li><span class="parameter" id="navigateTo-param-arguments">{<span class="type-annotation">dynamic</span> <span class="parameter-name">arguments</span>}</span></li>
+<li><span class="parameter" id="navigateTo-param-arguments">{<span class="type-annotation">dynamic</span> <span class="parameter-name">arguments</span>, </span></li>
+<li><span class="parameter" id="navigateTo-param-clearHistory"><span class="type-annotation">dynamic</span> <span class="parameter-name">clearHistory</span> = <span class="default-value">false</span>}</span></li>
 </ol>)
 
       
@@ -71,7 +72,13 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;dynamic&gt; navigateTo(String routeName, {arguments}) {
+  <pre class="language-dart"><code class="language-dart">Future&lt;dynamic&gt; navigateTo(String routeName,
+    {arguments, clearHistory = false}) {
+  if (clearHistory) {
+    return navigatorKey.currentState!.pushNamedAndRemoveUntil(
+        routeName, (route) =&gt; false,
+        arguments: arguments);
+  }
   return navigatorKey.currentState!
       .pushNamed(routeName, arguments: arguments);
 }</code></pre>
@@ -112,6 +119,7 @@
           <li><a href="../../services_navigation_service/NavigationService/urlLauncher.html">urlLauncher</a></li>
 
         <li class="section-title"><a href="../../services_navigation_service/NavigationService-class.html#instance-methods">Methods</a></li>
+          <li><a href="../../services_navigation_service/NavigationService/canGoBack.html">canGoBack</a></li>
           <li><a href="../../services_navigation_service/NavigationService/getInternalLinkParameters.html">getInternalLinkParameters</a></li>
           <li><a href="../../services_navigation_service/NavigationService/getInternalLinkRoute.html">getInternalLinkRoute</a></li>
           <li><a href="../../services_navigation_service/NavigationService/goBack.html">goBack</a></li>
@@ -144,7 +152,7 @@
 <footer>
   <span class="no-break">
     app
-      2.0.0-dev+43
+      2.0.0-dev+44
   </span>
 
   

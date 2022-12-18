@@ -55,7 +55,7 @@
 </h1></div>
 
         <section class="multi-line-signature">
-          <a href="../pages_explore_ExplorePage/ExplorePage-class.html">ExplorePage</a>
+          <a href="../viewmodels_explore_page_view_model/ExplorePageArguments-class.html">ExplorePageArguments</a>
           <span class="name ">actions_explore_page</span>
           <div class="features"><span class="feature">read / write</span></div>
 
@@ -65,38 +65,46 @@
         
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">ExplorePage actions_explore_page = ExplorePage(
+  <pre class="language-dart"><code class="language-dart">ExplorePageArguments actions_explore_page = ExplorePageArguments(
   title: &quot;Actions&quot;,
   sections: [
-    ActionExploreSection(title: &quot;Actions of the month&quot;, baseParams: {
-      &quot;of_the_month&quot;: true,
-    }),
-    ActionExploreSection(
+    ExploreSectionArguments(
+        title: &quot;Actions of the month&quot;,
+        baseParams: {
+          &quot;of_the_month&quot;: true,
+        },
+        type: ExploreSectionType.Action),
+    ExploreSectionArguments(
       title: &quot;Actions by cause&quot;,
       filter: ByCauseExploreFilter(),
+      type: ExploreSectionType.Action,
     ),
-    ActionExploreSection(
+    ExploreSectionArguments(
       title: &quot;Actions by time&quot;,
       filter: TimeExploreFilter(),
+      type: ExploreSectionType.Action,
     ),
-    ActionExploreSection(
-        title: &quot;Actions by type&quot;,
-        filter: ExploreFilter(
-          parameterName: &quot;type&quot;,
-          multi: false,
-          options: actionTypes
-              .map((type) =&gt; ExploreFilterOption(
-                    displayName: type.name,
-                    parameterValue: type.name,
-                  ))
-              .toList(),
-        )),
-    ActionExploreSection(
+    ExploreSectionArguments(
+      title: &quot;Actions by type&quot;,
+      filter: ExploreFilter(
+        parameterName: &quot;type&quot;,
+        multi: false,
+        options: actionTypes
+            .map((type) =&gt; ExploreFilterOption(
+                  displayName: type.name,
+                  parameterValue: type.name,
+                ))
+            .toList(),
+      ),
+      type: ExploreSectionType.Action,
+    ),
+    ExploreSectionArguments(
       title: &quot;Completed actions&quot;,
       baseParams: {
         &quot;completed&quot;: true,
       },
       backgroundColor: CustomColors.lightOrange,
+      type: ExploreSectionType.Action,
     ),
   ],
 );</code></pre>
@@ -150,7 +158,7 @@
 <footer>
   <span class="no-break">
     app
-      2.0.0-dev+43
+      2.0.0-dev+44
   </span>
 
   

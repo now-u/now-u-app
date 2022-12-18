@@ -131,16 +131,12 @@ Widget build(BuildContext context) {
                   : HeaderStyle1(name: model.currentUser!.getName()),
               children: [
                 Column(children: &lt;Widget&gt;[
-                  &#47;&#47; Campaigns
-                  ProgressTile(
-                    campaignsScore: model.numberOfCompletedCampaigns,
-                    actionsScore: model.numberOfCompletedActions,
-                    learningsScore: model.numberOfCompletedLearningResources,
+                  SizedBox(
+                    height: 10,
                   ),
-
-                  SizedBox(height: 30),
-                  ExploreSectionWidget.fromModel(model.myCampaigns, model),
                   ExploreSectionWidget.fromModel(model.myActions, model),
+                  ExploreSectionWidget.fromModel(
+                      model.suggestedCampaigns, model),
                   CustomWidthButton(
                     &#39;Explore&#39;,
                     onPressed: () {
@@ -152,8 +148,16 @@ Widget build(BuildContext context) {
                     buttonWidthProportion: 0.8,
                   ),
                   SizedBox(height: 30),
-                  ExploreSectionWidget.fromModel(
-                      model.suggestedCampaigns, model),
+
+                  &#47;&#47; Campaigns
+                  ProgressTile(
+                    campaignsScore: model.numberOfCompletedCampaigns,
+                    actionsScore: model.numberOfCompletedActions,
+                    learningsScore: model.numberOfCompletedLearningResources,
+                  ),
+
+                  SizedBox(height: 30),
+                  ExploreSectionWidget.fromModel(model.myCampaigns, model),
                   ExploreSectionWidget.fromModel(model.inTheNews, model),
 
                   Padding(
@@ -262,7 +266,7 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     app
-      2.0.0-dev+43
+      2.0.0-dev+44
   </span>
 
   

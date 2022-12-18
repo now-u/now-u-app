@@ -93,11 +93,9 @@
 
   var currentUser = await _authenticationService.fetchUser();
 
-  if (currentUser != null) {
-    _navigationService.navigateTo(Routes.home);
-  } else {
-    _navigationService.navigateTo(Routes.intro);
-  }
+  _navigationService.navigateTo(
+      currentUser != null ? Routes.home : Routes.intro,
+      clearHistory: true);
 }</code></pre>
 </section>
 
@@ -164,7 +162,7 @@
 <footer>
   <span class="no-break">
     app
-      2.0.0-dev+43
+      2.0.0-dev+44
   </span>
 
   

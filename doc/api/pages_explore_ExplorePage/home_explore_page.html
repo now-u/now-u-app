@@ -55,7 +55,7 @@
 </h1></div>
 
         <section class="multi-line-signature">
-          <a href="../pages_explore_ExplorePage/ExplorePage-class.html">ExplorePage</a>
+          <a href="../viewmodels_explore_page_view_model/ExplorePageArguments-class.html">ExplorePageArguments</a>
           <span class="name ">home_explore_page</span>
           <div class="features"><span class="feature">read / write</span></div>
 
@@ -65,31 +65,35 @@
         
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">ExplorePage home_explore_page = ExplorePage(
+  <pre class="language-dart"><code class="language-dart">ExplorePageArguments home_explore_page = ExplorePageArguments(
   title: &quot;Explore&quot;,
   sections: [
-    ActionExploreSection(
+    ExploreSectionArguments(
       title: &quot;Actions&quot;,
       link: actions_explore_page,
       description:
           &quot;Take a wide range of actions to drive lasting change for issues you care about&quot;,
+      type: ExploreSectionType.Action,
     ),
-    LearningResourceExploreSection(
+    ExploreSectionArguments(
       title: &quot;Learn&quot;,
       link: learning_explore_page,
       description:
           &quot;Learn more about key topics of pressing social and environmental issues&quot;,
+      type: ExploreSectionType.Learning,
     ),
-    CampaignExploreSection(
+    ExploreSectionArguments(
       title: &quot;Campaigns&quot;,
       link: campaigns_explore_page,
       description:
           &quot;Join members of the now-u community in coordinated campaigns to make a difference&quot;,
+      type: ExploreSectionType.Campaign,
     ),
-    NewsExploreSection(
+    ExploreSectionArguments(
       title: &quot;News&quot;,
       description:
           &quot;Find out what’s going on in the world this week in relation to your chosen causes&quot;,
+      type: ExploreSectionType.News,
     ),
   ],
 );</code></pre>
@@ -143,7 +147,7 @@
 <footer>
   <span class="no-break">
     app
-      2.0.0-dev+43
+      2.0.0-dev+44
   </span>
 
   

@@ -91,7 +91,7 @@
 
     <dl class="constructor-summary-list">
         <dt id="ExplorePageViewModel" class="callable">
-          <span class="name"><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel/ExplorePageViewModel.html">ExplorePageViewModel</a></span><span class="signature">(<span class="parameter" id="-param-title"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">title</span>, </span><span class="parameter" id="-param-sections"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../viewmodels_explore_page_view_model/ExploreSection-class.html">ExploreSection</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../models_Explorable/Explorable-class.html">Explorable</a></span>&gt;</span></span>&gt;</span></span> <span class="parameter-name">sections</span></span>)</span>
+          <span class="name"><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel/ExplorePageViewModel.html">ExplorePageViewModel</a></span><span class="signature">(<span class="parameter" id="-param-title"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">title</span>, </span><span class="parameter" id="-param-sections"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../viewmodels_explore_page_view_model/ExploreSectionArguments-class.html">ExploreSectionArguments</a></span>&gt;</span></span> <span class="parameter-name">sections</span>, </span><span class="parameter" id="-param-baseParams">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span>?</span> <span class="parameter-name">baseParams</span>}</span>)</span>
         </dt>
         <dd>
           
@@ -114,8 +114,8 @@
 
 </dd>
 
-        <dt id="canBack" class="property">
-  <span class="name"><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel/canBack.html">canBack</a></span>
+        <dt id="canGoBack" class="property">
+  <span class="name"><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel/canGoBack.html">canGoBack</a></span>
   <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> 
 
 </dt>
@@ -158,17 +158,6 @@
 
 </dd>
 
-        <dt id="previousPages" class="property">
-  <span class="name"><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel/previousPages.html">previousPages</a></span>
-  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-collection/Queue-class.html">Queue</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pages_explore_ExplorePage/ExplorePage-class.html">ExplorePage</a></span>&gt;</span></span> 
-
-</dt>
-<dd>
-  
-  <div class="features"><span class="feature">final</span></div>
-
-</dd>
-
         <dt id="runtimeType" class="property inherited">
   <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></span>
   <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Type-class.html">Type</a></span> 
@@ -193,12 +182,12 @@
 
         <dt id="title" class="property">
   <span class="name"><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel/title.html">title</a></span>
-  <span class="signature">&#8596; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> 
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> 
 
 </dt>
 <dd>
   
-  <div class="features"><span class="feature">read / write</span></div>
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -238,7 +227,7 @@
 </dd>
 
         <dt id="changePage" class="callable">
-  <span class="name"><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel/changePage.html">changePage</a></span><span class="signature">(<wbr><span class="parameter" id="changePage-param-page"><span class="type-annotation"><a href="../pages_explore_ExplorePage/ExplorePage-class.html">ExplorePage</a></span> <span class="parameter-name">page</span></span>)
+  <span class="name"><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel/changePage.html">changePage</a></span><span class="signature">(<wbr><span class="parameter" id="changePage-param-args"><span class="type-annotation"><a href="../viewmodels_explore_page_view_model/ExplorePageArguments-class.html">ExplorePageArguments</a></span> <span class="parameter-name">args</span></span>)
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -262,6 +251,19 @@
 object is not in a usable state and should be discarded (calls to
 <a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/addListener.html">addListener</a> will throw after the object is disposed).
   <div class="features"><span class="">@<a href="https://pub.dev/documentation/meta/1.8.0/meta/mustCallSuper-constant.html">mustCallSuper</a></span><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="hasLinks" class="callable">
+  <span class="name"><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel/hasLinks.html">hasLinks</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
 
 </dd>
 
@@ -383,19 +385,6 @@ notified when the object changes.
 
 </dd>
 
-        <dt id="update" class="callable">
-  <span class="name"><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel/update.html">update</a></span><span class="signature">(<wbr><span class="parameter" id="update-param-sections">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../viewmodels_explore_page_view_model/ExploreSection-class.html">ExploreSection</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../models_Explorable/Explorable-class.html">Explorable</a></span>&gt;</span></span>&gt;</span>?</span> <span class="parameter-name">sections</span>, </span><span class="parameter" id="update-param-title"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">title</span>, </span><span class="parameter" id="update-param-saveHistory"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">saveHistory</span> = <span class="default-value">true</span>}</span>)
-    <span class="returntype parameter">&#8594; void</span>
-  </span>
-  
-
-</dt>
-<dd>
-  
-  
-
-</dd>
-
     </dl>
   </section>
     
@@ -450,8 +439,10 @@ notified when the object changes.
         <li><a href="../viewmodels_explore_page_view_model/CampaignExploreSection-class.html">CampaignExploreSection</a></li>
         <li><a href="../viewmodels_explore_page_view_model/ExploreFilter-class.html">ExploreFilter</a></li>
         <li><a href="../viewmodels_explore_page_view_model/ExploreFilterOption-class.html">ExploreFilterOption</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/ExplorePageArguments-class.html">ExplorePageArguments</a></li>
         <li><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel-class.html">ExplorePageViewModel</a></li>
         <li><a href="../viewmodels_explore_page_view_model/ExploreSection-class.html">ExploreSection</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/ExploreSectionArguments-class.html">ExploreSectionArguments</a></li>
         <li><a href="../viewmodels_explore_page_view_model/LearningResourceExploreSection-class.html">LearningResourceExploreSection</a></li>
         <li><a href="../viewmodels_explore_page_view_model/NewsExploreSection-class.html">NewsExploreSection</a></li>
         <li><a href="../viewmodels_explore_page_view_model/TimeExploreFilter-class.html">TimeExploreFilter</a></li>
@@ -463,10 +454,13 @@ notified when the object changes.
 
 
 
+      <li class="section-title"><a href="../viewmodels_explore_page_view_model/viewmodels_explore_page_view_model-library.html#functions">Functions</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/exploreSectionFromArgs.html">exploreSectionFromArgs</a></li>
 
       <li class="section-title"><a href="../viewmodels_explore_page_view_model/viewmodels_explore_page_view_model-library.html#enums">Enums</a></li>
         <li><a href="../viewmodels_explore_page_view_model/ExploreFilterState.html">ExploreFilterState</a></li>
         <li><a href="../viewmodels_explore_page_view_model/ExploreSectionState.html">ExploreSectionState</a></li>
+        <li><a href="../viewmodels_explore_page_view_model/ExploreSectionType.html">ExploreSectionType</a></li>
 
 
 </ol>
@@ -484,11 +478,10 @@ notified when the object changes.
           <a href="../viewmodels_explore_page_view_model/ExplorePageViewModel-class.html#instance-properties">Properties</a>
         </li>
           <li class="inherited"><a href="../viewmodels_base_model/BaseModel/busy.html">busy</a></li>
-          <li><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel/canBack.html">canBack</a></li>
+          <li><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel/canGoBack.html">canGoBack</a></li>
           <li class="inherited"><a href="../viewmodels_base_model/BaseModel/currentUser.html">currentUser</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/hasListeners.html">hasListeners</a></li>
-          <li><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel/previousPages.html">previousPages</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
           <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreViewModelMixin/sections.html">sections</a></li>
           <li><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel/title.html">title</a></li>
@@ -498,6 +491,7 @@ notified when the object changes.
           <li><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel/back.html">back</a></li>
           <li><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel/changePage.html">changePage</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/dispose.html">dispose</a></li>
+          <li><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel/hasLinks.html">hasLinks</a></li>
           <li><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel/init.html">init</a></li>
           <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreViewModelMixin/initSections.html">initSections</a></li>
           <li class="inherited"><a href="../viewmodels_base_model/BaseModel/logout.html">logout</a></li>
@@ -507,7 +501,6 @@ notified when the object changes.
           <li class="inherited"><a href="../viewmodels_base_model/BaseModel/setBusy.html">setBusy</a></li>
           <li class="inherited"><a href="../viewmodels_explore_page_view_model/ExploreViewModelMixin/toggleFilterOption.html">toggleFilterOption</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
-          <li><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel/update.html">update</a></li>
 
         <li class="section-title inherited"><a href="../viewmodels_explore_page_view_model/ExplorePageViewModel-class.html#operators">Operators</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
@@ -524,7 +517,7 @@ notified when the object changes.
 <footer>
   <span class="no-break">
     app
-      2.0.0-dev+43
+      2.0.0-dev+44
   </span>
 
   
