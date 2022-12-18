@@ -20,22 +20,28 @@ class HomeViewModel extends BaseModel with ExploreViewModelMixin {
   final DialogService _dialogService = locator<DialogService>();
   final AuthenticationService _authService = locator<AuthenticationService>();
 
-  final ExploreSection myCampaigns = CampaignExploreSection(
+  final myCampaigns = exploreSectionFromArgs(ExploreSectionArguments(
     title: "My campaigns",
-  );
+    type: ExploreSectionType.Campaign,
+  ));
 
-  final ExploreSection suggestedCampaigns =
-      CampaignExploreSection(title: "Suggested campaigns", baseParams: {
-    "recommended": true,
-  });
+  final suggestedCampaigns = exploreSectionFromArgs(ExploreSectionArguments(
+    title: "Suggested campaigns",
+    baseParams: {
+      "recommended": true,
+    },
+    type: ExploreSectionType.Campaign,
+  ));
 
-  final ExploreSection myActions = ActionExploreSection(
+  final myActions = exploreSectionFromArgs(ExploreSectionArguments(
     title: "What can I do today?",
-  );
+    type: ExploreSectionType.Action,
+  ));
 
-  final ExploreSection inTheNews = NewsExploreSection(
+  final inTheNews = exploreSectionFromArgs(ExploreSectionArguments(
     title: "In the news",
-  );
+    type: ExploreSectionType.News,
+  ));
 
   HomeViewModel() {
     sections = [myCampaigns, suggestedCampaigns, myActions, inTheNews];
