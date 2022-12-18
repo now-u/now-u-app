@@ -39,16 +39,12 @@ class Home extends StatelessWidget {
                     : HeaderStyle1(name: model.currentUser!.getName()),
                 children: [
                   Column(children: <Widget>[
-                    // Campaigns
-                    ProgressTile(
-                      campaignsScore: model.numberOfCompletedCampaigns,
-                      actionsScore: model.numberOfCompletedActions,
-                      learningsScore: model.numberOfCompletedLearningResources,
+                    SizedBox(
+                      height: 10,
                     ),
-
-                    SizedBox(height: 30),
-                    ExploreSectionWidget.fromModel(model.myCampaigns, model),
                     ExploreSectionWidget.fromModel(model.myActions, model),
+                    ExploreSectionWidget.fromModel(
+                        model.suggestedCampaigns, model),
                     CustomWidthButton(
                       'Explore',
                       onPressed: () {
@@ -60,8 +56,16 @@ class Home extends StatelessWidget {
                       buttonWidthProportion: 0.8,
                     ),
                     SizedBox(height: 30),
-                    ExploreSectionWidget.fromModel(
-                        model.suggestedCampaigns, model),
+
+                    // Campaigns
+                    ProgressTile(
+                      campaignsScore: model.numberOfCompletedCampaigns,
+                      actionsScore: model.numberOfCompletedActions,
+                      learningsScore: model.numberOfCompletedLearningResources,
+                    ),
+
+                    SizedBox(height: 30),
+                    ExploreSectionWidget.fromModel(model.myCampaigns, model),
                     ExploreSectionWidget.fromModel(model.inTheNews, model),
 
                     Padding(

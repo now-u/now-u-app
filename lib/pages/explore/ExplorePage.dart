@@ -9,49 +9,72 @@ import 'package:stacked/stacked.dart';
 final double horizontalPadding = CustomPaddingSize.small;
 
 class ExplorePage extends StatelessWidget {
-  final List<ExploreSection> sections;
-  final String title;
+  final ExplorePageArguments args;
 
-  ExplorePage({required this.sections, required this.title, Key? key})
-      : super(key: key);
+  ExplorePage(this.args, {Key? key}) : super(key: key);
+
+  List<ExploreSection> buildSections() {
+    return this.args.sections.map((sectionArgs) {
+      switch (sectionArgs.type) {
+        case ExploreSectionType.Action:
+          return ActionExploreSection(sectionArgs);
+        case ExploreSectionType.Learning:
+          return LearningResourceExploreSection(sectionArgs);
+        case ExploreSectionType.Campaign:
+          return CampaignExploreSection(sectionArgs);
+        case ExploreSectionType.News:
+          return NewsExploreSection(sectionArgs);
+      }
+    }).toList() as List<ExploreSection>;
+  }
 
   Widget _header(BuildContext context, ExplorePageViewModel model) {
     return SafeArea(
         child: Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 20),
+      padding: EdgeInsets.symmetric(vertical: 20),
       child: Column(
         children: [
           GestureDetector(
-            onTap: model.canBack ? () => model.back() : null,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                if (model.canBack) Icon(Icons.chevron_left, size: 30),
-                Text(
-                  model.title,
-                  style: exploreHeading,
-                  textAlign: TextAlign.left,
-                ),
-              ],
+            onTap: model.canGoBack ? model.back : null,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  if (model.canGoBack) Icon(Icons.chevron_left, size: 30),
+                  Text(
+                    model.title,
+                    style: exploreHeading,
+                    textAlign: TextAlign.left,
+                  ),
+                ],
+              ),
             ),
           ),
-          Container(
-              height: 50,
-              child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  children: model.sections
-                      .where((section) => section.link != null)
-                      .map((section) => Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: DarkButton(
-                              section.title,
-                              onPressed: () => model.changePage(section.link!),
-                              size: DarkButtonSize.Large,
-                            ),
-                          ))
-                      .toList()))
+          if (model.hasLinks())
+            Padding(
+              padding: EdgeInsets.only(top: 10),
+              child: Container(
+                  height: 50,
+                  child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: horizontalPadding),
+                      // Map section arguments into real sections
+                      children: model.sections
+                          .where((section) => section.args.link != null)
+                          .map((section) => Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: DarkButton(
+                                  section.args.title,
+                                  onPressed: () =>
+                                      model.changePage(section.args.link!),
+                                  size: DarkButtonSize.Large,
+                                ),
+                              ))
+                          .toList())),
+            )
         ],
       ),
     ));
@@ -60,7 +83,8 @@ class ExplorePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ExplorePageViewModel>.reactive(
-        viewModelBuilder: () => ExplorePageViewModel(title, sections),
+        viewModelBuilder: () => ExplorePageViewModel(args.title, args.sections,
+            baseParams: args.baseParams),
         onModelReady: (model) => model.init(),
         builder: (context, model, child) {
           return Scaffold(
@@ -81,109 +105,136 @@ class ExplorePage extends StatelessWidget {
   }
 }
 
-ExplorePage campaigns_explore_page = ExplorePage(title: "Campaigns", sections: [
-  CampaignExploreSection(title: "Campaigns of the month", baseParams: {
-    "of_the_month": true,
-  }),
-  CampaignExploreSection(title: "Recommended campaigns", baseParams: {
-    "recommended": true,
-  }),
-  CampaignExploreSection(
+ExplorePageArguments campaigns_explore_page =
+    ExplorePageArguments(title: "Campaigns", sections: [
+  ExploreSectionArguments(
+      title: "Campaigns of the month",
+      baseParams: {
+        "of_the_month": true,
+      },
+      type: ExploreSectionType.Campaign),
+  ExploreSectionArguments(
+      title: "Recommended campaigns",
+      baseParams: {
+        "recommended": true,
+      },
+      type: ExploreSectionType.Campaign),
+  ExploreSectionArguments(
     title: "Campaigns by cause",
     filter: ByCauseExploreFilter(),
+    type: ExploreSectionType.Campaign,
   ),
-  CampaignExploreSection(
+  ExploreSectionArguments(
     title: "Completed campaigns",
     baseParams: {
       "completed": true,
     },
     backgroundColor: CustomColors.lightOrange,
+    type: ExploreSectionType.Campaign,
   ),
 ]);
 
-ExplorePage actions_explore_page = ExplorePage(
+ExplorePageArguments actions_explore_page = ExplorePageArguments(
   title: "Actions",
   sections: [
-    ActionExploreSection(title: "Actions of the month", baseParams: {
-      "of_the_month": true,
-    }),
-    ActionExploreSection(
+    ExploreSectionArguments(
+        title: "Actions of the month",
+        baseParams: {
+          "of_the_month": true,
+        },
+        type: ExploreSectionType.Action),
+    ExploreSectionArguments(
       title: "Actions by cause",
       filter: ByCauseExploreFilter(),
+      type: ExploreSectionType.Action,
     ),
-    ActionExploreSection(
+    ExploreSectionArguments(
       title: "Actions by time",
       filter: TimeExploreFilter(),
+      type: ExploreSectionType.Action,
     ),
-    ActionExploreSection(
-        title: "Actions by type",
-        filter: ExploreFilter(
-          parameterName: "type",
-          multi: false,
-          options: actionTypes
-              .map((type) => ExploreFilterOption(
-                    displayName: type.name,
-                    parameterValue: type.name,
-                  ))
-              .toList(),
-        )),
-    ActionExploreSection(
+    ExploreSectionArguments(
+      title: "Actions by type",
+      filter: ExploreFilter(
+        parameterName: "type",
+        multi: false,
+        options: actionTypes
+            .map((type) => ExploreFilterOption(
+                  displayName: type.name,
+                  parameterValue: type.name,
+                ))
+            .toList(),
+      ),
+      type: ExploreSectionType.Action,
+    ),
+    ExploreSectionArguments(
       title: "Completed actions",
       baseParams: {
         "completed": true,
       },
       backgroundColor: CustomColors.lightOrange,
+      type: ExploreSectionType.Action,
     ),
   ],
 );
 
-ExplorePage learning_explore_page = ExplorePage(
+ExplorePageArguments learning_explore_page = ExplorePageArguments(
   title: "Learn",
   sections: [
-    LearningResourceExploreSection(
+    ExploreSectionArguments(
       title: "Learning resources by time",
       filter: TimeExploreFilter(),
+      type: ExploreSectionType.Learning,
     ),
-    LearningResourceExploreSection(
+    ExploreSectionArguments(
       title: "Learning resource by cause",
       filter: ByCauseExploreFilter(),
+      type: ExploreSectionType.Learning,
     ),
-    LearningResourceExploreSection(title: "Learning resources"),
-    LearningResourceExploreSection(
+    ExploreSectionArguments(
+      title: "Learning resources",
+      type: ExploreSectionType.Learning,
+    ),
+    ExploreSectionArguments(
       title: "Completed learning",
       baseParams: {
         "completed": true,
       },
       backgroundColor: CustomColors.lightOrange,
+      type: ExploreSectionType.Learning,
     ),
   ],
 );
 
-ExplorePage home_explore_page = ExplorePage(
+ExplorePageArguments home_explore_page = ExplorePageArguments(
   title: "Explore",
   sections: [
-    ActionExploreSection(
+    ExploreSectionArguments(
       title: "Actions",
       link: actions_explore_page,
       description:
           "Take a wide range of actions to drive lasting change for issues you care about",
+      type: ExploreSectionType.Action,
     ),
-    LearningResourceExploreSection(
+    ExploreSectionArguments(
       title: "Learn",
       link: learning_explore_page,
       description:
           "Learn more about key topics of pressing social and environmental issues",
+      type: ExploreSectionType.Learning,
     ),
-    CampaignExploreSection(
+    ExploreSectionArguments(
       title: "Campaigns",
       link: campaigns_explore_page,
       description:
           "Join members of the now-u community in coordinated campaigns to make a difference",
+      type: ExploreSectionType.Campaign,
     ),
-    NewsExploreSection(
+    ExploreSectionArguments(
       title: "News",
       description:
           "Find out what’s going on in the world this week in relation to your chosen causes",
+      type: ExploreSectionType.News,
     ),
   ],
 );
