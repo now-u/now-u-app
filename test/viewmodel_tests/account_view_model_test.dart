@@ -81,24 +81,24 @@ void main() {
       //   );
       // });
 
-      test("Check save on update success", () {
-        DateTime now = DateTime.now();
+      // test("Check save on update success", () {
+      //   DateTime now = DateTime.now();
 
-        // Mock api to always return true
-        when(() => mockAuthService.updateUserDetails(name: "jelgar", dob: now))
-            .thenAnswer((_) => Future.value(true));
+      //   // Mock api to always return true
+      //   when(() => mockAuthService.updateUserDetails(name: "jelgar", dob: now))
+      //       .thenAnswer((_) => Future.value(true));
 
-        getAndRegisterMockAnalyticsService();
+      //   getAndRegisterMockAnalyticsService();
 
-        var model = AccountDetailsViewModel();
-        model.name = "jelgar";
-        model.dob = now;
-        model.save();
+      //   var model = AccountDetailsViewModel();
+      //   model.name = "jelgar";
+      //   model.dob = now;
+      //   model.save();
 
-        // Verify that updateUserDetails function is called with correct parameters when we save
-        verify(
-            () => mockAuthService.updateUserDetails(name: "jelgar", dob: now));
-      });
+      //   // Verify that updateUserDetails function is called with correct parameters when we save
+      //   verify(
+      //       () => mockAuthService.updateUserDetails(name: "jelgar", dob: now));
+      // });
     });
 
     // group("delete tests - ", () {
