@@ -12,6 +12,15 @@ class AnalyticsService {
   FirebaseAnalyticsObserver getAnalyticsObserver() =>
       FirebaseAnalyticsObserver(analytics: _analytics);
 
+  Future logRoute(String routeName) async {
+    await _analytics.logEvent(
+      name: 'screen_view',
+      parameters: {
+        'firebase_screen': routeName,
+      },
+    );
+  }
+
   Future logUserAccountDeleted() async {
     print("Deleted account logged in Analytics");
     await _analytics

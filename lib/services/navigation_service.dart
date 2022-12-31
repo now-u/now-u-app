@@ -16,8 +16,8 @@ const String INTERNAL_PREFIX = "internal:";
 const List ID_ROUTES = [Routes.campaignInfo, Routes.actionInfo];
 
 class UrlLauncher {
-  void openUrl(Uri url) {
-    launchUrl(url);
+  Future<void> openUrl(Uri url) async {
+    await launchUrl(url);
   }
 }
 
@@ -50,6 +50,7 @@ class NavigationService {
 
   Future<dynamic> navigateTo(String routeName,
       {arguments, clearHistory = false}) {
+
     if (clearHistory) {
       return navigatorKey.currentState!.pushNamedAndRemoveUntil(
           routeName, (route) => false,
@@ -146,7 +147,9 @@ class NavigationService {
       }
 
       navigateTo(route);
-    } else if ((isExternal ?? false) || isPDF(url) || isMailTo(url)) {
+    // } else if ((isExternal ?? false) || isPDF(url) || isMailTo(url)) {
+    } else if ((isExternal ?? false) || isMailTo(url)) {
+      print("Launching external link");
       await launchLinkExternal(
         url,
         title: title,
@@ -193,7 +196,7 @@ class NavigationService {
       if (extraOnConfirmFunction != null) {
         extraOnConfirmFunction();
       }
-      urlLauncher.openUrl(Uri.parse(url));
+      await urlLauncher.openUrl(Uri.parse(url));
     }
   }
 

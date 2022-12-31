@@ -64,7 +64,7 @@ class CausesViewModel extends BaseModel {
 class SelectCausesViewModel extends CausesViewModel {
   Future<void> selectCauses() async {
     await super.selectCauses();
-    _navigationService.navigateTo(Routes.home);
+    _navigationService.navigateTo(Routes.home, clearHistory: true);
   }
 }
 

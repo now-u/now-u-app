@@ -45,18 +45,6 @@ final profileTiles = <Map>[
   {'sectionHeading': "Feedback"},
   {
     'profileTile':
-        ProfileTile("Give past campaign feedback", CustomIcons.ic_feedback),
-    'link':
-        "https://docs.google.com/forms/d/e/1FAIpQLScg9a8pdP6P7GDKfyOCcJkU_i0C1m84T-M4muEUjfo8TmCSkw/viewform",
-  },
-  {
-    'profileTile':
-        ProfileTile("Propose a campaign", CustomIcons.ic_suggestcamp),
-    'link':
-        "https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform",
-  },
-  {
-    'profileTile':
         ProfileTile("Give feedback on the app", CustomIcons.ic_feedback),
     'link':
         "https://docs.google.com/forms/d/e/1FAIpQLSflMOarmyXRv7DRbDQPWRayCpE5X4d8afOpQ1hjXfdvzbnzQQ/viewform",
@@ -83,13 +71,13 @@ final profileTiles = <Map>[
   {'sectionHeading': "Legal"},
   {
     'profileTile': ProfileTile("Terms & conditions", CustomIcons.ic_tc),
-    'link': "https://share.now-u.com/legal/now-u_users_Ts&Cs.pdf",
+    'link': "https://now-u-docs.s3.eu-west-2.amazonaws.com/now-u+user+terms+and+conditions.pdf",
     'external': true
   },
   {
     'profileTile': ProfileTile("Privacy policy", CustomIcons.ic_privacy),
-    'link': "https://share.now-u.com/legal/now-u_privacy_policy.pdf",
-    'external': true
+    'link': "https://now-u-docs.s3.eu-west-2.amazonaws.com/now-u+privacy+policy.pdf",
+    'external': false 
   },
 ];
 

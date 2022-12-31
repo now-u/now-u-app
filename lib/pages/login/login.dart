@@ -96,6 +96,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                   ),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
+                      // TODO None of this will work
                       launch(
                           "https://share.now-u.com/legal/terms_and_conditions.pdf");
                     }),
