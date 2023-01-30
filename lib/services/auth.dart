@@ -1,5 +1,6 @@
 import 'package:app/models/User.dart';
 import 'package:app/locator.dart';
+import 'package:app/services/analytics.dart';
 import 'package:app/services/api_service.dart';
 import 'package:app/services/shared_preferences_service.dart';
 import 'package:app/services/device_info_service.dart';
@@ -9,6 +10,7 @@ class AuthenticationService {
       locator<SharedPreferencesService>();
   final DeviceInfoService _deviceInfoService = locator<DeviceInfoService>();
   final ApiService _apiService = locator<ApiService>();
+  final AnalyticsService _analyticsService = locator<AnalyticsService>();
 
   User? _currentUser;
   User? get currentUser => _currentUser;
@@ -59,9 +61,15 @@ class AuthenticationService {
     if (!isUserLoggedIn()) {
       return null;
     }
-    Map userResponse = await _apiService.getRequest('v1/users/me');
-    _currentUser = User.fromJson(userResponse["data"]);
-    return _currentUser;
+   
+    User user = await _apiService.getModelRequest('v1/users/me', User.fromJson);
+
+    // Set the user details in the analytics service
+    _analyticsService.setUserProperties(userId: user.id.toString());
+    // Save the user details in this auth service
+    _currentUser = user;
+
+    return user;
   }
 
   Future<bool> updateUserDetails({

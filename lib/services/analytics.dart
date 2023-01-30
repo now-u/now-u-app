@@ -12,13 +12,17 @@ class AnalyticsService {
   FirebaseAnalyticsObserver getAnalyticsObserver() =>
       FirebaseAnalyticsObserver(analytics: _analytics);
 
-  Future logRoute(String routeName) async {
-    await _analytics.logEvent(
-      name: 'screen_view',
-      parameters: {
-        'firebase_screen': routeName,
-      },
-    );
+  // Future logRoute(String routeName) async {
+  //   await _analytics.logEvent(
+  //     name: 'screen_view',
+  //     parameters: {
+  //       'firebase_screen': routeName,
+  //     },
+  //   );
+  // }
+
+  Future setUserProperties({ required String userId }) async {
+    await _analytics.setUserId(id: userId);
   }
 
   Future logUserAccountDeleted() async {

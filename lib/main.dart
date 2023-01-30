@@ -1,13 +1,8 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:app/locator.dart';
 import 'package:app/managers/dialog_manager.dart';
-import 'package:app/pages/explore/ExplorePage.dart';
 import 'package:app/pages/other/startup_view.dart';
-import 'package:app/pages/home/Home.dart';
-import 'package:app/pages/explore/ExplorePage.dart';
-import 'package:app/pages/explore/ExploreSection.dart';
 import 'package:app/routes.dart';
 import 'package:app/services/analytics.dart';
 import 'package:app/services/navigation_service.dart';
@@ -65,17 +60,6 @@ Color orange = Color.fromRGBO(255, 136, 0, 1);
 Color blue = Color.fromRGBO(1, 26, 67, 1);
 Color black = Color.fromRGBO(55, 58, 74, 1);
 Color lightGrey = Color.fromRGBO(119, 119, 119, 1);
-
-// Accent Colours
-
-//List<Widget> _pages = <Widget>[Campaigns(campaigns), Home(), Profile(_user)];
-
-Future<Map?> getSecrets() async {
-  String data = await rootBundle.loadString('assets/json/secrets.json');
-  Map? jsondata = json.decode(data);
-  return jsondata;
-  //return jsondata.containsKey(value) ? jsondata[value] : null;
-}
 
 class App extends StatefulWidget {
   @override

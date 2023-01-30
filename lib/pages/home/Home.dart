@@ -137,7 +137,7 @@ class HeaderStyle1 extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(
                 15, MediaQuery.of(context).size.height * 0.1, 0, 0),
             child: Text(
-              "Hello, \n$name",
+              "Welcome \n$name!",
               style: textStyleFrom(
                 Theme.of(context).primaryTextTheme.headline2,
                 color: Colors.white,
