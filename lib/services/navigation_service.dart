@@ -17,6 +17,7 @@ const List ID_ROUTES = [Routes.campaignInfo, Routes.actionInfo];
 
 class UrlLauncher {
   void openUrl(Uri url) {
+    print("Acutally launching $url");
     launchUrl(url);
   }
 }
@@ -146,7 +147,7 @@ class NavigationService {
       }
 
       navigateTo(route);
-    } else if ((isExternal ?? false) || isPDF(url) || isMailTo(url)) {
+    } else if ((isExternal ?? false) || isMailTo(url)) {
       await launchLinkExternal(
         url,
         title: title,
@@ -193,6 +194,7 @@ class NavigationService {
       if (extraOnConfirmFunction != null) {
         extraOnConfirmFunction();
       }
+      // Launching stuff now
       urlLauncher.openUrl(Uri.parse(url));
     }
   }
