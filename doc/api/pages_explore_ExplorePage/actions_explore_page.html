@@ -55,6 +55,7 @@
 </h1></div>
 
         <section class="multi-line-signature">
+          
           <a href="../viewmodels_explore_page_view_model/ExplorePageArguments-class.html">ExplorePageArguments</a>
           <span class="name ">actions_explore_page</span>
           <div class="features"><span class="feature">read / write</span></div>
@@ -87,12 +88,12 @@
     ExploreSectionArguments(
       title: &quot;Actions by type&quot;,
       filter: ExploreFilter(
-        parameterName: &quot;type&quot;,
+        parameterName: &quot;type__in&quot;,
         multi: false,
         options: actionTypes
             .map((type) =&gt; ExploreFilterOption(
                   displayName: type.name,
-                  parameterValue: type.name,
+                  parameterValue: campaignActionTypeData.values.where((value) =&gt; value[&#39;type&#39;] == type).map((value) =&gt; value[&#39;name&#39;]).toList(),
                 ))
             .toList(),
       ),

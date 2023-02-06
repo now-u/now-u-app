@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the build method from the LoginCodePageState extension, for the Dart programming language.">
-  <title>build method - LoginCodePageState extension - login_code_view library - Dart API</title>
+  <meta name="description" content="API docs for the build method from the LoginCodePageState class, for the Dart programming language.">
+  <title>build method - LoginCodePageState class - login_code_view library - Dart API</title>
 
 
   
@@ -56,11 +56,11 @@
 
     <section class="multi-line-signature">
       
-<div>
-  <ol class="annotation-list">
-    <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
-  </ol>
-</div>
+  <div>
+    <ol class="annotation-list">
+        <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
+    </ol>
+  </div>
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span>
 <span class="name ">build</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="build-param-context"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span></span></li>
@@ -121,13 +121,17 @@ helps avoid a category of bugs related to closures implicitly capturing
 <a href="https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html">StatefulWidget</a>, that closure would implicitly capture <code>this</code>, which is
 the current widget instance, and would have the (immutable) fields of that
 instance in scope:</p>
-<pre class="language-dart"><code class="language-dart">class MyButton extends StatefulWidget {
-  ...
+<pre class="language-dart"><code class="language-dart">// (this is not valid Flutter code)
+class MyButton extends StatefulWidgetX {
+  MyButton({super.key, required this.color});
+
   final Color color;
 
   @override
-  Widget build(BuildContext context, MyButtonState state) {
-    ... () { print("color: $color"); } ...
+  Widget build(BuildContext context, State state) {
+    return SpecialWidget(
+      handler: () { print('color: $color'); },
+    );
   }
 }
 </code></pre>
@@ -136,15 +140,25 @@ the <code>$color</code> in the print function refers to blue, as expected. Now,
 suppose the parent rebuilds <code>MyButton</code> with green. The closure created by
 the first build still implicitly refers to the original widget and the
 <code>$color</code> still prints blue even through the widget has been updated to
-green.</p>
+green; should that closure outlive its widget, it would print outdated
+information.</p>
 <p>In contrast, with the <a href="../../pages_login_login_code_view/LoginCodePageState/build.html">build</a> function on the <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> object, closures
 created during <a href="../../pages_login_login_code_view/LoginCodePageState/build.html">build</a> implicitly capture the <a href="https://api.flutter.dev/flutter/widgets/State-class.html">State</a> instance instead of
 the widget instance:</p>
-<pre class="language-dart"><code class="language-dart">class MyButtonState extends State&lt;MyButton&gt; {
-  ...
+<pre class="language-dart"><code class="language-dart">class MyButton extends StatefulWidget {
+  const MyButton({super.key, this.color = Colors.teal});
+
+  final Color color;
+  // ...
+}
+
+class MyButtonState extends State&lt;MyButton&gt; {
+  // ...
   @override
   Widget build(BuildContext context) {
-    ... () { print("color: ${widget.color}"); } ...
+    return SpecialWidget(
+      handler: () { print('color: ${widget.color}'); },
+    );
   }
 }
 </code></pre>

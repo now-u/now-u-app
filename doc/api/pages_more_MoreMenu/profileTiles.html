@@ -55,6 +55,7 @@
 </h1></div>
 
         <section class="multi-line-signature">
+          
           <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a></span>&gt;</span>
           <span class="name ">profileTiles</span>
           <div class="features"><span class="feature">final</span></div>
@@ -90,18 +91,18 @@
   &#47;&#47;   &#39;page&#39;: Routes.accountDetails,
   &#47;&#47; },
   {&#39;sectionHeading&#39;: &quot;Feedback&quot;},
-  {
-    &#39;profileTile&#39;:
-        ProfileTile(&quot;Give past campaign feedback&quot;, CustomIcons.ic_feedback),
-    &#39;link&#39;:
-        &quot;https:&#47;&#47;docs.google.com&#47;forms&#47;d&#47;e&#47;1FAIpQLScg9a8pdP6P7GDKfyOCcJkU_i0C1m84T-M4muEUjfo8TmCSkw&#47;viewform&quot;,
-  },
-  {
-    &#39;profileTile&#39;:
-        ProfileTile(&quot;Propose a campaign&quot;, CustomIcons.ic_suggestcamp),
-    &#39;link&#39;:
-        &quot;https:&#47;&#47;docs.google.com&#47;forms&#47;d&#47;e&#47;1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA&#47;viewform&quot;,
-  },
+  &#47;&#47; {
+  &#47;&#47;   &#39;profileTile&#39;:
+  &#47;&#47;       ProfileTile(&quot;Give past campaign feedback&quot;, CustomIcons.ic_feedback),
+  &#47;&#47;   &#39;link&#39;:
+  &#47;&#47;       &quot;https:&#47;&#47;docs.google.com&#47;forms&#47;d&#47;e&#47;1FAIpQLScg9a8pdP6P7GDKfyOCcJkU_i0C1m84T-M4muEUjfo8TmCSkw&#47;viewform&quot;,
+  &#47;&#47; },
+  &#47;&#47; {
+  &#47;&#47;   &#39;profileTile&#39;:
+  &#47;&#47;       ProfileTile(&quot;Propose a campaign&quot;, CustomIcons.ic_suggestcamp),
+  &#47;&#47;   &#39;link&#39;:
+  &#47;&#47;       &quot;https:&#47;&#47;docs.google.com&#47;forms&#47;d&#47;e&#47;1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA&#47;viewform&quot;,
+  &#47;&#47; },
   {
     &#39;profileTile&#39;:
         ProfileTile(&quot;Give feedback on the app&quot;, CustomIcons.ic_feedback),
@@ -120,23 +121,19 @@
   {
     &#39;profileTile&#39;: ProfileTile(&quot;Send us a message&quot;, CustomIcons.ic_social_fb),
     &#39;link&#39;: &quot;http:&#47;&#47;m.me&#47;nowufb&quot;,
-    &#39;external&#39;: true
   },
   {
     &#39;profileTile&#39;: ProfileTile(&quot;Send us an email&quot;, CustomIcons.ic_email),
     &#39;link&#39;: &quot;mailto:hello@now-.com?subject=Hi&quot;,
-    &#39;external&#39;: true
   },
   {&#39;sectionHeading&#39;: &quot;Legal&quot;},
   {
     &#39;profileTile&#39;: ProfileTile(&quot;Terms &amp; conditions&quot;, CustomIcons.ic_tc),
-    &#39;link&#39;: &quot;https:&#47;&#47;share.now-u.com&#47;legal&#47;now-u_users_Ts&amp;Cs.pdf&quot;,
-    &#39;external&#39;: true
+    &#39;link&#39;: TERMS_AND_CONDITIONS_URL,
   },
   {
-    &#39;profileTile&#39;: ProfileTile(&quot;Privacy policy&quot;, CustomIcons.ic_privacy),
-    &#39;link&#39;: &quot;https:&#47;&#47;share.now-u.com&#47;legal&#47;now-u_privacy_policy.pdf&quot;,
-    &#39;external&#39;: true
+    &#39;profileTile&#39;: ProfileTile(&quot;Privacy notice&quot;, CustomIcons.ic_privacy),
+    &#39;link&#39;: PRIVACY_POLICY_URL,
   },
 ];</code></pre>
 </section>

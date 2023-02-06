@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the launchLink method from the NavigationService extension, for the Dart programming language.">
-  <title>launchLink method - NavigationService extension - navigation_service library - Dart API</title>
+  <meta name="description" content="API docs for the launchLink method from the NavigationService class, for the Dart programming language.">
+  <title>launchLink method - NavigationService class - navigation_service library - Dart API</title>
 
 
   
@@ -113,7 +113,7 @@
     }
 
     navigateTo(route);
-  } else if ((isExternal ?? false) || isPDF(url) || isMailTo(url)) {
+  } else if ((isExternal ?? false) || isMailTo(url)) {
     await launchLinkExternal(
       url,
       title: title,
