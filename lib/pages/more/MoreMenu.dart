@@ -1,4 +1,5 @@
 import 'package:app/assets/StyleFrom.dart';
+import 'package:app/assets/constants.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
@@ -43,18 +44,18 @@ final profileTiles = <Map>[
   //   'page': Routes.accountDetails,
   // },
   {'sectionHeading': "Feedback"},
-  {
-    'profileTile':
-        ProfileTile("Give past campaign feedback", CustomIcons.ic_feedback),
-    'link':
-        "https://docs.google.com/forms/d/e/1FAIpQLScg9a8pdP6P7GDKfyOCcJkU_i0C1m84T-M4muEUjfo8TmCSkw/viewform",
-  },
-  {
-    'profileTile':
-        ProfileTile("Propose a campaign", CustomIcons.ic_suggestcamp),
-    'link':
-        "https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform",
-  },
+  // {
+  //   'profileTile':
+  //       ProfileTile("Give past campaign feedback", CustomIcons.ic_feedback),
+  //   'link':
+  //       "https://docs.google.com/forms/d/e/1FAIpQLScg9a8pdP6P7GDKfyOCcJkU_i0C1m84T-M4muEUjfo8TmCSkw/viewform",
+  // },
+  // {
+  //   'profileTile':
+  //       ProfileTile("Propose a campaign", CustomIcons.ic_suggestcamp),
+  //   'link':
+  //       "https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform",
+  // },
   {
     'profileTile':
         ProfileTile("Give feedback on the app", CustomIcons.ic_feedback),
@@ -73,23 +74,19 @@ final profileTiles = <Map>[
   {
     'profileTile': ProfileTile("Send us a message", CustomIcons.ic_social_fb),
     'link': "http://m.me/nowufb",
-    'external': true
   },
   {
     'profileTile': ProfileTile("Send us an email", CustomIcons.ic_email),
     'link': "mailto:hello@now-.com?subject=Hi",
-    'external': true
   },
   {'sectionHeading': "Legal"},
   {
     'profileTile': ProfileTile("Terms & conditions", CustomIcons.ic_tc),
-    'link': "https://share.now-u.com/legal/now-u_users_Ts&Cs.pdf",
-    'external': true
+    'link': TERMS_AND_CONDITIONS_URL,
   },
   {
-    'profileTile': ProfileTile("Privacy policy", CustomIcons.ic_privacy),
-    'link': "https://share.now-u.com/legal/now-u_privacy_policy.pdf",
-    'external': true
+    'profileTile': ProfileTile("Privacy notice", CustomIcons.ic_privacy),
+    'link': PRIVACY_POLICY_URL,
   },
 ];
 

@@ -79,10 +79,10 @@ class ApiService {
     return headers;
   }
 
-  dynamic formatRequestParamter(dynamic value) {
+  dynamic formatRequestParameter(dynamic value) {
     if (value is List) {
       return "[" +
-          value.map((item) => formatRequestParamter(item)).join(",") +
+          value.map((item) => formatRequestParameter(item)).join(",") +
           "]";
     }
     if (value is Iterable) {
@@ -108,7 +108,7 @@ class ApiService {
       stringParams = Map.fromIterable(
         params.keys,
         key: (k) => k,
-        value: (k) => formatRequestParamter(params[k]),
+        value: (k) => formatRequestParameter(params[k]),
       );
     }
 

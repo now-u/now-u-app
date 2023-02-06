@@ -191,22 +191,35 @@ class ExploreFilter extends BaseExploreFilter {
     await super.init(notifyListeners);
   }
 
-  Map<String, dynamic> toJson() {
-    // If many can be selected return a list
-    dynamic value = multi
-        ? staticOptions == null
-            ? []
-            : options
-                .where((option) => option.isSelected)
-                .map((option) => option.parameterValue)
-                .toList()
-        : staticOptions == null
-            ? null
-            : options
-                .firstWhereOrNull((option) => option.isSelected)
-                ?.parameterValue;
+  dynamic toJsonValue() {
+    if (staticOptions == null) {
+      return [];
+    }
 
-    return {parameterName: value};
+    var selectedOptions = options.where((option) => option.isSelected);
+
+    var values = [];
+
+    print("making params");
+
+    selectedOptions.forEach((option) {
+    
+      var value = option.parameterValue;
+      print(value);
+      if (value is List) {
+        values.addAll(value);
+      } else {
+        values.add(value);
+      }
+    });
+    
+    print(values);
+
+    return values;
+  }
+
+  Map<String, dynamic> toJson() {
+    return {parameterName: toJsonValue()};
   }
 }
 
