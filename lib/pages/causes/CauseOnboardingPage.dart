@@ -55,7 +55,7 @@ class CauseOnboardingPage extends StatelessWidget {
                                   ],
                                 ),
                                 Text(
-                                  'Take action and selected the causes which are important to you.',
+                                  'Take action and select the causes most important to you',
                                   style: TextStyle(
                                       fontSize: 15, color: Colors.white),
                                 ),

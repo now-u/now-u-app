@@ -10,7 +10,7 @@ class ArticleFactory extends ModelFactory<Article> {
       title: faker.lorem.sentence(),
       subtitle: faker.lorem.sentence(),
       headerImage: faker.image.image(),
-      type: articleTypes[0],
+      // type: articleTypes[0],
       fullArticleLink: faker.internet.httpUrl(),
       source: "bbc news",
     );

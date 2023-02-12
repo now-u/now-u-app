@@ -169,15 +169,13 @@ void main() {
               new Future<AlertResponse>(
                   () => new AlertResponse(response: true)));
 
+          when(() => mockUrlLauncher.openUrl(any()))
+              .thenAnswer((_) => new Future.value());
+
           await navigationService.launchLink(url);
           verify(() => mockUrlLauncher.openUrl(Uri.parse(url))).called(1);
           verifyNever(() => mockBroswer.open(url: any(named: "url")));
         }
-
-        test('PDF links', () async {
-          await assertOpensLinkExternally(
-              "https://share.now-u.com/legal/now-u_privacy_policy.pdf");
-        });
 
         test('mailto links', () async {
           await assertOpensLinkExternally(
@@ -199,6 +197,11 @@ void main() {
         test('https links', () async {
           await assertOpensLinkInternally(
               "https://css-tricks.com/snippets/html/mailto-links/");
+        });
+
+        test('PDF links', () async {
+          await assertOpensLinkInternally(
+              "https://share.now-u.com/legal/now-u_privacy_policy.pdf");
         });
       });
 

@@ -203,7 +203,6 @@ class ExploreFilter extends BaseExploreFilter {
     print("making params");
 
     selectedOptions.forEach((option) {
-    
       var value = option.parameterValue;
       print(value);
       if (value is List) {
@@ -212,7 +211,7 @@ class ExploreFilter extends BaseExploreFilter {
         values.add(value);
       }
     });
-    
+
     print(values);
 
     return values;

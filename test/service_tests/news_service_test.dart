@@ -35,7 +35,7 @@ void main() {
       expect(articles, [article]);
 
       verify(() => mockApiService.getModelListRequest(
-          "articles", Article.fromJson,
+          "v1/articles", Article.fromJson,
           params: inputParams)).called(1);
     });
   });

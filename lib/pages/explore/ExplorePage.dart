@@ -161,7 +161,10 @@ ExplorePageArguments actions_explore_page = ExplorePageArguments(
         options: actionTypes
             .map((type) => ExploreFilterOption(
                   displayName: type.name,
-                  parameterValue: campaignActionTypeData.values.where((value) => value['type'] == type).map((value) => value['name']).toList(),
+                  parameterValue: campaignActionTypeData.values
+                      .where((value) => value['type'] == type)
+                      .map((value) => value['name'])
+                      .toList(),
                 ))
             .toList(),
       ),

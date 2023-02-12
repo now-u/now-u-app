@@ -44,18 +44,6 @@ final profileTiles = <Map>[
   //   'page': Routes.accountDetails,
   // },
   {'sectionHeading': "Feedback"},
-  // {
-  //   'profileTile':
-  //       ProfileTile("Give past campaign feedback", CustomIcons.ic_feedback),
-  //   'link':
-  //       "https://docs.google.com/forms/d/e/1FAIpQLScg9a8pdP6P7GDKfyOCcJkU_i0C1m84T-M4muEUjfo8TmCSkw/viewform",
-  // },
-  // {
-  //   'profileTile':
-  //       ProfileTile("Propose a campaign", CustomIcons.ic_suggestcamp),
-  //   'link':
-  //       "https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform",
-  // },
   {
     'profileTile':
         ProfileTile("Give feedback on the app", CustomIcons.ic_feedback),

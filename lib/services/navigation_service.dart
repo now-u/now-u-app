@@ -16,9 +16,8 @@ const String INTERNAL_PREFIX = "internal:";
 const List ID_ROUTES = [Routes.campaignInfo, Routes.actionInfo];
 
 class UrlLauncher {
-  void openUrl(Uri url) {
-    print("Acutally launching $url");
-    launchUrl(url);
+  Future<void> openUrl(Uri url) async {
+    await launchUrl(url);
   }
 }
 
@@ -194,8 +193,7 @@ class NavigationService {
       if (extraOnConfirmFunction != null) {
         extraOnConfirmFunction();
       }
-      // Launching stuff now
-      urlLauncher.openUrl(Uri.parse(url));
+      await urlLauncher.openUrl(Uri.parse(url));
     }
   }
 
