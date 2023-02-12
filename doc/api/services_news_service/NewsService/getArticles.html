@@ -71,7 +71,7 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;List&lt;Article&gt;&gt; getArticles({Map&lt;String, dynamic&gt;? params}) async {
-  return _apiService.getModelListRequest(&quot;articles&quot;, Article.fromJson,
+  return _apiService.getModelListRequest(&quot;v1&#47;articles&quot;, Article.fromJson,
       params: params);
 }</code></pre>
 </section>
@@ -130,7 +130,7 @@
 <footer>
   <span class="no-break">
     app
-      2.0.0-dev+45
+      2.0.0-dev+46
   </span>
 
   

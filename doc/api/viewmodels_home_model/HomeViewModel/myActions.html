@@ -68,6 +68,10 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">final myActions = exploreSectionFromArgs(ExploreSectionArguments(
   title: &quot;What can I do today?&quot;,
+  baseParams: {
+    &#47;&#47; TODO This isn&#39;t working
+    &quot;completed&quot;: false,
+  },
   type: ExploreSectionType.Action,
 ));</code></pre>
 </section>
@@ -154,7 +158,7 @@
 <footer>
   <span class="no-break">
     app
-      2.0.0-dev+45
+      2.0.0-dev+46
   </span>
 
   

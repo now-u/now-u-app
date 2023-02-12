@@ -57,7 +57,7 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../models_Organisation/Organisation-class.html">Organisation</a></span>&gt;</span>?</span>&gt;</span></span>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../models_Organisation/Organisation-class.html">Organisation</a></span>&gt;</span></span>&gt;</span></span>
 <span class="name ">getPartners</span>(<wbr>)
 
       
@@ -69,21 +69,9 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;List&lt;Organisation&gt;?&gt; getPartners() async {
-  try {
-    var response = await http.get(Uri.parse(domainPrefix + &quot;organisations&quot;));
-    if (response.statusCode == 200) {
-      List&lt;Organisation&gt;? c = json
-          .decode(response.body)[&#39;data&#39;]
-          .map((e) =&gt; Organisation.fromJson(e))
-          .toList()
-          .cast&lt;Organisation&gt;();
-      return c;
-    }
-    return [];
-  } catch (e) {
-    return [];
-  }
+  <pre class="language-dart"><code class="language-dart">Future&lt;List&lt;Organisation&gt;&gt; getPartners() async {
+  return _apiService.getModelListRequest(
+      &quot;v1&#47;organisations&quot;, Organisation.fromJson);
 }</code></pre>
 </section>
 
@@ -112,15 +100,13 @@
           <li><a href="../../services_organisation_service/OrganisationService/OrganisationService.html">OrganisationService</a></li>
 
 
-        <li class="section-title">
+        <li class="section-title inherited">
           <a href="../../services_organisation_service/OrganisationService-class.html#instance-properties">Properties</a>
         </li>
-          <li><a href="../../services_organisation_service/OrganisationService/domainPrefix.html">domainPrefix</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
         <li class="section-title"><a href="../../services_organisation_service/OrganisationService-class.html#instance-methods">Methods</a></li>
-          <li><a href="../../services_organisation_service/OrganisationService/getOrganisation.html">getOrganisation</a></li>
           <li><a href="../../services_organisation_service/OrganisationService/getPartners.html">getPartners</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
@@ -143,7 +129,7 @@
 <footer>
   <span class="no-break">
     app
-      2.0.0-dev+45
+      2.0.0-dev+46
   </span>
 
   

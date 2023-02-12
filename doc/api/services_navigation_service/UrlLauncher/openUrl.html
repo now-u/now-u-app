@@ -57,7 +57,7 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype">void</span>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
 <span class="name ">openUrl</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="openUrl-param-url"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Uri-class.html">Uri</a></span> <span class="parameter-name">url</span></span></li>
 </ol>)
 
@@ -70,9 +70,8 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">void openUrl(Uri url) {
-  print(&quot;Acutally launching $url&quot;);
-  launchUrl(url);
+  <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; openUrl(Uri url) async {
+  await launchUrl(url);
 }</code></pre>
 </section>
 
@@ -130,7 +129,7 @@
 <footer>
   <span class="no-break">
     app
-      2.0.0-dev+45
+      2.0.0-dev+46
   </span>
 
   

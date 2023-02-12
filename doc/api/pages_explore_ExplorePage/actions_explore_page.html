@@ -93,7 +93,10 @@
         options: actionTypes
             .map((type) =&gt; ExploreFilterOption(
                   displayName: type.name,
-                  parameterValue: campaignActionTypeData.values.where((value) =&gt; value[&#39;type&#39;] == type).map((value) =&gt; value[&#39;name&#39;]).toList(),
+                  parameterValue: campaignActionTypeData.values
+                      .where((value) =&gt; value[&#39;type&#39;] == type)
+                      .map((value) =&gt; value[&#39;name&#39;])
+                      .toList(),
                 ))
             .toList(),
       ),
@@ -159,7 +162,7 @@
 <footer>
   <span class="no-break">
     app
-      2.0.0-dev+45
+      2.0.0-dev+46
   </span>
 
   

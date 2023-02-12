@@ -160,16 +160,6 @@ Widget build(BuildContext context) {
                                 .fontWeight,
                             color: Colors.white,
                           )),
-                      &#47;&#47;Expanded(
-                      &#47;&#47;  child: Container(
-                      &#47;&#47;    &#47;&#47;physics: NeverScrollableScrollPhysics(),
-                      &#47;&#47;    child: IntroPageSection(
-                      &#47;&#47;      &quot;Check your email&quot;,
-                      &#47;&#47;      &quot;We have just sent an email to ${widget.args.email}&quot;,
-                      &#47;&#47;      AssetImage(&#39;assets&#47;imgs&#47;intro&#47;il-mail@4x.png&#39;),
-                      &#47;&#47;    ),
-                      &#47;&#47;  ),
-                      &#47;&#47;),
                       SizedBox(height: 30),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 40),
@@ -178,8 +168,7 @@ Widget build(BuildContext context) {
                           child: DarkButton(
                             &quot;Open Email&quot;,
                             onPressed: () {
-                              &#47;&#47; TODO open email
-                              openEmailApp(context);
+                              model.openMailApp();
                             },
                           ),
                         ),
@@ -222,10 +211,7 @@ Widget build(BuildContext context) {
                           child: DarkButton(
                             &quot;Use secret code&quot;,
                             onPressed: () {
-                              &#47;&#47; TODO open email
-                              Navigator.of(context).pushNamed(
-                                  Routes.loginCodeInput,
-                                  arguments: args.email);
+                              model.navigateToSecretCodePage(args.email);
                             },
                             style: DarkButtonStyle.Outline,
                           ),
@@ -302,7 +288,7 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     app
-      2.0.0-dev+45
+      2.0.0-dev+46
   </span>
 
   

@@ -73,9 +73,15 @@
   if (!isUserLoggedIn()) {
     return null;
   }
-  Map userResponse = await _apiService.getRequest(&#39;v1&#47;users&#47;me&#39;);
-  _currentUser = User.fromJson(userResponse[&quot;data&quot;]);
-  return _currentUser;
+
+  User user = await _apiService.getModelRequest(&#39;v1&#47;users&#47;me&#39;, User.fromJson);
+
+  &#47;&#47; Set the user details in the analytics service
+  _analyticsService.setUserProperties(userId: user.id.toString());
+  &#47;&#47; Save the user details in this auth service
+  _currentUser = user;
+
+  return user;
 }</code></pre>
 </section>
 
@@ -142,7 +148,7 @@
 <footer>
   <span class="no-break">
     app
-      2.0.0-dev+45
+      2.0.0-dev+46
   </span>
 
   
