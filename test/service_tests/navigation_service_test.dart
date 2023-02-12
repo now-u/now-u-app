@@ -168,8 +168,9 @@ void main() {
           when(() => mockDialogService.showDialog(any())).thenAnswer((_) =>
               new Future<AlertResponse>(
                   () => new AlertResponse(response: true)));
-          
-          when(() => mockUrlLauncher.openUrl(any())).thenAnswer((_) => new Future.value());
+
+          when(() => mockUrlLauncher.openUrl(any()))
+              .thenAnswer((_) => new Future.value());
 
           await navigationService.launchLink(url);
           verify(() => mockUrlLauncher.openUrl(Uri.parse(url))).called(1);

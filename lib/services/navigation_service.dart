@@ -50,7 +50,6 @@ class NavigationService {
 
   Future<dynamic> navigateTo(String routeName,
       {arguments, clearHistory = false}) {
-
     if (clearHistory) {
       return navigatorKey.currentState!.pushNamedAndRemoveUntil(
           routeName, (route) => false,

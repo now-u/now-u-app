@@ -61,7 +61,7 @@ class AuthenticationService {
     if (!isUserLoggedIn()) {
       return null;
     }
-   
+
     User user = await _apiService.getModelRequest('v1/users/me', User.fromJson);
 
     // Set the user details in the analytics service

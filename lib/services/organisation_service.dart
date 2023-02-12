@@ -7,6 +7,7 @@ class OrganisationService {
 
   // This gets all the partners (for now this is just all the organisations)
   Future<List<Organisation>> getPartners() async {
-    return _apiService.getModelListRequest("v1/organisations", Organisation.fromJson);
+    return _apiService.getModelListRequest(
+        "v1/organisations", Organisation.fromJson);
   }
 }

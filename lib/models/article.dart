@@ -10,13 +10,13 @@ part 'article.g.dart';
 // class ArticleType {
 //   final String name;
 //   final IconData icon;
-// 
+//
 //   ArticleType({
 //     required this.name,
 //     required this.icon,
 //   });
 // }
-// 
+//
 // List<ArticleType> articleTypes = [
 //   ArticleType(name: "news", icon: CustomIcons.ic_news),
 //   ArticleType(name: "video", icon: CustomIcons.ic_video),
