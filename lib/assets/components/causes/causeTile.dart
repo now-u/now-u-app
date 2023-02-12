@@ -55,7 +55,7 @@ class CauseTile extends StatelessWidget {
                       ),
                     ),
                     Container(
-                        height: 40,
+                        height: 60,
                         child: Center(
                           child: Text(
                             '${cause.title}',

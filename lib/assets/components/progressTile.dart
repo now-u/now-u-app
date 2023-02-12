@@ -46,7 +46,7 @@ class ProgressTile extends StatelessWidget {
                   progressScore: campaignsScore,
                 ),
                 ProgressCircle(
-                  progressTitle: 'Actions Taken',
+                  progressTitle: 'Actions',
                   progressScore: actionsScore,
                 ),
                 ProgressCircle(

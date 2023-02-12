@@ -97,7 +97,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                   ),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
-                        // TODO Remove this launch
+                      // TODO Remove this launch
                       launch(TERMS_AND_CONDITIONS_URL);
                     }),
             ]),

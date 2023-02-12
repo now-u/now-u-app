@@ -35,6 +35,10 @@ class HomeViewModel extends BaseModel with ExploreViewModelMixin {
 
   final myActions = exploreSectionFromArgs(ExploreSectionArguments(
     title: "What can I do today?",
+    baseParams: {
+      // TODO This isn't working
+      "completed": false,
+    },
     type: ExploreSectionType.Action,
   ));
 

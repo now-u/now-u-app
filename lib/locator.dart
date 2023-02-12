@@ -25,6 +25,9 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 
+const USE_FAKE_SERVICES = false;
+// const USE_FAKE_SERVICES = constants.devMode;
+
 /* This allows us to create a fake api if we wish */
 GetIt locator = GetIt.instance;
 
@@ -37,7 +40,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => SharedPreferencesService());
   locator.registerLazySingleton(() => AuthenticationService());
   locator.registerLazySingleton(
-      () => constants.devMode ? FakeNewsService() : NewsService());
+      () => USE_FAKE_SERVICES ? FakeNewsService() : NewsService());
   locator.registerLazySingleton(() => FAQService());
   locator.registerLazySingleton(() => InternalNotificationService());
   locator.registerLazySingleton(() => DeviceInfoService());

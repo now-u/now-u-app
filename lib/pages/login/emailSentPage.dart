@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:android_intent/android_intent.dart';
 
 import 'package:app/assets/components/buttons/darkButton.dart';
 import 'package:app/assets/components/textButton.dart';
@@ -76,16 +73,6 @@ class EmailSentPage extends StatelessWidget {
                                   .fontWeight,
                               color: Colors.white,
                             )),
-                        //Expanded(
-                        //  child: Container(
-                        //    //physics: NeverScrollableScrollPhysics(),
-                        //    child: IntroPageSection(
-                        //      "Check your email",
-                        //      "We have just sent an email to ${widget.args.email}",
-                        //      AssetImage('assets/imgs/intro/il-mail@4x.png'),
-                        //    ),
-                        //  ),
-                        //),
                         SizedBox(height: 30),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 40),
@@ -94,8 +81,7 @@ class EmailSentPage extends StatelessWidget {
                             child: DarkButton(
                               "Open Email",
                               onPressed: () {
-                                // TODO open email
-                                openEmailApp(context);
+                                model.openMailApp();
                               },
                             ),
                           ),
@@ -138,10 +124,7 @@ class EmailSentPage extends StatelessWidget {
                             child: DarkButton(
                               "Use secret code",
                               onPressed: () {
-                                // TODO open email
-                                Navigator.of(context).pushNamed(
-                                    Routes.loginCodeInput,
-                                    arguments: args.email);
+                                model.navigateToSecretCodePage(args.email);
                               },
                               style: DarkButtonStyle.Outline,
                             ),
@@ -223,16 +206,4 @@ class FadeRouteBuilder<T> extends PageRouteBuilder<T> {
             return FadeTransition(opacity: animation1, child: child);
           },
         );
-}
-
-void openEmailApp(BuildContext context) {
-  if (Platform.isAndroid) {
-    AndroidIntent intent = AndroidIntent(
-      action: 'android.intent.action.MAIN',
-      category: 'android.intent.category.APP_EMAIL',
-    );
-    intent.launch().catchError((e) {});
-  } else if (Platform.isIOS) {
-    launch("message://").catchError((e) {});
-  }
 }

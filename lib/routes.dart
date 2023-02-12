@@ -57,7 +57,6 @@ Function initRoutes = (RouteSettings settings) {
   final args = settings.arguments;
 
   switch (settings.name) {
-
     // Into
     case Routes.causesEditPage:
       {

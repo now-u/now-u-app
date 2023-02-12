@@ -248,7 +248,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                                 children: [
                                                   TextSpan(
                                                     text:
-                                                        "You have completed this action and contributed to the goals of the ",
+                                                        "Thank you for completing this action and contributing to this important cause!",
                                                   ),
                                                   // TODO What is happening to this?
                                                   // TextSpan(

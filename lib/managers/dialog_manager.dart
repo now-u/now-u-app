@@ -8,6 +8,7 @@ import 'package:app/models/Cause.dart';
 
 import 'package:app/assets/components/buttons/darkButton.dart';
 import 'package:app/assets/StyleFrom.dart';
+import 'package:open_mail_app/open_mail_app.dart';
 
 abstract class CustomDialog {
   final DialogService _dialogService = locator<DialogService>();
@@ -90,6 +91,33 @@ class CauseDialog extends CustomDialog {
                   ),
                 ),
               ])),
+    );
+  }
+}
+
+class EmailAppPickerDialog extends CustomDialog {
+  final List<MailApp> options;
+
+  EmailAppPickerDialog(this.options);
+
+  void show(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return SimpleDialog(
+          title: Text("Open an email app"),
+          children: <Widget>[
+            for (var app in options)
+              SimpleDialogOption(
+                child: Text(app.name),
+                onPressed: () {
+                  OpenMailApp.openSpecificMailApp(app);
+                  complete(false, context);
+                },
+              ),
+          ],
+        );
+      },
     );
   }
 }

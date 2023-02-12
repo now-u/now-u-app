@@ -1,5 +1,6 @@
 import 'package:app/pages/login/emailSentPage.dart';
 import 'package:app/routes.dart';
+import 'package:open_mail_app/open_mail_app.dart';
 import 'base_model.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/auth.dart';
@@ -27,7 +28,7 @@ class LoginViewModel extends BaseModel {
       );
       setBusy(false);
       _navigationService.navigateTo(Routes.emailSent,
-          arguments: EmailSentPageArguments(email: email));
+          arguments: EmailSentPageArguments(email: email), clearHistory: true);
     } on ApiException catch (e) {
       setBusy(false);
       await _dialogService.showDialog(
@@ -56,9 +57,10 @@ class LoginViewModel extends BaseModel {
       setBusy(false);
 
       if (currentUser!.selectedCauseIds.length == 0) {
-        _navigationService.navigateTo(Routes.causesOnboardingPage);
+        _navigationService.navigateTo(Routes.causesOnboardingPage,
+            clearHistory: true);
       } else {
-        _navigationService.navigateTo(Routes.home);
+        _navigationService.navigateTo(Routes.home, clearHistory: true);
       }
     } on ApiException catch (e) {
       print("Got api exception");
@@ -80,6 +82,27 @@ class LoginViewModel extends BaseModel {
       await _dialogService.showDialog(
           BasicDialog(title: "Login error", description: errorMessage));
     }
+  }
+
+  Future openMailApp() async {
+    var result = await OpenMailApp.openMailApp();
+
+    // If no mail apps found, show error
+    if (!result.didOpen && !result.canOpen) {
+      _dialogService.showDialog(BasicDialog(
+          title: "No email apps found",
+          description: "Please check your emails"));
+
+      // iOS: if multiple mail apps found, show dialog to select.
+      // There is no native intent/default app system in iOS so
+      // you have to do it yourself.
+    } else if (!result.didOpen && result.canOpen) {
+      _dialogService.showDialog(EmailAppPickerDialog(result.options));
+    }
+  }
+
+  void navigateToSecretCodePage(String email) {
+    _navigationService.navigateTo(Routes.loginCodeInput, arguments: email);
   }
 
   void launchTandCs() {

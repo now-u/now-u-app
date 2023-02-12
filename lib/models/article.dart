@@ -7,24 +7,24 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'article.g.dart';
 
-class ArticleType {
-  final String name;
-  final IconData icon;
+// class ArticleType {
+//   final String name;
+//   final IconData icon;
+//
+//   ArticleType({
+//     required this.name,
+//     required this.icon,
+//   });
+// }
+//
+// List<ArticleType> articleTypes = [
+//   ArticleType(name: "news", icon: CustomIcons.ic_news),
+//   ArticleType(name: "video", icon: CustomIcons.ic_video),
+// ];
 
-  ArticleType({
-    required this.name,
-    required this.icon,
-  });
-}
-
-List<ArticleType> articleTypes = [
-  ArticleType(name: "news", icon: CustomIcons.ic_news),
-  ArticleType(name: "video", icon: CustomIcons.ic_video),
-];
-
-ArticleType articleTypeFromName(String name) {
-  return articleTypes.firstWhere((ArticleType type) => type.name == name);
-}
+// ArticleType articleTypeFromName(String name) {
+//   return articleTypes.firstWhere((ArticleType type) => type.name == name);
+// }
 
 @JsonSerializable()
 class Article extends Explorable {
@@ -33,8 +33,8 @@ class Article extends Explorable {
   final String title;
   final String subtitle;
 
-  @JsonKey(fromJson: articleTypeFromName)
-  final ArticleType type;
+  // @JsonKey(fromJson: articleTypeFromName)
+  // final ArticleType type;
 
   final String headerImage;
 
@@ -57,7 +57,6 @@ class Article extends Explorable {
     required this.id,
     required this.title,
     required this.subtitle,
-    required this.type,
     required this.headerImage,
     required this.fullArticleLink,
     this.source,
