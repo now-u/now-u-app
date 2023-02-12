@@ -1,4 +1,5 @@
 import 'package:app/assets/StyleFrom.dart';
+import 'package:app/assets/constants.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
@@ -61,23 +62,19 @@ final profileTiles = <Map>[
   {
     'profileTile': ProfileTile("Send us a message", CustomIcons.ic_social_fb),
     'link': "http://m.me/nowufb",
-    'external': true
   },
   {
     'profileTile': ProfileTile("Send us an email", CustomIcons.ic_email),
     'link': "mailto:hello@now-.com?subject=Hi",
-    'external': true
   },
   {'sectionHeading': "Legal"},
   {
     'profileTile': ProfileTile("Terms & conditions", CustomIcons.ic_tc),
-    'link': "https://now-u-docs.s3.eu-west-2.amazonaws.com/now-u+user+terms+and+conditions.pdf",
-    'external': true
+    'link': TERMS_AND_CONDITIONS_URL,
   },
   {
-    'profileTile': ProfileTile("Privacy policy", CustomIcons.ic_privacy),
-    'link': "https://now-u-docs.s3.eu-west-2.amazonaws.com/now-u+privacy+policy.pdf",
-    'external': false 
+    'profileTile': ProfileTile("Privacy notice", CustomIcons.ic_privacy),
+    'link': PRIVACY_POLICY_URL,
   },
 ];
 

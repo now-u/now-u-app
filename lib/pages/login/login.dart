@@ -1,4 +1,5 @@
 import 'package:app/assets/StyleFrom.dart';
+import 'package:app/assets/constants.dart';
 import 'package:flutter/gestures.dart';
 import 'package:app/assets/components/buttons/darkButton.dart';
 import 'package:app/assets/components/inputs.dart';
@@ -96,9 +97,8 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                   ),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
-                      // TODO None of this will work
-                      launch(
-                          "https://share.now-u.com/legal/terms_and_conditions.pdf");
+                      // TODO Remove this launch
+                      launch(TERMS_AND_CONDITIONS_URL);
                     }),
             ]),
       ),

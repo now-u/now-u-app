@@ -147,9 +147,7 @@ class NavigationService {
       }
 
       navigateTo(route);
-    // } else if ((isExternal ?? false) || isPDF(url) || isMailTo(url)) {
     } else if ((isExternal ?? false) || isMailTo(url)) {
-      print("Launching external link");
       await launchLinkExternal(
         url,
         title: title,

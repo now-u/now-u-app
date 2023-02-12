@@ -156,13 +156,12 @@ ExplorePageArguments actions_explore_page = ExplorePageArguments(
     ExploreSectionArguments(
       title: "Actions by type",
       filter: ExploreFilter(
-        // TODO This in filter doesnt exist atm
         parameterName: "type__in",
         multi: false,
         options: actionTypes
             .map((type) => ExploreFilterOption(
                   displayName: type.name,
-                  parameterValue: campaignActionTypeData.values.where((data) => data.type == type).map((data) => data.id),
+                  parameterValue: campaignActionTypeData.values.where((value) => value['type'] == type).map((value) => value['name']).toList(),
                 ))
             .toList(),
       ),
