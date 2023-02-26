@@ -8,7 +8,7 @@ part of 'User.dart';
 
 User _$UserFromJson(Map<String, dynamic> json) => User(
       id: json['id'] as int,
-      fullName: json['full_name'] as String,
+      email: json['email'] as String?,
       selectedCauseIds:
           (json['cause_ids'] as List<dynamic>).map((e) => e as int).toList(),
       completedCampaignIds: (json['completed_campaigns'] as List<dynamic>)
@@ -21,7 +21,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
           (json['completed_learning_resources'] as List<dynamic>)
               .map((e) => e as int)
               .toList(),
-      email: json['email'] as String?,
+      fullName: json['full_name'] as String?,
       dateOfBirth: json['date_of_birth'] == null
           ? null
           : DateTime.parse(json['date_of_birth'] as String),

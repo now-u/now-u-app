@@ -1,6 +1,12 @@
+import 'dart:async';
+
+import 'package:app/models/User.dart';
 import 'package:app/pages/login/emailSentPage.dart';
 import 'package:app/routes.dart';
+import 'package:app/services/storage.dart';
+import 'package:app/services/superbase.dart';
 import 'package:open_mail_app/open_mail_app.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide User;
 import 'base_model.dart';
 import 'package:app/locator.dart';
 import 'package:app/services/auth.dart';
@@ -13,74 +19,64 @@ class LoginViewModel extends BaseModel {
       locator<AuthenticationService>();
   final NavigationService _navigationService = locator<NavigationService>();
   final DialogService _dialogService = locator<DialogService>();
+  final SecureStorageService _secureStroageService = locator<SecureStorageService>();
 
-  Future email({
-    required String email,
-    required String name,
-    required bool newsletterSignup,
-  }) async {
-    setBusy(true);
-    try {
-      await _authenticationService.sendSignInWithEmailLink(
-        email,
-        name,
-        newsletterSignup,
-      );
-      setBusy(false);
-      _navigationService.navigateTo(Routes.emailSent,
-          arguments: EmailSentPageArguments(email: email), clearHistory: true);
-    } on ApiException catch (e) {
-      setBusy(false);
-      await _dialogService.showDialog(
-        BasicDialog(
-          title: "Login error",
-          description:
-              "The following error has occured please try again. ${e.message}",
-        ),
-      );
-    }
+  late final StreamSubscription<AuthState> _authStateSubscription;
+  final _supabaseService = locator<SupabaseService>(); 
+
+  String _email = "";
+  void set email(String email) {
+    _secureStroageService.setEmail(email);
+    this._email = email;
   }
 
-  Future login({
+  void init() {
+    _authStateSubscription = _supabaseService.client.auth.onAuthStateChange.listen((event) async {
+        print("Auth state has changed!");
+        User? user = await _authenticationService.fetchUser();
+        assert(user != null, "User not found by auth service");
+
+        print("Stuff");
+        if (!user!.hasProfile) {
+          print("Navigating to profile setup");
+          _navigationService.navigateTo(Routes.profileSetup, clearHistory: true);
+        } else {
+          _navigationService.navigateTo(Routes.home, clearHistory: true);
+        }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _authStateSubscription.cancel();
+  }
+  
+  Future sendLoginEmail() async {
+    await _authenticationService.sendSignInEmail(_email);
+    _navigationService.navigateTo(Routes.emailSent, arguments: EmailSentPageArguments(email: _email), clearHistory: true);
+  }
+  
+  Future loginWithGoogle() async {
+    await _authenticationService.signInWithGoogle();
+  }
+
+  Future loginWithFacebook() async {
+    await _authenticationService.signInWithFacebook();
+  }
+
+  Future loginWithCode({
     required String email,
     required String token,
-    bool isManual = false,
   }) async {
-    print("Logging in");
     setBusy(true);
-
     try {
-      await _authenticationService.login(
-        email,
-        token,
-      );
+      await _authenticationService.signInWithCode(email, token);
       setBusy(false);
-
-      if (currentUser!.selectedCauseIds.length == 0) {
-        _navigationService.navigateTo(Routes.causesOnboardingPage,
-            clearHistory: true);
-      } else {
-        _navigationService.navigateTo(Routes.home, clearHistory: true);
-      }
-    } on ApiException catch (e) {
-      print("Got api exception");
-      String errorMessage = e.message;
-      if (e.type == ApiExceptionType.TOKEN_EXPIRED) {
-        errorMessage =
-            "Your token has expired, please restart the login process";
-      }
-      if (e.type == ApiExceptionType.UNAUTHORIZED) {
-        if (isManual) {
-          errorMessage =
-              "Incorrect token, please double check your token from the email";
-        } else {
-          errorMessage = "Incorrect login link, please double check your email";
-        }
-      }
-
+    } catch (e) {
       setBusy(false);
       await _dialogService.showDialog(
-          BasicDialog(title: "Login error", description: errorMessage));
+          BasicDialog(title: "Login error", description: "Authentication failed, please double check your token from the email"));
     }
   }
 

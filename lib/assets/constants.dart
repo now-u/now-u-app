@@ -15,6 +15,10 @@ const PRIVACY_POLICY_URL =
 const TERMS_AND_CONDITIONS_URL =
     "https://now-u-docs.s3.eu-west-2.amazonaws.com/now-u+user+terms+and+conditions.pdf";
 
+const CAUSES_API_URL = "192.168.1.65:3001";
+// const CAUSES_API_URL = "staging.api.now-u.com";
+  // devMode ? "staging.api.now-u.com" : "api.now-u.com";
+
 class CustomColors {
   /// Primary brand color
   static Color brandColor = Color.fromRGBO(255, 136, 0, 1);

@@ -1,3 +1,4 @@
+import 'package:app/assets/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -40,9 +41,7 @@ class ApiService {
   ApiService(this.client);
 
   /// Base of url (no slashes)
-  // String baseUrl =
-  //     constants.devMode ? "staging.api.now-u.com" : "api.now-u.com";
-  String baseUrl = "staging.api.now-u.com";
+  String baseUrl = CAUSES_API_URL;
 
   /// The base path of the url (after the baseUrl)
   String baseUrlPath = "api/";
@@ -74,7 +73,8 @@ class ApiService {
     final AuthenticationService _authService = locator<AuthenticationService>();
     if (_authService.isAuthenticated) {
       // We know a token must exist as the user is authenticated
-      headers['token'] = _authService.token!;
+      // headers['token'] = _authService.token!;
+      headers['Authorization'] = "JWT ${_authService.token!}";
     }
     return headers;
   }
@@ -112,7 +112,9 @@ class ApiService {
       );
     }
 
-    final uri = Uri.https(baseUrl, baseUrlPath + path, stringParams);
+    // TODO Put back to https
+    // final uri = Uri.https(baseUrl, baseUrlPath + path, stringParams);
+    final uri = Uri.http(baseUrl, baseUrlPath + path, stringParams);
     print("Making request: ${uri.toString()}, headers: ${getRequestHeaders()}");
     http.Response response = await client.get(
       uri,
@@ -165,7 +167,9 @@ class ApiService {
   /// unsuccessful.
   Future<Map<String, dynamic>> postRequest(String path,
       {Map<String, dynamic>? body}) async {
-    final uri = Uri.https(baseUrl, baseUrlPath + path);
+    // TODO Put back 
+    // final uri = Uri.https(baseUrl, baseUrlPath + path);
+    final uri = Uri.http(baseUrl, baseUrlPath + path);
     print(
         "Making request: ${uri.toString()}, body: $body, headers: ${getRequestHeaders()}");
 
@@ -189,7 +193,9 @@ class ApiService {
   /// Returns Map of the response. Throws an [ApiException] if the request is
   /// unsuccessful.
   Future<Map> putRequest(String path, {Map<String, dynamic>? body}) async {
-    final uri = Uri.https(baseUrl, baseUrlPath + path);
+    // TODO Fix
+    // final uri = Uri.https(baseUrl, baseUrlPath + path);
+    final uri = Uri.http(baseUrl, baseUrlPath + path);
     print(
         "Making request: ${uri.toString()}, body: $body, headers: ${getRequestHeaders()}");
     http.Response response = await client.put(

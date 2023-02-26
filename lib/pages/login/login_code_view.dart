@@ -44,7 +44,7 @@ class LoginCodePageState extends State<LoginCodePage>
         final FormState form = _formKey.currentState!;
         if (form.validate()) {
           form.save();
-          model.login(email: widget.email, token: _token!, isManual: true);
+          model.loginWithCode(email: widget.email, token: _token!);
           return true;
         }
         return false;
@@ -52,6 +52,8 @@ class LoginCodePageState extends State<LoginCodePage>
 
       return ViewModelBuilder<LoginViewModel>.reactive(
         viewModelBuilder: () => LoginViewModel(),
+        onModelReady: (model) => model.init(),
+        onDispose: (model) => model.dispose(),
         builder: (context, model, child) => Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0),
             child: DarkButton(
