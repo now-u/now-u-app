@@ -130,7 +130,7 @@ Widget build(BuildContext context) {
           padding: EdgeInsets.fromLTRB(
               15, MediaQuery.of(context).size.height * 0.1, 0, 0),
           child: Text(
-            &quot;Welcome \n$name!&quot;,
+            name != null ? &quot;Welcome \n$name!&quot; : &quot;Welcome!&quot;,
             style: textStyleFrom(
               Theme.of(context).primaryTextTheme.headline2,
               color: Colors.white,

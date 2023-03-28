@@ -200,7 +200,7 @@ Widget build(BuildContext context) {
       final FormState form = _formKey.currentState!;
       if (form.validate()) {
         form.save();
-        model.login(email: widget.email, token: _token!, isManual: true);
+        model.loginWithCode(email: widget.email, token: _token!);
         return true;
       }
       return false;
@@ -208,6 +208,8 @@ Widget build(BuildContext context) {
 
     return ViewModelBuilder&lt;LoginViewModel&gt;.reactive(
       viewModelBuilder: () =&gt; LoginViewModel(),
+      onModelReady: (model) =&gt; model.init(),
+      onDispose: (model) =&gt; model.dispose(),
       builder: (context, model, child) =&gt; Padding(
           padding: EdgeInsets.symmetric(vertical: 16.0),
           child: DarkButton(

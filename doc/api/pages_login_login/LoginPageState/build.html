@@ -179,123 +179,52 @@ prints green, as expected.</p>
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
 Widget build(BuildContext context) {
-  final email = CustomTextFormField(
-    style: CustomFormFieldStyle.Dark,
-    keyboardType: TextInputType.emailAddress,
-    textCapitalization: TextCapitalization.none,
-    autofocus: false,
-    validator: (value) {
-      if (value.isEmpty) return &quot;Email cannot be empty&quot;;
-      if (!RegExp(
-              r&quot;^[a-zA-Z0-9.a-zA-Z0-9.!#$%&amp;&#39;*+-&#47;=?^_`{|}~]+@[a-zA-Z0-9-]+\.[a-zA-Z-]+&quot;)
-          .hasMatch(value)) {
-        return &quot;Email must be a valid email address&quot;;
-      }
-      return null;
-    },
-    onSaved: (value) {
-      print(&quot;Saved&quot;);
-      _email = value;
-      _repositry.setEmail(value);
-    },
-    hintText: &#39;e.g. jane.doe@email.com&#39;,
-  );
+  Widget _emailInput(LoginViewModel model) {
+    return CustomTextFormField(
+      style: CustomFormFieldStyle.Dark,
+      keyboardType: TextInputType.emailAddress,
+      textCapitalization: TextCapitalization.none,
+      autofocus: false,
+      validator: (value) {
+        if (value.isEmpty) return &quot;Email cannot be empty&quot;;
+        if (!RegExp(
+                r&quot;^[a-zA-Z0-9.a-zA-Z0-9.!#$%&amp;&#39;*+-&#47;=?^_`{|}~]+@[a-zA-Z0-9-]+\.[a-zA-Z-]+&quot;)
+            .hasMatch(value)) {
+          return &quot;Email must be a valid email address&quot;;
+        }
+        return null;
+      },
+      onChanged: (value) {
+        print(&quot;Saved&quot;);
+        model.email = value;
+      },
+      hintText: &#39;e.g. jane.doe@email.com&#39;,
+    );
+  }
 
-  final name = CustomTextFormField(
-    style: CustomFormFieldStyle.Dark,
-    keyboardType: TextInputType.text,
-    textCapitalization: TextCapitalization.words,
-    autofocus: false,
-    validator: (value) {
-      if (value.isEmpty) return &quot;Name cannot be empty&quot;;
-      return null;
-    },
-    onSaved: (value) {
-      print(&quot;Saved&quot;);
-      _name = value;
-      _repositry.setName(value);
-    },
-    hintText: &#39;Jane Doe&#39;,
-  );
-
-  final acceptTandC = CustomCheckboxFormField(
-    title: RichText(
-      text: TextSpan(
-          style: textStyleFrom(
-            Theme.of(context).primaryTextTheme.bodyText1,
-            color: Colors.white,
-          ),
-          children: [
-            TextSpan(text: &quot;I agree to the user &quot;),
-            TextSpan(
-                text: &quot;Terms &amp; Conditions&quot;,
-                style: textStyleFrom(
-                  Theme.of(context).primaryTextTheme.bodyText1,
-                  color: Theme.of(context).buttonColor,
-                ),
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    &#47;&#47; TODO Remove this launch
-                    launch(TERMS_AND_CONDITIONS_URL);
-                  }),
-          ]),
-    ),
-    validator: (value) {
-      if (!value!) return &quot;You must accept our terms and conditions&quot;;
-      return null;
-    },
-  );
-
-  final newsletterSignup = CustomCheckboxFormField(
-    title: RichText(
-      text: TextSpan(
-          style: textStyleFrom(
-            Theme.of(context).primaryTextTheme.bodyText1,
-            color: Colors.white,
-          ),
-          children: [
-            TextSpan(
-                text: &quot;I am happy to receive the now-u newsletter via email&quot;),
-          ]),
-    ),
-    onSaved: (value) {
-      _newsletterSignup = value;
-    },
-  );
-
-  Widget loginButton() {
+  Widget loginButton(LoginViewModel model) {
     Future&lt;bool&gt; validateAndSave(LoginViewModel model) async {
       final FormState form = _formKey.currentState!;
       if (form.validate()) {
         form.save();
-        &#47;&#47;if (stagingUsers.contains(_email)) {
-        &#47;&#47;  model.switchToStagingBranch();
-        &#47;&#47;}
-        print(&quot;Done login&quot;);
-        model.email(
-            email: _email!,
-            name: _name!,
-            newsletterSignup: _newsletterSignup!);
+        model.sendLoginEmail();
         return true;
       }
       return false;
     }
 
-    return ViewModelBuilder&lt;LoginViewModel&gt;.reactive(
-      viewModelBuilder: () =&gt; LoginViewModel(),
-      builder: (context, model, child) =&gt; Padding(
-          padding: EdgeInsets.symmetric(vertical: 16.0),
-          child: DarkButton(
-            &quot;Next&quot;,
-            onPressed: () {
-              print(&quot;Button pressed&quot;);
-              validateAndSave(model);
-            },
-          )),
-    );
+    return Padding(
+        padding: EdgeInsets.symmetric(vertical: 16.0),
+        child: DarkButton(
+          &quot;Next&quot;,
+          onPressed: () {
+            print(&quot;Button pressed&quot;);
+            validateAndSave(model);
+          },
+        ));
   }
 
-  Form loginForm() {
+  Form loginForm(LoginViewModel model) {
     return Form(
         key: _formKey,
         child: Padding(
@@ -320,6 +249,26 @@ Widget build(BuildContext context) {
                           ),
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 30.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            CustomIconButton(
+                              onPressed: model.loginWithGoogle,
+                              icon: FontAwesomeIcons.google,
+                              size: IconButtonSize.Small,
+                              isCircularButton: false,
+                            ),
+                            CustomIconButton(
+                              onPressed: model.loginWithFacebook,
+                              icon: FontAwesomeIcons.facebookF,
+                              size: IconButtonSize.Small,
+                              isCircularButton: false,
+                            ),
+                          ],
+                        ),
+                      ),
                       Container(
                         width: MediaQuery.of(context).size.width * 0.9,
                         child: Text(
@@ -341,20 +290,6 @@ Widget build(BuildContext context) {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          &quot;What should we call you?&quot;,
-                          style: textStyleFrom(
-                            Theme.of(context).primaryTextTheme.headline4,
-                            color: Colors.white,
-                          ),
-                          textAlign: TextAlign.left,
-                        ),
-                      ),
-                      SizedBox(height: 8),
-                      name,
-                      SizedBox(height: 15),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
                           &quot;Your email address&quot;,
                           style: textStyleFrom(
                             Theme.of(context).primaryTextTheme.headline4,
@@ -364,40 +299,30 @@ Widget build(BuildContext context) {
                         ),
                       ),
                       SizedBox(height: 8),
-                      email,
+                      _emailInput(model),
                       SizedBox(height: 20),
-                      acceptTandC,
-                      newsletterSignup,
-                      loginButton(),
+                      loginButton(model),
                       SizedBox(height: 10),
-                      ViewModelBuilder&lt;LoginViewModel&gt;.reactive(
-                          viewModelBuilder: () =&gt; LoginViewModel(),
-                          builder: (context, model, child) {
-                            return RichText(
-                              text: TextSpan(children: [
-                                TextSpan(
-                                    text: &quot;View our privacy policy &quot;,
-                                    style: textStyleFrom(
-                                      Theme.of(context)
-                                          .primaryTextTheme
-                                          .bodyText1,
-                                      color: Colors.white,
-                                    )),
-                                TextSpan(
-                                    text: &quot;here&quot;,
-                                    style: textStyleFrom(
-                                      Theme.of(context)
-                                          .primaryTextTheme
-                                          .bodyText1,
-                                      color: Theme.of(context).buttonColor,
-                                    ),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        model.launchTandCs();
-                                      }),
-                              ]),
-                            );
-                          }),
+                      RichText(
+                        text: TextSpan(children: [
+                          TextSpan(
+                              text: &quot;View our privacy policy &quot;,
+                              style: textStyleFrom(
+                                Theme.of(context).primaryTextTheme.bodyText1,
+                                color: Colors.white,
+                              )),
+                          TextSpan(
+                              text: &quot;here&quot;,
+                              style: textStyleFrom(
+                                Theme.of(context).primaryTextTheme.bodyText1,
+                                color: Theme.of(context).buttonColor,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  model.launchTandCs();
+                                }),
+                        ]),
+                      ),
                       SizedBox(height: 10),
                     ],
                   ),
@@ -415,13 +340,20 @@ Widget build(BuildContext context) {
         key: _scaffoldKey,
         backgroundColor: Theme.of(context).primaryColorDark,
         body: NotificationListener(
-            onNotification: (OverscrollIndicatorNotification overscroll) {
-              overscroll.disallowGlow();
-              return true;
-            },
-            child: ListView(children: [
-              loginForm(),
-            ])),
+          onNotification: (OverscrollIndicatorNotification overscroll) {
+            overscroll.disallowGlow();
+            return true;
+          },
+          child: ViewModelBuilder&lt;LoginViewModel&gt;.reactive(
+              viewModelBuilder: () =&gt; LoginViewModel(),
+              onModelReady: (model) =&gt; model.init(),
+              onDispose: (model) =&gt; model.dispose(),
+              builder: (context, model, child) {
+                return ListView(children: [
+                  loginForm(model),
+                ]);
+              }),
+        ),
       ));
 }</code></pre>
 </section>

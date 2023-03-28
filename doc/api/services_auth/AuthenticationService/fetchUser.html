@@ -70,18 +70,24 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;User?&gt; fetchUser() async {
-  if (!isUserLoggedIn()) {
+  if (!isAuthenticated) {
     return null;
   }
 
-  User user = await _apiService.getModelRequest(&#39;v1&#47;users&#47;me&#39;, User.fromJson);
+  try {
+    User user =
+        await _apiService.getModelRequest(&#39;v1&#47;users&#47;me&#39;, User.fromJson);
+    print(&quot;Fetched user: &quot;);
+    print(user);
+    &#47;&#47; Set the user details in the analytics service
+    _analyticsService.setUserProperties(userId: user.id.toString());
+    &#47;&#47; Save the user details in this auth service
+    _currentUser = user;
 
-  &#47;&#47; Set the user details in the analytics service
-  _analyticsService.setUserProperties(userId: user.id.toString());
-  &#47;&#47; Save the user details in this auth service
-  _currentUser = user;
-
-  return user;
+    return user;
+  } catch (err) {
+    return null;
+  }
 }</code></pre>
 </section>
 
@@ -123,10 +129,12 @@
           <li><a href="../../services_auth/AuthenticationService/deleteUserAccount.html">deleteUserAccount</a></li>
           <li><a href="../../services_auth/AuthenticationService/fetchUser.html">fetchUser</a></li>
           <li><a href="../../services_auth/AuthenticationService/isUserLoggedIn.html">isUserLoggedIn</a></li>
-          <li><a href="../../services_auth/AuthenticationService/login.html">login</a></li>
           <li><a href="../../services_auth/AuthenticationService/logout.html">logout</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-          <li><a href="../../services_auth/AuthenticationService/sendSignInWithEmailLink.html">sendSignInWithEmailLink</a></li>
+          <li><a href="../../services_auth/AuthenticationService/sendSignInEmail.html">sendSignInEmail</a></li>
+          <li><a href="../../services_auth/AuthenticationService/signInWithCode.html">signInWithCode</a></li>
+          <li><a href="../../services_auth/AuthenticationService/signInWithFacebook.html">signInWithFacebook</a></li>
+          <li><a href="../../services_auth/AuthenticationService/signInWithGoogle.html">signInWithGoogle</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
           <li><a href="../../services_auth/AuthenticationService/updateUserDetails.html">updateUserDetails</a></li>
 

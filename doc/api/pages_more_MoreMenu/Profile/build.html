@@ -163,7 +163,7 @@ Widget build(BuildContext context) {
                                         false);
                               } else if (profileTiles[index][&quot;function&quot;] !=
                                   null) {
-                                profileTiles[index][&quot;function&quot;]();
+                                profileTiles[index][&quot;function&quot;](model);
                               }
                             },
                             child: profileTiles[index][&quot;profileTile&quot;],
@@ -192,7 +192,7 @@ Widget build(BuildContext context) {
                   SizedBox(height: 20),
 
                   &#47;&#47; Dev Tools
-                  model.currentUser!.isStagingUser
+                  model.currentUser?.isStagingUser == true
                       ? Column(children: [
                           GestureDetector(
                               child: ProfileTile(

@@ -115,10 +115,12 @@ Widget build(BuildContext context) {
   return ViewModelBuilder&lt;LoginViewModel&gt;.reactive(
       viewModelBuilder: () =&gt; LoginViewModel(),
       onModelReady: (model) {
-        if (args.token != null) {
-          model.login(email: args.email, token: args.token!);
-        }
+        model.init();
+        &#47;&#47; if (args.token != null) {
+        &#47;&#47;   model.login(email: args.email, token: args.token!);
+        &#47;&#47; }
       },
+      onDispose: (model) =&gt; model.dispose(),
       builder: (context, model, child) {
         return Stack(children: &lt;Widget&gt;[
           Scaffold(

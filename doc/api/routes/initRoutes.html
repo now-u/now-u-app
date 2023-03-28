@@ -112,6 +112,12 @@
             builder: (context) =&gt; LoginPage(LoginPageArguments()),
             settings: settings);
       }
+    case Routes.profileSetup:
+      {
+        return customRoute(
+            builder: (context) =&gt; ProfileSetup(), settings: settings);
+      }
+
     case Routes.intro:
       {
         return customRoute(

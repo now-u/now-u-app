@@ -71,7 +71,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future fetchFAQs() async {
   try {
-    var response = await http.get(Uri.parse(domainPrefix + &quot;faqs&quot;));
+    var response = await http.get(Uri.parse(CAUSES_API_URL + &quot;faqs&quot;));
     if (response.statusCode != 200) {
       return false;
     }
@@ -114,7 +114,6 @@
         <li class="section-title">
           <a href="../../services_faq_service/FAQService-class.html#instance-properties">Properties</a>
         </li>
-          <li><a href="../../services_faq_service/FAQService/domainPrefix.html">domainPrefix</a></li>
           <li><a href="../../services_faq_service/FAQService/faqs.html">faqs</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>

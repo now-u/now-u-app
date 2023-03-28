@@ -124,11 +124,11 @@ Widget build(BuildContext context) {
             return ScrollableSheetPage(
               header: model.notifications!.length &gt; 0
                   ? HeaderWithNotifications(
-                      name: model.currentUser!.getName(),
+                      name: model.currentUser?.getName(),
                       notification: model.notifications![0],
                       dismissNotification: model.dismissNotification,
                     )
-                  : HeaderStyle1(name: model.currentUser!.getName()),
+                  : HeaderStyle1(name: model.currentUser?.getName()),
               children: [
                 Column(children: &lt;Widget&gt;[
                   SizedBox(
@@ -150,11 +150,13 @@ Widget build(BuildContext context) {
                   SizedBox(height: 30),
 
                   &#47;&#47; Campaigns
-                  ProgressTile(
-                    campaignsScore: model.numberOfCompletedCampaigns,
-                    actionsScore: model.numberOfCompletedActions,
-                    learningsScore: model.numberOfCompletedLearningResources,
-                  ),
+                  if (model.currentUser != null)
+                    ProgressTile(
+                      campaignsScore: model.numberOfCompletedCampaigns,
+                      actionsScore: model.numberOfCompletedActions,
+                      learningsScore:
+                          model.numberOfCompletedLearningResources,
+                    ),
 
                   SizedBox(height: 30),
                   ExploreSectionWidget.fromModel(model.myCampaigns, model),

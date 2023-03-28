@@ -74,6 +74,9 @@
 
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
+  final _supabaseService = locator&lt;SupabaseService&gt;();
+  await _supabaseService.init();
+
   final DynamicLinkService _dynamicLinkService =
       locator&lt;DynamicLinkService&gt;();
   await _dynamicLinkService.handleDynamicLinks();
@@ -92,9 +95,20 @@
   await _sharedPreferencesService.init();
 
   var currentUser = await _authenticationService.fetchUser();
+  print(&quot;Auth success current user is: &quot;);
+  print(currentUser);
+  &#47;&#47; _navigationService.navigateTo(
+  &#47;&#47;     currentUser != null ? Routes.home : Routes.intro,
+  &#47;&#47;     clearHistory: true);
+  &#47;&#47; var currentSession = _supabaseService.client.auth.currentSession;
 
+  &#47;&#47; TODO Check if user has profile and navigate accordingly, probably share this logic as well
   _navigationService.navigateTo(
-      currentUser != null ? Routes.home : Routes.intro,
+      currentUser == null
+          ? Routes.intro
+          : currentUser.hasProfile
+              ? Routes.home
+              : Routes.profileSetup,
       clearHistory: true);
 }</code></pre>
 </section>

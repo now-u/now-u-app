@@ -68,8 +68,8 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">final myActions = exploreSectionFromArgs(ExploreSectionArguments(
   title: &quot;What can I do today?&quot;,
+  &#47;&#47; TODO Fix, this should only filter by completed if there is an active user
   baseParams: {
-    &#47;&#47; TODO This isn&#39;t working
     &quot;completed&quot;: false,
   },
   type: ExploreSectionType.Action,

@@ -66,7 +66,11 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">factory User.fromJson(Map&lt;String, dynamic&gt; data) =&gt; _$UserFromJson(data);</code></pre>
+  <pre class="language-dart"><code class="language-dart">factory User.fromJson(Map&lt;String, dynamic&gt; data) {
+  print(&quot;Calling user from json with &quot;);
+  print(data);
+  return _$UserFromJson(data);
+}</code></pre>
 </section>
 
 
@@ -105,6 +109,7 @@
           <li><a href="../../models_User/User/email.html">email</a></li>
           <li><a href="../../models_User/User/fullName.html">fullName</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+          <li><a href="../../models_User/User/hasProfile.html">hasProfile</a></li>
           <li><a href="../../models_User/User/homeOwner.html">homeOwner</a></li>
           <li><a href="../../models_User/User/id.html">id</a></li>
           <li><a href="../../models_User/User/isStagingUser.html">isStagingUser</a></li>

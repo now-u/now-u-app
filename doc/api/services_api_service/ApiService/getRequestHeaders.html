@@ -83,7 +83,8 @@ also be added to the headers.</p>
   final AuthenticationService _authService = locator&lt;AuthenticationService&gt;();
   if (_authService.isAuthenticated) {
     &#47;&#47; We know a token must exist as the user is authenticated
-    headers[&#39;token&#39;] = _authService.token!;
+    &#47;&#47; headers[&#39;token&#39;] = _authService.token!;
+    headers[&#39;Authorization&#39;] = &quot;JWT ${_authService.token!}&quot;;
   }
   return headers;
 }</code></pre>

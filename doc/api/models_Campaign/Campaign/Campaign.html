@@ -64,10 +64,10 @@
 <li><span class="parameter" id="-param-cause"><span>required</span> <span class="type-annotation"><a href="../../models_Cause/ListCause-class.html">ListCause</a></span> <span class="parameter-name">cause</span>, </span></li>
 <li><span class="parameter" id="-param-startDate"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/DateTime-class.html">DateTime</a>?</span> <span class="parameter-name">startDate</span>, </span></li>
 <li><span class="parameter" id="-param-endDate"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/DateTime-class.html">DateTime</a>?</span> <span class="parameter-name">endDate</span>, </span></li>
+<li><span class="parameter" id="-param-videoLink"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">videoLink</span>, </span></li>
 <li><span class="parameter" id="-param-description"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">description</span>, </span></li>
 <li><span class="parameter" id="-param-actions"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../models_Action/ListCauseAction-class.html">ListCauseAction</a></span>&gt;</span></span> <span class="parameter-name">actions</span>, </span></li>
 <li><span class="parameter" id="-param-learningResources"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../models_Learning/LearningResource-class.html">LearningResource</a></span>&gt;</span></span> <span class="parameter-name">learningResources</span>, </span></li>
-<li><span class="parameter" id="-param-videoLink"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">videoLink</span>, </span></li>
 <li><span class="parameter" id="-param-infographicUrl"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">infographicUrl</span>, </span></li>
 <li><span class="parameter" id="-param-generalPartners"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../models_Organisation/Organisation-class.html">Organisation</a></span>&gt;</span></span> <span class="parameter-name">generalPartners</span> = <span class="default-value">const []</span>, </span></li>
 <li><span class="parameter" id="-param-campaignPartners"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../models_Organisation/Organisation-class.html">Organisation</a></span>&gt;</span></span> <span class="parameter-name">campaignPartners</span> = <span class="default-value">const []</span>, </span></li>
@@ -91,10 +91,10 @@
   required ListCause cause,
   DateTime? startDate,
   DateTime? endDate,
+  this.videoLink,
   required this.description,
   required this.actions,
   required this.learningResources,
-  required this.videoLink,
   required this.infographicUrl,
   this.generalPartners = const [],
   this.campaignPartners = const [],

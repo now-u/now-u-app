@@ -179,19 +179,6 @@
 
 </dd>
 
-        <dt id="login" class="callable">
-  <span class="name"><a href="../services_auth/AuthenticationService/login.html">login</a></span><span class="signature">(<wbr><span class="parameter" id="login-param-email"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">email</span>, </span><span class="parameter" id="login-param-emailToken"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">emailToken</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
-  </span>
-  
-
-</dt>
-<dd>
-  
-  
-
-</dd>
-
         <dt id="logout" class="callable">
   <span class="name"><a href="../services_auth/AuthenticationService/logout.html">logout</a></span><span class="signature">(<wbr>)
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
@@ -218,8 +205,47 @@
 
 </dd>
 
-        <dt id="sendSignInWithEmailLink" class="callable">
-  <span class="name"><a href="../services_auth/AuthenticationService/sendSignInWithEmailLink.html">sendSignInWithEmailLink</a></span><span class="signature">(<wbr><span class="parameter" id="sendSignInWithEmailLink-param-email"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">email</span>, </span><span class="parameter" id="sendSignInWithEmailLink-param-name"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span>, </span><span class="parameter" id="sendSignInWithEmailLink-param-acceptNewletter"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">acceptNewletter</span></span>)
+        <dt id="sendSignInEmail" class="callable">
+  <span class="name"><a href="../services_auth/AuthenticationService/sendSignInEmail.html">sendSignInEmail</a></span><span class="signature">(<wbr><span class="parameter" id="sendSignInEmail-param-email"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">email</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+        <dt id="signInWithCode" class="callable">
+  <span class="name"><a href="../services_auth/AuthenticationService/signInWithCode.html">signInWithCode</a></span><span class="signature">(<wbr><span class="parameter" id="signInWithCode-param-email"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">email</span>, </span><span class="parameter" id="signInWithCode-param-code"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">code</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+        <dt id="signInWithFacebook" class="callable">
+  <span class="name"><a href="../services_auth/AuthenticationService/signInWithFacebook.html">signInWithFacebook</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+        <dt id="signInWithGoogle" class="callable">
+  <span class="name"><a href="../services_auth/AuthenticationService/signInWithGoogle.html">signInWithGoogle</a></span><span class="signature">(<wbr>)
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
   </span>
   
@@ -308,6 +334,8 @@
 
 
 
+      <li class="section-title"><a href="../services_auth/services_auth-library.html#constants">Constants</a></li>
+        <li><a href="../services_auth/LOGIN_REDIRECT_URL-constant.html">LOGIN_REDIRECT_URL</a></li>
 
 
 
@@ -337,10 +365,12 @@
           <li><a href="../services_auth/AuthenticationService/deleteUserAccount.html">deleteUserAccount</a></li>
           <li><a href="../services_auth/AuthenticationService/fetchUser.html">fetchUser</a></li>
           <li><a href="../services_auth/AuthenticationService/isUserLoggedIn.html">isUserLoggedIn</a></li>
-          <li><a href="../services_auth/AuthenticationService/login.html">login</a></li>
           <li><a href="../services_auth/AuthenticationService/logout.html">logout</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-          <li><a href="../services_auth/AuthenticationService/sendSignInWithEmailLink.html">sendSignInWithEmailLink</a></li>
+          <li><a href="../services_auth/AuthenticationService/sendSignInEmail.html">sendSignInEmail</a></li>
+          <li><a href="../services_auth/AuthenticationService/signInWithCode.html">signInWithCode</a></li>
+          <li><a href="../services_auth/AuthenticationService/signInWithFacebook.html">signInWithFacebook</a></li>
+          <li><a href="../services_auth/AuthenticationService/signInWithGoogle.html">signInWithGoogle</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
           <li><a href="../services_auth/AuthenticationService/updateUserDetails.html">updateUserDetails</a></li>
 
