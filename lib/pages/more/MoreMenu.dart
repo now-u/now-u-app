@@ -76,6 +76,10 @@ final profileTiles = <Map>[
     'profileTile': ProfileTile("Privacy notice", CustomIcons.ic_privacy),
     'link': PRIVACY_POLICY_URL,
   },
+  {
+    'profileTile': ProfileTile("Logout", CustomIcons.ic_privacy),
+    'function': (BaseModel model) => model.logout(),
+  },
 ];
 
 ///The More page ![More Page](https://i.ibb.co/xDHyMPj/slack.png)
@@ -139,7 +143,7 @@ class Profile extends StatelessWidget {
                                           false);
                                 } else if (profileTiles[index]["function"] !=
                                     null) {
-                                  profileTiles[index]["function"]();
+                                  profileTiles[index]["function"](model);
                                 }
                               },
                               child: profileTiles[index]["profileTile"],
@@ -168,7 +172,7 @@ class Profile extends StatelessWidget {
                     SizedBox(height: 20),
 
                     // Dev Tools
-                    model.currentUser!.isStagingUser
+                    model.currentUser?.isStagingUser == true
                         ? Column(children: [
                             GestureDetector(
                                 child: ProfileTile(

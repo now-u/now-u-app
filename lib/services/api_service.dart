@@ -1,3 +1,4 @@
+import 'package:app/assets/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -40,9 +41,7 @@ class ApiService {
   ApiService(this.client);
 
   /// Base of url (no slashes)
-  // String baseUrl =
-  //     constants.devMode ? "staging.api.now-u.com" : "api.now-u.com";
-  String baseUrl = "staging.api.now-u.com";
+  String baseUrl = CAUSES_API_URL;
 
   /// The base path of the url (after the baseUrl)
   String baseUrlPath = "api/";
@@ -74,7 +73,8 @@ class ApiService {
     final AuthenticationService _authService = locator<AuthenticationService>();
     if (_authService.isAuthenticated) {
       // We know a token must exist as the user is authenticated
-      headers['token'] = _authService.token!;
+      // headers['token'] = _authService.token!;
+      headers['Authorization'] = "JWT ${_authService.token!}";
     }
     return headers;
   }

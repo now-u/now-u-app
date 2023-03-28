@@ -17,7 +17,7 @@ List<String> stagingUsers = [
 @JsonSerializable()
 class User {
   int id;
-  String fullName;
+  String? fullName;
 
   @JsonKey(name: "cause_ids")
   List<int> selectedCauseIds;
@@ -44,15 +44,16 @@ class User {
   set setOrganisation(Organisation? org) => _organisation = org;
 
   bool get isStagingUser => stagingUsers.contains(this.email);
+  bool get hasProfile => fullName != null && selectedCauseIds.length > 0;
 
   User({
     required this.id,
-    required this.fullName,
+    required this.email,
     required this.selectedCauseIds,
     required this.completedCampaignIds,
     required this.completedActionIds,
     required this.completedLearningResourceIds,
-    this.email,
+    this.fullName,
     this.dateOfBirth,
     this.location,
     this.monthlyDonationLimit,
@@ -63,7 +64,11 @@ class User {
     _organisation = organisation;
   }
 
-  factory User.fromJson(Map<String, dynamic> data) => _$UserFromJson(data);
+  factory User.fromJson(Map<String, dynamic> data) {
+    print("Calling user from json with ");
+    print(data);
+    return _$UserFromJson(data);
+  }
 
   Map getAttributes() {
     return {
@@ -126,7 +131,7 @@ class User {
     }
   }
 
-  String getName() {
+  String? getName() {
     return fullName;
   }
 
@@ -142,7 +147,7 @@ class User {
     return location;
   }
 
-  void setName(String name) {
+  void setName(String? name) {
     this.fullName = name;
   }
 

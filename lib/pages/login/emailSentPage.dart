@@ -28,10 +28,12 @@ class EmailSentPage extends StatelessWidget {
     return ViewModelBuilder<LoginViewModel>.reactive(
         viewModelBuilder: () => LoginViewModel(),
         onModelReady: (model) {
-          if (args.token != null) {
-            model.login(email: args.email, token: args.token!);
-          }
+          model.init();
+          // if (args.token != null) {
+          //   model.login(email: args.email, token: args.token!);
+          // }
         },
+        onDispose: (model) => model.dispose(),
         builder: (context, model, child) {
           return Stack(children: <Widget>[
             Scaffold(
