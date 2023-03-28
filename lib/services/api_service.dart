@@ -112,9 +112,7 @@ class ApiService {
       );
     }
 
-    // TODO Put back to https
-    // final uri = Uri.https(baseUrl, baseUrlPath + path, stringParams);
-    final uri = Uri.http(baseUrl, baseUrlPath + path, stringParams);
+    final uri = Uri.https(baseUrl, baseUrlPath + path, stringParams);
     print("Making request: ${uri.toString()}, headers: ${getRequestHeaders()}");
     http.Response response = await client.get(
       uri,
@@ -167,9 +165,8 @@ class ApiService {
   /// unsuccessful.
   Future<Map<String, dynamic>> postRequest(String path,
       {Map<String, dynamic>? body}) async {
-    // TODO Put back
-    // final uri = Uri.https(baseUrl, baseUrlPath + path);
-    final uri = Uri.http(baseUrl, baseUrlPath + path);
+
+    final uri = Uri.https(baseUrl, baseUrlPath + path);
     print(
         "Making request: ${uri.toString()}, body: $body, headers: ${getRequestHeaders()}");
 
@@ -193,9 +190,7 @@ class ApiService {
   /// Returns Map of the response. Throws an [ApiException] if the request is
   /// unsuccessful.
   Future<Map> putRequest(String path, {Map<String, dynamic>? body}) async {
-    // TODO Fix
-    // final uri = Uri.https(baseUrl, baseUrlPath + path);
-    final uri = Uri.http(baseUrl, baseUrlPath + path);
+    final uri = Uri.https(baseUrl, baseUrlPath + path);
     print(
         "Making request: ${uri.toString()}, body: $body, headers: ${getRequestHeaders()}");
     http.Response response = await client.put(
