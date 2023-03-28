@@ -165,7 +165,6 @@ class ApiService {
   /// unsuccessful.
   Future<Map<String, dynamic>> postRequest(String path,
       {Map<String, dynamic>? body}) async {
-
     final uri = Uri.https(baseUrl, baseUrlPath + path);
     print(
         "Making request: ${uri.toString()}, body: $body, headers: ${getRequestHeaders()}");
