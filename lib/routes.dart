@@ -9,6 +9,7 @@ import 'package:app/pages/intro/IntroPage.dart';
 import 'package:app/pages/login/emailSentPage.dart';
 import 'package:app/pages/login/login.dart';
 import 'package:app/pages/login/login_code_view.dart';
+import 'package:app/pages/login/profile_setup.dart';
 import 'package:app/pages/more/morePages/AccountDetailsPage.dart';
 import 'package:app/pages/more/morePages/FAQPage.dart';
 import 'package:app/pages/more/morePages/PartnersPage.dart';
@@ -28,6 +29,7 @@ class Routes {
   static const emailSent = "emailSent";
   static const loginCodeInput = "loginCodeInput";
   static const loginLinkClicked = "loginLinkClicked";
+  static const profileSetup = "profileSetup";
 
   // Tab View Routes
   static const campaign = "campaign";
@@ -99,6 +101,12 @@ Function initRoutes = (RouteSettings settings) {
             builder: (context) => LoginPage(LoginPageArguments()),
             settings: settings);
       }
+    case Routes.profileSetup:
+      {
+        return customRoute(
+            builder: (context) => ProfileSetup(), settings: settings);
+      }
+
     case Routes.intro:
       {
         return customRoute(

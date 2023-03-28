@@ -35,8 +35,8 @@ class HomeViewModel extends BaseModel with ExploreViewModelMixin {
 
   final myActions = exploreSectionFromArgs(ExploreSectionArguments(
     title: "What can I do today?",
+    // TODO Fix, this should only filter by completed if there is an active user
     baseParams: {
-      // TODO This isn't working
       "completed": false,
     },
     type: ExploreSectionType.Action,
@@ -80,15 +80,15 @@ class HomeViewModel extends BaseModel with ExploreViewModelMixin {
       _internalNotificationService.notifications;
 
   int get numberOfCompletedCampaigns {
-    return _authService.currentUser!.completedCampaignIds.length;
+    return currentUser!.completedCampaignIds.length;
   }
 
   int get numberOfCompletedActions {
-    return _authService.currentUser!.completedActionIds.length;
+    return currentUser!.completedActionIds.length;
   }
 
   int get numberOfCompletedLearningResources {
-    return _authService.currentUser!.completedLearningResourceIds.length;
+    return currentUser!.completedLearningResourceIds.length;
   }
 
   // getNotifications

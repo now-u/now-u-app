@@ -59,7 +59,7 @@ String descriptionFromJson(String value) {
 class Campaign extends ListCampaign {
   @JsonKey(fromJson: descriptionFromJson, name: "description_app")
   final String description;
-  final String videoLink;
+  final String? videoLink;
   final String infographicUrl;
 
   final List<Organisation> generalPartners;
@@ -85,10 +85,10 @@ class Campaign extends ListCampaign {
     required ListCause cause,
     DateTime? startDate,
     DateTime? endDate,
+    this.videoLink,
     required this.description,
     required this.actions,
     required this.learningResources,
-    required this.videoLink,
     required this.infographicUrl,
     this.generalPartners = const [],
     this.campaignPartners = const [],

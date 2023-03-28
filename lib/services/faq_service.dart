@@ -1,11 +1,10 @@
+import 'package:app/assets/constants.dart';
 import 'package:app/models/FAQ.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class FAQService {
-  String domainPrefix = "https://api.now-u.com/api/v1/";
-
   List<FAQ>? _faqs = [];
   List<FAQ>? get faqs {
     return _faqs;
@@ -13,7 +12,7 @@ class FAQService {
 
   Future fetchFAQs() async {
     try {
-      var response = await http.get(Uri.parse(domainPrefix + "faqs"));
+      var response = await http.get(Uri.parse(CAUSES_API_URL + "faqs"));
       if (response.statusCode != 200) {
         return false;
       }

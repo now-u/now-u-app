@@ -32,11 +32,11 @@ class Home extends StatelessWidget {
               return ScrollableSheetPage(
                 header: model.notifications!.length > 0
                     ? HeaderWithNotifications(
-                        name: model.currentUser!.getName(),
+                        name: model.currentUser?.getName(),
                         notification: model.notifications![0],
                         dismissNotification: model.dismissNotification,
                       )
-                    : HeaderStyle1(name: model.currentUser!.getName()),
+                    : HeaderStyle1(name: model.currentUser?.getName()),
                 children: [
                   Column(children: <Widget>[
                     SizedBox(
@@ -58,11 +58,13 @@ class Home extends StatelessWidget {
                     SizedBox(height: 30),
 
                     // Campaigns
-                    ProgressTile(
-                      campaignsScore: model.numberOfCompletedCampaigns,
-                      actionsScore: model.numberOfCompletedActions,
-                      learningsScore: model.numberOfCompletedLearningResources,
-                    ),
+                    if (model.currentUser != null)
+                      ProgressTile(
+                        campaignsScore: model.numberOfCompletedCampaigns,
+                        actionsScore: model.numberOfCompletedActions,
+                        learningsScore:
+                            model.numberOfCompletedLearningResources,
+                      ),
 
                     SizedBox(height: 30),
                     ExploreSectionWidget.fromModel(model.myCampaigns, model),
@@ -137,7 +139,7 @@ class HeaderStyle1 extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(
                 15, MediaQuery.of(context).size.height * 0.1, 0, 0),
             child: Text(
-              "Welcome \n$name!",
+              name != null ? "Welcome \n$name!" : "Welcome!",
               style: textStyleFrom(
                 Theme.of(context).primaryTextTheme.headline2,
                 color: Colors.white,

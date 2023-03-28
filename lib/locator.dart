@@ -20,6 +20,8 @@ import 'package:app/services/causes_service.dart';
 import 'package:app/assets/constants.dart' as constants;
 
 import 'package:app/services/fake/fake_causes_service.dart';
+import 'package:app/services/superbase.dart';
+import 'package:app/services/user_service.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:flutter/widgets.dart';
@@ -39,6 +41,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => SecureStorageService());
   locator.registerLazySingleton(() => SharedPreferencesService());
   locator.registerLazySingleton(() => AuthenticationService());
+  locator.registerLazySingleton(() => UserService());
   locator.registerLazySingleton(
       () => USE_FAKE_SERVICES ? FakeNewsService() : NewsService());
   locator.registerLazySingleton(() => FAQService());
@@ -51,6 +54,7 @@ void setupLocator() {
   // locator.registerLazySingleton(() => constants.devMode ? FakeCausesService() : CausesService());
   locator.registerLazySingleton(() => CausesService());
   locator.registerLazySingleton(() => ApiService(new http.Client()));
+  locator.registerLazySingleton(() => SupabaseService());
 }
 
 void registerFirebaseServicesToLocator() {

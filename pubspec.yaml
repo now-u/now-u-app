@@ -67,6 +67,8 @@ dependencies:
   json_annotation: ^4.6.0
   faker: ^2.0.0
 
+  supabase_flutter: ^1.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

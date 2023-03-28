@@ -73,7 +73,7 @@ void main() {
       // Expect token to be included in the response
       expect(apiService.getRequestHeaders(), {
         'Content-Type': 'application/json; charset=UTF-8',
-        'token': 'abc',
+        'Authorization': 'JWT abc',
       });
     });
   });
