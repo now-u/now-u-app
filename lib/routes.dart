@@ -106,7 +106,7 @@ Function initRoutes = (RouteSettings settings) {
         return customRoute(
             builder: (context) => ProfileSetup(), settings: settings);
       }
-    
+
     case Routes.intro:
       {
         return customRoute(

@@ -59,11 +59,12 @@ class Home extends StatelessWidget {
 
                     // Campaigns
                     if (model.currentUser != null)
-                        ProgressTile(
-                          campaignsScore: model.numberOfCompletedCampaigns,
-                          actionsScore: model.numberOfCompletedActions,
-                          learningsScore: model.numberOfCompletedLearningResources,
-                        ),
+                      ProgressTile(
+                        campaignsScore: model.numberOfCompletedCampaigns,
+                        actionsScore: model.numberOfCompletedActions,
+                        learningsScore:
+                            model.numberOfCompletedLearningResources,
+                      ),
 
                     SizedBox(height: 30),
                     ExploreSectionWidget.fromModel(model.myCampaigns, model),

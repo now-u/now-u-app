@@ -25,7 +25,8 @@ class ProfileSetupViewModel extends BaseModel {
   void saveAndNavigate() async {
     setBusy(true);
     // We know name is defined here as the form is valid
-    await _userSerivce.updateUser(name: name!, newsLetterSignup: signUpForNewsLetter);
+    await _userSerivce.updateUser(
+        name: name!, newsLetterSignup: signUpForNewsLetter);
     setBusy(false);
     _navigationService.navigateTo(Routes.causesOnboardingPage);
   }

@@ -19,10 +19,11 @@ class LoginViewModel extends BaseModel {
       locator<AuthenticationService>();
   final NavigationService _navigationService = locator<NavigationService>();
   final DialogService _dialogService = locator<DialogService>();
-  final SecureStorageService _secureStroageService = locator<SecureStorageService>();
+  final SecureStorageService _secureStroageService =
+      locator<SecureStorageService>();
 
   late final StreamSubscription<AuthState> _authStateSubscription;
-  final _supabaseService = locator<SupabaseService>(); 
+  final _supabaseService = locator<SupabaseService>();
 
   String _email = "";
   void set email(String email) {
@@ -31,18 +32,19 @@ class LoginViewModel extends BaseModel {
   }
 
   void init() {
-    _authStateSubscription = _supabaseService.client.auth.onAuthStateChange.listen((event) async {
-        print("Auth state has changed!");
-        User? user = await _authenticationService.fetchUser();
-        assert(user != null, "User not found by auth service");
+    _authStateSubscription =
+        _supabaseService.client.auth.onAuthStateChange.listen((event) async {
+      print("Auth state has changed!");
+      User? user = await _authenticationService.fetchUser();
+      assert(user != null, "User not found by auth service");
 
-        print("Stuff");
-        if (!user!.hasProfile) {
-          print("Navigating to profile setup");
-          _navigationService.navigateTo(Routes.profileSetup, clearHistory: true);
-        } else {
-          _navigationService.navigateTo(Routes.home, clearHistory: true);
-        }
+      print("Stuff");
+      if (!user!.hasProfile) {
+        print("Navigating to profile setup");
+        _navigationService.navigateTo(Routes.profileSetup, clearHistory: true);
+      } else {
+        _navigationService.navigateTo(Routes.home, clearHistory: true);
+      }
     });
   }
 
@@ -51,12 +53,13 @@ class LoginViewModel extends BaseModel {
     super.dispose();
     _authStateSubscription.cancel();
   }
-  
+
   Future sendLoginEmail() async {
     await _authenticationService.sendSignInEmail(_email);
-    _navigationService.navigateTo(Routes.emailSent, arguments: EmailSentPageArguments(email: _email), clearHistory: true);
+    _navigationService.navigateTo(Routes.emailSent,
+        arguments: EmailSentPageArguments(email: _email), clearHistory: true);
   }
-  
+
   Future loginWithGoogle() async {
     await _authenticationService.signInWithGoogle();
   }
@@ -75,8 +78,10 @@ class LoginViewModel extends BaseModel {
       setBusy(false);
     } catch (e) {
       setBusy(false);
-      await _dialogService.showDialog(
-          BasicDialog(title: "Login error", description: "Authentication failed, please double check your token from the email"));
+      await _dialogService.showDialog(BasicDialog(
+          title: "Login error",
+          description:
+              "Authentication failed, please double check your token from the email"));
     }
   }
 

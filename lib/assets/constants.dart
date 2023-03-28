@@ -17,7 +17,7 @@ const TERMS_AND_CONDITIONS_URL =
 
 const CAUSES_API_URL = "192.168.1.65:3001";
 // const CAUSES_API_URL = "staging.api.now-u.com";
-  // devMode ? "staging.api.now-u.com" : "api.now-u.com";
+// devMode ? "staging.api.now-u.com" : "api.now-u.com";
 
 class CustomColors {
   /// Primary brand color

@@ -9,20 +9,22 @@ class UserService {
   User? get currentUser => _currentUser;
 
   final ApiService _apiService = locator<ApiService>();
-  final AuthenticationService _authenticationService = locator<AuthenticationService>();
+  final AuthenticationService _authenticationService =
+      locator<AuthenticationService>();
 
   Future<User?> fetchUser() async {
     if (!_authenticationService.isAuthenticated) {
-        return null;
+      return null;
     }
 
     try {
-        User user = await _apiService.getModelRequest('v1/users/me', User.fromJson);
-        // Update the user in the service
-        _currentUser = user;
-        return user;
+      User user =
+          await _apiService.getModelRequest('v1/users/me', User.fromJson);
+      // Update the user in the service
+      _currentUser = user;
+      return user;
     } catch (err) {
-        return null;
+      return null;
     }
   }
 

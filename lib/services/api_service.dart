@@ -167,7 +167,7 @@ class ApiService {
   /// unsuccessful.
   Future<Map<String, dynamic>> postRequest(String path,
       {Map<String, dynamic>? body}) async {
-    // TODO Put back 
+    // TODO Put back
     // final uri = Uri.https(baseUrl, baseUrlPath + path);
     final uri = Uri.http(baseUrl, baseUrlPath + path);
     print(
