@@ -84,11 +84,9 @@ has completed the resource. // TODO Do this</p>
   <dt>Annotations</dt>
   <dd>
     <ul class="annotation-list clazz-relationships">
-        <li>@<a href="https://pub.dev/documentation/json_annotation/4.8.0/json_annotation/JsonSerializable-class.html">JsonSerializable</a>()</li>
+        <li>@JsonSerializable()</li>
     </ul>
   </dd>
-
-
       </dl>
     </section>
 
@@ -125,7 +123,7 @@ has completed the resource. // TODO Do this</p>
 </dt>
 <dd>
   
-  <div class="features"><span class="feature">final</span></div>
+  <div class="features"><span class="">@JsonKey(fromJson: causeFromJson, name: &quot;causes&quot;)</span><span class="feature">final</span></div>
 
 </dd>
 
@@ -136,7 +134,7 @@ has completed the resource. // TODO Do this</p>
 </dt>
 <dd>
   
-  <div class="features"><span class="feature">final</span></div>
+  <div class="features"><span class="">@JsonKey(fromJson: authBooleanSerializer, name: &quot;completed&quot;)</span><span class="feature">final</span></div>
 
 </dd>
 
@@ -257,7 +255,7 @@ has completed the resource. // TODO Do this</p>
 </dt>
 <dd>
   The type of the resource (eg article/video)
-  <div class="features"><span class="feature">final</span></div>
+  <div class="features"><span class="">@JsonKey(fromJson: getResourceTypeFromString)</span><span class="feature">final</span></div>
 
 </dd>
 

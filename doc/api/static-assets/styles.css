@@ -88,18 +88,6 @@
   cursor: pointer;
 }
 
-/*
-Only show images that fit their theme using GitHub's syntax, see:
-https://github.blog/changelog/2021-11-24-specify-theme-context-for-images-in-markdown/
-*/
-.dark-theme img[src$="#gh-light-mode-only"] {
-  display: none;
-}
-
-.light-theme img[src$="#gh-dark-mode-only"] {
-  display: none;
-}
-
 /* for layout */
 html,
 body {
@@ -1063,7 +1051,7 @@ button {
 .navbar-right .tt-menu {
   right: 0;
   left: inherit !important;
-  width: 540px;
+  width: 480px;
   max-height: 280px;
   overflow-y: scroll;
 }
@@ -1092,6 +1080,16 @@ button {
           box-shadow: 0 5px 10px rgba(0,0,0,.2);
 }
 
+.tt-suggestion {
+  color: var(--main-text-color);
+  margin-top: 5px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  border-style: solid;
+  border-color: lightgrey;
+  border-width: 0.5px;
+}
 
 .typeahead, .tt-query, .tt-hint {
   padding: 17px;
@@ -1112,7 +1110,7 @@ button {
   margin-bottom: 10px;
 }
 
-a.tt-container {
+a.tt-category-title {
   font-size: 16px;
   color: var(--main-hyperlinks-color);
 }
@@ -1127,7 +1125,7 @@ a.tt-container {
   margin: 0px;
   clear: both;
   text-align: center;
-  color: black;
+  text-color: black;
 }
 
 .tt-suggestion:hover {
@@ -1153,99 +1151,19 @@ a.tt-container {
   margin: 0;
 }
 
-.tt-container {
+.tt-category-title {
   font-size: 14px;
+  margin-left: 10px;
   margin-bottom: 0px;
   margin-top: 15px;
 }
 
-.tt-container-text {
-  color: var(--main-text-color);
-}
-
-
-/* Search results formatting for mini results below search bar. */
-
-.tt-search-results .tt-container {
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
-/* Do not show the container as a section. */
-.tt-search-results .tt-container-text {
-  display: none
-}
-
-/* An inline style. */
-.tt-search-results .tt-suggestion {
-  color: var(--main-text-color);
-  margin-top: 5px;
-  overflow: hidden;
-  padding-left: 10px;
-  padding-right: 10px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.tt-search-results .tt-suggestion-title {
-  font-size: 14px;
-  padding-right: 5px;
-}
-
-.tt-search-results .tt-suggestion-container {
-  color: var(--main-keyword-color);
-  font-size: 14px;
-  font-style: italic;
-  padding-right: 5px;
-}
-
-.tt-search-results .one-line-description {
-  color: var(--main-keyword-color);
-  display: inline;
-  margin-left: 0;
-}
-
-
-.tt-search-results .one-line-description::before {
-  content: open-quote;
-}
-
-.tt-search-results .one-line-description::after {
-  content: close-quote;
-}
-
-/* Search results formatting for `search.html`. */
-
-/* A block style. */
-#dartdoc-main-content .tt-suggestion {
-  color: var(--main-text-color);
-  margin-top: 5px;
-  margin-bottom: 10px;
-  border-style: solid;
-  border-color: lightgrey;
-  border-width: 0.5px;
-}
-
-#dartdoc-main-content .tt-suggestion-title {
-  display: block;
-  font-weight: 500;
+.tt-suggestion-title {
+  font-size: 16px;
   margin-right: 10px;
   margin-left: 10px;
   margin-bottom: 0px;
   margin-top: 4px;
-}
-
-#dartdoc-main-content .one-line-description {
-  display: block;
-  margin-right:10px;
-  margin-left: 10px;
-  margin-bottom: 3px;
-  margin-top: 2px;
-}
-
-/* Do not show a result's container. */
-#dartdoc-main-content .tt-suggestion-container {
-  display: none;
 }
 
 .temp-box {
@@ -1299,6 +1217,14 @@ a.tt-container {
   }
 }
 
+.one-line-description {
+  font-size: 12px;
+  margin-right:10px;
+  margin-left: 10px;
+  margin-bottom: 3px;
+  margin-top: 2px;
+}
+
 .search-from-lib {
   font-style: italic;
   color: var(--main-text-color);
@@ -1328,14 +1254,14 @@ li.inherited a {
 #instance-methods dt.inherited .name,
 #instance-properties dt.inherited .name,
 #operators dt.inherited .name {
-  font-weight: 400;
+  font-weight: 300;
   font-style: italic;
 }
 
 #instance-methods dt.inherited .signature,
 #instance-properties dt.inherited .signature,
 #operators dt.inherited .signature {
-  font-weight: 400;
+  font-weight: 300;
 }
 
 @media print {
