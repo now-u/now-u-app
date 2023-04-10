@@ -42,7 +42,6 @@ Campaign _$CampaignFromJson(Map<String, dynamic> json) => Campaign(
       learningResources: (json['learning_resources'] as List<dynamic>)
           .map((e) => LearningResource.fromJson(e as Map<String, dynamic>))
           .toList(),
-      infographicUrl: json['infographic_url'] as String,
       generalPartners: (json['general_partners'] as List<dynamic>?)
               ?.map((e) => Organisation.fromJson(e as Map<String, dynamic>))
               .toList() ??

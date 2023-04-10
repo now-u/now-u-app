@@ -1,4 +1,4 @@
-name: app
+name: apppubspec.yaml
 description: A new Flutter project.
 
 # The following defines the version and build number for your application.
@@ -56,18 +56,20 @@ dependencies:
   device_info: ^2.0.2
   
   # Firebase
-  firebase_analytics: ^10.1.0
-  firebase_crashlytics: ^3.0.3
-  firebase_messaging: ^14.0.3
-  firebase_dynamic_links: ^5.0.3
-  firebase_remote_config: ^3.0.3
-  firebase_core: ^2.1.1
+  firebase_analytics: ^10.2.0
+  firebase_crashlytics: ^3.1.0
+  firebase_messaging: ^14.4.0
+  firebase_dynamic_links: ^5.1.0
+  firebase_remote_config: ^4.0.0
+  firebase_core: ^2.9.0
   collection: ^1.15.0-nullsafety.4
   json_serializable: ^6.3.1
   json_annotation: ^4.6.0
   faker: ^2.0.0
 
   supabase_flutter: ^1.0.0
+  sentry_flutter: ^7.4.0
+  meilisearch: ^0.10.1
 
 dev_dependencies:
   flutter_test:
@@ -164,6 +166,9 @@ flutter:
     - family: CustomIconsClipboard
       fonts:
         - asset: assets/fonts/Icons/CustomIconsClipboard.ttf
+    - family: CauseIcons 
+      fonts:
+        - asset: assets/fonts/Icons/CauseIcons.ttf
 
   #   - family: Schyler
   #     fonts:

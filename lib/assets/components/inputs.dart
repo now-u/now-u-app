@@ -18,6 +18,8 @@ class CustomTextFormField extends StatelessWidget {
   final String? initialValue;
   final TextCapitalization? textCapitalization;
   final TextEditingController? controller;
+  final Icon? prefixIcon;
+  final Icon? suffixIcon;
 
   CustomTextFormField({
     this.autofocus,
@@ -31,6 +33,8 @@ class CustomTextFormField extends StatelessWidget {
     this.validator,
     this.enabled,
     this.controller,
+    this.prefixIcon,
+    this.suffixIcon,
   });
 
   @override
@@ -60,6 +64,8 @@ class CustomTextFormField extends StatelessWidget {
             opacity: 0.5,
           ),
         ),
+        prefixIcon: prefixIcon,
+        suffixIcon: suffixIcon,
       ),
       initialValue: initialValue,
       enabled: enabled ?? true,

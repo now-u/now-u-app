@@ -14,6 +14,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 const double CIRCLE_1_RADIUS = 150;
 const double CIRCLE_2_RADIUS = 250;
 
+// TODO There is a bug on this page when you tap the last FAQ the answer is not visible without scrolling
+// Maybe need something like: https://stackoverflow.com/questions/49153087/flutter-scrolling-to-a-widget-in-listview
 class FAQPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

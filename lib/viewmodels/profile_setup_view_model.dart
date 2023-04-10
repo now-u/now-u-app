@@ -25,6 +25,7 @@ class ProfileSetupViewModel extends BaseModel {
   void saveAndNavigate() async {
     setBusy(true);
     // We know name is defined here as the form is valid
+    print("Setting name to: $name");
     await _userSerivce.updateUser(
         name: name!, newsLetterSignup: signUpForNewsLetter);
     setBusy(false);

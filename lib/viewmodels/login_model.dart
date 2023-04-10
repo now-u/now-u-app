@@ -36,10 +36,10 @@ class LoginViewModel extends BaseModel {
         _supabaseService.client.auth.onAuthStateChange.listen((event) async {
       print("Auth state has changed!");
       User? user = await _authenticationService.fetchUser();
-      assert(user != null, "User not found by auth service");
 
-      print("Stuff");
-      if (!user!.hasProfile) {
+      if (user == null) {
+        _dialogService.showDialog(BasicDialog(title: "Login failed", description: "Login failed"));
+      } else if (!user.hasProfile) {
         print("Navigating to profile setup");
         _navigationService.navigateTo(Routes.profileSetup, clearHistory: true);
       } else {

@@ -12,8 +12,9 @@ class FAQService {
 
   Future fetchFAQs() async {
     try {
-      var response = await http.get(Uri.parse(CAUSES_API_URL + "faqs"));
+      var response = await http.get(getCausesApiPath("v1/faqs"));
       if (response.statusCode != 200) {
+        print("Error whilst fetching FAQs");
         return false;
       }
       _faqs = json
@@ -22,6 +23,8 @@ class FAQService {
           .toList()
           .cast<FAQ>();
     } catch (e) {
+      print("Failed to fetch faqs");
+      print(e);
       return e.toString();
     }
   }

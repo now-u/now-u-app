@@ -18,8 +18,7 @@ class ProfileSetup extends StatelessWidget {
         if (value.isEmpty) return "Name cannot be empty";
         return null;
       },
-      onSaved: (value) {
-        print("Saved");
+      onChanged: (value) {
         model.name = value;
       },
       hintText: 'Jane Doe',

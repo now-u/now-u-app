@@ -5,9 +5,11 @@ import 'package:app/models/Campaign.dart';
 import 'package:app/models/Learning.dart';
 import 'package:app/services/api_service.dart';
 import 'package:app/services/auth.dart';
+import 'package:meilisearch/meilisearch.dart';
 
 class CausesService {
   final ApiService _apiService = locator<ApiService>();
+  final _meiliSearchClient = MeiliSearchClient('http://127.0.0.1:7700', 'master_key');
 
   /// Get a list of causes
   ///
@@ -114,4 +116,8 @@ class CausesService {
     // Update user after request
     await locator<AuthenticationService>().fetchUser();
   }
+
+  // Future<Searcheable> searchResources(String query) async {
+  //   return _meiliSearchClient.index("CampaignAction").search(query);
+  // }
 }

@@ -1,4 +1,5 @@
 import 'package:app/assets/components/buttons/darkButton.dart';
+import 'package:app/assets/components/searchBar.dart';
 import 'package:app/assets/constants.dart';
 import 'package:app/models/Action.dart';
 import 'package:app/pages/explore/ExploreSection.dart';
@@ -51,6 +52,10 @@ class ExplorePage extends StatelessWidget {
               ),
             ),
           ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 8),
+            child: SearchBar(),
+          ),
           if (model.hasLinks())
             Padding(
               padding: EdgeInsets.only(top: 10),
@@ -90,7 +95,9 @@ class ExplorePage extends StatelessWidget {
           return Scaffold(
               body: SingleChildScrollView(
             child: Column(
-                children: [_header(context, model)] +
+                children: [
+                    _header(context, model),
+                ] +
                     model.sections
                         .map((ExploreSection section) => ExploreSectionWidget(
                               data: section,

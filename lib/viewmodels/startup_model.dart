@@ -11,6 +11,7 @@ import 'package:app/services/superbase.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:app/viewmodels/base_model.dart';
 import 'package:flutter/material.dart';
+import 'dart:developer';
 
 class StartUpViewModel extends BaseModel {
   final AuthenticationService _authenticationService =
@@ -43,8 +44,6 @@ class StartUpViewModel extends BaseModel {
     await _sharedPreferencesService.init();
 
     var currentUser = await _authenticationService.fetchUser();
-    print("Auth success current user is: ");
-    print(currentUser);
     // _navigationService.navigateTo(
     //     currentUser != null ? Routes.home : Routes.intro,
     //     clearHistory: true);
