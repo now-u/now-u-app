@@ -1,9 +1,9 @@
-import 'package:app/viewmodels/base_model.dart';
+import 'package:nowu/viewmodels/base_model.dart';
 
-import 'package:app/locator.dart';
-import 'package:app/services/faq_service.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/faq_service.dart';
 
-import 'package:app/models/FAQ.dart';
+import 'package:nowu/models/FAQ.dart';
 
 class FAQViewModel extends BaseModel {
   final FAQService _faqService = locator<FAQService>();

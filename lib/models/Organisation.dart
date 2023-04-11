@@ -1,4 +1,4 @@
-import 'package:app/models/Campaign.dart';
+import 'package:nowu/models/Campaign.dart';
 
 class Organisation {
   int? id;

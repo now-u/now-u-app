@@ -1,12 +1,12 @@
-import 'package:app/assets/StyleFrom.dart';
-import 'package:app/viewmodels/intro_view_model.dart';
+import 'package:nowu/assets/StyleFrom.dart';
+import 'package:nowu/viewmodels/intro_view_model.dart';
 import 'package:flutter/material.dart';
 
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:rect_getter/rect_getter.dart';
 
-import 'package:app/assets/components/buttons/darkButton.dart';
-import 'package:app/assets/components/textButton.dart';
+import 'package:nowu/assets/components/buttons/darkButton.dart';
+import 'package:nowu/assets/components/textButton.dart';
 import 'package:stacked/stacked.dart';
 
 const curve = Curves.ease;

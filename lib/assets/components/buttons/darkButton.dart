@@ -1,5 +1,5 @@
-import 'package:app/assets/StyleFrom.dart';
-import 'package:app/assets/components/customTile.dart';
+import 'package:nowu/assets/StyleFrom.dart';
+import 'package:nowu/assets/components/customTile.dart';
 import 'package:flutter/material.dart';
 
 final double defaultBorderRadius = 8.0;

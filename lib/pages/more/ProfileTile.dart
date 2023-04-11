@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:app/assets/components/customTile.dart';
+import 'package:nowu/assets/components/customTile.dart';
 
 const double ICON_PADDING = 22;
 const double ITEM_HORIZONTAL = 10;

@@ -1,5 +1,5 @@
-import 'package:app/pages/login/login.dart';
-import 'package:app/viewmodels/base_model.dart';
+import 'package:nowu/pages/login/login.dart';
+import 'package:nowu/viewmodels/base_model.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rect_getter/rect_getter.dart';
 

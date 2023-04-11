@@ -1,10 +1,10 @@
-import 'package:app/models/User.dart';
-import 'package:app/locator.dart';
-import 'package:app/services/analytics.dart';
-import 'package:app/services/api_service.dart';
-import 'package:app/services/shared_preferences_service.dart';
-import 'package:app/services/device_info_service.dart';
-import 'package:app/services/superbase.dart';
+import 'package:nowu/models/User.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/analytics.dart';
+import 'package:nowu/services/api_service.dart';
+import 'package:nowu/services/shared_preferences_service.dart';
+import 'package:nowu/services/device_info_service.dart';
+import 'package:nowu/services/superbase.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide User;
 
 const LOGIN_REDIRECT_URL = "com.nowu.app://login-callback/";

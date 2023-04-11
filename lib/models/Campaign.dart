@@ -1,10 +1,10 @@
-import 'package:app/locator.dart';
-import 'package:app/models/Action.dart';
-import 'package:app/models/Cause.dart';
-import 'package:app/models/Explorable.dart';
-import 'package:app/models/Learning.dart';
-import 'package:app/models/Organisation.dart';
-import 'package:app/services/dynamicLinks.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/models/Action.dart';
+import 'package:nowu/models/Cause.dart';
+import 'package:nowu/models/Explorable.dart';
+import 'package:nowu/models/Learning.dart';
+import 'package:nowu/models/Organisation.dart';
+import 'package:nowu/services/dynamicLinks.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'Campaign.g.dart';
@@ -60,7 +60,6 @@ class Campaign extends ListCampaign {
   @JsonKey(fromJson: descriptionFromJson, name: "description_app")
   final String description;
   final String? videoLink;
-  final String infographicUrl;
 
   final List<Organisation> generalPartners;
   final List<Organisation> campaignPartners;
@@ -89,7 +88,6 @@ class Campaign extends ListCampaign {
     required this.description,
     required this.actions,
     required this.learningResources,
-    required this.infographicUrl,
     this.generalPartners = const [],
     this.campaignPartners = const [],
     this.keyAims = const [],

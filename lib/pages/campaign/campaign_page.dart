@@ -1,10 +1,10 @@
-import 'package:app/assets/components/cause_indicator.dart';
-import 'package:app/assets/components/custom_network_image.dart';
-import 'package:app/assets/components/explore_tiles.dart';
-import 'package:app/assets/constants.dart';
-import 'package:app/models/Campaign.dart';
-import 'package:app/models/Cause.dart';
-import 'package:app/pages/campaign/campaign_view_model.dart';
+import 'package:nowu/assets/components/cause_indicator.dart';
+import 'package:nowu/assets/components/custom_network_image.dart';
+import 'package:nowu/assets/components/explore_tiles.dart';
+import 'package:nowu/assets/constants.dart';
+import 'package:nowu/models/Campaign.dart';
+import 'package:nowu/models/Cause.dart';
+import 'package:nowu/pages/campaign/campaign_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 

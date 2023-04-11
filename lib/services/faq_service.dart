@@ -1,5 +1,5 @@
-import 'package:app/assets/constants.dart';
-import 'package:app/models/FAQ.dart';
+import 'package:nowu/assets/constants.dart';
+import 'package:nowu/models/FAQ.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -12,8 +12,9 @@ class FAQService {
 
   Future fetchFAQs() async {
     try {
-      var response = await http.get(Uri.parse(CAUSES_API_URL + "faqs"));
+      var response = await http.get(getCausesApiPath("v1/faqs"));
       if (response.statusCode != 200) {
+        print("Error whilst fetching FAQs");
         return false;
       }
       _faqs = json
@@ -22,6 +23,8 @@ class FAQService {
           .toList()
           .cast<FAQ>();
     } catch (e) {
+      print("Failed to fetch faqs");
+      print(e);
       return e.toString();
     }
   }

@@ -1,10 +1,10 @@
-import 'package:app/assets/StyleFrom.dart';
-import 'package:app/assets/components/buttons/darkButton.dart';
-import 'package:app/assets/components/inputs.dart';
-import 'package:app/assets/components/header.dart';
+import 'package:nowu/assets/StyleFrom.dart';
+import 'package:nowu/assets/components/buttons/darkButton.dart';
+import 'package:nowu/assets/components/inputs.dart';
+import 'package:nowu/assets/components/header.dart';
 import 'package:flutter/material.dart';
 
-import 'package:app/viewmodels/login_model.dart';
+import 'package:nowu/viewmodels/login_model.dart';
 
 import 'package:stacked/stacked.dart';
 

@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:app/locator.dart';
-import 'package:app/managers/dialog_manager.dart';
-import 'package:app/pages/other/startup_view.dart';
-import 'package:app/routes.dart';
-import 'package:app/services/analytics.dart';
-import 'package:app/services/navigation_service.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/managers/dialog_manager.dart';
+import 'package:nowu/pages/other/startup_view.dart';
+import 'package:nowu/routes.dart';
+import 'package:nowu/services/analytics.dart';
+import 'package:nowu/services/navigation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';

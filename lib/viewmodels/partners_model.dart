@@ -1,9 +1,9 @@
-import 'package:app/viewmodels/base_model.dart';
+import 'package:nowu/viewmodels/base_model.dart';
 
-import 'package:app/locator.dart';
-import 'package:app/services/organisation_service.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/organisation_service.dart';
 
-import 'package:app/models/Organisation.dart';
+import 'package:nowu/models/Organisation.dart';
 
 class PartnersViewModel extends BaseModel {
   final OrganisationService? _organisationService =

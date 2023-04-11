@@ -1,18 +1,18 @@
-import 'package:app/assets/components/buttons/customWidthButton.dart';
-import 'package:app/assets/components/causes/causeTile.dart';
-import 'package:app/assets/components/progressTile.dart';
-import 'package:app/pages/explore/ExploreSection.dart';
+import 'package:nowu/assets/components/buttons/customWidthButton.dart';
+import 'package:nowu/assets/components/causes/causeTile.dart';
+import 'package:nowu/assets/components/progressTile.dart';
+import 'package:nowu/pages/explore/ExploreSection.dart';
 import 'package:flutter/material.dart';
 
-import 'package:app/assets/components/customScrollableSheet.dart';
-import 'package:app/assets/components/textButton.dart';
-import 'package:app/assets/components/notifications.dart';
-import 'package:app/assets/StyleFrom.dart';
+import 'package:nowu/assets/components/customScrollableSheet.dart';
+import 'package:nowu/assets/components/textButton.dart';
+import 'package:nowu/assets/components/notifications.dart';
+import 'package:nowu/assets/StyleFrom.dart';
 
-import 'package:app/models/Notification.dart';
+import 'package:nowu/models/Notification.dart';
 
 import 'package:stacked/stacked.dart';
-import 'package:app/viewmodels/home_model.dart';
+import 'package:nowu/viewmodels/home_model.dart';
 
 const double BUTTON_PADDING = 10;
 const PageStorageKey campaignCarouselPageKey = PageStorageKey(1);

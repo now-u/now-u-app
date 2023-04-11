@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:app/assets/StyleFrom.dart';
-import 'package:app/assets/components/customTile.dart';
+import 'package:nowu/assets/StyleFrom.dart';
+import 'package:nowu/assets/components/customTile.dart';
 
-import 'package:app/routes.dart';
+import 'package:nowu/routes.dart';
 
-import 'package:app/models/Notification.dart';
+import 'package:nowu/models/Notification.dart';
 
 class NotificationTile extends StatelessWidget {
   final InternalNotification notification;

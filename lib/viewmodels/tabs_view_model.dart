@@ -1,4 +1,4 @@
-import 'package:app/viewmodels/base_model.dart';
+import 'package:nowu/viewmodels/base_model.dart';
 
 enum TabPage { Home, Explore, Menu }
 

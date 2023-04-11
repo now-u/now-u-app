@@ -18,12 +18,14 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable' # 'dev', 'alpha', default to: 'stable'
-          flutter-version: '3.0.x'
+          flutter-version: '3.7.x'
 
       # Install your project's dependencies
       - run: flutter pub get
 
-      - run: pod repo update
+      - run: cd ios && pod install --repo-update
+
+      - run: git diff
       
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:

@@ -1,4 +1,4 @@
-import 'package:app/assets/components/header.dart';
+import 'package:nowu/assets/components/header.dart';
 import 'package:flutter/material.dart';
 
 /// Page which shows additional text information, usually as a result of

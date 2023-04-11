@@ -1,13 +1,13 @@
-import 'package:app/assets/components/buttons/darkButton.dart';
+import 'package:nowu/assets/components/buttons/darkButton.dart';
 import 'package:flutter/material.dart';
 
-import 'package:app/assets/StyleFrom.dart';
-import 'package:app/assets/components/custom_network_image.dart';
+import 'package:nowu/assets/StyleFrom.dart';
+import 'package:nowu/assets/components/custom_network_image.dart';
 
-import 'package:app/models/Notification.dart';
+import 'package:nowu/models/Notification.dart';
 
 import 'package:stacked/stacked.dart';
-import 'package:app/viewmodels/notification_model.dart';
+import 'package:nowu/viewmodels/notification_model.dart';
 
 class NotificationPage extends StatelessWidget {
   final InternalNotification notification;

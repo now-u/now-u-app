@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 
-import 'package:app/models/FAQ.dart';
+import 'package:nowu/models/FAQ.dart';
 
-import 'package:app/assets/components/customScrollableSheet.dart';
-import 'package:app/assets/components/header.dart';
-import 'package:app/assets/components/customTile.dart';
+import 'package:nowu/assets/components/customScrollableSheet.dart';
+import 'package:nowu/assets/components/header.dart';
+import 'package:nowu/assets/components/customTile.dart';
 
 import 'package:stacked/stacked.dart';
-import 'package:app/viewmodels/faq_model.dart';
+import 'package:nowu/viewmodels/faq_model.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 const double CIRCLE_1_RADIUS = 150;
 const double CIRCLE_2_RADIUS = 250;
 
+// TODO There is a bug on this page when you tap the last FAQ the answer is not visible without scrolling
+// Maybe need something like: https://stackoverflow.com/questions/49153087/flutter-scrolling-to-a-widget-in-listview
 class FAQPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
