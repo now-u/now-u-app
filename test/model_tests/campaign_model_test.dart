@@ -41,8 +41,6 @@ void main() {
       expect(campaign.learningResources.length, 1);
       expect(campaign.learningResources[0].id, 47);
       expect(campaign.videoLink, "https://youtu.be/EBfIH6dN3fk");
-      expect(campaign.infographicUrl,
-          "https://now-u.s3.eu-west-2.amazonaws.com/blm_campaign_illustration_f5ede3b48c.png");
     });
   });
 }

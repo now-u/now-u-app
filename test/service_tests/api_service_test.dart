@@ -32,8 +32,6 @@ void main() {
 
     mockHttpClient = MockHttpClient();
     apiService = ApiService(mockHttpClient);
-    apiService.baseUrl = "example.com";
-    apiService.baseUrlPath = "api/";
   });
 
   group('test getExceptionForResponse', () {
@@ -89,7 +87,7 @@ void main() {
       expect(response, {"abc": "def"});
 
       verify(() => mockHttpClient.get(
-          Uri.parse("https://example.com/api/causes/stuff"),
+          Uri.parse("https://staging.api.now-u.com/api/causes/stuff"),
           headers: any(named: "headers"))).called(1);
     });
 
@@ -104,7 +102,7 @@ void main() {
       expect(response, {"abc": "def"});
 
       verify(() => mockHttpClient.get(
-          Uri.parse("https://example.com/api/causes/stuff?limit=10&fav=true"),
+          Uri.parse("https://staging.api.now-u.com/api/causes/stuff?limit=10&fav=true"),
           headers: any(named: "headers"))).called(1);
     });
 
@@ -117,7 +115,7 @@ void main() {
         "causes": [1, 2]
       });
       verify(() => mockHttpClient.get(
-          Uri.parse("https://example.com/api/causes/stuff?causes=%5B1%2C2%5D"),
+          Uri.parse("https://staging.api.now-u.com/api/causes/stuff?causes=%5B1%2C2%5D"),
           headers: any(named: "headers"))).called(1);
     });
   });
@@ -134,7 +132,7 @@ void main() {
           await apiService.postRequest("test", body: {"test": "payload"});
       expect(response, {"abc": "def"});
       verify(() => mockHttpClient.post(
-          Uri.parse("https://example.com/api/test"),
+          Uri.parse("https://staging.api.now-u.com/api/test"),
           headers: any(named: "headers"),
           body: json.encode({"test": "payload"}),
           encoding: null)).called(1);

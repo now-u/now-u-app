@@ -28,7 +28,6 @@ class CampaignFactory extends ModelFactory<Campaign> {
       shortName: faker.lorem.word(),
       description: faker.lorem.sentence(),
       headerImage: faker.image.image(),
-      infographicUrl: faker.image.image(),
       videoLink: faker.internet.httpsUrl(),
       cause: ListCauseFactory().generate(),
       completed: faker.randomGenerator.boolean(),
