@@ -23,7 +23,9 @@ jobs:
       # Install your project's dependencies
       - run: flutter pub get
 
-      - run: pod repo update
+      - run: cd ios && pod install --repo-update
+
+      - run: git diff
       
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
