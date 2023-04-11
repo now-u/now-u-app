@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the fetchAction method from the ActionInfoViewModel extension, for the Dart programming language.">
-  <title>fetchAction method - ActionInfoViewModel extension - action_info_model library - Dart API</title>
+  <meta name="description" content="API docs for the fetchAction method from the ActionInfoViewModel class, for the Dart programming language.">
+  <title>fetchAction method - ActionInfoViewModel class - action_info_model library - Dart API</title>
 
 
   
@@ -28,7 +28,7 @@
 <header id="title">
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
-    <li><a href="../../index.html">app</a></li>
+    <li><a href="../../index.html">nowu</a></li>
     <li><a href="../../viewmodels_action_info_model/viewmodels_action_info_model-library.html">action_info_model</a></li>
     <li><a href="../../viewmodels_action_info_model/ActionInfoViewModel-class.html">ActionInfoViewModel</a></li>
     <li class="self-crumb">fetchAction method</li>
@@ -40,8 +40,11 @@
   <div class="toggle" id="theme-button">
     <label for="theme">
       <input type="checkbox" id="theme" value="light-theme">
-      <span class="material-symbols-outlined">
+      <span id="dark-theme-button" class="material-symbols-outlined">
         brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
       </span>
     </label>
   </div>
@@ -51,14 +54,13 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">fetchAction</span> method 
-    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
       
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
-<span class="name ">fetchAction</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="fetchAction-param-action"><span class="type-annotation"><a href="../../models_Action/ListCauseAction-class.html">ListCauseAction</a></span> <span class="parameter-name">action</span></span></li>
+<span class="name ">fetchAction</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="fetchAction-param-actionId"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">actionId</span></span></li>
 </ol>)
 
       
@@ -70,10 +72,10 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; fetchAction(ListCauseAction action) async {
+  <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; fetchAction(int actionId) async {
   setBusy(true);
   &#47;&#47; TODO catch error
-  _action = await _causesService.getAction(action.id);
+  _action = await _causesService.getAction(actionId);
   setBusy(false);
   notifyListeners();
 }</code></pre>
@@ -90,7 +92,7 @@
 </header>
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-  <li><a href="../../index.html">app</a></li>
+  <li><a href="../../index.html">nowu</a></li>
   <li><a href="../../viewmodels_action_info_model/viewmodels_action_info_model-library.html">action_info_model</a></li>
   <li><a href="../../viewmodels_action_info_model/ActionInfoViewModel-class.html">ActionInfoViewModel</a></li>
   <li class="self-crumb">fetchAction method</li>
@@ -146,8 +148,8 @@
 
 <footer>
   <span class="no-break">
-    app
-      2.0.0-dev+48
+    nowu
+      2.0.0-dev+49
   </span>
 
   

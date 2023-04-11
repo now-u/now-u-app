@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the build method from the CustomTextFormField extension, for the Dart programming language.">
-  <title>build method - CustomTextFormField extension - inputs library - Dart API</title>
+  <meta name="description" content="API docs for the build method from the CustomTextFormField class, for the Dart programming language.">
+  <title>build method - CustomTextFormField class - inputs library - Dart API</title>
 
 
   
@@ -28,7 +28,7 @@
 <header id="title">
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
-    <li><a href="../../index.html">app</a></li>
+    <li><a href="../../index.html">nowu</a></li>
     <li><a href="../../assets_components_inputs/assets_components_inputs-library.html">inputs</a></li>
     <li><a href="../../assets_components_inputs/CustomTextFormField-class.html">CustomTextFormField</a></li>
     <li class="self-crumb">build method</li>
@@ -40,8 +40,11 @@
   <div class="toggle" id="theme-button">
     <label for="theme">
       <input type="checkbox" id="theme" value="light-theme">
-      <span class="material-symbols-outlined">
+      <span id="dark-theme-button" class="material-symbols-outlined">
         brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
       </span>
     </label>
   </div>
@@ -51,16 +54,15 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">build</span> method 
-    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
       
-<div>
-  <ol class="annotation-list">
-    <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
-  </ol>
-</div>
+  <div>
+    <ol class="annotation-list">
+        <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
+    </ol>
+  </div>
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span>
 <span class="name ">build</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="build-param-context"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span></span></li>
@@ -114,6 +116,8 @@ and</li>
 Widget build(BuildContext context) {
   return Container(
       child: TextFormField(
+    onTap: onTap,
+    focusNode: this.focusNode,
     keyboardType: keyboardType ?? TextInputType.text,
     textInputAction: TextInputAction.go,
     autofocus: autofocus ?? false,
@@ -131,15 +135,24 @@ Widget build(BuildContext context) {
       filled: true,
       fillColor: Color.fromRGBO(221, 221, 221, 0.2),
       hintText: hintText ?? &quot;&quot;,
-      hintStyle: TextStyle(
-        color: colorFrom(
-          Theme.of(context).primaryColor,
-          opacity: 0.5,
-        ),
-      ),
+      hintStyle: style == CustomFormFieldStyle.Light
+          ? TextStyle(color: CustomColors.greyMed1)
+          : TextStyle(
+              color: colorFrom(
+                Theme.of(context).primaryColor,
+                opacity: 0.5,
+              ),
+            ),
+      enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: CustomColors.greyMed1)),
+      focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: CustomColors.greyMed1)),
+      prefixIcon: prefixIcon,
+      suffixIcon: suffixIcon,
     ),
     initialValue: initialValue,
     enabled: enabled ?? true,
+    readOnly: readOnly ?? false,
     controller: controller,
   ));
 }</code></pre>
@@ -156,7 +169,7 @@ Widget build(BuildContext context) {
 </header>
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-  <li><a href="../../index.html">app</a></li>
+  <li><a href="../../index.html">nowu</a></li>
   <li><a href="../../assets_components_inputs/assets_components_inputs-library.html">inputs</a></li>
   <li><a href="../../assets_components_inputs/CustomTextFormField-class.html">CustomTextFormField</a></li>
   <li class="self-crumb">build method</li>
@@ -176,6 +189,7 @@ Widget build(BuildContext context) {
           <li><a href="../../assets_components_inputs/CustomTextFormField/autofocus.html">autofocus</a></li>
           <li><a href="../../assets_components_inputs/CustomTextFormField/controller.html">controller</a></li>
           <li><a href="../../assets_components_inputs/CustomTextFormField/enabled.html">enabled</a></li>
+          <li><a href="../../assets_components_inputs/CustomTextFormField/focusNode.html">focusNode</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/hashCode.html">hashCode</a></li>
           <li><a href="../../assets_components_inputs/CustomTextFormField/hintText.html">hintText</a></li>
           <li><a href="../../assets_components_inputs/CustomTextFormField/initialValue.html">initialValue</a></li>
@@ -183,8 +197,12 @@ Widget build(BuildContext context) {
           <li><a href="../../assets_components_inputs/CustomTextFormField/keyboardType.html">keyboardType</a></li>
           <li><a href="../../assets_components_inputs/CustomTextFormField/onChanged.html">onChanged</a></li>
           <li><a href="../../assets_components_inputs/CustomTextFormField/onSaved.html">onSaved</a></li>
+          <li><a href="../../assets_components_inputs/CustomTextFormField/onTap.html">onTap</a></li>
+          <li><a href="../../assets_components_inputs/CustomTextFormField/prefixIcon.html">prefixIcon</a></li>
+          <li><a href="../../assets_components_inputs/CustomTextFormField/readOnly.html">readOnly</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
           <li><a href="../../assets_components_inputs/CustomTextFormField/style.html">style</a></li>
+          <li><a href="../../assets_components_inputs/CustomTextFormField/suffixIcon.html">suffixIcon</a></li>
           <li><a href="../../assets_components_inputs/CustomTextFormField/textCapitalization.html">textCapitalization</a></li>
           <li><a href="../../assets_components_inputs/CustomTextFormField/validator.html">validator</a></li>
 
@@ -217,8 +235,8 @@ Widget build(BuildContext context) {
 
 <footer>
   <span class="no-break">
-    app
-      2.0.0-dev+48
+    nowu
+      2.0.0-dev+49
   </span>
 
   

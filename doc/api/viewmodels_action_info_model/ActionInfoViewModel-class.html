@@ -28,7 +28,7 @@
 <header id="title">
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
-    <li><a href="../index.html">app</a></li>
+    <li><a href="../index.html">nowu</a></li>
     <li><a href="../viewmodels_action_info_model/viewmodels_action_info_model-library.html">action_info_model</a></li>
     <li class="self-crumb">ActionInfoViewModel class</li>
   </ol>
@@ -39,8 +39,11 @@
   <div class="toggle" id="theme-button">
     <label for="theme">
       <input type="checkbox" id="theme" value="light-theme">
-      <span class="material-symbols-outlined">
+      <span id="dark-theme-button" class="material-symbols-outlined">
         brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
       </span>
     </label>
   </div>
@@ -50,7 +53,6 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-class">ActionInfoViewModel</span> class 
-    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
  
 </h1></div>
 
@@ -76,6 +78,8 @@
 
 
         
+
+
       </dl>
     </section>
 
@@ -148,7 +152,7 @@
 </dt>
 <dd class="inherited">
   Whether any listeners are currently registered.
-  <div class="features"><span class="">@<a href="https://api.flutter.dev/flutter/widgets/protected-constant.html">protected</a></span><span class="feature">read-only</span><span class="feature">inherited</span></div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -209,12 +213,12 @@
   Discards any resources used by the object. After this is called, the
 object is not in a usable state and should be discarded (calls to
 <a href="https://api.flutter.dev/flutter/foundation/ChangeNotifier/addListener.html">addListener</a> will throw after the object is disposed).
-  <div class="features"><span class="">@<a href="https://api.flutter.dev/flutter/widgets/mustCallSuper-constant.html">mustCallSuper</a></span><span class="feature">inherited</span></div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="fetchAction" class="callable">
-  <span class="name"><a href="../viewmodels_action_info_model/ActionInfoViewModel/fetchAction.html">fetchAction</a></span><span class="signature">(<wbr><span class="parameter" id="fetchAction-param-action"><span class="type-annotation"><a href="../models_Action/ListCauseAction-class.html">ListCauseAction</a></span> <span class="parameter-name">action</span></span>)
+  <span class="name"><a href="../viewmodels_action_info_model/ActionInfoViewModel/fetchAction.html">fetchAction</a></span><span class="signature">(<wbr><span class="parameter" id="fetchAction-param-actionId"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">actionId</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
   </span>
   
@@ -287,7 +291,7 @@ object is not in a usable state and should be discarded (calls to
 </dt>
 <dd class="inherited">
   Call all the registered listeners.
-  <div class="features"><span class="">@<a href="https://api.flutter.dev/flutter/widgets/protected-constant.html">protected</a></span><span class="">@<a href="https://api.flutter.dev/flutter/widgets/visibleForTesting-constant.html">visibleForTesting</a></span><span class="feature">inherited</span></div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -382,7 +386,7 @@ notified when the object changes.
 </header>
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-  <li><a href="../index.html">app</a></li>
+  <li><a href="../index.html">nowu</a></li>
   <li><a href="../viewmodels_action_info_model/viewmodels_action_info_model-library.html">action_info_model</a></li>
   <li class="self-crumb">ActionInfoViewModel class</li>
 </ol>
@@ -450,8 +454,8 @@ notified when the object changes.
 
 <footer>
   <span class="no-break">
-    app
-      2.0.0-dev+48
+    nowu
+      2.0.0-dev+49
   </span>
 
   

@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the fetchCauses method from the CausesViewModel extension, for the Dart programming language.">
-  <title>fetchCauses method - CausesViewModel extension - causes_view_model library - Dart API</title>
+  <meta name="description" content="API docs for the fetchCauses method from the CausesViewModel class, for the Dart programming language.">
+  <title>fetchCauses method - CausesViewModel class - causes_view_model library - Dart API</title>
 
 
   
@@ -28,7 +28,7 @@
 <header id="title">
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
-    <li><a href="../../index.html">app</a></li>
+    <li><a href="../../index.html">nowu</a></li>
     <li><a href="../../viewmodels_causes_view_model/viewmodels_causes_view_model-library.html">causes_view_model</a></li>
     <li><a href="../../viewmodels_causes_view_model/CausesViewModel-class.html">CausesViewModel</a></li>
     <li class="self-crumb">fetchCauses method</li>
@@ -40,8 +40,11 @@
   <div class="toggle" id="theme-button">
     <label for="theme">
       <input type="checkbox" id="theme" value="light-theme">
-      <span class="material-symbols-outlined">
+      <span id="dark-theme-button" class="material-symbols-outlined">
         brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
       </span>
     </label>
   </div>
@@ -51,7 +54,6 @@
   <div id="dartdoc-main-content" class="main-content">
       <div>
 <h1><span class="kind-method">fetchCauses</span> method 
-    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
 </h1></div>
 
     <section class="multi-line-signature">
@@ -72,10 +74,8 @@
   <pre class="language-dart"><code class="language-dart">Future fetchCauses() async {
   setBusy(true);
 
-  print(&quot;Fetching cuases&quot;);
   List&lt;ListCause&gt; causesList = await _causesService.getCauses();
   _causes = {for (ListCause cause in causesList) cause: cause.selected};
-  print(&quot;Fetched cuases&quot;);
 
   setBusy(false);
   notifyListeners();
@@ -95,7 +95,7 @@
 </header>
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-  <li><a href="../../index.html">app</a></li>
+  <li><a href="../../index.html">nowu</a></li>
   <li><a href="../../viewmodels_causes_view_model/viewmodels_causes_view_model-library.html">causes_view_model</a></li>
   <li><a href="../../viewmodels_causes_view_model/CausesViewModel-class.html">CausesViewModel</a></li>
   <li class="self-crumb">fetchCauses method</li>
@@ -152,8 +152,8 @@
 
 <footer>
   <span class="no-break">
-    app
-      2.0.0-dev+48
+    nowu
+      2.0.0-dev+49
   </span>
 
   
