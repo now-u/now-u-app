@@ -38,7 +38,8 @@ class LoginViewModel extends BaseModel {
       User? user = await _authenticationService.fetchUser();
 
       if (user == null) {
-        _dialogService.showDialog(BasicDialog(title: "Login failed", description: "Login failed"));
+        _dialogService.showDialog(
+            BasicDialog(title: "Login failed", description: "Login failed"));
       } else if (!user.hasProfile) {
         print("Navigating to profile setup");
         _navigationService.navigateTo(Routes.profileSetup, clearHistory: true);

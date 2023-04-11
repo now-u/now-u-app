@@ -40,16 +40,16 @@ class CustomTextFormField extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.onTap,
-	this.focusNode,
-	this.readOnly,
+    this.focusNode,
+    this.readOnly,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
         child: TextFormField(
-	  onTap: onTap,
-	  focusNode: this.focusNode,
+      onTap: onTap,
+      focusNode: this.focusNode,
       keyboardType: keyboardType ?? TextInputType.text,
       textInputAction: TextInputAction.go,
       autofocus: autofocus ?? false,
@@ -67,20 +67,24 @@ class CustomTextFormField extends StatelessWidget {
         filled: true,
         fillColor: Color.fromRGBO(221, 221, 221, 0.2),
         hintText: hintText ?? "",
-        hintStyle: style == CustomFormFieldStyle.Light ? TextStyle(color: CustomColors.greyMed1) : TextStyle(
-          color: colorFrom(
-            Theme.of(context).primaryColor,
-            opacity: 0.5,
-          ),
-        ),
-		enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: CustomColors.greyMed1)),
-		focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: CustomColors.greyMed1)),
+        hintStyle: style == CustomFormFieldStyle.Light
+            ? TextStyle(color: CustomColors.greyMed1)
+            : TextStyle(
+                color: colorFrom(
+                  Theme.of(context).primaryColor,
+                  opacity: 0.5,
+                ),
+              ),
+        enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: CustomColors.greyMed1)),
+        focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: CustomColors.greyMed1)),
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
       ),
       initialValue: initialValue,
       enabled: enabled ?? true,
-	  readOnly: readOnly ?? false,
+      readOnly: readOnly ?? false,
       controller: controller,
     ));
   }

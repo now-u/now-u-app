@@ -7,30 +7,31 @@ import 'package:nowu/services/search_service.dart';
 import 'package:nowu/viewmodels/base_model.dart';
 
 class SearchViewModel extends BaseModel {
-	SearchService _searchService = locator<SearchService>();
-	NavigationService _navigationService = locator<NavigationService>();
+  SearchService _searchService = locator<SearchService>();
+  NavigationService _navigationService = locator<NavigationService>();
 
-	String get searchValue => _searchValue; 
-	String _searchValue = "";
-	List<ResourceSearchResult> searchResult = [];
+  String get searchValue => _searchValue;
+  String _searchValue = "";
+  List<ResourceSearchResult> searchResult = [];
 
-	void updateSearchValue(String value) {
-		_searchValue = value;
-		search();
-	}
+  void updateSearchValue(String value) {
+    _searchValue = value;
+    search();
+  }
 
-	void search() async {
-		searchResult = await _searchService.searchResources(searchValue.toString());
-		notifyListeners();
-	}
+  void search() async {
+    searchResult = await _searchService.searchResources(searchValue.toString());
+    notifyListeners();
+  }
 
-	void navigateToResult(int resultId) {
-		print("Clicking on thing");
-		_navigationService.navigateTo(Routes.actionInfo, arguments: ActionInfoArguments(actionId: resultId));
-	}
+  void navigateToResult(int resultId) {
+    print("Clicking on thing");
+    _navigationService.navigateTo(Routes.actionInfo,
+        arguments: ActionInfoArguments(actionId: resultId));
+  }
 
-	void navigateBack() {
-		print("Going back");
-		_navigationService.goBack();
-	}
+  void navigateBack() {
+    print("Going back");
+    _navigationService.goBack();
+  }
 }

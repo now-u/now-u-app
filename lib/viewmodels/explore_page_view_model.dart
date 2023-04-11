@@ -406,7 +406,7 @@ class ExplorePageViewModel extends BaseModel with ExploreViewModelMixin {
   }
 
   void navigateToSearchPage() {
-	_navigationService.navigateTo(Routes.search);
+    _navigationService.navigateTo(Routes.search);
   }
 }
 

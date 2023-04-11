@@ -75,7 +75,7 @@ class HomeViewModel extends BaseModel with ExploreViewModelMixin {
   Future getCausePopup(ListCause listCause) async {
     var dialogResult = await _dialogService.showDialog(CauseDialog(listCause));
     if (dialogResult.response) {
-        _navigationService.navigateTo(Routes.causesEditPage);
+      _navigationService.navigateTo(Routes.causesEditPage);
     }
   }
 

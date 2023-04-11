@@ -29,8 +29,10 @@ Map<String, IconData> iconMap = {
   "cause_icon_environment": CustomIcons.cause_icon_environment,
   "cause_icon_health_wellbeing": CustomIcons.cause_icon_health_wellbeing,
   "cause_icon_safe_home_community": CustomIcons.cause_icon_safe_home_community,
-  "cause_icon_economic_opportunity": CustomIcons.cause_icon_economic_opportunity,
-  "cause_icon_equality_human_rights": CustomIcons.cause_icon_equality_human_rights,
+  "cause_icon_economic_opportunity":
+      CustomIcons.cause_icon_economic_opportunity,
+  "cause_icon_equality_human_rights":
+      CustomIcons.cause_icon_equality_human_rights,
 };
 
 IconData getIconFromString(String iconString) {
@@ -157,10 +159,16 @@ class CustomIcons {
   static const IconData ic_clipboard =
       IconData(0xe81e, fontFamily: _kFontFam3, fontPackage: _kFontPkg);
 
-  static const IconData cause_icon_health_wellbeing = IconData(0xe801, fontFamily: _kFontFamCauses, fontPackage: _kFontPkg);
-  static const IconData cause_icon_education = IconData(0xe804, fontFamily: _kFontFamCauses, fontPackage: _kFontPkg);
-  static const IconData cause_icon_environment = IconData(0xe805, fontFamily: _kFontFamCauses, fontPackage: _kFontPkg);
-  static const IconData cause_icon_equality_human_rights = IconData(0xe806, fontFamily: _kFontFamCauses, fontPackage: _kFontPkg);
-  static const IconData cause_icon_safe_home_community = IconData(0xe807, fontFamily: _kFontFamCauses, fontPackage: _kFontPkg);
-  static const IconData cause_icon_economic_opportunity = IconData(0xe808, fontFamily: _kFontFamCauses, fontPackage: _kFontPkg);
+  static const IconData cause_icon_health_wellbeing =
+      IconData(0xe801, fontFamily: _kFontFamCauses, fontPackage: _kFontPkg);
+  static const IconData cause_icon_education =
+      IconData(0xe804, fontFamily: _kFontFamCauses, fontPackage: _kFontPkg);
+  static const IconData cause_icon_environment =
+      IconData(0xe805, fontFamily: _kFontFamCauses, fontPackage: _kFontPkg);
+  static const IconData cause_icon_equality_human_rights =
+      IconData(0xe806, fontFamily: _kFontFamCauses, fontPackage: _kFontPkg);
+  static const IconData cause_icon_safe_home_community =
+      IconData(0xe807, fontFamily: _kFontFamCauses, fontPackage: _kFontPkg);
+  static const IconData cause_icon_economic_opportunity =
+      IconData(0xe808, fontFamily: _kFontFamCauses, fontPackage: _kFontPkg);
 }

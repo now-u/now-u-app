@@ -196,7 +196,8 @@ Function initRoutes = (RouteSettings settings) {
       }
     case Routes.search:
       {
-		return customRoute(builder: (context) => SearchPage(), settings: settings);
+        return customRoute(
+            builder: (context) => SearchPage(), settings: settings);
       }
 
     // TODO add a 404 page

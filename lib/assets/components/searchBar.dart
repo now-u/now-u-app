@@ -9,7 +9,8 @@ class SearchBar extends StatelessWidget {
   final void Function()? onTap;
   final bool? readOnly;
 
-  const SearchBar({this.onChanged, this.onTap, this.readOnly, Key? key}) : super(key: key);
+  const SearchBar({this.onChanged, this.onTap, this.readOnly, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class SearchBar extends StatelessWidget {
         hintText: "Search actions",
         onChanged: onChanged,
         onTap: onTap,
-		readOnly: readOnly,
+        readOnly: readOnly,
       ),
     );
   }

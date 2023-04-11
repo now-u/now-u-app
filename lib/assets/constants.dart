@@ -19,8 +19,8 @@ const CAUSES_API_URL = "staging.api.now-u.com";
 const LOCAL_CAUSES_API_URL = "192.168.1.65:3001";
 
 Uri getCausesApiPath(String path, {Map<String, dynamic>? stringParams}) {
-    // return Uri.http(LOCAL_CAUSES_API_URL, "/api/" + path, stringParams);
-    return Uri.https(CAUSES_API_URL, "/api/" + path, stringParams);
+  // return Uri.http(LOCAL_CAUSES_API_URL, "/api/" + path, stringParams);
+  return Uri.https(CAUSES_API_URL, "/api/" + path, stringParams);
 }
 
 // devMode ? "staging.api.now-u.com" : "api.now-u.com";

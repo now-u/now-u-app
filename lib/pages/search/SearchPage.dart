@@ -47,7 +47,7 @@ class SearchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
         viewModelBuilder: () => SearchViewModel(),
-		onModelReady: (SearchViewModel model) => model.search(),
+        onModelReady: (SearchViewModel model) => model.search(),
         builder: (context, SearchViewModel model, child) {
           return Scaffold(
             body: SafeArea(
@@ -56,13 +56,13 @@ class SearchPage extends StatelessWidget {
                   Hero(
                     tag: SEARCH_BAR_HERO_TAG,
                     child: CustomTextFormField(
-					  style: CustomFormFieldStyle.Light,
+                      style: CustomFormFieldStyle.Light,
                       controller: _searchTextController,
                       autofocus: true,
                       prefixIcon: IconButton(
                         icon: Icon(Icons.arrow_back),
                         onPressed: model.navigateBack,
-						color: CustomColors.greyMed1,
+                        color: CustomColors.greyMed1,
                       ),
                       suffixIcon: IconButton(
                           icon: Icon(Icons.clear, color: CustomColors.greyMed1),
