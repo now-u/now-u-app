@@ -1,11 +1,11 @@
-import 'package:app/models/Cause.dart';
+import 'package:nowu/models/Cause.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:app/assets/icons/customIcons.dart';
-import 'package:app/models/Explorable.dart';
+import 'package:nowu/assets/icons/customIcons.dart';
+import 'package:nowu/models/Explorable.dart';
 
-import 'package:app/models/Action.dart';
+import 'package:nowu/models/Action.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'utils.dart';

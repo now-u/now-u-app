@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
-import 'package:app/locator.dart';
-import 'package:app/services/navigation_service.dart';
-import 'package:app/services/storage.dart';
-import 'package:app/services/device_info_service.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/navigation_service.dart';
+import 'package:nowu/services/storage.dart';
+import 'package:nowu/services/device_info_service.dart';
 
-import 'package:app/pages/login/emailSentPage.dart';
+import 'package:nowu/pages/login/emailSentPage.dart';
 
-import 'package:app/routes.dart';
+import 'package:nowu/routes.dart';
 
 import 'package:uni_links/uni_links.dart';
 

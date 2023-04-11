@@ -1,4 +1,4 @@
-import 'package:app/models/Action.dart';
+import 'package:nowu/models/Action.dart';
 
 import 'factory.dart';
 import 'cause_factory.dart';

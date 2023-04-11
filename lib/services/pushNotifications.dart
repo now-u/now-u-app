@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-import 'package:app/locator.dart';
-import 'package:app/services/navigation_service.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/navigation_service.dart';
 
 class PushNotificationService {
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;

@@ -1,6 +1,6 @@
-import 'package:app/locator.dart';
-import 'package:app/services/api_service.dart';
-import 'package:app/models/Organisation.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/api_service.dart';
+import 'package:nowu/models/Organisation.dart';
 
 class OrganisationService {
   final ApiService _apiService = locator<ApiService>();

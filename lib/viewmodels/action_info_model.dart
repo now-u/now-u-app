@@ -1,15 +1,15 @@
-import 'package:app/models/Cause.dart';
-import 'package:app/pages/explore/ExplorePage.dart';
-import 'package:app/services/causes_service.dart';
-import 'package:app/services/dialog_service.dart';
-import 'package:app/viewmodels/base_model.dart';
+import 'package:nowu/models/Cause.dart';
+import 'package:nowu/pages/explore/ExplorePage.dart';
+import 'package:nowu/services/causes_service.dart';
+import 'package:nowu/services/dialog_service.dart';
+import 'package:nowu/viewmodels/base_model.dart';
 
-import 'package:app/locator.dart';
-import 'package:app/routes.dart';
-import 'package:app/services/navigation_service.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/routes.dart';
+import 'package:nowu/services/navigation_service.dart';
 
-import 'package:app/models/Action.dart';
-import 'package:app/viewmodels/explore_page_view_model.dart';
+import 'package:nowu/models/Action.dart';
+import 'package:nowu/viewmodels/explore_page_view_model.dart';
 
 class ActionInfoViewModel extends BaseModel {
   final NavigationService _navigationService = locator<NavigationService>();
@@ -19,10 +19,10 @@ class ActionInfoViewModel extends BaseModel {
   CampaignAction? _action;
   CampaignAction? get action => _action;
 
-  Future<void> fetchAction(ListCauseAction action) async {
+  Future<void> fetchAction(int actionId) async {
     setBusy(true);
     // TODO catch error
-    _action = await _causesService.getAction(action.id);
+    _action = await _causesService.getAction(actionId);
     setBusy(false);
     notifyListeners();
   }

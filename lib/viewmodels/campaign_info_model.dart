@@ -1,11 +1,11 @@
-import 'package:app/services/causes_service.dart';
-import 'package:app/viewmodels/base_model.dart';
+import 'package:nowu/services/causes_service.dart';
+import 'package:nowu/viewmodels/base_model.dart';
 
-import 'package:app/locator.dart';
-import 'package:app/services/navigation_service.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/navigation_service.dart';
 
-import 'package:app/models/Campaign.dart';
-import 'package:app/models/SDG.dart';
+import 'package:nowu/models/Campaign.dart';
+import 'package:nowu/models/SDG.dart';
 
 class CampaignInfoViewModel extends BaseModel {
   final CausesService _causesService = locator<CausesService>();

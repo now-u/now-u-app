@@ -4,10 +4,10 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import 'package:app/services/api_service.dart';
-import 'package:app/services/auth.dart';
+import 'package:nowu/services/api_service.dart';
+import 'package:nowu/services/auth.dart';
 import '../setup/test_helpers.dart';
-import 'package:app/locator.dart';
+import 'package:nowu/locator.dart';
 
 class MockAuthenticationService extends Mock implements AuthenticationService {}
 

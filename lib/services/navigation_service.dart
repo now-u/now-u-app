@@ -1,12 +1,12 @@
-import 'package:app/services/causes_service.dart';
+import 'package:nowu/services/causes_service.dart';
 import 'package:flutter/material.dart';
-import 'package:app/routes.dart';
+import 'package:nowu/routes.dart';
 
-import 'package:app/locator.dart';
-import 'package:app/services/dialog_service.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/dialog_service.dart';
 
-import 'package:app/assets/components/buttons/darkButton.dart';
-import 'package:app/models/Action.dart';
+import 'package:nowu/assets/components/buttons/darkButton.dart';
+import 'package:nowu/models/Action.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -60,7 +60,7 @@ class NavigationService {
   }
 
   void goBack() {
-    return navigatorKey.currentState!.pop();
+    navigatorKey.currentState!.maybePop();
   }
 
   bool canGoBack() {

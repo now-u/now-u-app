@@ -1,5 +1,5 @@
-import 'package:app/assets/constants.dart';
-import 'package:app/models/FAQ.dart';
+import 'package:nowu/assets/constants.dart';
+import 'package:nowu/models/FAQ.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';

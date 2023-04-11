@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:app/assets/components/buttons/customIconButton.dart';
+import 'package:nowu/assets/components/buttons/customIconButton.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:app/models/Cause.dart';
+import 'package:nowu/models/Cause.dart';
 
 class CauseTile extends StatelessWidget {
   final ListCause cause;

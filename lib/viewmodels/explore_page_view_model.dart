@@ -1,23 +1,23 @@
 import 'dart:collection';
 import 'dart:math';
-import 'package:app/assets/components/explore_tiles.dart';
-import 'package:app/models/Action.dart';
-import 'package:app/models/Campaign.dart';
-import 'package:app/models/Cause.dart';
-import 'package:app/models/Learning.dart';
-import 'package:app/models/article.dart';
-import 'package:app/routes.dart';
-import 'package:app/services/auth.dart';
-import 'package:app/services/navigation_service.dart';
-import 'package:app/services/news_service.dart';
+import 'package:nowu/assets/components/explore_tiles.dart';
+import 'package:nowu/models/Action.dart';
+import 'package:nowu/models/Campaign.dart';
+import 'package:nowu/models/Cause.dart';
+import 'package:nowu/models/Learning.dart';
+import 'package:nowu/models/article.dart';
+import 'package:nowu/routes.dart';
+import 'package:nowu/services/auth.dart';
+import 'package:nowu/services/navigation_service.dart';
+import 'package:nowu/services/news_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
-import 'package:app/viewmodels/base_model.dart';
-import 'package:app/models/Explorable.dart';
-import 'package:app/locator.dart';
-import 'package:app/services/causes_service.dart';
+import 'package:nowu/viewmodels/base_model.dart';
+import 'package:nowu/models/Explorable.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/causes_service.dart';
 
 class ExplorePageArguments {
   final List<ExploreSectionArguments> sections;
@@ -403,6 +403,10 @@ class ExplorePageViewModel extends BaseModel with ExploreViewModelMixin {
 
   bool hasLinks() {
     return sections.any((section) => section.args.link != null);
+  }
+
+  void navigateToSearchPage() {
+	_navigationService.navigateTo(Routes.search);
   }
 }
 

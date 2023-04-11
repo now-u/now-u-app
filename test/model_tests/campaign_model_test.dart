@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:app/models/Campaign.dart';
+import 'package:nowu/models/Campaign.dart';
 
 import './helpers.dart';
 

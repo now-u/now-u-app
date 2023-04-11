@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:app/assets/StyleFrom.dart';
+import 'package:nowu/assets/StyleFrom.dart';
+import 'package:nowu/assets/constants.dart';
 
 final double theWidth = 60;
 final double theHeight = 30;
@@ -9,17 +10,20 @@ enum CustomFormFieldStyle { Light, Dark }
 class CustomTextFormField extends StatelessWidget {
   final bool? autofocus;
   final bool? enabled;
+  final bool? readOnly;
   final TextInputType? keyboardType;
   final Function? validator;
   final Function? onSaved;
   final Function? onChanged;
+  final void Function()? onTap;
   final CustomFormFieldStyle? style;
   final String? hintText;
   final String? initialValue;
   final TextCapitalization? textCapitalization;
   final TextEditingController? controller;
-  final Icon? prefixIcon;
-  final Icon? suffixIcon;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
+  final FocusNode? focusNode;
 
   CustomTextFormField({
     this.autofocus,
@@ -35,12 +39,17 @@ class CustomTextFormField extends StatelessWidget {
     this.controller,
     this.prefixIcon,
     this.suffixIcon,
+    this.onTap,
+	this.focusNode,
+	this.readOnly,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
         child: TextFormField(
+	  onTap: onTap,
+	  focusNode: this.focusNode,
       keyboardType: keyboardType ?? TextInputType.text,
       textInputAction: TextInputAction.go,
       autofocus: autofocus ?? false,
@@ -58,17 +67,20 @@ class CustomTextFormField extends StatelessWidget {
         filled: true,
         fillColor: Color.fromRGBO(221, 221, 221, 0.2),
         hintText: hintText ?? "",
-        hintStyle: TextStyle(
+        hintStyle: style == CustomFormFieldStyle.Light ? TextStyle(color: CustomColors.greyMed1) : TextStyle(
           color: colorFrom(
             Theme.of(context).primaryColor,
             opacity: 0.5,
           ),
         ),
+		enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: CustomColors.greyMed1)),
+		focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: CustomColors.greyMed1)),
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
       ),
       initialValue: initialValue,
       enabled: enabled ?? true,
+	  readOnly: readOnly ?? false,
       controller: controller,
     ));
   }

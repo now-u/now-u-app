@@ -4,8 +4,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 
-import 'package:app/locator.dart';
-import 'package:app/services/remote_config_service.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/remote_config_service.dart';
 
 // Taken from:
 // https://github.com/yshean/google_places_flutter/blob/master/lib/place_service.dart

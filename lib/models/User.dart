@@ -1,6 +1,6 @@
-import 'package:app/models/Action.dart';
-import 'package:app/models/Campaign.dart';
-import 'package:app/models/Organisation.dart';
+import 'package:nowu/models/Action.dart';
+import 'package:nowu/models/Campaign.dart';
+import 'package:nowu/models/Organisation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'User.g.dart';

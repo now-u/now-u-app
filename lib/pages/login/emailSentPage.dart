@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'package:app/assets/components/buttons/darkButton.dart';
-import 'package:app/assets/components/textButton.dart';
+import 'package:nowu/assets/components/buttons/darkButton.dart';
+import 'package:nowu/assets/components/textButton.dart';
 
-import 'package:app/viewmodels/login_model.dart';
+import 'package:nowu/viewmodels/login_model.dart';
 import 'package:stacked/stacked.dart';
 
-import 'package:app/routes.dart';
+import 'package:nowu/routes.dart';
 
-import 'package:app/pages/login/login.dart';
+import 'package:nowu/pages/login/login.dart';
 
 class EmailSentPageArguments {
   final String email;

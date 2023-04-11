@@ -1,11 +1,11 @@
-import 'package:app/assets/StyleFrom.dart';
-import 'package:app/assets/components/customAppBar.dart';
-import 'package:app/assets/components/buttons/darkButton.dart';
-import 'package:app/assets/components/textButton.dart';
-import 'package:app/assets/icons/customIcons.dart';
-import 'package:app/models/Action.dart';
-import 'package:app/routes.dart';
-import 'package:app/viewmodels/action_info_model.dart';
+import 'package:nowu/assets/StyleFrom.dart';
+import 'package:nowu/assets/components/customAppBar.dart';
+import 'package:nowu/assets/components/buttons/darkButton.dart';
+import 'package:nowu/assets/components/textButton.dart';
+import 'package:nowu/assets/icons/customIcons.dart';
+import 'package:nowu/models/Action.dart';
+import 'package:nowu/routes.dart';
+import 'package:nowu/viewmodels/action_info_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stacked/stacked.dart';
@@ -14,10 +14,10 @@ final double theHeaderHeight = 200;
 final double hPadding = 10;
 
 class ActionInfoArguments {
-  final ListCauseAction action;
+  final int actionId;
 
   ActionInfoArguments({
-    required this.action,
+    required this.actionId,
   });
 }
 
@@ -38,7 +38,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return ViewModelBuilder<ActionInfoViewModel>.reactive(
         viewModelBuilder: () => ActionInfoViewModel(),
-        onModelReady: (model) => model.fetchAction(widget.args.action),
+        onModelReady: (model) => model.fetchAction(widget.args.actionId),
         builder: (context, model, child) {
           return Scaffold(
               appBar: customAppBar(

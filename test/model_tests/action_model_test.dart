@@ -1,4 +1,4 @@
-import 'package:app/models/Action.dart';
+import 'package:nowu/models/Action.dart';
 import 'package:flutter_test/flutter_test.dart';
 import './helpers.dart';
 

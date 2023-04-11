@@ -1,9 +1,9 @@
-import 'package:app/assets/constants.dart';
-import 'package:app/locator.dart';
-import 'package:app/routes.dart';
-import 'package:app/services/navigation_service.dart';
-import 'package:app/services/user_service.dart';
-import 'package:app/viewmodels/base_model.dart';
+import 'package:nowu/assets/constants.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/routes.dart';
+import 'package:nowu/services/navigation_service.dart';
+import 'package:nowu/services/user_service.dart';
+import 'package:nowu/viewmodels/base_model.dart';
 import 'package:flutter/widgets.dart';
 
 class ProfileSetupViewModel extends BaseModel {

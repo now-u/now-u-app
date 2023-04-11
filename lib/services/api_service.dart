@@ -1,8 +1,8 @@
-import 'package:app/assets/constants.dart';
+import 'package:nowu/assets/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:app/services/auth.dart';
-import 'package:app/locator.dart';
+import 'package:nowu/services/auth.dart';
+import 'package:nowu/locator.dart';
 
 typedef T JsonDeserializer<T>(Map<String, dynamic> data);
 

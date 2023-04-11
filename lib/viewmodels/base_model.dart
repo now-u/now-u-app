@@ -1,8 +1,8 @@
-import 'package:app/locator.dart';
-import 'package:app/routes.dart';
-import 'package:app/models/User.dart';
-import 'package:app/services/auth.dart';
-import 'package:app/services/navigation_service.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/routes.dart';
+import 'package:nowu/models/User.dart';
+import 'package:nowu/services/auth.dart';
+import 'package:nowu/services/navigation_service.dart';
 import 'package:flutter/widgets.dart';
 
 class BaseModel extends ChangeNotifier {

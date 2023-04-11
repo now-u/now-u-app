@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:app/models/FAQ.dart';
+import 'package:nowu/models/FAQ.dart';
 
-import 'package:app/assets/components/customScrollableSheet.dart';
-import 'package:app/assets/components/header.dart';
-import 'package:app/assets/components/customTile.dart';
+import 'package:nowu/assets/components/customScrollableSheet.dart';
+import 'package:nowu/assets/components/header.dart';
+import 'package:nowu/assets/components/customTile.dart';
 
 import 'package:stacked/stacked.dart';
-import 'package:app/viewmodels/faq_model.dart';
+import 'package:nowu/viewmodels/faq_model.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

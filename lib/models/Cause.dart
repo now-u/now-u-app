@@ -1,4 +1,4 @@
-import 'package:app/assets/icons/customIcons.dart';
+import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:flutter/widgets.dart';
 import 'package:json_annotation/json_annotation.dart';
 

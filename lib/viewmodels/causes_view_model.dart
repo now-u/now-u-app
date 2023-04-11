@@ -1,11 +1,11 @@
-import 'package:app/routes.dart';
-import 'package:app/viewmodels/base_model.dart';
-import 'package:app/models/Cause.dart';
+import 'package:nowu/routes.dart';
+import 'package:nowu/viewmodels/base_model.dart';
+import 'package:nowu/models/Cause.dart';
 import "dart:async";
-import 'package:app/services/navigation_service.dart';
-import 'package:app/services/causes_service.dart';
-import 'package:app/locator.dart';
-import 'package:app/services/dialog_service.dart';
+import 'package:nowu/services/navigation_service.dart';
+import 'package:nowu/services/causes_service.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/dialog_service.dart';
 
 class CausesViewModel extends BaseModel {
   final DialogService _dialogService = locator<DialogService>();

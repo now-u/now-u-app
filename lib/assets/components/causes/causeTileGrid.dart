@@ -1,6 +1,6 @@
-import 'package:app/viewmodels/causes_view_model.dart';
+import 'package:nowu/viewmodels/causes_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:app/assets/components/causes/causeTile.dart';
+import 'package:nowu/assets/components/causes/causeTile.dart';
 
 class CauseTileGrid extends StatelessWidget {
   final CausesViewModel model;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:app/assets/StyleFrom.dart';
+import 'package:nowu/assets/StyleFrom.dart';
 
 final double defaultBorderRadius = 8.0;
 final double defaultPadding = 14.0;

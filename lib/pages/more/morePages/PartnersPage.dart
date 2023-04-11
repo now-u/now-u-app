@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:app/assets/components/customAppBar.dart';
-import 'package:app/assets/components/organisationTile.dart';
+import 'package:nowu/assets/components/customAppBar.dart';
+import 'package:nowu/assets/components/organisationTile.dart';
 
 import 'package:stacked/stacked.dart';
-import 'package:app/viewmodels/partners_model.dart';
+import 'package:nowu/viewmodels/partners_model.dart';
 
 class PartnersPage extends StatelessWidget {
   @override

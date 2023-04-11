@@ -1,6 +1,6 @@
-import 'package:app/assets/icons/customIcons.dart';
-import 'package:app/models/Campaign.dart';
-import 'package:app/models/Explorable.dart';
+import 'package:nowu/assets/icons/customIcons.dart';
+import 'package:nowu/models/Campaign.dart';
+import 'package:nowu/models/Explorable.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';

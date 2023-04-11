@@ -1,7 +1,7 @@
-import 'package:app/models/Notification.dart';
-import 'package:app/services/api_service.dart';
+import 'package:nowu/models/Notification.dart';
+import 'package:nowu/services/api_service.dart';
 
-import 'package:app/locator.dart';
+import 'package:nowu/locator.dart';
 
 class InternalNotificationService {
   final ApiService _apiService = locator<ApiService>();

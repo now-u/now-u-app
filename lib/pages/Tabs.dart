@@ -1,17 +1,17 @@
-import 'package:app/locator.dart';
-import 'package:app/services/navigation_service.dart';
-import 'package:app/viewmodels/explore_page_view_model.dart';
-import 'package:app/viewmodels/tabs_view_model.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/navigation_service.dart';
+import 'package:nowu/viewmodels/explore_page_view_model.dart';
+import 'package:nowu/viewmodels/tabs_view_model.dart';
 import 'package:flutter/material.dart';
 
-import 'package:app/assets/icons/customIcons.dart';
+import 'package:nowu/assets/icons/customIcons.dart';
 
-import 'package:app/pages/home/Home.dart';
-import 'package:app/pages/more/MoreMenu.dart';
-import 'package:app/pages/explore/ExplorePage.dart';
+import 'package:nowu/pages/home/Home.dart';
+import 'package:nowu/pages/more/MoreMenu.dart';
+import 'package:nowu/pages/explore/ExplorePage.dart';
 import 'package:stacked/stacked.dart';
 
-export 'package:app/viewmodels/tabs_view_model.dart';
+export 'package:nowu/viewmodels/tabs_view_model.dart';
 
 class TabPageDetails {
   final Widget widget;

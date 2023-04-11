@@ -1,6 +1,6 @@
 import 'package:mockito/mockito.dart';
 import 'dart:io';
-import 'package:app/locator.dart';
+import 'package:nowu/locator.dart';
 
 Map<String, String> unauthenticatedHeaders = {
   "Content-Type": "application/json; charset=UTF-8"

@@ -1,4 +1,4 @@
-import 'package:app/models/Cause.dart';
+import 'package:nowu/models/Cause.dart';
 import 'package:flutter/material.dart';
 
 import './factory.dart';

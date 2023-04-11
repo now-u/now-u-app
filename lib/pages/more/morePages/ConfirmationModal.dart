@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:app/assets/components/buttons/darkButton.dart';
-import 'package:app/viewmodels/account_details_model.dart';
+import 'package:nowu/assets/components/buttons/darkButton.dart';
+import 'package:nowu/viewmodels/account_details_model.dart';
 import 'package:stacked/stacked.dart';
 
 class ConfirmationModal extends StatelessWidget {

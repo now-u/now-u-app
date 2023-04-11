@@ -1,8 +1,8 @@
-import 'package:app/assets/components/buttons/darkButton.dart';
-import 'package:app/assets/components/card.dart';
-import 'package:app/assets/constants.dart';
-import 'package:app/pages/explore/ExplorePage.dart';
-import 'package:app/viewmodels/explore_page_view_model.dart';
+import 'package:nowu/assets/components/buttons/darkButton.dart';
+import 'package:nowu/assets/components/card.dart';
+import 'package:nowu/assets/constants.dart';
+import 'package:nowu/pages/explore/ExplorePage.dart';
+import 'package:nowu/viewmodels/explore_page_view_model.dart';
 import 'package:flutter/material.dart';
 
 class ExploreFilterSelectionItem extends StatelessWidget {

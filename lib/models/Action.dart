@@ -1,10 +1,10 @@
 // Custom Icons
-import 'package:app/assets/icons/customIcons.dart';
-import 'package:app/locator.dart';
-import 'package:app/models/Cause.dart';
-import 'package:app/models/Explorable.dart';
-import 'package:app/models/utils.dart';
-import 'package:app/services/causes_service.dart';
+import 'package:nowu/assets/icons/customIcons.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/models/Cause.dart';
+import 'package:nowu/models/Explorable.dart';
+import 'package:nowu/models/utils.dart';
+import 'package:nowu/services/causes_service.dart';
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -294,18 +294,6 @@ class ListCauseAction extends Explorable {
 
   factory ListCauseAction.fromJson(Map<String, dynamic> data) =>
       _$ListCauseActionFromJson(data);
-  // ListCauseAction.fromJson(Map<String, dynamic> json, {ListCause? cause})
-  //     : assert(cause != null || json['causes'] != null),
-  //       id = json['id'],
-  //       title = json['title'],
-  //       type = campaignActionTypeFromString(json['type']),
-  //       cause = json['causes'] != null
-  //           ? ListCause.fromJson(json['causes'][0])
-  //           : cause!,
-  //       time = json['time'].toDouble(),
-  //       releaseTime =
-  //           DateTime.parse(json['release_date'] ?? json['created_at']),
-  //       completed = json['completed'],
 
   Future<CampaignAction> getAction() async {
     CausesService _causesService = locator<CausesService>();

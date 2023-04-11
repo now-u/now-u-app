@@ -1,4 +1,4 @@
-import 'package:app/models/article.dart';
+import 'package:nowu/models/article.dart';
 
 import './factory.dart';
 
