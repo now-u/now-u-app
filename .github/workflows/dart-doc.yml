@@ -6,10 +6,6 @@ on:
 
   workflow_dispatch:
 
-  # FOR TESTING ONLY
-  pull_request:
-
-
 jobs:
   generate_docs:
     name: Generate dart docs
