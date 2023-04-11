@@ -1,14 +1,14 @@
-import 'package:app/assets/StyleFrom.dart';
-import 'package:app/assets/components/buttons/darkButton.dart';
-import 'package:app/assets/components/inputs.dart';
-import 'package:app/pages/more/morePages/ConfirmationModal.dart';
+import 'package:nowu/assets/StyleFrom.dart';
+import 'package:nowu/assets/components/buttons/darkButton.dart';
+import 'package:nowu/assets/components/inputs.dart';
+import 'package:nowu/pages/more/morePages/ConfirmationModal.dart';
 import 'package:flutter/material.dart';
-import 'package:app/assets/components/customAppBar.dart';
-import 'package:app/viewmodels/account_details_model.dart';
-import 'package:app/assets/components/textButton.dart';
+import 'package:nowu/assets/components/customAppBar.dart';
+import 'package:nowu/viewmodels/account_details_model.dart';
+import 'package:nowu/assets/components/textButton.dart';
 
 // TODO move models into models
-import 'package:app/services/google_location_search_service.dart';
+import 'package:nowu/services/google_location_search_service.dart';
 
 import 'package:stacked/stacked.dart';
 

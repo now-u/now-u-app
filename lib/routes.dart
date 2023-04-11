@@ -1,24 +1,25 @@
-import 'package:app/assets/routes/customRoute.dart';
-import 'package:app/models/Campaign.dart';
-import 'package:app/models/Notification.dart';
-import 'package:app/models/Organisation.dart';
-import 'package:app/pages/Tabs.dart';
-import 'package:app/pages/action/ActionInfo.dart';
-import 'package:app/pages/campaign/campaign_page.dart';
-import 'package:app/pages/intro/IntroPage.dart';
-import 'package:app/pages/login/emailSentPage.dart';
-import 'package:app/pages/login/login.dart';
-import 'package:app/pages/login/login_code_view.dart';
-import 'package:app/pages/login/profile_setup.dart';
-import 'package:app/pages/more/morePages/AccountDetailsPage.dart';
-import 'package:app/pages/more/morePages/FAQPage.dart';
-import 'package:app/pages/more/morePages/PartnersPage.dart';
-import 'package:app/pages/causes/CauseOnboardingPage.dart';
-import 'package:app/pages/causes/ChangeCausePage.dart';
-import 'package:app/pages/other/InfoPage.dart';
-import 'package:app/pages/other/NotificationPage.dart';
-import 'package:app/pages/other/OrganisationPage.dart';
-import 'package:app/viewmodels/explore_page_view_model.dart';
+import 'package:nowu/assets/routes/customRoute.dart';
+import 'package:nowu/models/Campaign.dart';
+import 'package:nowu/models/Notification.dart';
+import 'package:nowu/models/Organisation.dart';
+import 'package:nowu/pages/Tabs.dart';
+import 'package:nowu/pages/action/ActionInfo.dart';
+import 'package:nowu/pages/campaign/campaign_page.dart';
+import 'package:nowu/pages/intro/IntroPage.dart';
+import 'package:nowu/pages/login/emailSentPage.dart';
+import 'package:nowu/pages/login/login.dart';
+import 'package:nowu/pages/login/login_code_view.dart';
+import 'package:nowu/pages/login/profile_setup.dart';
+import 'package:nowu/pages/more/morePages/AccountDetailsPage.dart';
+import 'package:nowu/pages/more/morePages/FAQPage.dart';
+import 'package:nowu/pages/more/morePages/PartnersPage.dart';
+import 'package:nowu/pages/causes/CauseOnboardingPage.dart';
+import 'package:nowu/pages/causes/ChangeCausePage.dart';
+import 'package:nowu/pages/other/InfoPage.dart';
+import 'package:nowu/pages/other/NotificationPage.dart';
+import 'package:nowu/pages/other/OrganisationPage.dart';
+import 'package:nowu/pages/search/SearchPage.dart';
+import 'package:nowu/viewmodels/explore_page_view_model.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
@@ -53,6 +54,7 @@ class Routes {
   static const organisationPage = "organisationPage";
   static const info = "info";
   static const notification = "notification";
+  static const search = "search";
 }
 
 Function initRoutes = (RouteSettings settings) {
@@ -191,6 +193,11 @@ Function initRoutes = (RouteSettings settings) {
               builder: (context) => NotificationPage(args), settings: settings);
         }
         break;
+      }
+    case Routes.search:
+      {
+        return customRoute(
+            builder: (context) => SearchPage(), settings: settings);
       }
 
     // TODO add a 404 page

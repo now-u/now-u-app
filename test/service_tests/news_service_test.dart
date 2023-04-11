@@ -1,8 +1,8 @@
-import 'package:app/locator.dart';
-import 'package:app/models/article.dart';
-import 'package:app/services/news_service.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/models/article.dart';
+import 'package:nowu/services/news_service.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:app/services/api_service.dart';
+import 'package:nowu/services/api_service.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../factories/article_factory.dart';

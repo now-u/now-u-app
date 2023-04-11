@@ -1,7 +1,7 @@
-import 'package:app/assets/StyleFrom.dart';
+import 'package:nowu/assets/StyleFrom.dart';
 import 'package:flutter/material.dart';
 
-import 'package:app/assets/components/textButton.dart';
+import 'package:nowu/assets/components/textButton.dart';
 
 AppBar customAppBar({
   text,

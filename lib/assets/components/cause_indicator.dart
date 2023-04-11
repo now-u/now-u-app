@@ -1,4 +1,4 @@
-import 'package:app/models/Cause.dart';
+import 'package:nowu/models/Cause.dart';
 import 'package:flutter/widgets.dart';
 
 class CauseIndicator extends StatelessWidget {

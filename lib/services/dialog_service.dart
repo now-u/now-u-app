@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'package:app/assets/components/buttons/darkButton.dart';
-import 'package:app/managers/dialog_manager.dart';
-export 'package:app/managers/dialog_manager.dart';
+import 'package:nowu/assets/components/buttons/darkButton.dart';
+import 'package:nowu/managers/dialog_manager.dart';
+export 'package:nowu/managers/dialog_manager.dart';
 
 class AlertResponse {
   final dynamic response;

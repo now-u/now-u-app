@@ -1,11 +1,11 @@
-import 'package:app/assets/StyleFrom.dart';
+import 'package:nowu/assets/StyleFrom.dart';
 import 'package:flutter/material.dart';
 
-import 'package:app/models/Organisation.dart';
+import 'package:nowu/models/Organisation.dart';
 
-import 'package:app/assets/components/custom_network_image.dart';
+import 'package:nowu/assets/components/custom_network_image.dart';
 
-import 'package:app/routes.dart';
+import 'package:nowu/routes.dart';
 
 class OrganisationTile extends StatelessWidget {
   final Organisation organisation;

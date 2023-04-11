@@ -1,4 +1,4 @@
-import 'package:app/models/utils.dart';
+import 'package:nowu/models/utils.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

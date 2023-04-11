@@ -1,8 +1,8 @@
-import 'package:app/assets/StyleFrom.dart';
-import 'package:app/assets/components/buttons/darkButton.dart';
-import 'package:app/assets/components/inputs.dart';
-import 'package:app/assets/constants.dart';
-import 'package:app/viewmodels/profile_setup_view_model.dart';
+import 'package:nowu/assets/StyleFrom.dart';
+import 'package:nowu/assets/components/buttons/darkButton.dart';
+import 'package:nowu/assets/components/inputs.dart';
+import 'package:nowu/assets/constants.dart';
+import 'package:nowu/viewmodels/profile_setup_view_model.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -18,8 +18,7 @@ class ProfileSetup extends StatelessWidget {
         if (value.isEmpty) return "Name cannot be empty";
         return null;
       },
-      onSaved: (value) {
-        print("Saved");
+      onChanged: (value) {
         model.name = value;
       },
       hintText: 'Jane Doe',

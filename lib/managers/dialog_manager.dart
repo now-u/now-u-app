@@ -1,13 +1,13 @@
-import 'package:app/assets/components/buttons/customWidthButton.dart';
+import 'package:nowu/assets/components/buttons/customWidthButton.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import 'package:app/locator.dart';
-import 'package:app/services/dialog_service.dart';
-import 'package:app/models/Cause.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/dialog_service.dart';
+import 'package:nowu/models/Cause.dart';
 
-import 'package:app/assets/components/buttons/darkButton.dart';
-import 'package:app/assets/StyleFrom.dart';
+import 'package:nowu/assets/components/buttons/darkButton.dart';
+import 'package:nowu/assets/StyleFrom.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 
 abstract class CustomDialog {

@@ -1,16 +1,16 @@
-import 'package:app/assets/components/card.dart';
-import 'package:app/assets/components/cause_indicator.dart';
-import 'package:app/assets/components/custom_network_image.dart';
-import 'package:app/locator.dart';
-import 'package:app/models/Learning.dart';
-import 'package:app/routes.dart';
-import 'package:app/models/Action.dart';
-import 'package:app/models/Campaign.dart';
-import 'package:app/models/Cause.dart';
-import 'package:app/models/article.dart';
-import 'package:app/services/causes_service.dart';
-import 'package:app/services/navigation_service.dart';
-import 'package:app/pages/action/ActionInfo.dart';
+import 'package:nowu/assets/components/card.dart';
+import 'package:nowu/assets/components/cause_indicator.dart';
+import 'package:nowu/assets/components/custom_network_image.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/models/Learning.dart';
+import 'package:nowu/routes.dart';
+import 'package:nowu/models/Action.dart';
+import 'package:nowu/models/Campaign.dart';
+import 'package:nowu/models/Cause.dart';
+import 'package:nowu/models/article.dart';
+import 'package:nowu/services/causes_service.dart';
+import 'package:nowu/services/navigation_service.dart';
+import 'package:nowu/pages/action/ActionInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -117,7 +117,7 @@ class ExploreActionTile extends ExploreResourceTile {
   void onTap() {
     _navigationService.navigateTo(
       Routes.actionInfo,
-      arguments: ActionInfoArguments(action: action),
+      arguments: ActionInfoArguments(actionId: action.id),
     );
   }
 }

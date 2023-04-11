@@ -1,9 +1,9 @@
-import 'package:app/viewmodels/base_model.dart';
+import 'package:nowu/viewmodels/base_model.dart';
 
-import 'package:app/locator.dart';
-import 'package:app/services/navigation_service.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/navigation_service.dart';
 
-import 'package:app/services/internal_notification_service.dart';
+import 'package:nowu/services/internal_notification_service.dart';
 
 class NotificationViewModel extends BaseModel {
   InternalNotificationService? _internalNotificationService =

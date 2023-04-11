@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:app/assets/ClipShadowPath.dart';
-import 'package:app/assets/StyleFrom.dart';
+import 'package:nowu/assets/ClipShadowPath.dart';
+import 'package:nowu/assets/StyleFrom.dart';
 
 class ScrollableSheetPage extends StatelessWidget {
   final Widget header;

@@ -1,4 +1,4 @@
-import 'package:app/models/Cause.dart';
+import 'package:nowu/models/Cause.dart';
 
 abstract class Serializer<T> {
   T fromJson(Map<String, dynamic> data);

@@ -1,8 +1,9 @@
-import 'package:app/assets/components/buttons/darkButton.dart';
-import 'package:app/assets/constants.dart';
-import 'package:app/models/Action.dart';
-import 'package:app/pages/explore/ExploreSection.dart';
-import 'package:app/viewmodels/explore_page_view_model.dart';
+import 'package:nowu/assets/components/buttons/darkButton.dart';
+import 'package:nowu/assets/components/searchBar.dart';
+import 'package:nowu/assets/constants.dart';
+import 'package:nowu/models/Action.dart';
+import 'package:nowu/pages/explore/ExploreSection.dart';
+import 'package:nowu/viewmodels/explore_page_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -12,6 +13,8 @@ class ExplorePage extends StatelessWidget {
   final ExplorePageArguments args;
 
   ExplorePage(this.args, {Key? key}) : super(key: key);
+
+  final _searchBarFocusNode = FocusNode();
 
   List<ExploreSection> buildSections() {
     return this.args.sections.map((sectionArgs) {
@@ -50,6 +53,13 @@ class ExplorePage extends StatelessWidget {
                 ],
               ),
             ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: horizontalPadding, vertical: 8),
+            child: SearchBar(onTap: () {
+              model.navigateToSearchPage();
+            }),
           ),
           if (model.hasLinks())
             Padding(
@@ -90,7 +100,9 @@ class ExplorePage extends StatelessWidget {
           return Scaffold(
               body: SingleChildScrollView(
             child: Column(
-                children: [_header(context, model)] +
+                children: [
+                      _header(context, model),
+                    ] +
                     model.sections
                         .map((ExploreSection section) => ExploreSectionWidget(
                               data: section,

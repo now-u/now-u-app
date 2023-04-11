@@ -1,23 +1,23 @@
-import 'package:app/assets/StyleFrom.dart';
-import 'package:app/assets/constants.dart';
+import 'package:nowu/assets/StyleFrom.dart';
+import 'package:nowu/assets/constants.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:app/assets/icons/customIcons.dart';
+import 'package:nowu/assets/icons/customIcons.dart';
 
-import 'package:app/assets/components/customTile.dart';
+import 'package:nowu/assets/components/customTile.dart';
 
-import 'package:app/locator.dart';
-import 'package:app/services/navigation_service.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/navigation_service.dart';
 
-import 'package:app/pages/more/ProfileTile.dart';
-import 'package:app/routes.dart';
+import 'package:nowu/pages/more/ProfileTile.dart';
+import 'package:nowu/routes.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:stacked/stacked.dart';
-import 'package:app/viewmodels/base_model.dart';
+import 'package:nowu/viewmodels/base_model.dart';
 
 final profileTiles = <Map>[
   // Profile disabled for v1

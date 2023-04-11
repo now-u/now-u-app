@@ -4,10 +4,10 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import 'package:app/services/navigation_service.dart';
-import 'package:app/services/dialog_service.dart';
-import 'package:app/locator.dart';
-import 'package:app/routes.dart';
+import 'package:nowu/services/navigation_service.dart';
+import 'package:nowu/services/dialog_service.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/routes.dart';
 
 import '../setup/test_helpers.dart';
 

@@ -5,10 +5,10 @@ class RemoteConfigKey {
 }
 
 class RemoteConfigService {
-  late RemoteConfig remoteConfig;
+  late FirebaseRemoteConfig remoteConfig;
 
   Future init() async {
-    remoteConfig = RemoteConfig.instance;
+    remoteConfig = FirebaseRemoteConfig.instance;
     await remoteConfig.fetch();
     await remoteConfig.activate();
   }

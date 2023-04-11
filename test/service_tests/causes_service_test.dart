@@ -1,17 +1,17 @@
-import 'package:app/models/Action.dart';
-import 'package:app/models/Campaign.dart';
-import 'package:app/models/Cause.dart';
-import 'package:app/models/Learning.dart';
-import 'package:app/services/api_service.dart';
-import 'package:app/services/auth.dart';
+import 'package:nowu/models/Action.dart';
+import 'package:nowu/models/Campaign.dart';
+import 'package:nowu/models/Cause.dart';
+import 'package:nowu/models/Learning.dart';
+import 'package:nowu/services/api_service.dart';
+import 'package:nowu/services/auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 import '../factories/action_factory.dart';
 import '../factories/campaign_factory.dart';
 import '../factories/cause_factory.dart';
 import 'package:mocktail/mocktail.dart';
 
-import 'package:app/services/causes_service.dart';
-import 'package:app/locator.dart';
+import 'package:nowu/services/causes_service.dart';
+import 'package:nowu/locator.dart';
 
 import '../factories/learning_resource_factory.dart';
 import '../setup/test_helpers.dart';

@@ -1,5 +1,5 @@
-import 'package:app/assets/icons/customIcons.dart';
-import 'package:app/models/Cause.dart';
+import 'package:nowu/assets/icons/customIcons.dart';
+import 'package:nowu/models/Cause.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import './helpers.dart';

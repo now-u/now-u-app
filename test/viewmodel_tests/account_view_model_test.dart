@@ -1,16 +1,16 @@
-import 'package:app/services/analytics.dart';
-import 'package:app/services/api_service.dart';
-import 'package:app/services/google_location_search_service.dart';
-import 'package:app/services/navigation_service.dart';
+import 'package:nowu/services/analytics.dart';
+import 'package:nowu/services/api_service.dart';
+import 'package:nowu/services/google_location_search_service.dart';
+import 'package:nowu/services/navigation_service.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:app/locator.dart';
-import 'package:app/services/dialog_service.dart';
-import 'package:app/services/auth.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/dialog_service.dart';
+import 'package:nowu/services/auth.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../setup/test_helpers.dart';
 
-import 'package:app/viewmodels/account_details_model.dart';
+import 'package:nowu/viewmodels/account_details_model.dart';
 
 class MockAuthenticationService extends Mock implements AuthenticationService {}
 

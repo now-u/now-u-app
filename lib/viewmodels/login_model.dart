@@ -1,18 +1,18 @@
 import 'dart:async';
 
-import 'package:app/models/User.dart';
-import 'package:app/pages/login/emailSentPage.dart';
-import 'package:app/routes.dart';
-import 'package:app/services/storage.dart';
-import 'package:app/services/superbase.dart';
+import 'package:nowu/models/User.dart';
+import 'package:nowu/pages/login/emailSentPage.dart';
+import 'package:nowu/routes.dart';
+import 'package:nowu/services/storage.dart';
+import 'package:nowu/services/superbase.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide User;
 import 'base_model.dart';
-import 'package:app/locator.dart';
-import 'package:app/services/auth.dart';
-import 'package:app/services/navigation_service.dart';
-import 'package:app/services/dialog_service.dart';
-import 'package:app/services/api_service.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/auth.dart';
+import 'package:nowu/services/navigation_service.dart';
+import 'package:nowu/services/dialog_service.dart';
+import 'package:nowu/services/api_service.dart';
 
 class LoginViewModel extends BaseModel {
   final AuthenticationService _authenticationService =
@@ -36,10 +36,11 @@ class LoginViewModel extends BaseModel {
         _supabaseService.client.auth.onAuthStateChange.listen((event) async {
       print("Auth state has changed!");
       User? user = await _authenticationService.fetchUser();
-      assert(user != null, "User not found by auth service");
 
-      print("Stuff");
-      if (!user!.hasProfile) {
+      if (user == null) {
+        _dialogService.showDialog(
+            BasicDialog(title: "Login failed", description: "Login failed"));
+      } else if (!user.hasProfile) {
         print("Navigating to profile setup");
         _navigationService.navigateTo(Routes.profileSetup, clearHistory: true);
       } else {

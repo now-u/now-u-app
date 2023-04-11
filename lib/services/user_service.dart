@@ -1,7 +1,7 @@
-import 'package:app/locator.dart';
-import 'package:app/models/User.dart';
-import 'package:app/services/api_service.dart';
-import 'package:app/services/auth.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/models/User.dart';
+import 'package:nowu/services/api_service.dart';
+import 'package:nowu/services/auth.dart';
 
 class UserService {
   // TODO We hardly actually need the user now we have the auth token

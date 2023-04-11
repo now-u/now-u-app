@@ -1,7 +1,7 @@
-import 'package:app/assets/components/causes/causeTileGrid.dart';
-import 'package:app/viewmodels/causes_view_model.dart';
+import 'package:nowu/assets/components/causes/causeTileGrid.dart';
+import 'package:nowu/viewmodels/causes_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:app/assets/components/buttons/customWidthButton.dart';
+import 'package:nowu/assets/components/buttons/customWidthButton.dart';
 import 'package:stacked/stacked.dart';
 
 class CauseOnboardingPage extends StatelessWidget {

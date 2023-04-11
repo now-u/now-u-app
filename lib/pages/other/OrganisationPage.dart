@@ -1,17 +1,17 @@
-import 'package:app/assets/components/header.dart';
-import 'package:app/assets/components/sectionTitle.dart';
+import 'package:nowu/assets/components/header.dart';
+import 'package:nowu/assets/components/sectionTitle.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:app/assets/components/customTile.dart';
-import 'package:app/assets/components/custom_network_image.dart';
-import 'package:app/assets/StyleFrom.dart';
+import 'package:nowu/assets/components/customTile.dart';
+import 'package:nowu/assets/components/custom_network_image.dart';
+import 'package:nowu/assets/StyleFrom.dart';
 
-import 'package:app/models/Organisation.dart';
+import 'package:nowu/models/Organisation.dart';
 
-import 'package:app/locator.dart';
-import 'package:app/services/navigation_service.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/navigation_service.dart';
 
 final double SECTION_TITLE_BOTTOM_PADDING = 8;
 final double BETWEEN_SECTION_PADDING = 12;

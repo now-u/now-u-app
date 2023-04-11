@@ -1,13 +1,13 @@
-import 'package:app/models/Organisation.dart';
-import 'package:app/services/api_service.dart';
-import 'package:app/viewmodels/base_model.dart';
+import 'package:nowu/models/Organisation.dart';
+import 'package:nowu/services/api_service.dart';
+import 'package:nowu/viewmodels/base_model.dart';
 
 import 'package:flutter/material.dart';
-import 'package:app/locator.dart';
-import 'package:app/services/auth.dart';
-import 'package:app/services/google_location_search_service.dart';
-import 'package:app/services/dialog_service.dart';
-import 'package:app/services/analytics.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/auth.dart';
+import 'package:nowu/services/google_location_search_service.dart';
+import 'package:nowu/services/dialog_service.dart';
+import 'package:nowu/services/analytics.dart';
 
 class AccountDetailsViewModel extends BaseModel {
   final AuthenticationService _authenticationService =

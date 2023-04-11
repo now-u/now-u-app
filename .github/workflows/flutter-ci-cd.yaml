@@ -60,7 +60,7 @@ jobs:
     - uses: subosito/flutter-action@v2
       with:
         channel: 'stable' # 'dev', 'alpha', default to: 'stable'
-        flutter-version: '3.3.x'
+        flutter-version: '3.7.x'
       # env:
         # ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         # env:

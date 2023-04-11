@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:app/assets/components/textButton.dart';
-import 'package:app/pages/other/InfoPage.dart';
-import 'package:app/routes.dart';
+import 'package:nowu/assets/components/textButton.dart';
+import 'package:nowu/pages/other/InfoPage.dart';
+import 'package:nowu/routes.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

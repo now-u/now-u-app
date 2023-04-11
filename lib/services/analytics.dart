@@ -1,10 +1,10 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 
-import 'package:app/models/Action.dart';
-import 'package:app/models/Campaign.dart';
-import 'package:app/models/Learning.dart';
-import 'package:app/models/User.dart';
+import 'package:nowu/models/Action.dart';
+import 'package:nowu/models/Campaign.dart';
+import 'package:nowu/models/Learning.dart';
+import 'package:nowu/models/User.dart';
 
 class AnalyticsService {
   final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
