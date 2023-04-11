@@ -102,7 +102,8 @@ void main() {
       expect(response, {"abc": "def"});
 
       verify(() => mockHttpClient.get(
-          Uri.parse("https://staging.api.now-u.com/api/causes/stuff?limit=10&fav=true"),
+          Uri.parse(
+              "https://staging.api.now-u.com/api/causes/stuff?limit=10&fav=true"),
           headers: any(named: "headers"))).called(1);
     });
 
@@ -115,7 +116,8 @@ void main() {
         "causes": [1, 2]
       });
       verify(() => mockHttpClient.get(
-          Uri.parse("https://staging.api.now-u.com/api/causes/stuff?causes=%5B1%2C2%5D"),
+          Uri.parse(
+              "https://staging.api.now-u.com/api/causes/stuff?causes=%5B1%2C2%5D"),
           headers: any(named: "headers"))).called(1);
     });
   });
