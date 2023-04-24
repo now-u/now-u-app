@@ -8,7 +8,6 @@ import 'package:nowu/services/pushNotifications.dart';
 import 'package:nowu/services/remote_config_service.dart';
 import 'package:nowu/services/shared_preferences_service.dart';
 import 'package:nowu/services/superbase.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:nowu/viewmodels/base_model.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer';
@@ -20,8 +19,6 @@ class StartUpViewModel extends BaseModel {
 
   Future handleStartUpLogic() async {
     registerFirebaseServicesToLocator();
-
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
     final _supabaseService = locator<SupabaseService>();
     await _supabaseService.init();

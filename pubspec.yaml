@@ -11,7 +11,7 @@ description: now-u App
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 2.0.0-dev+50
+version: 2.0.0-dev+51
 
 environment:
   sdk: '>=2.15.0 <3.0.0'
@@ -57,7 +57,6 @@ dependencies:
   
   # Firebase
   firebase_analytics: ^10.2.0
-  firebase_crashlytics: ^3.1.0
   firebase_messaging: ^14.4.0
   firebase_dynamic_links: ^5.1.0
   firebase_remote_config: ^4.0.0
