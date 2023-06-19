@@ -23,7 +23,7 @@ class LoginPage extends StatefulWidget {
 
   LoginPage(this.args);
   @override
-  LoginPageState createState() => new LoginPageState();
+  LoginPageState createState() => LoginPageState();
 }
 
 class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {

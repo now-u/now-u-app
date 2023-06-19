@@ -90,12 +90,12 @@ TextStyle exploreHeading = TextStyle(
 const Offset tileShadowOffset = Offset(0, 3);
 const double tileShadowBlurRadius = 20;
 final BorderRadius tileBorderRadius = BorderRadius.circular(8);
-const BoxShadow tileBoxShadowLight = const BoxShadow(
+const BoxShadow tileBoxShadowLight = BoxShadow(
   color: Color.fromRGBO(0, 45, 96, 0.08),
   offset: tileShadowOffset,
   blurRadius: tileShadowBlurRadius,
 );
-const BoxShadow tileBoxShadowDark = const BoxShadow(
+const BoxShadow tileBoxShadowDark = BoxShadow(
   color: Color.fromRGBO(0, 0, 0, 0.08),
   offset: tileShadowOffset,
   blurRadius: tileShadowBlurRadius,

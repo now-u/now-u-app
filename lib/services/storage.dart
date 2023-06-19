@@ -33,8 +33,7 @@ class StorageProvider {
 }
 
 class SecureStorageService {
-  final _store =
-      StorageProvider(flutterSecureStorage: new FlutterSecureStorage());
+  final _store = StorageProvider(flutterSecureStorage: FlutterSecureStorage());
 
   Future<void> setEmail(String email) => _store.setEmail(email);
   Future<void> setName(String name) => _store.setEmail(name);

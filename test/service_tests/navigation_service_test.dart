@@ -29,7 +29,7 @@ class MockNavigatorState extends Mock implements NavigatorState {
 class MockNavigationKey extends Mock implements GlobalKey<NavigatorState> {
   final NavigatorState navigatorState;
   MockNavigationKey({NavigatorState? navigatorState})
-      : this.navigatorState = navigatorState ?? new MockNavigatorState();
+      : this.navigatorState = navigatorState ?? MockNavigatorState();
 
   @override
   NavigatorState? get currentState => navigatorState;
@@ -63,7 +63,7 @@ void main() {
     mockNavigatorState = mockNavigationKey.currentState!;
 
     navigationService =
-        new NavigationService(mockNavigationKey, mockUrlLauncher, mockBroswer);
+        NavigationService(mockNavigationKey, mockUrlLauncher, mockBroswer);
   });
 
   group('InternalLinkingTests -', () {
@@ -166,11 +166,10 @@ void main() {
       group('externally opens', () {
         Future<void> assertOpensLinkExternally(String url) async {
           when(() => mockDialogService.showDialog(any())).thenAnswer((_) =>
-              new Future<AlertResponse>(
-                  () => new AlertResponse(response: true)));
+              Future<AlertResponse>(() => AlertResponse(response: true)));
 
           when(() => mockUrlLauncher.openUrl(any()))
-              .thenAnswer((_) => new Future.value());
+              .thenAnswer((_) => Future.value());
 
           await navigationService.launchLink(url);
           verify(() => mockUrlLauncher.openUrl(Uri.parse(url))).called(1);
@@ -186,7 +185,7 @@ void main() {
       group('opens in internal browser', () {
         Future<void> assertOpensLinkInternally(String url) async {
           when(() => mockBroswer.open(url: any(named: "url")))
-              .thenAnswer((_) => new Future<void>(() => null));
+              .thenAnswer((_) => Future<void>(() => null));
 
           await navigationService.launchLink(url);
 

@@ -39,12 +39,11 @@ class CampaignPage extends StatelessWidget {
     return Stack(
       alignment: Alignment.bottomLeft,
       children: [
-        CustomNetworkImage(
-          campaign.headerImage,
-          height: 193,
-          fit: BoxFit.cover,
-          colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.darken)
-        ),
+        CustomNetworkImage(campaign.headerImage,
+            height: 193,
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.6), BlendMode.darken)),
         Padding(
           padding: EdgeInsets.all(CustomPaddingSize.normal),
           child: Text(
@@ -109,21 +108,27 @@ class CampaignPage extends StatelessWidget {
           horizontal: CustomPaddingSize.small,
           vertical: CustomPaddingSize.normal),
       child: Column(
-		crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
               Text(
                 "About this campaign",
-                style: Theme.of(context).primaryTextTheme.headline3!.copyWith(fontSize: 18),
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .headline3!
+                    .copyWith(fontSize: 18),
               ),
               Text(
                 campaign?.description ?? "",
                 style: Theme.of(context).primaryTextTheme.bodyText1,
-				textAlign: TextAlign.left,
+                textAlign: TextAlign.left,
               ),
-			  SizedBox(height: CustomPaddingSize.normal),
+              SizedBox(height: CustomPaddingSize.normal),
               Text(
                 "Support this campaign by completing these actions",
-                style: Theme.of(context).primaryTextTheme.headline3!.copyWith(fontSize: 18),
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .headline3!
+                    .copyWith(fontSize: 18),
               ),
             ] +
             _resourcesList(context, campaign),

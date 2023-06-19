@@ -29,9 +29,7 @@ GetIt locator = GetIt.instance;
 
 void setupLocator() {
   locator.registerLazySingleton(() => NavigationService(
-      new GlobalKey<NavigatorState>(),
-      new UrlLauncher(),
-      new CustomChromeSafariBrowser()));
+      GlobalKey<NavigatorState>(), UrlLauncher(), CustomChromeSafariBrowser()));
   locator.registerLazySingleton(() => SecureStorageService());
   locator.registerLazySingleton(() => SharedPreferencesService());
   locator.registerLazySingleton(() => AuthenticationService());
@@ -45,7 +43,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => OrganisationService());
   locator.registerLazySingleton(() => AnalyticsService());
   locator.registerLazySingleton(() => CausesService());
-  locator.registerLazySingleton(() => ApiService(new http.Client()));
+  locator.registerLazySingleton(() => ApiService(http.Client()));
   locator.registerLazySingleton(() => SupabaseService());
   locator.registerLazySingleton(() => SearchService());
 }

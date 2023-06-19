@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/locator.dart';
 
-typedef T JsonDeserializer<T>(Map<String, dynamic> data);
+typedef JsonDeserializer<T> = T Function(Map<String, dynamic> data);
 
 /// Types of http errors
 enum ApiExceptionType {
@@ -133,7 +133,7 @@ class ApiService {
 
     Map response = await getRequest(path, params: params);
     List<Map<String, dynamic>> listData =
-        new List<Map<String, dynamic>>.from(response["data"]);
+        List<Map<String, dynamic>>.from(response["data"]);
     return listData;
   }
 

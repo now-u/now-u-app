@@ -20,7 +20,7 @@ class PartnersPage extends StatelessWidget {
           onModelReady: (model) => model.fetchPartners(),
           builder: (context, model, child) {
             return GridView.builder(
-              gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 childAspectRatio: 0.85,
               ),
