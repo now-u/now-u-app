@@ -73,9 +73,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">void setupLocator() {
   locator.registerLazySingleton(() =&gt; NavigationService(
-      new GlobalKey&lt;NavigatorState&gt;(),
-      new UrlLauncher(),
-      new CustomChromeSafariBrowser()));
+      GlobalKey&lt;NavigatorState&gt;(), UrlLauncher(), CustomChromeSafariBrowser()));
   locator.registerLazySingleton(() =&gt; SecureStorageService());
   locator.registerLazySingleton(() =&gt; SharedPreferencesService());
   locator.registerLazySingleton(() =&gt; AuthenticationService());
@@ -89,7 +87,7 @@
   locator.registerLazySingleton(() =&gt; OrganisationService());
   locator.registerLazySingleton(() =&gt; AnalyticsService());
   locator.registerLazySingleton(() =&gt; CausesService());
-  locator.registerLazySingleton(() =&gt; ApiService(new http.Client()));
+  locator.registerLazySingleton(() =&gt; ApiService(http.Client()));
   locator.registerLazySingleton(() =&gt; SupabaseService());
   locator.registerLazySingleton(() =&gt; SearchService());
 }</code></pre>

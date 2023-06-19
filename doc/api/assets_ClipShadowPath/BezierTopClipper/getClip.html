@@ -83,7 +83,7 @@ clipped is of the given size.</p>
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
 Path getClip(Size size) {
-  var path = new Path();
+  var path = Path();
   path.lineTo(0.0, 40);
 
   var firstControlPoint = Offset(size.width &#47; 4, 65);
