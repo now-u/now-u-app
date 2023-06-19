@@ -43,14 +43,17 @@ class CampaignPage extends StatelessWidget {
           campaign.headerImage,
           height: 193,
           fit: BoxFit.cover,
+          colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.darken)
         ),
         Padding(
-          padding: EdgeInsets.all(CustomPaddingSize.small),
+          padding: EdgeInsets.all(CustomPaddingSize.normal),
           child: Text(
             campaign.title,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: CustomColors.white,
-              fontSize: CustomFontSize.heading1,
+              fontSize: CustomFontSize.heading3,
               fontWeight: FontWeight.w700,
             ),
           ),
