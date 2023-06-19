@@ -29,7 +29,7 @@ class AnalyticsService {
     print("Deleted account logged in Analytics");
     await _analytics
         .logEvent(name: "User account deleted", parameters: <String, dynamic>{
-      "time_deleted": new DateTime.now().toString(),
+      "time_deleted": DateTime.now().toString(),
     });
   }
 

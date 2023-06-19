@@ -12,7 +12,7 @@ class LoginCodePage extends StatefulWidget {
   final String email;
   LoginCodePage(this.email);
   @override
-  LoginCodePageState createState() => new LoginCodePageState();
+  LoginCodePageState createState() => LoginCodePageState();
 }
 
 class LoginCodePageState extends State<LoginCodePage>

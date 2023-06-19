@@ -14,5 +14,5 @@ Future<Map<String, dynamic>> readTestDataObject(path) async {
 
 Future<List<Map<String, dynamic>>> readTestDataList(String path) async {
   final data = await _readTestData(path);
-  return new List<Map<String, dynamic>>.from(json.decode(data)["data"]);
+  return List<Map<String, dynamic>>.from(json.decode(data)["data"]);
 }

@@ -19,7 +19,7 @@ class CustomAndroidRoute<T> extends MaterialPageRoute<T> {
     //  return child;
     // Fades between routes. (If you don't want any animation,
     // just return child.)
-    return new FadeTransition(opacity: animation, child: child);
+    return FadeTransition(opacity: animation, child: child);
   }
 }
 

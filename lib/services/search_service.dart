@@ -22,8 +22,8 @@ class ResourceSearchResult {
 class SearchService {
   // This is a read only API token for the CampaignAction index. If more access is required a new token must be generated
   final _meiliSearchClient = MeiliSearchClient(
-      'https://staging.search.now-u.com',
-      '409d257b061082199e0dfac10832bbd42ff33cd7e4e294f7c34dcab25023e2ae',
+    'https://staging.search.now-u.com',
+    '409d257b061082199e0dfac10832bbd42ff33cd7e4e294f7c34dcab25023e2ae',
   );
 
   Future<List<ResourceSearchResult>> searchResources(String query) async {

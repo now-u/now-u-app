@@ -56,7 +56,8 @@ class ExplorePage extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: horizontalPadding, vertical: 8,
+              horizontal: horizontalPadding,
+              vertical: 8,
             ),
             child: SearchBar(
               onTap: () {

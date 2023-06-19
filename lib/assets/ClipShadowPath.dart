@@ -47,7 +47,7 @@ class _ClipShadowShadowPainter extends CustomPainter {
 class BezierTopClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    var path = new Path();
+    var path = Path();
     path.lineTo(0.0, 40);
 
     var firstControlPoint = Offset(size.width / 4, 65);
@@ -75,7 +75,7 @@ class BezierTopClipper extends CustomClipper<Path> {
 class BezierClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    var path = new Path();
+    var path = Path();
     path.lineTo(0.0, size.height - 40);
 
     var firstControlPoint = Offset(size.width / 4, size.height - 65);

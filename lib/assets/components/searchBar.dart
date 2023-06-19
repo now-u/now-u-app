@@ -10,7 +10,8 @@ class SearchBar extends StatelessWidget {
   final bool? readOnly;
   final FocusNode? focusNode;
 
-  const SearchBar({this.onChanged, this.onTap, this.readOnly, this.focusNode, Key? key})
+  const SearchBar(
+      {this.onChanged, this.onTap, this.readOnly, this.focusNode, Key? key})
       : super(key: key);
 
   @override
