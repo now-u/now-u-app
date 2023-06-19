@@ -109,10 +109,21 @@ class CampaignPage extends StatelessWidget {
           horizontal: CustomPaddingSize.small,
           vertical: CustomPaddingSize.normal),
       child: Column(
+		crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
               Text(
-                "Support this campaign by completing these actions:",
-                style: Theme.of(context).primaryTextTheme.headline3,
+                "About this campaign",
+                style: Theme.of(context).primaryTextTheme.headline3!.copyWith(fontSize: 18),
+              ),
+              Text(
+                campaign?.description ?? "",
+                style: Theme.of(context).primaryTextTheme.bodyText1,
+				textAlign: TextAlign.left,
+              ),
+			  SizedBox(height: CustomPaddingSize.normal),
+              Text(
+                "Support this campaign by completing these actions",
+                style: Theme.of(context).primaryTextTheme.headline3!.copyWith(fontSize: 18),
               ),
             ] +
             _resourcesList(context, campaign),
