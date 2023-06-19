@@ -533,6 +533,18 @@ semantics tree.
 
 </dd>
 
+        <dt id="traversalEdgeBehavior" class="property inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/widgets/ModalRoute/traversalEdgeBehavior.html">traversalEdgeBehavior</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/widgets/TraversalEdgeBehavior.html">TraversalEdgeBehavior</a>?</span> 
+
+</dt>
+<dd class="inherited">
+  Controls the transfer of focus beyond the first and the last items of a
+<a href="https://api.flutter.dev/flutter/widgets/FocusScopeNode-class.html">FocusScopeNode</a>.
+  <div class="features"><span class="feature">final</span><span class="feature">inherited</span></div>
+
+</dd>
+
         <dt id="willDisposeAnimationController" class="property inherited">
   <span class="name"><a href="https://api.flutter.dev/flutter/widgets/TransitionRoute/willDisposeAnimationController.html">willDisposeAnimationController</a></span>
   <span class="signature">&#8596; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> 
@@ -586,6 +598,21 @@ semantics tree.
 </dt>
 <dd class="inherited">
   Enables this route to veto attempts by the user to dismiss it.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="buildModalBarrier" class="callable inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/widgets/ModalRoute/buildModalBarrier.html">buildModalBarrier</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Build the barrier for this <a href="https://api.flutter.dev/flutter/widgets/ModalRoute-class.html">ModalRoute</a>, subclasses can override
+this method to create their own barrier with customized features such as
+color or accessibility focus size.
   <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
@@ -859,7 +886,7 @@ navigator.
 
 </dt>
 <dd class="inherited">
-  Invoked when a non-existent method or property is accessed.
+  Invoked when a nonexistent method or property is accessed.
   <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
@@ -1043,12 +1070,14 @@ called if all previous callbacks returned true.
           <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/ModalRoute/subtreeContext.html">subtreeContext</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/PageRouteBuilder/transitionDuration.html">transitionDuration</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/PageRouteBuilder/transitionsBuilder.html">transitionsBuilder</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/ModalRoute/traversalEdgeBehavior.html">traversalEdgeBehavior</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/TransitionRoute/willDisposeAnimationController.html">willDisposeAnimationController</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/LocalHistoryRoute/willHandlePopInternally.html">willHandlePopInternally</a></li>
 
         <li class="section-title inherited"><a href="../viewmodels_intro_view_model/FadeRouteBuilder-class.html#instance-methods">Methods</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/LocalHistoryRoute/addLocalHistoryEntry.html">addLocalHistoryEntry</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/ModalRoute/addScopedWillPopCallback.html">addScopedWillPopCallback</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/ModalRoute/buildModalBarrier.html">buildModalBarrier</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/PageRouteBuilder/buildPage.html">buildPage</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/PageRouteBuilder/buildTransitions.html">buildTransitions</a></li>
           <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/PageRoute/canTransitionFrom.html">canTransitionFrom</a></li>
