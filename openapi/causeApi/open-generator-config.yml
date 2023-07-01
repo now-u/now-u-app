@@ -1,0 +1,4 @@
+# Config options for the dart-dio generator
+pubName: causesApiClient
+pubVersion: 0.0.1
+pubDescription: "Generated client for now-u causes API"

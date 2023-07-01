@@ -1,21 +1,26 @@
 import 'package:nowu/locator.dart';
-import 'package:nowu/models/Cause.dart';
 import 'package:nowu/models/Action.dart';
 import 'package:nowu/models/Campaign.dart';
 import 'package:nowu/models/Learning.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/auth.dart';
+import 'package:causeApiClient/api.dart' hide Campaign, ListCampaign, LearningResource;
+
+export 'package:nowu/models/Action.dart';
+export 'package:nowu/models/Campaign.dart';
+export 'package:nowu/models/Learning.dart';
+export 'package:nowu/models/Cause.dart';
 
 class CausesService {
   final ApiService _apiService = locator<ApiService>();
+  final CausesApi _causeServiceClient = CausesApi();
 
   /// Get a list of causes
   ///
   /// Input params
   /// Returns a list of ListCauses from the API
-  Future<List<ListCause>> getCauses({Map<String, dynamic>? params}) async {
-    return _apiService.getModelListRequest("v2/causes", ListCause.fromJson,
-        params: params);
+  Future<List<ListCause>> getCauses() async {
+	return _causeServiceClient.listCauses();
   }
 
   /// Get a list of campaigns

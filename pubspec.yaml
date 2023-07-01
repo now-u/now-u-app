@@ -71,6 +71,9 @@ dependencies:
   sentry_flutter: ^7.4.0
   meilisearch: ^0.10.1
 
+  causeApiClient:
+    path: openapi/causeApi
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

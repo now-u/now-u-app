@@ -21,7 +21,7 @@ class CausesViewModel extends BaseModel {
     setBusy(true);
 
     List<ListCause> causesList = await _causesService.getCauses();
-    _causes = {for (ListCause cause in causesList) cause: cause.selected};
+    _causes = {for (ListCause cause in causesList) cause: cause.isSelected};
 
     setBusy(false);
     notifyListeners();
