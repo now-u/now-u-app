@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nowu/assets/constants.dart';
 
 class CustomTextButton extends StatelessWidget {
   final String text;
@@ -42,7 +43,7 @@ class CustomTextButton extends StatelessWidget {
             child: Text(
               text,
               style: TextStyle(
-                color: fontColor ?? Theme.of(context).buttonColor,
+                color: fontColor ?? CustomColors.brandColor,
                 fontFamily:
                     Theme.of(context).primaryTextTheme.button!.fontFamily,
                 fontWeight: fontWeight ??

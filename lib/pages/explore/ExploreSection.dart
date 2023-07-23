@@ -1,8 +1,9 @@
 import 'package:nowu/assets/components/buttons/darkButton.dart';
 import 'package:nowu/assets/components/card.dart';
+import 'package:nowu/assets/components/explore_tiles.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:nowu/pages/explore/ExplorePage.dart';
-import 'package:nowu/viewmodels/explore_page_view_model.dart';
+import 'package:nowu/pages/explore/explore_page_view_model.dart';
 import 'package:flutter/material.dart';
 
 class ExploreFilterSelectionItem extends StatelessWidget {
@@ -147,6 +148,19 @@ class ExploreSectionWidget extends StatelessWidget {
     );
   }
 
+  Widget _renderTile(ExploreTileData tile) {
+	switch (tile) {
+		case NewsArticleExploreTileData():
+			return ExploreNewsTile(tile);
+		case ActionExploreTileData():
+			return ExploreActionTile(tile);
+		case CampaignExploreTileData():
+			return ExploreCampaignTile(tile);
+		case LearningResourceExploreTileData():
+			return ExploreLearningTile(tile);
+	}
+  }
+
   Widget _buildTiles(BuildContext context) {
     final sectionHeight = data.tileHeight;
 
@@ -175,7 +189,7 @@ class ExploreSectionWidget extends StatelessWidget {
               right: 8,
               left: index == 0 ? horizontalPadding : 0,
             ),
-            child: data.renderTile(data.tiles![index]),
+            child: _renderTile(data.tiles![index]),
           ),
         ),
       ),

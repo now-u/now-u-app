@@ -1,6 +1,6 @@
+import 'package:causeApiClient/causeApiClient.dart';
 import 'package:nowu/routes.dart';
 import 'package:nowu/viewmodels/base_model.dart';
-import 'package:nowu/models/Cause.dart';
 import "dart:async";
 import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/services/causes_service.dart';
@@ -12,16 +12,16 @@ class CausesViewModel extends BaseModel {
   final NavigationService _navigationService = locator<NavigationService>();
   final CausesService _causesService = locator<CausesService>();
 
-  Map<ListCause, bool> _causes = {};
+  Map<Cause, bool> _causes = {};
 
-  List<ListCause> get causesList => _causes.keys.toList();
+  List<Cause> get causesList => _causes.keys.toList();
   bool get areCausesDisabled => !_causes.values.toList().any((value) => value);
 
   Future fetchCauses() async {
     setBusy(true);
 
-    List<ListCause> causesList = await _causesService.getCauses();
-    _causes = {for (ListCause cause in causesList) cause: cause.isSelected};
+    List<Cause> causesList = await _causesService.getCauses();
+    _causes = {for (Cause cause in causesList) cause: cause.isSelected};
 
     setBusy(false);
     notifyListeners();
@@ -29,11 +29,11 @@ class CausesViewModel extends BaseModel {
     print(_causes);
   }
 
-  bool isCauseSelected(ListCause cause) {
+  bool isCauseSelected(Cause cause) {
     return _causes[cause] ?? false;
   }
 
-  void toggleSelection({required ListCause listCause}) {
+  void toggleSelection({required Cause listCause}) {
     bool isCauseSelected = _causes[listCause] ?? false;
     _causes[listCause] = !isCauseSelected;
     print("Cause selected");
@@ -42,7 +42,7 @@ class CausesViewModel extends BaseModel {
   }
 
   Future getCausePopup(
-      {required ListCause listCause, required int causeIndex}) async {
+      {required Cause listCause, required int causeIndex}) async {
     var dialogResult =
         await _dialogService.showDialog(CauseDialog(causesList[causeIndex]));
     if (dialogResult.response) {
@@ -53,7 +53,7 @@ class CausesViewModel extends BaseModel {
   }
 
   Future<void> selectCauses() async {
-    List<ListCause> selectedCauses =
+    List<Cause> selectedCauses =
         causesList.where((cause) => isCauseSelected(cause)).toList();
     return await _causesService.selectCauses(selectedCauses);
   }

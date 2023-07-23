@@ -2,6 +2,7 @@ import 'package:nowu/assets/components/inputs.dart';
 import 'package:flutter/material.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
+import 'package:nowu/models/Action.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:nowu/viewmodels/search_view_model.dart';
 import 'package:stacked/stacked.dart';
@@ -14,7 +15,7 @@ class SearchPage extends StatelessWidget {
   // TODO Looks like stacked has new ways of doing this, we should investigate
   final _searchTextController = TextEditingController();
 
-  Widget _searchResult(SearchViewModel model, ResourceSearchResult result) {
+  Widget _searchResult(SearchViewModel model, ListAction result) {
     return GestureDetector(
       onTap: () => model.navigateToResult(result.id),
       child: Row(

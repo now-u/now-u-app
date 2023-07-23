@@ -1,3 +1,5 @@
+import 'package:causeApiClient/causeApiClient.dart';
+import 'package:dio/dio.dart';
 import 'package:nowu/services/dynamicLinks.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/search_service.dart';
@@ -5,7 +7,6 @@ import 'package:nowu/services/storage.dart';
 import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/pushNotifications.dart';
 import 'package:nowu/services/navigation_service.dart';
-import 'package:nowu/services/news_service.dart';
 import 'package:nowu/services/faq_service.dart';
 import 'package:nowu/services/shared_preferences_service.dart';
 import 'package:nowu/services/internal_notification_service.dart';
@@ -13,7 +14,6 @@ import 'package:nowu/services/device_info_service.dart';
 import 'package:nowu/services/dialog_service.dart';
 import 'package:nowu/services/google_location_search_service.dart';
 import 'package:nowu/services/remote_config_service.dart';
-import 'package:nowu/services/organisation_service.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/causes_service.dart';
 
@@ -34,13 +34,11 @@ void setupLocator() {
   locator.registerLazySingleton(() => SharedPreferencesService());
   locator.registerLazySingleton(() => AuthenticationService());
   locator.registerLazySingleton(() => UserService());
-  locator.registerLazySingleton(() => NewsService());
   locator.registerLazySingleton(() => FAQService());
   locator.registerLazySingleton(() => InternalNotificationService());
   locator.registerLazySingleton(() => DeviceInfoService());
   locator.registerLazySingleton(() => DialogService());
   locator.registerLazySingleton(() => GoogleLocationSearchService());
-  locator.registerLazySingleton(() => OrganisationService());
   locator.registerLazySingleton(() => AnalyticsService());
   locator.registerLazySingleton(() => CausesService());
   locator.registerLazySingleton(() => ApiService(http.Client()));

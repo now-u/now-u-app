@@ -1,6 +1,7 @@
 import 'package:nowu/assets/StyleFrom.dart';
 import 'package:nowu/assets/components/customTile.dart';
 import 'package:flutter/material.dart';
+import 'package:nowu/assets/constants.dart';
 
 final double defaultBorderRadius = 8.0;
 final double defaultPadding = 14.0;
@@ -123,7 +124,7 @@ class SecondaryButton extends StatelessWidget {
             text!,
             style: textStyleFrom(
               Theme.of(context).primaryTextTheme.button,
-              color: Theme.of(context).buttonColor,
+              color: CustomColors.brandColor,
               fontSize: fontSize ?? darkButtonStyleStyles[size]['fontSize'],
             ),
           ),
@@ -153,7 +154,7 @@ class PrimaryButton extends StatelessWidget {
     return MaterialButton(
       height: darkButtonStyleStyles[size]['height'],
       elevation: 0,
-      color: Theme.of(context).buttonColor,
+      color: CustomColors.brandColor,
       disabledColor: colorFrom(
         Theme.of(context).primaryColor,
         opacity: 0.5,

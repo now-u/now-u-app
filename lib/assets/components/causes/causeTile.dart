@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nowu/models/Cause.dart';
 
 class CauseTile extends StatelessWidget {
-  final ListCause cause;
+  final Cause cause;
   final bool isSelected;
   final IconData icon;
   final VoidCallback gestureFunction;
@@ -16,7 +16,7 @@ class CauseTile extends StatelessWidget {
     required this.getInfoFunction,
     bool? isSelected,
   })  : this.isSelected = isSelected ?? cause.isSelected,
-        this.icon = cause.icon;
+        this.icon = cause.icon.toIconData();
 
   @override
   Widget build(BuildContext context) {

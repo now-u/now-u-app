@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:nowu/models/Learning.dart';
 import 'package:flutter/material.dart';
 
@@ -17,15 +18,14 @@ class LearningResourceTypeFactory extends ModelFactory<LearningResourceType> {
 class LearningResourceFactory extends ModelFactory<LearningResource> {
   @override
   LearningResource generate() {
-    return LearningResource(
-      id: faker.randomGenerator.integer(100),
-      title: faker.lorem.sentence(),
-      time: faker.randomGenerator.decimal(scale: 10),
-      link: faker.internet.httpUrl(),
-      type: LearningResourceTypeFactory().generate(),
-      createdAt: faker.date.dateTime(),
-      completed: faker.randomGenerator.boolean(),
-      cause: ListCauseFactory().generate(),
+    return LearningResource((resource) => resource
+      ..id = faker.randomGenerator.integer(100)
+      ..title = faker.lorem.sentence()
+      ..time = faker.randomGenerator.integer(10)
+      ..link = faker.internet.httpUrl()
+      ..learningResourceType = LearningResourceTypeEnum.INFOGRAPHIC
+      ..createdAt = faker.date.dateTime()
+      ..causes = ListBuilder(CauseFactory().generateList(length: 1))
     );
   }
 }

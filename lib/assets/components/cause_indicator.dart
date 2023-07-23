@@ -2,7 +2,7 @@ import 'package:nowu/models/Cause.dart';
 import 'package:flutter/widgets.dart';
 
 class CauseIndicator extends StatelessWidget {
-  final ListCause cause;
+  final Cause cause;
 
   const CauseIndicator(this.cause, {Key? key}) : super(key: key);
 
@@ -14,7 +14,7 @@ class CauseIndicator extends StatelessWidget {
       child: Row(
         children: [
           Icon(
-            cause.icon,
+            cause.icon.toIconData(),
             size: 18,
           ),
           const SizedBox(width: 6),

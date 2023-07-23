@@ -6,6 +6,7 @@ import 'package:nowu/models/Campaign.dart';
 import 'package:nowu/models/Cause.dart';
 import 'package:nowu/pages/campaign/campaign_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:nowu/pages/explore/explore_page_view_model.dart';
 import 'package:stacked/stacked.dart';
 
 class CampaignPage extends StatelessWidget {
@@ -39,7 +40,7 @@ class CampaignPage extends StatelessWidget {
     return Stack(
       alignment: Alignment.bottomLeft,
       children: [
-        CustomNetworkImage(campaign.headerImage,
+        CustomNetworkImage(campaign.headerImage.url,
             height: 193,
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
@@ -61,7 +62,7 @@ class CampaignPage extends StatelessWidget {
     );
   }
 
-  Widget _causeIndicator(ListCause cause) {
+  Widget _causeIndicator(Cause cause) {
     return Container(
       color: CustomColors.greyLight1,
       height: 43,
@@ -71,17 +72,19 @@ class CampaignPage extends StatelessWidget {
     );
   }
 
-  List<Widget> _resourcesList(BuildContext context, Campaign? campaign) {
-    if (campaign == null) {
+  List<Widget> _resourcesList(BuildContext context, CampaignViewModel viewModel) {
+    if (viewModel.campaign == null) {
       return [CircularProgressIndicator()];
     }
 
     // Collect all actions and learning materials into a 2 lists of shuffled
     // explore tile widgets.
     List<ExploreResourceTile> actions =
-        campaign.actions.map((action) => ExploreActionTile(action)).toList();
-    List<ExploreResourceTile> learningResources = campaign.learningResources
-        .map((lr) => ExploreLearningTile(lr))
+		// TODO FIx false here - should get if complete from service
+        viewModel.campaign!.actions.map((action) => ExploreActionTile(ActionExploreTileData(action, viewModel.actionIsComplete(action.id)))).toList();
+    List<ExploreResourceTile> learningResources = viewModel.campaign!.learningResources
+		// TODO FIx false here - should get if complete from service
+        .map((lr) => ExploreLearningTile(LearningResourceExploreTileData(lr, viewModel.learningResourceIsComplete(lr.id))))
         .toList();
 
     // Combine the lists
@@ -91,7 +94,7 @@ class CampaignPage extends StatelessWidget {
 
     // Shuffle and then place completed at the end of the list
     children.shuffle();
-    children.sort((a, b) => a.completed ? -1 : 1);
+    children.sort((a, b) => a.isCompleted ? -1 : 1);
 
     // Add padding to all the elements
     return children
@@ -102,7 +105,7 @@ class CampaignPage extends StatelessWidget {
         .toList();
   }
 
-  Widget _body(BuildContext context, Campaign? campaign) {
+  Widget _body(BuildContext context, CampaignViewModel viewModel) {
     return Padding(
       padding: EdgeInsets.symmetric(
           horizontal: CustomPaddingSize.small,
@@ -118,7 +121,7 @@ class CampaignPage extends StatelessWidget {
                     .copyWith(fontSize: 18),
               ),
               Text(
-                campaign?.description ?? "",
+                viewModel.campaign?.description ?? "",
                 style: Theme.of(context).primaryTextTheme.bodyText1,
                 textAlign: TextAlign.left,
               ),
@@ -131,7 +134,7 @@ class CampaignPage extends StatelessWidget {
                     .copyWith(fontSize: 18),
               ),
             ] +
-            _resourcesList(context, campaign),
+            _resourcesList(context, viewModel),
       ),
     );
   }
@@ -147,7 +150,7 @@ class CampaignPage extends StatelessWidget {
             _title(model.back),
             _heading(context, model.listCampaign),
             _causeIndicator(model.listCampaign.cause),
-            _body(context, model.campaign),
+            _body(context, model),
           ]);
         },
       ),

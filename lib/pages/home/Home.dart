@@ -1,6 +1,7 @@
 import 'package:nowu/assets/components/buttons/customWidthButton.dart';
 import 'package:nowu/assets/components/causes/causeTile.dart';
 import 'package:nowu/assets/components/progressTile.dart';
+import 'package:nowu/models/User.dart';
 import 'package:nowu/pages/explore/ExploreSection.dart';
 import 'package:flutter/material.dart';
 
@@ -32,11 +33,11 @@ class Home extends StatelessWidget {
               return ScrollableSheetPage(
                 header: model.notifications!.length > 0
                     ? HeaderWithNotifications(
-                        name: model.currentUser?.getName(),
+                        name: model.currentUser?.name,
                         notification: model.notifications![0],
                         dismissNotification: model.dismissNotification,
                       )
-                    : HeaderStyle1(name: model.currentUser?.getName()),
+                    : HeaderStyle1(name: model.currentUser?.name),
                 children: [
                   Column(children: <Widget>[
                     SizedBox(

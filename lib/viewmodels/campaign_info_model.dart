@@ -4,9 +4,9 @@ import 'package:nowu/viewmodels/base_model.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/services/navigation_service.dart';
 
-import 'package:nowu/models/Campaign.dart';
 import 'package:nowu/models/SDG.dart';
 
+// TODO Is this used anywhere?
 class CampaignInfoViewModel extends BaseModel {
   final CausesService _causesService = locator<CausesService>();
   final NavigationService _navigationService = locator<NavigationService>();
@@ -26,9 +26,5 @@ class CampaignInfoViewModel extends BaseModel {
     } else {
       _navigationService.launchLink("https://sustainabledevelopment.un.org");
     }
-  }
-
-  void viewCampaignVideo(Campaign campaign) {
-    _navigationService.launchLink(campaign.videoLink);
   }
 }

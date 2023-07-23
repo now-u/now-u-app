@@ -1,12 +1,11 @@
 import 'package:nowu/services/causes_service.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Action;
 import 'package:nowu/routes.dart';
 
 import 'package:nowu/locator.dart';
 import 'package:nowu/services/dialog_service.dart';
 
 import 'package:nowu/assets/components/buttons/darkButton.dart';
-import 'package:nowu/models/Action.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -135,7 +134,7 @@ class NavigationService {
             navigateTo(Routes.explore);
             return;
           }
-          _causesService.getAction(id).then((CampaignAction action) {
+          _causesService.getAction(id).then((Action action) {
             navigateTo(route, arguments: action);
           }).catchError((e) {
             _dialogService.showDialog(BasicDialog(

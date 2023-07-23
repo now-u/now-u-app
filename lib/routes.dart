@@ -19,7 +19,7 @@ import 'package:nowu/pages/other/InfoPage.dart';
 import 'package:nowu/pages/other/NotificationPage.dart';
 import 'package:nowu/pages/other/OrganisationPage.dart';
 import 'package:nowu/pages/search/SearchPage.dart';
-import 'package:nowu/viewmodels/explore_page_view_model.dart';
+import 'package:nowu/pages/explore/explore_page_view_model.dart';
 import 'package:flutter/material.dart';
 
 class Routes {

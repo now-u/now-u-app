@@ -1,6 +1,8 @@
+import 'package:nowu/pages/explore/explore_page_view_model.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/dialog_service.dart';
+import 'package:nowu/services/search_service.dart';
 import 'package:nowu/viewmodels/base_model.dart';
 import 'package:nowu/models/Cause.dart';
 
@@ -9,7 +11,6 @@ import 'package:nowu/services/internal_notification_service.dart';
 import 'package:nowu/services/navigation_service.dart';
 
 import 'package:nowu/models/Notification.dart';
-import 'package:nowu/viewmodels/explore_page_view_model.dart';
 import 'package:nowu/routes.dart';
 
 class HomeViewModel extends BaseModel with ExploreViewModelMixin {
@@ -18,33 +19,24 @@ class HomeViewModel extends BaseModel with ExploreViewModelMixin {
   final NavigationService _navigationService = locator<NavigationService>();
   final CausesService _causesService = locator<CausesService>();
   final DialogService _dialogService = locator<DialogService>();
-  final AuthenticationService _authService = locator<AuthenticationService>();
 
-  final myCampaigns = exploreSectionFromArgs(ExploreSectionArguments(
+  final myCampaigns = exploreSectionFromArgs(CampaignExploreSectionArgs(
     title: "My campaigns",
-    type: ExploreSectionType.Campaign,
   ));
 
-  final suggestedCampaigns = exploreSectionFromArgs(ExploreSectionArguments(
+  final suggestedCampaigns = exploreSectionFromArgs(CampaignExploreSectionArgs(
     title: "Suggested campaigns",
-    baseParams: {
-      "recommended": true,
-    },
-    type: ExploreSectionType.Campaign,
+	baseParams: CampaignSearchFilter(recommended: true),
   ));
 
-  final myActions = exploreSectionFromArgs(ExploreSectionArguments(
+  final myActions = exploreSectionFromArgs(ActionExploreSectionArgs(
     title: "What can I do today?",
     // TODO Fix, this should only filter by completed if there is an active user
-    baseParams: {
-      "completed": false,
-    },
-    type: ExploreSectionType.Action,
+	baseParams: ActionSearchFilter(completed: false),
   ));
 
-  final inTheNews = exploreSectionFromArgs(ExploreSectionArguments(
+  final inTheNews = exploreSectionFromArgs(NewsArticleExploreSectionArgs(
     title: "In the news",
-    type: ExploreSectionType.News,
   ));
 
   HomeViewModel() {
@@ -57,9 +49,9 @@ class HomeViewModel extends BaseModel with ExploreViewModelMixin {
     fetchCauses();
   }
 
-  List<ListCause> _causes = [];
+  List<Cause> _causes = [];
 
-  List<ListCause> get causes => _causes;
+  List<Cause> get causes => _causes;
 
   Future fetchCauses() async {
     setBusy(true);
@@ -72,7 +64,7 @@ class HomeViewModel extends BaseModel with ExploreViewModelMixin {
     notifyListeners();
   }
 
-  Future getCausePopup(ListCause listCause) async {
+  Future getCausePopup(Cause listCause) async {
     var dialogResult = await _dialogService.showDialog(CauseDialog(listCause));
     if (dialogResult.response) {
       _navigationService.navigateTo(Routes.causesEditPage);
@@ -83,15 +75,15 @@ class HomeViewModel extends BaseModel with ExploreViewModelMixin {
       _internalNotificationService.notifications;
 
   int get numberOfCompletedCampaigns {
-    return currentUser!.completedCampaignIds.length;
+    return _causesService.userInfo!.completedCampaignIds.length;
   }
 
   int get numberOfCompletedActions {
-    return currentUser!.completedActionIds.length;
+    return _causesService.userInfo!.completedActionIds.length;
   }
 
   int get numberOfCompletedLearningResources {
-    return currentUser!.completedLearningResourceIds.length;
+    return _causesService.userInfo!.completedLearningResourceIds.length;
   }
 
   // getNotifications

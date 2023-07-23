@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:nowu/locator.dart';
+import 'package:nowu/models/Action.dart';
 import 'package:nowu/pages/action/ActionInfo.dart';
 import 'package:nowu/routes.dart';
 import 'package:nowu/services/navigation_service.dart';
@@ -12,7 +13,7 @@ class SearchViewModel extends BaseModel {
 
   String get searchValue => _searchValue;
   String _searchValue = "";
-  List<ResourceSearchResult> searchResult = [];
+  List<ListAction> searchResult = [];
 
   void updateSearchValue(String value) {
     _searchValue = value;
@@ -20,7 +21,7 @@ class SearchViewModel extends BaseModel {
   }
 
   void search() async {
-    searchResult = await _searchService.searchResources(searchValue.toString());
+    searchResult = await _searchService.searchActions(filter: ActionSearchFilter(query: searchValue.toString()));
     notifyListeners();
   }
 

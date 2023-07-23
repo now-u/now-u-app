@@ -1,6 +1,6 @@
 import 'package:nowu/locator.dart';
 import 'package:nowu/services/navigation_service.dart';
-import 'package:nowu/viewmodels/explore_page_view_model.dart';
+import 'package:nowu/pages/explore/explore_page_view_model.dart';
 import 'package:nowu/viewmodels/tabs_view_model.dart';
 import 'package:flutter/material.dart';
 

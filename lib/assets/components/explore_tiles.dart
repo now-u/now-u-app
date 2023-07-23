@@ -2,17 +2,14 @@ import 'package:nowu/assets/components/card.dart';
 import 'package:nowu/assets/components/cause_indicator.dart';
 import 'package:nowu/assets/components/custom_network_image.dart';
 import 'package:nowu/locator.dart';
-import 'package:nowu/models/Learning.dart';
 import 'package:nowu/routes.dart';
-import 'package:nowu/models/Action.dart';
-import 'package:nowu/models/Campaign.dart';
-import 'package:nowu/models/Cause.dart';
 import 'package:nowu/models/article.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/pages/action/ActionInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nowu/pages/explore/explore_page_view_model.dart';
 
 enum ExploreTileStyle {
   Standard,
@@ -36,16 +33,16 @@ class ExploreCampaignTile extends ExploreTile {
 
   final String headerImage;
   final String title;
-  final ListCause cause;
+  final Cause cause;
   final bool completed;
   final ListCampaign campaign;
 
-  ExploreCampaignTile(ListCampaign model, {Key? key})
-      : headerImage = model.headerImage,
-        title = model.title,
-        cause = model.cause,
-        completed = model.completed,
-        campaign = model,
+  ExploreCampaignTile(CampaignExploreTileData tile, {Key? key})
+      : headerImage = tile.campaign.headerImage.url,
+        title = tile.campaign.title,
+        cause = tile.campaign.cause,
+        completed = tile.isCompleted,
+        campaign = tile.campaign,
         super(key: key);
 
   @override
@@ -96,20 +93,20 @@ class ExploreCampaignTile extends ExploreTile {
 }
 
 class ExploreActionTile extends ExploreResourceTile {
-  final ListCauseAction action;
+  final ListAction action;
 
-  ExploreActionTile(ListCauseAction model, {ExploreTileStyle? style, Key? key})
-      : action = model,
+  ExploreActionTile(ActionExploreTileData tile, {ExploreTileStyle? style, Key? key})
+      : action = tile.action,
         super(
-          title: model.title,
-          type: model.superType.name,
-          iconColor: model.primaryColor,
-          headerColor: model.secondaryColor,
-          dividerColor: model.tertiaryColor,
-          icon: model.icon,
-          cause: model.cause,
-          timeText: model.timeText,
-          completed: model.completed,
+          title: tile.action.title,
+          type: tile.action.type.name,
+          iconColor: tile.action.type.primaryColor,
+          headerColor: tile.action.type.secondaryColor,
+          dividerColor: tile.action.type.tertiaryColor,
+          icon: tile.action.type.icon,
+          cause: tile.action.cause,
+          timeText: tile.action.timeText,
+          isCompleted: tile.isCompleted,
           style: style,
           key: key,
         );
@@ -127,19 +124,19 @@ class ExploreLearningTile extends ExploreResourceTile {
 
   final LearningResource resource;
 
-  ExploreLearningTile(LearningResource model,
+  ExploreLearningTile(LearningResourceExploreTileData tile,
       {ExploreTileStyle? style, Key? key})
-      : resource = model,
+      : resource = tile.learningResource,
         super(
-          title: model.title,
-          type: model.type.name,
+          title: tile.learningResource.title,
+          type: tile.learningResource.type.name,
           iconColor: blue0,
           headerColor: blue1,
           dividerColor: blue2,
-          icon: model.icon,
-          cause: model.cause,
-          timeText: model.timeText,
-          completed: model.completed,
+          icon: tile.learningResource.icon,
+          cause: tile.learningResource.cause,
+          timeText: tile.learningResource.timeText,
+          isCompleted: tile.isCompleted,
           key: key,
           style: style,
         );
@@ -149,6 +146,7 @@ class ExploreLearningTile extends ExploreResourceTile {
     _navigationService.launchLink(
       resource.link,
     );
+	// TODO Notify listeners
   }
 }
 
@@ -163,9 +161,9 @@ abstract class ExploreResourceTile extends ExploreTile {
   final Color headerColor;
   final Color dividerColor;
   final IconData icon;
-  final ListCause cause;
+  final Cause cause;
   final String timeText;
-  final bool completed;
+  final bool isCompleted;
   final ExploreTileStyle style;
 
   ExploreResourceTile(
@@ -177,7 +175,7 @@ abstract class ExploreResourceTile extends ExploreTile {
       required this.icon,
       required this.cause,
       required this.timeText,
-      required this.completed,
+      required this.isCompleted,
       ExploreTileStyle? style,
       Key? key})
       : this.style = style ?? ExploreTileStyle.Standard,
@@ -227,7 +225,7 @@ abstract class ExploreResourceTile extends ExploreTile {
                     ),
                     Expanded(child: Container()),
                     _ExploreTileCheckmark(
-                      completed: completed,
+                      completed: isCompleted,
                     ),
                   ],
                 ),
@@ -272,16 +270,16 @@ class ExploreNewsTile extends ExploreTile {
   final String dateString;
   final String url;
   final String shortUrl;
-  final Article article;
+  final NewsArticle article;
 
-  ExploreNewsTile(Article model, {Key? key})
-      : title = model.title,
-        subtitle = model.subtitle,
-        headerImage = model.headerImage,
-        dateString = model.dateString ?? "",
-        url = model.fullArticleLink,
-        shortUrl = model.shortUrl,
-        article = model,
+  ExploreNewsTile(NewsArticleExploreTileData tile, {Key? key})
+      : title = tile.article.title,
+        subtitle = tile.article.subtitle,
+        headerImage = tile.article.headerImage.url,
+        dateString = tile.article.dateString ?? "",
+        url = tile.article.link,
+        shortUrl = tile.article.shortUrl,
+        article = tile.article,
         super(key: key);
 
   Widget buildBody(BuildContext context) {
@@ -289,7 +287,7 @@ class ExploreNewsTile extends ExploreTile {
       aspectRatio: 0.8,
       child: InkWell(
         onTap: () {
-          _navigationService.launchLink(article.fullArticleLink);
+          _navigationService.launchLink(article.link);
         },
         child: Column(
           children: [

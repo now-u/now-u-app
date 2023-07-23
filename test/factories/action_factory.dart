@@ -1,34 +1,36 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:nowu/models/Action.dart';
 
 import 'factory.dart';
 import 'cause_factory.dart';
 
-class ListCauseActionFactory extends ModelFactory<ListCauseAction> {
-  @override
-  ListCauseAction generate() {
-    return ListCauseAction(
-      id: faker.randomGenerator.integer(100),
-      title: faker.lorem.sentence(),
-      type: CampaignActionType.Volunteer,
-      cause: ListCauseFactory().generate(),
-      completed: faker.randomGenerator.boolean(),
-      time: faker.randomGenerator.decimal(min: 1, scale: 10),
-      createdAt: faker.date.dateTime(),
-    );
-  }
+class ListActionFactory extends ModelFactory<ListAction> {
+	@override
+	ListAction generate() {
+		return ListAction((action) => action
+			..id = faker.randomGenerator.integer(100)
+			..title = faker.lorem.sentence()
+			..actionType = ActionTypeEnum.VOLUNTEER
+			..causes = ListBuilder(CauseFactory().generateList(length: 1))
+			..time = faker.randomGenerator.integer(10)
+			..createdAt = faker.date.dateTime()
+		);
+	}
 }
 
-class CampaignActionFactory extends ModelFactory<CampaignAction> {
-  @override
-  CampaignAction generate() {
-    return CampaignAction(
-      id: faker.randomGenerator.integer(100),
-      title: faker.lorem.sentence(),
-      type: CampaignActionType.Volunteer,
-      cause: ListCauseFactory().generate(),
-      completed: faker.randomGenerator.boolean(),
-      time: faker.randomGenerator.decimal(min: 1, scale: 10),
-      createdAt: faker.date.dateTime(),
-    );
-  }
+class ActionFactory extends ModelFactory<Action> {
+	@override
+	Action generate() {
+		return Action((action) => action
+			..id = faker.randomGenerator.integer(100)
+			..title = faker.lorem.sentence()
+			..actionType = ActionTypeEnum.VOLUNTEER
+			..causes = ListBuilder([
+				CauseFactory().generate()
+			])
+			..isCompleted = faker.randomGenerator.boolean()
+			..time = faker.randomGenerator.integer(10)
+			..createdAt = faker.date.dateTime()
+		);
+	}
 }

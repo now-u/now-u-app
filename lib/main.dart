@@ -150,14 +150,14 @@ class _AppState extends State<App> {
         primaryColor: orange,
         // Accent Colours
         // Sunflower
-        accentColor: Color.fromRGBO(243, 183, 0, 1),
+        // accentColor: Color.fromRGBO(243, 183, 0, 1),
         // Venetian Red --> Accent
         errorColor: Color.fromRGBO(211, 0, 1, 1),
         // Salomie
         primaryColorLight: Color.fromRGBO(255, 220, 121, 1),
         // Oxford Blue
         primaryColorDark: blue,
-        buttonColor: orange,
+        // buttonColor: orange,
         //textSelectionColor: white, // Text used on top of
       ),
     );

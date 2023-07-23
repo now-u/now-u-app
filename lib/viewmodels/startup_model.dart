@@ -2,6 +2,7 @@
 import 'package:nowu/locator.dart';
 import 'package:nowu/routes.dart';
 import 'package:nowu/services/auth.dart';
+import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/dynamicLinks.dart';
 import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/services/pushNotifications.dart';
@@ -9,9 +10,10 @@ import 'package:nowu/services/remote_config_service.dart';
 import 'package:nowu/services/shared_preferences_service.dart';
 import 'package:nowu/services/superbase.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:nowu/services/user_service.dart';
 import 'package:nowu/viewmodels/base_model.dart';
+import 'package:nowu/models/User.dart';
 import 'package:flutter/material.dart';
-import 'dart:developer';
 
 class StartUpViewModel extends BaseModel {
   final AuthenticationService _authenticationService =
@@ -22,6 +24,8 @@ class StartUpViewModel extends BaseModel {
     registerFirebaseServicesToLocator();
 
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+
+	final _userService = locator<UserService>();
 
     final _supabaseService = locator<SupabaseService>();
     await _supabaseService.init();
@@ -43,7 +47,11 @@ class StartUpViewModel extends BaseModel {
         locator<SharedPreferencesService>();
     await _sharedPreferencesService.init();
 
-    var currentUser = await _authenticationService.fetchUser();
+	final _causesService = locator<CausesService>();
+
+    final currentUser = await _userService.fetchUser();
+    final userCasusesInfo = await _causesService.fetchUserInfo();
+
     // _navigationService.navigateTo(
     //     currentUser != null ? Routes.home : Routes.intro,
     //     clearHistory: true);
@@ -53,7 +61,7 @@ class StartUpViewModel extends BaseModel {
     _navigationService.navigateTo(
         currentUser == null
             ? Routes.intro
-            : currentUser.hasProfile
+            : (currentUser.isInitialised && userCasusesInfo.isInitialised == true)
                 ? Routes.home
                 : Routes.profileSetup,
         clearHistory: true);

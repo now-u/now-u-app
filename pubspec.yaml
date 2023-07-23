@@ -14,7 +14,7 @@ description: now-u App
 version: 2.0.0-dev+50
 
 environment:
-  sdk: '>=2.15.0 <3.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   flutter:
@@ -23,7 +23,7 @@ dependencies:
   share: ^2.0.4
   uuid: ^3.0.5
 
-  stacked: ^2.3.6
+  stacked: ^3.4.1
 
   shared_preferences: ^2.0.8
   path_provider: ^2.0.5
@@ -73,6 +73,7 @@ dependencies:
 
   causeApiClient:
     path: openapi/causeApi
+  dio: ^5.2.1+1
 
 dev_dependencies:
   flutter_test:

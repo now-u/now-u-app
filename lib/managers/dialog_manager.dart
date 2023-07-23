@@ -22,7 +22,7 @@ abstract class CustomDialog {
 }
 
 class CauseDialog extends CustomDialog {
-  ListCause cause;
+  Cause cause;
 
   CauseDialog(this.cause);
 
@@ -41,7 +41,7 @@ class CauseDialog extends CustomDialog {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Stack(children: [
-                  CachedNetworkImage(imageUrl: cause.headerImage),
+                  CachedNetworkImage(imageUrl: cause.headerImage.url),
                   Padding(
                     padding: EdgeInsets.all(5),
                     child: Align(

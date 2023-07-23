@@ -1,11 +1,7 @@
-import 'package:nowu/assets/icons/customIcons.dart';
-import 'package:nowu/models/Campaign.dart';
-import 'package:nowu/models/Explorable.dart';
-import 'package:flutter/material.dart';
+import 'package:causeApiClient/causeApiClient.dart';
 import 'package:intl/intl.dart';
-import 'package:json_annotation/json_annotation.dart';
 
-part 'article.g.dart';
+export 'package:causeApiClient/causeApiClient.dart' show NewsArticle;
 
 // class ArticleType {
 //   final String name;
@@ -26,53 +22,15 @@ part 'article.g.dart';
 //   return articleTypes.firstWhere((ArticleType type) => type.name == name);
 // }
 
-@JsonSerializable()
-class Article extends Explorable {
-  final int id;
+extension NewsArticleExtension on NewsArticle {
+	String? get dateString {
+		return releaseAt != null ? DateFormat("d MMM y").format(releaseAt!) : null;
+	}
 
-  final String title;
-  final String subtitle;
+	// TODO Try harder
+	String? getCategory({List<Campaign>? campaigns}) {
+		return "General";
+	}
 
-  // @JsonKey(fromJson: articleTypeFromName)
-  // final ArticleType type;
-
-  final String headerImage;
-
-  @JsonKey(name: "release_date")
-  final DateTime? releasedAt;
-  final String? source;
-  final String fullArticleLink;
-
-  @JsonKey(name: "campaignId")
-  final int? linkedCampaignId;
-
-  String? get dateString {
-    final releasedAt = this.releasedAt;
-    return releasedAt != null ? DateFormat("d MMM y").format(releasedAt) : null;
-  }
-
-  String get shortUrl => Uri.parse(fullArticleLink).host;
-
-  Article({
-    required this.id,
-    required this.title,
-    required this.subtitle,
-    required this.headerImage,
-    required this.fullArticleLink,
-    this.source,
-    this.linkedCampaignId,
-    this.releasedAt,
-  });
-
-  factory Article.fromJson(Map<String, dynamic> data) =>
-      _$ArticleFromJson(data);
-
-  String? getCategory({List<Campaign>? campaigns}) {
-    if (linkedCampaignId != null && campaigns != null) {
-      for (int i = 0; i < campaigns.length; i++) {
-        if (campaigns[i].id == linkedCampaignId) return campaigns[i].shortName;
-      }
-    }
-    return "General";
-  }
+	String get shortUrl => Uri.parse(link).host;
 }

@@ -1,10 +1,12 @@
+import 'package:collection/collection.dart';
 import 'package:nowu/assets/components/buttons/darkButton.dart';
 import 'package:nowu/assets/components/searchBar.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:nowu/models/Action.dart';
 import 'package:nowu/pages/explore/ExploreSection.dart';
-import 'package:nowu/viewmodels/explore_page_view_model.dart';
-import 'package:flutter/material.dart';
+import 'package:nowu/services/search_service.dart';
+import 'package:nowu/pages/explore/explore_page_view_model.dart';
+import 'package:flutter/material.dart' hide SearchBar;
 import 'package:stacked/stacked.dart';
 
 final double horizontalPadding = CustomPaddingSize.small;
@@ -15,21 +17,6 @@ class ExplorePage extends StatelessWidget {
   ExplorePage(this.args, {Key? key}) : super(key: key);
 
   final _searchBarFocusNode = FocusNode();
-
-  List<ExploreSection> buildSections() {
-    return this.args.sections.map((sectionArgs) {
-      switch (sectionArgs.type) {
-        case ExploreSectionType.Action:
-          return ActionExploreSection(sectionArgs);
-        case ExploreSectionType.Learning:
-          return LearningResourceExploreSection(sectionArgs);
-        case ExploreSectionType.Campaign:
-          return CampaignExploreSection(sectionArgs);
-        case ExploreSectionType.News:
-          return NewsExploreSection(sectionArgs);
-      }
-    }).toList() as List<ExploreSection>;
-  }
 
   Widget _header(BuildContext context, ExplorePageViewModel model) {
     return SafeArea(
@@ -124,77 +111,63 @@ class ExplorePage extends StatelessWidget {
 }
 
 ExplorePageArguments campaigns_explore_page =
-    ExplorePageArguments(title: "Campaigns", sections: [
-  ExploreSectionArguments(
-      title: "Campaigns of the month",
-      baseParams: {
-        "of_the_month": true,
-      },
-      type: ExploreSectionType.Campaign),
-  ExploreSectionArguments(
-      title: "Recommended campaigns",
-      baseParams: {
-        "recommended": true,
-      },
-      type: ExploreSectionType.Campaign),
-  ExploreSectionArguments(
-    title: "Campaigns by cause",
-    filter: ByCauseExploreFilter(),
-    type: ExploreSectionType.Campaign,
-  ),
-  ExploreSectionArguments(
-    title: "Completed campaigns",
-    baseParams: {
-      "completed": true,
-    },
-    backgroundColor: CustomColors.lightOrange,
-    type: ExploreSectionType.Campaign,
-  ),
+	ExplorePageArguments(title: "Campaigns", sections: [
+	CampaignExploreSectionArgs(
+		title: "Campaigns of the month",
+		baseParams: CampaignSearchFilter(ofTheMonth: true),
+	),
+	CampaignExploreSectionArgs(
+		title: "Recommended campaigns",
+		baseParams: CampaignSearchFilter(recommended: true),
+	),
+	CampaignExploreSectionArgs(
+		title: "Campaigns by cause",
+		filter: CampaignByCauseExploreFilter(),
+	),
+	CampaignExploreSectionArgs(
+		title: "Completed campaigns",
+		baseParams: CampaignSearchFilter(completed: true),
+		backgroundColor: CustomColors.lightOrange,
+	),
 ]);
 
 ExplorePageArguments actions_explore_page = ExplorePageArguments(
   title: "Actions",
   sections: [
-    ExploreSectionArguments(
+    ActionExploreSectionArgs(
         title: "Actions of the month",
-        baseParams: {
-          "of_the_month": true,
-        },
-        type: ExploreSectionType.Action),
-    ExploreSectionArguments(
+		baseParams: ActionSearchFilter(ofTheMonth: true),
+	),
+    ActionExploreSectionArgs(
       title: "Actions by cause",
-      filter: ByCauseExploreFilter(),
-      type: ExploreSectionType.Action,
+      filter: ActionByCauseExploreFilter(),
     ),
-    ExploreSectionArguments(
+    ActionExploreSectionArgs(
       title: "Actions by time",
-      filter: TimeExploreFilter(),
-      type: ExploreSectionType.Action,
+      filter: ActionTimeExploreFilter(),
     ),
-    ExploreSectionArguments(
+    ActionExploreSectionArgs(
       title: "Actions by type",
-      filter: ExploreFilter(
-        parameterName: "type__in",
+
+      filter: ExploreFilter<List<ActionTypeEnum>, ActionSearchFilter>(
         multi: false,
         options: actionTypes
-            .map((type) => ExploreFilterOption(
+            .map((type) => ExploreFilterOption<List<ActionTypeEnum>>(
                   displayName: type.name,
-                  parameterValue: campaignActionTypeData.values
-                      .where((value) => value['type'] == type)
-                      .map((value) => value['name'])
-                      .toList(),
+                  parameterValue: type.subTypes
                 ))
             .toList(),
+		toFilter: (selectedTypes) {
+			print("Converting thing to filter");
+			print(selectedTypes.flattened);
+			return ActionSearchFilter(types: selectedTypes.flattened);
+		},
       ),
-      type: ExploreSectionType.Action,
     ),
-    ExploreSectionArguments(
+    ActionExploreSectionArgs(
       title: "Completed actions",
-      baseParams: {
-        "completed": true,
-      },
+	  baseParams: ActionSearchFilter(completed: true),
       backgroundColor: CustomColors.lightOrange,
-      type: ExploreSectionType.Action,
     ),
   ],
 );
@@ -202,27 +175,21 @@ ExplorePageArguments actions_explore_page = ExplorePageArguments(
 ExplorePageArguments learning_explore_page = ExplorePageArguments(
   title: "Learn",
   sections: [
-    ExploreSectionArguments(
+    LearningResourceExploreSectionArgs(
       title: "Learning resources by time",
-      filter: TimeExploreFilter(),
-      type: ExploreSectionType.Learning,
+      filter: LearningResourceTimeExploreFilter(),
     ),
-    ExploreSectionArguments(
+    LearningResourceExploreSectionArgs(
       title: "Learning resource by cause",
-      filter: ByCauseExploreFilter(),
-      type: ExploreSectionType.Learning,
+      filter: LearningResourceByCauseExploreFilter(),
     ),
-    ExploreSectionArguments(
+    LearningResourceExploreSectionArgs(
       title: "Learning resources",
-      type: ExploreSectionType.Learning,
     ),
-    ExploreSectionArguments(
+    LearningResourceExploreSectionArgs(
       title: "Completed learning",
-      baseParams: {
-        "completed": true,
-      },
       backgroundColor: CustomColors.lightOrange,
-      type: ExploreSectionType.Learning,
+	  baseParams: LearningResourceSearchFilter(completed: true),
     ),
   ],
 );
@@ -230,32 +197,28 @@ ExplorePageArguments learning_explore_page = ExplorePageArguments(
 ExplorePageArguments home_explore_page = ExplorePageArguments(
   title: "Explore",
   sections: [
-    ExploreSectionArguments(
+    ActionExploreSectionArgs(
       title: "Actions",
       link: actions_explore_page,
       description:
           "Take a wide range of actions to drive lasting change for issues you care about",
-      type: ExploreSectionType.Action,
     ),
-    ExploreSectionArguments(
+    LearningResourceExploreSectionArgs(
       title: "Learn",
       link: learning_explore_page,
       description:
           "Learn more about key topics of pressing social and environmental issues",
-      type: ExploreSectionType.Learning,
     ),
-    ExploreSectionArguments(
+    CampaignExploreSectionArgs(
       title: "Campaigns",
       link: campaigns_explore_page,
       description:
           "Join members of the now-u community in coordinated campaigns to make a difference",
-      type: ExploreSectionType.Campaign,
     ),
-    ExploreSectionArguments(
+    NewsArticleExploreSectionArgs(
       title: "News",
       description:
           "Find out what’s going on in the world this week in relation to your chosen causes",
-      type: ExploreSectionType.News,
     ),
   ],
 );

@@ -42,13 +42,13 @@ class OrganisationTile extends StatelessWidget {
                       //height: 80, width: 100,
                       //width: 20,
                       child: CustomNetworkImage(
-                    organisation.getLogoLink(),
+                    organisation.logo.url,
                     fit: BoxFit.contain,
                   )),
                   SizedBox(
                     height: 10,
                   ),
-                  Text(organisation.getName()!,
+                  Text(organisation.name,
                       style: textStyleFrom(
                         Theme.of(context).primaryTextTheme.bodyText1,
                         fontSize: 12,

@@ -1,10 +1,8 @@
+import 'package:causeApiClient/causeApiClient.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
 
 import 'package:nowu/models/Action.dart';
-import 'package:nowu/models/Campaign.dart';
 import 'package:nowu/models/Learning.dart';
-import 'package:nowu/models/User.dart';
 
 class AnalyticsService {
   final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
@@ -33,14 +31,14 @@ class AnalyticsService {
     });
   }
 
-  Future logActionStatusUpdate(CampaignAction action, String status) async {
+  Future logActionStatusUpdate(Action action, String status) async {
     print("Logging action completed");
     await _analytics
         .logEvent(name: "action_$status", parameters: <String, dynamic>{
       "id": action.id,
       "title": action.title,
       "type": action.type.toString(),
-      "super_type": action.superType.name,
+      "super_type": action.type.name,
       "time": action.time,
     });
   }

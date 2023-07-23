@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:causeApiClient/causeApiClient.dart';
 import 'package:nowu/models/User.dart';
 import 'package:nowu/pages/login/emailSentPage.dart';
 import 'package:nowu/routes.dart';
 import 'package:nowu/services/storage.dart';
 import 'package:nowu/services/superbase.dart';
+import 'package:nowu/services/user_service.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide User;
 import 'base_model.dart';
@@ -21,6 +23,7 @@ class LoginViewModel extends BaseModel {
   final DialogService _dialogService = locator<DialogService>();
   final SecureStorageService _secureStroageService =
       locator<SecureStorageService>();
+  final UserService _userService = locator<UserService>();
 
   late final StreamSubscription<AuthState> _authStateSubscription;
   final _supabaseService = locator<SupabaseService>();
@@ -35,12 +38,13 @@ class LoginViewModel extends BaseModel {
     _authStateSubscription =
         _supabaseService.client.auth.onAuthStateChange.listen((event) async {
       print("Auth state has changed!");
-      User? user = await _authenticationService.fetchUser();
+      UserProfile? user = await _userService.fetchUser();
 
       if (user == null) {
         _dialogService.showDialog(
             BasicDialog(title: "Login failed", description: "Login failed"));
-      } else if (!user.hasProfile) {
+			// TODO DO we need to check causes here as well?
+      } else if (!user.isInitialised) {
         print("Navigating to profile setup");
         _navigationService.navigateTo(Routes.profileSetup, clearHistory: true);
       } else {

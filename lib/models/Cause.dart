@@ -1,45 +1,13 @@
-import 'package:causeApiClient/api.dart';
-import 'package:get/utils.dart';
+import 'package:causeApiClient/causeApiClient.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:flutter/widgets.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:causeApiClient/src/model/icon_enum.dart';
 
-import 'utils.dart';
+export 'package:causeApiClient/causeApiClient.dart' show Cause, IconEnum;
 
-part 'Cause.g.dart';
-
-extension on ListCause {
-	IconData get getIcon {
-		return getIconFromString(this.icon);
+extension IconEnumExtension on IconEnum {
+	IconData toIconData() {
+		// TODO Update this function to take in icon enum and use icon enum everywhere
+		return getIconFromString(this.toString());
 	}
 }
-
-// @JsonSerializable()
-// class ListCause {
-//   final int id;
-//   // TODO rename
-//   @JsonKey(name: "name")
-//   final String title;
-// 
-//   @JsonKey(fromJson: authBooleanSerializer, name: "joined")
-//   final bool isSelected;
-// 
-//   @JsonKey(fromJson: getIconFromString)
-//   final IconData icon;
-// 
-//   final String description;
-//   @JsonKey(name: "image")
-//   final String headerImage;
-// 
-//   const ListCause({
-//     required this.id,
-//     required this.title,
-//     required this.icon,
-//     required this.description,
-//     required this.headerImage,
-//     required this.isSelected,
-//   });
-// 
-//   factory ListCause.fromJson(Map<String, dynamic> data) =>
-//       _$ListCauseFromJson(data);
-// }

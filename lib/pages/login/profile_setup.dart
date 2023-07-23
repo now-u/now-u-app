@@ -39,7 +39,7 @@ class ProfileSetup extends StatelessWidget {
                 text: "Terms & Conditions",
                 style: textStyleFrom(
                   Theme.of(context).primaryTextTheme.bodyText1,
-                  color: Theme.of(context).buttonColor,
+                  color: CustomColors.brandColor,
                 ),
                 recognizer: TapGestureRecognizer()..onTap = model.openTsAndCs,
               ),
@@ -151,7 +151,7 @@ class ProfileSetup extends StatelessWidget {
                               text: "here",
                               style: textStyleFrom(
                                 Theme.of(context).primaryTextTheme.bodyText1,
-                                color: Theme.of(context).buttonColor,
+                                color: CustomColors.brandColor,
                               ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {

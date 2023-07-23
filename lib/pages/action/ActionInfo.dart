@@ -4,7 +4,6 @@ import 'package:nowu/assets/components/buttons/darkButton.dart';
 import 'package:nowu/assets/components/textButton.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:nowu/models/Action.dart';
-import 'package:nowu/routes.dart';
 import 'package:nowu/viewmodels/action_info_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -42,7 +41,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
         builder: (context, model, child) {
           return Scaffold(
               appBar: customAppBar(
-                text: model.busy ? "Loading..." : model.action!.superType.name,
+                text: model.busy ? "Loading..." : model.action!.type.name,
                 backButtonText: "Actions",
                 context: context,
               ),
@@ -54,16 +53,16 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                         children: [
                           Container(
                             width: double.infinity,
-                            color: model.action!.secondaryColor,
+                            color: model.action!.type.secondaryColor,
                             child: Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 15, vertical: 20),
                                 child: Text(model.action!.title)),
                           ),
                           Container(
-                            height: model.action!.completed ? null : 10,
-                            color: model.action!.primaryColor,
-                            child: model.action!.completed
+                            height: model.action!.isCompleted ? null : 10,
+                            color: model.action!.type.primaryColor,
+                            child: model.action!.isCompleted
                                 ? Row(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -98,8 +97,8 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Icon(
-                                        model.action!.icon,
-                                        color: model.action!.primaryColor,
+                                        model.action!.type.icon,
+                                        color: model.action!.type.primaryColor,
                                       ),
                                       SizedBox(width: 6),
                                       Icon(FontAwesomeIcons.clock, size: 12),
@@ -147,7 +146,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                         .primaryTextTheme
                                         .headline4),
                                 SizedBox(height: 10),
-                                Text(model.action!.whatDescription ?? "",
+                                Text(model.action!.whatDescription,
                                     style: Theme.of(context)
                                         .primaryTextTheme
                                         .bodyText1),
@@ -182,7 +181,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                             ),
                           ),
 
-                          !model.action!.completed
+                          !model.action!.isCompleted
                               ?
                               // If not completed show the then button
                               Column(
@@ -226,7 +225,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                               Padding(
                                   padding: EdgeInsets.only(top: 20, bottom: 10),
                                   child: Container(
-                                      color: model.action!.secondaryColor,
+                                      color: model.action!.type.secondaryColor,
                                       child: Padding(
                                         padding: const EdgeInsets.all(15.0),
                                         child: Column(
@@ -300,7 +299,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                         .primaryTextTheme
                                         .headline4),
                                 SizedBox(height: 10),
-                                Text(model.action!.whyDescription ?? "",
+                                Text(model.action!.whyDescription,
                                     style: Theme.of(context)
                                         .primaryTextTheme
                                         .bodyText1),
@@ -313,7 +312,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                               mainAxisAlignment: MainAxisAlignment.end,
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                model.action!.completed
+                                model.action!.isCompleted
                                     ? CustomTextButton("Mark as not done",
                                         fontSize: 14, onClick: () {
                                         model.removeActionStatus();
@@ -332,7 +331,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                 SizedBox(width: 10),
                               ]),
                           SizedBox(height: 15),
-                          !model.action!.completed
+                          !model.action!.isCompleted
                               ? Container()
                               : Container(
                                   height: 65,
@@ -349,7 +348,7 @@ class _ActionInfoState extends State<ActionInfo> with WidgetsBindingObserver {
                                   ),
                                 ),
                           SizedBox(
-                            height: model.action!.completed ? 0 : 70,
+                            height: model.action!.isCompleted ? 0 : 70,
                           ),
                         ],
                       ),

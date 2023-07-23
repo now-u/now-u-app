@@ -1,5 +1,6 @@
 import 'package:nowu/assets/constants.dart';
 import 'package:nowu/locator.dart';
+import 'package:nowu/models/User.dart';
 import 'package:nowu/routes.dart';
 import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/services/user_service.dart';
@@ -15,7 +16,7 @@ class ProfileSetupViewModel extends BaseModel {
   bool signUpForNewsLetter = false;
 
   ProfileSetupViewModel() {
-    this.name = currentUser?.fullName;
+    this.name = _userSerivce.currentUser?.name;
   }
 
   void openTsAndCs() {
@@ -26,8 +27,9 @@ class ProfileSetupViewModel extends BaseModel {
     setBusy(true);
     // We know name is defined here as the form is valid
     print("Setting name to: $name");
+    // TODO FIX
     await _userSerivce.updateUser(
-        name: name!, newsLetterSignup: signUpForNewsLetter);
+		name: name!, newsLetterSignup: signUpForNewsLetter);
     setBusy(false);
     _navigationService.navigateTo(Routes.causesOnboardingPage);
   }

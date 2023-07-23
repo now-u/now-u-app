@@ -176,7 +176,7 @@ class LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                                 text: "here",
                                 style: textStyleFrom(
                                   Theme.of(context).primaryTextTheme.bodyText1,
-                                  color: Theme.of(context).buttonColor,
+                                  color: CustomColors.brandColor,
                                 ),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
