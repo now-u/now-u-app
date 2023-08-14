@@ -1,7 +1,7 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 class RemoteConfigKey {
-  static const googlePlaceAPIKey = "googlePlaceAPIKey";
+  static const googlePlaceAPIKey = 'googlePlaceAPIKey';
 }
 
 class RemoteConfigService {

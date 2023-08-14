@@ -2,15 +2,16 @@ import 'package:nowu/services/causes_service.dart';
 import 'package:flutter/material.dart' hide Action;
 import 'package:nowu/routes.dart';
 
-import 'package:nowu/locator.dart';
-import 'package:nowu/services/dialog_service.dart';
+import 'package:nowu/app/app.locator.dart';
 
 import 'package:nowu/assets/components/buttons/darkButton.dart';
+import 'package:nowu/ui/dialogs/basic/basic_dialog.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-const String INTERNAL_PREFIX = "internal:";
+const String INTERNAL_PREFIX = 'internal:';
 
 const List ID_ROUTES = [Routes.campaignInfo, Routes.actionInfo];
 
@@ -23,36 +24,43 @@ class UrlLauncher {
 class CustomChromeSafariBrowser extends ChromeSafariBrowser {
   @override
   void onOpened() {
-    print("ChromeSafari browser opened");
+    print('ChromeSafari browser opened');
   }
 
   @override
   void onCompletedInitialLoad() {
-    print("ChromeSafari browser initial load completed");
+    print('ChromeSafari browser initial load completed');
   }
 
   @override
   void onClosed() {
-    print("ChromeSafari browser closed");
+    print('ChromeSafari browser closed');
   }
 }
 
+// TODO Start to use router service
 class NavigationService {
   final DialogService _dialogService = locator<DialogService>();
-  final CausesService _causesService = locator<CausesService>();
 
-  final GlobalKey<NavigatorState> navigatorKey;
-  final UrlLauncher urlLauncher;
-  final ChromeSafariBrowser browser;
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  final UrlLauncher urlLauncher = UrlLauncher();
+  final ChromeSafariBrowser browser = CustomChromeSafariBrowser();
 
-  NavigationService(this.navigatorKey, this.urlLauncher, this.browser);
+  // TODO Work out why I was taking these in?
+  // NavigationService(this.navigatorKey, this.urlLauncher, this.browser);
 
-  Future<dynamic> navigateTo(String routeName,
-      {arguments, clearHistory = false}) {
+  @Deprecated('Use router service instead')
+  Future<dynamic> navigateTo(
+    String routeName, {
+    arguments,
+    clearHistory = false,
+  }) {
     if (clearHistory) {
       return navigatorKey.currentState!.pushNamedAndRemoveUntil(
-          routeName, (route) => false,
-          arguments: arguments);
+        routeName,
+        (route) => false,
+        arguments: arguments,
+      );
     }
     return navigatorKey.currentState!
         .pushNamed(routeName, arguments: arguments);
@@ -71,15 +79,15 @@ class NavigationService {
   }
 
   bool isPDF(String link) {
-    return link.endsWith(".pdf");
+    return link.endsWith('.pdf');
   }
 
   bool isInsecureLink(String link) {
-    return link.startsWith("http://");
+    return link.startsWith('http://');
   }
 
   bool isMailTo(String link) {
-    return link.startsWith("mailto:");
+    return link.startsWith('mailto:');
   }
 
   Map? getInternalLinkParameters(String url) {
@@ -108,6 +116,7 @@ class NavigationService {
     }
   }
 
+  // TODO Move link navigation outside of this service
   Future launchLink(
     String url, {
     String? title,
@@ -117,6 +126,7 @@ class NavigationService {
     Function? extraOnConfirmFunction,
     bool? isExternal,
   }) async {
+    final CausesService _causesService = locator<CausesService>();
     if (isInternalLink(url)) {
       String route = getInternalLinkRoute(url);
       Map? parameters = getInternalLinkParameters(url);
@@ -137,8 +147,12 @@ class NavigationService {
           _causesService.getAction(id).then((Action action) {
             navigateTo(route, arguments: action);
           }).catchError((e) {
-            _dialogService.showDialog(BasicDialog(
-                title: "Error", description: "Error navigating to route"));
+            _dialogService.showDialog(
+              const BasicDialog(
+                title: 'Error',
+                description: 'Error navigating to route',
+              ),
+            );
           });
           return;
         }
@@ -170,23 +184,24 @@ class NavigationService {
     String? closeButtonText,
     Function? extraOnConfirmFunction,
   }) async {
-    AlertResponse exit = await (_dialogService.showDialog(
+    AlertResponse exit = await _dialogService.showDialog(
       BasicDialog(
-          title: title ?? "You're about to leave",
-          description: description ??
-              "This link will take you out of the app. Are you sure you want to go?",
-          buttons: <DialogButton>[
-            DialogButton(
-              text: buttonText ?? "Let's go",
-              response: true,
-            ),
-            DialogButton(
-              text: closeButtonText ?? "Close",
-              response: false,
-              style: DarkButtonStyle.Secondary,
-            ),
-          ]),
-    ) as Future<AlertResponse>);
+        title: title ?? "You're about to leave",
+        description: description ??
+            'This link will take you out of the app. Are you sure you want to go?',
+        buttons: <DialogButton>[
+          DialogButton(
+            text: buttonText ?? "Let's go",
+            response: true,
+          ),
+          DialogButton(
+            text: closeButtonText ?? 'Close',
+            response: false,
+            style: DarkButtonStyle.Secondary,
+          ),
+        ],
+      ),
+    );
 
     if (exit.response) {
       if (extraOnConfirmFunction != null) {

@@ -4,7 +4,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 
-import 'package:nowu/locator.dart';
+import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/remote_config_service.dart';
 
 // Taken from:
@@ -15,7 +15,7 @@ class GoogleLocationSearchService {
       locator<RemoteConfigService>();
 
   final client = Client();
-  String _sessionToken = Uuid().v4();
+  String _sessionToken = const Uuid().v4();
   String get sessionToken => _sessionToken;
 
   Future<List<Suggestion>?> fetchSuggestions(String input, String lang) async {
@@ -23,31 +23,32 @@ class GoogleLocationSearchService {
         _remoteConfigService!.getValue(RemoteConfigKey.googlePlaceAPIKey);
 
     final request = Uri.parse(
-        'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&language=$lang&key=$_apiKey&sessiontoken=$_sessionToken');
+      'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&language=$lang&key=$_apiKey&sessiontoken=$_sessionToken',
+    );
     final response = await client.get(request);
 
     if (response.statusCode == 200) {
-      print("Whoop");
+      print('Whoop');
       final result = json.decode(response.body);
-      print("Decoded the response");
+      print('Decoded the response');
       if (result['status'] == 'OK') {
-        print("Whoop whoop");
+        print('Whoop whoop');
         // compose suggestions in a list
         return result['predictions']
             .map<Suggestion>((p) => Suggestion(p['place_id'], p['description']))
             .toList();
       }
       if (result['status'] == 'ZERO_RESULTS') {
-        print("Rip whoop");
+        print('Rip whoop');
         return [];
       }
       print(result);
       print(result['status']);
       throw Exception(result['error_message']);
     } else {
-      print("Response not good");
-      print("Error");
-      print("$response");
+      print('Response not good');
+      print('Error');
+      print('$response');
       throw Exception('Failed to fetch suggestion');
     }
   }
@@ -57,7 +58,8 @@ class GoogleLocationSearchService {
         _remoteConfigService!.getValue(RemoteConfigKey.googlePlaceAPIKey);
 
     final request = Uri.parse(
-        'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=address_component&key=$_apiKey&sessiontoken=$_sessionToken');
+      'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=address_component&key=$_apiKey&sessiontoken=$_sessionToken',
+    );
     final response = await client.get(request);
 
     if (response.statusCode == 200) {

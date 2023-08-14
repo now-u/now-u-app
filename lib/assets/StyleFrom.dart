@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// TODO Remove
+@deprecated
 TextStyle textStyleFrom(
   TextStyle? style, {
   FontWeight? fontWeight,
@@ -21,10 +23,16 @@ TextStyle textStyleFrom(
   );
 }
 
+// TODO Remove
+@deprecated
 Color colorFrom(
   Color color, {
   double? opacity,
 }) {
   return Color.fromRGBO(
-      color.red, color.green, color.blue, opacity ?? color.opacity);
+    color.red,
+    color.green,
+    color.blue,
+    opacity ?? color.opacity,
+  );
 }

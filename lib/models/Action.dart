@@ -4,8 +4,10 @@ import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:flutter/material.dart' hide Action;
 import 'package:nowu/models/time.dart';
 
-export 'package:causeApiClient/causeApiClient.dart' show ListAction, Action, ActionTypeEnum;
+export 'package:causeApiClient/causeApiClient.dart'
+    show ListAction, Action, ActionTypeEnum;
 
+// TODO Move to colors and rename
 const green0 = Color.fromRGBO(89, 152, 26, 1);
 const green1 = Color.fromRGBO(230, 240, 221, 1);
 const green2 = Color.fromRGBO(177, 199, 155, 1);
@@ -36,91 +38,94 @@ class ActionType {
     required this.primaryColor,
     required this.secondaryColor,
     required this.tertiaryColor,
-	required this.subTypes,
+    required this.subTypes,
   });
 }
 
 const ActionType getInvolved = ActionType(
-	name: "Get involved",
-	icon: CustomIcons.ic_getinvolved,
-	primaryColor: orange0,
-	secondaryColor: orange1,
-	tertiaryColor: orange2,
-	subTypes: [
-		ActionTypeEnum.OTHER,
-		ActionTypeEnum.BEHAVIOR,
-		ActionTypeEnum.PURCHASE,
-		ActionTypeEnum.VOLUNTEER,
-		ActionTypeEnum.PROTEST,
-		ActionTypeEnum.CONNECT,
-	],
+  name: 'Get involved',
+  icon: CustomIcons.ic_getinvolved,
+  primaryColor: orange0,
+  secondaryColor: orange1,
+  tertiaryColor: orange2,
+  subTypes: [
+    ActionTypeEnum.OTHER,
+    ActionTypeEnum.BEHAVIOR,
+    ActionTypeEnum.PURCHASE,
+    ActionTypeEnum.VOLUNTEER,
+    ActionTypeEnum.PROTEST,
+    ActionTypeEnum.CONNECT,
+  ],
 );
 
 const ActionType learn = ActionType(
-	name: "Learn",
-	icon: CustomIcons.ic_learning,
-	primaryColor: blue0,
-	secondaryColor: blue1,
-	tertiaryColor: blue2,
-	subTypes: [
-		ActionTypeEnum.LEARN,
-		ActionTypeEnum.QUIZ,
-	]
+  name: 'Learn',
+  icon: CustomIcons.ic_learning,
+  primaryColor: blue0,
+  secondaryColor: blue1,
+  tertiaryColor: blue2,
+  subTypes: [
+    ActionTypeEnum.LEARN,
+    ActionTypeEnum.QUIZ,
+  ],
 );
 const ActionType advocate = ActionType(
-	name: "Advocate",
-	icon: CustomIcons.ic_raiseawareness,
-	primaryColor: orange0,
-	secondaryColor: orange1,
-	tertiaryColor: orange2,
-	subTypes: [
-	  	ActionTypeEnum.RAISE_AWARENESS,
-	  	ActionTypeEnum.SIGN,
-	  	ActionTypeEnum.CONTACT,
-	]
+  name: 'Advocate',
+  icon: CustomIcons.ic_raiseawareness,
+  primaryColor: orange0,
+  secondaryColor: orange1,
+  tertiaryColor: orange2,
+  subTypes: [
+    ActionTypeEnum.RAISE_AWARENESS,
+    ActionTypeEnum.SIGN,
+    ActionTypeEnum.CONTACT,
+  ],
 );
 const ActionType raiseMoney = ActionType(
-	name: "Raise money",
-	icon: CustomIcons.ic_raisemoney,
-	primaryColor: yellow0,
-	secondaryColor: yellow1,
-	tertiaryColor: yellow2,
-	subTypes: [
-		ActionTypeEnum.DONATE,
-		ActionTypeEnum.FUNDRAISE,
-	]
+  name: 'Raise money',
+  icon: CustomIcons.ic_raisemoney,
+  primaryColor: yellow0,
+  secondaryColor: yellow1,
+  tertiaryColor: yellow2,
+  subTypes: [
+    ActionTypeEnum.DONATE,
+    ActionTypeEnum.FUNDRAISE,
+  ],
 );
 const List<ActionType> actionTypes = [getInvolved, learn, advocate, raiseMoney];
 
 ActionType getActionTypeFromSubtype(ActionTypeEnum type) {
-	return actionTypes.firstWhere((actionType) => actionType.subTypes.contains(type), orElse: () => getInvolved);
+  return actionTypes.firstWhere(
+    (actionType) => actionType.subTypes.contains(type),
+    orElse: () => getInvolved,
+  );
 }
 
 // TODO Move out of action
 extension ListActionExtension on ListAction {
-	Cause get cause => causes[0];
-	ActionType get type => getActionTypeFromSubtype(actionType);
+  Cause get cause => causes[0];
+  ActionType get type => getActionTypeFromSubtype(actionType);
 
-	// TODO This is not quite right, it could be enabled - update API to provide releasedTime
-	// which is set based on when the action was enabled/released
-	DateTime get releaseTime => releaseAt ?? createdAt;
-	
-	bool get isNew => isNewDate(releaseTime);
-	String get timeText => getTimeText(time);
+  // TODO This is not quite right, it could be enabled - update API to provide releasedTime
+  // which is set based on when the action was enabled/released
+  DateTime get releaseTime => releaseAt ?? createdAt;
 
-	bool isCompletedByUser(CausesUser user) {
-		return user.completedActionIds.contains(this.id);
-	}
+  bool get isNew => isNewDate(releaseTime);
+  String get timeText => getTimeText(time);
+
+  bool isCompletedByUser(CausesUser user) {
+    return user.completedActionIds.contains(this.id);
+  }
 }
 
 extension ActionExtension on Action {
-	Cause get cause => causes[0];
-	ActionType get type => getActionTypeFromSubtype(actionType);
+  Cause get cause => causes[0];
+  ActionType get type => getActionTypeFromSubtype(actionType);
 
-	// TODO This is not quite right, it could be enabled - update API to provide releasedTime
-	// which is set based on when the action was enabled/released
-	DateTime get releaseTime => releaseAt ?? createdAt;
-	
-	bool get isNew => isNewDate(releaseTime);
-	String get timeText => getTimeText(time);
+  // TODO This is not quite right, it could be enabled - update API to provide releasedTime
+  // which is set based on when the action was enabled/released
+  DateTime get releaseTime => releaseAt ?? createdAt;
+
+  bool get isNew => isNewDate(releaseTime);
+  String get timeText => getTimeText(time);
 }

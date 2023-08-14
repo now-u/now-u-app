@@ -23,14 +23,14 @@ export 'package:causeApiClient/causeApiClient.dart' show NewsArticle;
 // }
 
 extension NewsArticleExtension on NewsArticle {
-	String? get dateString {
-		return releaseAt != null ? DateFormat("d MMM y").format(releaseAt!) : null;
-	}
+  String? get dateString {
+    return releaseAt != null ? DateFormat('d MMM y').format(releaseAt!) : null;
+  }
 
-	// TODO Try harder
-	String? getCategory({List<Campaign>? campaigns}) {
-		return "General";
-	}
+  // TODO Try harder
+  String? getCategory({List<Campaign>? campaigns}) {
+    return 'General';
+  }
 
-	String get shortUrl => Uri.parse(link).host;
+  String get shortUrl => Uri.parse(link).host;
 }

@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-import 'package:nowu/locator.dart';
+import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/navigation_service.dart';
 
 class PushNotificationService {

@@ -45,47 +45,52 @@ class CustomWidthButton extends StatelessWidget {
   final Color? textColor;
   final double? fontSize;
 
-  CustomWidthButton(this.text,
-      {required this.onPressed,
-      required this.size,
-      required this.buttonWidthProportion,
-      this.fontSize,
-      this.rightIcon,
-      this.backgroundColor,
-      this.textColor});
+  CustomWidthButton(
+    this.text, {
+    required this.onPressed,
+    required this.size,
+    required this.buttonWidthProportion,
+    this.fontSize,
+    this.rightIcon,
+    this.backgroundColor,
+    this.textColor,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: MediaQuery.of(context).size.width * buttonWidthProportion,
-        child: MaterialButton(
-          height: buttonStyleStyles[size]['height'],
-          minWidth: buttonWidthProportion,
-          elevation: 0,
-          color: this.backgroundColor ?? Theme.of(context).primaryColor,
-          disabledColor: colorFrom(
-            Theme.of(context).primaryColor,
-            opacity: 0.5,
+      width: MediaQuery.of(context).size.width * buttonWidthProportion,
+      child: MaterialButton(
+        height: buttonStyleStyles[size]['height'],
+        minWidth: buttonWidthProportion,
+        elevation: 0,
+        // TODO Why are these colors not coming from buttonTheme?
+        // TODO Do we ever use background color?
+        color: this.backgroundColor ?? Theme.of(context).colorScheme.primary,
+        // disabledColor: colorFrom(
+        //   Theme.of(context).primaryColor,
+        //   opacity: 0.5,
+        // ),
+        onPressed: onPressed,
+        shape: RoundedRectangleBorder(
+          borderRadius:
+              BorderRadius.circular(buttonStyleStyles[size]['borderRadius']),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: buttonStyleStyles[size]['vPadding'],
+            horizontal: buttonStyleStyles[size]['hPadding'],
           ),
-          onPressed: onPressed,
-          shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.circular(buttonStyleStyles[size]['borderRadius']),
-          ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: buttonStyleStyles[size]['vPadding'],
-              horizontal: buttonStyleStyles[size]['hPadding'],
+          child: Text(
+            text,
+            style: textStyleFrom(
+              Theme.of(context).textTheme.labelLarge,
+              color: textColor ?? Colors.white,
+              fontSize: fontSize ?? buttonStyleStyles[size]['fontSize'],
             ),
-            child: Text(
-              text,
-              style: textStyleFrom(
-                Theme.of(context).primaryTextTheme.button,
-                color: textColor ?? Colors.white,
-                fontSize: fontSize ?? buttonStyleStyles[size]['fontSize'],
-              ),
-            ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

@@ -1,58 +1,54 @@
 import 'package:causeApiClient/causeApiClient.dart';
-import 'package:nowu/models/Action.dart';
-import 'package:nowu/models/Campaign.dart';
-import 'package:nowu/models/Organisation.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 // TODO replace with roles
 List<String> stagingUsers = [
-  "james@now-u.com",
-  "dave@now-u.com",
-  "valusoutrik@gmail.com",
-  "jamezy850@gmail.com",
-  "charlieblindsay@gmail.com"
+  'james@now-u.com',
+  'dave@now-u.com',
+  'valusoutrik@gmail.com',
+  'jamezy850@gmail.com',
+  'charlieblindsay@gmail.com'
 ];
 
 extension UserProfileExtension on UserProfile {
-	bool get isInitialised => name != null;
+  bool get isInitialised => name != null;
 }
 
 extension CausesUserExtension on CausesUser {
-	bool get isInitialised => selectedCausesIds.length > 0;
+  bool get isInitialised => selectedCausesIds.length > 0;
 }
 
 // @JsonSerializable()
 // class User {
 //   int id;
 //   String? fullName;
-// 
+//
 //   @JsonKey(name: "cause_ids")
 //   List<int> selectedCauseIds;
-// 
+//
 //   @JsonKey(name: "completed_campaigns")
 //   List<int> completedCampaignIds;
 //   @JsonKey(name: "completed_actions")
 //   List<int> completedActionIds;
 //   @JsonKey(name: "completed_learning_resources")
 //   List<int> completedLearningResourceIds;
-// 
+//
 //   String? email;
 //   DateTime? dateOfBirth;
-// 
+//
 //   // TODO make some attributes class that can take any attrribute so I dont need this
 //   String? location;
 //   double? monthlyDonationLimit;
 //   bool? homeOwner;
-// 
+//
 //   int? points;
-// 
+//
 //   Organisation? _organisation;
 //   Organisation? get organisation => _organisation;
 //   set setOrganisation(Organisation? org) => _organisation = org;
-// 
+//
 //   bool get isStagingUser => stagingUsers.contains(this.email);
 //   bool get hasProfile => fullName != null && selectedCauseIds.length > 0;
-// 
+//
 //   User({
 //     required this.id,
 //     required this.email,
@@ -70,13 +66,13 @@ extension CausesUserExtension on CausesUser {
 //   }) {
 //     _organisation = organisation;
 //   }
-// 
+//
 //   factory User.fromJson(Map<String, dynamic> data) {
 //     print("Calling user from json with ");
 //     print(data);
 //     return _$UserFromJson(data);
 //   }
-// 
+//
 //   Map getAttributes() {
 //     return {
 //       //'id' : id,
@@ -88,7 +84,7 @@ extension CausesUserExtension on CausesUser {
 //       'home_owner': homeOwner,
 //     };
 //   }
-// 
+//
 //   Map getPostAttributes() {
 //     return {
 //       //'id' : id,
@@ -100,7 +96,7 @@ extension CausesUserExtension on CausesUser {
 //       'home_owner': homeOwner,
 //     };
 //   }
-// 
+//
 //   void setAttribute(String k, v) {
 //     switch (k) {
 //       case 'full_name':
@@ -137,43 +133,43 @@ extension CausesUserExtension on CausesUser {
 //         }
 //     }
 //   }
-// 
+//
 //   String? getName() {
 //     return fullName;
 //   }
-// 
+//
 //   String? getEmail() {
 //     return email;
 //   }
-// 
+//
 //   DateTime? getDateOfBirth() {
 //     return dateOfBirth;
 //   }
-// 
+//
 //   String? getLocation() {
 //     return location;
 //   }
-// 
+//
 //   void setName(String? name) {
 //     this.fullName = name;
 //   }
-// 
+//
 //   void setEmail(String email) {
 //     this.email = email;
 //   }
-// 
+//
 //   void setDateOfBirth(DateTime? dob) {
 //     this.dateOfBirth = dob;
 //   }
-// 
+//
 //   void setLocation(location) {
 //     this.location = location;
 //   }
-// 
+//
 //   void setMonthlyDonationLimit(double monthlyDonationLimit) {
 //     this.monthlyDonationLimit = monthlyDonationLimit;
 //   }
-// 
+//
 //   void setHomeOwner(bool homeOwner) {
 //     this.homeOwner = homeOwner;
 //   }

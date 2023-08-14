@@ -1,9 +1,13 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseService {
-  SupabaseClient get client => Supabase.instance.client;
+  bool isInitialized = false;
+
+  SupabaseClient? get client => isInitialized ? Supabase.instance.client : null;
 
   Future init() async {
+    isInitialized = true;
+    // TODO This just hangs if there is no user!
     await Supabase.initialize(
       url: 'https://uqwaxxhrkpbzvjdlfdqe.supabase.co',
       anonKey:

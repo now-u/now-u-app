@@ -1,15 +1,12 @@
 import 'package:nowu/assets/components/card.dart';
 import 'package:nowu/assets/components/cause_indicator.dart';
 import 'package:nowu/assets/components/custom_network_image.dart';
-import 'package:nowu/locator.dart';
-import 'package:nowu/routes.dart';
+import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/models/article.dart';
 import 'package:nowu/services/causes_service.dart';
-import 'package:nowu/services/navigation_service.dart';
-import 'package:nowu/pages/action/ActionInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:nowu/pages/explore/explore_page_view_model.dart';
+import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 
 enum ExploreTileStyle {
   Standard,
@@ -17,6 +14,8 @@ enum ExploreTileStyle {
 
 abstract class ExploreTile extends StatelessWidget {
   ExploreTile({key});
+
+  final CausesService _causesService = locator<CausesService>();
 
   Widget buildBody(BuildContext context);
 
@@ -29,12 +28,10 @@ abstract class ExploreTile extends StatelessWidget {
 }
 
 class ExploreCampaignTile extends ExploreTile {
-  final NavigationService _navigationService = locator<NavigationService>();
-
   final String headerImage;
   final String title;
   final Cause cause;
-  final bool completed;
+  final bool? completed;
   final ListCampaign campaign;
 
   ExploreCampaignTile(CampaignExploreTileData tile, {Key? key})
@@ -50,10 +47,7 @@ class ExploreCampaignTile extends ExploreTile {
     return AspectRatio(
       aspectRatio: 0.75,
       child: InkWell(
-        onTap: () => _navigationService.navigateTo(
-          Routes.campaign,
-          arguments: campaign,
-        ),
+        onTap: () => _causesService.openCampaign(campaign),
         child: Column(
           children: [
             Stack(
@@ -67,12 +61,13 @@ class ExploreCampaignTile extends ExploreTile {
                     fit: BoxFit.cover,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: _ExploreTileCheckmark(
-                    completed: completed,
-                  ),
-                )
+                if (completed != null)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: _ExploreTileCheckmark(
+                      completed: completed!,
+                    ),
+                  )
               ],
             ),
             Expanded(
@@ -83,8 +78,9 @@ class ExploreCampaignTile extends ExploreTile {
               ),
             ),
             Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: CauseIndicator(cause)),
+              padding: const EdgeInsets.only(bottom: 8),
+              child: CauseIndicator(cause),
+            ),
           ],
         ),
       ),
@@ -95,8 +91,11 @@ class ExploreCampaignTile extends ExploreTile {
 class ExploreActionTile extends ExploreResourceTile {
   final ListAction action;
 
-  ExploreActionTile(ActionExploreTileData tile, {ExploreTileStyle? style, Key? key})
-      : action = tile.action,
+  ExploreActionTile(
+    ActionExploreTileData tile, {
+    ExploreTileStyle? style,
+    Key? key,
+  })  : action = tile.action,
         super(
           title: tile.action.title,
           type: tile.action.type.name,
@@ -112,21 +111,18 @@ class ExploreActionTile extends ExploreResourceTile {
         );
 
   void onTap() {
-    _navigationService.navigateTo(
-      Routes.actionInfo,
-      arguments: ActionInfoArguments(actionId: action.id),
-    );
+    _causesService.openAction(action.id);
   }
 }
 
 class ExploreLearningTile extends ExploreResourceTile {
-  final CausesService _causesService = locator<CausesService>();
-
   final LearningResource resource;
 
-  ExploreLearningTile(LearningResourceExploreTileData tile,
-      {ExploreTileStyle? style, Key? key})
-      : resource = tile.learningResource,
+  ExploreLearningTile(
+    LearningResourceExploreTileData tile, {
+    ExploreTileStyle? style,
+    Key? key,
+  })  : resource = tile.learningResource,
         super(
           title: tile.learningResource.title,
           type: tile.learningResource.type.name,
@@ -141,19 +137,14 @@ class ExploreLearningTile extends ExploreResourceTile {
           style: style,
         );
 
-  void onTap() async {
-    await _causesService.completeLearningResource(resource.id);
-    _navigationService.launchLink(
-      resource.link,
-    );
-	// TODO Notify listeners
+  void onTap() {
+    _causesService.openLearningResource(resource);
+    // TODO Notify listeners
   }
 }
 
 abstract class ExploreResourceTile extends ExploreTile {
   final double COMPLETED_EXTENSION_WIDTH = 110;
-
-  final NavigationService _navigationService = locator<NavigationService>();
 
   final String title;
   final String type;
@@ -163,22 +154,22 @@ abstract class ExploreResourceTile extends ExploreTile {
   final IconData icon;
   final Cause cause;
   final String timeText;
-  final bool isCompleted;
+  final bool? isCompleted;
   final ExploreTileStyle style;
 
-  ExploreResourceTile(
-      {required this.title,
-      required this.type,
-      required this.iconColor,
-      required this.headerColor,
-      required this.dividerColor,
-      required this.icon,
-      required this.cause,
-      required this.timeText,
-      required this.isCompleted,
-      ExploreTileStyle? style,
-      Key? key})
-      : this.style = style ?? ExploreTileStyle.Standard,
+  ExploreResourceTile({
+    required this.title,
+    required this.type,
+    required this.iconColor,
+    required this.headerColor,
+    required this.dividerColor,
+    required this.icon,
+    required this.cause,
+    required this.timeText,
+    required this.isCompleted,
+    ExploreTileStyle? style,
+    Key? key,
+  })  : this.style = style ?? ExploreTileStyle.Standard,
         super(key: key);
 
   void onTap();
@@ -224,9 +215,10 @@ abstract class ExploreResourceTile extends ExploreTile {
                       textScaleFactor: .8,
                     ),
                     Expanded(child: Container()),
-                    _ExploreTileCheckmark(
-                      completed: isCompleted,
-                    ),
+                    if (isCompleted != null)
+                      _ExploreTileCheckmark(
+                        completed: isCompleted!,
+                      ),
                   ],
                 ),
               ),
@@ -236,15 +228,17 @@ abstract class ExploreResourceTile extends ExploreTile {
                 children: [
                   Expanded(
                     child: Container(
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: style == ExploreTileStyle.Standard
-                            ? _ExploreTileTitle(title)
-                            : Padding(
-                                padding: EdgeInsets.only(
-                                    right: COMPLETED_EXTENSION_WIDTH - 50),
-                                child: _ExploreTileTitle(title),
-                              )),
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: style == ExploreTileStyle.Standard
+                          ? _ExploreTileTitle(title)
+                          : Padding(
+                              padding: EdgeInsets.only(
+                                right: COMPLETED_EXTENSION_WIDTH - 50,
+                              ),
+                              child: _ExploreTileTitle(title),
+                            ),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8),
@@ -262,8 +256,6 @@ abstract class ExploreResourceTile extends ExploreTile {
 }
 
 class ExploreNewsTile extends ExploreTile {
-  final NavigationService _navigationService = locator<NavigationService>();
-
   final String title;
   final String subtitle;
   final String headerImage;
@@ -276,7 +268,7 @@ class ExploreNewsTile extends ExploreTile {
       : title = tile.article.title,
         subtitle = tile.article.subtitle,
         headerImage = tile.article.headerImage.url,
-        dateString = tile.article.dateString ?? "",
+        dateString = tile.article.dateString ?? '',
         url = tile.article.link,
         shortUrl = tile.article.shortUrl,
         article = tile.article,
@@ -287,13 +279,13 @@ class ExploreNewsTile extends ExploreTile {
       aspectRatio: 0.8,
       child: InkWell(
         onTap: () {
-          _navigationService.launchLink(article.link);
+          _causesService.openNewArticle(article);
         },
         child: Column(
           children: [
             AspectRatio(
               aspectRatio: 1.8,
-              // FIXME ink animation doesn't cover image
+              // TODO ink animation doesn't cover image
               child: CustomNetworkImage(
                 headerImage,
                 fit: BoxFit.cover,
@@ -308,7 +300,7 @@ class ExploreNewsTile extends ExploreTile {
                   children: [
                     Text(
                       title,
-                      style: Theme.of(context).primaryTextTheme.headline2!,
+                      style: Theme.of(context).textTheme.headlineMedium!,
                       textScaleFactor: .7,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -318,8 +310,8 @@ class ExploreNewsTile extends ExploreTile {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context)
-                          .primaryTextTheme
-                          .bodyText2!
+                          .textTheme
+                          .bodySmall!
                           .apply(fontStyle: FontStyle.normal),
                     ),
                     Text(
@@ -337,7 +329,7 @@ class ExploreNewsTile extends ExploreTile {
                 alignment: Alignment.center,
                 child: Text(
                   shortUrl,
-                  style: Theme.of(context).primaryTextTheme.bodyText1?.apply(
+                  style: Theme.of(context).textTheme.bodyLarge?.apply(
                         color: const Color.fromRGBO(255, 136, 0, 1),
                       ),
                   textScaleFactor: .7,
@@ -360,7 +352,7 @@ class _ExploreTileTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: Theme.of(context).primaryTextTheme.headline2!,
+      style: Theme.of(context).textTheme.headlineMedium!,
       textScaleFactor: .6,
       maxLines: 3,
       overflow: TextOverflow.ellipsis,
@@ -371,7 +363,6 @@ class _ExploreTileTitle extends StatelessWidget {
 class _ExploreTileCheckmark extends StatelessWidget {
   /// If the card has been completed
   final bool completed;
-  final double size;
 
   /// Colors for the checkmark
   static const Color _completedColor = Color.fromRGBO(89, 152, 26, 1);
@@ -379,7 +370,6 @@ class _ExploreTileCheckmark extends StatelessWidget {
 
   const _ExploreTileCheckmark({
     required this.completed,
-    this.size = 20,
     Key? key,
   }) : super(key: key);
 
@@ -399,7 +389,6 @@ class _ExploreTileCheckmark extends StatelessWidget {
         FaIcon(
           FontAwesomeIcons.solidCheckCircle,
           color: completed ? _completedColor : _uncompletedColor,
-          size: size,
         ),
       ],
     );

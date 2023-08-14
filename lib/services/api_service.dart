@@ -1,10 +1,8 @@
-import 'package:causeApiClient/causeApiClient.dart';
-import 'package:dio/dio.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:nowu/services/auth.dart';
-import 'package:nowu/locator.dart';
+import 'package:nowu/app/app.locator.dart';
 
 typedef JsonDeserializer<T> = T Function(Map<String, dynamic> data);
 
@@ -23,8 +21,11 @@ class ApiException implements Exception {
   int statusCode;
   String message;
 
-  ApiException(
-      {required this.type, required this.statusCode, required this.message});
+  ApiException({
+    required this.type,
+    required this.statusCode,
+    required this.message,
+  });
 }
 
 /// Map showing the translation from http response code to an
@@ -36,8 +37,8 @@ Map<int, ApiExceptionType> responseCodeExceptionMapping = {
 };
 
 class ApiService {
-  final http.Client client;
-  ApiService(this.client);
+  final http.Client client = http.Client();
+  ApiService();
 
   /// Generate appropriate [ApiException] from http response.
   ApiException getExceptionForResponse(http.Response response) {
@@ -46,11 +47,13 @@ class ApiService {
             ApiExceptionType.UNKNOWN;
 
     print(
-        "Request error: Body: ${response.body}, Code: ${response.statusCode}");
+      'Request error: Body: ${response.body}, Code: ${response.statusCode}',
+    );
     return ApiException(
-        type: exceptionType,
-        statusCode: response.statusCode,
-        message: response.body);
+      type: exceptionType,
+      statusCode: response.statusCode,
+      message: response.body,
+    );
   }
 
   /// Get headers for standard API request
@@ -67,22 +70,22 @@ class ApiService {
     if (_authService.isAuthenticated) {
       // We know a token must exist as the user is authenticated
       // headers['token'] = _authService.token!;
-      headers['Authorization'] = "JWT ${_authService.token!}";
+      headers['Authorization'] = 'JWT ${_authService.token!}';
     }
     return headers;
   }
 
   dynamic formatRequestParameter(dynamic value) {
     if (value is List) {
-      return "[" +
-          value.map((item) => formatRequestParameter(item)).join(",") +
-          "]";
+      return '[' +
+          value.map((item) => formatRequestParameter(item)).join(',') +
+          ']';
     }
     if (value is Iterable) {
       return value;
     }
     if (value is String) {
-      return "\"" + value + "\"";
+      return '\"' + value + '\"';
     }
     // Otherwise cast it to a string
     return value.toString();
@@ -95,7 +98,7 @@ class ApiService {
   Future<Map> getRequest(String path, {Map<String, dynamic>? params}) async {
     // Convert param values to strings
     Map<String, dynamic>? stringParams;
-    print("Constructing get request to $path");
+    print('Constructing get request to $path');
     if (params != null) {
       // Parse param values
       stringParams = Map.fromIterable(
@@ -106,12 +109,12 @@ class ApiService {
     }
 
     final uri = getCausesApiPath(path, stringParams: stringParams);
-    print("Making request: ${uri.toString()}, headers: ${getRequestHeaders()}");
+    print('Making request: ${uri.toString()}, headers: ${getRequestHeaders()}');
     http.Response response = await client.get(
       uri,
       headers: getRequestHeaders(),
     );
-    print("RESPONSE");
+    print('RESPONSE');
     print(uri.toString());
     print(response.body);
     print(response.statusCode);
@@ -123,31 +126,40 @@ class ApiService {
     return await json.decode(response.body);
   }
 
-  Future<List<Map<String, dynamic>>> getListRequest(String path,
-      {Map<String, dynamic>? params, int? limit = 5}) async {
+  Future<List<Map<String, dynamic>>> getListRequest(
+    String path, {
+    Map<String, dynamic>? params,
+    int? limit = 5,
+  }) async {
     if (params == null) {
       params = {};
     }
 
     if (limit != null) {
-      params["limit"] = limit;
+      params['limit'] = limit;
     }
 
     Map response = await getRequest(path, params: params);
     List<Map<String, dynamic>> listData =
-        List<Map<String, dynamic>>.from(response["data"]);
+        List<Map<String, dynamic>>.from(response['data']);
     return listData;
   }
 
-  Future<T> getModelRequest<T>(String path, JsonDeserializer<T> deserializer,
-      {Map<String, dynamic>? params}) async {
+  Future<T> getModelRequest<T>(
+    String path,
+    JsonDeserializer<T> deserializer, {
+    Map<String, dynamic>? params,
+  }) async {
     final response = await getRequest(path, params: params);
-    return deserializer(response["data"]);
+    return deserializer(response['data']);
   }
 
   Future<List<T>> getModelListRequest<T>(
-      String path, JsonDeserializer<T> deserializer,
-      {Map<String, dynamic>? params, int? limit = 5}) async {
+    String path,
+    JsonDeserializer<T> deserializer, {
+    Map<String, dynamic>? params,
+    int? limit = 5,
+  }) async {
     final data = await getListRequest(path, params: params);
     return data.map((item) => deserializer(item)).toList();
   }
@@ -156,11 +168,14 @@ class ApiService {
   ///
   /// Returns Map of the response. Throws an [ApiException] if the request is
   /// unsuccessful.
-  Future<Map<String, dynamic>> postRequest(String path,
-      {Map<String, dynamic>? body}) async {
+  Future<Map<String, dynamic>> postRequest(
+    String path, {
+    Map<String, dynamic>? body,
+  }) async {
     final uri = getCausesApiPath(path);
     print(
-        "Making request: ${uri.toString()}, body: $body, headers: ${getRequestHeaders()}");
+      'Making request: ${uri.toString()}, body: $body, headers: ${getRequestHeaders()}',
+    );
 
     http.Response response = await client.post(
       uri,
@@ -168,7 +183,7 @@ class ApiService {
       body: json.encode(body),
     );
 
-    print("Response: ${response.statusCode}, ${response.toString()}");
+    print('Response: ${response.statusCode}, ${response.toString()}');
 
     if (response.statusCode >= 400) {
       throw getExceptionForResponse(response);
@@ -184,7 +199,8 @@ class ApiService {
   Future<Map> putRequest(String path, {Map<String, dynamic>? body}) async {
     final uri = getCausesApiPath(path);
     print(
-        "Making request: ${uri.toString()}, body: $body, headers: ${getRequestHeaders()}");
+      'Making request: ${uri.toString()}, body: $body, headers: ${getRequestHeaders()}',
+    );
     http.Response response = await client.put(
       uri,
       headers: getRequestHeaders(),
@@ -204,7 +220,7 @@ class ApiService {
   /// unsuccessful.
   Future<Map> deleteRequest(String path) async {
     final uri = getCausesApiPath(path);
-    print("Making request: ${uri.toString()}, headers: ${getRequestHeaders()}");
+    print('Making request: ${uri.toString()}, headers: ${getRequestHeaders()}');
     http.Response response = await client.put(
       uri,
       headers: getRequestHeaders(),

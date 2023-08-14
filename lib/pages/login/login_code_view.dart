@@ -3,8 +3,7 @@ import 'package:nowu/assets/components/buttons/darkButton.dart';
 import 'package:nowu/assets/components/inputs.dart';
 import 'package:nowu/assets/components/header.dart';
 import 'package:flutter/material.dart';
-
-import 'package:nowu/viewmodels/login_model.dart';
+import 'package:nowu/ui/views/login/login_viewmodel.dart';
 
 import 'package:stacked/stacked.dart';
 
@@ -25,12 +24,12 @@ class LoginCodePageState extends State<LoginCodePage>
   Widget build(BuildContext context) {
     final token = CustomTextFormField(
       style: CustomFormFieldStyle.Dark,
-      keyboardType: TextInputType.numberWithOptions(decimal: false),
+      keyboardType: const TextInputType.numberWithOptions(decimal: false),
       textCapitalization: TextCapitalization.none,
       autofocus: false,
       validator: (value) {
-        if (value.isEmpty) return "Please enter the secret code from the email";
-        if (value.length != 6) return "The secret code must be 6 digits long";
+        if (value.isEmpty) return 'Please enter the secret code from the email';
+        if (value.length != 6) return 'The secret code must be 6 digits long';
         return null;
       },
       onSaved: (value) {
@@ -55,102 +54,110 @@ class LoginCodePageState extends State<LoginCodePage>
         onModelReady: (model) => model.init(),
         onDispose: (model) => model.dispose(),
         builder: (context, model, child) => Padding(
-            padding: EdgeInsets.symmetric(vertical: 16.0),
-            child: DarkButton(
-              "Log in",
-              onPressed: () {
-                validateAndSave(model);
-              },
-            )),
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          child: DarkButton(
+            'Log in',
+            onPressed: () {
+              validateAndSave(model);
+            },
+          ),
+        ),
       );
     }
 
     Form loginForm() {
       return Form(
-          key: _formKey,
-          child: Padding(
-              padding: EdgeInsets.only(left: 24, right: 24),
-              child: SafeArea(
-                child: Column(
-                  //shrinkWrap: true,
+        key: _formKey,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 24, right: 24),
+          child: SafeArea(
+            child: Column(
+              //shrinkWrap: true,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                PageHeader(
+                  title: 'Complete login',
+                  backButton: true,
+                  textColor: Colors.white,
+                ),
+
+                const SizedBox(height: 35),
+
+                Center(
+                  child: ClipRRect(
+                    child: Container(
+                      width: 65,
+                      child: Image.asset('assets/imgs/logo.png'),
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(3)),
+                  ),
+                ),
+
+                const SizedBox(
+                  height: 35,
+                ),
+                Text(
+                  'Type in your 6 digit code from the email to log into now-u',
+                  style: textStyleFrom(
+                    Theme.of(context).textTheme.headlineSmall,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 35,
+                ),
+                Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    PageHeader(
-                      title: "Complete login",
-                      backButton: true,
-                      textColor: Colors.white,
-                    ),
-
-                    SizedBox(height: 35),
-
-                    Center(
-                        child: ClipRRect(
-                      child: Container(
-                        width: 65,
-                        child: Image.asset('assets/imgs/logo.png'),
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(3)),
-                    )),
-
-                    SizedBox(
-                      height: 35,
-                    ),
-                    Text(
-                      "Type in your 6 digit code from the email to log into now-u",
-                      style: textStyleFrom(
-                        Theme.of(context).primaryTextTheme.headline3,
-                        color: Colors.white,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(
-                      height: 35,
-                    ),
-                    Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Your secret 6 digit code",
-                            style: textStyleFrom(
-                              Theme.of(context).primaryTextTheme.headline4,
-                              color: Colors.white,
-                            ),
-                            textAlign: TextAlign.left,
-                          ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Your secret 6 digit code',
+                        style: textStyleFrom(
+                          Theme.of(context).textTheme.displayMedium,
+                          color: Colors.white,
                         ),
-                        SizedBox(height: 8),
-                        token,
-                        loginButton(),
-                      ],
+                        textAlign: TextAlign.left,
+                      ),
                     ),
-                    SizedBox(
-                      height: 20,
-                    )
-
-                    // Uncomment to readd Skip button
-                    //skipButton(),
+                    const SizedBox(height: 8),
+                    token,
+                    loginButton(),
                   ],
                 ),
-              )));
+                const SizedBox(
+                  height: 20,
+                )
+
+                // Uncomment to readd Skip button
+                //skipButton(),
+              ],
+            ),
+          ),
+        ),
+      );
     }
 
     return WillPopScope(
-        onWillPop: () async => false,
-        child: Scaffold(
-          backgroundColor: Theme.of(context).primaryColorDark,
-          body: NotificationListener(
-              onNotification: (OverscrollIndicatorNotification overscroll) {
-                overscroll.disallowGlow();
-                return true;
-              },
-              child: ListView(children: [
-                loginForm(),
-              ])),
-        ));
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor: Theme.of(context).primaryColorDark,
+        body: NotificationListener(
+          onNotification: (OverscrollIndicatorNotification overscroll) {
+            overscroll.disallowIndicator();
+            return true;
+          },
+          child: ListView(
+            children: [
+              loginForm(),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

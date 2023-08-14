@@ -70,8 +70,11 @@ const List<int> kTransparentImage = <int>[
   0xAE,
 ];
 
-R provideMockedNetworkImages<R>(R body(),
-    {List<int> imageBytes = kTransparentImage, int statusCode = 200}) {
+R provideMockedNetworkImages<R>(
+  R body(), {
+  List<int> imageBytes = kTransparentImage,
+  int statusCode = 200,
+}) {
   return HttpOverrides.runZoned(
     body,
     createHttpClient: (_) => _createMockImageHttpClient(statusCode, imageBytes),
@@ -81,7 +84,9 @@ R provideMockedNetworkImages<R>(R body(),
 // Taken from https://github.com/flutter/flutter/blob/master/dev/manual_tests/test/mock_image_http.dart
 // Returns a mock HTTP client that responds with an image to all requests.
 MockHttpClient _createMockImageHttpClient(
-    int statusCode, List<int> imageBytes) {
+  int statusCode,
+  List<int> imageBytes,
+) {
   final MockHttpClient client = MockHttpClient();
   final MockHttpClientRequest request = MockHttpClientRequest();
   final MockHttpClientResponse response = MockHttpClientResponse();
@@ -93,7 +98,7 @@ MockHttpClient _createMockImageHttpClient(
       .thenAnswer((_) => Future<HttpClientResponse>.value(response));
 
   when(response.statusCode).thenReturn(statusCode);
-  print("Status code of $statusCode");
+  print('Status code of $statusCode');
   if (statusCode < 400) {
     when(response.contentLength).thenReturn(imageBytes.length);
     when(response.compressionState)
@@ -108,10 +113,11 @@ MockHttpClient _createMockImageHttpClient(
       final bool? cancelOnError =
           invocation.namedArguments[#cancelOnError] as bool?;
       return Stream<List<int>>.fromIterable(<List<int>>[imageBytes]).listen(
-          onData,
-          onDone: onDone,
-          onError: onError,
-          cancelOnError: cancelOnError);
+        onData,
+        onDone: onDone,
+        onError: onError,
+        cancelOnError: cancelOnError,
+      );
     });
   }
   return client;

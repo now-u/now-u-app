@@ -11,58 +11,60 @@ bool testMode = Platform.environment.containsKey('FLUTTER_TEST');
 bool devMode = !testMode && !kReleaseMode;
 
 const PRIVACY_POLICY_URL =
-    "https://now-u-docs.s3.eu-west-2.amazonaws.com/now-u+privacy+policy.pdf";
+    'https://now-u-docs.s3.eu-west-2.amazonaws.com/now-u+privacy+policy.pdf';
 const TERMS_AND_CONDITIONS_URL =
-    "https://now-u-docs.s3.eu-west-2.amazonaws.com/now-u+user+terms+and+conditions.pdf";
+    'https://now-u-docs.s3.eu-west-2.amazonaws.com/now-u+user+terms+and+conditions.pdf';
 
-const CAUSES_API_URL = "staging.api.now-u.com";
-const LOCAL_CAUSES_API_URL = "192.168.1.65:3001";
+const CAUSES_API_URL = 'staging.api.now-u.com';
+const LOCAL_CAUSES_API_URL = '192.168.1.65:3001';
+// const LOCAL_STACK_URL = "http://192.168.1.11";
+const LOCAL_STACK_URL = 'http://192.168.1.11';
 
 Uri getCausesApiPath(String path, {Map<String, dynamic>? stringParams}) {
   // return Uri.http(LOCAL_CAUSES_API_URL, "/api/" + path, stringParams);
-  return Uri.https(CAUSES_API_URL, "/api/" + path, stringParams);
+  return Uri.https(CAUSES_API_URL, '/api/' + path, stringParams);
 }
 
 // devMode ? "staging.api.now-u.com" : "api.now-u.com";
 
 class CustomColors {
   /// Primary brand color
-  static Color brandColor = Color.fromRGBO(255, 136, 0, 1);
+  static Color brandColor = const Color.fromRGBO(255, 136, 0, 1);
 
   // --- Styles --- //
 
   //-- Accent colours --//
   /// Venetian Red
-  static Color accentRed = Color.fromRGBO(211, 0, 1, 1);
+  static Color accentRed = const Color.fromRGBO(211, 0, 1, 1);
 
   /// Sunflower
-  static Color accentYellow = Color.fromRGBO(243, 183, 0, 1);
+  static Color accentYellow = const Color.fromRGBO(243, 183, 0, 1);
 
   /// Salomie
-  static Color accentLightYellow = Color.fromRGBO(243, 183, 0, 1);
+  static Color accentLightYellow = const Color.fromRGBO(243, 183, 0, 1);
 
   /// Oxford Blue
-  static Color accentBlue = Color.fromRGBO(1, 26, 67, 1);
+  static Color accentBlue = const Color.fromRGBO(1, 26, 67, 1);
 
   //-- Neutrals --//
   static Color white = Colors.white;
-  static Color greyLight1 = Color.fromRGBO(247, 248, 252, 1);
-  static Color greyLight2 = Color.fromRGBO(222, 224, 232, 1);
-  static Color greyMed1 = Color.fromRGBO(189, 192, 205, 1);
-  static Color greyDark1 = Color.fromRGBO(155, 159, 177, 1);
-  static Color greyDark2 = Color.fromRGBO(109, 113, 129, 1);
-  static Color black1 = Color.fromRGBO(55, 58, 74, 1);
-  static Color black2 = Color.fromRGBO(23, 23, 26, 1);
+  static Color greyLight1 = const Color.fromRGBO(247, 248, 252, 1);
+  static Color greyLight2 = const Color.fromRGBO(222, 224, 232, 1);
+  static Color greyMed1 = const Color.fromRGBO(189, 192, 205, 1);
+  static Color greyDark1 = const Color.fromRGBO(155, 159, 177, 1);
+  static Color greyDark2 = const Color.fromRGBO(109, 113, 129, 1);
+  static Color black1 = const Color.fromRGBO(55, 58, 74, 1);
+  static Color black2 = const Color.fromRGBO(23, 23, 26, 1);
 
   //-- Background --//
-  static Color lightOrange = Color.fromRGBO(255, 243, 230, 0.5);
+  static Color lightOrange = const Color.fromRGBO(255, 243, 230, 0.5);
 
   //-- Shadow colors --//
 }
 
 //-- Fonts --//
-String fontFamily = "Nunito";
-String fontFamilySecondary = "Poppins";
+String fontFamily = 'Nunito';
+String fontFamilySecondary = 'Poppins';
 
 class CustomFontSize {
   static double heading1 = 36;

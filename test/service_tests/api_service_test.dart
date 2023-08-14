@@ -7,7 +7,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/auth.dart';
 import '../setup/test_helpers.dart';
-import 'package:nowu/locator.dart';
+import 'package:nowu/app/app.locator.dart';
 
 class MockAuthenticationService extends Mock implements AuthenticationService {}
 
@@ -36,9 +36,11 @@ void main() {
 
   group('test getExceptionForResponse', () {
     void testExceptionForStatusCode(
-        int statusCode, ApiExceptionType expectedType) {
+      int statusCode,
+      ApiExceptionType expectedType,
+    ) {
       // getAndRegisterMockAnalyticsService();
-      http.Response response = http.Response("", statusCode);
+      http.Response response = http.Response('', statusCode);
 
       ApiException excpetion = apiService.getExceptionForResponse(response);
       expect(excpetion.type, expectedType);
@@ -66,7 +68,7 @@ void main() {
       // Mock auth service
       // to show authenticated user
       when(() => mockAuthService.isAuthenticated).thenReturn(true);
-      when(() => mockAuthService.token).thenReturn("abc");
+      when(() => mockAuthService.token).thenReturn('abc');
 
       // Expect token to be included in the response
       expect(apiService.getRequestHeaders(), {
@@ -79,65 +81,89 @@ void main() {
   group('test getRequest', () {
     test('without parameters', () async {
       when(() => mockAuthService.isAuthenticated).thenReturn(false);
-      when(() => mockHttpClient.get(any(), headers: any(named: "headers")))
+      when(() => mockHttpClient.get(any(), headers: any(named: 'headers')))
           .thenAnswer(
-              (_) => Future.value(http.Response('{"abc": "def"}', 200)));
+        (_) => Future.value(http.Response('{"abc": "def"}', 200)),
+      );
 
-      Map response = await apiService.getRequest("causes/stuff");
-      expect(response, {"abc": "def"});
+      Map response = await apiService.getRequest('causes/stuff');
+      expect(response, {'abc': 'def'});
 
-      verify(() => mockHttpClient.get(
-          Uri.parse("https://staging.api.now-u.com/api/causes/stuff"),
-          headers: any(named: "headers"))).called(1);
+      verify(
+        () => mockHttpClient.get(
+          Uri.parse('https://staging.api.now-u.com/api/causes/stuff'),
+          headers: any(named: 'headers'),
+        ),
+      ).called(1);
     });
 
     test('with parameters', () async {
       when(() => mockAuthService.isAuthenticated).thenReturn(false);
-      when(() => mockHttpClient.get(any(), headers: any(named: "headers")))
+      when(() => mockHttpClient.get(any(), headers: any(named: 'headers')))
           .thenAnswer(
-              (_) => Future.value(http.Response('{"abc": "def"}', 200)));
+        (_) => Future.value(http.Response('{"abc": "def"}', 200)),
+      );
 
       Map response = await apiService
-          .getRequest("causes/stuff", params: {"limit": 10, "fav": true});
-      expect(response, {"abc": "def"});
+          .getRequest('causes/stuff', params: {'limit': 10, 'fav': true});
+      expect(response, {'abc': 'def'});
 
-      verify(() => mockHttpClient.get(
+      verify(
+        () => mockHttpClient.get(
           Uri.parse(
-              "https://staging.api.now-u.com/api/causes/stuff?limit=10&fav=true"),
-          headers: any(named: "headers"))).called(1);
+            'https://staging.api.now-u.com/api/causes/stuff?limit=10&fav=true',
+          ),
+          headers: any(named: 'headers'),
+        ),
+      ).called(1);
     });
 
     test('with list parameters', () async {
       when(() => mockAuthService.isAuthenticated).thenReturn(false);
-      when(() => mockHttpClient.get(any(), headers: any(named: "headers")))
+      when(() => mockHttpClient.get(any(), headers: any(named: 'headers')))
           .thenAnswer((_) => Future.value(http.Response('{}', 200)));
 
-      await apiService.getRequest("causes/stuff", params: {
-        "causes": [1, 2]
-      });
-      verify(() => mockHttpClient.get(
+      await apiService.getRequest(
+        'causes/stuff',
+        params: {
+          'causes': [1, 2]
+        },
+      );
+      verify(
+        () => mockHttpClient.get(
           Uri.parse(
-              "https://staging.api.now-u.com/api/causes/stuff?causes=%5B1%2C2%5D"),
-          headers: any(named: "headers"))).called(1);
+            'https://staging.api.now-u.com/api/causes/stuff?causes=%5B1%2C2%5D',
+          ),
+          headers: any(named: 'headers'),
+        ),
+      ).called(1);
     });
   });
 
   group('test postRequest', () {
     test('without parameters', () async {
       when(() => mockAuthService.isAuthenticated).thenReturn(false);
-      when(() => mockHttpClient.post(any(),
-              headers: any(named: "headers"), body: any(named: "body")))
-          .thenAnswer(
-              (_) => Future.value(http.Response('{"abc": "def"}', 200)));
+      when(
+        () => mockHttpClient.post(
+          any(),
+          headers: any(named: 'headers'),
+          body: any(named: 'body'),
+        ),
+      ).thenAnswer(
+        (_) => Future.value(http.Response('{"abc": "def"}', 200)),
+      );
 
       Map response =
-          await apiService.postRequest("test", body: {"test": "payload"});
-      expect(response, {"abc": "def"});
-      verify(() => mockHttpClient.post(
-          Uri.parse("https://staging.api.now-u.com/api/test"),
-          headers: any(named: "headers"),
-          body: json.encode({"test": "payload"}),
-          encoding: null)).called(1);
+          await apiService.postRequest('test', body: {'test': 'payload'});
+      expect(response, {'abc': 'def'});
+      verify(
+        () => mockHttpClient.post(
+          Uri.parse('https://staging.api.now-u.com/api/test'),
+          headers: any(named: 'headers'),
+          body: json.encode({'test': 'payload'}),
+          encoding: null,
+        ),
+      ).called(1);
     });
   });
 

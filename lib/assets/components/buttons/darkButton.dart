@@ -47,38 +47,50 @@ class DarkButton extends StatelessWidget {
   final double? fontSize;
   final DarkButtonStyle? style;
 
-  DarkButton(this.text,
-      {this.size = DarkButtonSize.Medium,
-      required this.onPressed,
-      this.rightIcon,
-      this.leftIcon,
-      this.style,
-      this.fontSize});
+  DarkButton(
+    this.text, {
+    this.size = DarkButtonSize.Medium,
+    required this.onPressed,
+    this.rightIcon,
+    this.leftIcon,
+    this.style,
+    this.fontSize,
+  });
 
   @override
   Widget build(BuildContext context) {
     if (style == DarkButtonStyle.Primary) {
-      return PrimaryButton(text,
-          onPressed: onPressed,
-          rightIcon: rightIcon,
-          size: size,
-          fontSize: fontSize);
+      return PrimaryButton(
+        text,
+        onPressed: onPressed,
+        rightIcon: rightIcon,
+        size: size,
+        fontSize: fontSize,
+      );
     }
     if (style == DarkButtonStyle.Outline) {
-      return OutlineButton(text,
-          onPressed: onPressed, size: size, fontSize: fontSize);
+      return OutlineButton(
+        text,
+        onPressed: onPressed,
+        size: size,
+        fontSize: fontSize,
+      );
     } else if (style == DarkButtonStyle.Secondary) {
-      return SecondaryButton(text,
-          onPressed: onPressed,
-          rightIcon: rightIcon,
-          size: size,
-          fontSize: fontSize);
+      return SecondaryButton(
+        text,
+        onPressed: onPressed,
+        rightIcon: rightIcon,
+        size: size,
+        fontSize: fontSize,
+      );
     } else {
-      return PrimaryButton(text,
-          onPressed: onPressed,
-          rightIcon: rightIcon,
-          size: size,
-          fontSize: fontSize);
+      return PrimaryButton(
+        text,
+        onPressed: onPressed,
+        rightIcon: rightIcon,
+        size: size,
+        fontSize: fontSize,
+      );
     }
   }
 }
@@ -102,35 +114,37 @@ class SecondaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomTile(
-        child: Container(
-      color: Colors.white,
-      height: darkButtonStyleStyles[size]['height'],
-      child: ElevatedButton(
-        style: ButtonStyle(
+      child: Container(
+        color: Colors.white,
+        height: darkButtonStyleStyles[size]['height'],
+        child: ElevatedButton(
+          style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.white),
             shape: MaterialStateProperty.all(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(
-                    darkButtonStyleStyles[size]['borderRadius']),
+                  darkButtonStyleStyles[size]['borderRadius'],
+                ),
               ),
-            )),
-        onPressed: onPressed,
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: darkButtonStyleStyles[size]['vPadding'],
-            horizontal: darkButtonStyleStyles[size]['hPadding'],
+            ),
           ),
-          child: Text(
-            text!,
-            style: textStyleFrom(
-              Theme.of(context).primaryTextTheme.button,
-              color: CustomColors.brandColor,
-              fontSize: fontSize ?? darkButtonStyleStyles[size]['fontSize'],
+          onPressed: onPressed,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: darkButtonStyleStyles[size]['vPadding'],
+              horizontal: darkButtonStyleStyles[size]['hPadding'],
+            ),
+            child: Text(
+              text!,
+              style: TextStyle(
+                fontFamily: 'Nunito',
+                fontSize: fontSize ?? darkButtonStyleStyles[size]['fontSize'],
+              ),
             ),
           ),
         ),
       ),
-    ));
+    );
   }
 }
 
@@ -181,7 +195,7 @@ class PrimaryButton extends StatelessWidget {
             child: Text(
               text!,
               style: textStyleFrom(
-                Theme.of(context).primaryTextTheme.button,
+                Theme.of(context).textTheme.labelLarge,
                 color: Colors.white,
                 fontSize: fontSize ?? darkButtonStyleStyles[size]['fontSize'],
               ),
@@ -223,7 +237,7 @@ class OutlineButton extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius:
             BorderRadius.circular(darkButtonStyleStyles[size]['borderRadius']),
-        side: BorderSide(
+        side: const BorderSide(
           color: Colors.white,
           width: 1,
           style: BorderStyle.solid,
@@ -241,7 +255,7 @@ class OutlineButton extends StatelessWidget {
             child: Text(
               text!,
               style: textStyleFrom(
-                Theme.of(context).primaryTextTheme.button,
+                Theme.of(context).textTheme.labelLarge,
                 color: Colors.white,
                 fontSize: fontSize ?? darkButtonStyleStyles[size]['fontSize'],
               ),

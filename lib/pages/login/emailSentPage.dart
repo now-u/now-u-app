@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:nowu/assets/components/buttons/darkButton.dart';
 import 'package:nowu/assets/components/textButton.dart';
+import 'package:nowu/ui/views/login/login_viewmodel.dart';
 
-import 'package:nowu/viewmodels/login_model.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nowu/routes.dart';
-
-import 'package:nowu/pages/login/login.dart';
 
 class EmailSentPageArguments {
   final String email;
@@ -26,120 +24,114 @@ class EmailSentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<LoginViewModel>.reactive(
-        viewModelBuilder: () => LoginViewModel(),
-        onModelReady: (model) {
-          model.init();
-          // if (args.token != null) {
-          //   model.login(email: args.email, token: args.token!);
-          // }
-        },
-        onDispose: (model) => model.dispose(),
-        builder: (context, model, child) {
-          return Stack(children: <Widget>[
+      viewModelBuilder: () => LoginViewModel(),
+      onModelReady: (model) {
+        model.init();
+        // if (args.token != null) {
+        //   model.login(email: args.email, token: args.token!);
+        // }
+      },
+      onDispose: (model) => model.dispose(),
+      builder: (context, model, child) {
+        return Stack(
+          children: <Widget>[
             Scaffold(
-                body: Container(
-                    color: Theme.of(context).primaryColorDark,
-                    child: Column(
-                      children: <Widget>[
-                        SafeArea(
-                          child: Container(),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 20, bottom: 40),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              body: Container(
+                color: Theme.of(context).primaryColorDark,
+                child: Column(
+                  children: <Widget>[
+                    SafeArea(
+                      child: Container(),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 20, bottom: 40),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      ),
+                    ),
+                    args.token == null
+                        ? Container()
+                        : Container(
+                            height: 40,
+                            child: const CircularProgressIndicator(),
+                          ),
+                    const Flexible(
+                      child: Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Image(
+                          image: AssetImage(
+                            'assets/imgs/intro/il-mail@4x.png',
                           ),
                         ),
-                        args.token == null
-                            ? Container()
-                            : Container(
-                                height: 40, child: CircularProgressIndicator()),
-                        Flexible(
-                          child: Padding(
-                            padding: EdgeInsets.all(20),
-                            child: Image(
-                              image: AssetImage(
-                                  'assets/imgs/intro/il-mail@4x.png'),
-                            ),
-                          ),
+                      ),
+                    ),
+                    Text(
+                      'Check your email',
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                    const SizedBox(height: 30),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      child: Container(
+                        width: double.infinity,
+                        child: DarkButton(
+                          'Open Email',
+                          onPressed: () {
+                            model.openMailApp();
+                          },
                         ),
-                        Text("Check your email",
-                            style: TextStyle(
-                              fontSize: Theme.of(context)
-                                  .primaryTextTheme
-                                  .headline1!
-                                  .fontSize,
-                              fontWeight: Theme.of(context)
-                                  .primaryTextTheme
-                                  .headline1!
-                                  .fontWeight,
-                              color: Colors.white,
-                            )),
-                        SizedBox(height: 30),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 40),
-                          child: Container(
-                            width: double.infinity,
-                            child: DarkButton(
-                              "Open Email",
-                              onPressed: () {
-                                model.openMailApp();
-                              },
-                            ),
-                          ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CustomTextButton(
+                          "I didn't get my email",
+                          onClick: () {
+                            Navigator.of(context).pushNamed(Routes.login);
+                          },
+                          fontSize: 14,
                         ),
-                        SizedBox(height: 20),
-                        Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CustomTextButton("I didn't get my email",
-                                  onClick: () {
-                                Navigator.of(context).pushNamed(
-                                  Routes.login,
-                                  arguments: LoginPageArguments(),
-                                );
-                              }, fontSize: 14),
-                            ]),
-                        SizedBox(height: 20),
-                        Container(
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            child: Text(
-                                "If the email link does not work, use the code we have emailed you.",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: Theme.of(context)
-                                      .primaryTextTheme
-                                      .bodyText1!
-                                      .fontSize,
-                                  fontWeight: Theme.of(context)
-                                      .primaryTextTheme
-                                      .bodyText1!
-                                      .fontWeight,
-                                  color: Colors.white,
-                                ))),
-                        SizedBox(height: 10),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 40),
-                          child: Container(
-                            width: double.infinity,
-                            child: DarkButton(
-                              "Use secret code",
-                              onPressed: () {
-                                model.navigateToSecretCodePage(args.email);
-                              },
-                              style: DarkButtonStyle.Outline,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20),
                       ],
-                    ))),
-          ]);
-        });
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: Text(
+                        'If the email link does not work, use the code we have emailed you.',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
+                      child: Container(
+                        width: double.infinity,
+                        child: DarkButton(
+                          'Use secret code',
+                          onPressed: () {
+                            model.navigateToSecretCodePage(args.email);
+                          },
+                          style: DarkButtonStyle.Outline,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 
+// TODO Back button was broken on these pages
 class IntroPageSection extends StatelessWidget {
   final String title;
   final String description;
@@ -153,7 +145,7 @@ class IntroPageSection extends StatelessWidget {
       children: <Widget>[
         Flexible(
           child: Padding(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Image(image: image),
           ),
         ),
@@ -162,34 +154,21 @@ class IntroPageSection extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text(title,
-                  style: TextStyle(
-                    fontSize:
-                        Theme.of(context).primaryTextTheme.headline1!.fontSize,
-                    fontWeight: Theme.of(context)
-                        .primaryTextTheme
-                        .headline1!
-                        .fontWeight,
-                    color: Colors.white,
-                  )),
-              SizedBox(
+              Text(
+                title,
+                style: Theme.of(context).textTheme.headlineLarge,
+              ),
+              const SizedBox(
                 height: 10,
               ),
               Container(
-                  width: MediaQuery.of(context).size.width * 0.6,
-                  child: Text(description,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: Theme.of(context)
-                            .primaryTextTheme
-                            .bodyText1!
-                            .fontSize,
-                        fontWeight: Theme.of(context)
-                            .primaryTextTheme
-                            .bodyText1!
-                            .fontWeight,
-                        color: Colors.white,
-                      ))),
+                width: MediaQuery.of(context).size.width * 0.6,
+                child: Text(
+                  description,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ),
             ],
           ),
         ),

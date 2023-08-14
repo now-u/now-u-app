@@ -1,11 +1,9 @@
-import 'package:meta/meta.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class StorageProvider {
-  StorageProvider({required this.flutterSecureStorage})
-      : assert(flutterSecureStorage != null);
-
   final FlutterSecureStorage flutterSecureStorage;
+
+  StorageProvider({required this.flutterSecureStorage});
 
   static const String storageUserEmailKey = 'userEmailAddress';
   static const String storageUserNameKey = 'userName';
@@ -33,7 +31,8 @@ class StorageProvider {
 }
 
 class SecureStorageService {
-  final _store = StorageProvider(flutterSecureStorage: FlutterSecureStorage());
+  final _store =
+      StorageProvider(flutterSecureStorage: const FlutterSecureStorage());
 
   Future<void> setEmail(String email) => _store.setEmail(email);
   Future<void> setName(String name) => _store.setEmail(name);

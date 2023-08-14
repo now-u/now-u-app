@@ -11,8 +11,8 @@ void main() {
       SharedPreferencesService sharedPreferencesService =
           SharedPreferencesService();
       await sharedPreferencesService.init();
-      sharedPreferencesService.saveUserToken("abc");
-      expect(await sharedPreferencesService.getUserToken(), "abc");
+      sharedPreferencesService.saveUserToken('abc');
+      expect(await sharedPreferencesService.getUserToken(), 'abc');
     });
   });
 }

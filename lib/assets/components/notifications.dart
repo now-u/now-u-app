@@ -15,79 +15,82 @@ class NotificationTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomTile(
-        onClick: () {
-          Navigator.of(context)
-              .pushNamed(Routes.notification, arguments: notification);
-        },
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Icon
-            Padding(
-                padding: EdgeInsets.all(10),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                  child: Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Icon(
-                      Icons.notifications_active,
-                      color: Colors.white,
-                    ),
-                  ),
-                )),
-
-            SizedBox(width: 2),
-
-            // Text
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  SizedBox(height: 10),
-                  Text(
-                    notification.getTitle()!,
-                    style: Theme.of(context).primaryTextTheme.headline4,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                  Text(
-                    notification.getSubtitle() ?? "",
-                    style: textStyleFrom(
-                      Theme.of(context).primaryTextTheme.bodyText1,
-                      fontSize: 11,
-                    ),
-                  )
-                ],
+      onClick: () {
+        Navigator.of(context)
+            .pushNamed(Routes.notification, arguments: notification);
+      },
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Icon
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                borderRadius: const BorderRadius.all(Radius.circular(8.0)),
               ),
-            ),
-
-            // Dismiss button
-            Padding(
-              padding: EdgeInsets.all(8),
-              child: Container(
-                child: MaterialButton(
-                  onPressed: () {
-                    dismissFunction(notification.getId());
-                  },
-                  elevation: 2.0,
-                  minWidth: 0,
-                  color: Color.fromRGBO(196, 196, 196, 1),
-                  child: Icon(
-                    Icons.close,
-                    color: Colors.white,
-                  ),
-                  padding: EdgeInsets.all(0),
-                  shape: CircleBorder(),
-                  height: 10,
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              child: const Padding(
+                padding: EdgeInsets.all(8),
+                child: Icon(
+                  Icons.notifications_active,
+                  color: Colors.white,
                 ),
               ),
             ),
-          ],
-        ));
+          ),
+
+          const SizedBox(width: 2),
+
+          // Text
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                const SizedBox(height: 10),
+                Text(
+                  notification.getTitle()!,
+                  style: Theme.of(context).textTheme.displayMedium,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                Text(
+                  notification.getSubtitle() ?? '',
+                  style: textStyleFrom(
+                    Theme.of(context).textTheme.bodyLarge,
+                    fontSize: 11,
+                  ),
+                )
+              ],
+            ),
+          ),
+
+          // Dismiss button
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Container(
+              child: MaterialButton(
+                onPressed: () {
+                  dismissFunction(notification.getId());
+                },
+                elevation: 2.0,
+                minWidth: 0,
+                color: const Color.fromRGBO(196, 196, 196, 1),
+                child: const Icon(
+                  Icons.close,
+                  color: Colors.white,
+                ),
+                padding: const EdgeInsets.all(0),
+                shape: const CircleBorder(),
+                height: 10,
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

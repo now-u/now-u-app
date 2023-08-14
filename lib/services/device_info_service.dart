@@ -10,7 +10,7 @@ class DeviceInfoService {
     }
     if (Platform.isAndroid) {
       var androidInfo = await DeviceInfoPlugin().androidInfo;
-      return "${androidInfo.version.release} (SDK ${androidInfo.version.sdkInt})";
+      return '${androidInfo.version.release} (SDK ${androidInfo.version.sdkInt})';
     }
     return null;
   }

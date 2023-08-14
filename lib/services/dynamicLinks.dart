@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:flutter/foundation.dart';
 
-import 'package:nowu/locator.dart';
+import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/services/storage.dart';
-import 'package:nowu/services/device_info_service.dart';
 
 import 'package:nowu/pages/login/emailSentPage.dart';
 
@@ -18,13 +18,20 @@ class DynamicLinkService {
   final NavigationService? _navigationService = locator<NavigationService>();
   final SecureStorageService? _storageProvider =
       locator<SecureStorageService>();
-  final DeviceInfoService? _deviceInfoService = locator<DeviceInfoService>();
+  // TODO Remove/fix for web this service
+  // final DeviceInfoService? _deviceInfoService = locator<DeviceInfoService>();
 
   Future handleDynamicLinks() async {
     bool gotIosLink = false;
-    if (await _deviceInfoService!.isIOS13) {
+
+    // TODO Find out which of these is required? I commented out below and replaced with this because device service is not available
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
       await initUniLinks();
     }
+    // if (await _deviceInfoService!.isIOS13) {
+    //   await initUniLinks();
+    // }
+
     if (!gotIosLink) {
       // 1. Get the initial dynamic link if the app is opened with a dynamic link
       final PendingDynamicLinkData? data =
@@ -36,37 +43,40 @@ class DynamicLinkService {
     }
     // 3. Register a link callback to fire if the app is opened up from the background
     // using a dynamic link.
-    FirebaseDynamicLinks.instance.onLink.listen((dynamicLinkData) {
-      _handleDeepLink(dynamicLinkData.link);
-    }, onError: (e) async {
-      print('Link Failed: ${e.message}');
-    });
+    FirebaseDynamicLinks.instance.onLink.listen(
+      (dynamicLinkData) {
+        _handleDeepLink(dynamicLinkData.link);
+      },
+      onError: (e) async {
+        print('Link Failed: ${e.message}');
+      },
+    );
   }
 
   void _handleDeepLink(Uri? deepLink) async {
     if (deepLink != null) {
       print('_handleDeepLink | deeplink: $deepLink');
       print('_handleDeepLink | deepLink path: ${deepLink.path}');
-      if (deepLink.path == "/loginMobile" || deepLink.host == 'loginmobile') {
+      if (deepLink.path == '/loginMobile' || deepLink.host == 'loginmobile') {
         String? email = await _storageProvider!.getEmail();
         if (email == null) return;
 
         String? token = deepLink.queryParameters['token'];
         EmailSentPageArguments args =
             EmailSentPageArguments(email: email, token: token);
-        print("Navigating to emailSent");
+        print('Navigating to emailSent');
         _navigationService!
             .navigateTo(Routes.loginLinkClicked, arguments: args);
       }
       if (RegExp('campaigns/[0-9]+').hasMatch(deepLink.path)) {
         String campaignNumberString = deepLink.path.substring(11);
-        print("_handleDeepLink | campaign number: $campaignNumberString");
+        print('_handleDeepLink | campaign number: $campaignNumberString');
         int campaignNumber = int.parse(campaignNumberString);
         _navigationService!
             .navigateTo(Routes.campaignInfo, arguments: campaignNumber);
       }
     } else {
-      print("Deep link was null");
+      print('Deep link was null');
     }
   }
 
@@ -84,24 +94,25 @@ class DynamicLinkService {
     required String imageUrl,
     bool? short,
   }) async {
-    print("Getting uri");
+    print('Getting uri');
     final DynamicLinkParameters parameters = DynamicLinkParameters(
-        uriPrefix: "https://nowu.page.link",
-        link: Uri.parse("https://now-u.com/$linkPath"),
-        androidParameters: AndroidParameters(
-          packageName: "com.nowu.app",
-          minimumVersion: 0,
-        ),
-        //TODO IOS needs fixing
-        iosParameters: IOSParameters(
-          bundleId: "com.google.FirebaseCppDynamicLinksTestApp.dev",
-          minimumVersion: '0',
-        ),
-        socialMetaTagParameters: SocialMetaTagParameters(
-          title: title,
-          description: description,
-          imageUrl: Uri.parse(imageUrl),
-        ));
+      uriPrefix: 'https://nowu.page.link',
+      link: Uri.parse('https://now-u.com/$linkPath'),
+      androidParameters: const AndroidParameters(
+        packageName: 'com.nowu.app',
+        minimumVersion: 0,
+      ),
+      //TODO IOS needs fixing
+      iosParameters: const IOSParameters(
+        bundleId: 'com.google.FirebaseCppDynamicLinksTestApp.dev',
+        minimumVersion: '0',
+      ),
+      socialMetaTagParameters: SocialMetaTagParameters(
+        title: title,
+        description: description,
+        imageUrl: Uri.parse(imageUrl),
+      ),
+    );
     Uri url;
     if (short == false) {
       url = await FirebaseDynamicLinks.instance.buildLink(parameters);
@@ -125,15 +136,18 @@ class DynamicLinkService {
     bool gotLink = false;
 
     // Attach a listener to the stream
-    _sub = uriLinkStream.listen((Uri? deepLink) {
-      if (deepLink != null) {
-        gotLink = true;
-        _handleDeepLink(deepLink);
-      }
-    }, onError: (err) {
-      // Handle exception by warning the user their action did not succeed
-      print('D| $err');
-    });
+    _sub = uriLinkStream.listen(
+      (Uri? deepLink) {
+        if (deepLink != null) {
+          gotLink = true;
+          _handleDeepLink(deepLink);
+        }
+      },
+      onError: (err) {
+        // Handle exception by warning the user their action did not succeed
+        print('D| $err');
+      },
+    );
     // TODO: Don't forget to call _sub.cancel() in dispose()
     return gotLink;
   }

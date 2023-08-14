@@ -1,8 +1,7 @@
 import 'package:causeApiClient/causeApiClient.dart';
 import 'package:dio/dio.dart';
-import 'package:nowu/locator.dart';
-import 'package:nowu/models/User.dart';
-import 'package:nowu/services/api_service.dart';
+import 'package:nowu/assets/constants.dart';
+import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/auth.dart';
 
 class UserService {
@@ -12,22 +11,22 @@ class UserService {
 
   final AuthenticationService _authService = locator<AuthenticationService>();
   CauseApiClient get _causeServiceClient {
-	return CauseApiClient(
-  	    dio: Dio(
-  	    	BaseOptions(
-  	    		baseUrl: 'http://192.168.1.11:8000',
-				headers: _authService.token == null ? null : {
-  	  				'Authorization': 'JWT ${_authService.token!}'
-  	  			}
-  	    	)
-  	    )
-  	);
+    return CauseApiClient(
+      dio: Dio(
+        BaseOptions(
+          baseUrl: '$LOCAL_STACK_URL:8000',
+          headers: _authService.token == null
+              ? null
+              : {'Authorization': 'JWT ${_authService.token!}'},
+        ),
+      ),
+    );
   }
 
   Future<UserProfile?> fetchUser() async {
     if (!_authService.isAuthenticated) {
-		// TODO LOG
-		return null;
+      // TODO LOG
+      return null;
     }
 
     final response = await _causeServiceClient.getMeApi().meProfileRetrieve();
@@ -35,14 +34,16 @@ class UserService {
   }
 
   // Update user profile (maybe including signup for newletter email?)
-  Future<void> updateUser(
-      {required String name, required bool newsLetterSignup}) async {
-	  // TODO Handle news letter
-    final response = await _causeServiceClient.getMeApi().meProfilePartialUpdate(
-		patchedUserProfile: PatchedUserProfile((profile) => profile
-			..name = name
-		),
-	);
-	_currentUser = response.data!;
+  Future<void> updateUser({
+    required String name,
+    required bool newsLetterSignup,
+  }) async {
+    // TODO Handle news letter
+    final response =
+        await _causeServiceClient.getMeApi().meProfilePartialUpdate(
+              patchedUserProfile:
+                  PatchedUserProfile((profile) => profile..name = name),
+            );
+    _currentUser = response.data!;
   }
 }

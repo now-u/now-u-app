@@ -1,12 +1,9 @@
-import 'package:causeApiClient/causeApiClient.dart';
-import 'package:dio/dio.dart';
 import 'package:nowu/services/dynamicLinks.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:nowu/services/storage.dart';
 import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/pushNotifications.dart';
-import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/services/faq_service.dart';
 import 'package:nowu/services/shared_preferences_service.dart';
 import 'package:nowu/services/internal_notification_service.dart';
@@ -20,16 +17,14 @@ import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/superbase.dart';
 import 'package:nowu/services/user_service.dart';
 
-import 'package:http/http.dart' as http;
-import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 
 /* This allows us to create a fake api if we wish */
 GetIt locator = GetIt.instance;
 
 void setupLocator() {
-  locator.registerLazySingleton(() => NavigationService(
-      GlobalKey<NavigatorState>(), UrlLauncher(), CustomChromeSafariBrowser()));
+  // locator.registerLazySingleton(() => NavigationService(
+  //     GlobalKey<NavigatorState>(), UrlLauncher(), CustomChromeSafariBrowser()));
   locator.registerLazySingleton(() => SecureStorageService());
   locator.registerLazySingleton(() => SharedPreferencesService());
   locator.registerLazySingleton(() => AuthenticationService());
@@ -41,9 +36,10 @@ void setupLocator() {
   locator.registerLazySingleton(() => GoogleLocationSearchService());
   locator.registerLazySingleton(() => AnalyticsService());
   locator.registerLazySingleton(() => CausesService());
-  locator.registerLazySingleton(() => ApiService(http.Client()));
+  locator.registerLazySingleton(() => ApiService());
   locator.registerLazySingleton(() => SupabaseService());
   locator.registerLazySingleton(() => SearchService());
+  // TODO This is super temporary, we should use the stacked auto generated router
 }
 
 void registerFirebaseServicesToLocator() {

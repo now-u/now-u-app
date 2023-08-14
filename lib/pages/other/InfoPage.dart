@@ -33,11 +33,12 @@ class InfoPage extends StatelessWidget {
             backButton: true,
           ),
           Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-              child: Text(
-                args.getBody()!.replaceAll("\n", "\n\n"),
-                style: Theme.of(context).primaryTextTheme.bodyText1,
-              )),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            child: Text(
+              args.getBody()!.replaceAll('\n', '\n\n'),
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          ),
         ],
       ),
     );

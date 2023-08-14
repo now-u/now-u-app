@@ -6,7 +6,7 @@ import 'package:mocktail/mocktail.dart';
 
 import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/services/dialog_service.dart';
-import 'package:nowu/locator.dart';
+import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/routes.dart';
 
 import '../setup/test_helpers.dart';
@@ -73,15 +73,15 @@ void main() {
       }
 
       test('Valid internal link isInternalLink', () {
-        testIsInternalLink("internal:home", true);
+        testIsInternalLink('internal:home', true);
       });
 
       test('Valid internal link with parameters isInternalLink', () {
-        testIsInternalLink("internal:home&1=2?2=4", true);
+        testIsInternalLink('internal:home&1=2?2=4', true);
       });
 
       test('Http link is not internal link', () {
-        testIsInternalLink("http://hello.com", false);
+        testIsInternalLink('http://hello.com', false);
       });
     });
 
@@ -91,14 +91,16 @@ void main() {
       }
 
       test('Link with no parameters gets correct route', () {
-        testInternalLinkRoute("internal:home", "home");
-        testInternalLinkRoute("internal:aboutus", "aboutus");
+        testInternalLinkRoute('internal:home', 'home');
+        testInternalLinkRoute('internal:aboutus', 'aboutus');
       });
 
       test('Link with parameters gets correct route', () {
-        testInternalLinkRoute("internal:home&1=2?2=3", "home");
+        testInternalLinkRoute('internal:home&1=2?2=3', 'home');
         testInternalLinkRoute(
-            "internal:aboutus&hello=howareyou?2=3", "aboutus");
+          'internal:aboutus&hello=howareyou?2=3',
+          'aboutus',
+        );
       });
     });
 
@@ -108,17 +110,17 @@ void main() {
       }
 
       test('Link with no parameters gets correct parameters', () {
-        testInternalLinkParameters("internal:aboutus", null);
+        testInternalLinkParameters('internal:aboutus', null);
       });
 
       test('Link with parameters gets correct parameters', () {
-        testInternalLinkParameters("internal:aboutus&hello=howareyou?2=3", {
-          "hello": "howareyou",
-          "2": "3",
+        testInternalLinkParameters('internal:aboutus&hello=howareyou?2=3', {
+          'hello': 'howareyou',
+          '2': '3',
         });
 
-        testInternalLinkParameters("internal:aboutus&id=3", {
-          "id": "3",
+        testInternalLinkParameters('internal:aboutus&id=3', {
+          'id': '3',
         });
       });
     });
@@ -132,15 +134,17 @@ void main() {
 
       test('Pdf link is a pdf', () {
         testIsPDF(
-            "https://share.now-u.com/legal/now-u_privacy_policy.pdf", true);
+          'https://share.now-u.com/legal/now-u_privacy_policy.pdf',
+          true,
+        );
       });
 
       test('Pdf internal link is a pdf', () {
-        testIsPDF("internal://hello.pdf", true);
+        testIsPDF('internal://hello.pdf', true);
       });
 
       test('Non pdf link is not a pdf', () {
-        testIsPDF("https://hello.com", false);
+        testIsPDF('https://hello.com', false);
       });
     });
 
@@ -150,41 +154,43 @@ void main() {
       }
 
       test('Mailto link is a mailto', () {
-        testIsMailto("mailto:name@email.com", true);
+        testIsMailto('mailto:name@email.com', true);
       });
 
       test('internal link is no a mailto', () {
-        testIsMailto("internal://hello.pdf", false);
+        testIsMailto('internal://hello.pdf', false);
       });
 
       test('http link is not a mailto', () {
-        testIsMailto("https://hello.com", false);
+        testIsMailto('https://hello.com', false);
       });
     });
 
     group('launchLink', () {
       group('externally opens', () {
         Future<void> assertOpensLinkExternally(String url) async {
-          when(() => mockDialogService.showDialog(any())).thenAnswer((_) =>
-              Future<AlertResponse>(() => AlertResponse(response: true)));
+          when(() => mockDialogService.showDialog(any())).thenAnswer(
+            (_) => Future<AlertResponse>(() => AlertResponse(response: true)),
+          );
 
           when(() => mockUrlLauncher.openUrl(any()))
               .thenAnswer((_) => Future.value());
 
           await navigationService.launchLink(url);
           verify(() => mockUrlLauncher.openUrl(Uri.parse(url))).called(1);
-          verifyNever(() => mockBroswer.open(url: any(named: "url")));
+          verifyNever(() => mockBroswer.open(url: any(named: 'url')));
         }
 
         test('mailto links', () async {
           await assertOpensLinkExternally(
-              "mailto:someone@yoursite.com?subject=Mail from Our Site");
+            'mailto:someone@yoursite.com?subject=Mail from Our Site',
+          );
         });
       });
 
       group('opens in internal browser', () {
         Future<void> assertOpensLinkInternally(String url) async {
-          when(() => mockBroswer.open(url: any(named: "url")))
+          when(() => mockBroswer.open(url: any(named: 'url')))
               .thenAnswer((_) => Future<void>(() => null));
 
           await navigationService.launchLink(url);
@@ -195,21 +201,26 @@ void main() {
 
         test('https links', () async {
           await assertOpensLinkInternally(
-              "https://css-tricks.com/snippets/html/mailto-links/");
+            'https://css-tricks.com/snippets/html/mailto-links/',
+          );
         });
 
         test('PDF links', () async {
           await assertOpensLinkInternally(
-              "https://share.now-u.com/legal/now-u_privacy_policy.pdf");
+            'https://share.now-u.com/legal/now-u_privacy_policy.pdf',
+          );
         });
       });
 
       group('resolves internal links', () {
         test('opens internal links internally', () async {
-          const url = "internal:home";
-          when(() => mockNavigatorState.pushNamed<Object?>(any(),
-                  arguments: any(named: "arguments")))
-              .thenAnswer((_) => Future.value({}));
+          const url = 'internal:home';
+          when(
+            () => mockNavigatorState.pushNamed<Object?>(
+              any(),
+              arguments: any(named: 'arguments'),
+            ),
+          ).thenAnswer((_) => Future.value({}));
 
           await navigationService.launchLink(url);
 

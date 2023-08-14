@@ -1,54 +1,46 @@
-import 'package:causeApiClient/causeApiClient.dart';
-import 'package:nowu/models/User.dart';
-import 'package:nowu/locator.dart';
-import 'package:nowu/services/analytics.dart';
-import 'package:nowu/services/api_service.dart';
+import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/shared_preferences_service.dart';
-import 'package:nowu/services/device_info_service.dart';
 import 'package:nowu/services/superbase.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide User;
 
-const LOGIN_REDIRECT_URL = "com.nowu.app://login-callback/";
+const LOGIN_REDIRECT_URL = 'com.nowu.app://login-callback/';
 
 class AuthenticationService {
-  final SharedPreferencesService _sharedPreferencesService =
-      locator<SharedPreferencesService>();
-  final DeviceInfoService _deviceInfoService = locator<DeviceInfoService>();
-  final ApiService _apiService = locator<ApiService>();
-  final AnalyticsService _analyticsService = locator<AnalyticsService>();
-  final SupabaseService _supabaseService = locator<SupabaseService>();
+  final _sharedPreferencesService = locator<SharedPreferencesService>();
+  final _supabaseService = locator<SupabaseService>();
 
   // String? get token => _sharedPreferencesService.getUserToken();
-  String? get token => _supabaseService.client.auth.currentSession?.accessToken;
+  String? get token =>
+      _supabaseService.client?.auth.currentSession?.accessToken;
   bool get isAuthenticated =>
-      _supabaseService.client.auth.currentSession != null;
+      _supabaseService.client?.auth.currentSession != null;
 
   bool isUserLoggedIn() {
     return token != null;
   }
 
   Future sendSignInEmail(String email) async {
-    await _supabaseService.client.auth
+    await _supabaseService.client!.auth
         .signInWithOtp(email: email, emailRedirectTo: LOGIN_REDIRECT_URL);
   }
 
   Future signInWithGoogle() async {
-    await _supabaseService.client.auth
+    await _supabaseService.client!.auth
         .signInWithOAuth(Provider.google, redirectTo: LOGIN_REDIRECT_URL);
   }
 
   Future signInWithFacebook() async {
-    await _supabaseService.client.auth
+    await _supabaseService.client!.auth
         .signInWithOAuth(Provider.facebook, redirectTo: LOGIN_REDIRECT_URL);
   }
 
   Future signInWithCode(String email, String code) async {
-    await _supabaseService.client.auth
+    await _supabaseService.client!.auth
         .verifyOTP(type: OtpType.magiclink, email: email, token: code);
   }
 
   Future<void> logout() async {
-    await _supabaseService.client.auth.signOut();
+    await _supabaseService.client!.auth.signOut();
     await _sharedPreferencesService.clearUserToken();
   }
 

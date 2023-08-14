@@ -18,14 +18,15 @@ class LearningResourceTypeFactory extends ModelFactory<LearningResourceType> {
 class LearningResourceFactory extends ModelFactory<LearningResource> {
   @override
   LearningResource generate() {
-    return LearningResource((resource) => resource
-      ..id = faker.randomGenerator.integer(100)
-      ..title = faker.lorem.sentence()
-      ..time = faker.randomGenerator.integer(10)
-      ..link = faker.internet.httpUrl()
-      ..learningResourceType = LearningResourceTypeEnum.INFOGRAPHIC
-      ..createdAt = faker.date.dateTime()
-      ..causes = ListBuilder(CauseFactory().generateList(length: 1))
+    return LearningResource(
+      (resource) => resource
+        ..id = faker.randomGenerator.integer(100)
+        ..title = faker.lorem.sentence()
+        ..time = faker.randomGenerator.integer(10)
+        ..link = faker.internet.httpUrl()
+        ..learningResourceType = LearningResourceTypeEnum.INFOGRAPHIC
+        ..createdAt = faker.date.dateTime()
+        ..causes = ListBuilder(CauseFactory().generateList(length: 1)),
     );
   }
 }

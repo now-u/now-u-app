@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:nowu/assets/components/buttons/darkButton.dart';
-import 'package:nowu/viewmodels/account_details_model.dart';
-import 'package:stacked/stacked.dart';
 
 class ConfirmationModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-	return Container();
-	// TODO Fix
+    return Container();
+    // TODO Fix
     // return ViewModelBuilder<AccountDetailsViewModel>.reactive(
     //     viewModelBuilder: () => AccountDetailsViewModel(),
     //     builder: (context, model, child) {

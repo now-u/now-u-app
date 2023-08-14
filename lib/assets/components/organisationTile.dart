@@ -14,50 +14,57 @@ class OrganisationTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {
-          if (extraOnTap != null) {
-            extraOnTap!();
-          }
-          Navigator.of(context)
-              .pushNamed(Routes.organisationPage, arguments: organisation);
-        },
-        child: Container(
-          width: 100,
-          //height: 60,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              boxShadow: [
-                BoxShadow(
-                    color: Color.fromRGBO(0, 0, 0, 0.16),
-                    offset: Offset(0, 3),
-                    blurRadius: 6)
-              ]),
-          child: Padding(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Expanded(
-                      //height: 80, width: 100,
-                      //width: 20,
-                      child: CustomNetworkImage(
-                    organisation.logo.url,
-                    fit: BoxFit.contain,
-                  )),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(organisation.name,
-                      style: textStyleFrom(
-                        Theme.of(context).primaryTextTheme.bodyText1,
-                        fontSize: 12,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center)
-                ],
-              )),
-        ));
+      onTap: () {
+        if (extraOnTap != null) {
+          extraOnTap!();
+        }
+        Navigator.of(context)
+            .pushNamed(Routes.organisationPage, arguments: organisation);
+      },
+      child: Container(
+        width: 100,
+        //height: 60,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, 0.16),
+              offset: Offset(0, 3),
+              blurRadius: 6,
+            )
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Expanded(
+                //height: 80, width: 100,
+                //width: 20,
+                child: CustomNetworkImage(
+                  organisation.logo.url,
+                  fit: BoxFit.contain,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                organisation.name,
+                style: textStyleFrom(
+                  Theme.of(context).textTheme.bodyLarge,
+                  fontSize: 12,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
