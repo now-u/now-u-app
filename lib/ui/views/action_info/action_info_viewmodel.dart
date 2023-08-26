@@ -32,13 +32,15 @@ class ActionInfoViewModel extends FutureViewModel<Action> {
     try {
       await _causesService.completeAction(data!.id);
       setBusy(false);
-      _routerService.navigateToExplore(actions_explore_page);
+	  // TODO Really?
+      _routerService.navigateToExplore(BaseResourceSearchFilter(resourceTypes: [ResourceType.ACTION]));
     } catch (err) {
       // TODO Log and metric!
       setBusy(false);
       print(err.toString());
-      _dialogService.showDialog(
-        BasicDialog(title: 'Error', description: 'Failed to complete action'),
+      _dialogService.showErrorDialog(
+        title: 'Error',
+        description: 'Failed to complete action',
       );
     }
   }
@@ -57,13 +59,7 @@ class ActionInfoViewModel extends FutureViewModel<Action> {
   void navigateToCauseExplorePage() {
     // TODO THis needs some more thought
     _routerService.navigateToExplore(
-      ExplorePageArguments(
-        sections: home_explore_page.sections,
-        title: 'Explore ${data!.cause.title} cause',
-        baseParams: BaseResourceSearchFilter(
-          causeIds: [data!.cause.id],
-        ),
-      ),
+        BaseResourceSearchFilter(causeIds: [data!.cause.id]),
     );
   }
 }

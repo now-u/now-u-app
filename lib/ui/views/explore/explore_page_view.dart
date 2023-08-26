@@ -1,7 +1,9 @@
+import 'package:get/get.dart';
 import 'package:nowu/assets/components/buttons/darkButton.dart';
 import 'package:nowu/assets/components/searchBar.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:flutter/material.dart' hide SearchBar;
+import 'package:nowu/services/search_service.dart';
 import 'package:nowu/ui/views/explore/explore_page_definition.dart';
 import 'package:nowu/ui/views/explore/explore_section_view.dart';
 import 'package:stacked/stacked.dart';
@@ -11,9 +13,9 @@ import 'explore_page_viewmodel.dart';
 final double horizontalPadding = CustomPaddingSize.small;
 
 class ExplorePage extends StatelessWidget {
-  final ExplorePageArguments args;
+  final BaseResourceSearchFilter? filter;
 
-  ExplorePage(this.args, {Key? key}) : super(key: key);
+  ExplorePage({Key? key, this.filter}) : super(key: key);
 
   final _searchBarFocusNode = FocusNode();
 
@@ -33,7 +35,7 @@ class ExplorePage extends StatelessWidget {
                     if (model.canGoBack)
                       const Icon(Icons.chevron_left, size: 30),
                     Text(
-                      model.title,
+                      'Explore',
                       style: exploreHeading,
                       textAlign: TextAlign.left,
                     ),
@@ -56,7 +58,7 @@ class ExplorePage extends StatelessWidget {
             ),
             if (model.hasLinks())
               Padding(
-                padding: const EdgeInsets.only(top: 10),
+                padding:const EdgeInsets.only(top: 10),
                 child: Container(
                   height: 50,
                   child: ListView(
@@ -64,6 +66,7 @@ class ExplorePage extends StatelessWidget {
                     shrinkWrap: true,
                     padding:
                         EdgeInsets.symmetric(horizontal: horizontalPadding),
+					// TODO Replace this with filter pills for causes and action type (all base filter options)
                     // Map section arguments into real sections
                     children: model.sections
                         .where((section) => section.link != null)
@@ -72,7 +75,7 @@ class ExplorePage extends StatelessWidget {
                             padding: const EdgeInsets.all(4.0),
                             child: DarkButton(
                               section.title,
-                              onPressed: () => model.changePage(section.link!),
+                              onPressed: () => model.updateFilter(section.link!),
                               size: DarkButtonSize.Large,
                             ),
                           ),
@@ -90,9 +93,9 @@ class ExplorePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ExplorePageViewModel>.reactive(
-      // TODO Base filter params
-      viewModelBuilder: () => ExplorePageViewModel(args.title, args.sections),
+      viewModelBuilder: () => ExplorePageViewModel(baseFilter: filter),
       builder: (context, model, child) {
+		print('Got sections ${model.sections}');
         return Scaffold(
           body: SingleChildScrollView(
             child: Column(
@@ -102,7 +105,7 @@ class ExplorePage extends StatelessWidget {
                   model.sections
                       .map(
                         (ExploreSectionArguments section) =>
-                            ExploreSectionWidget(section),
+                            ExploreSectionWidget(section, pageViewModel: model),
                       )
                       .toList(),
             ),
@@ -111,4 +114,31 @@ class ExplorePage extends StatelessWidget {
       },
     );
   }
+}
+
+class FilterPill extends StatelessWidget {
+	final VoidCallback onClick;
+	final String text;
+	final bool isSelected;
+
+	FilterPill({
+		required this.text,
+		required this.onClick,
+		required this.isSelected,
+	});
+
+	@override
+	Widget build(BuildContext context) {
+		return Container(
+			decoration: BoxDecoration(
+				borderRadius: BorderRadius.all(Radius.circular(8.0)),
+				// TODO No...
+				color: isSelected ? Colors.white : Colors.orange,
+				border: Border(
+					// TODO COlor of border?
+				),
+			),
+			child: Text(text)
+		);
+	}
 }

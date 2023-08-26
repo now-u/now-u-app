@@ -9,7 +9,6 @@ class AuthenticationService {
   final _sharedPreferencesService = locator<SharedPreferencesService>();
   final _supabaseService = locator<SupabaseService>();
 
-  // String? get token => _sharedPreferencesService.getUserToken();
   String? get token =>
       _supabaseService.client?.auth.currentSession?.accessToken;
   bool get isAuthenticated =>

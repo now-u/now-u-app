@@ -352,6 +352,8 @@ class SearchService {
 
   Future<List<ListAction>> searchActions({ActionSearchFilter? filter}) async {
     final _actionsIndex = _meiliSearchClient.index(SearchIndexName.ACTIONS);
+    print(
+        "Searching actions with ${filter?.toMeilisearchQuery(_causesService.userInfo).filter}");
     final result = await _actionsIndex.search(
       filter?.query,
       filter?.toMeilisearchQuery(_causesService.userInfo),

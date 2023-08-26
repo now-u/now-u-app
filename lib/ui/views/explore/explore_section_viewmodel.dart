@@ -94,6 +94,7 @@ sealed class ExploreSectionViewModel<
   final _routerService = locator<RouterService>();
 
   ExploreSectionArguments<FilterT, FilterParamType> args;
+  ExplorePageViewModel? pageViewModel;
 
   ExploreSectionState state = ExploreSectionState.Loading;
   Iterable<T> tiles = [];
@@ -102,15 +103,28 @@ sealed class ExploreSectionViewModel<
   ExploreSectionFilterViewModelData<FilterT, FilterParamType>? filterData;
 
   // TODO Should probably just take args
-  ExploreSectionViewModel(this.args)
+  ExploreSectionViewModel(this.args, this.pageViewModel)
       : filterData = args.filter != null
             ? ExploreSectionFilterViewModelData(args: args.filter!)
             : null;
 
-  void changePage(ExplorePageArguments args) {
-    // TODO This method is duplicated in the page and the section, can we stop that?
-    _routerService.navigateToExplore(args);
+  Future<void> handleLink() async {
+	print("Handling link");
+    if (args.link == null) {
+		return;
+	}
+	if (pageViewModel == null) {
+		return _routerService.navigateToExplore(args.link!);
+	}
+	pageViewModel!.updateFilter(args.link);
   }
+
+  Future<void> navigateToEmptyExplore() async {
+	if (pageViewModel == null) {
+		return _routerService.navigateToExplore();
+	}
+	pageViewModel!.updateFilter(BaseResourceSearchFilter());
+  } 
 
   FilterT get combinedFilter {
     // TODO Get filter working!!
@@ -165,8 +179,8 @@ sealed class ExploreSectionViewModel<
 class ActionExploreSectionViewModel<FilterParamType>
     extends ExploreSectionViewModel<ActionExploreTileData, ActionSearchFilter,
         FilterParamType> {
-  ActionExploreSectionViewModel(ActionExploreSectionArgs<FilterParamType> args)
-      : super(args);
+  ActionExploreSectionViewModel(ActionExploreSectionArgs<FilterParamType> args, ExplorePageViewModel? pageViewModel)
+      : super(args, pageViewModel);
 
   @override
   _fetchTiles() async {
@@ -191,7 +205,8 @@ class LearningResourceExploreSectionViewModel<FilterParamType>
         LearningResourceSearchFilter, FilterParamType> {
   LearningResourceExploreSectionViewModel(
     LearningResourceExploreSectionArgs<FilterParamType> args,
-  ) : super(args);
+	ExplorePageViewModel? pageViewModel,
+  ) : super(args, pageViewModel);
 
   @override
   _fetchTiles() async {
@@ -219,7 +234,8 @@ class CampaignExploreSectionViewModel<FilterParamType>
         CampaignSearchFilter, FilterParamType> {
   CampaignExploreSectionViewModel(
     CampaignExploreSectionArgs<FilterParamType> args,
-  ) : super(args);
+	ExplorePageViewModel? pageViewModel,
+  ) : super(args, pageViewModel);
 
   @override
   _fetchTiles() async {
@@ -242,7 +258,8 @@ class NewsArticleExploreSectionViewModel<FilterParamType>
         NewsArticleSearchFilter, FilterParamType> {
   NewsArticleExploreSectionViewModel(
     NewsArticleExploreSectionArgs<FilterParamType> args,
-  ) : super(args);
+	ExplorePageViewModel? pageViewModel,
+  ) : super(args, pageViewModel);
 
   @override
   _fetchTiles() async {

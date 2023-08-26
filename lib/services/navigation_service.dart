@@ -1,23 +1,14 @@
-import 'package:nowu/services/causes_service.dart';
 import 'package:flutter/material.dart' hide Action;
-import 'package:nowu/routes.dart';
-
-import 'package:nowu/app/app.locator.dart';
-
-import 'package:nowu/assets/components/buttons/darkButton.dart';
-import 'package:nowu/ui/dialogs/basic/basic_dialog.dart';
-import 'package:stacked_services/stacked_services.dart';
-
 import 'package:url_launcher/url_launcher.dart';
+import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/services/dialog_service.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 const String INTERNAL_PREFIX = 'internal:';
 
-const List ID_ROUTES = [Routes.campaignInfo, Routes.actionInfo];
-
 class UrlLauncher {
   Future<void> openUrl(Uri url) async {
-    await launchUrl(url);
+    await launchUrl(url, mode: LaunchMode.externalApplication);
   }
 }
 
@@ -126,40 +117,39 @@ class NavigationService {
     Function? extraOnConfirmFunction,
     bool? isExternal,
   }) async {
-    final CausesService _causesService = locator<CausesService>();
-    if (isInternalLink(url)) {
-      String route = getInternalLinkRoute(url);
-      Map? parameters = getInternalLinkParameters(url);
+    // final CausesService _causesService = locator<CausesService>();
+    // if (isInternalLink(url)) {
+    //   String route = getInternalLinkRoute(url);
+    //   Map? parameters = getInternalLinkParameters(url);
 
-      if (ID_ROUTES.contains(route)) {
-        int? id = int.tryParse(parameters!['id']);
+    //   if (ID_ROUTES.contains(route)) {
+    //     int? id = int.tryParse(parameters!['id']);
 
-        if (route == Routes.campaignInfo) {
-          navigateTo(route, arguments: id);
-          return;
-        }
+    //     if (route == Routes.campaignInfo) {
+    //       navigateTo(route, arguments: id);
+    //       return;
+    //     }
 
-        if (route == Routes.actionInfo) {
-          if (id == null) {
-            navigateTo(Routes.explore);
-            return;
-          }
-          _causesService.getAction(id).then((Action action) {
-            navigateTo(route, arguments: action);
-          }).catchError((e) {
-            _dialogService.showDialog(
-              const BasicDialog(
-                title: 'Error',
-                description: 'Error navigating to route',
-              ),
-            );
-          });
-          return;
-        }
-      }
+    //     if (route == Routes.actionInfo) {
+    //       if (id == null) {
+    //         navigateTo(Routes.explore);
+    //         return;
+    //       }
+    //       _causesService.getAction(id).then((Action action) {
+    //         navigateTo(route, arguments: action);
+    //       }).catchError((e) {
+    //         _dialogService.showErrorDialog(
+    //           title: 'Error',
+    //           description: 'Error navigating to route',
+    //         );
+    //       });
+    //       return;
+    //     }
+    //   }
 
-      navigateTo(route);
-    } else if ((isExternal ?? false) || isMailTo(url)) {
+    //   navigateTo(route);
+    // } else if ((isExternal ?? false) || isMailTo(url)) {
+    if ((isExternal ?? false) || isMailTo(url)) {
       await launchLinkExternal(
         url,
         title: title,
@@ -184,26 +174,8 @@ class NavigationService {
     String? closeButtonText,
     Function? extraOnConfirmFunction,
   }) async {
-    AlertResponse exit = await _dialogService.showDialog(
-      BasicDialog(
-        title: title ?? "You're about to leave",
-        description: description ??
-            'This link will take you out of the app. Are you sure you want to go?',
-        buttons: <DialogButton>[
-          DialogButton(
-            text: buttonText ?? "Let's go",
-            response: true,
-          ),
-          DialogButton(
-            text: closeButtonText ?? 'Close',
-            response: false,
-            style: DarkButtonStyle.Secondary,
-          ),
-        ],
-      ),
-    );
-
-    if (exit.response) {
+    bool shouldExit = await _dialogService.showExitConfirmationDialog();
+    if (shouldExit) {
       if (extraOnConfirmFunction != null) {
         extraOnConfirmFunction();
       }

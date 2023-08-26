@@ -30,7 +30,8 @@ ExplorePageArguments campaigns_explore_page = ExplorePageArguments(
 
 ExplorePageArguments actions_explore_page = ExplorePageArguments(
   title: 'Actions',
-  sections: [
+  sections: 
+  [
     ActionExploreSectionArgs(
       title: 'Actions of the month',
       baseParams: ActionSearchFilter(ofTheMonth: true),
@@ -82,19 +83,19 @@ ExplorePageArguments home_explore_page = ExplorePageArguments(
   sections: [
     ActionExploreSectionArgs(
       title: 'Actions',
-      link: actions_explore_page,
+      link: BaseResourceSearchFilter(resourceTypes: [ResourceType.ACTION]),
       description:
           'Take a wide range of actions to drive lasting change for issues you care about',
     ),
     LearningResourceExploreSectionArgs(
       title: 'Learn',
-      link: learning_explore_page,
+      link: BaseResourceSearchFilter(resourceTypes: [ResourceType.LEARNING_RESOURCE]),
       description:
           'Learn more about key topics of pressing social and environmental issues',
     ),
     CampaignExploreSectionArgs(
       title: 'Campaigns',
-      link: campaigns_explore_page,
+      link: BaseResourceSearchFilter(resourceTypes: [ResourceType.CAMPAIGN]),
       description:
           'Join members of the now-u community in coordinated campaigns to make a difference',
     ),

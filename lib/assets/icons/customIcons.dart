@@ -18,29 +18,6 @@
 ///         Homepage:  http://fortawesome.github.com/Font-Awesome/
 ///
 import 'package:flutter/widgets.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-// TODO Remove
-Map<String, IconData> iconMap = {
-  'ic_getinvolved': CustomIcons.ic_getinvolved,
-  'ic_learning': CustomIcons.ic_learning,
-  'ic_raiseawareness': CustomIcons.ic_raiseawareness,
-  'ic_raisemoney': CustomIcons.ic_raisemoney,
-  'cause_icon_education': CustomIcons.cause_icon_education,
-  'cause_icon_environment': CustomIcons.cause_icon_environment,
-  'cause_icon_health_wellbeing': CustomIcons.cause_icon_health_wellbeing,
-  'cause_icon_safe_home_community': CustomIcons.cause_icon_safe_home_community,
-  'cause_icon_economic_opportunity':
-      CustomIcons.cause_icon_economic_opportunity,
-  'cause_icon_equality_human_rights':
-      CustomIcons.cause_icon_equality_human_rights,
-};
-
-// TODO Remove
-IconData getIconFromString(String iconString) {
-  // If we cannot find a icon matching this string just return a circle.
-  return iconMap[iconString] ?? FontAwesomeIcons.solidCircle;
-}
 
 class CustomIcons {
   CustomIcons._();

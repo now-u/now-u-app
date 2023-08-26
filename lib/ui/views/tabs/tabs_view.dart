@@ -1,8 +1,7 @@
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/navigation_service.dart';
-import 'package:nowu/ui/views/explore/explore_page_definition.dart';
+import 'package:nowu/services/search_service.dart';
 import 'package:nowu/ui/views/explore/explore_page_view.dart';
-import 'package:nowu/ui/views/explore/explore_pages.dart';
 import 'package:nowu/ui/views/home/home_view.dart';
 import 'package:flutter/material.dart';
 
@@ -28,9 +27,9 @@ class TabPageDetails {
 
 class TabsView extends StatelessWidget with WidgetsBindingObserver {
   final TabPage? initialPage;
-  final ExplorePageArguments? explorePageArgs;
+  final BaseResourceSearchFilter? explorePageBaseFilter;
 
-  TabsView({this.initialPage, this.explorePageArgs});
+  TabsView({this.initialPage, this.explorePageBaseFilter});
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +44,8 @@ class TabsView extends StatelessWidget with WidgetsBindingObserver {
 
         case TabPage.Explore:
           return TabPageDetails(
-            widget: ExplorePage(
-              explorePageArgs != null ? explorePageArgs! : home_explore_page,
-            ),
+			// TODO Does the filter go in here?
+            widget: ExplorePage(),
             icon: CustomIcons.ic_news,
             title: 'Explore',
           );

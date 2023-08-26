@@ -1,10 +1,10 @@
 import 'package:nowu/assets/components/buttons/customWidthButton.dart';
+import 'package:nowu/assets/components/customTile.dart';
 import 'package:nowu/assets/components/progressTile.dart';
 import 'package:flutter/material.dart';
 
 import 'package:nowu/assets/components/customScrollableSheet.dart';
 import 'package:nowu/assets/components/textButton.dart';
-import 'package:nowu/assets/components/notifications.dart';
 import 'package:nowu/assets/StyleFrom.dart';
 
 import 'package:nowu/models/Notification.dart';
@@ -35,14 +35,19 @@ class HomeView extends StackedView<HomeViewModel> {
     HomeViewModel viewModel,
     Widget? childl,
   ) {
+    final latestNotification = viewModel.notifications!.elementAtOrNull(0);
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor.withOpacity(0.05),
       body: ScrollableSheetPage(
-        header: viewModel.notifications!.length > 0
+        header: latestNotification != null
             ? HeaderWithNotifications(
                 name: viewModel.currentUser?.name,
                 notification: viewModel.notifications![0],
-                dismissNotification: viewModel.dismissNotification,
+                // TODO Fix internal notifiaction type
+                dismissNotification: () =>
+                    viewModel.dismissNotification(latestNotification.id!),
+                openNotification: () =>
+                    viewModel.openNotification(latestNotification),
               )
             : HeaderStyle1(name: viewModel.currentUser?.name),
         children: [
@@ -190,12 +195,14 @@ class HeaderStyle1 extends StatelessWidget {
 class HeaderWithNotifications extends StatelessWidget {
   final String? name;
   final InternalNotification notification;
-  final Function dismissNotification;
+  final VoidCallback dismissNotification;
+  final VoidCallback openNotification;
 
   HeaderWithNotifications({
     required this.name,
     required this.notification,
     required this.dismissNotification,
+    required this.openNotification,
   });
 
   @override
@@ -228,9 +235,97 @@ class HeaderWithNotifications extends StatelessWidget {
                   NotificationTile(
                     notification,
                     dismissFunction: dismissNotification,
+                    openNotification: openNotification,
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.2),
                 ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class NotificationTile extends StatelessWidget {
+  final InternalNotification notification;
+  final Function dismissFunction;
+  final VoidCallback openNotification;
+
+  NotificationTile(this.notification,
+      {required this.dismissFunction, required this.openNotification});
+  @override
+  Widget build(BuildContext context) {
+    return CustomTile(
+      onClick: openNotification,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Icon
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(8),
+                child: Icon(
+                  Icons.notifications_active,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(width: 2),
+
+          // Text
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                const SizedBox(height: 10),
+                Text(
+                  notification.getTitle()!,
+                  style: Theme.of(context).textTheme.displayMedium,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                Text(
+                  notification.getSubtitle() ?? '',
+                  style: textStyleFrom(
+                    Theme.of(context).textTheme.bodyLarge,
+                    fontSize: 11,
+                  ),
+                )
+              ],
+            ),
+          ),
+
+          // Dismiss button
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Container(
+              child: MaterialButton(
+                onPressed: () {
+                  dismissFunction(notification.getId());
+                },
+                elevation: 2.0,
+                minWidth: 0,
+                color: const Color.fromRGBO(196, 196, 196, 1),
+                child: const Icon(
+                  Icons.close,
+                  color: Colors.white,
+                ),
+                padding: const EdgeInsets.all(0),
+                shape: const CircleBorder(),
+                height: 10,
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
             ),
           ),

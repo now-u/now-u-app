@@ -1,8 +1,13 @@
 import 'package:causeApiClient/causeApiClient.dart';
 
 import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/assets/constants.dart';
 import 'package:nowu/services/router_service.dart';
+import 'package:nowu/services/search_service.dart';
 import 'package:nowu/ui/views/explore/explore_page_definition.dart';
+import 'package:nowu/ui/views/explore/section_filters/by_action_type.dart';
+import 'package:nowu/ui/views/explore/section_filters/by_cause.dart';
+import 'package:nowu/ui/views/explore/section_filters/by_time.dart';
 import 'package:stacked/stacked.dart';
 
 enum ExploreSectionType {
@@ -17,30 +22,120 @@ sealed class ExploreTileData {}
 class ExplorePageViewModel extends BaseViewModel {
   RouterService _routerService = locator<RouterService>();
 
-  final String title;
-  List<ExploreSectionArguments> sections;
+  BaseResourceSearchFilter? baseFilter;
+  ExplorePageViewModel({
+    this.baseFilter,
+  });
 
-  // void init() {
-  //   initSections();
-  // }
+  List<ExploreSectionArguments> get sections {
+	bool isFilterOnlyResource(ResourceType resourceType) {
+		return baseFilter?.resourceTypes?.length == 1 && baseFilter!.resourceTypes!.contains(resourceType);
+	}
+	
+    if (isFilterOnlyResource(ResourceType.ACTION)) {
+      return [
+        ActionExploreSectionArgs(
+          title: 'Actions of the month',
+          baseParams: ActionSearchFilter(ofTheMonth: true),
+        ),
+        ActionExploreSectionArgs(
+          title: 'Actions by cause',
+          filter: ActionByCauseExploreFilter(),
+        ),
+        ActionExploreSectionArgs(
+          title: 'Actions by time',
+          filter: ActionTimeExploreFilter(),
+        ),
+        ActionExploreSectionArgs(
+          title: 'Actions by type',
+          filter: ByActionTypeFilter(),
+        ),
+        ActionExploreSectionArgs(
+          title: 'Completed actions',
+          baseParams: ActionSearchFilter(completed: true),
+          backgroundColor: CustomColors.lightOrange,
+        ),
+      ];
+    }
+    if (isFilterOnlyResource(ResourceType.LEARNING_RESOURCE)) {
+      return [
+        LearningResourceExploreSectionArgs(
+          title: 'Learning resources by time',
+          filter: LearningResourceTimeExploreFilter(),
+        ),
+        LearningResourceExploreSectionArgs(
+          title: 'Learning resource by cause',
+          filter: LearningResourceByCauseExploreFilter(),
+        ),
+        LearningResourceExploreSectionArgs(
+          title: 'Learning resources',
+        ),
+        LearningResourceExploreSectionArgs(
+          title: 'Completed learning',
+          backgroundColor: CustomColors.lightOrange,
+          baseParams: LearningResourceSearchFilter(completed: true),
+        ),
+      ];
+    }
+		// TODO THis doesn't seem to quite work! need to make equitable/write little function
+    if (isFilterOnlyResource(ResourceType.CAMPAIGN)) {
+      return [
+        CampaignExploreSectionArgs(
+          title: 'Campaigns of the month',
+          baseParams: CampaignSearchFilter(ofTheMonth: true),
+        ),
+        CampaignExploreSectionArgs(
+          title: 'Recommended campaigns',
+          baseParams: CampaignSearchFilter(recommended: true),
+        ),
+        CampaignExploreSectionArgs(
+          title: 'Campaigns by cause',
+          filter: CampaignByCauseExploreFilter(),
+        ),
+        CampaignExploreSectionArgs(
+          title: 'Completed campaigns',
+          baseParams: CampaignSearchFilter(completed: true),
+          backgroundColor: CustomColors.lightOrange,
+        ),
+      ];
+    }
 
-  ExplorePageViewModel(
-    this.title,
-    this.sections, {
-    Map<String, dynamic>? baseParams,
-  }) {
-    // Add the base parameters to the sections
-    // this.sections = sections.map((args) {
-    // 	return exploreSectionFromArgs(
-    // 		// TODO Handle filterig across all sections
-    // 		// args.addBaseParams(baseParams ?? {})
-    // 		args,
-    // 	);
-    // }).toList();
+    return [
+      if (baseFilter?.resourceTypes == null || baseFilter!.resourceTypes!.contains(ResourceType.ACTION))
+        ActionExploreSectionArgs(
+          title: 'Actions',
+          link: BaseResourceSearchFilter(resourceTypes: [ResourceType.ACTION]),
+          description:
+              'Take a wide range of actions to drive lasting change for issues you care about',
+        ),
+      if (baseFilter?.resourceTypes == null || baseFilter!.resourceTypes!.contains(ResourceType.LEARNING_RESOURCE))
+        LearningResourceExploreSectionArgs(
+          title: 'Learn',
+          link: BaseResourceSearchFilter(resourceTypes: [ResourceType.LEARNING_RESOURCE]),
+          description:
+              'Learn more about key topics of pressing social and environmental issues',
+        ),
+      if (baseFilter?.resourceTypes == null || baseFilter!.resourceTypes!.contains(ResourceType.CAMPAIGN))
+        CampaignExploreSectionArgs(
+          title: 'Campaigns',
+          link: BaseResourceSearchFilter(resourceTypes: [ResourceType.CAMPAIGN]),
+          description:
+              'Join members of the now-u community in coordinated campaigns to make a difference',
+        ),
+      if (baseFilter?.resourceTypes == null || baseFilter!.resourceTypes!.contains(ResourceType.NEWS_ARTICLE))
+        NewsArticleExploreSectionArgs(
+          title: 'News',
+          description:
+              'Find out what’s going on in the world this week in relation to your chosen causes',
+        ),
+    ];
   }
 
-  void changePage(ExplorePageArguments args) {
-    _routerService.navigateToExplore(args);
+  // TODO Merge with base filter rather than replacing
+  void updateFilter(BaseResourceSearchFilter? args) {
+	this.baseFilter = args;
+	print('Updating filter');
+	notifyListeners();
   }
 
   bool get canGoBack {

@@ -1,5 +1,6 @@
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/auth.dart';
+import 'package:nowu/services/dialog_service.dart';
 import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/services/router_service.dart';
 import 'package:stacked/stacked.dart';
@@ -39,6 +40,9 @@ class MoreViewModel extends BaseViewModel {
       case LinkMenuItemAction():
         return _navigationService.launchLink(
           action.link,
+          // TODO This is broken at the moment (at least for app store)
+          // TODO 1 - fix this is we still need external links
+          // TODO 2 - Open app store directly (not via broswer)
           isExternal: action.isExternal,
         );
       case RouteMenuItemAction():

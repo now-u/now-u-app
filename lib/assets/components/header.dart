@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nowu/assets/components/textButton.dart';
 import 'package:nowu/pages/other/InfoPage.dart';
-import 'package:nowu/routes.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../StyleFrom.dart';
 
+// TODO Loads of stuff here isn't used, remove all the things
 class PageHeader extends StatelessWidget {
   final Function? onTap;
   final String? title;
@@ -86,23 +86,6 @@ class PageHeader extends StatelessWidget {
                 const SizedBox(
                   width: 7,
                 ),
-                infoTitle != null && infoText != null
-                    ? GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pushNamed(
-                            Routes.info,
-                            arguments: InfoPageArgumnets(
-                              title: infoTitle,
-                              body: infoText,
-                            ),
-                          );
-                        },
-                        child: Icon(
-                          FontAwesomeIcons.questionCircle,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      )
-                    : Container(),
               ],
             ),
           ),

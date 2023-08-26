@@ -17,7 +17,6 @@ const TERMS_AND_CONDITIONS_URL =
 
 const CAUSES_API_URL = 'staging.api.now-u.com';
 const LOCAL_CAUSES_API_URL = '192.168.1.65:3001';
-// const LOCAL_STACK_URL = "http://192.168.1.11";
 const LOCAL_STACK_URL = 'http://192.168.1.11';
 
 Uri getCausesApiPath(String path, {Map<String, dynamic>? stringParams}) {

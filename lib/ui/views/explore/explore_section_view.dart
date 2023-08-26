@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:nowu/ui/views/explore/explore_page_definition.dart';
 import 'package:nowu/ui/views/explore/explore_page_view.dart';
 import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
-import 'package:nowu/ui/views/explore/explore_pages.dart';
 import 'package:nowu/ui/views/explore/explore_section_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -45,9 +44,10 @@ class ExploreFilterSelectionItem extends StatelessWidget {
 }
 
 class ExploreSectionWidget extends StatelessWidget {
+  final ExplorePageViewModel? pageViewModel;
   final ExploreSectionArguments data;
 
-  ExploreSectionWidget(this.data);
+  ExploreSectionWidget(this.data, { this.pageViewModel });
 
   // ExploreSectionWidget.fromModel(
   //     ExploreSection section, ExploreViewModelMixin model)
@@ -65,8 +65,7 @@ class ExploreSectionWidget extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            onTap:
-                data.link != null ? () => model.changePage(data.link!) : () {},
+            onTap: model.handleLink,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -143,7 +142,7 @@ class ExploreSectionWidget extends StatelessWidget {
                 SizedBox(height: CustomPaddingSize.small),
                 DarkButton(
                   'Explore',
-                  onPressed: () => model.changePage(home_explore_page),
+                  onPressed: model.navigateToEmptyExplore,
                 )
               ],
             ),
@@ -166,16 +165,16 @@ class ExploreSectionWidget extends StatelessWidget {
     }
   }
 
-  ExploreSectionViewModel getViewModel(ExploreSectionArguments args) {
+  ExploreSectionViewModel getViewModel(ExploreSectionArguments args, ExplorePageViewModel? pageViewModel) {
     switch (args) {
       case NewsArticleExploreSectionArgs():
-        return NewsArticleExploreSectionViewModel(args);
+        return NewsArticleExploreSectionViewModel(args, pageViewModel);
       case ActionExploreSectionArgs():
-        return ActionExploreSectionViewModel(args);
+        return ActionExploreSectionViewModel(args, pageViewModel);
       case CampaignExploreSectionArgs():
-        return CampaignExploreSectionViewModel(args);
+        return CampaignExploreSectionViewModel(args, pageViewModel);
       case LearningResourceExploreSectionArgs():
-        return LearningResourceExploreSectionViewModel(args);
+        return LearningResourceExploreSectionViewModel(args, pageViewModel);
     }
   }
 
@@ -221,10 +220,10 @@ class ExploreSectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
-      viewModelBuilder: () => getViewModel(data),
+      viewModelBuilder: () => getViewModel(data, pageViewModel),
       onViewModelReady: (model) => model.init(),
       // TODO THis broke everything?
-      fireOnViewModelReadyOnce: true,
+      // fireOnViewModelReadyOnce: true,
       builder: (conext, model, child) {
         return Container(
           color: data.backgroundColor,

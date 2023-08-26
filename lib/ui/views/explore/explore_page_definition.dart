@@ -46,7 +46,7 @@ sealed class ExploreSectionArguments<
   final String title;
 
   /// Where clicking on the title should go
-  final ExplorePageArguments? link;
+  final BaseResourceSearchFilter? link;
 
   /// Description of the section
   final String? description;
@@ -96,7 +96,7 @@ class CampaignExploreSectionArgs<FilterParamType>
   CampaignExploreSectionArgs({
     required String title,
     ExploreFilterArgs<CampaignSearchFilter, FilterParamType>? filter,
-    ExplorePageArguments? link,
+    BaseResourceSearchFilter? link,
     String? description,
     CampaignSearchFilter? baseParams,
     Color? backgroundColor,
@@ -118,7 +118,7 @@ class ActionExploreSectionArgs<FilterParamType>
     // TODO This should be args - its currently got state as well!
     // State should be handled in the view model and not passed in the args
     ExploreFilterArgs<ActionSearchFilter, FilterParamType>? filter,
-    ExplorePageArguments? link,
+    BaseResourceSearchFilter? link,
     String? description,
     ActionSearchFilter? baseParams,
     Color? backgroundColor,
@@ -139,7 +139,8 @@ class LearningResourceExploreSectionArgs<FilterParamType>
   LearningResourceExploreSectionArgs({
     required String title,
     ExploreFilterArgs<LearningResourceSearchFilter, FilterParamType>? filter,
-    ExplorePageArguments? link,
+	// TODO REmove
+    BaseResourceSearchFilter? link,
     String? description,
     LearningResourceSearchFilter? baseParams,
     Color? backgroundColor,
@@ -159,7 +160,7 @@ class NewsArticleExploreSectionArgs<FilterParamType>
   NewsArticleExploreSectionArgs({
     required String title,
     ExploreFilterArgs<NewsArticleSearchFilter, FilterParamType>? filter,
-    ExplorePageArguments? link,
+    BaseResourceSearchFilter? link,
     String? description,
     NewsArticleSearchFilter? baseParams,
     Color? backgroundColor,

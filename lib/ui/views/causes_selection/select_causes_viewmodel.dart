@@ -43,8 +43,8 @@ abstract class SelectCausesViewModel extends FutureViewModel<Map<Cause, bool>> {
     required int causeIndex,
   }) async {
     var dialogResult =
-        await _dialogService.showDialog(CauseDialog(causesList[causeIndex]));
-    if (dialogResult.response) {
+        await _dialogService.showCauseDialog(cause: causesList[causeIndex]);
+    if (dialogResult) {
       if (data![listCause] == false) {
         toggleSelection(listCause: listCause);
       }

@@ -23,7 +23,10 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
   LoginViewModel viewModelBuilder(BuildContext context) => LoginViewModel();
 
   @override
-  void onViewModelReady(LoginViewModel viewModel) => viewModel.init();
+  void onViewModelReady(LoginViewModel viewModel) {
+    viewModel.init();
+    syncFormWithViewModel(viewModel);
+  }
 
   @override
   void onDispose(LoginViewModel viewModel) => viewModel.dispose();
@@ -44,14 +47,10 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
           textInputAction: TextInputAction.next,
           autofocus: false,
           decoration: InputDecoration(
-            errorText: model.emailInputValidationMessage,
+            errorText:
+                model.showValidation ? model.emailInputValidationMessage : null,
             hintText: 'e.g. jane.doe@email.com',
           ),
-          onChanged: (value) {
-            if (model.emailInputValidationMessage != null) {
-              model.validateForm();
-            }
-          },
         ),
       );
     }
@@ -73,10 +72,8 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
       return Container(
         width: double.infinity,
         child: TextButton(
-          child: const Text('Create Account'),
-          onPressed: () {
-            model.loginWithEmail();
-          },
+          child: const Text('Login'),
+          onPressed: model.loginWithEmail,
         ),
       );
     }

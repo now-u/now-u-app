@@ -3,21 +3,16 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:nowu/app/app.locator.dart';
-import 'package:nowu/services/navigation_service.dart';
+import 'package:nowu/services/router_service.dart';
 import 'package:nowu/services/storage.dart';
-
-import 'package:nowu/pages/login/emailSentPage.dart';
-
-import 'package:nowu/routes.dart';
 
 import 'package:uni_links/uni_links.dart';
 
 // The holy grail link https://nowu.page.link/?link=https://now-u.com/campaigns?id=1&apn=com.nowu.app
 
 class DynamicLinkService {
-  final NavigationService? _navigationService = locator<NavigationService>();
-  final SecureStorageService? _storageProvider =
-      locator<SecureStorageService>();
+  final _routerService = locator<RouterService>();
+  final SecureStorageService _storageProvider = locator<SecureStorageService>();
   // TODO Remove/fix for web this service
   // final DeviceInfoService? _deviceInfoService = locator<DeviceInfoService>();
 
@@ -58,22 +53,20 @@ class DynamicLinkService {
       print('_handleDeepLink | deeplink: $deepLink');
       print('_handleDeepLink | deepLink path: ${deepLink.path}');
       if (deepLink.path == '/loginMobile' || deepLink.host == 'loginmobile') {
-        String? email = await _storageProvider!.getEmail();
+        String? email = await _storageProvider.getEmail();
         if (email == null) return;
 
         String? token = deepLink.queryParameters['token'];
-        EmailSentPageArguments args =
-            EmailSentPageArguments(email: email, token: token);
         print('Navigating to emailSent');
-        _navigationService!
-            .navigateTo(Routes.loginLinkClicked, arguments: args);
+        // TODO WTF is going on here? Do we need this and the supabase stuff
+        _routerService.navigateToLoginEmailSentView(email: email, token: token);
       }
       if (RegExp('campaigns/[0-9]+').hasMatch(deepLink.path)) {
         String campaignNumberString = deepLink.path.substring(11);
         print('_handleDeepLink | campaign number: $campaignNumberString');
         int campaignNumber = int.parse(campaignNumberString);
-        _navigationService!
-            .navigateTo(Routes.campaignInfo, arguments: campaignNumber);
+        // TODO Handle this -> should this use link?? Look up how deep links work these days
+        // _routerService.navigateToCampaignInfoView(arguments: campaignNumber);
       }
     } else {
       print('Deep link was null');

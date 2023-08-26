@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:nowu/assets/StyleFrom.dart';
 
 import 'package:nowu/assets/components/customAppBar.dart';
-import 'package:nowu/assets/components/organisationTile.dart';
+import 'package:nowu/assets/components/custom_network_image.dart';
+import 'package:nowu/models/Organisation.dart';
 
 import 'package:stacked/stacked.dart';
 
@@ -31,11 +33,15 @@ class PartnersView extends StackedView<PartnersViewModel> {
               ),
               itemCount: viewModel.data!.length,
               itemBuilder: (BuildContext context, int index) {
+                final organisation = viewModel.data!.elementAt(index);
                 return Container(
                   height: 200,
                   child: Padding(
                     padding: const EdgeInsets.all(8),
-                    child: OrganisationTile(viewModel.data!.elementAt(index)),
+                    child: _OrganisationTile(
+                      organisation: organisation,
+                      onTap: () => viewModel.openOrganisationInfo(organisation),
+                    ),
                   ),
                 );
               },
@@ -46,5 +52,63 @@ class PartnersView extends StackedView<PartnersViewModel> {
   @override
   PartnersViewModel viewModelBuilder(BuildContext context) {
     return PartnersViewModel();
+  }
+}
+
+class _OrganisationTile extends StatelessWidget {
+  final Organisation organisation;
+  final VoidCallback onTap;
+
+  const _OrganisationTile({required this.organisation, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 100,
+        //height: 60,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, 0.16),
+              offset: Offset(0, 3),
+              blurRadius: 6,
+            )
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Expanded(
+                //height: 80, width: 100,
+                //width: 20,
+                child: CustomNetworkImage(
+                  organisation.logo.url,
+                  fit: BoxFit.contain,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                organisation.name,
+                style: textStyleFrom(
+                  Theme.of(context).textTheme.bodyLarge,
+                  fontSize: 12,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

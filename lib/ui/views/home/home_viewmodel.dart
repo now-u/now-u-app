@@ -65,10 +65,9 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future getCausePopup(Cause listCause) async {
-    var dialogResult = await _dialogService.showDialog(CauseDialog(listCause));
-    if (dialogResult.response) {
-      // TODO Fix
-      // _navigationService.navigateTo(Routes.causesEditPage);
+    final dialogResult = await _dialogService.showCauseDialog(cause: listCause);
+    if (dialogResult) {
+      _routerService.navigateToChangeSelectCausesView();
     }
   }
 
@@ -93,6 +92,11 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  Future openNotification(InternalNotification notification) async {
+    await _routerService.navigateToNotificationInfoView(
+        notification: notification,);
+  }
+
   Future dismissNotification(int id) async {
     bool success = await _internalNotificationService.dismissNotification(id);
     if (success) {
@@ -110,7 +114,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void goToExplorePage() {
-    _routerService.navigateToExplore(home_explore_page);
+    _routerService.navigateToExplore();
   }
 
   void goToEditCausesPage() {

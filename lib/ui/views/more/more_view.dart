@@ -44,7 +44,7 @@ final menuItems = <MenuItemData>[
   const SectionHeadingMenuItem(title: 'The app'),
   const ActionMenuItem(
     title: 'About Us',
-    icon: CustomIcons.ic_faq,
+    icon: FontAwesomeIcons.infoCircle,
     action: LinkMenuItemAction('https://now-u.com/aboutus'),
   ),
   const ActionMenuItem(
@@ -80,29 +80,30 @@ final menuItems = <MenuItemData>[
   const ActionMenuItem(
     title: 'Send us a message',
     icon: CustomIcons.ic_social_fb,
-    action: LinkMenuItemAction('http://m.me/nowufb'),
+    action: LinkMenuItemAction('http://m.me/nowufb', isExternal: true),
   ),
   const ActionMenuItem(
     title: 'Send us an email',
     icon: CustomIcons.ic_email,
-    action: LinkMenuItemAction('mailto:hello@now-.com?subject=Hi'),
+    action: LinkMenuItemAction('mailto:hello@now-.com?subject=Hi',
+        isExternal: true),
   ),
   const SectionHeadingMenuItem(title: 'Legal'),
   const ActionMenuItem(
     title: 'Terms & conditions',
     icon: CustomIcons.ic_tc,
-    action: LinkMenuItemAction(TERMS_AND_CONDITIONS_URL),
+    action: LinkMenuItemAction(TERMS_AND_CONDITIONS_URL, isExternal: true),
   ),
   const ActionMenuItem(
     title: 'Privacy Notice',
     icon: CustomIcons.ic_privacy,
-    action: LinkMenuItemAction(PRIVACY_POLICY_URL),
+    action: LinkMenuItemAction(PRIVACY_POLICY_URL, isExternal: true),
   ),
   const SectionHeadingMenuItem(title: 'User'),
   ActionMenuItem(
     title: 'Log out',
     // TODO Get icon
-    icon: CustomIcons.ic_privacy,
+    icon: FontAwesomeIcons.solidUser,
     action: FunctionMenuItemAction((model) => model.logout()),
   ),
 ];
