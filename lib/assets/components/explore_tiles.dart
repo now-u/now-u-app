@@ -115,10 +115,10 @@ class ExploreActionTile extends ExploreResourceTile {
   }
 }
 
-class ExploreLearningTile extends ExploreResourceTile {
+class ExploreLearningResourceTile extends ExploreResourceTile {
   final LearningResource resource;
 
-  ExploreLearningTile(
+  ExploreLearningResourceTile(
     LearningResourceExploreTileData tile, {
     ExploreTileStyle? style,
     Key? key,
@@ -255,7 +255,7 @@ abstract class ExploreResourceTile extends ExploreTile {
   }
 }
 
-class ExploreNewsTile extends ExploreTile {
+class ExploreNewsArticleTile extends ExploreTile {
   final String title;
   final String subtitle;
   final String headerImage;
@@ -264,7 +264,7 @@ class ExploreNewsTile extends ExploreTile {
   final String shortUrl;
   final NewsArticle article;
 
-  ExploreNewsTile(NewsArticleExploreTileData tile, {Key? key})
+  ExploreNewsArticleTile(NewsArticleExploreTileData tile, {Key? key})
       : title = tile.article.title,
         subtitle = tile.article.subtitle,
         headerImage = tile.article.headerImage.url,

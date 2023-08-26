@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:nowu/assets/components/buttons/darkButton.dart';
 import 'package:nowu/assets/components/searchBar.dart';
 import 'package:nowu/assets/constants.dart';
@@ -90,12 +89,24 @@ class ExplorePage extends StatelessWidget {
     );
   }
 
+  Widget _buildSection(ExploreSectionArguments sectionArgs, ExplorePageViewModel pageViewModel) {
+	switch (sectionArgs) {
+	  case ActionExploreSectionArgs():
+		return ActionExploreSection(sectionArgs, pageViewModel: pageViewModel);
+	  case LearningResourceExploreSectionArgs():
+		return LearningResourceExploreSection(sectionArgs, pageViewModel: pageViewModel);
+	  case CampaignExploreSectionArgs():
+		return CampaignExploreSection(sectionArgs, pageViewModel: pageViewModel);
+	  case NewsArticleExploreSectionArgs():
+		return NewsArticleExploreSection(sectionArgs, pageViewModel: pageViewModel);
+	}
+  }
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ExplorePageViewModel>.reactive(
       viewModelBuilder: () => ExplorePageViewModel(baseFilter: filter),
       builder: (context, model, child) {
-		print('Got sections ${model.sections}');
         return Scaffold(
           body: SingleChildScrollView(
             child: Column(
@@ -103,10 +114,7 @@ class ExplorePage extends StatelessWidget {
                     _header(context, model),
                   ] +
                   model.sections
-                      .map(
-                        (ExploreSectionArguments section) =>
-                            ExploreSectionWidget(section, pageViewModel: model),
-                      )
+                      .map((sectionArgs) => _buildSection(sectionArgs, model))
                       .toList(),
             ),
           ),

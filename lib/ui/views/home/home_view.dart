@@ -56,8 +56,8 @@ class HomeView extends StackedView<HomeViewModel> {
               const SizedBox(
                 height: 10,
               ),
-              ExploreSectionWidget(viewModel.myActions),
-              ExploreSectionWidget(viewModel.suggestedCampaigns),
+              ActionExploreSection(viewModel.myActions),
+              CampaignExploreSection(viewModel.suggestedCampaigns),
               CustomWidthButton(
                 'Explore',
                 onPressed: () {
@@ -79,8 +79,8 @@ class HomeView extends StackedView<HomeViewModel> {
 
               const SizedBox(height: 30),
               // TODO Rename so page and section have Argument/Definition and then Widget/noPrefix
-              ExploreSectionWidget(viewModel.myCampaigns),
-              ExploreSectionWidget(viewModel.inTheNews),
+              CampaignExploreSection(viewModel.myCampaigns),
+              NewsArticleExploreSection(viewModel.inTheNews),
 
               if (viewModel.currentUser != null)
                 Padding(

@@ -88,7 +88,8 @@ class ExploreSectionFilterViewModelData<
 sealed class ExploreSectionViewModel<
     T extends ExploreTileData,
     FilterT extends ResourceSearchFilter<FilterT>,
-    FilterParamType> extends BaseViewModel {
+    FilterParamType
+> extends BaseViewModel {
   final _searchService = locator<SearchService>();
   final _causesService = locator<CausesService>();
   final _routerService = locator<RouterService>();

@@ -3,6 +3,7 @@ import 'package:nowu/assets/components/card.dart';
 import 'package:nowu/assets/components/explore_tiles.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:nowu/services/search_service.dart';
 import 'package:nowu/ui/views/explore/explore_page_definition.dart';
 import 'package:nowu/ui/views/explore/explore_page_view.dart';
 import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
@@ -43,18 +44,24 @@ class ExploreFilterSelectionItem extends StatelessWidget {
   }
 }
 
-class ExploreSectionWidget extends StatelessWidget {
+abstract class ExploreSectionWidget<
+    TTileData extends ExploreTileData,
+	TFilter extends ResourceSearchFilter<TFilter>,
+	TFilterParam,
+	TArgs extends ExploreSectionArguments<TFilter, TFilterParam>,
+	TViewModel extends ExploreSectionViewModel<TTileData, TFilter, TFilterParam>
+> extends StackedView<TViewModel> {
   final ExplorePageViewModel? pageViewModel;
-  final ExploreSectionArguments data;
+  final TArgs args;
 
-  ExploreSectionWidget(this.data, { this.pageViewModel });
+  ExploreSectionWidget(this.args, { this.pageViewModel });
 
-  // ExploreSectionWidget.fromModel(
-  //     ExploreSection section, ExploreViewModelMixin model)
-  //     : data = section,
-  //       changePage = ((_) {}),
-  //       toggleFilterOption = ((BaseExploreFilterOption option) =>
-  //           model.toggleFilterOption(section, option));
+  Widget _renderTile(TTileData tile);
+
+  @override
+  void onViewModelReady(TViewModel viewModel) {
+    viewModel.init();
+  }
 
   Widget _buildSectionHeader(
     BuildContext context,
@@ -70,17 +77,17 @@ class ExploreSectionWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  data.title,
+                  args.title,
                   style: Theme.of(context).textTheme.headlineSmall,
                   textAlign: TextAlign.left,
                 ),
-                if (data.link != null) const Icon(Icons.chevron_right, size: 30)
+                if (args.link != null) const Icon(Icons.chevron_right, size: 30)
               ],
             ),
           ),
-          if (data.description != null)
+          if (args.description != null)
             Text(
-              data.description!,
+              args.description!,
               style: Theme.of(context).textTheme.displayMedium,
               textAlign: TextAlign.left,
             ),
@@ -114,7 +121,7 @@ class ExploreSectionWidget extends StatelessWidget {
     );
   }
 
-  Widget _noTilesFound(ExploreSectionViewModel model) {
+  Widget _noTilesFound(TViewModel model) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
       child: BaseCard(
@@ -135,7 +142,7 @@ class ExploreSectionWidget extends StatelessWidget {
                 ),
                 SizedBox(height: CustomPaddingSize.small),
                 Text(
-                  'Looks like we don’t have any ‘${data.title}’ to recommend right now. Check out our ‘Explore’ page to get involved another way.',
+                  'Looks like we don’t have any ‘${args.title}’ to recommend right now. Check out our ‘Explore’ page to get involved another way.',
                   style: lightTheme.textTheme.bodyMedium,
                   textAlign: TextAlign.center,
                 ),
@@ -152,34 +159,8 @@ class ExploreSectionWidget extends StatelessWidget {
     );
   }
 
-  Widget _renderTile(ExploreTileData tile) {
-    switch (tile) {
-      case NewsArticleExploreTileData():
-        return ExploreNewsTile(tile);
-      case ActionExploreTileData():
-        return ExploreActionTile(tile);
-      case CampaignExploreTileData():
-        return ExploreCampaignTile(tile);
-      case LearningResourceExploreTileData():
-        return ExploreLearningTile(tile);
-    }
-  }
-
-  ExploreSectionViewModel getViewModel(ExploreSectionArguments args, ExplorePageViewModel? pageViewModel) {
-    switch (args) {
-      case NewsArticleExploreSectionArgs():
-        return NewsArticleExploreSectionViewModel(args, pageViewModel);
-      case ActionExploreSectionArgs():
-        return ActionExploreSectionViewModel(args, pageViewModel);
-      case CampaignExploreSectionArgs():
-        return CampaignExploreSectionViewModel(args, pageViewModel);
-      case LearningResourceExploreSectionArgs():
-        return LearningResourceExploreSectionViewModel(args, pageViewModel);
-    }
-  }
-
-  Widget _buildTiles(BuildContext context, ExploreSectionViewModel model) {
-    final sectionHeight = data.tileHeight;
+  Widget _buildTiles(BuildContext context, TViewModel model) {
+    final sectionHeight = args.tileHeight;
 
     if (model.state == ExploreSectionState.Loading) {
       return Container(
@@ -218,42 +199,122 @@ class ExploreSectionWidget extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return ViewModelBuilder.reactive(
-      viewModelBuilder: () => getViewModel(data, pageViewModel),
-      onViewModelReady: (model) => model.init(),
-      // TODO THis broke everything?
-      // fireOnViewModelReadyOnce: true,
-      builder: (conext, model, child) {
-        return Container(
-          color: data.backgroundColor,
-          child: Padding(
-            padding:
-                EdgeInsets.only(top: data.backgroundColor != null ? 12 : 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                // Section header
-                Column(
-                  children: [
-                    // Text header
-                    _buildSectionHeader(context, model),
-                    const SizedBox(height: 2),
-                    if (model.filterData != null &&
-                        model.filterData!.state ==
-                            ExploreSectionFilterState.Loaded)
-                      _buildSectionFilters(model),
+  Widget builder(
+	BuildContext context,
+	TViewModel model,
+	Widget? child,
+  ) {
+    return Container(
+      color: args.backgroundColor,
+      child: Padding(
+        padding:
+            EdgeInsets.only(top: args.backgroundColor != null ? 12 : 0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            // Section header
+            Column(
+              children: [
+                // Text header
+                _buildSectionHeader(context, model),
+                const SizedBox(height: 2),
+                if (model.filterData != null &&
+                    model.filterData!.state ==
+                        ExploreSectionFilterState.Loaded)
+                  _buildSectionFilters(model),
 
-                    SizedBox(height: CustomPaddingSize.small),
-                    _buildTiles(context, model),
-                    SizedBox(height: CustomPaddingSize.normal),
-                  ],
-                ),
+                SizedBox(height: CustomPaddingSize.small),
+                _buildTiles(context, model),
+                SizedBox(height: CustomPaddingSize.normal),
               ],
             ),
-          ),
-        );
-      },
+          ],
+        ),
+      ),
     );
+  }
+}
+
+class ActionExploreSection<TFilterParam> extends ExploreSectionWidget<
+  ActionExploreTileData,
+  ActionSearchFilter,
+  TFilterParam,
+  ActionExploreSectionArgs<TFilterParam>,
+  ActionExploreSectionViewModel<TFilterParam>
+> {
+  ActionExploreSection(ActionExploreSectionArgs<TFilterParam> args, { ExplorePageViewModel? pageViewModel })
+	  : super(args, pageViewModel: pageViewModel);
+
+  @override
+  Widget _renderTile(ActionExploreTileData tile) {
+	return ExploreActionTile(tile);
+  }
+
+  @override
+  ActionExploreSectionViewModel<TFilterParam> viewModelBuilder(BuildContext context) {
+	return ActionExploreSectionViewModel(this.args, pageViewModel);
+  }
+}
+
+class LearningResourceExploreSection<TFilterParam> extends ExploreSectionWidget<
+  LearningResourceExploreTileData,
+  LearningResourceSearchFilter,
+  TFilterParam,
+  LearningResourceExploreSectionArgs<TFilterParam>,
+  LearningResourceExploreSectionViewModel<TFilterParam>
+> {
+  LearningResourceExploreSection(LearningResourceExploreSectionArgs<TFilterParam> args, { ExplorePageViewModel? pageViewModel })
+	  : super(args, pageViewModel: pageViewModel);
+
+  @override
+  Widget _renderTile(LearningResourceExploreTileData tile) {
+	return ExploreLearningResourceTile(tile);
+  }
+
+  @override
+  LearningResourceExploreSectionViewModel<TFilterParam> viewModelBuilder(BuildContext context) {
+	return LearningResourceExploreSectionViewModel(this.args, pageViewModel);
+  }
+}
+
+class CampaignExploreSection<TFilterParam> extends ExploreSectionWidget<
+  CampaignExploreTileData,
+  CampaignSearchFilter,
+  TFilterParam,
+  CampaignExploreSectionArgs<TFilterParam>,
+  CampaignExploreSectionViewModel<TFilterParam>
+> {
+  CampaignExploreSection(CampaignExploreSectionArgs<TFilterParam> args, { ExplorePageViewModel? pageViewModel })
+	  : super(args, pageViewModel: pageViewModel);
+
+  @override
+  Widget _renderTile(CampaignExploreTileData tile) {
+	return ExploreCampaignTile(tile);
+  }
+
+  @override
+  CampaignExploreSectionViewModel<TFilterParam> viewModelBuilder(BuildContext context) {
+	return CampaignExploreSectionViewModel(this.args, pageViewModel);
+  }
+}
+
+class NewsArticleExploreSection<TFilterParam> extends ExploreSectionWidget<
+  NewsArticleExploreTileData,
+  NewsArticleSearchFilter,
+  TFilterParam,
+  NewsArticleExploreSectionArgs<TFilterParam>,
+  NewsArticleExploreSectionViewModel<TFilterParam>
+> {
+  NewsArticleExploreSection(NewsArticleExploreSectionArgs<TFilterParam> args, { ExplorePageViewModel? pageViewModel })
+	  : super(args, pageViewModel: pageViewModel);
+
+  @override
+  Widget _renderTile(NewsArticleExploreTileData tile) {
+	return ExploreNewsArticleTile(tile);
+  }
+
+  @override
+  NewsArticleExploreSectionViewModel<TFilterParam> viewModelBuilder(BuildContext context) {
+	return NewsArticleExploreSectionViewModel(this.args, pageViewModel);
   }
 }

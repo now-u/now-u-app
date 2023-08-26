@@ -107,7 +107,7 @@ class CampaignInfoView extends StackedView<CampaignViewModel> {
         viewModel.campaign!.learningResources
             // TODO FIx false here - should get if complete from service
             .map(
-              (lr) => ExploreLearningTile(
+              (lr) => ExploreLearningResourceTile(
                 LearningResourceExploreTileData(
                   lr,
                   viewModel.learningResourceIsComplete(lr.id),
