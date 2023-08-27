@@ -26,18 +26,31 @@ String timeBracketsToMeilisearchFilter(
 }
 
 class BaseResourceSearchFilter {
-  String? query;
-  Iterable<int>? causeIds;
+  final String? query;
+  final Iterable<int>? causeIds;
   // TODO This is really weird because we merge base resource filter with other filters, how do we use this field for those?
   // do we need 2 different filters? One for searching resources or should we just return empty when the resource type is not include
   // for the merge stuff??
-  Iterable<ResourceType>? resourceTypes;
+  final Iterable<ResourceType>? resourceTypes;
 
-  BaseResourceSearchFilter({
+  const BaseResourceSearchFilter({
     this.query,
     this.causeIds,
     this.resourceTypes,
   });
+
+  // TODO Use freezed to generate this
+  BaseResourceSearchFilter copyWith({
+    String? query,
+    Iterable<int>? causeIds,
+    Iterable<ResourceType>? resourceTypes,
+  }) {
+    return BaseResourceSearchFilter(
+      query: query ?? this.query,
+      causeIds: causeIds ?? this.causeIds,
+      resourceTypes: resourceTypes ?? this.resourceTypes,
+    );
+  }
 }
 
 abstract class ResourceSearchFilter<Self extends ResourceSearchFilter<Self>> {
@@ -282,6 +295,20 @@ class ResourcesSearchResult {
     required this.campaigns,
     required this.newsArticles,
   });
+}
+
+// TODO do this somehwere central and maybe use sealed type
+String getResourceTypeDisplay(ResourceType resourceType) {
+  switch (resourceType) {
+    case ResourceType.ACTION:
+      return 'Action';
+    case ResourceType.LEARNING_RESOURCE:
+      return 'Learning';
+    case ResourceType.CAMPAIGN:
+      return 'Campaign';
+    case ResourceType.NEWS_ARTICLE:
+      return 'News';
+  }
 }
 
 // TODO do this somehwere central and maybe use sealed type

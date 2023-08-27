@@ -1,8 +1,8 @@
-import 'package:nowu/assets/components/buttons/darkButton.dart';
 import 'package:nowu/assets/components/searchBar.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:flutter/material.dart' hide SearchBar;
 import 'package:nowu/services/search_service.dart';
+import 'package:nowu/ui/common/dropdown_filter_chip.dart';
 import 'package:nowu/ui/views/explore/explore_page_definition.dart';
 import 'package:nowu/ui/views/explore/explore_section_view.dart';
 import 'package:stacked/stacked.dart';
@@ -12,9 +12,10 @@ import 'explore_page_viewmodel.dart';
 final double horizontalPadding = CustomPaddingSize.small;
 
 class ExplorePage extends StatelessWidget {
-  final BaseResourceSearchFilter? filter;
+  final BaseResourceSearchFilter filter;
 
-  ExplorePage({Key? key, this.filter}) : super(key: key);
+  ExplorePage({Key? key, this.filter = const BaseResourceSearchFilter()})
+      : super(key: key);
 
   final _searchBarFocusNode = FocusNode();
 
@@ -55,51 +56,90 @@ class ExplorePage extends StatelessWidget {
                 focusNode: _searchBarFocusNode,
               ),
             ),
-            if (model.hasLinks())
-              Padding(
-                padding:const EdgeInsets.only(top: 10),
-                child: Container(
-                  height: 50,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    padding:
-                        EdgeInsets.symmetric(horizontal: horizontalPadding),
-					// TODO Replace this with filter pills for causes and action type (all base filter options)
-                    // Map section arguments into real sections
-                    children: model.sections
-                        .where((section) => section.link != null)
-                        .map(
-                          (section) => Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: DarkButton(
-                              section.title,
-                              onPressed: () => model.updateFilter(section.link!),
-                              size: DarkButtonSize.Large,
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Container(
+                height: 50,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                  children: [
+                    DropdownFilterChip<ResourceType>(
+                      label: Text(
+                        model.baseFilter.resourceTypes?.isNotEmpty == true
+                            ? 'Type: ${getResourceTypeDisplay(model.baseFilter.resourceTypes!.first)}'
+                            : 'Resource Types',
+                        //  selectedCategories.value.isEmpty
+                        //      ? 'category'
+                        //      : selectedCategories.value.first,
+                      ),
+                      value: model.baseFilter.resourceTypes?.first,
+                      // value: selectedCategories.value.isEmpty
+                      //     ? null
+                      //     : selectedCategories.value.first,
+                      items: [
+                        const DropdownMenuItem(value: null, child: Text('All')),
+                        for (final resourceType in ResourceType.values)
+                          DropdownMenuItem(
+                              value: resourceType,
+                              child:
+                                  Text(getResourceTypeDisplay(resourceType))),
+                      ],
+                      onChanged: (ResourceType? value) {
+                        model.updateFilter(BaseResourceSearchFilter(
+                            resourceTypes: value != null ? [value] : null));
+                      },
+                    ),
+                    DropdownFilterChip<int>(
+                      label: Text(
+                        model.baseFilter.causeIds?.isNotEmpty == true
+                            ? 'Cause: ${model.getCauseById(model.baseFilter.causeIds!.first).title}'
+                            : 'Causes',
+                        //  selectedCategories.value.isEmpty
+                        //      ? 'category'
+                        //      : selectedCategories.value.first,
+                      ),
+                      value: model.baseFilter.causeIds?.first,
+                      // value: selectedCategories.value.isEmpty
+                      //     ? null
+                      //     : selectedCategories.value.first,
+                      items: [
+                        const DropdownMenuItem(value: null, child: Text('All')),
+                        for (final cause in model.causes)
+                          DropdownMenuItem(
+                              value: cause.id, child: Text(cause.title)),
+                      ],
+                      onChanged: (int? value) {
+                        model.updateFilter(model.baseFilter.copyWith(
+                            causeIds: value != null ? [value] : null));
+                      },
+                    )
+                  ],
                 ),
-              )
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildSection(ExploreSectionArguments sectionArgs, ExplorePageViewModel pageViewModel) {
-	switch (sectionArgs) {
-	  case ActionExploreSectionArgs():
-		return ActionExploreSection(sectionArgs, pageViewModel: pageViewModel);
-	  case LearningResourceExploreSectionArgs():
-		return LearningResourceExploreSection(sectionArgs, pageViewModel: pageViewModel);
-	  case CampaignExploreSectionArgs():
-		return CampaignExploreSection(sectionArgs, pageViewModel: pageViewModel);
-	  case NewsArticleExploreSectionArgs():
-		return NewsArticleExploreSection(sectionArgs, pageViewModel: pageViewModel);
-	}
+  Widget _buildSection(
+      ExploreSectionArguments sectionArgs, ExplorePageViewModel pageViewModel) {
+    switch (sectionArgs) {
+      case ActionExploreSectionArgs():
+        return ActionExploreSection(sectionArgs, pageViewModel: pageViewModel);
+      case LearningResourceExploreSectionArgs():
+        return LearningResourceExploreSection(sectionArgs,
+            pageViewModel: pageViewModel);
+      case CampaignExploreSectionArgs():
+        return CampaignExploreSection(sectionArgs,
+            pageViewModel: pageViewModel);
+      case NewsArticleExploreSectionArgs():
+        return NewsArticleExploreSection(sectionArgs,
+            pageViewModel: pageViewModel);
+    }
   }
 
   @override
@@ -107,6 +147,8 @@ class ExplorePage extends StatelessWidget {
     return ViewModelBuilder<ExplorePageViewModel>.reactive(
       viewModelBuilder: () => ExplorePageViewModel(baseFilter: filter),
       builder: (context, model, child) {
+        print(
+            'Inside page render ${model.sections.map((sectionArgs) => sectionArgs.baseParams.causeIds).toList()}');
         return Scaffold(
           body: SingleChildScrollView(
             child: Column(
@@ -122,31 +164,4 @@ class ExplorePage extends StatelessWidget {
       },
     );
   }
-}
-
-class FilterPill extends StatelessWidget {
-	final VoidCallback onClick;
-	final String text;
-	final bool isSelected;
-
-	FilterPill({
-		required this.text,
-		required this.onClick,
-		required this.isSelected,
-	});
-
-	@override
-	Widget build(BuildContext context) {
-		return Container(
-			decoration: BoxDecoration(
-				borderRadius: BorderRadius.all(Radius.circular(8.0)),
-				// TODO No...
-				color: isSelected ? Colors.white : Colors.orange,
-				border: Border(
-					// TODO COlor of border?
-				),
-			),
-			child: Text(text)
-		);
-	}
 }

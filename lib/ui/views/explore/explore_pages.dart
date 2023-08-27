@@ -30,8 +30,7 @@ ExplorePageArguments campaigns_explore_page = ExplorePageArguments(
 
 ExplorePageArguments actions_explore_page = ExplorePageArguments(
   title: 'Actions',
-  sections: 
-  [
+  sections: [
     ActionExploreSectionArgs(
       title: 'Actions of the month',
       baseParams: ActionSearchFilter(ofTheMonth: true),
@@ -89,7 +88,8 @@ ExplorePageArguments home_explore_page = ExplorePageArguments(
     ),
     LearningResourceExploreSectionArgs(
       title: 'Learn',
-      link: BaseResourceSearchFilter(resourceTypes: [ResourceType.LEARNING_RESOURCE]),
+      link: BaseResourceSearchFilter(
+          resourceTypes: [ResourceType.LEARNING_RESOURCE]),
       description:
           'Learn more about key topics of pressing social and environmental issues',
     ),

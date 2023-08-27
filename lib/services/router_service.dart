@@ -10,7 +10,8 @@ export 'package:nowu/app/app.router.dart';
 extension RouterServiceExtension on RouterService {
   Future<void> navigateToExplore([BaseResourceSearchFilter? baseFilter]) {
     return navigateTo(
-      TabsViewRoute(initialPage: TabPage.Explore, explorePageBaseFilter: baseFilter),
+      TabsViewRoute(
+          initialPage: TabPage.Explore, explorePageBaseFilter: baseFilter),
     );
   }
 

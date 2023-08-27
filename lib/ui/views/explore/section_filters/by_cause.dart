@@ -8,10 +8,11 @@ abstract class ByCauseExploreFilter<
     extends ExploreFilterArgs<FilterT, int> {
   ByCauseExploreFilter() : super(isMulti: true);
 
+  // TODO Does this still need to be a getOptions thing, can we just use static options now as causes is not future
   @override
   getOptions() async {
     final CausesService _causesService = locator<CausesService>();
-    List<Cause> causes = await _causesService.getCauses();
+    List<Cause> causes = _causesService.causes;
     return causes.map(
       (Cause cause) => ExploreFilterOptionArgs(
         displayName: cause.title,

@@ -1,10 +1,13 @@
+import 'dart:async';
+
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/dialog_service.dart';
 import 'package:nowu/services/router_service.dart';
+import 'package:nowu/ui/common/post_login_viewmodel.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 import 'package:stacked/stacked.dart';
 
-class LoginEmailSentViewModel extends BaseViewModel {
+class LoginEmailSentViewModel extends BaseViewModel with PostLoginViewModelMixin {
   final String email;
   LoginEmailSentViewModel({required this.email});
 

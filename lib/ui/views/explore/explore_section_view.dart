@@ -46,17 +46,20 @@ class ExploreFilterSelectionItem extends StatelessWidget {
 
 abstract class ExploreSectionWidget<
     TTileData extends ExploreTileData,
-	TFilter extends ResourceSearchFilter<TFilter>,
-	TFilterParam,
-	TArgs extends ExploreSectionArguments<TFilter, TFilterParam>,
-	TViewModel extends ExploreSectionViewModel<TTileData, TFilter, TFilterParam>
-> extends StackedView<TViewModel> {
+    TFilter extends ResourceSearchFilter<TFilter>,
+    TFilterParam,
+    TArgs extends ExploreSectionArguments<TFilter, TFilterParam>,
+    TViewModel extends ExploreSectionViewModel<TTileData, TFilter,
+        TFilterParam>> extends StackedView<TViewModel> {
   final ExplorePageViewModel? pageViewModel;
   final TArgs args;
 
-  ExploreSectionWidget(this.args, { this.pageViewModel });
+  ExploreSectionWidget(this.args, {this.pageViewModel});
 
   Widget _renderTile(TTileData tile);
+
+  @override
+  bool get createNewViewModelOnInsert => true;
 
   @override
   void onViewModelReady(TViewModel viewModel) {
@@ -200,15 +203,18 @@ abstract class ExploreSectionWidget<
 
   @override
   Widget builder(
-	BuildContext context,
-	TViewModel model,
-	Widget? child,
+    BuildContext context,
+    TViewModel model,
+    Widget? child,
   ) {
+    // TODO When the input args changes, the viewmodel isn't updated
+    print("Rerendering ExploreSection");
+    print(args.baseParams.causeIds);
+    print(model.args.baseParams.causeIds);
     return Container(
       color: args.backgroundColor,
       child: Padding(
-        padding:
-            EdgeInsets.only(top: args.backgroundColor != null ? 12 : 0),
+        padding: EdgeInsets.only(top: args.backgroundColor != null ? 12 : 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -219,8 +225,7 @@ abstract class ExploreSectionWidget<
                 _buildSectionHeader(context, model),
                 const SizedBox(height: 2),
                 if (model.filterData != null &&
-                    model.filterData!.state ==
-                        ExploreSectionFilterState.Loaded)
+                    model.filterData!.state == ExploreSectionFilterState.Loaded)
                   _buildSectionFilters(model),
 
                 SizedBox(height: CustomPaddingSize.small),
@@ -236,85 +241,90 @@ abstract class ExploreSectionWidget<
 }
 
 class ActionExploreSection<TFilterParam> extends ExploreSectionWidget<
-  ActionExploreTileData,
-  ActionSearchFilter,
-  TFilterParam,
-  ActionExploreSectionArgs<TFilterParam>,
-  ActionExploreSectionViewModel<TFilterParam>
-> {
-  ActionExploreSection(ActionExploreSectionArgs<TFilterParam> args, { ExplorePageViewModel? pageViewModel })
-	  : super(args, pageViewModel: pageViewModel);
+    ActionExploreTileData,
+    ActionSearchFilter,
+    TFilterParam,
+    ActionExploreSectionArgs<TFilterParam>,
+    ActionExploreSectionViewModel<TFilterParam>> {
+  ActionExploreSection(ActionExploreSectionArgs<TFilterParam> args,
+      {ExplorePageViewModel? pageViewModel})
+      : super(args, pageViewModel: pageViewModel);
 
   @override
   Widget _renderTile(ActionExploreTileData tile) {
-	return ExploreActionTile(tile);
+    return ExploreActionTile(tile);
   }
 
   @override
-  ActionExploreSectionViewModel<TFilterParam> viewModelBuilder(BuildContext context) {
-	return ActionExploreSectionViewModel(this.args, pageViewModel);
+  ActionExploreSectionViewModel<TFilterParam> viewModelBuilder(
+      BuildContext context) {
+    return ActionExploreSectionViewModel(this.args, pageViewModel);
   }
 }
 
 class LearningResourceExploreSection<TFilterParam> extends ExploreSectionWidget<
-  LearningResourceExploreTileData,
-  LearningResourceSearchFilter,
-  TFilterParam,
-  LearningResourceExploreSectionArgs<TFilterParam>,
-  LearningResourceExploreSectionViewModel<TFilterParam>
-> {
-  LearningResourceExploreSection(LearningResourceExploreSectionArgs<TFilterParam> args, { ExplorePageViewModel? pageViewModel })
-	  : super(args, pageViewModel: pageViewModel);
+    LearningResourceExploreTileData,
+    LearningResourceSearchFilter,
+    TFilterParam,
+    LearningResourceExploreSectionArgs<TFilterParam>,
+    LearningResourceExploreSectionViewModel<TFilterParam>> {
+  LearningResourceExploreSection(
+      LearningResourceExploreSectionArgs<TFilterParam> args,
+      {ExplorePageViewModel? pageViewModel})
+      : super(args, pageViewModel: pageViewModel);
 
   @override
   Widget _renderTile(LearningResourceExploreTileData tile) {
-	return ExploreLearningResourceTile(tile);
+    return ExploreLearningResourceTile(tile);
   }
 
   @override
-  LearningResourceExploreSectionViewModel<TFilterParam> viewModelBuilder(BuildContext context) {
-	return LearningResourceExploreSectionViewModel(this.args, pageViewModel);
+  LearningResourceExploreSectionViewModel<TFilterParam> viewModelBuilder(
+      BuildContext context) {
+    return LearningResourceExploreSectionViewModel(this.args, pageViewModel);
   }
 }
 
 class CampaignExploreSection<TFilterParam> extends ExploreSectionWidget<
-  CampaignExploreTileData,
-  CampaignSearchFilter,
-  TFilterParam,
-  CampaignExploreSectionArgs<TFilterParam>,
-  CampaignExploreSectionViewModel<TFilterParam>
-> {
-  CampaignExploreSection(CampaignExploreSectionArgs<TFilterParam> args, { ExplorePageViewModel? pageViewModel })
-	  : super(args, pageViewModel: pageViewModel);
+    CampaignExploreTileData,
+    CampaignSearchFilter,
+    TFilterParam,
+    CampaignExploreSectionArgs<TFilterParam>,
+    CampaignExploreSectionViewModel<TFilterParam>> {
+  CampaignExploreSection(CampaignExploreSectionArgs<TFilterParam> args,
+      {ExplorePageViewModel? pageViewModel})
+      : super(args, pageViewModel: pageViewModel);
 
   @override
   Widget _renderTile(CampaignExploreTileData tile) {
-	return ExploreCampaignTile(tile);
+    return ExploreCampaignTile(tile);
   }
 
   @override
-  CampaignExploreSectionViewModel<TFilterParam> viewModelBuilder(BuildContext context) {
-	return CampaignExploreSectionViewModel(this.args, pageViewModel);
+  CampaignExploreSectionViewModel<TFilterParam> viewModelBuilder(
+      BuildContext context) {
+    return CampaignExploreSectionViewModel(this.args, pageViewModel);
   }
 }
 
 class NewsArticleExploreSection<TFilterParam> extends ExploreSectionWidget<
-  NewsArticleExploreTileData,
-  NewsArticleSearchFilter,
-  TFilterParam,
-  NewsArticleExploreSectionArgs<TFilterParam>,
-  NewsArticleExploreSectionViewModel<TFilterParam>
-> {
-  NewsArticleExploreSection(NewsArticleExploreSectionArgs<TFilterParam> args, { ExplorePageViewModel? pageViewModel })
-	  : super(args, pageViewModel: pageViewModel);
+    NewsArticleExploreTileData,
+    NewsArticleSearchFilter,
+    TFilterParam,
+    NewsArticleExploreSectionArgs<TFilterParam>,
+    NewsArticleExploreSectionViewModel<TFilterParam>> {
+  NewsArticleExploreSection(NewsArticleExploreSectionArgs<TFilterParam> args,
+      {ExplorePageViewModel? pageViewModel})
+      : super(args, pageViewModel: pageViewModel);
 
   @override
   Widget _renderTile(NewsArticleExploreTileData tile) {
-	return ExploreNewsArticleTile(tile);
+    return ExploreNewsArticleTile(tile);
   }
 
   @override
-  NewsArticleExploreSectionViewModel<TFilterParam> viewModelBuilder(BuildContext context) {
-	return NewsArticleExploreSectionViewModel(this.args, pageViewModel);
+  NewsArticleExploreSectionViewModel<TFilterParam> viewModelBuilder(
+      BuildContext context) {
+    return NewsArticleExploreSectionViewModel(this.args, pageViewModel);
   }
 }

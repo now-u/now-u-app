@@ -4,10 +4,8 @@ import 'package:logging/logging.dart';
 import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/services/router_service.dart';
 import 'package:nowu/services/storage.dart';
-import 'package:nowu/services/superbase.dart';
 import 'package:nowu/ui/common/post_login_viewmodel.dart';
 import 'package:stacked/stacked.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' hide User;
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/auth.dart';
 
@@ -34,25 +32,6 @@ class LoginViewModel extends FormViewModel with PostLoginViewModelMixin {
 
   bool showValidation = false;
 
-  late final StreamSubscription<AuthState>? _authStateSubscription;
-  final _supabaseService = locator<SupabaseService>();
-
-  void init() {
-    _authStateSubscription =
-        _supabaseService.client?.auth.onAuthStateChange.listen((data) async {
-      _logger.info('Auth state changed');
-      if (data.event == AuthChangeEvent.signedIn) {
-        await fetchUserAndNavigatePostLogin();
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _authStateSubscription?.cancel();
-    super.dispose();
-  }
-
   Future loginWithGoogle() async {
     await _authenticationService.signInWithGoogle();
   }
@@ -69,9 +48,9 @@ class LoginViewModel extends FormViewModel with PostLoginViewModelMixin {
       return;
     }
     _logger.info('Logging in with email $emailInputValue');
-    _secureStroageService.setEmail(emailInputValue!);
-    await _authenticationService.sendSignInEmail(emailInputValue!);
-    _routerService.navigateToLoginEmailSentView(email: emailInputValue!);
+    await _secureStroageService.setEmail(emailInputValue!);
+    _authenticationService.sendSignInEmail(emailInputValue!);
+    await _routerService.navigateToLoginEmailSentView(email: emailInputValue!);
   }
 
   void launchTandCs() {
@@ -81,7 +60,7 @@ class LoginViewModel extends FormViewModel with PostLoginViewModelMixin {
     );
   }
 
-  void skipLogin() {
-    _routerService.navigateToHome(clearHistory: true);
+  void skipLogin() async {
+    await _routerService.navigateToHome(clearHistory: true);
   }
 }

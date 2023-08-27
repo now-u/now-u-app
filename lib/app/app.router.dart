@@ -92,7 +92,7 @@ class StackedRouterWeb extends _i18.RootStackRouter {
     FAQViewRoute.name: (routeData) {
       return _i18.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i6.FAQView(),
+        child: _i6.FaqView(),
         opaque: true,
         barrierDismissible: false,
       );
@@ -374,7 +374,7 @@ class CampaignInfoViewArgs {
 }
 
 /// generated route for
-/// [_i6.FAQView]
+/// [_i6.FaqView]
 class FAQViewRoute extends _i18.PageRouteInfo<void> {
   const FAQViewRoute()
       : super(

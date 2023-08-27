@@ -1,12 +1,11 @@
 import 'package:causeApiClient/causeApiClient.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:dio/dio.dart';
+import 'package:logging/logging.dart';
 import 'package:nowu/app/app.router.dart';
-import 'package:nowu/assets/constants.dart';
 import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/navigation_service.dart';
-import 'package:sentry_dio/sentry_dio.dart';
 import 'package:stacked_services/stacked_services.dart' hide NavigationService;
 
 export 'package:nowu/models/Action.dart';
@@ -16,32 +15,24 @@ export 'package:nowu/models/Cause.dart';
 
 class CausesService {
   final _authService = locator<AuthenticationService>();
+  final _apiService = locator<ApiService>();
   final _navigationService = locator<NavigationService>();
   final _routerService = locator<RouterService>();
+  final _logger = Logger('CausesService');
 
-  Dio getDioClient() {
-    final dio = Dio(
-      BaseOptions(
-        baseUrl: '$LOCAL_STACK_URL:8000',
-        headers: _authService.token == null
-            ? null
-            : {
-                'Authorization': 'JWT ${_authService.token!}',
-                'content-type': 'application/json',
-                'Access-Control-Allow-Origin': 'true',
-              },
-      ),
-    );
-    dio.addSentry();
-    return dio;
+  List<Cause>? _causes;
+  List<Cause> get causes {
+    if (_causes == null) {
+      throw Exception('Cannot get causes before initalizing causes service');
+    }
+    return _causes!;
   }
 
-  // TODO We don't want to be creating a new client every time, can we deal with auth headers later?
-  CauseApiClient get _causeServiceClient {
-    return CauseApiClient(
-      dio: getDioClient(),
-    );
+  Future<void> init() async {
+    await _fetchCauses();
   }
+
+  CauseApiClient get _causeServiceClient => _apiService.apiClient;
 
   CausesUser? _userInfo = null;
   CausesUser? get userInfo => _userInfo;
@@ -50,9 +41,13 @@ class CausesService {
   ///
   /// Input params
   /// Returns a list of Causes from the API
-  Future<List<Cause>> getCauses() async {
+  Future<void> _fetchCauses() async {
     final response = await _causeServiceClient.getCausesApi().causesList();
-    return response.data!.asList();
+    _causes = response.data!.asList();
+  }
+
+  Cause getCause(int id) {
+    return causes.firstWhere((cause) => cause.id == id);
   }
 
   /// Get a campaign by id
@@ -87,13 +82,18 @@ class CausesService {
 
     // // Update user after request
     // await locator<AuthenticationService>().fetchUser();
-    _causeServiceClient.getMeApi().meCausesInfoPartialUpdate(
+    final response = await _causeServiceClient.getMeApi().meCausesInfoPartialUpdate(
           patchedCausesUser: PatchedCausesUser(
             (userInfo) => userInfo
-              ..newSelectedCausesIds =
+              ..selectedCausesIds =
                   ListBuilder(selectedCauses.map((cause) => cause.id).toList()),
           ),
         );
+
+	_userInfo = response.data;
+
+	// After selecting causes we fetch all causes to updated 'selected' status
+	await _fetchCauses();
   }
 
   /// Complete an action
@@ -137,11 +137,13 @@ class CausesService {
 
   Future<CausesUser?> fetchUserInfo() async {
     if (!_authService.isAuthenticated) {
-      // TODO LOG
+      _logger.warning('Trying to fetch user info when not authenticated');
       return null;
     }
     final response =
         await _causeServiceClient.getMeApi().meCausesInfoRetrieve();
+	print("YPatched user select info");
+	print(response.data);
     return _userInfo = response.data!;
   }
 

@@ -1,6 +1,6 @@
+import 'package:causeApiClient/causeApiClient.dart' hide Image;
 import 'package:flutter/material.dart';
 
-import 'package:nowu/models/FAQ.dart';
 import 'package:nowu/assets/components/customScrollableSheet.dart';
 import 'package:nowu/assets/components/header.dart';
 import 'package:nowu/assets/components/customTile.dart';
@@ -12,16 +12,16 @@ import 'faq_viewmodel.dart';
 
 // TODO There is a bug on this page when you tap the last FAQ the answer is not visible without scrolling
 // Maybe need something like: https://stackoverflow.com/questions/49153087/flutter-scrolling-to-a-widget-in-listview
-class FAQView extends StackedView<FAQViewModel> {
+class FaqView extends StackedView<FaqViewModel> {
   @override
-  FAQViewModel viewModelBuilder(BuildContext context) {
-    return FAQViewModel();
+  FaqViewModel viewModelBuilder(BuildContext context) {
+    return FaqViewModel();
   }
 
   @override
   Widget builder(
     BuildContext context,
-    FAQViewModel viewModel,
+    FaqViewModel viewModel,
     Widget? child,
   ) {
     return Scaffold(
@@ -62,7 +62,7 @@ class FAQView extends StackedView<FAQViewModel> {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: viewModel.data!.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return FAQTile(viewModel.data!.elementAt(index));
+                      return FaqTile(viewModel.data![index]);
                     },
                   ),
                 )
@@ -72,14 +72,14 @@ class FAQView extends StackedView<FAQViewModel> {
   }
 }
 
-class FAQTile extends StatefulWidget {
-  final FAQ faq;
-  FAQTile(this.faq);
+class FaqTile extends StatefulWidget {
+  final Faq faq;
+  FaqTile(this.faq);
   @override
-  _FAQTileState createState() => _FAQTileState();
+  _FaqTileState createState() => _FaqTileState();
 }
 
-class _FAQTileState extends State<FAQTile> {
+class _FaqTileState extends State<FaqTile> {
   late bool selected;
   @override
   void initState() {

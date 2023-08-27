@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:nowu/app/app.dialogs.dart';
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/app/app.router.dart';
+import 'package:nowu/assets/constants.dart';
 import 'package:nowu/firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -48,6 +49,10 @@ void main() async {
       // We recommend adjusting this value in production.
       options.tracesSampleRate = 1.0;
       options.addIntegration(LoggingIntegration());
+
+      // TODO Set if debug
+      options.debug = devMode;
+      options.diagnosticLevel = SentryLevel.info;
     },
     appRunner: () => runApp(App()),
   );

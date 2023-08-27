@@ -11,7 +11,6 @@ import 'package:nowu/services/navigation_service.dart';
 
 import 'package:nowu/models/Notification.dart';
 import 'package:nowu/ui/views/explore/explore_page_definition.dart';
-import 'package:nowu/ui/views/explore/explore_pages.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeViewModel extends BaseViewModel {
@@ -22,7 +21,15 @@ class HomeViewModel extends BaseViewModel {
   final _dialogService = locator<DialogService>();
   final _userService = locator<UserService>();
 
+  late List<Cause> _causes;
+  List<Cause> get causes => _causes;
+
   UserProfile? get currentUser => _userService.currentUser;
+
+  void init() {
+    fetchNotifications();
+    _causes = _causesService.causes;
+  }
 
   // TODO should these def really be in the iewmodel? Feel like it shoul dbe in the view to me
   final myCampaigns = CampaignExploreSectionArgs(
@@ -43,26 +50,6 @@ class HomeViewModel extends BaseViewModel {
   final inTheNews = NewsArticleExploreSectionArgs(
     title: 'In the news',
   );
-
-  void init() {
-    fetchNotifications();
-    fetchCauses();
-  }
-
-  List<Cause> _causes = [];
-
-  List<Cause> get causes => _causes;
-
-  Future fetchCauses() async {
-    setBusy(true);
-
-    _causes = await _causesService.getCauses();
-
-    setBusy(false);
-
-    print('Fetched ${_causes.length} causes');
-    notifyListeners();
-  }
 
   Future getCausePopup(Cause listCause) async {
     final dialogResult = await _dialogService.showCauseDialog(cause: listCause);
@@ -94,7 +81,8 @@ class HomeViewModel extends BaseViewModel {
 
   Future openNotification(InternalNotification notification) async {
     await _routerService.navigateToNotificationInfoView(
-        notification: notification,);
+      notification: notification,
+    );
   }
 
   Future dismissNotification(int id) async {

@@ -1,36 +1,33 @@
 import 'package:causeApiClient/causeApiClient.dart';
-import 'package:dio/dio.dart';
-import 'package:nowu/assets/constants.dart';
+import 'package:logging/logging.dart';
 import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/auth.dart';
 
 class UserService {
   // TODO We hardly actually need the user now we have the auth token
   UserProfile? _currentUser = null;
   UserProfile? get currentUser => _currentUser;
+  Logger _logger = Logger('UserService');
 
-  final AuthenticationService _authService = locator<AuthenticationService>();
-  CauseApiClient get _causeServiceClient {
-    return CauseApiClient(
-      dio: Dio(
-        BaseOptions(
-          baseUrl: '$LOCAL_STACK_URL:8000',
-          headers: _authService.token == null
-              ? null
-              : {'Authorization': 'JWT ${_authService.token!}'},
-        ),
-      ),
-    );
-  }
+  final _authService = locator<AuthenticationService>();
+  final _apiService = locator<ApiService>();
+
+  CauseApiClient get _causeServiceClient => _apiService.apiClient;
 
   Future<UserProfile?> fetchUser() async {
     if (!_authService.isAuthenticated) {
-      // TODO LOG
+	  _logger.warning('Fetched user when not authenticated');
       return null;
     }
-
-    final response = await _causeServiceClient.getMeApi().meProfileRetrieve();
-    return _currentUser = response.data!;
+	
+	try {
+		final response = await _causeServiceClient.getMeApi().meProfileRetrieve();
+		return _currentUser = response.data;
+	} catch(e) {
+	  _logger.warning('Fetch user failed, $e');
+	  throw e;
+	}
   }
 
   // Update user profile (maybe including signup for newletter email?)

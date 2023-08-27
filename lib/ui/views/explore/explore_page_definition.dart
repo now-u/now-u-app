@@ -139,7 +139,7 @@ class LearningResourceExploreSectionArgs<FilterParamType>
   LearningResourceExploreSectionArgs({
     required String title,
     ExploreFilterArgs<LearningResourceSearchFilter, FilterParamType>? filter,
-	// TODO REmove
+    // TODO REmove
     BaseResourceSearchFilter? link,
     String? description,
     LearningResourceSearchFilter? baseParams,

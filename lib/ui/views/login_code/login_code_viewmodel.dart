@@ -30,7 +30,6 @@ class LoginCodeViewModel extends FormViewModel with PostLoginViewModelMixin {
       try {
         setBusy(true);
         await _authenticationService.signInWithCode(email, codeInputValue!);
-        return fetchUserAndNavigatePostLogin();
       } catch (e) {
         setBusy(false);
         Sentry.captureException(e);

@@ -14,7 +14,6 @@ import 'package:nowu/services/remote_config_service.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/causes_service.dart';
 
-import 'package:nowu/services/superbase.dart';
 import 'package:nowu/services/user_service.dart';
 
 import 'package:get_it/get_it.dart';
@@ -37,7 +36,6 @@ void setupLocator() {
   locator.registerLazySingleton(() => AnalyticsService());
   locator.registerLazySingleton(() => CausesService());
   locator.registerLazySingleton(() => ApiService());
-  locator.registerLazySingleton(() => SupabaseService());
   locator.registerLazySingleton(() => SearchService());
   // TODO This is super temporary, we should use the stacked auto generated router
 }

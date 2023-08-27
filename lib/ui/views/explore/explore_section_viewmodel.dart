@@ -88,8 +88,7 @@ class ExploreSectionFilterViewModelData<
 sealed class ExploreSectionViewModel<
     T extends ExploreTileData,
     FilterT extends ResourceSearchFilter<FilterT>,
-    FilterParamType
-> extends BaseViewModel {
+    FilterParamType> extends BaseViewModel {
   final _searchService = locator<SearchService>();
   final _causesService = locator<CausesService>();
   final _routerService = locator<RouterService>();
@@ -110,22 +109,21 @@ sealed class ExploreSectionViewModel<
             : null;
 
   Future<void> handleLink() async {
-	print("Handling link");
     if (args.link == null) {
-		return;
-	}
-	if (pageViewModel == null) {
-		return _routerService.navigateToExplore(args.link!);
-	}
-	pageViewModel!.updateFilter(args.link);
+      return;
+    }
+    if (pageViewModel == null) {
+      return _routerService.navigateToExplore(args.link!);
+    }
+    pageViewModel!.updateFilter(args.link!);
   }
 
   Future<void> navigateToEmptyExplore() async {
-	if (pageViewModel == null) {
-		return _routerService.navigateToExplore();
-	}
-	pageViewModel!.updateFilter(BaseResourceSearchFilter());
-  } 
+    if (pageViewModel == null) {
+      return _routerService.navigateToExplore();
+    }
+    pageViewModel!.updateFilter(const BaseResourceSearchFilter());
+  }
 
   FilterT get combinedFilter {
     // TODO Get filter working!!
@@ -143,7 +141,6 @@ sealed class ExploreSectionViewModel<
   }
 
   Future<void> init() async {
-    print('Initing section');
     try {
       await this.filterData?.init(reloadTiles);
       this.tiles = await _fetchTiles();
@@ -180,7 +177,8 @@ sealed class ExploreSectionViewModel<
 class ActionExploreSectionViewModel<FilterParamType>
     extends ExploreSectionViewModel<ActionExploreTileData, ActionSearchFilter,
         FilterParamType> {
-  ActionExploreSectionViewModel(ActionExploreSectionArgs<FilterParamType> args, ExplorePageViewModel? pageViewModel)
+  ActionExploreSectionViewModel(ActionExploreSectionArgs<FilterParamType> args,
+      ExplorePageViewModel? pageViewModel)
       : super(args, pageViewModel);
 
   @override
@@ -206,7 +204,7 @@ class LearningResourceExploreSectionViewModel<FilterParamType>
         LearningResourceSearchFilter, FilterParamType> {
   LearningResourceExploreSectionViewModel(
     LearningResourceExploreSectionArgs<FilterParamType> args,
-	ExplorePageViewModel? pageViewModel,
+    ExplorePageViewModel? pageViewModel,
   ) : super(args, pageViewModel);
 
   @override
@@ -235,7 +233,7 @@ class CampaignExploreSectionViewModel<FilterParamType>
         CampaignSearchFilter, FilterParamType> {
   CampaignExploreSectionViewModel(
     CampaignExploreSectionArgs<FilterParamType> args,
-	ExplorePageViewModel? pageViewModel,
+    ExplorePageViewModel? pageViewModel,
   ) : super(args, pageViewModel);
 
   @override
@@ -259,7 +257,7 @@ class NewsArticleExploreSectionViewModel<FilterParamType>
         NewsArticleSearchFilter, FilterParamType> {
   NewsArticleExploreSectionViewModel(
     NewsArticleExploreSectionArgs<FilterParamType> args,
-	ExplorePageViewModel? pageViewModel,
+    ExplorePageViewModel? pageViewModel,
   ) : super(args, pageViewModel);
 
   @override

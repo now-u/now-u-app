@@ -333,6 +333,45 @@ paths:
               schema:
                 $ref: '#/components/schemas/Cause'
           description: ''
+  /faqs/:
+    get:
+      operationId: faqs_list
+      tags:
+      - faqs
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Faq'
+          description: ''
+  /faqs/{id}/:
+    get:
+      operationId: faqs_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this faq.
+        required: true
+      tags:
+      - faqs
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Faq'
+          description: ''
   /learning_resources/:
     get:
       operationId: learning_resources_list
@@ -390,7 +429,7 @@ paths:
       responses:
         '200':
           description: No response body
-  /me/causesInfo:
+  /me/causesInfo/:
     get:
       operationId: me_causesInfo_retrieve
       description: View for information about the users interactions with causes resources
@@ -456,7 +495,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CausesUser'
           description: ''
-  /me/profile:
+  /me/profile/:
     get:
       operationId: me_profile_retrieve
       tags:
@@ -635,11 +674,11 @@ components:
           type: boolean
         title:
           type: string
-          maxLength: 100
+          maxLength: 200
         link:
           type: string
           format: uri
-          maxLength: 200
+          maxLength: 3000
         action_type:
           $ref: '#/components/schemas/ActionTypeEnum'
         what_description:
@@ -648,6 +687,8 @@ components:
           type: string
         time:
           type: integer
+          maximum: 2147483647
+          minimum: -2147483648
         of_the_month:
           type: boolean
         suggested:
@@ -808,24 +849,31 @@ components:
           type: array
           items:
             type: integer
-          readOnly: true
         completed_campaign_ids:
           type: array
           items:
             type: integer
           readOnly: true
-        new_selected_causes_ids:
-          type: array
-          items:
-            type: integer
-          writeOnly: true
       required:
       - completed_action_ids
       - completed_campaign_ids
       - completed_learning_resource_ids
       - id
-      - new_selected_causes_ids
       - selected_causes_ids
+    Faq:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        question:
+          type: string
+        answer:
+          type: string
+      required:
+      - answer
+      - id
+      - question
     IconEnum:
       enum:
       - cause_icon_education
@@ -892,18 +940,20 @@ components:
           type: boolean
         title:
           type: string
-          maxLength: 100
+          maxLength: 200
         time:
           type: integer
+          maximum: 2147483647
+          minimum: -2147483648
         link:
           type: string
           format: uri
-          maxLength: 200
+          maxLength: 500
         learning_resource_type:
           $ref: '#/components/schemas/LearningResourceTypeEnum'
         source:
           type: string
-          maxLength: 100
+          maxLength: 300
       required:
       - causes
       - created_at
@@ -936,7 +986,7 @@ components:
           readOnly: true
         title:
           type: string
-          maxLength: 100
+          maxLength: 200
         action_type:
           $ref: '#/components/schemas/ActionTypeEnum'
         causes:
@@ -945,6 +995,8 @@ components:
             $ref: '#/components/schemas/Cause'
         time:
           type: integer
+          maximum: 2147483647
+          minimum: -2147483648
         created_at:
           type: string
           format: date-time
@@ -1022,17 +1074,17 @@ components:
           type: boolean
         title:
           type: string
-          maxLength: 64
+          maxLength: 300
         subtitle:
           type: string
-          maxLength: 100
+          maxLength: 300
         source:
           type: string
-          maxLength: 100
+          maxLength: 300
         link:
           type: string
           format: uri
-          maxLength: 200
+          maxLength: 500
       required:
       - created_at
       - header_image
@@ -1164,17 +1216,11 @@ components:
           type: array
           items:
             type: integer
-          readOnly: true
         completed_campaign_ids:
           type: array
           items:
             type: integer
           readOnly: true
-        new_selected_causes_ids:
-          type: array
-          items:
-            type: integer
-          writeOnly: true
     PatchedUserProfile:
       type: object
       properties:
@@ -1208,7 +1254,5 @@ components:
       - id
   securitySchemes:
     tokenAuth:
-      type: apiKey
-      in: header
-      name: Authorization
-      description: Token-based authentication with required prefix "JWT"
+      type: http
+      scheme: bearer

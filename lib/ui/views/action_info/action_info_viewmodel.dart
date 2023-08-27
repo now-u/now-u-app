@@ -32,8 +32,9 @@ class ActionInfoViewModel extends FutureViewModel<Action> {
     try {
       await _causesService.completeAction(data!.id);
       setBusy(false);
-	  // TODO Really?
-      _routerService.navigateToExplore(BaseResourceSearchFilter(resourceTypes: [ResourceType.ACTION]));
+      // TODO Really?
+      _routerService.navigateToExplore(
+          BaseResourceSearchFilter(resourceTypes: [ResourceType.ACTION]));
     } catch (err) {
       // TODO Log and metric!
       setBusy(false);
@@ -59,7 +60,7 @@ class ActionInfoViewModel extends FutureViewModel<Action> {
   void navigateToCauseExplorePage() {
     // TODO THis needs some more thought
     _routerService.navigateToExplore(
-        BaseResourceSearchFilter(causeIds: [data!.cause.id]),
+      BaseResourceSearchFilter(causeIds: [data!.cause.id]),
     );
   }
 }

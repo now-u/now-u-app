@@ -10,9 +10,6 @@ class CauseTileGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!viewModel.dataReady) {
-      return const Center(child: CircularProgressIndicator());
-    }
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,

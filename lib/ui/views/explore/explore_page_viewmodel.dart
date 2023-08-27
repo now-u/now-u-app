@@ -2,6 +2,7 @@ import 'package:causeApiClient/causeApiClient.dart';
 
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/assets/constants.dart';
+import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/router_service.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:nowu/ui/views/explore/explore_page_definition.dart';
@@ -21,17 +22,31 @@ sealed class ExploreTileData {}
 
 class ExplorePageViewModel extends BaseViewModel {
   RouterService _routerService = locator<RouterService>();
+  CausesService _causesService = locator<CausesService>();
 
-  BaseResourceSearchFilter? baseFilter;
+  BaseResourceSearchFilter baseFilter;
   ExplorePageViewModel({
-    this.baseFilter,
+    this.baseFilter = const BaseResourceSearchFilter(),
   });
 
+  List<Cause> get causes => _causesService.causes;
+
   List<ExploreSectionArguments> get sections {
-	bool isFilterOnlyResource(ResourceType resourceType) {
-		return baseFilter?.resourceTypes?.length == 1 && baseFilter!.resourceTypes!.contains(resourceType);
-	}
-	
+    final sections = _getSections();
+    sections.forEach((section) {
+      section.baseParams.mergeBaseFilter(this.baseFilter);
+    });
+    print('Merged base filter with every section');
+    print(sections.map((section) => section.baseParams.causeIds));
+    return sections;
+  }
+
+  List<ExploreSectionArguments> _getSections() {
+    bool isFilterOnlyResource(ResourceType resourceType) {
+      return baseFilter.resourceTypes?.length == 1 &&
+          baseFilter.resourceTypes!.contains(resourceType);
+    }
+
     if (isFilterOnlyResource(ResourceType.ACTION)) {
       return [
         ActionExploreSectionArgs(
@@ -77,7 +92,7 @@ class ExplorePageViewModel extends BaseViewModel {
         ),
       ];
     }
-		// TODO THis doesn't seem to quite work! need to make equitable/write little function
+    // TODO THis doesn't seem to quite work! need to make equitable/write little function
     if (isFilterOnlyResource(ResourceType.CAMPAIGN)) {
       return [
         CampaignExploreSectionArgs(
@@ -101,28 +116,35 @@ class ExplorePageViewModel extends BaseViewModel {
     }
 
     return [
-      if (baseFilter?.resourceTypes == null || baseFilter!.resourceTypes!.contains(ResourceType.ACTION))
+      if (baseFilter.resourceTypes == null ||
+          baseFilter.resourceTypes!.contains(ResourceType.ACTION))
         ActionExploreSectionArgs(
           title: 'Actions',
-          link: BaseResourceSearchFilter(resourceTypes: [ResourceType.ACTION]),
+          link: const BaseResourceSearchFilter(
+              resourceTypes: [ResourceType.ACTION]),
           description:
               'Take a wide range of actions to drive lasting change for issues you care about',
         ),
-      if (baseFilter?.resourceTypes == null || baseFilter!.resourceTypes!.contains(ResourceType.LEARNING_RESOURCE))
+      if (baseFilter.resourceTypes == null ||
+          baseFilter.resourceTypes!.contains(ResourceType.LEARNING_RESOURCE))
         LearningResourceExploreSectionArgs(
           title: 'Learn',
-          link: BaseResourceSearchFilter(resourceTypes: [ResourceType.LEARNING_RESOURCE]),
+          link: const BaseResourceSearchFilter(
+              resourceTypes: [ResourceType.LEARNING_RESOURCE]),
           description:
               'Learn more about key topics of pressing social and environmental issues',
         ),
-      if (baseFilter?.resourceTypes == null || baseFilter!.resourceTypes!.contains(ResourceType.CAMPAIGN))
+      if (baseFilter.resourceTypes == null ||
+          baseFilter.resourceTypes!.contains(ResourceType.CAMPAIGN))
         CampaignExploreSectionArgs(
           title: 'Campaigns',
-          link: BaseResourceSearchFilter(resourceTypes: [ResourceType.CAMPAIGN]),
+          link: const BaseResourceSearchFilter(
+              resourceTypes: [ResourceType.CAMPAIGN]),
           description:
               'Join members of the now-u community in coordinated campaigns to make a difference',
         ),
-      if (baseFilter?.resourceTypes == null || baseFilter!.resourceTypes!.contains(ResourceType.NEWS_ARTICLE))
+      if (baseFilter.resourceTypes == null ||
+          baseFilter.resourceTypes!.contains(ResourceType.NEWS_ARTICLE))
         NewsArticleExploreSectionArgs(
           title: 'News',
           description:
@@ -132,14 +154,18 @@ class ExplorePageViewModel extends BaseViewModel {
   }
 
   // TODO Merge with base filter rather than replacing
-  void updateFilter(BaseResourceSearchFilter? args) {
-	this.baseFilter = args;
-	print('Updating filter');
-	notifyListeners();
+  void updateFilter(BaseResourceSearchFilter args) {
+    this.baseFilter = args;
+    print('Updating filter');
+    notifyListeners();
   }
 
   bool get canGoBack {
     return !_routerService.stack.isEmpty;
+  }
+
+  Cause getCauseById(int id) {
+    return _causesService.getCause(id);
   }
 
   void back() {

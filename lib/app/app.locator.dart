@@ -23,7 +23,6 @@ import '../services/pushNotifications.dart';
 import '../services/search_service.dart';
 import '../services/shared_preferences_service.dart';
 import '../services/storage.dart';
-import '../services/superbase.dart';
 import '../services/user_service.dart';
 import 'app.router.dart';
 
@@ -50,7 +49,6 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => FAQService());
   locator.registerLazySingleton(() => PushNotificationService());
   locator.registerLazySingleton(() => DynamicLinkService());
-  locator.registerLazySingleton(() => SupabaseService());
   locator.registerLazySingleton(() => AnalyticsService());
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => DialogService());

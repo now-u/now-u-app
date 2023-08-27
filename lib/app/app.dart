@@ -42,7 +42,7 @@ import 'package:nowu/ui/views/login_email_sent/login_email_sent_view.dart';
     CustomRoute(page: PartnersView),
     CustomRoute(page: ActionInfoView, path: 'action/:actionId'),
     CustomRoute(page: CampaignInfoView),
-    CustomRoute(page: FAQView),
+    CustomRoute(page: FaqView),
     CustomRoute(page: IntroView),
     CustomRoute(page: ProfileSetupView),
     CustomRoute(page: LoginView),
@@ -80,7 +80,6 @@ import 'package:nowu/ui/views/login_email_sent/login_email_sent_view.dart';
     LazySingleton(classType: FAQService),
     LazySingleton(classType: PushNotificationService),
     LazySingleton(classType: DynamicLinkService),
-    LazySingleton(classType: SupabaseService),
     LazySingleton(classType: AnalyticsService),
     // TODO This is super temporary this should be removed
     LazySingleton(classType: NavigationService),
