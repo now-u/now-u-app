@@ -62,10 +62,6 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'now-u',
-      // TODO Add back navigatorObservers
-      // navigatorObservers: [
-      //   locator<AnalyticsService>().getAnalyticsObserver(),
-      // ],
       routerDelegate: stackedRouter.delegate(
         navigatorObservers: () => [
           locator<AnalyticsService>().getAnalyticsObserver(),

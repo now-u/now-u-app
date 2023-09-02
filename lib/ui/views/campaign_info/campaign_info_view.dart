@@ -100,7 +100,7 @@ class CampaignInfoView extends StackedView<CampaignViewModel> {
                   action,
                   viewModel.actionIsComplete(action.id),
                 ),
-				onTap: () => viewModel.openAction(action),
+                onTap: () => viewModel.openAction(action),
               ),
             )
             .toList();
@@ -113,7 +113,7 @@ class CampaignInfoView extends StackedView<CampaignViewModel> {
                   lr,
                   viewModel.learningResourceIsComplete(lr.id),
                 ),
-				onTap: () => viewModel.openLearningResource(lr),
+                onTap: () => viewModel.openLearningResource(lr),
               ),
             )
             .toList();

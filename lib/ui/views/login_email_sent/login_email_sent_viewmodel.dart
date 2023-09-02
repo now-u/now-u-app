@@ -7,7 +7,8 @@ import 'package:nowu/ui/common/post_login_viewmodel.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 import 'package:stacked/stacked.dart';
 
-class LoginEmailSentViewModel extends BaseViewModel with PostLoginViewModelMixin {
+class LoginEmailSentViewModel extends BaseViewModel
+    with PostLoginViewModelMixin {
   final String email;
   LoginEmailSentViewModel({required this.email});
 

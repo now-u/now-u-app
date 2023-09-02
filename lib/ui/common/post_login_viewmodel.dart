@@ -21,13 +21,14 @@ mixin PostLoginViewModelMixin on BaseViewModel implements Initialisable {
 
   void initialise() {
     _logger.info('Initialised PostLoginViewModelMixin');
-	setupNavigatePostLogin();
+    setupNavigatePostLogin();
   }
 
-  late final StreamSubscription<AuthState>? _authStateSubscription;
+  StreamSubscription<AuthState>? _authStateSubscription;
 
   Future<void> setupNavigatePostLogin() async {
-    _authStateSubscription = _authenticationService.onAuthStateChange((data) async {
+    _authStateSubscription =
+        _authenticationService.onAuthStateChange((data) async {
       _logger.info('Auth state changed');
       if (data.event == AuthChangeEvent.signedIn && data.session != null) {
         handleSignedIn();
@@ -43,7 +44,7 @@ mixin PostLoginViewModelMixin on BaseViewModel implements Initialisable {
   @override
   void dispose() {
     _authStateSubscription?.cancel();
-	super.dispose();
+    super.dispose();
   }
 
   Future<void> fetchUserAndNavigatePostLogin() async {

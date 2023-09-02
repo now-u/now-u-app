@@ -43,6 +43,6 @@ class StartupView extends StackedView<StartupViewModel> {
 
   @override
   onViewModelReady(StartupViewModel viewModel) {
-    viewModel.handleStartUpLogic();
+    viewModel.initialise();
   }
 }

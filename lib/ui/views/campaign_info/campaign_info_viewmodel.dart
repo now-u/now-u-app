@@ -36,7 +36,9 @@ class CampaignViewModel extends BaseViewModel {
   }
 
   void openLearningResource(LearningResource learningResource) {
-    _causesService.completeLearningResource(learningResource.id).then((value) => notifyListeners());
+    _causesService
+        .completeLearningResource(learningResource.id)
+        .then((value) => notifyListeners());
     _causesService.openLearningResource(learningResource);
   }
 

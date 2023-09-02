@@ -32,7 +32,8 @@ class ExploreCampaignTile extends ExploreTile {
   final ListCampaign campaign;
   final GestureTapCallback onTap;
 
-  ExploreCampaignTile(CampaignExploreTileData tile, {required this.onTap, Key? key})
+  ExploreCampaignTile(CampaignExploreTileData tile,
+      {required this.onTap, Key? key})
       : headerImage = tile.campaign.headerImage.url,
         title = tile.campaign.title,
         cause = tile.campaign.cause,
@@ -91,7 +92,7 @@ class ExploreActionTile extends ExploreResourceTile {
 
   ExploreActionTile(
     ActionExploreTileData tile, {
-	required GestureTapCallback onTap,
+    required GestureTapCallback onTap,
     ExploreTileStyle? style,
     Key? key,
   })  : action = tile.action,
@@ -106,7 +107,7 @@ class ExploreActionTile extends ExploreResourceTile {
           timeText: tile.action.timeText,
           isCompleted: tile.isCompleted,
           style: style,
-		  onTap: onTap,
+          onTap: onTap,
           key: key,
         );
 }
@@ -116,7 +117,7 @@ class ExploreLearningResourceTile extends ExploreResourceTile {
 
   ExploreLearningResourceTile(
     LearningResourceExploreTileData tile, {
-	required GestureTapCallback onTap,
+    required GestureTapCallback onTap,
     ExploreTileStyle? style,
     Key? key,
   })  : resource = tile.learningResource,
@@ -132,7 +133,7 @@ class ExploreLearningResourceTile extends ExploreResourceTile {
           isCompleted: tile.isCompleted,
           key: key,
           style: style,
-		  onTap: onTap,
+          onTap: onTap,
         );
 }
 
@@ -161,7 +162,7 @@ abstract class ExploreResourceTile extends ExploreTile {
     required this.cause,
     required this.timeText,
     required this.isCompleted,
-	required this.onTap,
+    required this.onTap,
     ExploreTileStyle? style,
     Key? key,
   })  : this.style = style ?? ExploreTileStyle.Standard,
@@ -258,7 +259,8 @@ class ExploreNewsArticleTile extends ExploreTile {
   final NewsArticle article;
   final GestureTapCallback onTap;
 
-  ExploreNewsArticleTile(NewsArticleExploreTileData tile, {required this.onTap, Key? key})
+  ExploreNewsArticleTile(NewsArticleExploreTileData tile,
+      {required this.onTap, Key? key})
       : title = tile.article.title,
         subtitle = tile.article.subtitle,
         headerImage = tile.article.headerImage.url,

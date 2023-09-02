@@ -5,7 +5,7 @@ import 'package:sentry_dio/sentry_dio.dart';
 
 // TODO Use causesApiClient generated auth interceptors
 class AuthInterceptor extends Interceptor {
-  String? token; 
+  String? token;
 
   @override
   void onRequest(
@@ -13,8 +13,8 @@ class AuthInterceptor extends Interceptor {
     RequestInterceptorHandler handler,
   ) async {
     if (token != null) {
-		options.headers['Authorization'] = 'Bearer $token';
-	}
+      options.headers['Authorization'] = 'Bearer $token';
+    }
     super.onRequest(options, handler);
   }
 }
@@ -46,19 +46,19 @@ class ApiService {
         },
       ),
     )
-		..addSentry
-		..interceptors.add(_authInterceptor)
-		..interceptors.add(LogInterceptor());
+      ..addSentry
+      ..interceptors.add(_authInterceptor)
+      ..interceptors.add(LogInterceptor());
     _apiClient = CauseApiClient(
       dio: dio,
     );
   }
 
   void setToken(String? token) {
-	_authInterceptor.token = token;
+    _authInterceptor.token = token;
   }
 
   void setBaseUrl(String baseUrl) {
-	apiClient.dio.options.baseUrl = baseUrl;
+    apiClient.dio.options.baseUrl = baseUrl;
   }
 }

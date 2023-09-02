@@ -17,17 +17,17 @@ class UserService {
 
   Future<UserProfile?> fetchUser() async {
     if (!_authService.isAuthenticated) {
-	  _logger.warning('Fetched user when not authenticated');
+      _logger.warning('Fetched user when not authenticated');
       return null;
     }
-	
-	try {
-		final response = await _causeServiceClient.getMeApi().meProfileRetrieve();
-		return _currentUser = response.data;
-	} catch(e) {
-	  _logger.warning('Fetch user failed, $e');
-	  throw e;
-	}
+
+    try {
+      final response = await _causeServiceClient.getMeApi().meProfileRetrieve();
+      return _currentUser = response.data;
+    } catch (e) {
+      _logger.warning('Fetch user failed, $e');
+      throw e;
+    }
   }
 
   // Update user profile (maybe including signup for newletter email?)

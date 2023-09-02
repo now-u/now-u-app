@@ -92,7 +92,6 @@ class ExplorePageViewModel extends BaseViewModel {
         ),
       ];
     }
-    // TODO THis doesn't seem to quite work! need to make equitable/write little function
     if (isFilterOnlyResource(ResourceType.CAMPAIGN)) {
       return [
         CampaignExploreSectionArgs(
@@ -156,7 +155,6 @@ class ExplorePageViewModel extends BaseViewModel {
   // TODO Merge with base filter rather than replacing
   void updateFilter(BaseResourceSearchFilter args) {
     this.baseFilter = args;
-    print('Updating filter');
     notifyListeners();
   }
 

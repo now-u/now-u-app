@@ -177,9 +177,10 @@ sealed class ExploreSectionViewModel<
 class ActionExploreSectionViewModel<FilterParamType>
     extends ExploreSectionViewModel<ActionExploreTileData, ActionSearchFilter,
         FilterParamType> {
-  ActionExploreSectionViewModel(ActionExploreSectionArgs<FilterParamType> args,
-      ExplorePageViewModel? pageViewModel,)
-      : super(args, pageViewModel);
+  ActionExploreSectionViewModel(
+    ActionExploreSectionArgs<FilterParamType> args,
+    ExplorePageViewModel? pageViewModel,
+  ) : super(args, pageViewModel);
 
   @override
   _fetchTiles() async {
@@ -222,7 +223,7 @@ class LearningResourceExploreSectionViewModel<FilterParamType>
   Future<void> tileOnClick(LearningResourceExploreTileData tileData) async {
     // TODO This double code is shared a lot
     await _causesService.completeLearningResource(tileData.learningResource.id);
-	notifyListeners();
+    notifyListeners();
     // TODO Can we do this after?
     // TODO If not do we do that else where (notify after navigate)
     return _causesService.openLearningResource(tileData.learningResource);

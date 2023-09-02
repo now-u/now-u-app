@@ -82,7 +82,9 @@ class CausesService {
 
     // // Update user after request
     // await locator<AuthenticationService>().fetchUser();
-    final response = await _causeServiceClient.getMeApi().meCausesInfoPartialUpdate(
+    final response = await _causeServiceClient
+        .getMeApi()
+        .meCausesInfoPartialUpdate(
           patchedCausesUser: PatchedCausesUser(
             (userInfo) => userInfo
               ..selectedCausesIds =
@@ -90,10 +92,10 @@ class CausesService {
           ),
         );
 
-	_userInfo = response.data;
+    _userInfo = response.data;
 
-	// After selecting causes we fetch all causes to updated 'selected' status
-	await _fetchCauses();
+    // After selecting causes we fetch all causes to updated 'selected' status
+    await _fetchCauses();
   }
 
   /// Complete an action
@@ -142,8 +144,8 @@ class CausesService {
     }
     final response =
         await _causeServiceClient.getMeApi().meCausesInfoRetrieve();
-	print("YPatched user select info");
-	print(response.data);
+    print("YPatched user select info");
+    print(response.data);
     return _userInfo = response.data!;
   }
 

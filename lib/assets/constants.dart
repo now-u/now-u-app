@@ -24,8 +24,9 @@ const LOCAL_STACK_URL = 'http://192.168.1.11';
 const CAUSES_API_URL = 'https://causes.dev.apiv2.now-u.com/';
 
 // const SEARCH_SERVICE_URL = '$LOCAL_STACK_URL:7700';
-const SEARCH_SERVICE_URL = 'https://search.dev.apiv2.now-u.com/';
-const SEARCH_SERVICE_KEY = 'bff96ec33b85544b836bc50a8708e9d61833ff2f38d0f83f44f7a700e3bb89cc';
+const SEARCH_SERVICE_URL = 'https://search.dev.apiv2.now-u.com';
+const SEARCH_SERVICE_KEY =
+    '31c585c68897bbb6d802130ab36f7a0dca04f6cb0c9ec9e89c05729ca8106169';
 
 class CustomColors {
   /// Primary brand color
@@ -125,6 +126,3 @@ final lightTheme = ThemeData(
     ),
   ),
 );
-
-// Used during on boarding
-final darkTheme = ThemeData();

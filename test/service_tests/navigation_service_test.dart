@@ -222,8 +222,8 @@ void main() {
           ).thenAnswer((_) => Future.value({}));
 
           await navigationService.launchLink(url);
-			
-		  // TODO Fix
+
+          // TODO Fix
           // verify(() => mockNavigatorState.pushNamed(Routes.home)).called(1);
         });
       });

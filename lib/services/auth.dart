@@ -22,17 +22,16 @@ class AuthenticationService {
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxd2F4eGhya3BienZqZGxmZHFlIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzcyMjc5ODMsImV4cCI6MTk5MjgwMzk4M30.JiWVL_JjY-bUK_XauRrnexJSvkia1mH8FcWgUDN1grI',
     );
 
-	print('Current session is: ${_client.auth.currentSession}');
+    print('Current session is: ${_client.auth.currentSession}');
 
-	if (token != null) {
-		_apiService.setToken(token!);
-	}
+    if (token != null) {
+      _apiService.setToken(token!);
+    }
 
     _client.auth.onAuthStateChange.listen((data) {
       if (data.event == AuthChangeEvent.signedIn ||
           data.event == AuthChangeEvent.tokenRefreshed) {
-
-		_logger.info('Updated user token for causes serivice client');
+        _logger.info('Updated user token for causes serivice client');
         _apiService.setToken(token!);
       }
       // TODO Handle logout

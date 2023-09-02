@@ -1,5 +1,6 @@
 import 'package:causeApiClient/causeApiClient.dart';
 import 'package:collection/collection.dart';
+import 'package:logging/logging.dart';
 import 'package:meilisearch/meilisearch.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_collection/built_collection.dart';
@@ -334,14 +335,16 @@ String getResourceTypeIndexName(ResourceType resourceType) {
 
 class SearchService {
   // This is a read only API token for the CampaignAction index. If more access is required a new token must be generated
+  // TODO Add custom dio with sentry enabled
   final _meiliSearchClient = MeiliSearchClient(
     SEARCH_SERVICE_URL,
     SEARCH_SERVICE_KEY,
     const Duration(seconds: 10),
   );
 
-  final CauseApiClient _causeServiceClient = CauseApiClient();
-  final CausesService _causesService = locator<CausesService>();
+  final _causeServiceClient = CauseApiClient();
+  final _causesService = locator<CausesService>();
+  final _logger = Logger('SearchService');
 
   List<ListAction> _searchHitsToActions(List<Map<String, dynamic>> hits) {
     final results = _causeServiceClient.serializers.deserialize(

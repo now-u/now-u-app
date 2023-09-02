@@ -4,6 +4,7 @@ import 'package:nowu/assets/components/inputs.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:nowu/themes.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nowu/ui/views/profile_setup/profile_setup_viewmodel.dart';
@@ -194,17 +195,20 @@ class ProfileSetupView extends StackedView<ProfileSetupViewModel> {
     // TODO Check this still works at this level
     return WillPopScope(
       onWillPop: () async => false,
-      child: Scaffold(
-        backgroundColor: Theme.of(context).primaryColorDark,
-        body: NotificationListener(
-          onNotification: (OverscrollIndicatorNotification overscroll) {
-            overscroll.disallowIndicator();
-            return true;
-          },
-          child: ListView(
-            children: [
-              _setupProfileForm(context, model),
-            ],
+      child: Theme(
+        data: darkTheme,
+        child: Scaffold(
+          backgroundColor: darkTheme.colorScheme.background,
+          body: NotificationListener(
+            onNotification: (OverscrollIndicatorNotification overscroll) {
+              overscroll.disallowIndicator();
+              return true;
+            },
+            child: ListView(
+              children: [
+                _setupProfileForm(context, model),
+              ],
+            ),
           ),
         ),
       ),

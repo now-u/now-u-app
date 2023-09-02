@@ -51,7 +51,8 @@ class _LoginForm extends StatelessWidget {
   final LoginCodeViewModel viewModel;
   final TextEditingController codeInputController;
 
-  const _LoginForm(this.viewModel, {
+  const _LoginForm(
+    this.viewModel, {
     super.key,
     required this.codeInputController,
   });
@@ -152,16 +153,17 @@ class _Body extends StatelessWidget {
   final LoginCodeViewModel viewModel;
   final TextEditingController codeInputController;
 
-  const _Body(this.viewModel, {
+  const _Body(
+    this.viewModel, {
     super.key,
-	required this.codeInputController,
+    required this.codeInputController,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-	// TODO Why do I need to specify this manually?
-	  backgroundColor: Theme.of(context).colorScheme.background,
+      // TODO Why do I need to specify this manually?
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: NotificationListener(
         onNotification: (OverscrollIndicatorNotification overscroll) {
           overscroll.disallowIndicator();

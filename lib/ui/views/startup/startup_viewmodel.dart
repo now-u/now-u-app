@@ -21,6 +21,7 @@ class StartupViewModel extends BaseViewModel with PostLoginViewModelMixin {
   @override
   void initialise() {
     _logger.info('Initialised startup view model');
+    handleStartUpLogic();
   }
 
   // TODO Add retires on error with backoff
@@ -61,12 +62,12 @@ class StartupViewModel extends BaseViewModel with PostLoginViewModelMixin {
     final _authenticationService = locator<AuthenticationService>();
     await _authenticationService.init();
 
-	// TODO This feels brittle, can we do this somehwere more centrally?
-	// TODO Can probably remove this
-	if (_authenticationService.token != null) {
-	    _logger.info('Setting token for api service');
-		_apiService.setToken(_authenticationService.token!);
-	}
+    // TODO This feels brittle, can we do this somehwere more centrally?
+    // TODO Can probably remove this
+    if (_authenticationService.token != null) {
+      _logger.info('Setting token for api service');
+      _apiService.setToken(_authenticationService.token!);
+    }
 
     _logger.info('Initalizing causes service');
     final _causesService = locator<CausesService>();
@@ -75,12 +76,12 @@ class StartupViewModel extends BaseViewModel with PostLoginViewModelMixin {
     sentryTransaction.finish();
 
     if (_authenticationService.isAuthenticated) {
-	  _logger.info('User is authenticated');
+      _logger.info('User is authenticated');
       return fetchUserAndNavigatePostLogin();
     }
 
     // TODO Track if device has already finished intro, if so show login page instead
-	_logger.info('User is not authenticated');
+    _logger.info('User is not authenticated');
     _routerService.clearStackAndShow(const IntroViewRoute());
   }
 }

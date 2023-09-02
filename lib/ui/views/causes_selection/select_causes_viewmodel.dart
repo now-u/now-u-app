@@ -9,7 +9,8 @@ import 'package:stacked/stacked.dart';
 export 'package:nowu/services/router_service.dart';
 
 // TODO Maybe to future view model here? Maybe it need smultiple or idk something
-abstract class SelectCausesViewModel extends BaseViewModel implements Initialisable {
+abstract class SelectCausesViewModel extends BaseViewModel
+    implements Initialisable {
   final DialogService _dialogService = locator<DialogService>();
   final CausesService _causesService = locator<CausesService>();
 
