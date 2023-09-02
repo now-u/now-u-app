@@ -335,8 +335,8 @@ String getResourceTypeIndexName(ResourceType resourceType) {
 class SearchService {
   // This is a read only API token for the CampaignAction index. If more access is required a new token must be generated
   final _meiliSearchClient = MeiliSearchClient(
-    '$LOCAL_STACK_URL:7700',
-    'masterKey',
+    SEARCH_SERVICE_URL,
+    SEARCH_SERVICE_KEY,
     const Duration(seconds: 10),
   );
 
@@ -380,7 +380,8 @@ class SearchService {
   Future<List<ListAction>> searchActions({ActionSearchFilter? filter}) async {
     final _actionsIndex = _meiliSearchClient.index(SearchIndexName.ACTIONS);
     print(
-        "Searching actions with ${filter?.toMeilisearchQuery(_causesService.userInfo).filter}");
+      'Searching actions with ${filter?.toMeilisearchQuery(_causesService.userInfo).filter}',
+    );
     final result = await _actionsIndex.search(
       filter?.query,
       filter?.toMeilisearchQuery(_causesService.userInfo),

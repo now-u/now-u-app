@@ -1,7 +1,6 @@
 import 'package:nowu/assets/components/card.dart';
 import 'package:nowu/assets/components/cause_indicator.dart';
 import 'package:nowu/assets/components/custom_network_image.dart';
-import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/models/article.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +13,6 @@ enum ExploreTileStyle {
 
 abstract class ExploreTile extends StatelessWidget {
   ExploreTile({key});
-
-  final CausesService _causesService = locator<CausesService>();
 
   Widget buildBody(BuildContext context);
 
@@ -33,8 +30,9 @@ class ExploreCampaignTile extends ExploreTile {
   final Cause cause;
   final bool? completed;
   final ListCampaign campaign;
+  final GestureTapCallback onTap;
 
-  ExploreCampaignTile(CampaignExploreTileData tile, {Key? key})
+  ExploreCampaignTile(CampaignExploreTileData tile, {required this.onTap, Key? key})
       : headerImage = tile.campaign.headerImage.url,
         title = tile.campaign.title,
         cause = tile.campaign.cause,
@@ -47,7 +45,7 @@ class ExploreCampaignTile extends ExploreTile {
     return AspectRatio(
       aspectRatio: 0.75,
       child: InkWell(
-        onTap: () => _causesService.openCampaign(campaign),
+        onTap: onTap,
         child: Column(
           children: [
             Stack(
@@ -93,6 +91,7 @@ class ExploreActionTile extends ExploreResourceTile {
 
   ExploreActionTile(
     ActionExploreTileData tile, {
+	required GestureTapCallback onTap,
     ExploreTileStyle? style,
     Key? key,
   })  : action = tile.action,
@@ -107,12 +106,9 @@ class ExploreActionTile extends ExploreResourceTile {
           timeText: tile.action.timeText,
           isCompleted: tile.isCompleted,
           style: style,
+		  onTap: onTap,
           key: key,
         );
-
-  void onTap() {
-    _causesService.openAction(action.id);
-  }
 }
 
 class ExploreLearningResourceTile extends ExploreResourceTile {
@@ -120,6 +116,7 @@ class ExploreLearningResourceTile extends ExploreResourceTile {
 
   ExploreLearningResourceTile(
     LearningResourceExploreTileData tile, {
+	required GestureTapCallback onTap,
     ExploreTileStyle? style,
     Key? key,
   })  : resource = tile.learningResource,
@@ -135,12 +132,8 @@ class ExploreLearningResourceTile extends ExploreResourceTile {
           isCompleted: tile.isCompleted,
           key: key,
           style: style,
+		  onTap: onTap,
         );
-
-  void onTap() {
-    _causesService.openLearningResource(resource);
-    // TODO Notify listeners
-  }
 }
 
 abstract class ExploreResourceTile extends ExploreTile {
@@ -156,6 +149,7 @@ abstract class ExploreResourceTile extends ExploreTile {
   final String timeText;
   final bool? isCompleted;
   final ExploreTileStyle style;
+  final GestureTapCallback onTap;
 
   ExploreResourceTile({
     required this.title,
@@ -167,12 +161,11 @@ abstract class ExploreResourceTile extends ExploreTile {
     required this.cause,
     required this.timeText,
     required this.isCompleted,
+	required this.onTap,
     ExploreTileStyle? style,
     Key? key,
   })  : this.style = style ?? ExploreTileStyle.Standard,
         super(key: key);
-
-  void onTap();
 
   @override
   Widget buildBody(BuildContext context) {
@@ -263,8 +256,9 @@ class ExploreNewsArticleTile extends ExploreTile {
   final String url;
   final String shortUrl;
   final NewsArticle article;
+  final GestureTapCallback onTap;
 
-  ExploreNewsArticleTile(NewsArticleExploreTileData tile, {Key? key})
+  ExploreNewsArticleTile(NewsArticleExploreTileData tile, {required this.onTap, Key? key})
       : title = tile.article.title,
         subtitle = tile.article.subtitle,
         headerImage = tile.article.headerImage.url,
@@ -278,9 +272,7 @@ class ExploreNewsArticleTile extends ExploreTile {
     return AspectRatio(
       aspectRatio: 0.8,
       child: InkWell(
-        onTap: () {
-          _causesService.openNewArticle(article);
-        },
+        onTap: onTap,
         child: Column(
           children: [
             AspectRatio(

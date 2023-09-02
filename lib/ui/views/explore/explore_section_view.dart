@@ -56,7 +56,7 @@ abstract class ExploreSectionWidget<
 
   ExploreSectionWidget(this.args, {this.pageViewModel});
 
-  Widget _renderTile(TTileData tile);
+  Widget _renderTile(TTileData tile, TViewModel viewModel);
 
   @override
   bool get createNewViewModelOnInsert => true;
@@ -194,7 +194,7 @@ abstract class ExploreSectionWidget<
               right: 8,
               left: index == 0 ? horizontalPadding : 0,
             ),
-            child: _renderTile(model.tiles.elementAt(index)),
+            child: _renderTile(model.tiles.elementAt(index), model),
           ),
         ),
       ),
@@ -208,9 +208,6 @@ abstract class ExploreSectionWidget<
     Widget? child,
   ) {
     // TODO When the input args changes, the viewmodel isn't updated
-    print("Rerendering ExploreSection");
-    print(args.baseParams.causeIds);
-    print(model.args.baseParams.causeIds);
     return Container(
       color: args.backgroundColor,
       child: Padding(
@@ -247,17 +244,17 @@ class ActionExploreSection<TFilterParam> extends ExploreSectionWidget<
     ActionExploreSectionArgs<TFilterParam>,
     ActionExploreSectionViewModel<TFilterParam>> {
   ActionExploreSection(ActionExploreSectionArgs<TFilterParam> args,
-      {ExplorePageViewModel? pageViewModel})
+      {ExplorePageViewModel? pageViewModel,})
       : super(args, pageViewModel: pageViewModel);
 
   @override
-  Widget _renderTile(ActionExploreTileData tile) {
-    return ExploreActionTile(tile);
+  Widget _renderTile(ActionExploreTileData tile, ActionExploreSectionViewModel viewModel) {
+    return ExploreActionTile(tile, onTap: () => viewModel.tileOnClick(tile));
   }
 
   @override
   ActionExploreSectionViewModel<TFilterParam> viewModelBuilder(
-      BuildContext context) {
+      BuildContext context,) {
     return ActionExploreSectionViewModel(this.args, pageViewModel);
   }
 }
@@ -270,17 +267,17 @@ class LearningResourceExploreSection<TFilterParam> extends ExploreSectionWidget<
     LearningResourceExploreSectionViewModel<TFilterParam>> {
   LearningResourceExploreSection(
       LearningResourceExploreSectionArgs<TFilterParam> args,
-      {ExplorePageViewModel? pageViewModel})
+      {ExplorePageViewModel? pageViewModel,})
       : super(args, pageViewModel: pageViewModel);
 
   @override
-  Widget _renderTile(LearningResourceExploreTileData tile) {
-    return ExploreLearningResourceTile(tile);
+  Widget _renderTile(LearningResourceExploreTileData tile, LearningResourceExploreSectionViewModel viewModel) {
+    return ExploreLearningResourceTile(tile, onTap: () => viewModel.tileOnClick(tile));
   }
 
   @override
   LearningResourceExploreSectionViewModel<TFilterParam> viewModelBuilder(
-      BuildContext context) {
+      BuildContext context,) {
     return LearningResourceExploreSectionViewModel(this.args, pageViewModel);
   }
 }
@@ -292,17 +289,17 @@ class CampaignExploreSection<TFilterParam> extends ExploreSectionWidget<
     CampaignExploreSectionArgs<TFilterParam>,
     CampaignExploreSectionViewModel<TFilterParam>> {
   CampaignExploreSection(CampaignExploreSectionArgs<TFilterParam> args,
-      {ExplorePageViewModel? pageViewModel})
+      {ExplorePageViewModel? pageViewModel,})
       : super(args, pageViewModel: pageViewModel);
 
   @override
-  Widget _renderTile(CampaignExploreTileData tile) {
-    return ExploreCampaignTile(tile);
+  Widget _renderTile(CampaignExploreTileData tile, CampaignExploreSectionViewModel viewModel) {
+    return ExploreCampaignTile(tile, onTap: () => viewModel.tileOnClick(tile));
   }
 
   @override
   CampaignExploreSectionViewModel<TFilterParam> viewModelBuilder(
-      BuildContext context) {
+      BuildContext context,) {
     return CampaignExploreSectionViewModel(this.args, pageViewModel);
   }
 }
@@ -314,17 +311,17 @@ class NewsArticleExploreSection<TFilterParam> extends ExploreSectionWidget<
     NewsArticleExploreSectionArgs<TFilterParam>,
     NewsArticleExploreSectionViewModel<TFilterParam>> {
   NewsArticleExploreSection(NewsArticleExploreSectionArgs<TFilterParam> args,
-      {ExplorePageViewModel? pageViewModel})
+      {ExplorePageViewModel? pageViewModel,})
       : super(args, pageViewModel: pageViewModel);
 
   @override
-  Widget _renderTile(NewsArticleExploreTileData tile) {
-    return ExploreNewsArticleTile(tile);
+  Widget _renderTile(NewsArticleExploreTileData tile, NewsArticleExploreSectionViewModel viewModel) {
+    return ExploreNewsArticleTile(tile, onTap: () => viewModel.tileOnClick(tile));
   }
 
   @override
   NewsArticleExploreSectionViewModel<TFilterParam> viewModelBuilder(
-      BuildContext context) {
+      BuildContext context,) {
     return NewsArticleExploreSectionViewModel(this.args, pageViewModel);
   }
 }

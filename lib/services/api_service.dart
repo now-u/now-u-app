@@ -26,18 +26,20 @@ class ApiService {
   CauseApiClient get apiClient {
     if (_apiClient == null) {
       throw Exception(
-        'Cannot get api client before initalizing causes service',
+        'Cannot get api client before initalizing api service',
       );
     }
     return _apiClient!;
   }
+
+  String get baseUrl => apiClient.dio.options.baseUrl;
 
   void init() {
     _authInterceptor = AuthInterceptor();
 
     final dio = Dio(
       BaseOptions(
-        baseUrl: '$LOCAL_STACK_URL:8000',
+        baseUrl: CAUSES_API_URL,
         headers: {
           'content-type': 'application/json',
           'Access-Control-Allow-Origin': 'true',
@@ -52,7 +54,11 @@ class ApiService {
     );
   }
 
-  setToken(String? token) {
+  void setToken(String? token) {
 	_authInterceptor.token = token;
+  }
+
+  void setBaseUrl(String baseUrl) {
+	apiClient.dio.options.baseUrl = baseUrl;
   }
 }

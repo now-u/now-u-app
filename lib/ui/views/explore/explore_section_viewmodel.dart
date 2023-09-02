@@ -171,14 +171,14 @@ sealed class ExploreSectionViewModel<
   }
 
   Future<Iterable<T>> _fetchTiles();
-  void tileOnClick(T tileData);
+  Future<void> tileOnClick(T tileData);
 }
 
 class ActionExploreSectionViewModel<FilterParamType>
     extends ExploreSectionViewModel<ActionExploreTileData, ActionSearchFilter,
         FilterParamType> {
   ActionExploreSectionViewModel(ActionExploreSectionArgs<FilterParamType> args,
-      ExplorePageViewModel? pageViewModel)
+      ExplorePageViewModel? pageViewModel,)
       : super(args, pageViewModel);
 
   @override
@@ -194,8 +194,8 @@ class ActionExploreSectionViewModel<FilterParamType>
   }
 
   @override
-  void tileOnClick(ActionExploreTileData tileData) {
-    _causesService.openAction(tileData.action.id);
+  Future<void> tileOnClick(ActionExploreTileData tileData) {
+    return _causesService.openAction(tileData.action.id);
   }
 }
 
@@ -219,12 +219,13 @@ class LearningResourceExploreSectionViewModel<FilterParamType>
   }
 
   @override
-  void tileOnClick(LearningResourceExploreTileData tileData) async {
+  Future<void> tileOnClick(LearningResourceExploreTileData tileData) async {
+    // TODO This double code is shared a lot
     await _causesService.completeLearningResource(tileData.learningResource.id);
+	notifyListeners();
     // TODO Can we do this after?
     // TODO If not do we do that else where (notify after navigate)
-    notifyListeners();
-    _causesService.openLearningResource(tileData.learningResource);
+    return _causesService.openLearningResource(tileData.learningResource);
   }
 }
 
@@ -247,8 +248,8 @@ class CampaignExploreSectionViewModel<FilterParamType>
   }
 
   @override
-  void tileOnClick(CampaignExploreTileData tileData) async {
-    _causesService.openCampaign(tileData.campaign);
+  Future<void> tileOnClick(CampaignExploreTileData tileData) async {
+    return _causesService.openCampaign(tileData.campaign);
   }
 }
 
@@ -270,7 +271,7 @@ class NewsArticleExploreSectionViewModel<FilterParamType>
   }
 
   @override
-  void tileOnClick(NewsArticleExploreTileData tileData) async {
-    _causesService.openNewArticle(tileData.article);
+  Future<void> tileOnClick(NewsArticleExploreTileData tileData) async {
+    return _causesService.openNewArticle(tileData.article);
   }
 }

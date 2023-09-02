@@ -15,16 +15,17 @@ const PRIVACY_POLICY_URL =
 const TERMS_AND_CONDITIONS_URL =
     'https://now-u-docs.s3.eu-west-2.amazonaws.com/now-u+user+terms+and+conditions.pdf';
 
-const CAUSES_API_URL = 'staging.api.now-u.com';
 const LOCAL_CAUSES_API_URL = '192.168.1.65:3001';
 const LOCAL_STACK_URL = 'http://192.168.1.11';
 
-Uri getCausesApiPath(String path, {Map<String, dynamic>? stringParams}) {
-  // return Uri.http(LOCAL_CAUSES_API_URL, "/api/" + path, stringParams);
-  return Uri.https(CAUSES_API_URL, '/api/' + path, stringParams);
-}
-
 // devMode ? "staging.api.now-u.com" : "api.now-u.com";
+
+// const CAUSES_API_URL = '$LOCAL_STACK_URL:8000';
+const CAUSES_API_URL = 'https://causes.dev.apiv2.now-u.com/';
+
+// const SEARCH_SERVICE_URL = '$LOCAL_STACK_URL:7700';
+const SEARCH_SERVICE_URL = 'https://search.dev.apiv2.now-u.com/';
+const SEARCH_SERVICE_KEY = 'bff96ec33b85544b836bc50a8708e9d61833ff2f38d0f83f44f7a700e3bb89cc';
 
 class CustomColors {
   /// Primary brand color

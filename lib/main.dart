@@ -50,7 +50,6 @@ void main() async {
       options.tracesSampleRate = 1.0;
       options.addIntegration(LoggingIntegration());
 
-      // TODO Set if debug
       options.debug = devMode;
       options.diagnosticLevel = SentryLevel.info;
     },
