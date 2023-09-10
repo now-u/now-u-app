@@ -86,7 +86,10 @@ class CampaignInfoView extends StackedView<CampaignViewModel> {
     CampaignViewModel viewModel,
   ) {
     if (viewModel.campaign == null) {
-      return [const CircularProgressIndicator()];
+      return [const Center(child: Padding(
+        padding: EdgeInsets.all(24.0),
+        child: CircularProgressIndicator(),
+      ))];
     }
 
     // Collect all actions and learning materials into a 2 lists of shuffled
@@ -132,7 +135,11 @@ class CampaignInfoView extends StackedView<CampaignViewModel> {
         .map(
           (resource) => Padding(
             padding: const EdgeInsets.symmetric(vertical: 5),
-            child: resource,
+            child: Container(
+				height: 160,
+				width: double.infinity,
+				child: resource,
+			),
           ),
         )
         .toList();

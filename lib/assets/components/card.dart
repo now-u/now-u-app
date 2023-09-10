@@ -14,6 +14,7 @@ class BaseCard extends StatelessWidget {
       elevation: tileElevation,
       shadowColor: tileBoxShadowLight.color,
       child: child,
+      surfaceTintColor: Colors.transparent,
     );
   }
 }

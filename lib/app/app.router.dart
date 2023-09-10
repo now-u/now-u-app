@@ -89,7 +89,7 @@ class StackedRouterWeb extends _i18.RootStackRouter {
         barrierDismissible: false,
       );
     },
-    FAQViewRoute.name: (routeData) {
+    FaqViewRoute.name: (routeData) {
       return _i18.CustomPage<dynamic>(
         routeData: routeData,
         child: _i6.FaqView(),
@@ -221,8 +221,8 @@ class StackedRouterWeb extends _i18.RootStackRouter {
           path: '/campaign-info-view',
         ),
         _i18.RouteConfig(
-          FAQViewRoute.name,
-          path: '/f-aq-view',
+          FaqViewRoute.name,
+          path: '/faq-view',
         ),
         _i18.RouteConfig(
           IntroViewRoute.name,
@@ -375,14 +375,14 @@ class CampaignInfoViewArgs {
 
 /// generated route for
 /// [_i6.FaqView]
-class FAQViewRoute extends _i18.PageRouteInfo<void> {
-  const FAQViewRoute()
+class FaqViewRoute extends _i18.PageRouteInfo<void> {
+  const FaqViewRoute()
       : super(
-          FAQViewRoute.name,
-          path: '/f-aq-view',
+          FaqViewRoute.name,
+          path: '/faq-view',
         );
 
-  static const String name = 'FAQView';
+  static const String name = 'FaqView';
 }
 
 /// generated route for
@@ -667,10 +667,10 @@ extension RouterStateExtension on _i17.RouterService {
     );
   }
 
-  Future<dynamic> navigateToFAQView(
+  Future<dynamic> navigateToFaqView(
       {void Function(_i18.NavigationFailure)? onFailure}) async {
     return navigateTo(
-      const FAQViewRoute(),
+      const FaqViewRoute(),
       onFailure: onFailure,
     );
   }
@@ -839,10 +839,10 @@ extension RouterStateExtension on _i17.RouterService {
     );
   }
 
-  Future<dynamic> replaceWithFAQView(
+  Future<dynamic> replaceWithFaqView(
       {void Function(_i18.NavigationFailure)? onFailure}) async {
     return replaceWith(
-      const FAQViewRoute(),
+      const FaqViewRoute(),
       onFailure: onFailure,
     );
   }

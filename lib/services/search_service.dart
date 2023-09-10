@@ -34,6 +34,7 @@ class BaseResourceSearchFilter {
   // for the merge stuff??
   final Iterable<ResourceType>? resourceTypes;
 
+  // TODO Add released since
   const BaseResourceSearchFilter({
     this.query,
     this.causeIds,
@@ -180,7 +181,10 @@ class ActionSearchFilter extends ResourceSearchFilter<ActionSearchFilter> {
       filter.add(timeBracketsToMeilisearchFilter(timeBrackets!));
     }
 
-    // TODO REcommenede wha is it called?
+    // TODO Recommeneded wha is it called?
+    // Its called suggested but need to redeploy to make this work
+
+    // TODO Released since
 
     // TODO Action type
     if (types != null) {

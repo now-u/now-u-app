@@ -114,6 +114,21 @@ final regularTheme = ThemeData(
     height: 48,
   ),
   textButtonTheme: TextButtonThemeData(style: primaryTextButtonStyle),
+  // TODO Bring back!
+  // TODO Fix buttons
+  searchBarTheme: SearchBarThemeData(
+    surfaceTintColor: const MaterialStatePropertyAll(Colors.transparent),
+    hintStyle: MaterialStatePropertyAll(
+        textTheme.bodyLarge!.copyWith(color: Colors.grey)),
+    elevation: const MaterialStatePropertyAll(tileElevation),
+    shadowColor: MaterialStatePropertyAll(tileBoxShadowLight.color),
+  ),
+  cardTheme: const CardTheme(
+    surfaceTintColor: Colors.transparent,
+  ),
+  appBarTheme: const AppBarTheme(
+    surfaceTintColor: Colors.transparent,
+  ),
   inputDecorationTheme: InputDecorationTheme(
     filled: true,
     fillColor: const Color.fromRGBO(221, 221, 221, 0.2),

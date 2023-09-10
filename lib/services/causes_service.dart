@@ -179,6 +179,7 @@ class CausesService {
     if (_userInfo == null) {
       return null;
     }
+	// TODO Store copy of these values as set so don't have to loop through
     return _userInfo!.completedLearningResourceIds.contains(learningResourceId);
   }
 

@@ -173,6 +173,7 @@ abstract class ExploreSectionWidget<
     }
 
     if (model.state == ExploreSectionState.Errored) {
+	  // TODO
       return Container(color: Colors.red);
     }
 

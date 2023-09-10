@@ -49,25 +49,25 @@ class ExploreCampaignTile extends ExploreTile {
         onTap: onTap,
         child: Column(
           children: [
-            Stack(
-              alignment: Alignment.topRight,
-              children: [
-                AspectRatio(
-                  aspectRatio: 1.5,
+            Container(
+			  constraints: const BoxConstraints(maxHeight: 150),
+              child: Stack(
+                alignment: Alignment.topRight,
+                children: [
                   // FIXME ink animation doesn't cover image
-                  child: CustomNetworkImage(
+                  CustomNetworkImage(
                     headerImage,
                     fit: BoxFit.cover,
                   ),
-                ),
-                if (completed != null)
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: _ExploreTileCheckmark(
-                      completed: completed!,
-                    ),
-                  )
-              ],
+                  if (completed != null)
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: _ExploreTileCheckmark(
+                        completed: completed!,
+                      ),
+                    )
+                ],
+              ),
             ),
             Expanded(
               child: Container(

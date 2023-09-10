@@ -36,15 +36,14 @@ class CampaignViewModel extends BaseViewModel {
   }
 
   void openLearningResource(LearningResource learningResource) {
-    _causesService
-        .completeLearningResource(learningResource.id)
-        .then((value) => notifyListeners());
-    _causesService.openLearningResource(learningResource);
+    // TODO Look into stream services (which can notify their listens when a resource is completed)
+    // _causesService
+    //     .completeLearningResource(learningResource.id)
+    //     .then((value) => notifyListeners());
+    _causesService.openLearningResource(learningResource).then((value) => notifyListeners());
   }
 
   void openAction(ListAction action) {
-    // TODO Look into stream services (which can notify their listens when a resource is completed)
-    _causesService.completeAction(action.id).then((value) => notifyListeners());
     _causesService.openAction(action.id);
   }
 

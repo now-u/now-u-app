@@ -82,8 +82,7 @@ LearningResourceType getResourceTypeFromEnum(LearningResourceTypeEnum type) {
 /// like the time expected to completed the resource. We also store if the user
 /// has completed the resource. // TODO Do this
 extension LearningResourceExtension on LearningResource {
-  String get timeText =>
-      timeBrackets.firstWhere((b) => b['maxTime'] > time)['text'];
+  String get timeText => timeBrackets.firstWhere((b) => b.maxTime > time).text;
 
   LearningResourceType get type =>
       getResourceTypeFromEnum(learningResourceType);

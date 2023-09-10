@@ -55,7 +55,7 @@ final menuItems = <MenuItemData>[
   const ActionMenuItem(
     title: 'FAQ',
     icon: CustomIcons.ic_faq,
-    action: RouteMenuItemAction(FAQViewRoute()),
+    action: RouteMenuItemAction(FaqViewRoute()),
   ),
   const SectionHeadingMenuItem(title: 'Feedback'),
   const ActionMenuItem(

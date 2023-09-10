@@ -11,10 +11,10 @@ abstract class TimeExploreFilter<FilterT extends ResourceSearchFilter<FilterT>>
   getOptions() async {
     return timeBrackets.map(
       (bracket) => ExploreFilterOptionArgs(
-        displayName: bracket['text'],
+        displayName: bracket.text,
         parameterValue: Tuple2(
-          bracket['minTime'].toDouble(),
-          bracket['maxTime'].toDouble(),
+          bracket.minTime.toDouble(),
+          bracket.maxTime.toDouble(),
         ),
       ),
     );
