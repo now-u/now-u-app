@@ -8,8 +8,7 @@ import 'explore_tab.dart';
 class ExploreNewsArticleTab extends StatelessWidget {
   final ExplorePageViewModel viewModel;
 
-  const ExploreNewsArticleTab(this.viewModel, {Key? key})
-      : super(key: key);
+  const ExploreNewsArticleTab(this.viewModel, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +18,7 @@ class ExploreNewsArticleTab extends StatelessWidget {
       ],
       filterResults: viewModel.newsArticles.map<Widget>(
         (article) => Container(
-		  // TODO Create shared constant for these/ pull. from ExploreSectionArgs
+          // TODO Create shared constant for these/ pull. from ExploreSectionArgs
           height: 400,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),

@@ -47,7 +47,7 @@ class CausesFilter extends StatelessWidget {
       child: ExploreFilterChip(
         onSelected: (_) => viewModel.openCausesFilterSheet(),
         label: 'Causes',
-        isSelected: viewModel.filterCauseIds.isNotEmpty,
+        isSelected: viewModel.filterData.filterCauseIds.isNotEmpty,
       ),
     );
   }
@@ -66,7 +66,7 @@ class TimeFilter extends StatelessWidget {
     return ExploreFilterChip(
       onSelected: (_) => viewModel.openTimeBracketsFilterSheet(),
       label: 'Time',
-      isSelected: viewModel.filterTimeBrackets.isNotEmpty,
+      isSelected: viewModel.filterData.filterTimeBrackets.isNotEmpty,
     );
   }
 }
@@ -81,11 +81,11 @@ class CompletedFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        return ExploreFilterChip(
-          onSelected: (_) => viewModel.toggleFilterCompleted(),
-          label: 'Completed',
-          isSelected: viewModel.filterCompleted,
-        );
+    return ExploreFilterChip(
+      onSelected: (_) => viewModel.toggleFilterCompleted(),
+      label: 'Completed',
+      isSelected: viewModel.filterData.filterCompleted,
+    );
   }
 }
 
@@ -100,11 +100,11 @@ class RecommendedFilter extends StatelessWidget {
   // TODO Fix - Not implemeneted - suggested not serializer on server side/filterable
   @override
   Widget build(BuildContext context) {
-        return ExploreFilterChip(
-          onSelected: (_) => viewModel.toggleFilterRecommended(),
-          label: 'Recommended',
-          isSelected: viewModel.filterRecommended,
-        );
+    return ExploreFilterChip(
+      onSelected: (_) => viewModel.toggleFilterRecommended(),
+      label: 'Recommended',
+      isSelected: viewModel.filterData.filterRecommended,
+    );
   }
 }
 
@@ -119,10 +119,10 @@ class NewFilter extends StatelessWidget {
   // TODO Fix - Not implemeneted - how get release date? Can api return that?
   @override
   Widget build(BuildContext context) {
-        return ExploreFilterChip(
-          onSelected: (_) => viewModel.toggleFilterNew(),
-          label: 'New',
-          isSelected: viewModel.filterNew,
-        );
+    return ExploreFilterChip(
+      onSelected: (_) => viewModel.toggleFilterNew(),
+      label: 'New',
+      isSelected: viewModel.filterData.filterNew,
+    );
   }
 }

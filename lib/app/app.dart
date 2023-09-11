@@ -22,7 +22,6 @@ import 'package:nowu/ui/views/login/login_view.dart';
 import 'package:nowu/ui/views/notification_info/notification_info_view.dart';
 import 'package:nowu/ui/views/partners/partners_view.dart';
 import 'package:nowu/ui/views/profile_setup/profile_setup_view.dart';
-import 'package:nowu/ui/views/search/search_view.dart';
 import 'package:nowu/ui/views/startup/startup_view.dart';
 import 'package:nowu/ui/views/tabs/tabs_view.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -38,7 +37,6 @@ import 'package:nowu/ui/bottom_sheets/explore_filter/explore_filter_sheet.dart';
 @StackedApp(
   routes: [
     CustomRoute(page: StartupView, initial: true),
-    CustomRoute(page: SearchView),
     CustomRoute(page: PartnersView),
     CustomRoute(page: ActionInfoView, path: 'action/:actionId'),
     CustomRoute(page: CampaignInfoView),

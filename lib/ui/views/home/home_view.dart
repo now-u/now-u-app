@@ -56,8 +56,20 @@ class HomeView extends StackedView<HomeViewModel> {
               const SizedBox(
                 height: 10,
               ),
-              ActionExploreSection(viewModel.myActions),
-              CampaignExploreSection(viewModel.suggestedCampaigns),
+              ActionExploreSection(
+                title: 'What can I do today?',
+                isLoading: viewModel.myActions == null,
+                tiles: viewModel.myActions,
+                tileOnClick: (tileData) =>
+                    viewModel.openAction(tileData.action),
+              ),
+              CampaignExploreSection(
+                title: 'Suggested campaigns',
+                isLoading: viewModel.suggestedCampaigns == null,
+                tiles: viewModel.suggestedCampaigns,
+                tileOnClick: (tileData) =>
+                    viewModel.openCampaign(tileData.campaign),
+              ),
               CustomWidthButton(
                 'Explore',
                 onPressed: () {
@@ -79,8 +91,20 @@ class HomeView extends StackedView<HomeViewModel> {
 
               const SizedBox(height: 30),
               // TODO Rename so page and section have Argument/Definition and then Widget/noPrefix
-              CampaignExploreSection(viewModel.myCampaigns),
-              NewsArticleExploreSection(viewModel.inTheNews),
+              CampaignExploreSection(
+                title: 'My campaigns',
+                tiles: viewModel.myCampaigns,
+                isLoading: viewModel.myCampaigns == null,
+                tileOnClick: (tileData) =>
+                    viewModel.openCampaign(tileData.campaign),
+              ),
+              NewsArticleExploreSection(
+                title: 'In the news',
+                tiles: viewModel.inTheNews,
+                isLoading: viewModel.inTheNews == null,
+                tileOnClick: (tileData) =>
+                    viewModel.openNewsArticle(tileData.article),
+              ),
 
               if (viewModel.currentUser != null)
                 Padding(

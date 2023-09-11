@@ -1,6 +1,5 @@
 import 'package:nowu/app/app.router.dart';
-import 'package:nowu/services/search_service.dart';
-import 'package:nowu/ui/views/explore/explore_page_definition.dart';
+import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:nowu/ui/views/tabs/tabs_view.dart';
 import 'package:stacked_services/stacked_services.dart' show RouterService;
 
@@ -8,10 +7,11 @@ export 'package:stacked_services/stacked_services.dart' show RouterService;
 export 'package:nowu/app/app.router.dart';
 
 extension RouterServiceExtension on RouterService {
-  Future<void> navigateToExplore([BaseResourceSearchFilter? baseFilter]) {
+  Future<void> navigateToExplore([ExplorePageFilterData? filterData]) {
     return navigateTo(
+      // TODO Fix args for naving to explore
       TabsViewRoute(
-          initialPage: TabPage.Explore, explorePageBaseFilter: baseFilter),
+          initialPage: TabPage.Explore, exploreFilterData: filterData,),
     );
   }
 

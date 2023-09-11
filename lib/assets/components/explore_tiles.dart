@@ -50,7 +50,7 @@ class ExploreCampaignTile extends ExploreTile {
         child: Column(
           children: [
             Container(
-			  constraints: const BoxConstraints(maxHeight: 150),
+              constraints: const BoxConstraints(maxHeight: 150),
               child: Stack(
                 alignment: Alignment.topRight,
                 children: [

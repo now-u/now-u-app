@@ -10,7 +10,7 @@ import 'package:nowu/services/internal_notification_service.dart';
 import 'package:nowu/services/navigation_service.dart';
 
 import 'package:nowu/models/Notification.dart';
-import 'package:nowu/ui/views/explore/explore_page_definition.dart';
+import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeViewModel extends BaseViewModel {
@@ -20,36 +20,68 @@ class HomeViewModel extends BaseViewModel {
   final _causesService = locator<CausesService>();
   final _dialogService = locator<DialogService>();
   final _userService = locator<UserService>();
+  final _searchService = locator<SearchService>();
 
   late List<Cause> _causes;
   List<Cause> get causes => _causes;
 
+  // TODO Multiple futures viewModel
+  List<ActionExploreTileData>? _myActions;
+  List<ActionExploreTileData>? get myActions => _myActions;
+  List<CampaignExploreTileData>? _myCampaigns;
+  List<CampaignExploreTileData>? get myCampaigns => _myCampaigns;
+  List<CampaignExploreTileData>? _suggestedCampaigns;
+  List<CampaignExploreTileData>? get suggestedCampaigns => _suggestedCampaigns;
+  List<NewsArticleExploreTileData>? _inTheNews;
+  List<NewsArticleExploreTileData>? get inTheNews => _inTheNews;
+
   UserProfile? get currentUser => _userService.currentUser;
 
-  void init() {
+  Future<void> init() async {
     fetchNotifications();
     _causes = _causesService.causes;
+    // TODO Multiple futures
+    await Future.wait([
+      _searchService.searchCampaigns().then(
+            (value) => _myCampaigns = value
+                .map(
+                  (campaign) => CampaignExploreTileData(
+                    campaign,
+                    _causesService.campaignIsComplete(campaign.id),
+                  ),
+                )
+                .toList(),
+          ),
+      _searchService
+          .searchCampaigns(filter: CampaignSearchFilter(recommended: true))
+          .then(
+            (value) => _suggestedCampaigns = value
+                .map(
+                  (campaign) => CampaignExploreTileData(
+                    campaign,
+                    _causesService.campaignIsComplete(campaign.id),
+                  ),
+                )
+                .toList(),
+          ),
+      _searchService.searchActions().then(
+            (value) => _myActions = value
+                .map(
+                  (action) => ActionExploreTileData(
+                    action,
+                    _causesService.actionIsComplete(action.id),
+                  ),
+                )
+                .toList(),
+          ),
+      _searchService.searchNewsArticles().then(
+            (value) => _inTheNews = value
+                .map((action) => NewsArticleExploreTileData(action))
+                .toList(),
+          ),
+    ]);
+    notifyListeners();
   }
-
-  // TODO should these def really be in the iewmodel? Feel like it shoul dbe in the view to me
-  final myCampaigns = CampaignExploreSectionArgs(
-    title: 'My campaigns',
-  );
-
-  final suggestedCampaigns = CampaignExploreSectionArgs(
-    title: 'Suggested campaigns',
-    baseParams: CampaignSearchFilter(recommended: true),
-  );
-
-  final myActions = ActionExploreSectionArgs(
-    title: 'What can I do today?',
-    // TODO Fix, this should only filter by completed if there is an active user
-    baseParams: ActionSearchFilter(completed: false),
-  );
-
-  final inTheNews = NewsArticleExploreSectionArgs(
-    title: 'In the news',
-  );
 
   Future getCausePopup(Cause listCause) async {
     final dialogResult = await _dialogService.showCauseDialog(cause: listCause);
@@ -107,5 +139,17 @@ class HomeViewModel extends BaseViewModel {
 
   void goToEditCausesPage() {
     _routerService.navigateToChangeSelectCausesView();
+  }
+
+  Future<void> openAction(ListAction action) {
+    return _causesService.openAction(action.id);
+  }
+
+  Future<void> openCampaign(ListCampaign campaign) {
+    return _causesService.openCampaign(campaign);
+  }
+
+  Future<void> openNewsArticle(NewsArticle article) {
+    return _causesService.openNewArticle(article);
   }
 }

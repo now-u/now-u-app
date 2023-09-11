@@ -26,6 +26,7 @@ String timeBracketsToMeilisearchFilter(
       .join(' OR ');
 }
 
+// TODO Use composition for this
 class BaseResourceSearchFilter {
   final String? query;
   final Iterable<int>? causeIds;
@@ -52,6 +53,22 @@ class BaseResourceSearchFilter {
       causeIds: causeIds ?? this.causeIds,
       resourceTypes: resourceTypes ?? this.resourceTypes,
     );
+  }
+
+  // TODO Duplicate code going on here!
+  List<String> toMeilisearchFilter() {
+    final List<String> filter = [];
+
+    if (causeIds != null) {
+      filter.add("causes.id IN [${causeIds!.join(',')}]");
+    }
+
+    // TODO Add epoch released at to meilisearch
+    // if (filter?.releasedSince != null) {
+    // 	filters.add("released_at_epoch > ${filter!.releasedSince!.millisecondsSinceEpoch / 1000}");
+    // }
+
+    return filter;
   }
 }
 
@@ -445,7 +462,10 @@ class SearchService {
                 query: filter?.query,
                 // TODO Can merge with correct type if required
                 // TODO This is completely wrong need to do to meilisearch query thing
-                // filter: filter,
+                // TODO This check is a hack, make it so news articles can be filtered by cause
+                filter: resourceType != ResourceType.NEWS_ARTICLE
+                    ? filter?.toMeilisearchFilter()
+                    : null,
               ),
             )
             .toList(),

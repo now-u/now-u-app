@@ -3,94 +3,51 @@ import 'package:nowu/assets/components/card.dart';
 import 'package:nowu/assets/components/explore_tiles.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:nowu/services/search_service.dart';
-import 'package:nowu/ui/views/explore/explore_page_definition.dart';
 import 'package:nowu/ui/views/explore/explore_page_view.dart';
 import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
-import 'package:nowu/ui/views/explore/explore_section_viewmodel.dart';
-import 'package:stacked/stacked.dart';
 
-class ExploreFilterSelectionItem extends StatelessWidget {
-  final String text;
-  final bool isSelected;
-  final VoidCallback onPressed;
+class ExploreSectionWidget extends StatelessWidget {
+  final bool isLoading;
+  final String title;
+  final GestureTapCallback? titleOnClick;
+  final String? description;
+  final Iterable<Widget>? tiles;
+  final double tileHeight;
 
-  ExploreFilterSelectionItem({
-    required this.text,
-    required this.isSelected,
-    required this.onPressed,
+  ExploreSectionWidget({
+    required this.isLoading,
+    required this.title,
+    required this.titleOnClick,
+    required this.description,
+    required this.tiles,
+    required this.tileHeight,
   });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        decoration: BoxDecoration(
-          color: isSelected ? CustomColors.black1 : CustomColors.greyLight2,
-          borderRadius: const BorderRadius.all(Radius.circular(24)),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        child: Center(
-          child: Text(
-            text,
-            style: TextStyle(
-              color: isSelected ? CustomColors.white : CustomColors.black2,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-abstract class ExploreSectionWidget<
-    TTileData extends ExploreTileData,
-    TFilter extends ResourceSearchFilter<TFilter>,
-    TFilterParam,
-    TArgs extends ExploreSectionArguments<TFilter, TFilterParam>,
-    TViewModel extends ExploreSectionViewModel<TTileData, TFilter,
-        TFilterParam>> extends StackedView<TViewModel> {
-  final ExplorePageViewModel? pageViewModel;
-  final TArgs args;
-
-  ExploreSectionWidget(this.args, {this.pageViewModel});
-
-  Widget _renderTile(TTileData tile, TViewModel viewModel);
-
-  @override
-  bool get createNewViewModelOnInsert => true;
-
-  @override
-  void onViewModelReady(TViewModel viewModel) {
-    viewModel.init();
-  }
 
   Widget _buildSectionHeader(
     BuildContext context,
-    ExploreSectionViewModel model,
   ) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
       child: Column(
         children: [
           GestureDetector(
-            onTap: model.handleLink,
+            onTap: titleOnClick,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  args.title,
+                  title,
                   style: Theme.of(context).textTheme.headlineSmall,
                   textAlign: TextAlign.left,
                 ),
-                if (args.link != null) const Icon(Icons.chevron_right, size: 30)
+                if (titleOnClick != null)
+                  const Icon(Icons.chevron_right, size: 30)
               ],
             ),
           ),
-          if (args.description != null)
+          if (description != null)
             Text(
-              args.description!,
+              description!,
               style: Theme.of(context).textTheme.displayMedium,
               textAlign: TextAlign.left,
             ),
@@ -99,32 +56,7 @@ abstract class ExploreSectionWidget<
     );
   }
 
-  Widget _buildSectionFilters(ExploreSectionViewModel model) {
-    return Container(
-      height: 40,
-      child: ListView.builder(
-        padding: const EdgeInsets.only(bottom: 8, top: 6),
-        scrollDirection: Axis.horizontal,
-        itemCount: model.filterData?.filterOptions.length,
-        itemBuilder: (context, index) {
-          final option = model.filterData!.filterOptions.elementAt(index);
-          return Padding(
-            padding: EdgeInsets.only(
-              right: 5,
-              left: index == 0 ? horizontalPadding : 0,
-            ),
-            child: ExploreFilterSelectionItem(
-              text: option.displayName,
-              isSelected: model.filterData!.optionIsSelected(option),
-              onPressed: () => model.filterData!.toggleSelectOption(option),
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _noTilesFound(TViewModel model) {
+  Widget _noTilesFound() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
       child: BaseCard(
@@ -145,14 +77,15 @@ abstract class ExploreSectionWidget<
                 ),
                 SizedBox(height: CustomPaddingSize.small),
                 Text(
-                  'Looks like we don’t have any ‘${args.title}’ to recommend right now. Check out our ‘Explore’ page to get involved another way.',
+                  'Looks like we don’t have any ‘${title}’ to recommend right now. Check out our ‘Explore’ page to get involved another way.',
                   style: lightTheme.textTheme.bodyMedium,
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: CustomPaddingSize.small),
                 DarkButton(
                   'Explore',
-                  onPressed: model.navigateToEmptyExplore,
+                  // TODO
+                  onPressed: () {},
                 )
               ],
             ),
@@ -162,57 +95,41 @@ abstract class ExploreSectionWidget<
     );
   }
 
-  Widget _buildTiles(BuildContext context, TViewModel model) {
-    final sectionHeight = args.tileHeight;
+  Widget _buildTiles(BuildContext context) {
+    final sectionHeight = tileHeight;
 
-    if (model.state == ExploreSectionState.Loading) {
+    if (isLoading) {
       return Container(
         height: sectionHeight,
         child: const Center(child: CircularProgressIndicator()),
       );
     }
 
-    if (model.state == ExploreSectionState.Errored) {
-	  // TODO
-      return Container(color: Colors.red);
-    }
-
-    if (model.tiles.length == 0) {
-      return _noTilesFound(model);
+    if (tiles?.length == 0) {
+      return _noTilesFound();
     }
 
     return Container(
       height: sectionHeight,
       clipBehavior: Clip.none,
-      child: ListView.builder(
+      child: ListView(
         clipBehavior: Clip.none,
         scrollDirection: Axis.horizontal,
-        itemCount: model.tiles.length,
-        itemBuilder: (context, index) => Container(
-          clipBehavior: Clip.none,
-          child: Padding(
-            padding: EdgeInsets.only(
-              right: 8,
-              left: index == 0 ? horizontalPadding : 0,
-            ),
-            child: _renderTile(model.tiles.elementAt(index), model),
-          ),
-        ),
+        children: <Widget>[
+          const SizedBox(width: 8.0),
+          ...(tiles ?? []),
+          const SizedBox(width: 8.0)
+        ],
       ),
     );
   }
 
   @override
-  Widget builder(
-    BuildContext context,
-    TViewModel model,
-    Widget? child,
-  ) {
+  Widget build(BuildContext context) {
     // TODO When the input args changes, the viewmodel isn't updated
     return Container(
-      color: args.backgroundColor,
       child: Padding(
-        padding: EdgeInsets.only(top: args.backgroundColor != null ? 12 : 0),
+        padding: const EdgeInsets.only(top: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -220,14 +137,10 @@ abstract class ExploreSectionWidget<
             Column(
               children: [
                 // Text header
-                _buildSectionHeader(context, model),
+                _buildSectionHeader(context),
                 const SizedBox(height: 2),
-                if (model.filterData != null &&
-                    model.filterData!.state == ExploreSectionFilterState.Loaded)
-                  _buildSectionFilters(model),
-
                 SizedBox(height: CustomPaddingSize.small),
-                _buildTiles(context, model),
+                _buildTiles(context),
                 SizedBox(height: CustomPaddingSize.normal),
               ],
             ),
@@ -238,104 +151,128 @@ abstract class ExploreSectionWidget<
   }
 }
 
-class ActionExploreSection<TFilterParam> extends ExploreSectionWidget<
-    ActionExploreTileData,
-    ActionSearchFilter,
-    TFilterParam,
-    ActionExploreSectionArgs<TFilterParam>,
-    ActionExploreSectionViewModel<TFilterParam>> {
-  ActionExploreSection(
-    ActionExploreSectionArgs<TFilterParam> args, {
-    ExplorePageViewModel? pageViewModel,
-  }) : super(args, pageViewModel: pageViewModel);
+class ActionExploreSection extends StatelessWidget {
+  final Iterable<ActionExploreTileData>? tiles;
+  final bool isLoading;
+  final String title;
+  final GestureTapCallback? titleOnClick;
+  final String? description;
+  final void Function(ActionExploreTileData tileData) tileOnClick;
+
+  const ActionExploreSection({
+    required this.title,
+    required this.isLoading,
+    required this.tiles,
+    required this.tileOnClick,
+    this.titleOnClick,
+    this.description,
+  });
 
   @override
-  Widget _renderTile(
-      ActionExploreTileData tile, ActionExploreSectionViewModel viewModel) {
-    return ExploreActionTile(tile, onTap: () => viewModel.tileOnClick(tile));
-  }
-
-  @override
-  ActionExploreSectionViewModel<TFilterParam> viewModelBuilder(
-    BuildContext context,
-  ) {
-    return ActionExploreSectionViewModel(this.args, pageViewModel);
-  }
-}
-
-class LearningResourceExploreSection<TFilterParam> extends ExploreSectionWidget<
-    LearningResourceExploreTileData,
-    LearningResourceSearchFilter,
-    TFilterParam,
-    LearningResourceExploreSectionArgs<TFilterParam>,
-    LearningResourceExploreSectionViewModel<TFilterParam>> {
-  LearningResourceExploreSection(
-    LearningResourceExploreSectionArgs<TFilterParam> args, {
-    ExplorePageViewModel? pageViewModel,
-  }) : super(args, pageViewModel: pageViewModel);
-
-  @override
-  Widget _renderTile(LearningResourceExploreTileData tile,
-      LearningResourceExploreSectionViewModel viewModel) {
-    return ExploreLearningResourceTile(tile,
-        onTap: () => viewModel.tileOnClick(tile));
-  }
-
-  @override
-  LearningResourceExploreSectionViewModel<TFilterParam> viewModelBuilder(
-    BuildContext context,
-  ) {
-    return LearningResourceExploreSectionViewModel(this.args, pageViewModel);
+  Widget build(BuildContext context) {
+    return ExploreSectionWidget(
+      tiles: this.tiles?.map((tileData) =>
+          ExploreActionTile(tileData, onTap: () => tileOnClick(tileData)),),
+      tileHeight: 160,
+      isLoading: isLoading,
+      titleOnClick: titleOnClick,
+      title: title,
+      description: description,
+    );
   }
 }
 
-class CampaignExploreSection<TFilterParam> extends ExploreSectionWidget<
-    CampaignExploreTileData,
-    CampaignSearchFilter,
-    TFilterParam,
-    CampaignExploreSectionArgs<TFilterParam>,
-    CampaignExploreSectionViewModel<TFilterParam>> {
-  CampaignExploreSection(
-    CampaignExploreSectionArgs<TFilterParam> args, {
-    ExplorePageViewModel? pageViewModel,
-  }) : super(args, pageViewModel: pageViewModel);
+class LearningResourceExploreSection extends StatelessWidget {
+  final Iterable<LearningResourceExploreTileData>? tiles;
+  final bool isLoading;
+  final String title;
+  final GestureTapCallback? titleOnClick;
+  final String? description;
+  final void Function(LearningResourceExploreTileData tileData) tileOnClick;
+
+  const LearningResourceExploreSection({
+    required this.title,
+    required this.isLoading,
+    required this.tiles,
+    required this.tileOnClick,
+    this.titleOnClick,
+    this.description,
+  });
 
   @override
-  Widget _renderTile(
-      CampaignExploreTileData tile, CampaignExploreSectionViewModel viewModel) {
-    return ExploreCampaignTile(tile, onTap: () => viewModel.tileOnClick(tile));
-  }
-
-  @override
-  CampaignExploreSectionViewModel<TFilterParam> viewModelBuilder(
-    BuildContext context,
-  ) {
-    return CampaignExploreSectionViewModel(this.args, pageViewModel);
+  Widget build(BuildContext context) {
+    return ExploreSectionWidget(
+      tiles: this.tiles?.map(
+            (tileData) => ExploreLearningResourceTile(tileData,
+                onTap: () => tileOnClick(tileData)),
+          ),
+      tileHeight: 160,
+      isLoading: isLoading,
+      titleOnClick: titleOnClick,
+      title: title,
+      description: description,
+    );
   }
 }
 
-class NewsArticleExploreSection<TFilterParam> extends ExploreSectionWidget<
-    NewsArticleExploreTileData,
-    NewsArticleSearchFilter,
-    TFilterParam,
-    NewsArticleExploreSectionArgs<TFilterParam>,
-    NewsArticleExploreSectionViewModel<TFilterParam>> {
-  NewsArticleExploreSection(
-    NewsArticleExploreSectionArgs<TFilterParam> args, {
-    ExplorePageViewModel? pageViewModel,
-  }) : super(args, pageViewModel: pageViewModel);
+class CampaignExploreSection extends StatelessWidget {
+  final Iterable<CampaignExploreTileData>? tiles;
+  final bool isLoading;
+  final String title;
+  final GestureTapCallback? titleOnClick;
+  final String? description;
+  final void Function(CampaignExploreTileData tileData) tileOnClick;
+
+  const CampaignExploreSection({
+    required this.title,
+    required this.isLoading,
+    required this.tiles,
+    required this.tileOnClick,
+    this.description,
+    this.titleOnClick,
+  });
 
   @override
-  Widget _renderTile(NewsArticleExploreTileData tile,
-      NewsArticleExploreSectionViewModel viewModel) {
-    return ExploreNewsArticleTile(tile,
-        onTap: () => viewModel.tileOnClick(tile));
+  Widget build(BuildContext context) {
+    return ExploreSectionWidget(
+      tiles: this.tiles?.map((tileData) =>
+          ExploreCampaignTile(tileData, onTap: () => tileOnClick(tileData))),
+      tileHeight: 300,
+      isLoading: isLoading,
+      titleOnClick: titleOnClick,
+      title: title,
+      description: description,
+    );
   }
+}
+
+class NewsArticleExploreSection extends StatelessWidget {
+  final Iterable<NewsArticleExploreTileData>? tiles;
+  final bool isLoading;
+  final String title;
+  final GestureTapCallback? titleOnClick;
+  final String? description;
+  final void Function(NewsArticleExploreTileData tileData) tileOnClick;
+
+  const NewsArticleExploreSection({
+    required this.title,
+    required this.isLoading,
+    required this.tiles,
+    required this.tileOnClick,
+    this.titleOnClick,
+    this.description,
+  });
 
   @override
-  NewsArticleExploreSectionViewModel<TFilterParam> viewModelBuilder(
-    BuildContext context,
-  ) {
-    return NewsArticleExploreSectionViewModel(this.args, pageViewModel);
+  Widget build(BuildContext context) {
+    return ExploreSectionWidget(
+      tiles: this.tiles?.map((tileData) =>
+          ExploreNewsArticleTile(tileData, onTap: () => tileOnClick(tileData))),
+      tileHeight: 330,
+      isLoading: isLoading,
+      titleOnClick: titleOnClick,
+      title: title,
+      description: description,
+    );
   }
 }

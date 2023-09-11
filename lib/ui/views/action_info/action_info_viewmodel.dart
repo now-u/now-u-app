@@ -3,11 +3,10 @@ import 'package:nowu/services/dialog_service.dart';
 import 'package:nowu/services/router_service.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:nowu/services/user_service.dart';
-import 'package:nowu/ui/views/explore/explore_page_definition.dart';
-import 'package:nowu/ui/views/explore/explore_pages.dart';
 
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/navigation_service.dart';
+import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class ActionInfoViewModel extends FutureViewModel<Action> {
@@ -33,8 +32,7 @@ class ActionInfoViewModel extends FutureViewModel<Action> {
       await _causesService.completeAction(data!.id);
       setBusy(false);
       // TODO Really?
-      _routerService.navigateToExplore(
-          BaseResourceSearchFilter(resourceTypes: [ResourceType.ACTION]));
+	  _routerService.back();
     } catch (err) {
       // TODO Log and metric!
       setBusy(false);
@@ -60,7 +58,7 @@ class ActionInfoViewModel extends FutureViewModel<Action> {
   void navigateToCauseExplorePage() {
     // TODO THis needs some more thought
     _routerService.navigateToExplore(
-      BaseResourceSearchFilter(causeIds: [data!.cause.id]),
+      ExplorePageFilterData(filterCauseIds: Set.of([data!.cause.id])),
     );
   }
 }

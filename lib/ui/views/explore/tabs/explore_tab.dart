@@ -40,4 +40,3 @@ class ExploreTab extends StatelessWidget {
     );
   }
 }
-

@@ -19,11 +19,11 @@ class ExploreActionTab extends StatelessWidget {
         ExploreFilterChip(
           onSelected: (_) => viewModel.openActionTypesFilterSheet(),
           label: 'Type',
-          isSelected: viewModel.filterActionTypes.isNotEmpty,
+          isSelected: viewModel.filterData.filterActionTypes.isNotEmpty,
         ),
-		NewFilter(viewModel: viewModel),
-		RecommendedFilter(viewModel: viewModel),
-		CompletedFilter(viewModel: viewModel),
+        NewFilter(viewModel: viewModel),
+        RecommendedFilter(viewModel: viewModel),
+        CompletedFilter(viewModel: viewModel),
       ],
       filterResults: viewModel.actions.map<Widget>(
         (action) => Container(

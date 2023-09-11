@@ -17,9 +17,9 @@ class ExploreLearningResourceTab extends StatelessWidget {
       filterChips: [
         CausesFilter(viewModel: viewModel),
         TimeFilter(viewModel: viewModel),
-		NewFilter(viewModel: viewModel),
-		RecommendedFilter(viewModel: viewModel),
-		CompletedFilter(viewModel: viewModel),
+        NewFilter(viewModel: viewModel),
+        RecommendedFilter(viewModel: viewModel),
+        CompletedFilter(viewModel: viewModel),
       ],
       filterResults: viewModel.learningResources.map<Widget>(
         (learningResource) => Container(
@@ -27,7 +27,8 @@ class ExploreLearningResourceTab extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: ExploreLearningResourceTile(
-              LearningResourceExploreTileData(learningResource, viewModel.isLearningResourceComplete(learningResource)),
+              LearningResourceExploreTileData(learningResource,
+                  viewModel.isLearningResourceComplete(learningResource)),
               onTap: () => viewModel.openLearningResource(learningResource),
             ),
           ),
