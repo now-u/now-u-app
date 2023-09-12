@@ -661,7 +661,6 @@ components:
         release_at:
           type: string
           format: date-time
-          nullable: true
           description: The date from which this resource should be available in the
             app. If not provided the resource will not be visible
         end_at:
@@ -670,8 +669,6 @@ components:
           nullable: true
           description: The date from which this resource should no longer be available
             in the app. If not provided the reosurce will stay visible after its released
-        enabled:
-          type: boolean
         title:
           type: string
           maxLength: 200
@@ -700,6 +697,7 @@ components:
       - id
       - is_completed
       - link
+      - release_at
       - time
       - title
       - updated_at
@@ -769,7 +767,6 @@ components:
         release_at:
           type: string
           format: date-time
-          nullable: true
           description: The date from which this resource should be available in the
             app. If not provided the resource will not be visible
         end_at:
@@ -778,8 +775,6 @@ components:
           nullable: true
           description: The date from which this resource should no longer be available
             in the app. If not provided the reosurce will stay visible after its released
-        enabled:
-          type: boolean
         title:
           type: string
           maxLength: 100
@@ -801,6 +796,7 @@ components:
       - id
       - is_completed
       - learning_resources
+      - release_at
       - short_name
       - title
       - updated_at
@@ -916,6 +912,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Cause'
+        release_at_timestamp:
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -927,7 +925,6 @@ components:
         release_at:
           type: string
           format: date-time
-          nullable: true
           description: The date from which this resource should be available in the
             app. If not provided the resource will not be visible
         end_at:
@@ -936,8 +933,6 @@ components:
           nullable: true
           description: The date from which this resource should no longer be available
             in the app. If not provided the reosurce will stay visible after its released
-        enabled:
-          type: boolean
         title:
           type: string
           maxLength: 200
@@ -960,6 +955,8 @@ components:
       - id
       - learning_resource_type
       - link
+      - release_at
+      - release_at_timestamp
       - source
       - time
       - title
@@ -1004,16 +1001,21 @@ components:
         release_at:
           type: string
           format: date-time
-          nullable: true
           description: The date from which this resource should be available in the
             app. If not provided the resource will not be visible
         of_the_month:
           type: boolean
+        suggested:
+          type: boolean
+        release_at_timestamp:
+          type: integer
       required:
       - action_type
       - causes
       - created_at
       - id
+      - release_at
+      - release_at_timestamp
       - time
       - title
     ListCampaign:
@@ -1036,10 +1038,21 @@ components:
           $ref: '#/components/schemas/Image'
         of_the_month:
           type: boolean
+        suggested:
+          type: boolean
+        release_at:
+          type: string
+          format: date-time
+          description: The date from which this resource should be available in the
+            app. If not provided the resource will not be visible
+        release_at_timestamp:
+          type: integer
       required:
       - causes
       - header_image
       - id
+      - release_at
+      - release_at_timestamp
       - short_name
       - title
     NewsArticle:
@@ -1050,6 +1063,8 @@ components:
           readOnly: true
         header_image:
           $ref: '#/components/schemas/Image'
+        release_at_timestamp:
+          type: integer
         created_at:
           type: string
           format: date-time
@@ -1061,7 +1076,6 @@ components:
         release_at:
           type: string
           format: date-time
-          nullable: true
           description: The date from which this resource should be available in the
             app. If not provided the resource will not be visible
         end_at:
@@ -1070,8 +1084,6 @@ components:
           nullable: true
           description: The date from which this resource should no longer be available
             in the app. If not provided the reosurce will stay visible after its released
-        enabled:
-          type: boolean
         title:
           type: string
           maxLength: 300
@@ -1090,6 +1102,8 @@ components:
       - header_image
       - id
       - link
+      - release_at
+      - release_at_timestamp
       - source
       - subtitle
       - title
@@ -1117,7 +1131,6 @@ components:
         release_at:
           type: string
           format: date-time
-          nullable: true
           description: The date from which this resource should be available in the
             app. If not provided the resource will not be visible
         end_at:
@@ -1126,8 +1139,6 @@ components:
           nullable: true
           description: The date from which this resource should no longer be available
             in the app. If not provided the reosurce will stay visible after its released
-        enabled:
-          type: boolean
         name:
           type: string
           maxLength: 100
@@ -1172,6 +1183,7 @@ components:
       - logo
       - name
       - organisation_type
+      - release_at
       - updated_at
     OrganisationExtraLink:
       type: object
