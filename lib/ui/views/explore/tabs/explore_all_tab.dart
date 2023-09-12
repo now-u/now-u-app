@@ -10,7 +10,8 @@ class ExploreAllTab extends StatelessWidget {
   final ExplorePageViewModel viewModel;
   final void Function(ExploreTabKey tab) changeTab;
 
-  const ExploreAllTab(this.viewModel, this.changeTab, {Key? key}) : super(key: key);
+  const ExploreAllTab(this.viewModel, this.changeTab, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

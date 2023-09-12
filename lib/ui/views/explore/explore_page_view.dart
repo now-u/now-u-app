@@ -42,7 +42,9 @@ class ExplorePage extends StackedView<ExplorePageViewModel> with $ExplorePage {
 class ExploreTabData {
   final String title;
   final Widget Function(
-      ExplorePageViewModel viewModel, void Function(ExploreTabKey tab) changeTab,) child;
+    ExplorePageViewModel viewModel,
+    void Function(ExploreTabKey tab) changeTab,
+  ) child;
 
   const ExploreTabData({
     required this.title,
@@ -161,15 +163,17 @@ class _ExploreTabsState extends State<ExploreTabs>
               const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
           unselectedLabelColor: Colors.grey,
           unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w400),
-          tabs: ExploreTabKey.values.map((tab) => Text(getTabData(tab).title)).toList(),
+          tabs: ExploreTabKey.values
+              .map((tab) => Text(getTabData(tab).title))
+              .toList(),
           tabAlignment: TabAlignment.start,
         ),
       ),
       body: TabBarView(
         controller: _tabController,
         children: ExploreTabKey.values
-            .map((tab) =>
-                getTabData(tab).child(widget.viewModel, (ExploreTabKey tab) => _tabController?.animateTo(tab.index)))
+            .map((tab) => getTabData(tab).child(widget.viewModel,
+                (ExploreTabKey tab) => _tabController?.animateTo(tab.index)))
             .toList(),
       ),
     );
