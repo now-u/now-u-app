@@ -32,7 +32,7 @@ class ActionInfoViewModel extends FutureViewModel<Action> {
       await _causesService.completeAction(data!.id);
       setBusy(false);
       // TODO Really?
-	  _routerService.back();
+      _routerService.back();
     } catch (err) {
       // TODO Log and metric!
       setBusy(false);

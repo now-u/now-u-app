@@ -46,7 +46,7 @@ class TabsView extends StatelessWidget with WidgetsBindingObserver {
         case TabPage.Explore:
           return TabPageDetails(
             // TODO Does the filter go in here?
-            widget: ExplorePage( filterData: exploreFilterData ),
+            widget: ExplorePage(filterData: exploreFilterData),
             icon: CustomIcons.ic_news,
             title: 'Explore',
           );

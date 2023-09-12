@@ -17,8 +17,7 @@ final double horizontalPadding = CustomPaddingSize.small;
 class ExplorePage extends StackedView<ExplorePageViewModel> with $ExplorePage {
   final ExplorePageFilterData? filterData;
 
-  ExplorePage({Key? key, this.filterData})
-      : super(key: key);
+  ExplorePage({Key? key, this.filterData}) : super(key: key);
 
   @override
   ExplorePageViewModel viewModelBuilder(BuildContext context) =>
@@ -42,7 +41,8 @@ class ExplorePage extends StackedView<ExplorePageViewModel> with $ExplorePage {
 
 class ExploreTabData {
   final String title;
-  final Widget Function(ExplorePageViewModel) child;
+  final Widget Function(
+      ExplorePageViewModel viewModel, void Function(ExploreTabKey tab) changeTab,) child;
 
   const ExploreTabData({
     required this.title,
@@ -50,26 +50,64 @@ class ExploreTabData {
   });
 }
 
+enum ExploreTabKey {
+  ALL,
+  ACTIONS,
+  LEARN,
+  CAMPAIGN,
+  NEWS,
+}
+
+ExploreTabData getTabData(ExploreTabKey tab) {
+  switch (tab) {
+    case ExploreTabKey.ALL:
+      return ExploreTabData(
+        title: 'All',
+        child: (viewModel, changeTab) => ExploreAllTab(viewModel, changeTab),
+      );
+    case ExploreTabKey.ACTIONS:
+      return ExploreTabData(
+        title: 'Actions',
+        child: (viewModel, _) => ExploreActionTab(viewModel),
+      );
+    case ExploreTabKey.LEARN:
+      return ExploreTabData(
+        title: 'Learn',
+        child: (viewModel, _) => ExploreLearningResourceTab(viewModel),
+      );
+    case ExploreTabKey.CAMPAIGN:
+      return ExploreTabData(
+        title: 'Campaigns',
+        child: (viewModel, _) => ExploreCampaignTab(viewModel),
+      );
+    case ExploreTabKey.NEWS:
+      return ExploreTabData(
+        title: 'News',
+        child: (viewModel, _) => ExploreNewsArticleTab(viewModel),
+      );
+  }
+}
+
 final exploreTabs = [
   ExploreTabData(
     title: 'All',
-    child: (viewModel) => ExploreAllTab(viewModel),
+    child: (viewModel, changeTab) => ExploreAllTab(viewModel, changeTab),
   ),
   ExploreTabData(
     title: 'Actions',
-    child: (viewModel) => ExploreActionTab(viewModel),
+    child: (viewModel, _) => ExploreActionTab(viewModel),
   ),
   ExploreTabData(
     title: 'Learn',
-    child: (viewModel) => ExploreLearningResourceTab(viewModel),
+    child: (viewModel, _) => ExploreLearningResourceTab(viewModel),
   ),
   ExploreTabData(
     title: 'Campaigns',
-    child: (viewModel) => ExploreCampaignTab(viewModel),
+    child: (viewModel, _) => ExploreCampaignTab(viewModel),
   ),
   ExploreTabData(
     title: 'News',
-    child: (viewModel) => ExploreNewsArticleTab(viewModel),
+    child: (viewModel, _) => ExploreNewsArticleTab(viewModel),
   ),
 ];
 
@@ -123,14 +161,16 @@ class _ExploreTabsState extends State<ExploreTabs>
               const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
           unselectedLabelColor: Colors.grey,
           unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w400),
-          tabs: exploreTabs.map((tab) => Text(tab.title)).toList(),
+          tabs: ExploreTabKey.values.map((tab) => Text(getTabData(tab).title)).toList(),
           tabAlignment: TabAlignment.start,
         ),
       ),
       body: TabBarView(
         controller: _tabController,
-        children:
-            exploreTabs.map((tab) => tab.child(widget.viewModel)).toList(),
+        children: ExploreTabKey.values
+            .map((tab) =>
+                getTabData(tab).child(widget.viewModel, (ExploreTabKey tab) => _tabController?.animateTo(tab.index)))
+            .toList(),
       ),
     );
   }

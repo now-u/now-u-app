@@ -171,8 +171,10 @@ class ActionExploreSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExploreSectionWidget(
-      tiles: this.tiles?.map((tileData) =>
-          ExploreActionTile(tileData, onTap: () => tileOnClick(tileData)),),
+      tiles: this.tiles?.map(
+            (tileData) =>
+                ExploreActionTile(tileData, onTap: () => tileOnClick(tileData)),
+          ),
       tileHeight: 160,
       isLoading: isLoading,
       titleOnClick: titleOnClick,

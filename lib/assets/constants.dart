@@ -26,7 +26,7 @@ const CAUSES_API_URL = 'https://causes.dev.apiv2.now-u.com/';
 // const SEARCH_SERVICE_URL = '$LOCAL_STACK_URL:7700';
 const SEARCH_SERVICE_URL = 'https://search.dev.apiv2.now-u.com';
 const SEARCH_SERVICE_KEY =
-    '31c585c68897bbb6d802130ab36f7a0dca04f6cb0c9ec9e89c05729ca8106169';
+    'aaae5a4efcd407ca2c568ad9bcafda8f5362526a4b14ab8d746df52a7e7415a6';
 
 class CustomColors {
   /// Primary brand color

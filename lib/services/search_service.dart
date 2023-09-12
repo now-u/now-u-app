@@ -26,6 +26,16 @@ String timeBracketsToMeilisearchFilter(
       .join(' OR ');
 }
 
+String recommendedToMeiliSearchFilter() {
+  return 'suggested = true';
+}
+
+String newToMeiliSearchFilter(
+  Iterable<Tuple2<double, double>> timeBrackets,
+) {
+  return 'release_at_timestamp > ${DateTime.now().subtract(const Duration(days: 2)).millisecondsSinceEpoch / 1000}';
+}
+
 // TODO Use composition for this
 class BaseResourceSearchFilter {
   final String? query;
@@ -34,12 +44,14 @@ class BaseResourceSearchFilter {
   // do we need 2 different filters? One for searching resources or should we just return empty when the resource type is not include
   // for the merge stuff??
   final Iterable<ResourceType>? resourceTypes;
+  final DateTime? releasedSince;
 
   // TODO Add released since
   const BaseResourceSearchFilter({
     this.query,
     this.causeIds,
     this.resourceTypes,
+    this.releasedSince,
   });
 
   // TODO Use freezed to generate this
@@ -63,10 +75,10 @@ class BaseResourceSearchFilter {
       filter.add("causes.id IN [${causeIds!.join(',')}]");
     }
 
-    // TODO Add epoch released at to meilisearch
-    // if (filter?.releasedSince != null) {
-    // 	filters.add("released_at_epoch > ${filter!.releasedSince!.millisecondsSinceEpoch / 1000}");
-    // }
+    if (releasedSince != null) {
+      filter.add(
+          'release_at_timestamp > ${releasedSince!.millisecondsSinceEpoch / 1000}');
+    }
 
     return filter;
   }
@@ -95,10 +107,10 @@ abstract class ResourceSearchFilter<Self extends ResourceSearchFilter<Self>> {
       filter.add("causes.id IN [${selectedCauseIds.join(',')}]");
     }
 
-    // TODO Add epoch released at to meilisearch
-    // if (filter?.releasedSince != null) {
-    // 	filters.add("released_at_epoch > ${filter!.releasedSince!.millisecondsSinceEpoch / 1000}");
-    // }
+    if (releasedSince != null) {
+      filter.add(
+          'release_at_timestamp > ${releasedSince!.millisecondsSinceEpoch / 1000}');
+    }
 
     return filter;
   }
@@ -143,7 +155,9 @@ class CampaignSearchFilter extends ResourceSearchFilter<CampaignSearchFilter> {
       );
     }
 
-    // TODO REcommenede wha is it called?
+    if (recommended == true) {
+      filter.add(recommendedToMeiliSearchFilter());
+    }
 
     return SearchQuery(
       filter: filter,
@@ -198,8 +212,9 @@ class ActionSearchFilter extends ResourceSearchFilter<ActionSearchFilter> {
       filter.add(timeBracketsToMeilisearchFilter(timeBrackets!));
     }
 
-    // TODO Recommeneded wha is it called?
-    // Its called suggested but need to redeploy to make this work
+    if (recommended == true) {
+      filter.add(recommendedToMeiliSearchFilter());
+    }
 
     // TODO Released since
 
@@ -261,6 +276,10 @@ class LearningResourceSearchFilter
 
     if (timeBrackets != null) {
       filter.add(timeBracketsToMeilisearchFilter(timeBrackets!));
+    }
+
+    if (recommended == true) {
+      filter.add(recommendedToMeiliSearchFilter());
     }
 
     // TODO REcommenede wha is it called?

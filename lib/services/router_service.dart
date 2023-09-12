@@ -11,7 +11,9 @@ extension RouterServiceExtension on RouterService {
     return navigateTo(
       // TODO Fix args for naving to explore
       TabsViewRoute(
-          initialPage: TabPage.Explore, exploreFilterData: filterData,),
+        initialPage: TabPage.Explore,
+        exploreFilterData: filterData,
+      ),
     );
   }
 

@@ -49,11 +49,13 @@ class ExplorePageViewModel extends FormViewModel {
   late ExplorePageFilterData filterData;
 
   ExplorePageViewModel({
-	ExplorePageFilterData? filterData,
+    ExplorePageFilterData? filterData,
   }) {
-    this.filterData = filterData ?? ExplorePageFilterData(
-		filterCauseIds: _causesService.userInfo?.selectedCausesIds.toSet() ?? Set(),
-	);
+    this.filterData = filterData ??
+        ExplorePageFilterData(
+          filterCauseIds:
+              _causesService.userInfo?.selectedCausesIds.toSet() ?? Set(),
+        );
   }
 
   List<Cause> get causes => _causesService.causes;
@@ -79,12 +81,15 @@ class ExplorePageViewModel extends FormViewModel {
     // Remove search fallback to use user causes
     actions = await _searchService.searchActions(
       filter: ActionSearchFilter(
-        causeIds: this.filterData.filterCauseIds.isEmpty ? null : filterData.filterCauseIds.toList(),
+        causeIds: this.filterData.filterCauseIds.isEmpty
+            ? null
+            : filterData.filterCauseIds.toList(),
         timeBrackets: this.filterData.filterTimeBrackets.isEmpty
             ? null
             : filterData.filterTimeBrackets.toList(),
-        types:
-            this.filterData.filterActionTypes.isEmpty ? null : filterData.filterActionTypes.toList(),
+        types: this.filterData.filterActionTypes.isEmpty
+            ? null
+            : filterData.filterActionTypes.toList(),
         completed: filterData.filterCompleted == true ? true : null,
         recommended: filterData.filterRecommended == true ? true : null,
         releasedSince: filterData.filterNew == true
@@ -99,7 +104,9 @@ class ExplorePageViewModel extends FormViewModel {
   Future<void> searchLearningResources() async {
     learningResources = await _searchService.searchLearningResources(
       filter: LearningResourceSearchFilter(
-        causeIds: this.filterData.filterCauseIds.isEmpty ? null : filterData.filterCauseIds.toList(),
+        causeIds: this.filterData.filterCauseIds.isEmpty
+            ? null
+            : filterData.filterCauseIds.toList(),
         timeBrackets: this.filterData.filterTimeBrackets.isEmpty
             ? null
             : filterData.filterTimeBrackets.toList(),
@@ -120,7 +127,9 @@ class ExplorePageViewModel extends FormViewModel {
   Future<void> searchCampaigns() async {
     campaigns = await _searchService.searchCampaigns(
       filter: CampaignSearchFilter(
-        causeIds: this.filterData.filterCauseIds.isEmpty ? null : filterData.filterCauseIds.toList(),
+        causeIds: this.filterData.filterCauseIds.isEmpty
+            ? null
+            : filterData.filterCauseIds.toList(),
         completed: filterData.filterCompleted == true ? true : null,
         recommended: filterData.filterRecommended == true ? true : null,
         releasedSince: filterData.filterNew == true
@@ -135,7 +144,9 @@ class ExplorePageViewModel extends FormViewModel {
   Future<void> searchNewsArticles() async {
     newsArticles = await _searchService.searchNewsArticles(
       filter: NewsArticleSearchFilter(
-        causeIds: this.filterData.filterCauseIds.isEmpty ? null : filterData.filterCauseIds.toList(),
+        causeIds: this.filterData.filterCauseIds.isEmpty
+            ? null
+            : filterData.filterCauseIds.toList(),
         releasedSince: filterData.filterNew == true
             ? (DateTime.now().subtract(const Duration(days: 2)))
             : null,
@@ -149,7 +160,9 @@ class ExplorePageViewModel extends FormViewModel {
     allSearchResult = await _searchService.searchResources(
       filter: BaseResourceSearchFilter(
         // TODO Add released since
-        causeIds: this.filterData.filterCauseIds.isEmpty ? null : filterData.filterCauseIds.toList(),
+        causeIds: this.filterData.filterCauseIds.isEmpty
+            ? null
+            : filterData.filterCauseIds.toList(),
         query: searchBarValue,
       ),
     );
@@ -226,7 +239,8 @@ class ExplorePageViewModel extends FormViewModel {
             )
             .toList(),
         initialSelectedValues: this
-            .filterData.filterActionTypes
+            .filterData
+            .filterActionTypes
             .map(getActionTypeFromSubtype)
             .map((type) => type.name)
             .toSet(),
