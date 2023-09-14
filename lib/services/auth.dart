@@ -66,7 +66,8 @@ class AuthenticationService {
   }
 
   StreamSubscription<AuthState> onAuthStateChange(
-      void onData(AuthState event),) {
+    void onData(AuthState event),
+  ) {
     return _client.auth.onAuthStateChange.listen(onData);
   }
 

@@ -27,7 +27,9 @@ class ExploreCampaignTab extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: ExploreCampaignTile(
               CampaignExploreTileData(
-                  campaign, viewModel.isCampaignComplete(campaign),),
+                campaign,
+                viewModel.isCampaignComplete(campaign),
+              ),
               onTap: () => viewModel.openCampaign(campaign),
             ),
           ),

@@ -127,7 +127,9 @@ class _FaqTileState extends State<FaqTile> {
               selected
                   ? Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 12, horizontal: 20,),
+                        vertical: 12,
+                        horizontal: 20,
+                      ),
                       child: Text(
                         widget.faq.answer,
                         style: Theme.of(context).textTheme.bodyLarge,

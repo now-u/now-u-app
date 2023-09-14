@@ -85,8 +85,10 @@ final menuItems = <MenuItemData>[
   const ActionMenuItem(
     title: 'Send us an email',
     icon: CustomIcons.ic_email,
-    action: LinkMenuItemAction('mailto:hello@now-.com?subject=Hi',
-        isExternal: true,),
+    action: LinkMenuItemAction(
+      'mailto:hello@now-.com?subject=Hi',
+      isExternal: true,
+    ),
   ),
   const SectionHeadingMenuItem(title: 'Legal'),
   const ActionMenuItem(

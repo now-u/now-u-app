@@ -574,16 +574,18 @@ class NotificationInfoViewArgs {
 }
 
 extension RouterStateExtension on _i16.RouterService {
-  Future<dynamic> navigateToStartupView(
-      {void Function(_i17.NavigationFailure)? onFailure,}) async {
+  Future<dynamic> navigateToStartupView({
+    void Function(_i17.NavigationFailure)? onFailure,
+  }) async {
     return navigateTo(
       const StartupViewRoute(),
       onFailure: onFailure,
     );
   }
 
-  Future<dynamic> navigateToPartnersView(
-      {void Function(_i17.NavigationFailure)? onFailure,}) async {
+  Future<dynamic> navigateToPartnersView({
+    void Function(_i17.NavigationFailure)? onFailure,
+  }) async {
     return navigateTo(
       const PartnersViewRoute(),
       onFailure: onFailure,
@@ -616,32 +618,36 @@ extension RouterStateExtension on _i16.RouterService {
     );
   }
 
-  Future<dynamic> navigateToFaqView(
-      {void Function(_i17.NavigationFailure)? onFailure,}) async {
+  Future<dynamic> navigateToFaqView({
+    void Function(_i17.NavigationFailure)? onFailure,
+  }) async {
     return navigateTo(
       const FaqViewRoute(),
       onFailure: onFailure,
     );
   }
 
-  Future<dynamic> navigateToIntroView(
-      {void Function(_i17.NavigationFailure)? onFailure,}) async {
+  Future<dynamic> navigateToIntroView({
+    void Function(_i17.NavigationFailure)? onFailure,
+  }) async {
     return navigateTo(
       const IntroViewRoute(),
       onFailure: onFailure,
     );
   }
 
-  Future<dynamic> navigateToProfileSetupView(
-      {void Function(_i17.NavigationFailure)? onFailure,}) async {
+  Future<dynamic> navigateToProfileSetupView({
+    void Function(_i17.NavigationFailure)? onFailure,
+  }) async {
     return navigateTo(
       const ProfileSetupViewRoute(),
       onFailure: onFailure,
     );
   }
 
-  Future<dynamic> navigateToLoginView(
-      {void Function(_i17.NavigationFailure)? onFailure,}) async {
+  Future<dynamic> navigateToLoginView({
+    void Function(_i17.NavigationFailure)? onFailure,
+  }) async {
     return navigateTo(
       const LoginViewRoute(),
       onFailure: onFailure,
@@ -678,16 +684,18 @@ extension RouterStateExtension on _i16.RouterService {
     );
   }
 
-  Future<dynamic> navigateToChangeSelectCausesView(
-      {void Function(_i17.NavigationFailure)? onFailure,}) async {
+  Future<dynamic> navigateToChangeSelectCausesView({
+    void Function(_i17.NavigationFailure)? onFailure,
+  }) async {
     return navigateTo(
       const ChangeSelectCausesViewRoute(),
       onFailure: onFailure,
     );
   }
 
-  Future<dynamic> navigateToOnboardingSelectCausesView(
-      {void Function(_i17.NavigationFailure)? onFailure,}) async {
+  Future<dynamic> navigateToOnboardingSelectCausesView({
+    void Function(_i17.NavigationFailure)? onFailure,
+  }) async {
     return navigateTo(
       const OnboardingSelectCausesViewRoute(),
       onFailure: onFailure,
@@ -734,16 +742,18 @@ extension RouterStateExtension on _i16.RouterService {
     );
   }
 
-  Future<dynamic> replaceWithStartupView(
-      {void Function(_i17.NavigationFailure)? onFailure,}) async {
+  Future<dynamic> replaceWithStartupView({
+    void Function(_i17.NavigationFailure)? onFailure,
+  }) async {
     return replaceWith(
       const StartupViewRoute(),
       onFailure: onFailure,
     );
   }
 
-  Future<dynamic> replaceWithPartnersView(
-      {void Function(_i17.NavigationFailure)? onFailure,}) async {
+  Future<dynamic> replaceWithPartnersView({
+    void Function(_i17.NavigationFailure)? onFailure,
+  }) async {
     return replaceWith(
       const PartnersViewRoute(),
       onFailure: onFailure,
@@ -776,32 +786,36 @@ extension RouterStateExtension on _i16.RouterService {
     );
   }
 
-  Future<dynamic> replaceWithFaqView(
-      {void Function(_i17.NavigationFailure)? onFailure,}) async {
+  Future<dynamic> replaceWithFaqView({
+    void Function(_i17.NavigationFailure)? onFailure,
+  }) async {
     return replaceWith(
       const FaqViewRoute(),
       onFailure: onFailure,
     );
   }
 
-  Future<dynamic> replaceWithIntroView(
-      {void Function(_i17.NavigationFailure)? onFailure,}) async {
+  Future<dynamic> replaceWithIntroView({
+    void Function(_i17.NavigationFailure)? onFailure,
+  }) async {
     return replaceWith(
       const IntroViewRoute(),
       onFailure: onFailure,
     );
   }
 
-  Future<dynamic> replaceWithProfileSetupView(
-      {void Function(_i17.NavigationFailure)? onFailure,}) async {
+  Future<dynamic> replaceWithProfileSetupView({
+    void Function(_i17.NavigationFailure)? onFailure,
+  }) async {
     return replaceWith(
       const ProfileSetupViewRoute(),
       onFailure: onFailure,
     );
   }
 
-  Future<dynamic> replaceWithLoginView(
-      {void Function(_i17.NavigationFailure)? onFailure,}) async {
+  Future<dynamic> replaceWithLoginView({
+    void Function(_i17.NavigationFailure)? onFailure,
+  }) async {
     return replaceWith(
       const LoginViewRoute(),
       onFailure: onFailure,
@@ -838,16 +852,18 @@ extension RouterStateExtension on _i16.RouterService {
     );
   }
 
-  Future<dynamic> replaceWithChangeSelectCausesView(
-      {void Function(_i17.NavigationFailure)? onFailure,}) async {
+  Future<dynamic> replaceWithChangeSelectCausesView({
+    void Function(_i17.NavigationFailure)? onFailure,
+  }) async {
     return replaceWith(
       const ChangeSelectCausesViewRoute(),
       onFailure: onFailure,
     );
   }
 
-  Future<dynamic> replaceWithOnboardingSelectCausesView(
-      {void Function(_i17.NavigationFailure)? onFailure,}) async {
+  Future<dynamic> replaceWithOnboardingSelectCausesView({
+    void Function(_i17.NavigationFailure)? onFailure,
+  }) async {
     return replaceWith(
       const OnboardingSelectCausesViewRoute(),
       onFailure: onFailure,

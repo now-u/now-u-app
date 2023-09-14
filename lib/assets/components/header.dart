@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nowu/assets/components/textButton.dart';
 
-
 import '../StyleFrom.dart';
 
 // TODO Loads of stuff here isn't used, remove all the things

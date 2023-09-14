@@ -15,65 +15,72 @@ class ExploreAllTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExploreTab(filterChips: [
-      CausesFilter(viewModel: viewModel),
-      NewFilter(viewModel: viewModel),
-    ], filterResults: [
-      CampaignExploreSection(
-        title: 'Campaigns',
-        description:
-            'Join members of the now-u community in coordinated campaigns to make a difference',
-        titleOnClick: () => changeTab(ExploreTabKey.CAMPAIGN),
-        tileOnClick: (tileData) => viewModel.openCampaign(tileData.campaign),
-        tiles: viewModel.allSearchResult?.campaigns
-            .map((campaign) => CampaignExploreTileData(
-                  campaign,
-                  viewModel.isCampaignComplete(campaign),
-                ),),
-        // TODO Handle loading state
-        isLoading: viewModel.allSearchResult == null,
-      ),
-      ActionExploreSection(
-        title: 'Actions',
-        description:
-            'Take a wide range of actions to drive lasting change for issues you care about',
-        titleOnClick: () => changeTab(ExploreTabKey.ACTIONS),
-        tileOnClick: (tileData) => viewModel.openAction(tileData.action),
-        tiles: viewModel.allSearchResult?.actions
-            .map((action) => ActionExploreTileData(
-                  action,
-                  viewModel.isActionComplete(action),
-                ),),
-        // TODO Handle loading state
-        isLoading: viewModel.allSearchResult == null,
-      ),
-      LearningResourceExploreSection(
-        title: 'Learn',
-        description:
-            'Learn more about key topics of pressing social and environmental issues',
-        titleOnClick: () => changeTab(ExploreTabKey.LEARN),
-        tileOnClick: (tileData) =>
-            viewModel.openLearningResource(tileData.learningResource),
-        tiles: viewModel.allSearchResult?.learningResources
-            .map((learningResource) => LearningResourceExploreTileData(
-                  learningResource,
-                  viewModel.isLearningResourceComplete(learningResource),
-                ),),
-        // TODO Handle loading state
-        isLoading: viewModel.allSearchResult == null,
-      ),
-      NewsArticleExploreSection(
-        title: 'News',
-        description:
-            'Find out what’s going on in the world this week in relation to your chosen causes',
-        // TODO Link to actions tab
-        titleOnClick: () => changeTab(ExploreTabKey.NEWS),
-        tileOnClick: (tileData) => viewModel.openNewsArticle(tileData.article),
-        tiles: viewModel.allSearchResult?.newsArticles
-            .map((newsArticle) => NewsArticleExploreTileData(newsArticle)),
-        // TODO Handle loading state
-        isLoading: viewModel.allSearchResult == null,
-      ),
-    ],);
+    return ExploreTab(
+      filterChips: [
+        CausesFilter(viewModel: viewModel),
+        NewFilter(viewModel: viewModel),
+      ],
+      filterResults: [
+        CampaignExploreSection(
+          title: 'Campaigns',
+          description:
+              'Join members of the now-u community in coordinated campaigns to make a difference',
+          titleOnClick: () => changeTab(ExploreTabKey.CAMPAIGN),
+          tileOnClick: (tileData) => viewModel.openCampaign(tileData.campaign),
+          tiles: viewModel.allSearchResult?.campaigns.map(
+            (campaign) => CampaignExploreTileData(
+              campaign,
+              viewModel.isCampaignComplete(campaign),
+            ),
+          ),
+          // TODO Handle loading state
+          isLoading: viewModel.allSearchResult == null,
+        ),
+        ActionExploreSection(
+          title: 'Actions',
+          description:
+              'Take a wide range of actions to drive lasting change for issues you care about',
+          titleOnClick: () => changeTab(ExploreTabKey.ACTIONS),
+          tileOnClick: (tileData) => viewModel.openAction(tileData.action),
+          tiles: viewModel.allSearchResult?.actions.map(
+            (action) => ActionExploreTileData(
+              action,
+              viewModel.isActionComplete(action),
+            ),
+          ),
+          // TODO Handle loading state
+          isLoading: viewModel.allSearchResult == null,
+        ),
+        LearningResourceExploreSection(
+          title: 'Learn',
+          description:
+              'Learn more about key topics of pressing social and environmental issues',
+          titleOnClick: () => changeTab(ExploreTabKey.LEARN),
+          tileOnClick: (tileData) =>
+              viewModel.openLearningResource(tileData.learningResource),
+          tiles: viewModel.allSearchResult?.learningResources.map(
+            (learningResource) => LearningResourceExploreTileData(
+              learningResource,
+              viewModel.isLearningResourceComplete(learningResource),
+            ),
+          ),
+          // TODO Handle loading state
+          isLoading: viewModel.allSearchResult == null,
+        ),
+        NewsArticleExploreSection(
+          title: 'News',
+          description:
+              'Find out what’s going on in the world this week in relation to your chosen causes',
+          // TODO Link to actions tab
+          titleOnClick: () => changeTab(ExploreTabKey.NEWS),
+          tileOnClick: (tileData) =>
+              viewModel.openNewsArticle(tileData.article),
+          tiles: viewModel.allSearchResult?.newsArticles
+              .map((newsArticle) => NewsArticleExploreTileData(newsArticle)),
+          // TODO Handle loading state
+          isLoading: viewModel.allSearchResult == null,
+        ),
+      ],
+    );
   }
 }

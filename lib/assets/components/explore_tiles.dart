@@ -32,9 +32,11 @@ class ExploreCampaignTile extends ExploreTile {
   final ListCampaign campaign;
   final GestureTapCallback onTap;
 
-  ExploreCampaignTile(CampaignExploreTileData tile,
-      {required this.onTap, Key? key,})
-      : headerImage = tile.campaign.headerImage.url,
+  ExploreCampaignTile(
+    CampaignExploreTileData tile, {
+    required this.onTap,
+    Key? key,
+  })  : headerImage = tile.campaign.headerImage.url,
         title = tile.campaign.title,
         cause = tile.campaign.cause,
         completed = tile.isCompleted,
@@ -259,9 +261,11 @@ class ExploreNewsArticleTile extends ExploreTile {
   final NewsArticle article;
   final GestureTapCallback onTap;
 
-  ExploreNewsArticleTile(NewsArticleExploreTileData tile,
-      {required this.onTap, Key? key,})
-      : title = tile.article.title,
+  ExploreNewsArticleTile(
+    NewsArticleExploreTileData tile, {
+    required this.onTap,
+    Key? key,
+  })  : title = tile.article.title,
         subtitle = tile.article.subtitle,
         headerImage = tile.article.headerImage.url,
         dateString = tile.article.dateString ?? '',

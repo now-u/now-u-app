@@ -77,7 +77,8 @@ class BaseResourceSearchFilter {
 
     if (releasedSince != null) {
       filter.add(
-          'release_at_timestamp > ${releasedSince!.millisecondsSinceEpoch / 1000}',);
+        'release_at_timestamp > ${releasedSince!.millisecondsSinceEpoch / 1000}',
+      );
     }
 
     return filter;
@@ -109,7 +110,8 @@ abstract class ResourceSearchFilter<Self extends ResourceSearchFilter<Self>> {
 
     if (releasedSince != null) {
       filter.add(
-          'release_at_timestamp > ${releasedSince!.millisecondsSinceEpoch / 1000}',);
+        'release_at_timestamp > ${releasedSince!.millisecondsSinceEpoch / 1000}',
+      );
     }
 
     return filter;

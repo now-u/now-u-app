@@ -205,8 +205,10 @@ class LearningResourceExploreSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExploreSectionWidget(
       tiles: this.tiles?.map(
-            (tileData) => ExploreLearningResourceTile(tileData,
-                onTap: () => tileOnClick(tileData),),
+            (tileData) => ExploreLearningResourceTile(
+              tileData,
+              onTap: () => tileOnClick(tileData),
+            ),
           ),
       tileHeight: 160,
       isLoading: isLoading,
@@ -237,8 +239,10 @@ class CampaignExploreSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExploreSectionWidget(
-      tiles: this.tiles?.map((tileData) =>
-          ExploreCampaignTile(tileData, onTap: () => tileOnClick(tileData)),),
+      tiles: this.tiles?.map(
+            (tileData) => ExploreCampaignTile(tileData,
+                onTap: () => tileOnClick(tileData)),
+          ),
       tileHeight: 300,
       isLoading: isLoading,
       titleOnClick: titleOnClick,
@@ -268,8 +272,10 @@ class NewsArticleExploreSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExploreSectionWidget(
-      tiles: this.tiles?.map((tileData) =>
-          ExploreNewsArticleTile(tileData, onTap: () => tileOnClick(tileData)),),
+      tiles: this.tiles?.map(
+            (tileData) => ExploreNewsArticleTile(tileData,
+                onTap: () => tileOnClick(tileData)),
+          ),
       tileHeight: 330,
       isLoading: isLoading,
       titleOnClick: titleOnClick,

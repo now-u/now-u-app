@@ -88,10 +88,11 @@ class CampaignInfoView extends StackedView<CampaignViewModel> {
     if (viewModel.campaign == null) {
       return [
         const Center(
-            child: Padding(
-          padding: EdgeInsets.all(24.0),
-          child: CircularProgressIndicator(),
-        ),),
+          child: Padding(
+            padding: EdgeInsets.all(24.0),
+            child: CircularProgressIndicator(),
+          ),
+        ),
       ];
     }
 

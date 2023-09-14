@@ -277,8 +277,11 @@ class NotificationTile extends StatelessWidget {
   final Function dismissFunction;
   final VoidCallback openNotification;
 
-  NotificationTile(this.notification,
-      {required this.dismissFunction, required this.openNotification,});
+  NotificationTile(
+    this.notification, {
+    required this.dismissFunction,
+    required this.openNotification,
+  });
   @override
   Widget build(BuildContext context) {
     return CustomTile(

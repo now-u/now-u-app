@@ -119,7 +119,8 @@ final regularTheme = ThemeData(
   searchBarTheme: SearchBarThemeData(
     surfaceTintColor: const MaterialStatePropertyAll(Colors.transparent),
     hintStyle: MaterialStatePropertyAll(
-        textTheme.bodyLarge!.copyWith(color: Colors.grey),),
+      textTheme.bodyLarge!.copyWith(color: Colors.grey),
+    ),
     elevation: const MaterialStatePropertyAll(tileElevation),
     shadowColor: MaterialStatePropertyAll(tileBoxShadowLight.color),
   ),

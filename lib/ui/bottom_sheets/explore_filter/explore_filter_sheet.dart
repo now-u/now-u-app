@@ -80,8 +80,10 @@ class ExploreFilterSheet extends StackedView<ExploreFilterSheetModel> {
                         ),
                       ),
                       if (viewModel.isSelected(option))
-                        Icon(Icons.check,
-                            color: Theme.of(context).primaryColor,),
+                        Icon(
+                          Icons.check,
+                          color: Theme.of(context).primaryColor,
+                        ),
                     ],
                   ),
                 ),
@@ -93,8 +95,12 @@ class ExploreFilterSheet extends StackedView<ExploreFilterSheetModel> {
             width: double.infinity,
             child: FilledButton(
               onPressed: () {
-                completer!(SheetResponse(
-                    confirmed: true, data: viewModel.selectedOptionValues,),);
+                completer!(
+                  SheetResponse(
+                    confirmed: true,
+                    data: viewModel.selectedOptionValues,
+                  ),
+                );
               },
               child: const Text('Apply'),
             ),
@@ -107,5 +113,6 @@ class ExploreFilterSheet extends StackedView<ExploreFilterSheetModel> {
   @override
   ExploreFilterSheetModel viewModelBuilder(BuildContext context) =>
       ExploreFilterSheetModel(
-          selectedOptionValues: request.data!.initialSelectedValues,);
+        selectedOptionValues: request.data!.initialSelectedValues,
+      );
 }

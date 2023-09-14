@@ -172,8 +172,12 @@ class _ExploreTabsState extends State<ExploreTabs>
       body: TabBarView(
         controller: _tabController,
         children: ExploreTabKey.values
-            .map((tab) => getTabData(tab).child(widget.viewModel,
-                (ExploreTabKey tab) => _tabController?.animateTo(tab.index),),)
+            .map(
+              (tab) => getTabData(tab).child(
+                widget.viewModel,
+                (ExploreTabKey tab) => _tabController?.animateTo(tab.index),
+              ),
+            )
             .toList(),
       ),
     );
