@@ -1,18 +1,20 @@
+import 'package:causeApiClient/causeApiClient.dart';
 import 'package:nowu/models/Cause.dart';
-import 'package:flutter/material.dart';
 
 import './factory.dart';
+import 'image_factory.dart';
 
-class ListCauseFactory extends ModelFactory<ListCause> {
+class CauseFactory extends ModelFactory<Cause> {
   @override
-  ListCause generate() {
-    return ListCause(
-      id: faker.randomGenerator.integer(100),
-      title: faker.lorem.sentence(),
-      description: faker.lorem.sentence(),
-      selected: faker.randomGenerator.boolean(),
-      icon: Icons.wc,
-      headerImage: faker.image.image(),
+  Cause generate() {
+    return Cause(
+      (cause) => cause
+        ..id = faker.randomGenerator.integer(100)
+        ..title = faker.lorem.sentence()
+        ..description = faker.lorem.sentence()
+        ..isSelected = faker.randomGenerator.boolean()
+        ..icon = IconEnum.environment
+        ..headerImage = ImageFactory().generateBuilder(),
     );
   }
 }

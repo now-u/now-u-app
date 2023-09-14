@@ -9,24 +9,16 @@ jobs:
     runs-on: macos-latest
     timeout-minutes: 30
     steps:
+      - uses: actions/checkout@v2
+
       # Checks-out our repository under $GITHUB_WORKSPACE, so our job can access it
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      # Setup the flutter environment.
-      - name: Setup flutter 
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable' # 'dev', 'alpha', default to: 'stable'
-          flutter-version: '3.7.x'
-
-      # Install your project's dependencies
-      - run: flutter pub get
+      - name: Setup app
+        uses: ./.github/actions/setup-app
 
       - run: cd ios && pod install --repo-update
 
       - run: git diff
-      
+
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Regenerated pod lockfile

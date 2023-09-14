@@ -55,12 +55,10 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+      
+    - name: Setup app
+      uses: ./.github/actions/setup-app
      
-    # Setup the flutter environment.
-    - uses: subosito/flutter-action@v2
-      with:
-        channel: 'stable' # 'dev', 'alpha', default to: 'stable'
-        flutter-version: '3.7.x'
       # env:
         # ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         # env:
@@ -73,15 +71,6 @@ jobs:
     # - run: pwd 
     # - run: echo $TEST_SECRET 
     # - run: echo $KEY_JKS > android/key.jks
-    
-    # Run flutter doctor.
-    - run: flutter doctor
-    
-    # Run flutter version.
-    - run: flutter --version 
-
-    # Get flutter dependencies.
-    - run: flutter pub get
     
     # Build apk
     - run: flutter build appbundle --release
@@ -146,15 +135,8 @@ jobs:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_IOS_CONFIG_PROD }}
         run: echo $FIREBASE_CONFIG > ./ios/Runner/GoogleService-Info.plist
 
-      # Setup the flutter environment.
-      - name: Setup flutter 
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable' # 'dev', 'alpha', default to: 'stable'
-          flutter-version: '3.7.x'
-
-      # Install your project's dependencies
-      - run: flutter pub get
+      - name: Setup app
+        uses: ./.github/actions/setup-app
 
       # Build and sign the ipa using a single flutter command
       - name: Building IPA

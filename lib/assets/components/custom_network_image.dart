@@ -24,14 +24,15 @@ class CustomNetworkImage extends StatelessWidget {
   Widget build(BuildContext context) {
     // If there is no image then return an error icon
     if (url == null) {
-      return Center(child: Icon(Icons.error));
+      return const Center(child: Icon(Icons.error));
     }
     return CachedNetworkImage(
       imageUrl: url!,
       placeholder: placeholder == null
-          ? (context, url) => Center(child: CircularProgressIndicator())
+          ? (context, url) => const Center(child: CircularProgressIndicator())
           : placeholder as Widget Function(BuildContext, String)?,
-      errorWidget: (context, url, error) => Center(child: Icon(Icons.error)),
+      errorWidget: (context, url, error) =>
+          const Center(child: Icon(Icons.error)),
       height: height,
       imageBuilder: (context, imageProvider) => Container(
         decoration: BoxDecoration(
@@ -50,7 +51,7 @@ class CustomNetworkImage extends StatelessWidget {
 // Where possible please use full fat CustomNetworkImage
 ImageProvider customNetworkImageProvider(String? url) {
   if (url == null) {
-    return AssetImage('assets/imgs/plain-white-background.jpg');
+    return const AssetImage('assets/imgs/plain-white-background.jpg');
   }
   return CachedNetworkImageProvider(
     url,

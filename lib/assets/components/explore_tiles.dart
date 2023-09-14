@@ -1,18 +1,11 @@
 import 'package:nowu/assets/components/card.dart';
 import 'package:nowu/assets/components/cause_indicator.dart';
 import 'package:nowu/assets/components/custom_network_image.dart';
-import 'package:nowu/locator.dart';
-import 'package:nowu/models/Learning.dart';
-import 'package:nowu/routes.dart';
-import 'package:nowu/models/Action.dart';
-import 'package:nowu/models/Campaign.dart';
-import 'package:nowu/models/Cause.dart';
 import 'package:nowu/models/article.dart';
 import 'package:nowu/services/causes_service.dart';
-import 'package:nowu/services/navigation_service.dart';
-import 'package:nowu/pages/action/ActionInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 
 enum ExploreTileStyle {
   Standard,
@@ -32,20 +25,22 @@ abstract class ExploreTile extends StatelessWidget {
 }
 
 class ExploreCampaignTile extends ExploreTile {
-  final NavigationService _navigationService = locator<NavigationService>();
-
   final String headerImage;
   final String title;
-  final ListCause cause;
-  final bool completed;
+  final Cause cause;
+  final bool? completed;
   final ListCampaign campaign;
+  final GestureTapCallback onTap;
 
-  ExploreCampaignTile(ListCampaign model, {Key? key})
-      : headerImage = model.headerImage,
-        title = model.title,
-        cause = model.cause,
-        completed = model.completed,
-        campaign = model,
+  ExploreCampaignTile(
+    CampaignExploreTileData tile, {
+    required this.onTap,
+    Key? key,
+  })  : headerImage = tile.campaign.headerImage.url,
+        title = tile.campaign.title,
+        cause = tile.campaign.cause,
+        completed = tile.isCompleted,
+        campaign = tile.campaign,
         super(key: key);
 
   @override
@@ -53,30 +48,28 @@ class ExploreCampaignTile extends ExploreTile {
     return AspectRatio(
       aspectRatio: 0.75,
       child: InkWell(
-        onTap: () => _navigationService.navigateTo(
-          Routes.campaign,
-          arguments: campaign,
-        ),
+        onTap: onTap,
         child: Column(
           children: [
-            Stack(
-              alignment: Alignment.topRight,
-              children: [
-                AspectRatio(
-                  aspectRatio: 1.5,
+            Container(
+              constraints: const BoxConstraints(maxHeight: 150),
+              child: Stack(
+                alignment: Alignment.topRight,
+                children: [
                   // FIXME ink animation doesn't cover image
-                  child: CustomNetworkImage(
+                  CustomNetworkImage(
                     headerImage,
                     fit: BoxFit.cover,
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: _ExploreTileCheckmark(
-                    completed: completed,
-                  ),
-                )
-              ],
+                  if (completed != null)
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: _ExploreTileCheckmark(
+                        completed: completed!,
+                      ),
+                    ),
+                ],
+              ),
             ),
             Expanded(
               child: Container(
@@ -86,8 +79,9 @@ class ExploreCampaignTile extends ExploreTile {
               ),
             ),
             Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: CauseIndicator(cause)),
+              padding: const EdgeInsets.only(bottom: 8),
+              child: CauseIndicator(cause),
+            ),
           ],
         ),
       ),
@@ -96,66 +90,57 @@ class ExploreCampaignTile extends ExploreTile {
 }
 
 class ExploreActionTile extends ExploreResourceTile {
-  final ListCauseAction action;
+  final ListAction action;
 
-  ExploreActionTile(ListCauseAction model, {ExploreTileStyle? style, Key? key})
-      : action = model,
+  ExploreActionTile(
+    ActionExploreTileData tile, {
+    required GestureTapCallback onTap,
+    ExploreTileStyle? style,
+    Key? key,
+  })  : action = tile.action,
         super(
-          title: model.title,
-          type: model.superType.name,
-          iconColor: model.primaryColor,
-          headerColor: model.secondaryColor,
-          dividerColor: model.tertiaryColor,
-          icon: model.icon,
-          cause: model.cause,
-          timeText: model.timeText,
-          completed: model.completed,
+          title: tile.action.title,
+          type: tile.action.type.name,
+          iconColor: tile.action.type.primaryColor,
+          headerColor: tile.action.type.secondaryColor,
+          dividerColor: tile.action.type.tertiaryColor,
+          icon: tile.action.type.icon,
+          cause: tile.action.cause,
+          timeText: tile.action.timeText,
+          isCompleted: tile.isCompleted,
           style: style,
+          onTap: onTap,
           key: key,
         );
-
-  void onTap() {
-    _navigationService.navigateTo(
-      Routes.actionInfo,
-      arguments: ActionInfoArguments(actionId: action.id),
-    );
-  }
 }
 
-class ExploreLearningTile extends ExploreResourceTile {
-  final CausesService _causesService = locator<CausesService>();
-
+class ExploreLearningResourceTile extends ExploreResourceTile {
   final LearningResource resource;
 
-  ExploreLearningTile(LearningResource model,
-      {ExploreTileStyle? style, Key? key})
-      : resource = model,
+  ExploreLearningResourceTile(
+    LearningResourceExploreTileData tile, {
+    required GestureTapCallback onTap,
+    ExploreTileStyle? style,
+    Key? key,
+  })  : resource = tile.learningResource,
         super(
-          title: model.title,
-          type: model.type.name,
+          title: tile.learningResource.title,
+          type: tile.learningResource.type.name,
           iconColor: blue0,
           headerColor: blue1,
           dividerColor: blue2,
-          icon: model.icon,
-          cause: model.cause,
-          timeText: model.timeText,
-          completed: model.completed,
+          icon: tile.learningResource.icon,
+          cause: tile.learningResource.cause,
+          timeText: tile.learningResource.timeText,
+          isCompleted: tile.isCompleted,
           key: key,
           style: style,
+          onTap: onTap,
         );
-
-  void onTap() async {
-    await _causesService.completeLearningResource(resource.id);
-    _navigationService.launchLink(
-      resource.link,
-    );
-  }
 }
 
 abstract class ExploreResourceTile extends ExploreTile {
   final double COMPLETED_EXTENSION_WIDTH = 110;
-
-  final NavigationService _navigationService = locator<NavigationService>();
 
   final String title;
   final String type;
@@ -163,27 +148,27 @@ abstract class ExploreResourceTile extends ExploreTile {
   final Color headerColor;
   final Color dividerColor;
   final IconData icon;
-  final ListCause cause;
+  final Cause cause;
   final String timeText;
-  final bool completed;
+  final bool? isCompleted;
   final ExploreTileStyle style;
+  final GestureTapCallback onTap;
 
-  ExploreResourceTile(
-      {required this.title,
-      required this.type,
-      required this.iconColor,
-      required this.headerColor,
-      required this.dividerColor,
-      required this.icon,
-      required this.cause,
-      required this.timeText,
-      required this.completed,
-      ExploreTileStyle? style,
-      Key? key})
-      : this.style = style ?? ExploreTileStyle.Standard,
+  ExploreResourceTile({
+    required this.title,
+    required this.type,
+    required this.iconColor,
+    required this.headerColor,
+    required this.dividerColor,
+    required this.icon,
+    required this.cause,
+    required this.timeText,
+    required this.isCompleted,
+    required this.onTap,
+    ExploreTileStyle? style,
+    Key? key,
+  })  : this.style = style ?? ExploreTileStyle.Standard,
         super(key: key);
-
-  void onTap();
 
   @override
   Widget buildBody(BuildContext context) {
@@ -226,9 +211,10 @@ abstract class ExploreResourceTile extends ExploreTile {
                       textScaleFactor: .8,
                     ),
                     Expanded(child: Container()),
-                    _ExploreTileCheckmark(
-                      completed: completed,
-                    ),
+                    if (isCompleted != null)
+                      _ExploreTileCheckmark(
+                        completed: isCompleted!,
+                      ),
                   ],
                 ),
               ),
@@ -238,20 +224,22 @@ abstract class ExploreResourceTile extends ExploreTile {
                 children: [
                   Expanded(
                     child: Container(
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: style == ExploreTileStyle.Standard
-                            ? _ExploreTileTitle(title)
-                            : Padding(
-                                padding: EdgeInsets.only(
-                                    right: COMPLETED_EXTENSION_WIDTH - 50),
-                                child: _ExploreTileTitle(title),
-                              )),
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: style == ExploreTileStyle.Standard
+                          ? _ExploreTileTitle(title)
+                          : Padding(
+                              padding: EdgeInsets.only(
+                                right: COMPLETED_EXTENSION_WIDTH - 50,
+                              ),
+                              child: _ExploreTileTitle(title),
+                            ),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8),
                     child: CauseIndicator(cause),
-                  )
+                  ),
                 ],
               ),
               flex: 3,
@@ -263,39 +251,39 @@ abstract class ExploreResourceTile extends ExploreTile {
   }
 }
 
-class ExploreNewsTile extends ExploreTile {
-  final NavigationService _navigationService = locator<NavigationService>();
-
+class ExploreNewsArticleTile extends ExploreTile {
   final String title;
   final String subtitle;
   final String headerImage;
   final String dateString;
   final String url;
   final String shortUrl;
-  final Article article;
+  final NewsArticle article;
+  final GestureTapCallback onTap;
 
-  ExploreNewsTile(Article model, {Key? key})
-      : title = model.title,
-        subtitle = model.subtitle,
-        headerImage = model.headerImage,
-        dateString = model.dateString ?? "",
-        url = model.fullArticleLink,
-        shortUrl = model.shortUrl,
-        article = model,
+  ExploreNewsArticleTile(
+    NewsArticleExploreTileData tile, {
+    required this.onTap,
+    Key? key,
+  })  : title = tile.article.title,
+        subtitle = tile.article.subtitle,
+        headerImage = tile.article.headerImage.url,
+        dateString = tile.article.dateString ?? '',
+        url = tile.article.link,
+        shortUrl = tile.article.shortUrl,
+        article = tile.article,
         super(key: key);
 
   Widget buildBody(BuildContext context) {
     return AspectRatio(
       aspectRatio: 0.8,
       child: InkWell(
-        onTap: () {
-          _navigationService.launchLink(article.fullArticleLink);
-        },
+        onTap: onTap,
         child: Column(
           children: [
             AspectRatio(
               aspectRatio: 1.8,
-              // FIXME ink animation doesn't cover image
+              // TODO ink animation doesn't cover image
               child: CustomNetworkImage(
                 headerImage,
                 fit: BoxFit.cover,
@@ -310,7 +298,7 @@ class ExploreNewsTile extends ExploreTile {
                   children: [
                     Text(
                       title,
-                      style: Theme.of(context).primaryTextTheme.headline2!,
+                      style: Theme.of(context).textTheme.headlineMedium!,
                       textScaleFactor: .7,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -320,13 +308,13 @@ class ExploreNewsTile extends ExploreTile {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context)
-                          .primaryTextTheme
-                          .bodyText2!
+                          .textTheme
+                          .bodySmall!
                           .apply(fontStyle: FontStyle.normal),
                     ),
                     Text(
                       dateString,
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -339,7 +327,7 @@ class ExploreNewsTile extends ExploreTile {
                 alignment: Alignment.center,
                 child: Text(
                   shortUrl,
-                  style: Theme.of(context).primaryTextTheme.bodyText1?.apply(
+                  style: Theme.of(context).textTheme.bodyLarge?.apply(
                         color: const Color.fromRGBO(255, 136, 0, 1),
                       ),
                   textScaleFactor: .7,
@@ -362,7 +350,7 @@ class _ExploreTileTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: Theme.of(context).primaryTextTheme.headline2!,
+      style: Theme.of(context).textTheme.headlineMedium!,
       textScaleFactor: .6,
       maxLines: 3,
       overflow: TextOverflow.ellipsis,
@@ -373,7 +361,6 @@ class _ExploreTileTitle extends StatelessWidget {
 class _ExploreTileCheckmark extends StatelessWidget {
   /// If the card has been completed
   final bool completed;
-  final double size;
 
   /// Colors for the checkmark
   static const Color _completedColor = Color.fromRGBO(89, 152, 26, 1);
@@ -381,7 +368,6 @@ class _ExploreTileCheckmark extends StatelessWidget {
 
   const _ExploreTileCheckmark({
     required this.completed,
-    this.size = 20,
     Key? key,
   }) : super(key: key);
 
@@ -401,7 +387,6 @@ class _ExploreTileCheckmark extends StatelessWidget {
         FaIcon(
           FontAwesomeIcons.solidCheckCircle,
           color: completed ? _completedColor : _uncompletedColor,
-          size: size,
         ),
       ],
     );
