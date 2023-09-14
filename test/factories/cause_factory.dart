@@ -1,6 +1,8 @@
+import 'package:causeApiClient/causeApiClient.dart';
 import 'package:nowu/models/Cause.dart';
 
 import './factory.dart';
+import 'image_factory.dart';
 
 class CauseFactory extends ModelFactory<Cause> {
   @override
@@ -12,7 +14,7 @@ class CauseFactory extends ModelFactory<Cause> {
         ..description = faker.lorem.sentence()
         ..isSelected = faker.randomGenerator.boolean()
         ..icon = IconEnum.environment
-        ..headerImage = faker.image.image(),
+        ..headerImage = ImageFactory().generateBuilder(),
     );
   }
 }

@@ -54,9 +54,9 @@ class ExploreTabData {
 
 enum ExploreTabKey {
   ALL,
+  CAMPAIGN,
   ACTIONS,
   LEARN,
-  CAMPAIGN,
   NEWS,
 }
 

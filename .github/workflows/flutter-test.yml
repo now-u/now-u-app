@@ -16,24 +16,14 @@ jobs:
         # os: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v2
-      
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: 'beta'
 
-      - run: dart --version
-      - run: flutter --version
-      - run: flutter pub get
+      - name: Setup app
+        uses: ./.github/actions/setup-app
+
       - run: pod repo update 
-      
-      - name: Linting 
-        run: flutter format .
 
-      - name: Commit linting 
-        uses: EndBug/add-and-commit@v7.0.0
-        with:
-          author_name: github-actions
-          author_email: 41898282+github-actions[bot]@users.noreply.github.com
-     
+      - name: Flutter analyze
+        run: flutter analyze
+
       - name: Run tests
         run: flutter test

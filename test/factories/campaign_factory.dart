@@ -4,6 +4,7 @@ import 'package:built_collection/built_collection.dart';
 import 'factory.dart';
 import 'cause_factory.dart';
 import 'action_factory.dart';
+import 'image_factory.dart';
 import 'learning_resource_factory.dart';
 
 class ListCampaignFactory extends ModelFactory<ListCampaign> {
@@ -14,7 +15,7 @@ class ListCampaignFactory extends ModelFactory<ListCampaign> {
         ..id = faker.randomGenerator.integer(100)
         ..title = faker.lorem.sentence()
         ..shortName = faker.lorem.word()
-        ..headerImage = faker.image.image()
+        ..headerImage = ImageFactory().generateBuilder()
         ..causes = ListBuilder(CauseFactory().generateList(length: 1)),
     );
   }
@@ -28,7 +29,7 @@ class CampaignFactory extends ModelFactory<Campaign> {
         ..id = faker.randomGenerator.integer(100)
         ..title = faker.lorem.sentence()
         ..shortName = faker.lorem.word()
-        ..headerImage = faker.image.image()
+        ..headerImage = ImageFactory().generateBuilder()
         ..causes = ListBuilder(CauseFactory().generateList(length: 1))
         ..isCompleted = faker.randomGenerator.boolean()
         ..actions = ListBuilder(ListActionFactory().generateList(length: 2))

@@ -19,6 +19,20 @@ class ExploreAllTab extends StatelessWidget {
       CausesFilter(viewModel: viewModel),
       NewFilter(viewModel: viewModel),
     ], filterResults: [
+      CampaignExploreSection(
+        title: 'Campaigns',
+        description:
+            'Join members of the now-u community in coordinated campaigns to make a difference',
+        titleOnClick: () => changeTab(ExploreTabKey.CAMPAIGN),
+        tileOnClick: (tileData) => viewModel.openCampaign(tileData.campaign),
+        tiles: viewModel.allSearchResult?.campaigns
+            .map((campaign) => CampaignExploreTileData(
+                  campaign,
+                  viewModel.isCampaignComplete(campaign),
+                )),
+        // TODO Handle loading state
+        isLoading: viewModel.allSearchResult == null,
+      ),
       ActionExploreSection(
         title: 'Actions',
         description:
@@ -44,20 +58,6 @@ class ExploreAllTab extends StatelessWidget {
             .map((learningResource) => LearningResourceExploreTileData(
                   learningResource,
                   viewModel.isLearningResourceComplete(learningResource),
-                )),
-        // TODO Handle loading state
-        isLoading: viewModel.allSearchResult == null,
-      ),
-      CampaignExploreSection(
-        title: 'Campaigns',
-        description:
-            'Join members of the now-u community in coordinated campaigns to make a difference',
-        titleOnClick: () => changeTab(ExploreTabKey.CAMPAIGN),
-        tileOnClick: (tileData) => viewModel.openCampaign(tileData.campaign),
-        tiles: viewModel.allSearchResult?.campaigns
-            .map((campaign) => CampaignExploreTileData(
-                  campaign,
-                  viewModel.isCampaignComplete(campaign),
                 )),
         // TODO Handle loading state
         isLoading: viewModel.allSearchResult == null,
