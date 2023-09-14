@@ -1,46 +1,46 @@
-import 'package:nowu/locator.dart';
-import 'package:nowu/models/User.dart';
+import 'package:causeApiClient/causeApiClient.dart';
+import 'package:logging/logging.dart';
+import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/auth.dart';
 
 class UserService {
   // TODO We hardly actually need the user now we have the auth token
-  User? _currentUser = null;
-  User? get currentUser => _currentUser;
+  UserProfile? _currentUser = null;
+  UserProfile? get currentUser => _currentUser;
+  Logger _logger = Logger('UserService');
 
-  final ApiService _apiService = locator<ApiService>();
-  final AuthenticationService _authenticationService =
-      locator<AuthenticationService>();
+  final _authService = locator<AuthenticationService>();
+  final _apiService = locator<ApiService>();
 
-  Future<User?> fetchUser() async {
-    if (!_authenticationService.isAuthenticated) {
+  CauseApiClient get _causeServiceClient => _apiService.apiClient;
+
+  Future<UserProfile?> fetchUser() async {
+    if (!_authService.isAuthenticated) {
+      _logger.warning('Fetched user when not authenticated');
       return null;
     }
 
     try {
-      User user =
-          await _apiService.getModelRequest('v1/users/me', User.fromJson);
-      // Update the user in the service
-      _currentUser = user;
-      return user;
-    } catch (err) {
-      return null;
+      final response = await _causeServiceClient.getMeApi().meProfileRetrieve();
+      return _currentUser = response.data;
+    } catch (e) {
+      _logger.warning('Fetch user failed, $e');
+      throw e;
     }
   }
 
   // Update user profile (maybe including signup for newletter email?)
-  Future<void> updateUser(
-      {required String name, required bool newsLetterSignup}) async {
-    Map response = await _apiService.putRequest(
-      'v1/users/me',
-      body: {
-        "full_name": name,
-        "newsletter_signup": newsLetterSignup,
-      },
-    );
-    print(response);
-    User userResponse = User.fromJson(response['data']);
-    // TODO Update user from response (we might just be able to overwrite here)
-    _currentUser = userResponse;
+  Future<void> updateUser({
+    required String name,
+    required bool newsLetterSignup,
+  }) async {
+    // TODO Handle news letter
+    final response =
+        await _causeServiceClient.getMeApi().meProfilePartialUpdate(
+              patchedUserProfile:
+                  PatchedUserProfile((profile) => profile..name = name),
+            );
+    _currentUser = response.data!;
   }
 }

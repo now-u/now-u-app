@@ -1,8 +1,9 @@
 import 'package:nowu/models/Notification.dart';
 import 'package:nowu/services/api_service.dart';
 
-import 'package:nowu/locator.dart';
+import 'package:nowu/app/app.locator.dart';
 
+// TODO Move to apiv2
 class InternalNotificationService {
   final ApiService _apiService = locator<ApiService>();
 
@@ -11,25 +12,29 @@ class InternalNotificationService {
     return _notifications;
   }
 
+// TODO Fix
   Future fetchNotifications() async {
-    try {
-      _notifications = await _apiService.getModelListRequest(
-          "v1/users/me/notifications", InternalNotification.fromJson);
-    } catch (e) {
-      print("Error getting notifications");
-    }
+    // try {
+    //   _notifications = await _apiService.getModelListRequest(
+    //     'v1/users/me/notifications',
+    //     InternalNotification.fromJson,
+    //   );
+    // } catch (e) {
+    //   print('Error getting notifications');
+    // }
   }
 
   Future<bool> dismissNotification(int? notificationId) async {
-    try {
-      await _apiService
-          .putRequest("v1/users/me/notifications/$notificationId/dismiss");
-      _notifications!
-          .removeWhere((InternalNotification n) => n.getId() == notificationId);
-      return true;
-    } catch (e) {
-      print("Error dismissing notifications");
-      return false;
-    }
+    return true;
+    // try {
+    //   await _apiService
+    //       .putRequest('v1/users/me/notifications/$notificationId/dismiss');
+    //   _notifications!
+    //       .removeWhere((InternalNotification n) => n.getId() == notificationId);
+    //   return true;
+    // } catch (e) {
+    //   print('Error dismissing notifications');
+    //   return false;
+    // }
   }
 }

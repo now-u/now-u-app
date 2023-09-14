@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-final Color shadowWhiteColor = Color.fromRGBO(0, 45, 96, 0.08);
-final Color shadowColor = Color.fromRGBO(0, 0, 0, 0.08);
+final Color shadowWhiteColor = const Color.fromRGBO(0, 45, 96, 0.08);
+final Color shadowColor = const Color.fromRGBO(0, 0, 0, 0.08);
 final double shadowBlurRadius = 20;
-final Offset shadowOffset = Offset(0, 3);
+final Offset shadowOffset = const Offset(0, 3);
 
 BoxShadow customTileBoxShadow(bool onWhiteBackground) => BoxShadow(
       color: onWhiteBackground ? shadowWhiteColor : shadowColor,
@@ -33,11 +33,12 @@ class CustomTile extends StatelessWidget {
       onTap: onClick as void Function()?,
       child: Container(
         decoration: BoxDecoration(
-            color: color ?? Colors.white,
-            borderRadius: tileBorderRadius(borderRadius: borderRadius),
-            boxShadow: [
-              customTileBoxShadow(onWhiteBackground ?? false),
-            ]),
+          color: color ?? Colors.white,
+          borderRadius: tileBorderRadius(borderRadius: borderRadius),
+          boxShadow: [
+            customTileBoxShadow(onWhiteBackground ?? false),
+          ],
+        ),
         child: ClipRRect(
           borderRadius: tileBorderRadius(borderRadius: borderRadius),
           child: child,

@@ -1,31 +1,14 @@
-import 'package:nowu/assets/constants.dart';
-import 'package:nowu/models/FAQ.dart';
+import 'package:causeApiClient/causeApiClient.dart';
+import 'package:nowu/app/app.locator.dart';
 
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:nowu/services/api_service.dart';
 
 class FAQService {
-  List<FAQ>? _faqs = [];
-  List<FAQ>? get faqs {
-    return _faqs;
-  }
+  final _apiService = locator<ApiService>();
+  CauseApiClient get _causeServiceClient => _apiService.apiClient;
 
-  Future fetchFAQs() async {
-    try {
-      var response = await http.get(getCausesApiPath("v1/faqs"));
-      if (response.statusCode != 200) {
-        print("Error whilst fetching FAQs");
-        return false;
-      }
-      _faqs = json
-          .decode(response.body)['data']
-          .map((e) => FAQ.fromJson(e))
-          .toList()
-          .cast<FAQ>();
-    } catch (e) {
-      print("Failed to fetch faqs");
-      print(e);
-      return e.toString();
-    }
+  Future<List<Faq>> getFaqs() async {
+    final response = await _causeServiceClient.getFaqsApi().faqsList();
+    return response.data!.toList();
   }
 }

@@ -1,11 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 
-PageRoute customRoute({WidgetBuilder? builder, RouteSettings? settings}) {
-  return Platform.isAndroid
-      ? CustomAndroidRoute(builder: builder!, settings: settings)
-      : CustomIosRoute(builder: builder!, settings: settings);
+PageRoute customRoute({
+  required WidgetBuilder builder,
+  RouteSettings? settings,
+}) {
+  return defaultTargetPlatform == TargetPlatform.iOS
+      ? CustomIosRoute(builder: builder, settings: settings)
+      : CustomAndroidRoute(builder: builder, settings: settings);
 }
 
 class CustomAndroidRoute<T> extends MaterialPageRoute<T> {
@@ -13,8 +16,12 @@ class CustomAndroidRoute<T> extends MaterialPageRoute<T> {
       : super(builder: builder, settings: settings);
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     //if (settings.isInitialRoute)
     //  return child;
     // Fades between routes. (If you don't want any animation,
