@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:nowu/app/app.locator.dart';
 
 Map<String, String> unauthenticatedHeaders = {
-  'Content-Type': 'application/json; charset=UTF-8'
+  'Content-Type': 'application/json; charset=UTF-8',
 };
 
 Future<String> readTestData(

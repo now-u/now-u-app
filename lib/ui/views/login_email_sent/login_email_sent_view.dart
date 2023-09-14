@@ -39,7 +39,6 @@ class _Body extends StatelessWidget {
   final LoginEmailSentViewModel viewModel;
 
   const _Body({
-    super.key,
     required this.token,
     required this.email,
     required this.viewModel,

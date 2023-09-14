@@ -1,6 +1,5 @@
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/auth.dart';
-import 'package:nowu/services/dialog_service.dart';
 import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/services/router_service.dart';
 import 'package:stacked/stacked.dart';

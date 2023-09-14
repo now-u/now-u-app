@@ -53,7 +53,6 @@ class _LoginForm extends StatelessWidget {
 
   const _LoginForm(
     this.viewModel, {
-    super.key,
     required this.codeInputController,
   });
 
@@ -138,7 +137,7 @@ class _LoginForm extends StatelessWidget {
             ),
             const SizedBox(
               height: 20,
-            )
+            ),
 
             // Uncomment to readd Skip button
             //skipButton(),
@@ -155,7 +154,6 @@ class _Body extends StatelessWidget {
 
   const _Body(
     this.viewModel, {
-    super.key,
     required this.codeInputController,
   });
 

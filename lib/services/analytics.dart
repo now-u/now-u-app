@@ -64,7 +64,7 @@ class AnalyticsService {
         'id': resource.id,
         'title': resource.title,
         'time': resource.time,
-        'type': resource.type.name
+        'type': resource.type.name,
       },
     );
   }

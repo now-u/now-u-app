@@ -35,7 +35,7 @@ class CauseTile extends StatelessWidget {
               color: Color.fromRGBO(0, 0, 0, 0.16),
               offset: Offset(0, 8),
               blurRadius: 6,
-            )
+            ),
           ],
         ),
         child: Column(
@@ -67,7 +67,7 @@ class CauseTile extends StatelessWidget {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -92,7 +92,7 @@ class CauseTile extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 1)
+            const SizedBox(height: 1),
           ],
         ),
       ),

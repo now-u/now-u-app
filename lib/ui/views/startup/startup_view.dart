@@ -29,7 +29,7 @@ class StartupView extends StackedView<StartupViewModel> {
               valueColor: AlwaysStoppedAnimation(
                 Theme.of(context).primaryColor,
               ),
-            )
+            ),
           ],
         ),
       ),

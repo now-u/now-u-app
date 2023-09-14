@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nowu/assets/components/textButton.dart';
-import 'package:nowu/pages/other/InfoPage.dart';
 
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../StyleFrom.dart';
 
@@ -157,7 +155,7 @@ class PageHeaderBackButton extends StatelessWidget {
                       ),
                     ),
                   ),
-                )
+                ),
         ],
       ),
     );

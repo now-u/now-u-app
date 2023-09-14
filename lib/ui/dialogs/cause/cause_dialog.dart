@@ -52,7 +52,7 @@ class CauseDialog extends StackedView<CausesDialogModel> {
                     color: Theme.of(context).primaryColor,
                   ),
                 ),
-              )
+              ),
             ],
           ),
           Padding(

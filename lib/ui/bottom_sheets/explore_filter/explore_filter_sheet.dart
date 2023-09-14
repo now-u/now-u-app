@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nowu/ui/common/ui_helpers.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -82,7 +81,7 @@ class ExploreFilterSheet extends StackedView<ExploreFilterSheetModel> {
                       ),
                       if (viewModel.isSelected(option))
                         Icon(Icons.check,
-                            color: Theme.of(context).primaryColor),
+                            color: Theme.of(context).primaryColor,),
                     ],
                   ),
                 ),
@@ -95,7 +94,7 @@ class ExploreFilterSheet extends StackedView<ExploreFilterSheetModel> {
             child: FilledButton(
               onPressed: () {
                 completer!(SheetResponse(
-                    confirmed: true, data: viewModel.selectedOptionValues));
+                    confirmed: true, data: viewModel.selectedOptionValues,),);
               },
               child: const Text('Apply'),
             ),
@@ -108,5 +107,5 @@ class ExploreFilterSheet extends StackedView<ExploreFilterSheetModel> {
   @override
   ExploreFilterSheetModel viewModelBuilder(BuildContext context) =>
       ExploreFilterSheetModel(
-          selectedOptionValues: request.data!.initialSelectedValues);
+          selectedOptionValues: request.data!.initialSelectedValues,);
 }

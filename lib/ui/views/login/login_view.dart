@@ -173,7 +173,7 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
                 const SizedBox(height: 10),
               ],
             ),
-          )
+          ),
         ],
       );
     }

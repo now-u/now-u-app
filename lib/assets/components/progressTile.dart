@@ -102,7 +102,7 @@ class ProgressCircle extends StatelessWidget {
         Text(
           progressTitle,
           style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-        )
+        ),
       ],
     );
   }

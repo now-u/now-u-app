@@ -121,7 +121,7 @@ class HomeView extends StackedView<HomeViewModel> {
                         onClick: () {
                           viewModel.goToEditCausesPage();
                         },
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -278,7 +278,7 @@ class NotificationTile extends StatelessWidget {
   final VoidCallback openNotification;
 
   NotificationTile(this.notification,
-      {required this.dismissFunction, required this.openNotification});
+      {required this.dismissFunction, required this.openNotification,});
   @override
   Widget build(BuildContext context) {
     return CustomTile(
@@ -326,7 +326,7 @@ class NotificationTile extends StatelessWidget {
                     Theme.of(context).textTheme.bodyLarge,
                     fontSize: 11,
                   ),
-                )
+                ),
               ],
             ),
           ),

@@ -173,7 +173,7 @@ class _ExploreTabsState extends State<ExploreTabs>
         controller: _tabController,
         children: ExploreTabKey.values
             .map((tab) => getTabData(tab).child(widget.viewModel,
-                (ExploreTabKey tab) => _tabController?.animateTo(tab.index)))
+                (ExploreTabKey tab) => _tabController?.animateTo(tab.index),),)
             .toList(),
       ),
     );

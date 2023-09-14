@@ -33,7 +33,7 @@ class ExploreCampaignTile extends ExploreTile {
   final GestureTapCallback onTap;
 
   ExploreCampaignTile(CampaignExploreTileData tile,
-      {required this.onTap, Key? key})
+      {required this.onTap, Key? key,})
       : headerImage = tile.campaign.headerImage.url,
         title = tile.campaign.title,
         cause = tile.campaign.cause,
@@ -65,7 +65,7 @@ class ExploreCampaignTile extends ExploreTile {
                       child: _ExploreTileCheckmark(
                         completed: completed!,
                       ),
-                    )
+                    ),
                 ],
               ),
             ),
@@ -237,7 +237,7 @@ abstract class ExploreResourceTile extends ExploreTile {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8),
                     child: CauseIndicator(cause),
-                  )
+                  ),
                 ],
               ),
               flex: 3,
@@ -260,7 +260,7 @@ class ExploreNewsArticleTile extends ExploreTile {
   final GestureTapCallback onTap;
 
   ExploreNewsArticleTile(NewsArticleExploreTileData tile,
-      {required this.onTap, Key? key})
+      {required this.onTap, Key? key,})
       : title = tile.article.title,
         subtitle = tile.article.subtitle,
         headerImage = tile.article.headerImage.url,
@@ -310,7 +310,7 @@ class ExploreNewsArticleTile extends ExploreTile {
                     ),
                     Text(
                       dateString,
-                    )
+                    ),
                   ],
                 ),
               ),

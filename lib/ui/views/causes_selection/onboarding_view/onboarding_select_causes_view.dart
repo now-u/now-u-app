@@ -57,7 +57,7 @@ class OnboardingSelectCausesView
                                 ),
                               ),
                             ),
-                            Expanded(flex: 3, child: SizedBox())
+                            Expanded(flex: 3, child: SizedBox()),
                           ],
                         ),
                         Text(
@@ -94,7 +94,7 @@ class OnboardingSelectCausesView
                 const SizedBox(height: 10),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

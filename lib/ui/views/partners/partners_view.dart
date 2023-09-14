@@ -76,7 +76,7 @@ class _OrganisationTile extends StatelessWidget {
               color: Color.fromRGBO(0, 0, 0, 0.16),
               offset: Offset(0, 3),
               blurRadius: 6,
-            )
+            ),
           ],
         ),
         child: Padding(
@@ -104,7 +104,7 @@ class _OrganisationTile extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
-              )
+              ),
             ],
           ),
         ),

@@ -41,7 +41,7 @@ class ExploreSectionWidget extends StatelessWidget {
                   textAlign: TextAlign.left,
                 ),
                 if (titleOnClick != null)
-                  const Icon(Icons.chevron_right, size: 30)
+                  const Icon(Icons.chevron_right, size: 30),
               ],
             ),
           ),
@@ -86,7 +86,7 @@ class ExploreSectionWidget extends StatelessWidget {
                   'Explore',
                   // TODO
                   onPressed: () {},
-                )
+                ),
               ],
             ),
           ),
@@ -118,7 +118,7 @@ class ExploreSectionWidget extends StatelessWidget {
         children: <Widget>[
           const SizedBox(width: 8.0),
           ...(tiles ?? []),
-          const SizedBox(width: 8.0)
+          const SizedBox(width: 8.0),
         ],
       ),
     );
@@ -206,7 +206,7 @@ class LearningResourceExploreSection extends StatelessWidget {
     return ExploreSectionWidget(
       tiles: this.tiles?.map(
             (tileData) => ExploreLearningResourceTile(tileData,
-                onTap: () => tileOnClick(tileData)),
+                onTap: () => tileOnClick(tileData),),
           ),
       tileHeight: 160,
       isLoading: isLoading,
@@ -238,7 +238,7 @@ class CampaignExploreSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExploreSectionWidget(
       tiles: this.tiles?.map((tileData) =>
-          ExploreCampaignTile(tileData, onTap: () => tileOnClick(tileData))),
+          ExploreCampaignTile(tileData, onTap: () => tileOnClick(tileData)),),
       tileHeight: 300,
       isLoading: isLoading,
       titleOnClick: titleOnClick,
@@ -269,7 +269,7 @@ class NewsArticleExploreSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExploreSectionWidget(
       tiles: this.tiles?.map((tileData) =>
-          ExploreNewsArticleTile(tileData, onTap: () => tileOnClick(tileData))),
+          ExploreNewsArticleTile(tileData, onTap: () => tileOnClick(tileData)),),
       tileHeight: 330,
       isLoading: isLoading,
       titleOnClick: titleOnClick,

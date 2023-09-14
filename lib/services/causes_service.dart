@@ -144,7 +144,7 @@ class CausesService {
     }
     final response =
         await _causeServiceClient.getMeApi().meCausesInfoRetrieve();
-    print("YPatched user select info");
+    print('YPatched user select info');
     print(response.data);
     return _userInfo = response.data!;
   }

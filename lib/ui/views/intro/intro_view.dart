@@ -84,7 +84,7 @@ class IntroViewPages extends StatelessWidget {
                               onClick: () => viewModel.skip(context),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),

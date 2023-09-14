@@ -1,6 +1,5 @@
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/navigation_service.dart';
-import 'package:nowu/services/search_service.dart';
 import 'package:nowu/ui/views/explore/explore_page_view.dart';
 import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:nowu/ui/views/home/home_view.dart';
@@ -71,7 +70,7 @@ class TabsView extends StatelessWidget with WidgetsBindingObserver {
                   colors: [
                     Theme.of(context).colorScheme.error,
                     Theme.of(context).primaryColor,
-                    Theme.of(context).primaryColor
+                    Theme.of(context).primaryColor,
                   ],
                 ).createShader(bounds),
                 child: Icon(pageDetails.icon),

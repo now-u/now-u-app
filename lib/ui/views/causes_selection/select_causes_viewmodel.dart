@@ -18,7 +18,7 @@ abstract class SelectCausesViewModel extends BaseViewModel
 
   void initialise() {
     causesData = {
-      for (Cause cause in _causesService.causes) cause: cause.isSelected
+      for (Cause cause in _causesService.causes) cause: cause.isSelected,
     };
   }
 

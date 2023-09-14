@@ -1,7 +1,6 @@
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/dialog_service.dart';
 import 'package:nowu/services/router_service.dart';
-import 'package:nowu/services/search_service.dart';
 import 'package:nowu/services/user_service.dart';
 
 import 'package:nowu/app/app.locator.dart';

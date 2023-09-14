@@ -91,7 +91,7 @@ class CampaignInfoView extends StackedView<CampaignViewModel> {
             child: Padding(
           padding: EdgeInsets.all(24.0),
           child: CircularProgressIndicator(),
-        ))
+        ),),
       ];
     }
 

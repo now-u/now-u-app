@@ -28,7 +28,7 @@ class ExploreLearningResourceTab extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: ExploreLearningResourceTile(
               LearningResourceExploreTileData(learningResource,
-                  viewModel.isLearningResourceComplete(learningResource)),
+                  viewModel.isLearningResourceComplete(learningResource),),
               onTap: () => viewModel.openLearningResource(learningResource),
             ),
           ),

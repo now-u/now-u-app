@@ -52,7 +52,7 @@ class ChangeSelectCausesView extends StackedView<ChangeSelectCausesViewModel> {
                       viewModel.goBack();
                     },
                   ),
-                  const SizedBox(width: 10)
+                  const SizedBox(width: 10),
                 ],
               ),
             ),

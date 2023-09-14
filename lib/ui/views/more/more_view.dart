@@ -86,7 +86,7 @@ final menuItems = <MenuItemData>[
     title: 'Send us an email',
     icon: CustomIcons.ic_email,
     action: LinkMenuItemAction('mailto:hello@now-.com?subject=Hi',
-        isExternal: true),
+        isExternal: true,),
   ),
   const SectionHeadingMenuItem(title: 'Legal'),
   const ActionMenuItem(
@@ -159,7 +159,7 @@ class MoreView extends StackedView<MoreViewModel> {
                 SocialButton(
                   icon: FontAwesomeIcons.twitter,
                   link: 'https://twitter.com/now_u_app',
-                )
+                ),
               ],
             ),
             const SizedBox(height: 20),

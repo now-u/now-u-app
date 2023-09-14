@@ -73,7 +73,7 @@ class ScrollableSheetPage extends StatelessWidget {
         children: [
           // Header
           header,
-          sheet
+          sheet,
         ],
       ),
     );

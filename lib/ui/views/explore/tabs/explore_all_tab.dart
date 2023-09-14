@@ -29,7 +29,7 @@ class ExploreAllTab extends StatelessWidget {
             .map((campaign) => CampaignExploreTileData(
                   campaign,
                   viewModel.isCampaignComplete(campaign),
-                )),
+                ),),
         // TODO Handle loading state
         isLoading: viewModel.allSearchResult == null,
       ),
@@ -43,7 +43,7 @@ class ExploreAllTab extends StatelessWidget {
             .map((action) => ActionExploreTileData(
                   action,
                   viewModel.isActionComplete(action),
-                )),
+                ),),
         // TODO Handle loading state
         isLoading: viewModel.allSearchResult == null,
       ),
@@ -58,7 +58,7 @@ class ExploreAllTab extends StatelessWidget {
             .map((learningResource) => LearningResourceExploreTileData(
                   learningResource,
                   viewModel.isLearningResourceComplete(learningResource),
-                )),
+                ),),
         // TODO Handle loading state
         isLoading: viewModel.allSearchResult == null,
       ),
@@ -74,6 +74,6 @@ class ExploreAllTab extends StatelessWidget {
         // TODO Handle loading state
         isLoading: viewModel.allSearchResult == null,
       ),
-    ]);
+    ],);
   }
 }

@@ -20,7 +20,7 @@ class PartnerInfoView extends StackedView<PartnerInfoViewModel> {
       : super(key: key);
 
   Iterable<Widget> getSocialMediaChildren(
-      Organisation org, PartnerInfoViewModel viewModel) {
+      Organisation org, PartnerInfoViewModel viewModel,) {
     final List<({String? link, IconData icon})> socialButtons = [
       (link: org.instagramLink, icon: FontAwesomeIcons.instagram),
       (link: org.facebookLink, icon: FontAwesomeIcons.facebookF),
@@ -33,15 +33,15 @@ class PartnerInfoView extends StackedView<PartnerInfoViewModel> {
         .map(
           (button) => SocialMediaButton(
               icon: button.icon,
-              onPressed: () => viewModel.launchLink(button.link!)),
+              onPressed: () => viewModel.launchLink(button.link!),),
         )
         .toList();
   }
 
   Iterable<Widget> getExtraLinks(
-      Organisation org, PartnerInfoViewModel viewModel) {
+      Organisation org, PartnerInfoViewModel viewModel,) {
     return org.extraLinks.map((link) => ExtraLinkButton(
-        title: link.title, onClick: () => viewModel.launchLink(link.link)));
+        title: link.title, onClick: () => viewModel.launchLink(link.link),),);
   }
 
   @override
@@ -140,7 +140,7 @@ class PartnerInfoView extends StackedView<PartnerInfoViewModel> {
                 const SizedBox(height: 20),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

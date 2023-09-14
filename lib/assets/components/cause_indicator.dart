@@ -21,7 +21,7 @@ class CauseIndicator extends StatelessWidget {
           Text(
             cause.title,
             textScaleFactor: .9,
-          )
+          ),
         ],
       ),
     );
