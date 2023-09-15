@@ -12,6 +12,11 @@ on:
     
 # on: push    # Default will running for every branch.
     
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
 jobs:
   android:
     # This job will run on ubuntu virtual machine
@@ -23,9 +28,9 @@ jobs:
         ALIAS_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         TEST_SECRET: ${{ secrets.TEST_SECRET }}
     steps:
-    
+
     - uses: actions/checkout@v2
-    
+
     - name: Key base64 to file
       id: write_file_key
       uses: timheuer/base64-to-file@v1
@@ -55,6 +60,7 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+        cache: 'gradle'
       
     - name: Setup app
       uses: ./.github/actions/setup-app

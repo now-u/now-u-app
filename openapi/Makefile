@@ -15,5 +15,6 @@ generate-prod:
 			-c /local/open-generator-config.yml \
 			--enable-post-process-file \
   			-o /local/causeApi
+	sudo chown -R ${USER} causeApi
 	cd causeApi && flutter pub get
 	cd causeApi && flutter pub run build_runner build
