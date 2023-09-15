@@ -19,6 +19,7 @@ runs:
       with:
         channel: 'beta' # 'dev', 'alpha', default to: 'stable'
         flutter-version: '3.14.x'
+        cache: true
       
     - name: Flutter version
       shell: bash
