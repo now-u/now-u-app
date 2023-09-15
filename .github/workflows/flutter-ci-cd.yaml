@@ -26,9 +26,7 @@ jobs:
         KEY_JKS: ${{ secrets.ANDROID_KEY_JKS }}
         KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         ALIAS_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-        TEST_SECRET: ${{ secrets.TEST_SECRET }}
     steps:
-
     - uses: actions/checkout@v2
 
     - name: Key base64 to file
