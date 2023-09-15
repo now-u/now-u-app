@@ -14,6 +14,8 @@ jobs:
       # Checks-out our repository under $GITHUB_WORKSPACE, so our job can access it
       - name: Setup app
         uses: ./.github/actions/setup-app
+        with:
+          firebaseConfig: ${{ secrets.FIREBASE_CONFIG_PROD }}
 
       - run: cd ios && pod install --repo-update
 

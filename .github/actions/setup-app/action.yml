@@ -1,6 +1,11 @@
 name: 'Setup app'
 description: 'Install flutter and dependencies'
 
+inputs:
+  firebaseConfig:
+    description: 'Contents of google-services.json'
+    required: true
+
 runs:
   using: "composite"
   steps:
@@ -20,12 +25,18 @@ runs:
         channel: 'beta' # 'dev', 'alpha', default to: 'stable'
         flutter-version: '3.14.x'
         cache: true
-      
+
     - name: Flutter version
       shell: bash
       run: |
         dart --version
         flutter --version
+
+    - name: Create firebase google-service.json
+      shell: bash
+      env:
+        FIREBASE_CONFIG: ${{ inputs.firebaseConfig }}
+      run: echo $FIREBASE_CONFIG > ./android/app/google-services.json
 
     - name: Generate openapi client
       shell: bash
