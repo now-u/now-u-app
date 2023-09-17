@@ -19,8 +19,6 @@ jobs:
 
       - name: Setup app
         uses: ./.github/actions/setup-app
-        with:
-          firebaseConfig: ${{ secrets.FIREBASE_CONFIG_PROD }}
 
       - run: pod repo update 
 

@@ -24,7 +24,6 @@ jobs:
 
     - name: 🧰 Setup app
       uses: ./.github/actions/setup-app
-        firebaseConfig: ${{ secrets.FIREBASE_CONFIG_PROD }}
 
     - name: 🔑 Add secrets
       env:

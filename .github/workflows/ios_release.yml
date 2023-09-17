@@ -25,9 +25,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Install the Apple certificate and provisioning profile 
-      - name: Install the Apple certificate and provisioning profile
+      # Install the Apple certificate and provisioning profile
+      - name: 🔑 Install the Apple certificate and provisioning profile
         env:
+          # NOTE: Once a year this certificate will expire.
+          # This secret stores the base64 encoded p12. This can be generated with the following:
+          #
+          # Follow this guide to convert the downloaded certifacte to p12
+          # https://gist.github.com/jcward/d08b33fc3e6c5f90c18437956e5ccc35
+          # Rough overview
+          # Generate certifacte (.cer) or use the same file as before
+          # Upload cert here and download output: https://developer.apple.com/account/resources/profiles/list
+          # Do some stuff to generate p12 cert (ios_distribution.p12)
+          # NOTE: When running `openssl pkcs12 -export` use the -legacy flag
+          # NOTE: Download apple cert from  https://developer.apple.com/certificationauthority/AppleWWDRCA.cer
+          #
+          # After generating use `cat ios_distribution.p12 | base64 | xclip
+          # -selection c` to copy the output and update the secret. If passowrd
+          # is chnage update P12_PASSWORD as well
           BUILD_CERTIFICATE_BASE64: ${{ secrets.APPSTORE_CERT_BASE64 }}
           P12_PASSWORD: ${{ secrets.APPSTORE_CERT_PASSWORD }}
           BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.MOBILEPROVISION_BASE64 }}
@@ -51,27 +66,15 @@ jobs:
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
-      # - name: Create firebase GoogleService-Info.plist
-      #   env:
-      #     FIREBASE_CONFIG: ${{ secrets.FIREBASE_IOS_CONFIG_PROD }}
-      #   run: echo $FIREBASE_CONFIG > ./ios/Runner/GoogleService-Info.plist
-
-      - name: Setup app
+      - name: 🧰  Setup app
         uses: ./.github/actions/setup-app
-        with:
-          # TODO Remove this and just commit to repo
-          firebaseConfig: ${{ secrets.FIREBASE_CONFIG_PROD }}
-
-      # TODO Remove
-      # - name: Pod install
-      #   run: cd ios && pod install
 
       # Build and sign the ipa using a single flutter command
-      - name: Building IPA
+      - name: 🛠️ Building IPA
         run: flutter build ipa --release --export-options-plist=ios/Runner/ExportOptions.plist
 
       # Collect the file and upload as artifact
-      - name: collect ipa artifacts
+      - name: ⏫ Upload bundle as gh artifact
         uses: actions/upload-artifact@v2
         with:
          name: release-ipa
@@ -79,13 +82,13 @@ jobs:
          path: build/ios/ipa/*.ipa
 
       # Important! Cleanup: remove the certificate and provisioning profile from the runner!
-      - name: Clean up keychain and provisioning profile
+      - name: 🧹 Clean up keychain and provisioning profile
         if: ${{ always() }}
         run: |
           security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
           rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision
 
-      - name: Publishing app to TestFlight
+      - name: ⏫ Publishing app to TestFlight
         env:
           APPLEID_USERNAME: ${{ secrets.APPLEID_USERNAME }}
           APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
