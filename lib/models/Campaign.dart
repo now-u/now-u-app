@@ -16,7 +16,8 @@ extension CampaignExtension on Campaign {
     return this.causes[0];
   }
 
-  String get description => this.description.replaceAll('\\n', '\n\n');
+  // TODO This is really sad, it would be easy to use description by accident
+  String getDescription() => this.description.replaceAll('\\n', '\n\n');
 
   Future<String> getShareText() async {
     Uri uri = await _dynamicLinkService.createDynamicLink(

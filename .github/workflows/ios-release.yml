@@ -2,22 +2,15 @@ name: IOS release
 
 on:
   workflow_dispatch:
-
-# TODO Use tag to set version in setup app
-# on:
-#   workflow_call:
-#     inputs:
-#       version:
-#         required: true
-#         type: string
+  workflow_call:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref }}
+  group: ${{ github.workflow }}-ios-release-${{ github.head_ref }}
   cancel-in-progress: true
 
 # TODO https://damienaicheh.github.io/flutter/github/actions/2021/04/22/build-sign-flutter-ios-github-actions-en.html
 jobs:
-  release_ios:
+  release-ios:
     runs-on: macos-latest
     timeout-minutes: 30
     steps:

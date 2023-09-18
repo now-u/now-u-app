@@ -40,7 +40,7 @@ class ActionMenuItem extends MenuItemData {
   });
 }
 
-final menuItems = <MenuItemData>[
+List<MenuItemData> getMenuItems(MoreViewModel viewModel) => [
   const SectionHeadingMenuItem(title: 'The app'),
   const ActionMenuItem(
     title: 'About Us',
@@ -102,12 +102,20 @@ final menuItems = <MenuItemData>[
     action: LinkMenuItemAction(PRIVACY_POLICY_URL, isExternal: true),
   ),
   const SectionHeadingMenuItem(title: 'User'),
-  ActionMenuItem(
-    title: 'Log out',
-    // TODO Get icon
-    icon: FontAwesomeIcons.solidUser,
-    action: FunctionMenuItemAction((model) => model.logout()),
-  ),
+  if (viewModel.isLoggedIn)
+	ActionMenuItem(
+  	  title: 'Log out',
+  	  // TODO Get icon
+  	  icon: FontAwesomeIcons.solidUser,
+  	  action: FunctionMenuItemAction(viewModel.logout),
+  	)
+  else
+	const ActionMenuItem(
+  	  title: 'Log in',
+  	  // TODO Get icon
+  	  icon: FontAwesomeIcons.solidUser,
+  	  action: RouteMenuItemAction(LoginViewRoute()), 
+  	),
 ];
 
 ///The More page ![More Page](https://i.ibb.co/xDHyMPj/slack.png)
@@ -141,8 +149,8 @@ class MoreView extends StackedView<MoreViewModel> {
             ListView(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              children: menuItems
-                  .map((tile) => MenuItem(tile, viewModel: viewModel, index: 2))
+              children: getMenuItems(viewModel) 
+                  .map((tile) => MenuItem(tile, viewModel: viewModel))
                   .toList(),
             ),
             const SizedBox(height: 15),
@@ -153,14 +161,17 @@ class MoreView extends StackedView<MoreViewModel> {
                 SocialButton(
                   icon: FontAwesomeIcons.instagram,
                   link: 'https://www.instagram.com/now_u_app/',
+				  viewModel: viewModel,
                 ),
                 SocialButton(
                   icon: FontAwesomeIcons.facebookF,
                   link: 'https://www.facebook.com/nowufb',
+				  viewModel: viewModel,
                 ),
                 SocialButton(
                   icon: FontAwesomeIcons.twitter,
                   link: 'https://twitter.com/now_u_app',
+				  viewModel: viewModel,
                 ),
               ],
             ),
@@ -174,18 +185,16 @@ class MoreView extends StackedView<MoreViewModel> {
 
 class MenuItem extends StatelessWidget {
   final MenuItemData data;
-  final int index;
   final MoreViewModel viewModel;
 
-  const MenuItem(this.data, {required this.index, required this.viewModel});
+  const MenuItem(this.data, {required this.viewModel});
 
   Widget build(BuildContext context) {
     final data = this.data;
     switch (data) {
       case SectionHeadingMenuItem():
         return Padding(
-          padding:
-              EdgeInsets.only(left: 20, top: index == 0 ? 0 : 25, bottom: 5),
+          padding: const EdgeInsets.only(left: 20, top: 25, bottom: 5),
           child: Text(
             data.title,
             style: Theme.of(context).textTheme.displayMedium,
@@ -230,20 +239,20 @@ class MenuItem extends StatelessWidget {
 
 class SocialButton extends StatelessWidget {
   final double size = 50;
-  final IconData? icon;
-  final String? link;
+  final IconData icon;
+  final String link;
+  final MoreViewModel viewModel;
 
   SocialButton({
-    this.icon,
-    this.link,
+    required this.icon,
+    required this.link,
+	required this.viewModel,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        launch(link!);
-      },
+      onTap: () => viewModel.launchLinkExternal(link),
       child: CustomTile(
         borderRadius: size / 2,
         child: Container(
