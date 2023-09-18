@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nowu/themes.dart';
+import 'package:nowu/utils/intersperse.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -55,7 +56,7 @@ class BasicDialog extends StackedView<BasicDialogModel> {
                 const SizedBox(height: 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
+                  children: <Widget>[
                     if (request.mainButtonTitle != null)
                       TextButton(
                         child: Text(request.mainButtonTitle!),
@@ -69,7 +70,7 @@ class BasicDialog extends StackedView<BasicDialogModel> {
                         onPressed: () =>
                             completer(DialogResponse(confirmed: false)),
                       ),
-                  ],
+                  ].intersperse(const SizedBox(height: 10,)).toList(),
                 ),
                 const SizedBox(height: 20),
               ],

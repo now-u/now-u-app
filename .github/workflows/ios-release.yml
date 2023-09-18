@@ -2,14 +2,7 @@ name: IOS release
 
 on:
   workflow_dispatch:
-
-# TODO Use tag to set version in setup app
-# on:
-#   workflow_call:
-#     inputs:
-#       version:
-#         required: true
-#         type: string
+  workflow_call:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}

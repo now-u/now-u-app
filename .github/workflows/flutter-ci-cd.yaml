@@ -1,27 +1,58 @@
 name: Flutter CI CD
 
-# This workflow is triggered on pushes to the repository.
-
-# TODO Trigger on tag
 on:
-  push: 
-    # branches: [staging, master]
-    branches: [staging]
-  # pull_request:
-  #  branches: [ dev ]
+  push:
+    branches: [main]
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+
   workflow_dispatch: # to manually run this workflow
-    
-# on: push    # Default will running for every branch.
-    
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}
   cancel-in-progress: true
 
 jobs:
-  release:
+  prepare:
     runs-on: macos-latest
     timeout-minutes: 30
     steps:
-      - name: Trigger other 2 actions
-        run: echo TODO
+      - uses: actions/checkout@v2
+
+      - name: Extract version from tag
+        uses: damienaicheh/extract-version-from-tag-action@v1.1.0
+
+      - name: Setup cider
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          pub global activate cider
+
+      - name: Set version
+        run: |
+          echo "Setting version to ${{ github.ref_name }}"
+          cider version ${{ github.ref_name }}
+
+      - name: Update change log
+        run: cider release
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v7
+        with:
+          author_name: GitHub Actions
+          author_email: actions@github.com
+          branch: main
+          message: "Update version on pubspec.yaml & update change log"
+
+      - name: Release ios
+        uses: now-u/now-u-backend/.github/workflows/android-release.yml@main
+        secrets: inherit
+
+  release-ios:
+    needs: prepare
+    uses: now-u/now-u-app/.github/workflows/ios-release.yml@main
+    secrets: inherit
+
+  release-android:
+    needs: prepare
+    uses: now-u/now-u-app/.github/workflows/android-release.yml@main
+    secrets: inherit
