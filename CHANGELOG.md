@@ -1,5 +1,5 @@
 # now-u app changelog
-## Unreleased
+## 2.0.2 - 2023-09-19
 ### Added
 - Added login button to more menu for unauthenticated users
 - Fix new filter for all explore tab
