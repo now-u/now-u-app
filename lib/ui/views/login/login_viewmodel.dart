@@ -40,6 +40,10 @@ class LoginViewModel extends FormViewModel with PostLoginViewModelMixin {
     await _authenticationService.signInWithFacebook();
   }
 
+  Future loginWithApple() async {
+    await _authenticationService.signInWithApple();
+  }
+
   Future loginWithEmail() async {
     validateForm();
     showValidation = true;

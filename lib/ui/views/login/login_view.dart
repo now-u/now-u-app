@@ -1,9 +1,11 @@
-import 'package:nowu/assets/constants.dart';
+import 'dart:io';
+
 import 'package:flutter/gestures.dart';
-import 'package:nowu/themes.dart';
-import 'package:nowu/ui/common/form.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nowu/assets/constants.dart';
+import 'package:nowu/themes.dart';
+import 'package:nowu/ui/common/form.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
@@ -116,10 +118,15 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    SocialMediaLoginButton(
-                      onPressed: model.loginWithGoogle,
-                      iconData: FontAwesomeIcons.google,
-                    ),
+                    Platform.isIOS
+                        ? SocialMediaLoginButton(
+                            onPressed: model.loginWithApple,
+                            iconData: FontAwesomeIcons.apple,
+                          )
+                        : SocialMediaLoginButton(
+                            onPressed: model.loginWithGoogle,
+                            iconData: FontAwesomeIcons.google,
+                          ),
                     SocialMediaLoginButton(
                       onPressed: model.loginWithFacebook,
                       iconData: FontAwesomeIcons.facebookF,
