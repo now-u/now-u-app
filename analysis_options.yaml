@@ -9,7 +9,6 @@
 # packages, and plugins designed to encourage good coding practices.
 
 analyzer:
-  errors:
   exclude:
     - "openapi/causeApi/**"
 
