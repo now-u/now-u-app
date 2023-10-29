@@ -24,7 +24,9 @@ export 'package:causeApiClient/causeApiClient.dart' show NewsArticle;
 
 extension NewsArticleExtension on NewsArticle {
   String? get dateString {
-    return releaseAt != null ? DateFormat('d MMM y').format(releaseAt!) : null;
+    // TODO: Fix nullability
+    //  return releaseAt != null ? DateFormat('d MMM y').format(releaseAt) : null;
+    return DateFormat('d MMM y').format(releaseAt);
   }
 
   // TODO Try harder
