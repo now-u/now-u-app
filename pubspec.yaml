@@ -12,6 +12,7 @@ description: now-u App
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 version: 2.0.2
+publish_to: none
 
 environment:
   sdk: '>=3.0.0 <4.0.0'

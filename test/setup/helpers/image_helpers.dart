@@ -91,7 +91,7 @@ MockHttpClient _createMockImageHttpClient(
   final MockHttpClientRequest request = MockHttpClientRequest();
   final MockHttpClientResponse response = MockHttpClientResponse();
   final MockHttpHeaders headers = MockHttpHeaders();
-  when(client.getUrl(any!))
+  when(client.getUrl(any ?? Uri()))
       .thenAnswer((_) => Future<HttpClientRequest>.value(request));
   when(request.headers).thenReturn(headers);
   when(request.close())
