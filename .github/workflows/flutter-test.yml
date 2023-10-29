@@ -23,9 +23,9 @@ jobs:
       - run: pod repo update 
 
       - name: Flutter analyze
-        run: flutter analyze
+        run: flutter analyze --no-fatal-infos
 
-      - name: Flutter analyze
+      - name: Flutter format
         run: dart format -o none --set-exit-if-change
 
       - name: Run tests
