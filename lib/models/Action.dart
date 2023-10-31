@@ -108,7 +108,8 @@ extension ListActionExtension on ListAction {
 
   // TODO This is not quite right, it could be enabled - update API to provide releasedTime
   // which is set based on when the action was enabled/released
-  DateTime get releaseTime => releaseAt ?? createdAt;
+  //  DateTime get releaseTime => releaseAt ?? createdAt;
+  DateTime get releaseTime => releaseAt;
 
   bool get isNew => isNewDate(releaseTime);
   String get timeText => getTimeText(time);
@@ -124,7 +125,8 @@ extension ActionExtension on Action {
 
   // TODO This is not quite right, it could be enabled - update API to provide releasedTime
   // which is set based on when the action was enabled/released
-  DateTime get releaseTime => releaseAt ?? createdAt;
+  // DateTime get releaseTime => releaseAt ?? createdAt;
+  DateTime get releaseTime => releaseAt;
 
   bool get isNew => isNewDate(releaseTime);
   String get timeText => getTimeText(time);

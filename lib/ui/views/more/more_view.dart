@@ -1,17 +1,11 @@
 import 'package:flutter/foundation.dart';
-import 'package:nowu/app/app.router.dart';
-import 'package:nowu/assets/constants.dart';
 import 'package:flutter/material.dart';
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:nowu/assets/icons/customIcons.dart';
-
+import 'package:nowu/app/app.router.dart';
 import 'package:nowu/assets/components/customTile.dart';
-
+import 'package:nowu/assets/constants.dart';
+import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:nowu/pages/more/ProfileTile.dart';
-
-import 'package:url_launcher/url_launcher.dart';
-
 import 'package:stacked/stacked.dart';
 
 import 'more_viewmodel.dart';
@@ -41,82 +35,82 @@ class ActionMenuItem extends MenuItemData {
 }
 
 List<MenuItemData> getMenuItems(MoreViewModel viewModel) => [
-  const SectionHeadingMenuItem(title: 'The app'),
-  const ActionMenuItem(
-    title: 'About Us',
-    icon: FontAwesomeIcons.infoCircle,
-    action: LinkMenuItemAction('https://now-u.com/aboutus'),
-  ),
-  const ActionMenuItem(
-    title: 'Our partners',
-    icon: CustomIcons.ic_partners,
-    action: RouteMenuItemAction(PartnersViewRoute()),
-  ),
-  const ActionMenuItem(
-    title: 'FAQ',
-    icon: CustomIcons.ic_faq,
-    action: RouteMenuItemAction(FaqViewRoute()),
-  ),
-  const SectionHeadingMenuItem(title: 'Feedback'),
-  const ActionMenuItem(
-    title: 'Give feedback on the app',
-    icon: CustomIcons.ic_feedback,
-    action: LinkMenuItemAction(
-      'https://docs.google.com/forms/d/e/1FAIpQLSflMOarmyXRv7DRbDQPWRayCpE5X4d8afOpQ1hjXfdvzbnzQQ/viewform',
-    ),
-  ),
-  if (defaultTargetPlatform == TargetPlatform.iOS ||
-      defaultTargetPlatform == TargetPlatform.android)
-    ActionMenuItem(
-      title: 'Rate us on the app store',
-      icon: CustomIcons.ic_rateus,
-      action: LinkMenuItemAction(
-        defaultTargetPlatform == TargetPlatform.iOS
-            ? 'https://apps.apple.com/us/app/now-u/id1516126639'
-            : 'https://play.google.com/store/apps/details?id=com.nowu.app',
-        isExternal: true,
+      const SectionHeadingMenuItem(title: 'The app'),
+      const ActionMenuItem(
+        title: 'About Us',
+        icon: FontAwesomeIcons.infoCircle,
+        action: LinkMenuItemAction('https://now-u.com/aboutus'),
       ),
-    ),
-  const ActionMenuItem(
-    title: 'Send us a message',
-    icon: CustomIcons.ic_social_fb,
-    action: LinkMenuItemAction('http://m.me/nowufb', isExternal: true),
-  ),
-  const ActionMenuItem(
-    title: 'Send us an email',
-    icon: CustomIcons.ic_email,
-    action: LinkMenuItemAction(
-      'mailto:hello@now-.com?subject=Hi',
-      isExternal: true,
-    ),
-  ),
-  const SectionHeadingMenuItem(title: 'Legal'),
-  const ActionMenuItem(
-    title: 'Terms & conditions',
-    icon: CustomIcons.ic_tc,
-    action: LinkMenuItemAction(TERMS_AND_CONDITIONS_URL, isExternal: true),
-  ),
-  const ActionMenuItem(
-    title: 'Privacy Notice',
-    icon: CustomIcons.ic_privacy,
-    action: LinkMenuItemAction(PRIVACY_POLICY_URL, isExternal: true),
-  ),
-  const SectionHeadingMenuItem(title: 'User'),
-  if (viewModel.isLoggedIn)
-	ActionMenuItem(
-  	  title: 'Log out',
-  	  // TODO Get icon
-  	  icon: FontAwesomeIcons.solidUser,
-  	  action: FunctionMenuItemAction(viewModel.logout),
-  	)
-  else
-	const ActionMenuItem(
-  	  title: 'Log in',
-  	  // TODO Get icon
-  	  icon: FontAwesomeIcons.solidUser,
-  	  action: RouteMenuItemAction(LoginViewRoute()), 
-  	),
-];
+      const ActionMenuItem(
+        title: 'Our partners',
+        icon: CustomIcons.ic_partners,
+        action: RouteMenuItemAction(PartnersViewRoute()),
+      ),
+      const ActionMenuItem(
+        title: 'FAQ',
+        icon: CustomIcons.ic_faq,
+        action: RouteMenuItemAction(FaqViewRoute()),
+      ),
+      const SectionHeadingMenuItem(title: 'Feedback'),
+      const ActionMenuItem(
+        title: 'Give feedback on the app',
+        icon: CustomIcons.ic_feedback,
+        action: LinkMenuItemAction(
+          'https://docs.google.com/forms/d/e/1FAIpQLSflMOarmyXRv7DRbDQPWRayCpE5X4d8afOpQ1hjXfdvzbnzQQ/viewform',
+        ),
+      ),
+      if (defaultTargetPlatform == TargetPlatform.iOS ||
+          defaultTargetPlatform == TargetPlatform.android)
+        ActionMenuItem(
+          title: 'Rate us on the app store',
+          icon: CustomIcons.ic_rateus,
+          action: LinkMenuItemAction(
+            defaultTargetPlatform == TargetPlatform.iOS
+                ? 'https://apps.apple.com/us/app/now-u/id1516126639'
+                : 'https://play.google.com/store/apps/details?id=com.nowu.app',
+            isExternal: true,
+          ),
+        ),
+      const ActionMenuItem(
+        title: 'Send us a message',
+        icon: CustomIcons.ic_social_fb,
+        action: LinkMenuItemAction('http://m.me/nowufb', isExternal: true),
+      ),
+      const ActionMenuItem(
+        title: 'Send us an email',
+        icon: CustomIcons.ic_email,
+        action: LinkMenuItemAction(
+          'mailto:hello@now-.com?subject=Hi',
+          isExternal: true,
+        ),
+      ),
+      const SectionHeadingMenuItem(title: 'Legal'),
+      const ActionMenuItem(
+        title: 'Terms & conditions',
+        icon: CustomIcons.ic_tc,
+        action: LinkMenuItemAction(TERMS_AND_CONDITIONS_URL, isExternal: true),
+      ),
+      const ActionMenuItem(
+        title: 'Privacy Notice',
+        icon: CustomIcons.ic_privacy,
+        action: LinkMenuItemAction(PRIVACY_POLICY_URL, isExternal: true),
+      ),
+      const SectionHeadingMenuItem(title: 'User'),
+      if (viewModel.isLoggedIn)
+        ActionMenuItem(
+          title: 'Log out',
+          // TODO Get icon
+          icon: FontAwesomeIcons.solidUser,
+          action: FunctionMenuItemAction(viewModel.logout),
+        )
+      else
+        const ActionMenuItem(
+          title: 'Log in',
+          // TODO Get icon
+          icon: FontAwesomeIcons.solidUser,
+          action: RouteMenuItemAction(LoginViewRoute()),
+        ),
+    ];
 
 ///The More page ![More Page](https://i.ibb.co/xDHyMPj/slack.png)
 ///
@@ -149,7 +143,7 @@ class MoreView extends StackedView<MoreViewModel> {
             ListView(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              children: getMenuItems(viewModel) 
+              children: getMenuItems(viewModel)
                   .map((tile) => MenuItem(tile, viewModel: viewModel))
                   .toList(),
             ),
@@ -161,17 +155,17 @@ class MoreView extends StackedView<MoreViewModel> {
                 SocialButton(
                   icon: FontAwesomeIcons.instagram,
                   link: 'https://www.instagram.com/now_u_app/',
-				  viewModel: viewModel,
+                  viewModel: viewModel,
                 ),
                 SocialButton(
                   icon: FontAwesomeIcons.facebookF,
                   link: 'https://www.facebook.com/nowufb',
-				  viewModel: viewModel,
+                  viewModel: viewModel,
                 ),
                 SocialButton(
                   icon: FontAwesomeIcons.twitter,
                   link: 'https://twitter.com/now_u_app',
-				  viewModel: viewModel,
+                  viewModel: viewModel,
                 ),
               ],
             ),
@@ -246,7 +240,7 @@ class SocialButton extends StatelessWidget {
   SocialButton({
     required this.icon,
     required this.link,
-	required this.viewModel,
+    required this.viewModel,
   });
 
   @override
