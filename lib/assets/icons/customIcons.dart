@@ -18,19 +18,6 @@
 ///         Homepage:  http://fortawesome.github.com/Font-Awesome/
 ///
 import 'package:flutter/widgets.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-Map<String, IconData> iconMap = {
-  "ic_getinvolved": CustomIcons.ic_getinvolved,
-  "ic_learning": CustomIcons.ic_learning,
-  "ic_raiseawareness": CustomIcons.ic_raiseawareness,
-  "ic_raisemoney": CustomIcons.ic_raisemoney,
-};
-
-IconData getIconFromString(String iconString) {
-  // If we cannot find a icon matching this string just return a circle.
-  return iconMap[iconString] ?? FontAwesomeIcons.solidCircle;
-}
 
 class CustomIcons {
   CustomIcons._();
@@ -38,6 +25,7 @@ class CustomIcons {
   static const _kFontFam = 'CustomIcons';
   static const _kFontFam2 = 'CustomIcons2';
   static const _kFontFam3 = 'CustomIconsClipboard';
+  static const _kFontFamCauses = 'CauseIcons';
   static const dynamic _kFontPkg = null;
 
   static const IconData ic_partners =
@@ -149,4 +137,17 @@ class CustomIcons {
       IconData(0xe807, fontFamily: _kFontFam2, fontPackage: _kFontPkg);
   static const IconData ic_clipboard =
       IconData(0xe81e, fontFamily: _kFontFam3, fontPackage: _kFontPkg);
+
+  static const IconData cause_icon_health_wellbeing =
+      IconData(0xe801, fontFamily: _kFontFamCauses, fontPackage: _kFontPkg);
+  static const IconData cause_icon_education =
+      IconData(0xe804, fontFamily: _kFontFamCauses, fontPackage: _kFontPkg);
+  static const IconData cause_icon_environment =
+      IconData(0xe805, fontFamily: _kFontFamCauses, fontPackage: _kFontPkg);
+  static const IconData cause_icon_equality_human_rights =
+      IconData(0xe806, fontFamily: _kFontFamCauses, fontPackage: _kFontPkg);
+  static const IconData cause_icon_safe_home_community =
+      IconData(0xe807, fontFamily: _kFontFamCauses, fontPackage: _kFontPkg);
+  static const IconData cause_icon_economic_opportunity =
+      IconData(0xe808, fontFamily: _kFontFamCauses, fontPackage: _kFontPkg);
 }

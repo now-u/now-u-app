@@ -1,40 +1,13 @@
 // Custom Icons
-import 'package:app/assets/icons/customIcons.dart';
-import 'package:app/locator.dart';
-import 'package:app/models/Cause.dart';
-import 'package:app/models/Explorable.dart';
-import 'package:app/models/utils.dart';
-import 'package:app/services/causes_service.dart';
-import 'package:flutter/material.dart';
-import 'package:tuple/tuple.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:causeApiClient/causeApiClient.dart';
+import 'package:nowu/assets/icons/customIcons.dart';
+import 'package:flutter/material.dart' hide Action;
+import 'package:nowu/models/time.dart';
 
-part 'Action.g.dart';
+export 'package:causeApiClient/causeApiClient.dart'
+    show ListAction, Action, ActionTypeEnum;
 
-enum CampaignActionType {
-  Volunteer,
-  Donation,
-  Fundraise,
-  Awareness,
-  Petition,
-  Behaviour,
-  Contact,
-  Protest,
-  Connect,
-  Learn,
-  Quiz,
-  Other
-}
-
-const List<String> rejectionReasons = [
-  "It requires too much effort",
-  "It takes too long",
-  "It does not seem useful/impactful",
-  "I have completed too many of these",
-  "This is not something I like doing",
-  "Other",
-];
-
+// TODO Move to colors and rename
 const green0 = Color.fromRGBO(89, 152, 26, 1);
 const green1 = Color.fromRGBO(230, 240, 221, 1);
 const green2 = Color.fromRGBO(177, 199, 155, 1);
@@ -57,6 +30,7 @@ class ActionType {
   final Color primaryColor;
   final Color secondaryColor;
   final Color tertiaryColor;
+  final List<ActionTypeEnum> subTypes;
 
   const ActionType({
     required this.name,
@@ -64,289 +38,96 @@ class ActionType {
     required this.primaryColor,
     required this.secondaryColor,
     required this.tertiaryColor,
+    required this.subTypes,
   });
 }
 
 const ActionType getInvolved = ActionType(
-  name: "Get involved",
+  name: 'Get involved',
   icon: CustomIcons.ic_getinvolved,
   primaryColor: orange0,
   secondaryColor: orange1,
   tertiaryColor: orange2,
+  subTypes: [
+    ActionTypeEnum.OTHER,
+    ActionTypeEnum.BEHAVIOR,
+    ActionTypeEnum.PURCHASE,
+    ActionTypeEnum.VOLUNTEER,
+    ActionTypeEnum.PROTEST,
+    ActionTypeEnum.CONNECT,
+  ],
 );
+
 const ActionType learn = ActionType(
-  name: "Learn",
+  name: 'Learn',
   icon: CustomIcons.ic_learning,
   primaryColor: blue0,
   secondaryColor: blue1,
   tertiaryColor: blue2,
+  subTypes: [
+    ActionTypeEnum.LEARN,
+    ActionTypeEnum.QUIZ,
+  ],
 );
 const ActionType advocate = ActionType(
-  name: "Advocate",
+  name: 'Advocate',
   icon: CustomIcons.ic_raiseawareness,
   primaryColor: orange0,
   secondaryColor: orange1,
   tertiaryColor: orange2,
+  subTypes: [
+    ActionTypeEnum.RAISE_AWARENESS,
+    ActionTypeEnum.SIGN,
+    ActionTypeEnum.CONTACT,
+  ],
 );
 const ActionType raiseMoney = ActionType(
-  name: "Raise money",
+  name: 'Raise money',
   icon: CustomIcons.ic_raisemoney,
   primaryColor: yellow0,
   secondaryColor: yellow1,
   tertiaryColor: yellow2,
+  subTypes: [
+    ActionTypeEnum.DONATE,
+    ActionTypeEnum.FUNDRAISE,
+  ],
 );
 const List<ActionType> actionTypes = [getInvolved, learn, advocate, raiseMoney];
 
-const Map defaultCampaignActionTypeData = {
-  'name': "other",
-  'verb': "Complete",
-  'pastVerb': "Completed",
-  'displayName': "special action",
-  //'icon': FontAwesomeIcons.check,
-  //'Type': CustomIcons.heartHand,
-  'type': getInvolved,
-};
-
-const Map campaignActionTypeData = {
-  CampaignActionType.Volunteer: {
-    'name': "volunteer",
-    'verb': "Volunteer",
-    'pastVerb': "Volunteered",
-    'displayName': "volunteer",
-    //'icon': CustomIcons.icon_vol_1,
-    'type': getInvolved,
-  },
-  CampaignActionType.Donation: {
-    'name': "donate",
-    'verb': "Make",
-    'pastVerb': "Made",
-    'displayName': "donation",
-    //'icon': CustomIcons.icon_donate_01,
-    'type': raiseMoney,
-  },
-  CampaignActionType.Fundraise: {
-    'name': "fundraise",
-    'verb': "Take part in",
-    'pastVerb': "Took part in",
-    'displayName': "fundraiser",
-    //'icon': CustomIcons.icon_fundraise_01,
-    'type': raiseMoney,
-  },
-  CampaignActionType.Awareness: {
-    'name': "awareness",
-    'verb': "Raise awareness",
-    'pastVerb': "Raised awareness",
-    'displayName': "time",
-    //'icon': CustomIcons.icon_raise_awareness_01_01,
-    'type': advocate,
-  },
-  CampaignActionType.Petition: {
-    'name': "sign",
-    'verb': "Sign",
-    'pastVerb': "Signed",
-    'displayName': "petition",
-    //'icon': CustomIcons.icon_petition_01,
-    'type': advocate,
-  },
-  CampaignActionType.Behaviour: {
-    'name': "behaviour",
-    'verb': "Complete",
-    'pastVerb': "Completed",
-    'displayName': "behaviour change action",
-    //'icon': CustomIcons.icon_behaviour_01,
-    'type': getInvolved,
-  },
-  CampaignActionType.Contact: {
-    'name': "contact",
-    'verb': "Complete",
-    'pastVerb': "Completed",
-    'displayName': "contact change action",
-    //'icon': CustomIcons.icon_contact_01,
-    'type': advocate,
-  },
-  CampaignActionType.Protest: {
-    'name': "protest",
-    'verb': "Take part in",
-    'pastVerb': "Took part in",
-    'displayName': "protest",
-    //'icon': CustomIcons.icon_protest_01,
-    'type': getInvolved,
-  },
-  CampaignActionType.Connect: {
-    'name': "connect",
-    'verb': "Connect",
-    'pastVerb': "Connected",
-    'displayName': "times",
-    //'icon': FontAwesomeIcons.link,
-    //'icon': CustomIcons.icon_connect_01,
-    'type': getInvolved,
-  },
-  CampaignActionType.Learn: {
-    'name': "learn",
-    'verb': "Complete",
-    'pastVerb': "Completed",
-    'displayName': "learning action",
-    //'icon': CustomIcons.icon_learning_01,
-    'type': learn,
-  },
-  CampaignActionType.Quiz: {
-    'name': "quiz",
-    'verb': "Complete",
-    'pastVerb': "Completed",
-    'displayName': "quiz",
-    //'icon': CustomIcons.icon_quiz_01,
-    'type': learn,
-  },
-  CampaignActionType.Other: defaultCampaignActionTypeData
-};
-
-const List<Map> timeBrackets = [
-  {"text": "1-5 mins", "minTime": 0, "maxTime": 5},
-  {"text": "5-15 mins", "minTime": 5, "maxTime": 15},
-  {"text": "15-30 mins", "minTime": 15, "maxTime": 30},
-  {"text": "30-60 mins", "minTime": 30, "maxTime": 60},
-  {"text": "Few hours", "minTime": 60, "maxTime": 240},
-  {"text": "Long term", "minTime": 240, "maxTime": double.infinity},
-];
-
-CampaignActionType campaignActionTypeFromString(String? s) {
-  CampaignActionType t = CampaignActionType.Other;
-  campaignActionTypeData.forEach((key, value) {
-    if (value['name'] == s) {
-      t = key;
-    }
-  });
-  return t;
+ActionType getActionTypeFromSubtype(ActionTypeEnum type) {
+  return actionTypes.firstWhere(
+    (actionType) => actionType.subTypes.contains(type),
+    orElse: () => getInvolved,
+  );
 }
 
-Tuple3<String?, String?, String?> generateCampaignActionDesc(
-    CampaignActionType? t) {
-  if (campaignActionTypeData.containsKey(t)) {
-    return Tuple3(
-        campaignActionTypeData[t]['verb'],
-        campaignActionTypeData[t]['pastVerb'],
-        campaignActionTypeData[t]['displayName']);
-  }
-  return const Tuple3("Complete", "Completed", "special action");
-}
+// TODO Move out of action
+extension ListActionExtension on ListAction {
+  Cause get cause => causes[0];
+  ActionType get type => getActionTypeFromSubtype(actionType);
 
-@JsonSerializable()
-class ListCauseAction extends Explorable {
-  final int id;
+  // TODO This is not quite right, it could be enabled - update API to provide releasedTime
+  // which is set based on when the action was enabled/released
+  //  DateTime get releaseTime => releaseAt ?? createdAt;
+  DateTime get releaseTime => releaseAt;
 
-  final String title;
+  bool get isNew => isNewDate(releaseTime);
+  String get timeText => getTimeText(time);
 
-  /// The type of the action
-  // TODO this function should not be required
-  @JsonKey(fromJson: campaignActionTypeFromString)
-  final CampaignActionType type;
-
-  /// The super type is a bigger category than the type - This is used for the
-  /// styling.
-  ActionType get superType => campaignActionTypeData[type]['type'];
-
-  Color get primaryColor => superType.primaryColor;
-
-  Color get secondaryColor => superType.secondaryColor;
-
-  Color get tertiaryColor => superType.tertiaryColor;
-
-  IconData get icon => superType.icon;
-
-  /// The cause that this action is part of
-  // Although at the api level an action can be in many causes, for now we are
-  // only showing a single cause in the UI.
-  @JsonKey(fromJson: causeFromJson, name: "causes")
-  final ListCause cause;
-
-  final double time;
-
-  String get timeText =>
-      timeBrackets.firstWhere((b) => b['maxTime'] > time)['text'];
-
-  bool get isNew =>
-      DateTime.now()
-          .difference(releaseTime)
-          .compareTo(const Duration(days: 2)) <
-      0;
-
-  /// Whether the user has completed this action
-  @JsonKey(fromJson: authBooleanSerializer, name: "completed")
-  final bool completed;
-
-  @JsonKey(name: "release_date")
-  final DateTime? releasedAt;
-  final DateTime createdAt;
-
-  /// When this action was released
-  DateTime get releaseTime => releasedAt ?? createdAt;
-
-  ListCauseAction({
-    required this.id,
-    required this.title,
-    required this.type,
-    required this.cause,
-    required this.completed,
-    required this.time,
-    required this.createdAt,
-    this.releasedAt,
-  });
-
-  factory ListCauseAction.fromJson(Map<String, dynamic> data) =>
-      _$ListCauseActionFromJson(data);
-  // ListCauseAction.fromJson(Map<String, dynamic> json, {ListCause? cause})
-  //     : assert(cause != null || json['causes'] != null),
-  //       id = json['id'],
-  //       title = json['title'],
-  //       type = campaignActionTypeFromString(json['type']),
-  //       cause = json['causes'] != null
-  //           ? ListCause.fromJson(json['causes'][0])
-  //           : cause!,
-  //       time = json['time'].toDouble(),
-  //       releaseTime =
-  //           DateTime.parse(json['release_date'] ?? json['created_at']),
-  //       completed = json['completed'],
-
-  Future<CampaignAction> getAction() async {
-    CausesService _causesService = locator<CausesService>();
-    return _causesService.getAction(id);
+  bool isCompletedByUser(CausesUser user) {
+    return user.completedActionIds.contains(this.id);
   }
 }
 
-@JsonSerializable()
-class CampaignAction extends ListCauseAction {
-  final String? whatDescription;
-  final String? whyDescription;
-  final String? link;
+extension ActionExtension on Action {
+  Cause get cause => causes[0];
+  ActionType get type => getActionTypeFromSubtype(actionType);
 
-  CampaignAction({
-    required int id,
-    required String title,
-    required CampaignActionType type,
-    required ListCause cause,
-    required bool completed,
-    required double time,
-    required DateTime createdAt,
-    DateTime? releasedAt,
-    this.whatDescription,
-    this.whyDescription,
-    this.link,
-  }) : super(
-          id: id,
-          title: title,
-          type: type,
-          cause: cause,
-          completed: completed,
-          createdAt: createdAt,
-          releasedAt: releasedAt,
-          time: time,
-        );
+  // TODO This is not quite right, it could be enabled - update API to provide releasedTime
+  // which is set based on when the action was enabled/released
+  // DateTime get releaseTime => releaseAt ?? createdAt;
+  DateTime get releaseTime => releaseAt;
 
-  factory CampaignAction.fromJson(Map<String, dynamic> data) =>
-      _$CampaignActionFromJson(data);
-  // CampaignAction.fromJson(Map<String, dynamic> json)
-  //     : whatDescription = json['what_description'],
-  //       whyDescription = json['why_description'],
-  //       link = json['link'],
-  //       super.fromJson(json);
+  bool get isNew => isNewDate(releaseTime);
+  String get timeText => getTimeText(time);
 }
