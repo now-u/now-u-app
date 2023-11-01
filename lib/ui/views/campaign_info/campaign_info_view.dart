@@ -166,7 +166,7 @@ class CampaignInfoView extends StackedView<CampaignViewModel> {
                     .copyWith(fontSize: 18),
               ),
               Text(
-                viewModel.campaign?.description ?? '',
+                viewModel.campaign?.getDescription() ?? '',
                 style: Theme.of(context).textTheme.bodyLarge,
                 textAlign: TextAlign.left,
               ),

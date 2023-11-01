@@ -20,7 +20,7 @@ class LinkMenuItemAction extends MenuItemAction {
 }
 
 class FunctionMenuItemAction extends MenuItemAction {
-  final Future<void> Function(MoreViewModel model) function;
+  final Future<void> Function() function;
   const FunctionMenuItemAction(this.function);
 }
 
@@ -28,6 +28,8 @@ class MoreViewModel extends BaseViewModel {
   final _authenticationService = locator<AuthenticationService>();
   final _navigationService = locator<NavigationService>();
   final _routerService = locator<RouterService>();
+
+  bool get isLoggedIn => _authenticationService.isUserLoggedIn();
 
   Future<void> logout() async {
     await _authenticationService.logout();
@@ -47,7 +49,11 @@ class MoreViewModel extends BaseViewModel {
       case RouteMenuItemAction():
         return _routerService.navigateTo(action.route);
       case FunctionMenuItemAction():
-        return action.function(this);
+        return action.function();
     }
+  }
+
+  Future<void> launchLinkExternal(String link) {
+	return _navigationService.launchLink(link, isExternal: true);
   }
 }

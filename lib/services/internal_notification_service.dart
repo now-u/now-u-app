@@ -1,11 +1,8 @@
 import 'package:nowu/models/Notification.dart';
-import 'package:nowu/services/api_service.dart';
-
-import 'package:nowu/app/app.locator.dart';
 
 // TODO Move to apiv2
 class InternalNotificationService {
-  final ApiService _apiService = locator<ApiService>();
+  // final ApiService _apiService = locator<ApiService>();
 
   List<InternalNotification>? _notifications = [];
   List<InternalNotification>? get notifications {

@@ -40,9 +40,16 @@ class HomeViewModel extends BaseViewModel {
   Future<void> init() async {
     fetchNotifications();
     _causes = _causesService.causes;
+
+	// TODO Filter by selected causes 
+	List<int>? selectedCausesId = _causesService.userInfo?.selectedCausesIds.toList();
+	List<int>? causesFilter = selectedCausesId?.isEmpty == false ? selectedCausesId : null;
+
     // TODO Multiple futures
     await Future.wait([
-      _searchService.searchCampaigns().then(
+      _searchService.searchCampaigns(filter: CampaignSearchFilter(
+		causeIds: causesFilter,
+	  )).then(
             (value) => _myCampaigns = value
                 .map(
                   (campaign) => CampaignExploreTileData(
@@ -53,7 +60,7 @@ class HomeViewModel extends BaseViewModel {
                 .toList(),
           ),
       _searchService
-          .searchCampaigns(filter: CampaignSearchFilter(recommended: true))
+          .searchCampaigns(filter: CampaignSearchFilter(recommended: true, causeIds: causesFilter))
           .then(
             (value) => _suggestedCampaigns = value
                 .map(
@@ -64,7 +71,7 @@ class HomeViewModel extends BaseViewModel {
                 )
                 .toList(),
           ),
-      _searchService.searchActions().then(
+      _searchService.searchActions(filter: ActionSearchFilter(causeIds: causesFilter)).then(
             (value) => _myActions = value
                 .map(
                   (action) => ActionExploreTileData(
@@ -74,7 +81,7 @@ class HomeViewModel extends BaseViewModel {
                 )
                 .toList(),
           ),
-      _searchService.searchNewsArticles().then(
+      _searchService.searchNewsArticles(filter: NewsArticleSearchFilter(causeIds: causesFilter)).then(
             (value) => _inTheNews = value
                 .map((action) => NewsArticleExploreTileData(action))
                 .toList(),
