@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:app/assets/StyleFrom.dart';
+import 'package:nowu/assets/StyleFrom.dart';
 
 final double defaultBorderRadius = 8.0;
 final double defaultPadding = 14.0;
@@ -48,19 +48,20 @@ class CustomIconButton extends StatelessWidget {
       ),
       onPressed: onPressed,
       shape: isCircularButton
-          ? CircleBorder()
+          ? const CircleBorder()
           : RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(
-                  buttonStyleStyles[size]['borderRadius']),
+                buttonStyleStyles[size]['borderRadius'],
+              ),
             ),
       padding: isCircularButton
-          ? EdgeInsets.all(0)
-          : EdgeInsets.symmetric(horizontal: 60.0, vertical: 15.0),
+          ? const EdgeInsets.all(0)
+          : const EdgeInsets.symmetric(horizontal: 60.0, vertical: 15.0),
       child: Icon(
         icon,
         size: isCircularButton
-            ? buttonStyleStyles[size]["iconSize"] - 10
-            : buttonStyleStyles[size]["iconSize"],
+            ? buttonStyleStyles[size]['iconSize'] - 10
+            : buttonStyleStyles[size]['iconSize'],
         color: iconColor ?? Colors.white,
       ),
     );
@@ -76,34 +77,36 @@ class CircularIconButton extends StatelessWidget {
   final double? height;
   final double? iconSize;
 
-  CircularIconButton(
-      {required this.icon,
-      required this.onPressed,
-      this.iconColor,
-      this.backgroundColor,
-      this.height,
-      this.iconSize});
+  CircularIconButton({
+    required this.icon,
+    required this.onPressed,
+    this.iconColor,
+    this.backgroundColor,
+    this.height,
+    this.iconSize,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: height,
-        child: MaterialButton(
-          height: height,
-          elevation: 0,
-          color: this.backgroundColor ?? Theme.of(context).primaryColor,
-          disabledColor: colorFrom(
-            Theme.of(context).primaryColor,
-            opacity: 0.5,
-          ),
-          onPressed: onPressed,
-          shape: CircleBorder(),
-          padding: EdgeInsets.all(0),
-          child: Icon(
-            icon,
-            size: iconSize,
-            color: iconColor ?? Colors.white,
-          ),
-        ));
+      width: height,
+      child: MaterialButton(
+        height: height,
+        elevation: 0,
+        color: this.backgroundColor ?? Theme.of(context).primaryColor,
+        disabledColor: colorFrom(
+          Theme.of(context).primaryColor,
+          opacity: 0.5,
+        ),
+        onPressed: onPressed,
+        shape: const CircleBorder(),
+        padding: const EdgeInsets.all(0),
+        child: Icon(
+          icon,
+          size: iconSize,
+          color: iconColor ?? Colors.white,
+        ),
+      ),
+    );
   }
 }

@@ -42,3 +42,7 @@ flutter pub run build_runner build
 ### Documentation :book:
 
 For more detailed documentation checkout the [wiki](https://github.com/now-u/now-u-app/wiki)!
+
+### Adding custom icons
+
+Get the icon as an SVG. Open it in inkscape Ctrl-a to select everything and `object > Ungroup`, `Path > Stroke to Path` and `Path > Union`. Save that and add the icon to https://www.fluttericon.com/

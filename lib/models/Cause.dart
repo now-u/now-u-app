@@ -1,37 +1,32 @@
-import 'package:app/assets/icons/customIcons.dart';
+import 'package:logging/logging.dart';
+import 'package:causeApiClient/causeApiClient.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:flutter/widgets.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:causeApiClient/src/model/icon_enum.dart';
 
-import 'utils.dart';
+export 'package:causeApiClient/causeApiClient.dart' show Cause, IconEnum;
 
-part 'Cause.g.dart';
+final _logger = Logger('IconEnumExtension');
 
-@JsonSerializable()
-class ListCause {
-  final int id;
-  // TODO rename
-  @JsonKey(name: "name")
-  final String title;
+extension IconEnumExtension on IconEnum {
+  IconData toIconData() {
+    switch (this) {
+      case IconEnum.healthWellbeing:
+        return CustomIcons.cause_icon_health_wellbeing;
+      case IconEnum.equalityHumanRights:
+        return CustomIcons.cause_icon_equality_human_rights;
+      case IconEnum.environment:
+        return CustomIcons.cause_icon_environment;
+      case IconEnum.education:
+        return CustomIcons.cause_icon_education;
+      case IconEnum.safeHomeCommunity:
+        return CustomIcons.cause_icon_safe_home_community;
+      case IconEnum.economicOpportunity:
+        return CustomIcons.cause_icon_economic_opportunity;
+    }
 
-  @JsonKey(fromJson: authBooleanSerializer, name: "joined")
-  final bool selected;
-
-  @JsonKey(fromJson: getIconFromString)
-  final IconData icon;
-
-  final String description;
-  @JsonKey(name: "image")
-  final String headerImage;
-
-  const ListCause({
-    required this.id,
-    required this.title,
-    required this.icon,
-    required this.description,
-    required this.headerImage,
-    required this.selected,
-  });
-
-  factory ListCause.fromJson(Map<String, dynamic> data) =>
-      _$ListCauseFromJson(data);
+    _logger.severe('Unknown IconEnum: $this');
+    return FontAwesomeIcons.solidCircle;
+  }
 }

@@ -10,10 +10,12 @@ class SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-          horizontal: padding ?? 0, vertical: vpadding ?? 15),
+        horizontal: padding ?? 0,
+        vertical: vpadding ?? 15,
+      ),
       child: Text(
         text,
-        style: Theme.of(context).primaryTextTheme.headline4,
+        style: Theme.of(context).textTheme.displayMedium,
       ),
     );
   }
