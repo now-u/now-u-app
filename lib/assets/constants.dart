@@ -27,6 +27,8 @@ const SEARCH_SERVICE_URL = 'https://search.dev.apiv2.now-u.com';
 const SEARCH_SERVICE_KEY =
     'aaae5a4efcd407ca2c568ad9bcafda8f5362526a4b14ab8d746df52a7e7415a6';
 
+const ABOUT_US_URL = 'https://www.now-u.com/about';
+
 class CustomColors {
   /// Primary brand color
   static Color brandColor = const Color.fromRGBO(255, 136, 0, 1);
