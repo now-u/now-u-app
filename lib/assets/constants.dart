@@ -10,8 +10,7 @@ bool testMode = Platform.environment.containsKey('FLUTTER_TEST');
 /// Whether the app is currently running in debug mode
 bool devMode = !testMode && !kReleaseMode;
 
-const PRIVACY_POLICY_URL =
-    'https://now-u-docs.s3.eu-west-2.amazonaws.com/now-u+privacy+policy.pdf';
+const PRIVACY_POLICY_URL = 'https://www.now-u.com/info/privacy-notice';
 const TERMS_AND_CONDITIONS_URL =
     'https://now-u-docs.s3.eu-west-2.amazonaws.com/now-u+user+terms+and+conditions.pdf';
 
