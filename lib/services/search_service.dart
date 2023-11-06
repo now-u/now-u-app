@@ -1,11 +1,10 @@
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/serializer.dart';
 import 'package:causeApiClient/causeApiClient.dart';
 import 'package:collection/collection.dart';
-import 'package:logging/logging.dart';
 import 'package:meilisearch/meilisearch.dart';
-import 'package:built_value/serializer.dart';
-import 'package:built_collection/built_collection.dart';
-import 'package:nowu/assets/constants.dart';
 import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/assets/constants.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:tuple/tuple.dart';
 
@@ -40,6 +39,7 @@ String newToMeiliSearchFilter(
 class BaseResourceSearchFilter {
   final String? query;
   final Iterable<int>? causeIds;
+
   // TODO This is really weird because we merge base resource filter with other filters, how do we use this field for those?
   // do we need 2 different filters? One for searching resources or should we just return empty when the resource type is not include
   // for the merge stuff??
@@ -386,7 +386,6 @@ class SearchService {
 
   final _causeServiceClient = CauseApiClient();
   final _causesService = locator<CausesService>();
-  final _logger = Logger('SearchService');
 
   List<ListAction> _searchHitsToActions(List<Map<String, dynamic>> hits) {
     final results = _causeServiceClient.serializers.deserialize(

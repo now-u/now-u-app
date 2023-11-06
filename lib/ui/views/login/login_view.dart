@@ -152,7 +152,7 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
                             .copyWith(color: CustomColors.brandColor),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            model.launchTandCs();
+                            model.launchPrivacyPolicy();
                           },
                       ),
                     ],
