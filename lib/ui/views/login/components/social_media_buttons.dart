@@ -6,30 +6,29 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../login_viewmodel.dart';
 
 class SocialMediaLoginButtons extends StatelessWidget {
-
   SocialMediaLoginButtons(this._viewModel);
 
   final LoginViewModel _viewModel;
 
   @override
   Widget build(BuildContext context) => Row(
-    mainAxisAlignment: MainAxisAlignment.spaceAround,
-    children: [
-      Platform.isIOS
-          ? _SocialMediaLoginButton(
-        onPressed: _viewModel.loginWithApple,
-        iconData: FontAwesomeIcons.apple,
-      )
-          : _SocialMediaLoginButton(
-        onPressed: _viewModel.loginWithGoogle,
-        iconData: FontAwesomeIcons.google,
-      ),
-      _SocialMediaLoginButton(
-        onPressed: _viewModel.loginWithFacebook,
-        iconData: FontAwesomeIcons.facebookF,
-      ),
-    ],
-  );
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Platform.isIOS
+              ? _SocialMediaLoginButton(
+                  onPressed: _viewModel.loginWithApple,
+                  iconData: FontAwesomeIcons.apple,
+                )
+              : _SocialMediaLoginButton(
+                  onPressed: _viewModel.loginWithFacebook,
+                  iconData: FontAwesomeIcons.facebookF,
+                ),
+          _SocialMediaLoginButton(
+            onPressed: _viewModel.loginWithGoogle,
+            iconData: FontAwesomeIcons.google,
+          ),
+        ],
+      );
 }
 
 class _SocialMediaLoginButton extends StatelessWidget {
