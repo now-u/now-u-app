@@ -61,6 +61,7 @@ class AuthenticationService {
   }
 
   Future signInWithCode(String email, String code) async {
+    _logger.info('Signing in with code');
     await _client.auth
         .verifyOTP(type: OtpType.magiclink, email: email, token: code);
   }
