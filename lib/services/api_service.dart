@@ -23,6 +23,7 @@ class ApiService {
   late AuthInterceptor _authInterceptor;
 
   CauseApiClient? _apiClient;
+
   CauseApiClient get apiClient {
     if (_apiClient == null) {
       throw Exception(

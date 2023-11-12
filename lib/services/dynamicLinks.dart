@@ -64,8 +64,9 @@ class DynamicLinkService {
       if (RegExp('campaigns/[0-9]+').hasMatch(deepLink.path)) {
         String campaignNumberString = deepLink.path.substring(11);
         print('_handleDeepLink | campaign number: $campaignNumberString');
-        int campaignNumber = int.parse(campaignNumberString);
+
         // TODO Handle this -> should this use link?? Look up how deep links work these days
+        // int campaignNumber = int.parse(campaignNumberString);
         // _routerService.navigateToCampaignInfoView(arguments: campaignNumber);
       }
     } else {
@@ -121,7 +122,8 @@ class DynamicLinkService {
   }
 
   // Handling deeplinks
-  StreamSubscription? _sub;
+  // TODO: Don't forget to call _sub.cancel() in dispose()
+  // StreamSubscription? _sub;
 
   Future<bool> initUniLinks() async {
     // Example deeplink
@@ -129,7 +131,7 @@ class DynamicLinkService {
     bool gotLink = false;
 
     // Attach a listener to the stream
-    _sub = uriLinkStream.listen(
+    uriLinkStream.listen(
       (Uri? deepLink) {
         if (deepLink != null) {
           gotLink = true;

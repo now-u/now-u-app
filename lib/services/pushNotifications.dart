@@ -10,7 +10,7 @@ class PushNotificationService {
 
   Future init() async {
     if (Platform.isIOS) {
-      NotificationSettings settings = await _fcm.requestPermission(
+      await _fcm.requestPermission(
         alert: true,
         announcement: false,
         badge: true,

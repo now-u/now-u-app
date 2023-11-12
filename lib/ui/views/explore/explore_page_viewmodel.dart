@@ -7,6 +7,7 @@ import 'package:nowu/services/bottom_sheet_service.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:nowu/ui/bottom_sheets/explore_filter/explore_filter_sheet.dart';
+import 'package:nowu/utils/new_since.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tuple/tuple.dart';
 
@@ -93,7 +94,7 @@ class ExplorePageViewModel extends FormViewModel {
         completed: filterData.filterCompleted == true ? true : null,
         recommended: filterData.filterRecommended == true ? true : null,
         releasedSince: filterData.filterNew == true
-            ? (DateTime.now().subtract(const Duration(days: 2)))
+            ? newSinceDate()
             : null,
         query: searchBarValue,
       ),
@@ -116,7 +117,7 @@ class ExplorePageViewModel extends FormViewModel {
         completed: filterData.filterCompleted == true ? true : null,
         recommended: filterData.filterRecommended == true ? true : null,
         releasedSince: filterData.filterNew == true
-            ? (DateTime.now().subtract(const Duration(days: 2)))
+            ? newSinceDate()
             : null,
         query: searchBarValue,
       ),
@@ -133,7 +134,7 @@ class ExplorePageViewModel extends FormViewModel {
         completed: filterData.filterCompleted == true ? true : null,
         recommended: filterData.filterRecommended == true ? true : null,
         releasedSince: filterData.filterNew == true
-            ? (DateTime.now().subtract(const Duration(days: 2)))
+            ? newSinceDate()
             : null,
         query: searchBarValue,
       ),
@@ -148,7 +149,7 @@ class ExplorePageViewModel extends FormViewModel {
             ? null
             : filterData.filterCauseIds.toList(),
         releasedSince: filterData.filterNew == true
-            ? (DateTime.now().subtract(const Duration(days: 2)))
+            ? newSinceDate()
             : null,
         query: searchBarValue,
       ),
@@ -164,6 +165,7 @@ class ExplorePageViewModel extends FormViewModel {
             ? null
             : filterData.filterCauseIds.toList(),
         query: searchBarValue,
+		releasedSince: filterData.filterNew == true ? newSinceDate() : null,
       ),
     );
     notifyListeners();
@@ -273,17 +275,16 @@ class ExplorePageViewModel extends FormViewModel {
     return _causesService.openNewArticle(article);
   }
 
-  bool isActionComplete(ListAction action) {
-    return _causesService.actionIsComplete(action.id) == true;
+  bool? isActionComplete(ListAction action) {
+    return _causesService.actionIsComplete(action.id);
   }
 
-  bool isLearningResourceComplete(LearningResource learningResource) {
-    return _causesService.learningResourceIsComplete(learningResource.id) ==
-        true;
+  bool? isLearningResourceComplete(LearningResource learningResource) {
+    return _causesService.learningResourceIsComplete(learningResource.id);
   }
 
-  bool isCampaignComplete(ListCampaign campaign) {
-    return _causesService.campaignIsComplete(campaign.id) == true;
+  bool? isCampaignComplete(ListCampaign campaign) {
+    return _causesService.campaignIsComplete(campaign.id);
   }
 }
 
