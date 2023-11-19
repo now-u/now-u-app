@@ -25,6 +25,11 @@ class LoginCodeView extends StackedView<LoginCodeViewModel>
   }) : super(key: key);
 
   @override
+  void onViewModelReady(LoginCodeViewModel viewModel) {
+    syncFormWithViewModel(viewModel);
+  }
+
+  @override
   Widget builder(
     BuildContext context,
     LoginCodeViewModel viewModel,
