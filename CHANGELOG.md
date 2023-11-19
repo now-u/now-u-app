@@ -1,4 +1,5 @@
 # now-u app changelog
+## 2.0.3 - 2023-11-19
 ## 2.0.2 - 2023-09-19
 ### Added
 - Added login button to more menu for unauthenticated users
