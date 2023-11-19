@@ -36,11 +36,11 @@ jobs:
     - name: 🛠️ Build app
       run: flutter build appbundle --release
 
-    - name: ⏫ Upload bundle as gh artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: Signed app bundle
-        path: ${{steps.sign_app.outputs.signedReleaseFile}}
+    # - name: ⏫ Upload bundle as gh artifact
+    #   uses: actions/upload-artifact@v2
+    #   with:
+    #     name: Signed app bundle
+    #     path: ${{steps.sign_app.outputs.signedReleaseFile}}
 
     - name: ⏫ Upload bundle to Play Store
       uses: r0adkll/upload-google-play@v1

@@ -58,7 +58,7 @@ jobs:
     secrets: inherit
 
   release-android:
-
+    name: Release Android
     needs: prepare
     uses: now-u/now-u-app/.github/workflows/android-release.yml@main
     secrets: inherit
