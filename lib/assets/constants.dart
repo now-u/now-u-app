@@ -10,8 +10,7 @@ bool testMode = Platform.environment.containsKey('FLUTTER_TEST');
 /// Whether the app is currently running in debug mode
 bool devMode = !testMode && !kReleaseMode;
 
-const PRIVACY_POLICY_URL =
-    'https://now-u-docs.s3.eu-west-2.amazonaws.com/now-u+privacy+policy.pdf';
+const PRIVACY_POLICY_URL = 'https://www.now-u.com/info/privacy-notice';
 const TERMS_AND_CONDITIONS_URL =
     'https://now-u-docs.s3.eu-west-2.amazonaws.com/now-u+user+terms+and+conditions.pdf';
 
@@ -27,6 +26,8 @@ const CAUSES_API_URL = 'https://causes.dev.apiv2.now-u.com/';
 const SEARCH_SERVICE_URL = 'https://search.dev.apiv2.now-u.com';
 const SEARCH_SERVICE_KEY =
     'aaae5a4efcd407ca2c568ad9bcafda8f5362526a4b14ab8d746df52a7e7415a6';
+
+const ABOUT_US_URL = 'https://www.now-u.com/about';
 
 class CustomColors {
   /// Primary brand color

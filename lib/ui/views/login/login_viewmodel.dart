@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:logging/logging.dart';
+import 'package:nowu/assets/constants.dart';
 import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/services/router_service.dart';
 import 'package:nowu/services/storage.dart';
@@ -40,6 +41,10 @@ class LoginViewModel extends FormViewModel with PostLoginViewModelMixin {
     await _authenticationService.signInWithFacebook();
   }
 
+  Future loginWithApple() async {
+    await _authenticationService.signInWithApple();
+  }
+
   Future loginWithEmail() async {
     validateForm();
     showValidation = true;
@@ -53,11 +58,8 @@ class LoginViewModel extends FormViewModel with PostLoginViewModelMixin {
     await _routerService.navigateToLoginEmailSentView(email: emailInputValue!);
   }
 
-  void launchTandCs() {
-    _navigationService.launchLink(
-      'http://www.now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf',
-      isExternal: true,
-    );
+  void launchPrivacyPolicy() {
+    _navigationService.launchLink(PRIVACY_POLICY_URL, isExternal: true);
   }
 
   void skipLogin() async {

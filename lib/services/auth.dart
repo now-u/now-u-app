@@ -60,6 +60,11 @@ class AuthenticationService {
         .signInWithOAuth(Provider.facebook, redirectTo: LOGIN_REDIRECT_URL);
   }
 
+  Future signInWithApple() async {
+    await _client.auth
+        .signInWithOAuth(Provider.apple, redirectTo: LOGIN_REDIRECT_URL);
+  }
+
   Future signInWithCode(String email, String code) async {
     _logger.info('Signing in with code');
     await _client.auth

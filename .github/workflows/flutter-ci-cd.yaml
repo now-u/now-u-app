@@ -2,6 +2,7 @@ name: Flutter CI CD
 
 on:
   push:
+
     tags:
       - '[0-9]+.[0-9]+.[0-9]+'
 
@@ -57,7 +58,7 @@ jobs:
     secrets: inherit
 
   release-android:
-    name: Release Android
+
     needs: prepare
     uses: now-u/now-u-app/.github/workflows/android-release.yml@main
     secrets: inherit
