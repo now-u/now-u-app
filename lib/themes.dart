@@ -69,8 +69,8 @@ final textTheme = baseTextTheme.merge(
 );
 
 final primaryTextButtonStyle = TextButton.styleFrom(
-  backgroundColor: CustomColors.brandColor,
-  foregroundColor: Colors.white,
+  backgroundColor: Colors.transparent,
+  foregroundColor: CustomColors.brandColor,
   textStyle: textTheme.displayMedium!.copyWith(fontWeight: FontWeight.w700),
   padding: const EdgeInsets.symmetric(
     vertical: 12.0,
@@ -81,7 +81,20 @@ final primaryTextButtonStyle = TextButton.styleFrom(
   ),
 );
 
-final secondaryTextButtonStyle = TextButton.styleFrom(
+final primaryFilledButtonStyle = TextButton.styleFrom(
+  backgroundColor: CustomColors.brandColor,
+  foregroundColor: Colors.white,
+  textStyle: textTheme.displayMedium!.copyWith(fontWeight: FontWeight.w700),
+  padding: const EdgeInsets.symmetric(
+    vertical: 12.0,
+    horizontal: 36.0,
+  ),
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(8.0),
+  ),
+);
+
+final secondaryFilledButtonStyle = TextButton.styleFrom(
   elevation: 10,
   shadowColor: tileBoxShadowLight.color,
   backgroundColor: Colors.white,
@@ -114,6 +127,7 @@ final regularTheme = ThemeData(
     height: 48,
   ),
   textButtonTheme: TextButtonThemeData(style: primaryTextButtonStyle),
+  filledButtonTheme: FilledButtonThemeData(style: primaryFilledButtonStyle),
   // TODO Bring back!
   // TODO Fix buttons
   searchBarTheme: SearchBarThemeData(
