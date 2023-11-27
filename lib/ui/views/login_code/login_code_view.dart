@@ -131,7 +131,7 @@ class _LoginForm extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: TextButton(
+                  child: FilledButton(
                     child: const Text('Log in'),
                     onPressed: () {
                       viewModel.loginWithCode();

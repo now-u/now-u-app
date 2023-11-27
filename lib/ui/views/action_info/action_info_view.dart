@@ -166,9 +166,9 @@ class ActionInfoView extends StackedView<ActionInfoViewModel> {
                     ),
                     Align(
                       alignment: Alignment.topCenter,
-                      child: TextButton(
+                      child: FilledButton(
                         child: const Text('Take action'),
-                        style: secondaryTextButtonStyle,
+                        style: secondaryFilledButtonStyle,
                         onPressed: () {
                           viewModel.launchAction();
                         },
@@ -207,10 +207,10 @@ class ActionInfoView extends StackedView<ActionInfoViewModel> {
                               ),
                               Align(
                                 alignment: Alignment.topCenter,
-                                child: TextButton(
+                                child: FilledButton(
                                   child: const Text('Mark as done'),
                                   onPressed: viewModel.completeAction,
-                                  style: secondaryTextButtonStyle,
+                                  style: secondaryFilledButtonStyle,
                                 ),
                               ),
                             ],
