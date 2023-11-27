@@ -61,8 +61,7 @@ class AuthenticationService {
   }
 
   Future signInWithApple() async {
-    await _client.auth
-        .signInWithOAuth(Provider.apple, redirectTo: LOGIN_REDIRECT_URL);
+    await _client.auth.signInWithApple();
   }
 
   Future signInWithCode(String email, String code) async {
