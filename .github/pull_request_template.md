@@ -2,13 +2,13 @@
 
 Please include a brief summary of what the issue is and what has been done to solve it
 
-Fixes #<issue_number> or trello link
+Fixes #<issue_number> or taiga link
 
 # Checklist:
 
 ## Creator
 
-- [ ] The target branch is dev
+- [ ] The target branch is main
 - [ ] I have updated the unreleased section of the change log
 - [ ] I have reviewed the 'files changed' tab on github to ensure all changes are as expected
 - [ ] I have added someone to review the pr
