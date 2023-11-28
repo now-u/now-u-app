@@ -69,7 +69,7 @@ dependencies:
   json_annotation: ^4.6.0
   faker: ^2.0.0
 
-  supabase_flutter: ^1.10.12
+  supabase_flutter: ^1.10.25
   meilisearch: ^0.14.0
   google_sign_in: ^6.1.6
 
