@@ -1,4 +1,5 @@
 # now-u app changelog
+## 2.0.4+54 - 2023-11-29
 ## 2.0.3 - 2023-11-19
 ### Added
 - Sign in with apple
