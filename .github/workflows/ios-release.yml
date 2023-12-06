@@ -38,6 +38,8 @@ jobs:
           # is chnage update P12_PASSWORD as well
           BUILD_CERTIFICATE_BASE64: ${{ secrets.APPSTORE_CERT_BASE64 }}
           P12_PASSWORD: ${{ secrets.APPSTORE_CERT_PASSWORD }}
+          # To generate download provisioning pofile from apple and run
+          # cat nowu.mobileprovision | base64 | xclip -selection c
           BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.MOBILEPROVISION_BASE64 }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
