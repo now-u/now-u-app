@@ -1,7 +1,7 @@
-import 'package:app/assets/StyleFrom.dart';
+import 'package:nowu/assets/StyleFrom.dart';
 import 'package:flutter/material.dart';
 
-import 'package:app/assets/components/textButton.dart';
+import 'package:nowu/assets/components/textButton.dart';
 
 AppBar customAppBar({
   text,
@@ -21,17 +21,17 @@ AppBar customAppBar({
     bottom: text == null
         ? null
         : PreferredSize(
-            preferredSize: Size(0, 30),
+            preferredSize: const Size(0, 30),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(width: 15),
+                const SizedBox(width: 15),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 5),
+                  padding: const EdgeInsets.only(bottom: 5),
                   child: Text(
                     text,
                     style: textStyleFrom(
-                      Theme.of(context).primaryTextTheme.headline2,
+                      Theme.of(context).textTheme.headlineMedium,
                     ),
                   ),
                 ),
@@ -50,7 +50,7 @@ AppBar customAppBar({
                 ? Container()
                 : Container(
                     child: CustomTextButton(
-                      backButtonText ?? "Back",
+                      backButtonText ?? 'Back',
                       iconLeft: true,
                       onClick: () {
                         if (extraOnTap != null) {

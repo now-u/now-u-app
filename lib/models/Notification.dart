@@ -1,10 +1,10 @@
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter/material.dart';
 
-import 'package:app/assets/StyleFrom.dart';
+import 'package:nowu/assets/StyleFrom.dart';
 
-import 'package:app/locator.dart';
-import 'package:app/services/navigation_service.dart';
+import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/services/navigation_service.dart';
 
 final NavigationService? _navigationService = locator<NavigationService>();
 
@@ -20,11 +20,11 @@ class InternalNotification {
   InternalNotification.fromJson(
     Map json,
   ) {
-    id = json["id"];
-    title = json["title"];
-    subtitle = json["subtitle"];
-    body = json["body"];
-    image = json["image"];
+    id = json['id'];
+    title = json['title'];
+    subtitle = json['subtitle'];
+    body = json['body'];
+    image = json['image'];
   }
 
   int? getId() {
@@ -55,18 +55,18 @@ class InternalNotification {
       },
       styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
         p: textStyleFrom(
-          Theme.of(context).primaryTextTheme.bodyText1,
+          Theme.of(context).textTheme.bodyLarge,
           color: Colors.white,
         ),
         listBullet: textStyleFrom(
-          Theme.of(context).primaryTextTheme.bodyText1,
+          Theme.of(context).textTheme.bodyLarge,
           color: Colors.white,
         ),
         textAlign: WrapAlignment.center,
         textScaleFactor: 1.2,
       ),
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
     );
   }
 }

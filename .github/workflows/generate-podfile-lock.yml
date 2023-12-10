@@ -1,0 +1,24 @@
+name: Generate podfile.lock 
+  
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  bump-pods:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v2
+
+      # Checks-out our repository under $GITHUB_WORKSPACE, so our job can access it
+      - name: Setup app
+        uses: ./.github/actions/setup-app
+
+      - run: cd ios && pod install --repo-update
+
+      - run: git diff
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Regenerated pod lockfile

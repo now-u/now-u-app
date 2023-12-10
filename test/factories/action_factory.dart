@@ -1,34 +1,36 @@
-import 'package:app/models/Action.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:nowu/models/Action.dart';
 
 import 'factory.dart';
 import 'cause_factory.dart';
 
-class ListCauseActionFactory extends ModelFactory<ListCauseAction> {
+class ListActionFactory extends ModelFactory<ListAction> {
   @override
-  ListCauseAction generate() {
-    return ListCauseAction(
-      id: faker.randomGenerator.integer(100),
-      title: faker.lorem.sentence(),
-      type: CampaignActionType.Volunteer,
-      cause: ListCauseFactory().generate(),
-      completed: faker.randomGenerator.boolean(),
-      time: faker.randomGenerator.decimal(min: 1, scale: 10),
-      createdAt: faker.date.dateTime(),
+  ListAction generate() {
+    return ListAction(
+      (action) => action
+        ..id = faker.randomGenerator.integer(100)
+        ..title = faker.lorem.sentence()
+        ..actionType = ActionTypeEnum.VOLUNTEER
+        ..causes = ListBuilder(CauseFactory().generateList(length: 1))
+        ..time = faker.randomGenerator.integer(10)
+        ..createdAt = faker.date.dateTime(),
     );
   }
 }
 
-class CampaignActionFactory extends ModelFactory<CampaignAction> {
+class ActionFactory extends ModelFactory<Action> {
   @override
-  CampaignAction generate() {
-    return CampaignAction(
-      id: faker.randomGenerator.integer(100),
-      title: faker.lorem.sentence(),
-      type: CampaignActionType.Volunteer,
-      cause: ListCauseFactory().generate(),
-      completed: faker.randomGenerator.boolean(),
-      time: faker.randomGenerator.decimal(min: 1, scale: 10),
-      createdAt: faker.date.dateTime(),
+  Action generate() {
+    return Action(
+      (action) => action
+        ..id = faker.randomGenerator.integer(100)
+        ..title = faker.lorem.sentence()
+        ..actionType = ActionTypeEnum.VOLUNTEER
+        ..causes = ListBuilder([CauseFactory().generate()])
+        ..isCompleted = faker.randomGenerator.boolean()
+        ..time = faker.randomGenerator.integer(10)
+        ..createdAt = faker.date.dateTime(),
     );
   }
 }

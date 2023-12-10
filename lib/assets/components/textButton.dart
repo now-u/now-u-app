@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nowu/assets/constants.dart';
 
 class CustomTextButton extends StatelessWidget {
   final String text;
@@ -26,42 +27,43 @@ class CustomTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: GestureDetector(
-      onTap: onClick as void Function()?,
-      child: Row(
-        children: <Widget>[
-          this.iconLeft != null
-              ? Icon(
-                  Icons.chevron_left,
-                  size: 25,
-                  color: Theme.of(context).primaryColor,
-                )
-              : Container(),
-          Container(
-            width: width,
-            child: Text(
-              text,
-              style: TextStyle(
-                color: fontColor ?? Theme.of(context).buttonColor,
-                fontFamily:
-                    Theme.of(context).primaryTextTheme.button!.fontFamily,
-                fontWeight: fontWeight ??
-                    Theme.of(context).primaryTextTheme.button!.fontWeight,
-                fontStyle: Theme.of(context).primaryTextTheme.button!.fontStyle,
-                fontSize: fontSize ?? 16,
+      child: GestureDetector(
+        onTap: onClick as void Function()?,
+        child: Row(
+          children: <Widget>[
+            this.iconLeft != null
+                ? Icon(
+                    Icons.chevron_left,
+                    size: 25,
+                    color: Theme.of(context).primaryColor,
+                  )
+                : Container(),
+            Container(
+              width: width,
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: fontColor ?? CustomColors.brandColor,
+                  fontFamily:
+                      Theme.of(context).textTheme.labelLarge!.fontFamily,
+                  fontWeight: fontWeight ??
+                      Theme.of(context).textTheme.labelLarge!.fontWeight,
+                  fontStyle: Theme.of(context).textTheme.labelLarge!.fontStyle,
+                  fontSize: fontSize ?? 16,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
-          ),
-          this.iconRight != null
-              ? Icon(
-                  Icons.chevron_right,
-                  size: 25,
-                  color: Theme.of(context).primaryColor,
-                )
-              : Container(),
-        ],
+            this.iconRight != null
+                ? Icon(
+                    Icons.chevron_right,
+                    size: 25,
+                    color: Theme.of(context).primaryColor,
+                  )
+                : Container(),
+          ],
+        ),
       ),
-    ));
+    );
   }
 }

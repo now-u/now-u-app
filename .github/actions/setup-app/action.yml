@@ -1,0 +1,37 @@
+name: 'Setup app'
+description: 'Install flutter and dependencies'
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup docker
+      if: runner.os == 'macos'
+      shell: bash
+      run: |
+        brew install docker
+        colima start
+
+    # Setup the flutter environment.
+    - name: Setup flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: 'beta' # 'dev', 'alpha', default to: 'stable'
+        flutter-version: '3.14.x'
+        cache: true
+
+    - name: Flutter version
+      shell: bash
+      run: |
+        dart --version
+        flutter --version
+
+    - name: Generate openapi client
+      shell: bash
+      run: cd openapi && make generate-prod
+
+    # Install your project's dependencies
+    - name: Install dependencies
+      shell: bash
+      run: flutter pub get

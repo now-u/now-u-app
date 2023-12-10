@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-import 'package:app/locator.dart';
-import 'package:app/services/navigation_service.dart';
+import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/services/navigation_service.dart';
 
 class PushNotificationService {
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
@@ -10,7 +10,7 @@ class PushNotificationService {
 
   Future init() async {
     if (Platform.isIOS) {
-      NotificationSettings settings = await _fcm.requestPermission(
+      await _fcm.requestPermission(
         alert: true,
         announcement: false,
         badge: true,

@@ -1,29 +1,14 @@
-import 'package:app/models/FAQ.dart';
+import 'package:causeApiClient/causeApiClient.dart';
+import 'package:nowu/app/app.locator.dart';
 
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:nowu/services/api_service.dart';
 
 class FAQService {
-  String domainPrefix = "https://api.now-u.com/api/v1/";
+  final _apiService = locator<ApiService>();
+  CauseApiClient get _causeServiceClient => _apiService.apiClient;
 
-  List<FAQ>? _faqs = [];
-  List<FAQ>? get faqs {
-    return _faqs;
-  }
-
-  Future fetchFAQs() async {
-    try {
-      var response = await http.get(Uri.parse(domainPrefix + "faqs"));
-      if (response.statusCode != 200) {
-        return false;
-      }
-      _faqs = json
-          .decode(response.body)['data']
-          .map((e) => FAQ.fromJson(e))
-          .toList()
-          .cast<FAQ>();
-    } catch (e) {
-      return e.toString();
-    }
+  Future<List<Faq>> getFaqs() async {
+    final response = await _causeServiceClient.getFaqsApi().faqsList();
+    return response.data!.toList();
   }
 }
