@@ -1,10 +1,13 @@
 import 'dart:async';
 
 import 'package:logging/logging.dart';
+import 'package:nowu/assets/constants.dart';
+import 'package:nowu/services/dialog_service.dart';
 import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/services/router_service.dart';
 import 'package:nowu/services/storage.dart';
 import 'package:nowu/ui/common/post_login_viewmodel.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/auth.dart';
@@ -28,16 +31,27 @@ class LoginViewModel extends FormViewModel with PostLoginViewModelMixin {
   final _routerService = locator<RouterService>();
   final _navigationService = locator<NavigationService>();
   final _secureStroageService = locator<SecureStorageService>();
+  final _dialogService = locator<DialogService>();
   final _logger = Logger('LoginViewModel');
 
   bool showValidation = false;
 
   Future loginWithGoogle() async {
-    await _authenticationService.signInWithGoogle();
+    try {
+		await _authenticationService.signInWithGoogle();
+	} catch(e) {
+		_logger.severe('Login failed: error=$e');
+		await Sentry.captureException(e);
+		_dialogService.showErrorDialog(title: 'Login failed', description: 'Unknwon error during login. Please try again.');
+	}
   }
 
   Future loginWithFacebook() async {
     await _authenticationService.signInWithFacebook();
+  }
+
+  Future loginWithApple() async {
+    await _authenticationService.signInWithApple();
   }
 
   Future loginWithEmail() async {
@@ -53,11 +67,8 @@ class LoginViewModel extends FormViewModel with PostLoginViewModelMixin {
     await _routerService.navigateToLoginEmailSentView(email: emailInputValue!);
   }
 
-  void launchTandCs() {
-    _navigationService.launchLink(
-      'http://www.now-u.com/static/media/now-u_privacy-notice.25c0d41b.pdf',
-      isExternal: true,
-    );
+  void launchPrivacyPolicy() {
+    _navigationService.launchLink(PRIVACY_POLICY_URL, isExternal: true);
   }
 
   void skipLogin() async {

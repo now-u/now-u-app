@@ -39,7 +39,7 @@ List<MenuItemData> getMenuItems(MoreViewModel viewModel) => [
       const ActionMenuItem(
         title: 'About Us',
         icon: FontAwesomeIcons.infoCircle,
-        action: LinkMenuItemAction('https://now-u.com/aboutus'),
+        action: LinkMenuItemAction(ABOUT_US_URL),
       ),
       const ActionMenuItem(
         title: 'Our partners',

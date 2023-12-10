@@ -1,3 +1,4 @@
+import 'package:logging/logging.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/dialog_service.dart';
@@ -22,6 +23,7 @@ class LoginCodeViewModel extends FormViewModel with PostLoginViewModelMixin {
 
   final _authenticationService = locator<AuthenticationService>();
   final _dialogService = locator<DialogService>();
+  final _logger = Logger('LoginCodeViewModel');
 
   Future<void> loginWithCode() async {
     // TODO Is this validate call required or does isFormValid do it
@@ -33,6 +35,7 @@ class LoginCodeViewModel extends FormViewModel with PostLoginViewModelMixin {
       } catch (e) {
         setBusy(false);
         Sentry.captureException(e);
+		_logger.severe('Login failed', e);
         return _dialogService.showErrorDialog(
           title: 'Login error',
           description:

@@ -1,12 +1,12 @@
-import 'package:nowu/assets/constants.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:nowu/assets/constants.dart';
 import 'package:nowu/themes.dart';
 import 'package:nowu/ui/common/form.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
+import 'components/social_media_buttons.dart';
 import 'login_view.form.dart';
 import 'login_viewmodel.dart';
 
@@ -58,8 +58,8 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
     Widget _skipButton(LoginViewModel model) {
       return Container(
         width: double.infinity,
-        child: TextButton(
-          style: secondaryTextButtonStyle,
+        child: FilledButton(
+          style: secondaryFilledButtonStyle,
           child: const Text('Skip'),
           onPressed: () {
             model.skipLogin();
@@ -71,7 +71,7 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
     Widget _loginButton(LoginViewModel model) {
       return Container(
         width: double.infinity,
-        child: TextButton(
+        child: FilledButton(
           child: const Text('Login'),
           onPressed: model.loginWithEmail,
         ),
@@ -113,19 +113,7 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
                   ),
                 ),
                 const SizedBox(height: 30),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    SocialMediaLoginButton(
-                      onPressed: model.loginWithGoogle,
-                      iconData: FontAwesomeIcons.google,
-                    ),
-                    SocialMediaLoginButton(
-                      onPressed: model.loginWithFacebook,
-                      iconData: FontAwesomeIcons.facebookF,
-                    ),
-                  ],
-                ),
+                SocialMediaLoginButtons(model),
                 const SizedBox(height: 30),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.9,
@@ -164,7 +152,7 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
                             .copyWith(color: CustomColors.brandColor),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            model.launchTandCs();
+                            model.launchPrivacyPolicy();
                           },
                       ),
                     ],
@@ -193,31 +181,6 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
               _loginForm(viewModel),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class SocialMediaLoginButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final IconData iconData;
-
-  const SocialMediaLoginButton({
-    Key? key,
-    required this.onPressed,
-    required this.iconData,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
-      child: Icon(iconData, color: Colors.orange),
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.white),
-        padding: const MaterialStatePropertyAll(
-          EdgeInsets.symmetric(vertical: 15, horizontal: 60),
         ),
       ),
     );
