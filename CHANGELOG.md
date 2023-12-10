@@ -1,5 +1,13 @@
 # now-u app changelog
-## Unreleased
+## 2.0.4+54 - 2023-11-29
+## 2.0.3 - 2023-11-19
+### Added
+- Sign in with apple
+
+### Fixed
+- Fix manual login with code
+
+## 2.0.2 - 2023-09-19
 ### Added
 - Added login button to more menu for unauthenticated users
 - Fix new filter for all explore tab

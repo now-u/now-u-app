@@ -85,7 +85,7 @@ class _Body extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Container(
               width: double.infinity,
-              child: TextButton(
+              child: FilledButton(
                 child: const Text('Open Email'),
                 onPressed: viewModel.openMailApp,
               ),
@@ -117,7 +117,7 @@ class _Body extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Container(
               width: double.infinity,
-              child: TextButton(
+              child: FilledButton(
                 child: const Text('Use secret code'),
                 onPressed: viewModel.navigateToSecretCodePage,
               ),

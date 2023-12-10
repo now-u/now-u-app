@@ -1061,6 +1061,10 @@ components:
         id:
           type: integer
           readOnly: true
+        causes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cause'
         header_image:
           $ref: '#/components/schemas/Image'
         release_at_timestamp:
@@ -1098,6 +1102,7 @@ components:
           format: uri
           maxLength: 500
       required:
+      - causes
       - created_at
       - header_image
       - id

@@ -11,7 +11,7 @@ description: now-u App
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 2.0.2
+version: 2.0.4+54
 publish_to: none
 
 environment:
@@ -69,8 +69,9 @@ dependencies:
   json_annotation: ^4.6.0
   faker: ^2.0.0
 
-  supabase_flutter: ^1.10.12
+  supabase_flutter: ^1.10.25
   meilisearch: ^0.14.0
+  google_sign_in: ^6.1.6
 
   sentry_flutter: ^7.9.0
   sentry_dio: ^7.9.0

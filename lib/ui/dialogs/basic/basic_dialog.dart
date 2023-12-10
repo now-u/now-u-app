@@ -58,14 +58,14 @@ class BasicDialog extends StackedView<BasicDialogModel> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     if (request.mainButtonTitle != null)
-                      TextButton(
+                      FilledButton(
                         child: Text(request.mainButtonTitle!),
                         onPressed: () =>
                             completer(DialogResponse(confirmed: true)),
                       ),
                     if (request.secondaryButtonTitle != null)
-                      TextButton(
-                        style: secondaryTextButtonStyle,
+                      FilledButton(
+                        style: secondaryFilledButtonStyle,
                         child: Text(request.secondaryButtonTitle!),
                         onPressed: () =>
                             completer(DialogResponse(confirmed: false)),

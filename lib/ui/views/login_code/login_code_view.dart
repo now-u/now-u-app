@@ -25,6 +25,11 @@ class LoginCodeView extends StackedView<LoginCodeViewModel>
   }) : super(key: key);
 
   @override
+  void onViewModelReady(LoginCodeViewModel viewModel) {
+    syncFormWithViewModel(viewModel);
+  }
+
+  @override
   Widget builder(
     BuildContext context,
     LoginCodeViewModel viewModel,
@@ -126,7 +131,7 @@ class _LoginForm extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: TextButton(
+                  child: FilledButton(
                     child: const Text('Log in'),
                     onPressed: () {
                       viewModel.loginWithCode();
