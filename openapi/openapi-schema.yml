@@ -1,0 +1,1275 @@
+openapi: 3.0.3
+info:
+  title: now-u cause API
+  version: 1.0.0
+  description: now-u service to fetch causes data
+paths:
+  /actions/:
+    get:
+      operationId: actions_list
+      tags:
+      - actions
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ListAction'
+          description: ''
+  /actions/{id}/:
+    get:
+      operationId: actions_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this action.
+        required: true
+      tags:
+      - actions
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Action'
+          description: ''
+  /actions/{id}/complete/:
+    post:
+      operationId: actions_complete
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this action.
+        required: true
+      tags:
+      - actions
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /actions/{id}/uncomplete/:
+    delete:
+      operationId: actions_uncomplete
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this action.
+        required: true
+      tags:
+      - actions
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/schema/:
+    get:
+      operationId: api_schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /campaigns/:
+    get:
+      operationId: campaigns_list
+      tags:
+      - campaigns
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ListCampaign'
+          description: ''
+  /campaigns/{id}/:
+    get:
+      operationId: campaigns_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this campaign.
+        required: true
+      tags:
+      - campaigns
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+          description: ''
+  /causes/:
+    get:
+      operationId: causes_list
+      tags:
+      - causes
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cause'
+          description: ''
+  /causes/{id}/:
+    get:
+      operationId: causes_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this cause.
+        required: true
+      tags:
+      - causes
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cause'
+          description: ''
+  /causes/select/:
+    post:
+      operationId: causes_select
+      tags:
+      - causes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: {}
+              description: Unspecified request body
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              additionalProperties: {}
+              description: Unspecified request body
+          multipart/form-data:
+            schema:
+              type: object
+              additionalProperties: {}
+              description: Unspecified request body
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cause'
+          description: ''
+  /faqs/:
+    get:
+      operationId: faqs_list
+      tags:
+      - faqs
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Faq'
+          description: ''
+  /faqs/{id}/:
+    get:
+      operationId: faqs_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this faq.
+        required: true
+      tags:
+      - faqs
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Faq'
+          description: ''
+  /learning_resources/:
+    get:
+      operationId: learning_resources_list
+      tags:
+      - learning_resources
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LearningResource'
+          description: ''
+  /learning_resources/{id}/:
+    get:
+      operationId: learning_resources_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this learning resource.
+        required: true
+      tags:
+      - learning_resources
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LearningResource'
+          description: ''
+  /learning_resources/{id}/complete/:
+    post:
+      operationId: learning_resources_complete
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this learning resource.
+        required: true
+      tags:
+      - learning_resources
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /me/causesInfo/:
+    get:
+      operationId: me_causesInfo_retrieve
+      description: View for information about the users interactions with causes resources
+      tags:
+      - me
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CausesUser'
+          description: ''
+    put:
+      operationId: me_causesInfo_update
+      description: View for information about the users interactions with causes resources
+      tags:
+      - me
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CausesUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CausesUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CausesUser'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CausesUser'
+          description: ''
+    patch:
+      operationId: me_causesInfo_partial_update
+      description: View for information about the users interactions with causes resources
+      tags:
+      - me
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCausesUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCausesUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCausesUser'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CausesUser'
+          description: ''
+  /me/profile/:
+    get:
+      operationId: me_profile_retrieve
+      tags:
+      - me
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
+    put:
+      operationId: me_profile_update
+      tags:
+      - me
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
+    patch:
+      operationId: me_profile_partial_update
+      tags:
+      - me
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfile'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
+  /new_articles/:
+    get:
+      operationId: new_articles_list
+      tags:
+      - new_articles
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NewsArticle'
+          description: ''
+  /new_articles/{id}/:
+    get:
+      operationId: new_articles_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this news article.
+        required: true
+      tags:
+      - new_articles
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsArticle'
+          description: ''
+  /organisations/:
+    get:
+      operationId: organisations_list
+      tags:
+      - organisations
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organisation'
+          description: ''
+  /organisations/{id}/:
+    get:
+      operationId: organisations_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this organisation.
+        required: true
+      tags:
+      - organisations
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organisation'
+          description: ''
+components:
+  schemas:
+    Action:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        causes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cause'
+        is_completed:
+          type: boolean
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        release_at:
+          type: string
+          format: date-time
+          description: The date from which this resource should be available in the
+            app. If not provided the resource will not be visible
+        end_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date from which this resource should no longer be available
+            in the app. If not provided the reosurce will stay visible after its released
+        title:
+          type: string
+          maxLength: 200
+        link:
+          type: string
+          format: uri
+          maxLength: 3000
+        action_type:
+          $ref: '#/components/schemas/ActionTypeEnum'
+        what_description:
+          type: string
+        why_description:
+          type: string
+        time:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        of_the_month:
+          type: boolean
+        suggested:
+          type: boolean
+      required:
+      - action_type
+      - causes
+      - created_at
+      - id
+      - is_completed
+      - link
+      - release_at
+      - time
+      - title
+      - updated_at
+      - what_description
+      - why_description
+    ActionTypeEnum:
+      enum:
+      - VOLUNTEER
+      - DONATE
+      - PURCHASE
+      - FUNDRAISE
+      - RAISE_AWARENESS
+      - SIGN
+      - BEHAVIOR
+      - CONTACT
+      - PROTEST
+      - CONNECT
+      - LEARN
+      - QUIZ
+      - OTHER
+      type: string
+      description: |-
+        * `VOLUNTEER` - Volunteer
+        * `DONATE` - Donate
+        * `PURCHASE` - Purchase
+        * `FUNDRAISE` - Fundraise
+        * `RAISE_AWARENESS` - Raise awareness
+        * `SIGN` - Sign
+        * `BEHAVIOR` - Behavior change
+        * `CONTACT` - Contact
+        * `PROTEST` - Protest
+        * `CONNECT` - Connect
+        * `LEARN` - Learn
+        * `QUIZ` - Quiz
+        * `OTHER` - Other
+    Campaign:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        causes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cause'
+        learning_resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/LearningResource'
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ListAction'
+        is_completed:
+          type: boolean
+          readOnly: true
+        header_image:
+          $ref: '#/components/schemas/Image'
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        release_at:
+          type: string
+          format: date-time
+          description: The date from which this resource should be available in the
+            app. If not provided the resource will not be visible
+        end_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date from which this resource should no longer be available
+            in the app. If not provided the reosurce will stay visible after its released
+        title:
+          type: string
+          maxLength: 100
+        short_name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+        of_the_month:
+          type: boolean
+        suggested:
+          type: boolean
+      required:
+      - actions
+      - causes
+      - created_at
+      - description
+      - header_image
+      - id
+      - is_completed
+      - learning_resources
+      - release_at
+      - short_name
+      - title
+      - updated_at
+    Cause:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 100
+        header_image:
+          $ref: '#/components/schemas/Image'
+        icon:
+          $ref: '#/components/schemas/IconEnum'
+        description:
+          type: string
+        is_selected:
+          type: boolean
+          readOnly: true
+      required:
+      - description
+      - header_image
+      - icon
+      - id
+      - is_selected
+      - title
+    CausesUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        completed_learning_resource_ids:
+          type: array
+          items:
+            type: integer
+          readOnly: true
+        completed_action_ids:
+          type: array
+          items:
+            type: integer
+          readOnly: true
+        selected_causes_ids:
+          type: array
+          items:
+            type: integer
+        completed_campaign_ids:
+          type: array
+          items:
+            type: integer
+          readOnly: true
+      required:
+      - completed_action_ids
+      - completed_campaign_ids
+      - completed_learning_resource_ids
+      - id
+      - selected_causes_ids
+    Faq:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        question:
+          type: string
+        answer:
+          type: string
+      required:
+      - answer
+      - id
+      - question
+    IconEnum:
+      enum:
+      - cause_icon_education
+      - cause_icon_environment
+      - cause_icon_health_wellbeing
+      - cause_icon_safe_home_community
+      - cause_icon_economic_opportunity
+      - cause_icon_equality_human_rights
+      type: string
+      description: |-
+        * `cause_icon_education` - Education
+        * `cause_icon_environment` - Environment
+        * `cause_icon_health_wellbeing` - Health Wellbeing
+        * `cause_icon_safe_home_community` - Safe Home Community
+        * `cause_icon_economic_opportunity` - Economic Opportunity
+        * `cause_icon_equality_human_rights` - Equility Human Rights
+    Image:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        url:
+          type: string
+          readOnly: true
+        alt_text:
+          type: string
+          nullable: true
+          maxLength: 100
+      required:
+      - id
+      - url
+    LearningResource:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        causes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cause'
+        release_at_timestamp:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        release_at:
+          type: string
+          format: date-time
+          description: The date from which this resource should be available in the
+            app. If not provided the resource will not be visible
+        end_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date from which this resource should no longer be available
+            in the app. If not provided the reosurce will stay visible after its released
+        title:
+          type: string
+          maxLength: 200
+        time:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        link:
+          type: string
+          format: uri
+          maxLength: 500
+        learning_resource_type:
+          $ref: '#/components/schemas/LearningResourceTypeEnum'
+        source:
+          type: string
+          maxLength: 300
+      required:
+      - causes
+      - created_at
+      - id
+      - learning_resource_type
+      - link
+      - release_at
+      - release_at_timestamp
+      - source
+      - time
+      - title
+      - updated_at
+    LearningResourceTypeEnum:
+      enum:
+      - VIDEO
+      - READING
+      - INFOGRAPHIC
+      - LISTEN
+      - OTHER
+      type: string
+      description: |-
+        * `VIDEO` - Video
+        * `READING` - Reading
+        * `INFOGRAPHIC` - Infographic
+        * `LISTEN` - Listen
+        * `OTHER` - Other
+    ListAction:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 200
+        action_type:
+          $ref: '#/components/schemas/ActionTypeEnum'
+        causes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cause'
+        time:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        release_at:
+          type: string
+          format: date-time
+          description: The date from which this resource should be available in the
+            app. If not provided the resource will not be visible
+        of_the_month:
+          type: boolean
+        suggested:
+          type: boolean
+        release_at_timestamp:
+          type: integer
+      required:
+      - action_type
+      - causes
+      - created_at
+      - id
+      - release_at
+      - release_at_timestamp
+      - time
+      - title
+    ListCampaign:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 100
+        short_name:
+          type: string
+          maxLength: 100
+        causes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cause'
+        header_image:
+          $ref: '#/components/schemas/Image'
+        of_the_month:
+          type: boolean
+        suggested:
+          type: boolean
+        release_at:
+          type: string
+          format: date-time
+          description: The date from which this resource should be available in the
+            app. If not provided the resource will not be visible
+        release_at_timestamp:
+          type: integer
+      required:
+      - causes
+      - header_image
+      - id
+      - release_at
+      - release_at_timestamp
+      - short_name
+      - title
+    NewsArticle:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        causes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cause'
+        header_image:
+          $ref: '#/components/schemas/Image'
+        release_at_timestamp:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        release_at:
+          type: string
+          format: date-time
+          description: The date from which this resource should be available in the
+            app. If not provided the resource will not be visible
+        end_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date from which this resource should no longer be available
+            in the app. If not provided the reosurce will stay visible after its released
+        title:
+          type: string
+          maxLength: 300
+        subtitle:
+          type: string
+          maxLength: 300
+        source:
+          type: string
+          maxLength: 300
+        link:
+          type: string
+          format: uri
+          maxLength: 500
+      required:
+      - causes
+      - created_at
+      - header_image
+      - id
+      - link
+      - release_at
+      - release_at_timestamp
+      - source
+      - subtitle
+      - title
+      - updated_at
+    Organisation:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        logo:
+          $ref: '#/components/schemas/Image'
+        extra_links:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganisationExtraLink'
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        release_at:
+          type: string
+          format: date-time
+          description: The date from which this resource should be available in the
+            app. If not provided the resource will not be visible
+        end_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date from which this resource should no longer be available
+            in the app. If not provided the reosurce will stay visible after its released
+        name:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+        organisation_type:
+          $ref: '#/components/schemas/OrganisationTypeEnum'
+        website_link:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        email_address:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 254
+        geographic_reach:
+          type: string
+          nullable: true
+          maxLength: 100
+        instagram_link:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        facebook_link:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+        twitter_link:
+          type: string
+          format: uri
+          nullable: true
+          maxLength: 200
+      required:
+      - created_at
+      - description
+      - extra_links
+      - id
+      - logo
+      - name
+      - organisation_type
+      - release_at
+      - updated_at
+    OrganisationExtraLink:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 100
+        link:
+          type: string
+          format: uri
+          maxLength: 200
+      required:
+      - link
+      - title
+    OrganisationTypeEnum:
+      enum:
+      - CHARITY
+      - SOCIAL_ENTERPRISE
+      - UNKNOWN
+      type: string
+      description: |-
+        * `CHARITY` - Charity
+        * `SOCIAL_ENTERPRISE` - Social Enterprise
+        * `UNKNOWN` - Unknown - Please fix
+    PatchedCausesUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        completed_learning_resource_ids:
+          type: array
+          items:
+            type: integer
+          readOnly: true
+        completed_action_ids:
+          type: array
+          items:
+            type: integer
+          readOnly: true
+        selected_causes_ids:
+          type: array
+          items:
+            type: integer
+        completed_campaign_ids:
+          type: array
+          items:
+            type: integer
+          readOnly: true
+    PatchedUserProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+          title: Email address
+        name:
+          type: string
+          maxLength: 150
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+          title: Email address
+        name:
+          type: string
+          maxLength: 150
+      required:
+      - email
+      - id
+  securitySchemes:
+    tokenAuth:
+      type: http
+      scheme: bearer

@@ -57,5 +57,18 @@
         <string>superhuman</string>
         <string>protonmail</string>
     </array>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>io.supabase.flutterquickstart</string>
+        </array>
+      </dict>
+    </array>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 </dict>
 </plist>

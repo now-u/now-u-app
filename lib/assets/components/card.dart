@@ -1,4 +1,4 @@
-import 'package:app/assets/constants.dart';
+import 'package:nowu/assets/constants.dart';
 import 'package:flutter/material.dart';
 
 class BaseCard extends StatelessWidget {
@@ -14,6 +14,7 @@ class BaseCard extends StatelessWidget {
       elevation: tileElevation,
       shadowColor: tileBoxShadowLight.color,
       child: child,
+      surfaceTintColor: Colors.transparent,
     );
   }
 }

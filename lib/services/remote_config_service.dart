@@ -1,14 +1,14 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 class RemoteConfigKey {
-  static const googlePlaceAPIKey = "googlePlaceAPIKey";
+  static const googlePlaceAPIKey = 'googlePlaceAPIKey';
 }
 
 class RemoteConfigService {
-  late RemoteConfig remoteConfig;
+  late FirebaseRemoteConfig remoteConfig;
 
   Future init() async {
-    remoteConfig = RemoteConfig.instance;
+    remoteConfig = FirebaseRemoteConfig.instance;
     await remoteConfig.fetch();
     await remoteConfig.activate();
   }

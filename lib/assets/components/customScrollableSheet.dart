@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:app/assets/ClipShadowPath.dart';
-import 'package:app/assets/StyleFrom.dart';
+import 'package:nowu/assets/ClipShadowPath.dart';
+import 'package:nowu/assets/StyleFrom.dart';
 
 class ScrollableSheetPage extends StatelessWidget {
   final Widget header;
@@ -40,16 +40,17 @@ class ScrollableSheetPage extends StatelessWidget {
             controller: controller,
             child: ClipShadowPath(
               shadow: shadow ??
-                  Shadow(
+                  const Shadow(
                     blurRadius: 5,
                     color: Color.fromRGBO(121, 43, 2, 0.3),
                     offset: Offset(0, -3),
                   ),
               clipper: BezierTopClipper(),
               child: Container(
-                color: sheetBackgroundColor ?? Color.fromRGBO(247, 248, 252, 1),
+                color: sheetBackgroundColor ??
+                    const Color.fromRGBO(247, 248, 252, 1),
                 child: Padding(
-                  padding: EdgeInsets.only(top: 60),
+                  padding: const EdgeInsets.only(top: 60),
                   child: Column(
                     children: children,
                   ),
@@ -72,7 +73,7 @@ class ScrollableSheetPage extends StatelessWidget {
         children: [
           // Header
           header,
-          sheet
+          sheet,
         ],
       ),
     );

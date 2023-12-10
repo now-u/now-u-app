@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:app/assets/components/textButton.dart';
-import 'package:app/pages/other/InfoPage.dart';
-import 'package:app/routes.dart';
-
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nowu/assets/components/textButton.dart';
 
 import '../StyleFrom.dart';
 
+// TODO Loads of stuff here isn't used, remove all the things
 class PageHeader extends StatelessWidget {
   final Function? onTap;
   final String? title;
@@ -23,19 +20,20 @@ class PageHeader extends StatelessWidget {
   final double? fontSize;
   final double? extraInnerPadding;
 
-  PageHeader(
-      {this.onTap,
-      this.title,
-      this.icon,
-      this.backButton,
-      this.backButtonText,
-      this.padding,
-      this.infoText,
-      this.infoTitle,
-      this.textColor,
-      this.maxLines,
-      this.fontSize,
-      this.extraInnerPadding});
+  PageHeader({
+    this.onTap,
+    this.title,
+    this.icon,
+    this.backButton,
+    this.backButtonText,
+    this.padding,
+    this.infoText,
+    this.infoTitle,
+    this.textColor,
+    this.maxLines,
+    this.fontSize,
+    this.extraInnerPadding,
+  });
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -54,55 +52,39 @@ class PageHeader extends StatelessWidget {
             padding:
                 EdgeInsets.only(left: padding == null ? 20 : padding! + 10),
             child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  infoText == null && infoTitle == null && maxLines != null
-                      ? Expanded(
-                          child: Text(
-                            title!,
-                            textAlign: TextAlign.left,
-                            style: textStyleFrom(
-                              Theme.of(context).primaryTextTheme.headline2,
-                              color: textColor,
-                              fontSize: fontSize,
-                            ),
-                            maxLines: maxLines,
-                            overflow: TextOverflow.ellipsis,
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                infoText == null && infoTitle == null && maxLines != null
+                    ? Expanded(
+                        child: Text(
+                          title!,
+                          textAlign: TextAlign.left,
+                          style: textStyleFrom(
+                            Theme.of(context).textTheme.headlineMedium,
+                            color: textColor,
+                            fontSize: fontSize,
                           ),
-                        )
-                      : Container(
-                          child: Text(
-                            title!,
-                            textAlign: TextAlign.left,
-                            style: textStyleFrom(
-                              Theme.of(context).primaryTextTheme.headline2,
-                              color: textColor,
-                              fontSize: fontSize,
-                            ),
+                          maxLines: maxLines,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )
+                    : Container(
+                        child: Text(
+                          title!,
+                          textAlign: TextAlign.left,
+                          style: textStyleFrom(
+                            Theme.of(context).textTheme.headlineMedium,
+                            color: textColor,
+                            fontSize: fontSize,
                           ),
                         ),
-                  SizedBox(
-                    width: 7,
-                  ),
-                  infoTitle != null && infoText != null
-                      ? GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pushNamed(
-                              Routes.info,
-                              arguments: InfoPageArgumnets(
-                                title: infoTitle,
-                                body: infoText,
-                              ),
-                            );
-                          },
-                          child: Icon(
-                            FontAwesomeIcons.questionCircle,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        )
-                      : Container(),
-                ]),
+                      ),
+                const SizedBox(
+                  width: 7,
+                ),
+              ],
+            ),
           ),
         ),
       ],
@@ -117,12 +99,13 @@ class PageHeaderBackButton extends StatelessWidget {
   final String? backButtonText;
   final double? padding;
 
-  PageHeaderBackButton(
-      {this.backButton,
-      this.backButtonText,
-      this.padding,
-      this.icon,
-      this.onTap});
+  PageHeaderBackButton({
+    this.backButton,
+    this.backButtonText,
+    this.padding,
+    this.icon,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -137,16 +120,20 @@ class PageHeaderBackButton extends StatelessWidget {
               ? Container(
                   height: 40,
                   child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: padding ?? 10.0, vertical: 10.0),
-                      child: CustomTextButton(
-                        backButtonText ?? "Back",
-                        onClick: () {
-                          Navigator.of(context).pop();
-                        },
-                        iconLeft: true,
-                        fontWeight: FontWeight.w400,
-                      )))
+                    padding: EdgeInsets.symmetric(
+                      horizontal: padding ?? 10.0,
+                      vertical: 10.0,
+                    ),
+                    child: CustomTextButton(
+                      backButtonText ?? 'Back',
+                      onClick: () {
+                        Navigator.of(context).pop();
+                      },
+                      iconLeft: true,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                )
               : Container(
                   height: 40,
                 ),
@@ -158,14 +145,16 @@ class PageHeaderBackButton extends StatelessWidget {
                     onTap: onTap as void Function()?,
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: padding ?? 10.0, vertical: 10.0),
+                        horizontal: padding ?? 10.0,
+                        vertical: 10.0,
+                      ),
                       child: Icon(
                         icon,
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
                   ),
-                )
+                ),
         ],
       ),
     );
