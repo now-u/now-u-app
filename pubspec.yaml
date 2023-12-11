@@ -87,7 +87,7 @@ dev_dependencies:
     sdk: flutter
   mockito: ^5.0.15
   mocktail: ^0.3.0
-  flutter_launcher_icons: ^0.9.2
+  flutter_launcher_icons: ">=0.9.2 <0.13.0"
   flutter_redux_dev_tools: ^0.5.1
   dartdoc: ^6.0.0
   build_runner: ^2.4.6
