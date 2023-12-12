@@ -4,6 +4,7 @@
 // StackedDialogGenerator
 // **************************************************************************
 
+import 'package:nowu/ui/dialogs/action/action_completed_dialog.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import 'app.locator.dart';
@@ -15,6 +16,7 @@ enum DialogType {
   basic,
   emailAppPicker,
   cause,
+  actionCompleted,
 }
 
 void setupDialogUi() {
@@ -27,6 +29,8 @@ void setupDialogUi() {
         EmailAppPickerDialog(request: request, completer: completer),
     DialogType.cause: (context, request, completer) =>
         CauseDialog(request: request, completer: completer),
+    DialogType.actionCompleted: (context, request, completer) =>
+        ActionCompletedDialog(request: request, completer: completer),
   };
 
   dialogService.registerCustomDialogBuilders(builders);

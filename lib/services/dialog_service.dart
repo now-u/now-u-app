@@ -51,4 +51,12 @@ extension DialogServiceExtension on DialogService {
     );
     return response?.confirmed == true;
   }
+
+  Future<bool> showActionCompletedDialog() async {
+    final response = await showCustomDialog(
+      barrierDismissible: true,
+      variant: DialogType.actionCompleted,
+    );
+    return response?.confirmed == true;
+  }
 }
