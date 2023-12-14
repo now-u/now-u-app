@@ -5,6 +5,7 @@ import 'package:nowu/services/user_service.dart';
 
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/navigation_service.dart';
+import 'package:nowu/ui/views/explore/explore_page_view.form.dart';
 import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -31,6 +32,7 @@ class ActionInfoViewModel extends FutureViewModel<Action> {
       await _causesService.completeAction(data!.id);
       setBusy(false);
       _dialogService.showActionCompletedDialog();
+      notifySourceChanged();
     } catch (err) {
       // TODO Log and metric!
       setBusy(false);
