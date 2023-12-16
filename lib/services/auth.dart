@@ -5,8 +5,14 @@ import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/shared_preferences_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide User;
+import 'package:google_sign_in/google_sign_in.dart';
 
 const LOGIN_REDIRECT_URL = 'com.nowu.app://login-callback/';
+
+class LoginException implements Exception {
+  String message;
+  LoginException(this.message);
+}
 
 class AuthenticationService {
   final _sharedPreferencesService = locator<SharedPreferencesService>();
@@ -51,8 +57,49 @@ class AuthenticationService {
   }
 
   Future signInWithGoogle() async {
-    await _client.auth
-        .signInWithOAuth(Provider.google, redirectTo: LOGIN_REDIRECT_URL);
+	_logger.info('Singing in with google');
+
+  	/// Web Client ID that you registered with Google Cloud.
+  	const webClientId = '938145287148-1dt6dldjl7bo0nbflfu3b95uc8lm73gl.apps.googleusercontent.com';
+
+  	/// iOS Client ID that you registered with Google Cloud.
+  	const iosClientId = '938145287148-nib1shq0tat1rle7g1bh22eqmhltf7i4.apps.googleusercontent.com';
+
+  	// Google sign in on Android will work without providing the Android
+  	// Client ID registered on Google Cloud.
+  	final GoogleSignIn googleSignIn = GoogleSignIn(
+  	  clientId: iosClientId,
+  	  serverClientId: webClientId,
+  	);
+
+	_logger.info('Launching google signin dialog');
+	final googleUser = await googleSignIn.signIn();
+
+	_logger.info('Fetching auth');
+	if (await googleUser == null) {
+		_logger.warning('No user selected from dialog. Aborting google login.');
+		return;
+	}
+
+  	final googleAuth = await googleUser!.authentication;
+  	final accessToken = googleAuth.accessToken;
+  	final idToken = googleAuth.idToken;
+
+  	if (accessToken == null) {
+	  _logger.severe('No access token found after google login');
+  	  throw LoginException('No access token found.');
+  	}
+  	if (idToken == null) {
+	  _logger.severe('No id token found after google login');
+  	  throw LoginException('No id token found.');
+  	}
+
+	_logger.info('Sending google auth credentials to supabase');
+  	return _client.auth.signInWithIdToken(
+  	  provider: Provider.google,
+  	  idToken: idToken,
+  	  accessToken: accessToken,
+  	);
   }
 
   Future signInWithFacebook() async {
@@ -65,6 +112,7 @@ class AuthenticationService {
   }
 
   Future signInWithCode(String email, String code) async {
+    _logger.info('Signing in with code');
     await _client.auth
         .verifyOTP(type: OtpType.magiclink, email: email, token: code);
   }

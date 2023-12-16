@@ -5,12 +5,12 @@ on:
   workflow_call:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref }}
+  group: ${{ github.workflow }}-ios-release-${{ github.head_ref }}
   cancel-in-progress: true
 
 # TODO https://damienaicheh.github.io/flutter/github/actions/2021/04/22/build-sign-flutter-ios-github-actions-en.html
 jobs:
-  release_ios:
+  release-ios:
     runs-on: macos-latest
     timeout-minutes: 30
     steps:
@@ -38,6 +38,8 @@ jobs:
           # is chnage update P12_PASSWORD as well
           BUILD_CERTIFICATE_BASE64: ${{ secrets.APPSTORE_CERT_BASE64 }}
           P12_PASSWORD: ${{ secrets.APPSTORE_CERT_PASSWORD }}
+          # To generate download provisioning pofile from apple and run
+          # cat nowu.mobileprovision | base64 | xclip -selection c
           BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.MOBILEPROVISION_BASE64 }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |

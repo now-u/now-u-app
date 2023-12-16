@@ -58,8 +58,8 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
     Widget _skipButton(LoginViewModel model) {
       return Container(
         width: double.infinity,
-        child: TextButton(
-          style: secondaryTextButtonStyle,
+        child: FilledButton(
+          style: secondaryFilledButtonStyle,
           child: const Text('Skip'),
           onPressed: () {
             model.skipLogin();
@@ -71,7 +71,7 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
     Widget _loginButton(LoginViewModel model) {
       return Container(
         width: double.infinity,
-        child: TextButton(
+        child: FilledButton(
           child: const Text('Login'),
           onPressed: model.loginWithEmail,
         ),
