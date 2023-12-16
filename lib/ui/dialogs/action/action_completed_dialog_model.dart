@@ -2,7 +2,6 @@ import 'package:nowu/services/router_service.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../app/app.locator.dart';
-import '../../../services/navigation_service.dart';
 
 class ActionCompletedDialogModel extends BaseViewModel {
   final _routerService = locator<RouterService>();

@@ -1,9 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:nowu/assets/components/buttons/darkButton.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
-import 'package:nowu/models/Cause.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
