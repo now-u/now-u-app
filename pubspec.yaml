@@ -42,7 +42,7 @@ dependencies:
   time: ^2.0.0
   intl: ^0.18.1
   flutter_markdown: ^0.6.7
-  cached_network_image: ^3.2.1
+  cached_network_image: ^3.3.0
   equatable: ^2.0.3
   
   rflutter_alert: ^2.0.4
