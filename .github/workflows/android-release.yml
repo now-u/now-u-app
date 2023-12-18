@@ -3,6 +3,10 @@ name: Android release
 on:
   workflow_dispatch:
   workflow_call:
+    inputs:
+      ref:
+        required: true
+        type: string
 
 concurrency:
   group: ${{ github.workflow }}-android-release-${{ github.head_ref }}
@@ -13,7 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ inputs.ref }}
 
     - name: 🧰 Setup app
       uses: ./.github/actions/setup-app

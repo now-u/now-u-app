@@ -15,9 +15,11 @@ jobs:
   prepare:
     name: Release setup
     runs-on: macos-latest
+    outputs:
+      ref: ${{ steps.commit.outputs.commit_sha }}
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Extract version from tag
         uses: damienaicheh/extract-version-from-tag-action@v1.1.0
@@ -42,7 +44,8 @@ jobs:
       - name: Update change log
         run: cider release
 
-      - name: Commit changes
+      - id: commit
+        name: Commit changes
         uses: EndBug/add-and-commit@v7
         with:
           author_name: GitHub Actions
@@ -55,9 +58,13 @@ jobs:
     needs: prepare
     uses: now-u/now-u-app/.github/workflows/ios-release.yml@main
     secrets: inherit
+    with:
+      ref: ${{ needs.prepare.outputs.ref }}
 
   release-android:
     name: Release Android
     needs: prepare
     uses: now-u/now-u-app/.github/workflows/android-release.yml@main
     secrets: inherit
+    with:
+      ref: ${{ needs.prepare.outputs.ref }}
