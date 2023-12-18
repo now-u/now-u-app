@@ -1101,12 +1101,18 @@ components:
           type: string
           format: uri
           maxLength: 500
+        published_at:
+          type: string
+          format: date-time
+          description: The date when this resource was published by the source. The
+            app will show news in published order by default.
       required:
       - causes
       - created_at
       - header_image
       - id
       - link
+      - published_at
       - release_at
       - release_at_timestamp
       - source
