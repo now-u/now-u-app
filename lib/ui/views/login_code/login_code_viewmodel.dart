@@ -5,6 +5,7 @@ import 'package:nowu/services/dialog_service.dart';
 import 'package:nowu/ui/common/post_login_viewmodel.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:stacked/stacked.dart';
+import '../../../generated/l10n.dart';
 import 'login_code_view.form.dart';
 
 class LoginCodeFormValidators {
@@ -38,8 +39,7 @@ class LoginCodeViewModel extends FormViewModel with PostLoginViewModelMixin {
 		_logger.severe('Login failed', e);
         return _dialogService.showErrorDialog(
           title: 'Login error',
-          description:
-              'Authentication failed, please double check your token from the email',
+          description: S.current.errorAuthenticationFailed,
         );
       }
     }

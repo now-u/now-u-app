@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:nowu/app/app.bottomsheets.dart';
@@ -16,6 +17,8 @@ import 'package:nowu/services/analytics.dart';
 import 'package:nowu/themes.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sentry_logging/sentry_logging.dart';
+
+import 'generated/l10n.dart';
 
 void main() async {
   await runZonedGuarded(() async {
@@ -71,6 +74,13 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'now-u',
+      localizationsDelegates: [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
       routerDelegate: stackedRouter.delegate(
         navigatorObservers: () => [
           locator<AnalyticsService>().getAnalyticsObserver(),
