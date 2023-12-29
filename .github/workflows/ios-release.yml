@@ -3,6 +3,10 @@ name: IOS release
 on:
   workflow_dispatch:
   workflow_call:
+    inputs:
+      ref:
+        required: true
+        type: string
 
 concurrency:
   group: ${{ github.workflow }}-ios-release-${{ github.head_ref }}
@@ -16,7 +20,9 @@ jobs:
     steps:
       # Checks-out our repository under $GITHUB_WORKSPACE, so our job can access it
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
 
       # Install the Apple certificate and provisioning profile
       - name: 🔑 Install the Apple certificate and provisioning profile
