@@ -63,7 +63,7 @@ class AuthenticationService {
   	const webClientId = '938145287148-1dt6dldjl7bo0nbflfu3b95uc8lm73gl.apps.googleusercontent.com';
 
   	/// iOS Client ID that you registered with Google Cloud.
-  	const iosClientId = '938145287148-nib1shq0tat1rle7g1bh22eqmhltf7i4.apps.googleusercontent.com';
+  	const iosClientId = '938145287148-3b96qect9a9drnhsio206ld9go22fk1h.apps.googleusercontent.com';
 
   	// Google sign in on Android will work without providing the Android
   	// Client ID registered on Google Cloud.

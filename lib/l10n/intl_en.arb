@@ -1,0 +1,8 @@
+{
+  "actionBack": "Back",
+  "actionSave": "Save",
+
+  "changeSelectCausesSelectCausesLabel": "Select the causes which are most important to you to receive personalised content.",
+
+  "errorAuthenticationFailed": "Authentication failed, please double check your token from the email"
+}

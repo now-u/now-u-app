@@ -314,7 +314,8 @@ class NewsArticleSearchFilter
   }) : super(query: query, causeIds: causeIds, releasedSince: releasedSince);
 
   SearchQuery toMeilisearchQuery(CausesUser? userInfo) {
-    return const SearchQuery();
+	final List<String> filter = super._toMeilisearchFilter(userInfo?.selectedCausesIds);
+	return SearchQuery(filter: filter, sort: ['published_at_timestamp:desc']);
   }
 
   NewsArticleSearchFilter merge(NewsArticleSearchFilter other) {

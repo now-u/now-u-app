@@ -11,7 +11,7 @@ description: now-u App
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 2.0.4+54
+version: 2.0.5+55
 publish_to: none
 
 environment:
@@ -19,6 +19,8 @@ environment:
 
 dependencies:
   flutter:
+    sdk: flutter
+  flutter_localizations:
     sdk: flutter
   http: ^0.13.4
   share: ^2.0.4
@@ -38,7 +40,7 @@ dependencies:
   rect_getter: ^1.0.0
   permission_handler: ^10.1.0
   time: ^2.0.0
-  intl: ^0.17.0 # Date formatting
+  intl: ^0.18.1
   flutter_markdown: ^0.6.7
   cached_network_image: ^3.3.0
   equatable: ^2.0.3
@@ -196,3 +198,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_intl:
+  enabled: true

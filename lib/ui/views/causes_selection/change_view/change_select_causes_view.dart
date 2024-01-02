@@ -4,6 +4,7 @@ import 'package:nowu/assets/components/buttons/customWidthButton.dart';
 import 'package:nowu/ui/views/causes_selection/components/causeTileGrid.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../../generated/l10n.dart';
 import 'change_select_causes_viewmodel.dart';
 
 class ChangeSelectCausesView extends StackedView<ChangeSelectCausesViewModel> {
@@ -29,18 +30,18 @@ class ChangeSelectCausesView extends StackedView<ChangeSelectCausesViewModel> {
               child: Row(
                 children: [
                   MaterialButton(
-                    child: const Row(
+                    child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           FontAwesomeIcons.chevronLeft,
                           color: Colors.orange,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Text(
-                          'Back',
-                          style: TextStyle(
+                          S.of(context).actionBack,
+                          style: const TextStyle(
                             color: Colors.orange,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -56,15 +57,15 @@ class ChangeSelectCausesView extends StackedView<ChangeSelectCausesViewModel> {
                 ],
               ),
             ),
-            const Expanded(
+            Expanded(
               flex: 2,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Edit Causes',
                       style: TextStyle(
                         fontSize: 30,
@@ -73,8 +74,8 @@ class ChangeSelectCausesView extends StackedView<ChangeSelectCausesViewModel> {
                       ),
                     ),
                     Text(
-                      'Select the causes which are most important to you to receive personalised content.',
-                      style: TextStyle(fontSize: 15, color: Colors.black),
+                      S.of(context).changeSelectCausesSelectCausesLabel,
+                      style: const TextStyle(fontSize: 15, color: Colors.black),
                     ),
                   ],
                 ),
@@ -88,7 +89,7 @@ class ChangeSelectCausesView extends StackedView<ChangeSelectCausesViewModel> {
               flex: 1,
               child: Center(
                 child: CustomWidthButton(
-                  'Save',
+                  S.of(context).actionSave,
                   onPressed: viewModel.areCausesDisabled
                       ? () {}
                       : () {
