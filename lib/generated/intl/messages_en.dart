@@ -24,6 +24,12 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "actionBack": MessageLookupByLibrary.simpleMessage("Back"),
         "actionSave": MessageLookupByLibrary.simpleMessage("Save"),
+        "action_completed_dialog_explore_action":
+            MessageLookupByLibrary.simpleMessage("Explore"),
+        "action_completed_dialog_label": MessageLookupByLibrary.simpleMessage(
+            "Discover more ways to make a difference in our community"),
+        "action_completed_dialog_title": MessageLookupByLibrary.simpleMessage(
+            "Thank you for taking action!"),
         "changeSelectCausesSelectCausesLabel": MessageLookupByLibrary.simpleMessage(
             "Select the causes which are most important to you to receive personalised content."),
         "errorAuthenticationFailed": MessageLookupByLibrary.simpleMessage(

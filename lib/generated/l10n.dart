@@ -1,6 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import 'intl/messages_all.dart';
 
 // **************************************************************************
@@ -75,6 +76,36 @@ class S {
     return Intl.message(
       'Select the causes which are most important to you to receive personalised content.',
       name: 'changeSelectCausesSelectCausesLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Thank you for taking action!`
+  String get action_completed_dialog_title {
+    return Intl.message(
+      'Thank you for taking action!',
+      name: 'action_completed_dialog_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Discover more ways to make a difference in our community`
+  String get action_completed_dialog_label {
+    return Intl.message(
+      'Discover more ways to make a difference in our community',
+      name: 'action_completed_dialog_label',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Explore`
+  String get action_completed_dialog_explore_action {
+    return Intl.message(
+      'Explore',
+      name: 'action_completed_dialog_explore_action',
       desc: '',
       args: [],
     );

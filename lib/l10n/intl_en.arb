@@ -1,8 +1,9 @@
 {
   "actionBack": "Back",
   "actionSave": "Save",
-
   "changeSelectCausesSelectCausesLabel": "Select the causes which are most important to you to receive personalised content.",
-
+  "action_completed_dialog_title": "Thank you for taking action!",
+  "action_completed_dialog_label": "Discover more ways to make a difference in our community",
+  "action_completed_dialog_explore_action": "Explore",
   "errorAuthenticationFailed": "Authentication failed, please double check your token from the email"
 }

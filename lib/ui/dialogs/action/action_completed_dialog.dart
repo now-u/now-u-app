@@ -3,7 +3,11 @@ import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../../../generated/l10n.dart';
+import '../../../theme/assets.dart';
 import 'action_completed_dialog_model.dart';
+
+const double HEARTS_ICON_SIZE = 145.0;
 
 class ActionCompletedDialog extends StackedView<ActionCompletedDialogModel> {
   final Function(DialogResponse) completer;
@@ -42,7 +46,9 @@ class ActionCompletedDialog extends StackedView<ActionCompletedDialogModel> {
             ),
           ),
           Image.asset(
-            'assets/imgs/actions/hearts.png',
+            Assets.hearts,
+            width: 145.0,
+            height: 145.0,
           ),
         ],
       ),
@@ -77,7 +83,7 @@ class ActionCompletedDialogContent extends StatelessWidget {
         const SizedBox(height: 16.0),
         Flexible(
           child: Text(
-            'Thank you for taking action!',
+            S.of(context).action_completed_dialog_title,
             style: Theme.of(context).textTheme.headlineMedium,
             textAlign: TextAlign.center,
             maxLines: 2,
@@ -86,7 +92,7 @@ class ActionCompletedDialogContent extends StatelessWidget {
         const SizedBox(height: 20.0),
         Flexible(
           child: Text(
-            'Discover more ways to make a difference in our community',
+            S.of(context).action_completed_dialog_label,
             style: Theme.of(context).textTheme.displayMedium,
             textAlign: TextAlign.center,
             maxLines: 2,
@@ -97,7 +103,7 @@ class ActionCompletedDialogContent extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 36.0),
           width: double.infinity,
           child: FilledButton(
-            child: const Text('Explore'),
+            child: Text(S.of(context).action_completed_dialog_explore_action),
             onPressed: viewModel.onNavigateToExplore,
           ),
         ),
