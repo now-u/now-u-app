@@ -8,8 +8,6 @@ import '../../../generated/l10n.dart';
 import '../../../theme/assets.dart';
 import 'action_completed_dialog_model.dart';
 
-const double HEARTS_ICON_SIZE = 145.0;
-
 class ActionCompletedDialog extends StackedView<ActionCompletedDialogModel> {
   final Function(DialogResponse) completer;
 
