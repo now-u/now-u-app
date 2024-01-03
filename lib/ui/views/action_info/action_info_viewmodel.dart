@@ -1,11 +1,9 @@
+import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/dialog_service.dart';
+import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/services/router_service.dart';
 import 'package:nowu/services/user_service.dart';
-
-import 'package:nowu/app/app.locator.dart';
-import 'package:nowu/services/navigation_service.dart';
-import 'package:nowu/ui/views/explore/explore_page_view.form.dart';
 import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -17,6 +15,7 @@ class ActionInfoViewModel extends FutureViewModel<Action> {
   final _dialogService = locator<DialogService>();
 
   final int actionId;
+
   ActionInfoViewModel(this.actionId);
 
   Future<Action> futureToRun() => _causesService.getAction(actionId);
