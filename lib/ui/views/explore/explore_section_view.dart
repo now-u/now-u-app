@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:nowu/assets/components/buttons/darkButton.dart';
 import 'package:nowu/assets/components/card.dart';
 import 'package:nowu/assets/components/explore_tiles.dart';
 import 'package:nowu/assets/constants.dart';
-import 'package:flutter/material.dart';
 import 'package:nowu/ui/views/explore/explore_page_view.dart';
 import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 
@@ -23,9 +23,7 @@ class ExploreSectionWidget extends StatelessWidget {
     required this.tileHeight,
   });
 
-  Widget _buildSectionHeader(
-    BuildContext context,
-  ) {
+  Widget _buildSectionHeader(BuildContext context,) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
       child: Column(
@@ -173,8 +171,8 @@ class ActionExploreSection extends StatelessWidget {
     return ExploreSectionWidget(
       tiles: this.tiles?.map(
             (tileData) =>
-                ExploreActionTile(tileData, onTap: () => tileOnClick(tileData)),
-          ),
+            ExploreActionTile(tileData, onTap: () => tileOnClick(tileData)),
+      ),
       tileHeight: 160,
       isLoading: isLoading,
       titleOnClick: titleOnClick,
@@ -206,10 +204,10 @@ class LearningResourceExploreSection extends StatelessWidget {
     return ExploreSectionWidget(
       tiles: this.tiles?.map(
             (tileData) => ExploreLearningResourceTile(
-              tileData,
-              onTap: () => tileOnClick(tileData),
-            ),
-          ),
+          tileData,
+          onTap: () => tileOnClick(tileData),
+        ),
+      ),
       tileHeight: 160,
       isLoading: isLoading,
       titleOnClick: titleOnClick,
@@ -240,8 +238,10 @@ class CampaignExploreSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExploreSectionWidget(
       tiles: this.tiles?.map(
-            (tileData) => ExploreCampaignTile(tileData,
-                onTap: () => tileOnClick(tileData)),
+            (tileData) => ExploreCampaignTile(
+              tileData,
+              onTap: () => tileOnClick(tileData),
+            ),
           ),
       tileHeight: 300,
       isLoading: isLoading,
@@ -273,8 +273,10 @@ class NewsArticleExploreSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExploreSectionWidget(
       tiles: this.tiles?.map(
-            (tileData) => ExploreNewsArticleTile(tileData,
-                onTap: () => tileOnClick(tileData)),
+            (tileData) => ExploreNewsArticleTile(
+              tileData,
+              onTap: () => tileOnClick(tileData),
+            ),
           ),
       tileHeight: 330,
       isLoading: isLoading,
