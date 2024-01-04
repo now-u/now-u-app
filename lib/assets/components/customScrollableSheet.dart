@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nowu/assets/ClipShadowPath.dart';
-import 'package:nowu/assets/StyleFrom.dart';
 
 class ScrollableSheetPage extends StatelessWidget {
   final Widget header;
@@ -65,10 +64,7 @@ class ScrollableSheetPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: scaffoldBackgroundColor ??
-          colorFrom(
-            Theme.of(context).primaryColor,
-            opacity: 0.05,
-          ),
+          Theme.of(context).primaryColor.withOpacity(0.5),
       body: Stack(
         children: [
           // Header

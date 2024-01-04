@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nowu/assets/StyleFrom.dart';
 
 final double defaultBorderRadius = 8.0;
 final double defaultPadding = 14.0;
@@ -42,10 +41,7 @@ class CustomIconButton extends StatelessWidget {
       height: buttonStyleStyles[size]['height'],
       elevation: 0,
       color: this.backgroundColor ?? Theme.of(context).primaryColor,
-      disabledColor: colorFrom(
-        Theme.of(context).primaryColor,
-        opacity: 0.5,
-      ),
+      disabledColor: Theme.of(context).primaryColor.withOpacity(0.5),
       onPressed: onPressed,
       shape: isCircularButton
           ? const CircleBorder()
@@ -94,10 +90,7 @@ class CircularIconButton extends StatelessWidget {
         height: height,
         elevation: 0,
         color: this.backgroundColor ?? Theme.of(context).primaryColor,
-        disabledColor: colorFrom(
-          Theme.of(context).primaryColor,
-          opacity: 0.5,
-        ),
+        disabledColor: Theme.of(context).primaryColor.withOpacity(0.5),
         onPressed: onPressed,
         shape: const CircleBorder(),
         padding: const EdgeInsets.all(0),

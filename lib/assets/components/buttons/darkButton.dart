@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:nowu/assets/StyleFrom.dart';
 import 'package:nowu/assets/components/customTile.dart';
-import 'package:flutter/material.dart';
 import 'package:nowu/assets/constants.dart';
 
 final double defaultBorderRadius = 8.0;
@@ -47,8 +47,7 @@ class DarkButton extends StatelessWidget {
   final double? fontSize;
   final DarkButtonStyle? style;
 
-  DarkButton(
-    this.text, {
+  DarkButton(this.text, {
     this.size = DarkButtonSize.Medium,
     required this.onPressed,
     this.rightIcon,
@@ -103,8 +102,7 @@ class SecondaryButton extends StatelessWidget {
   final DarkButtonSize size;
   final double? fontSize;
 
-  SecondaryButton(
-    this.text, {
+  SecondaryButton(this.text, {
     required this.onPressed,
     required this.rightIcon,
     required this.size,
@@ -155,8 +153,7 @@ class PrimaryButton extends StatelessWidget {
   final DarkButtonSize size;
   final double? fontSize;
 
-  PrimaryButton(
-    this.text, {
+  PrimaryButton(this.text, {
     required this.onPressed,
     required this.rightIcon,
     required this.size,
@@ -169,10 +166,7 @@ class PrimaryButton extends StatelessWidget {
       height: darkButtonStyleStyles[size]['height'],
       elevation: 0,
       color: CustomColors.brandColor,
-      disabledColor: colorFrom(
-        Theme.of(context).primaryColor,
-        opacity: 0.5,
-      ),
+      disabledColor: Theme.of(context).primaryColor.withOpacity(0.5),
       onPressed: onPressed,
       shape: RoundedRectangleBorder(
         borderRadius:
@@ -185,8 +179,8 @@ class PrimaryButton extends StatelessWidget {
           rightIcon == null
               ? Container()
               : Container(
-                  width: 5,
-                ),
+            width: 5,
+          ),
           Padding(
             padding: EdgeInsets.symmetric(
               vertical: darkButtonStyleStyles[size]['vPadding'],
@@ -204,10 +198,10 @@ class PrimaryButton extends StatelessWidget {
           rightIcon == null
               ? Container()
               : Icon(
-                  rightIcon,
-                  size: 25,
-                  color: Colors.white,
-                ),
+            rightIcon,
+            size: 25,
+            color: Colors.white,
+          ),
         ],
       ),
     );
@@ -220,8 +214,7 @@ class OutlineButton extends StatelessWidget {
   final DarkButtonSize size;
   final double? fontSize;
 
-  OutlineButton(
-    this.text, {
+  OutlineButton(this.text, {
     required this.onPressed,
     required this.size,
     required this.fontSize,
@@ -236,7 +229,7 @@ class OutlineButton extends StatelessWidget {
       onPressed: onPressed,
       shape: RoundedRectangleBorder(
         borderRadius:
-            BorderRadius.circular(darkButtonStyleStyles[size]['borderRadius']),
+        BorderRadius.circular(darkButtonStyleStyles[size]['borderRadius']),
         side: const BorderSide(
           color: Colors.white,
           width: 1,

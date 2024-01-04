@@ -22,17 +22,3 @@ TextStyle textStyleFrom(
     height: height ?? style!.height,
   );
 }
-
-// TODO Remove
-@deprecated
-Color colorFrom(
-  Color color, {
-  double? opacity,
-}) {
-  return Color.fromRGBO(
-    color.red,
-    color.green,
-    color.blue,
-    opacity ?? color.opacity,
-  );
-}
