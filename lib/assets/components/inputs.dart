@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nowu/assets/StyleFrom.dart';
 
 final double theWidth = 60;
 final double theHeight = 30;
@@ -239,11 +238,11 @@ class CustomCheckboxFormField extends FormField<bool> {
                   state.hasError
                       ? Text(
                           state.errorText!,
-                          style: textStyleFrom(
-                            Theme.of(context).textTheme.bodyLarge,
-                            color: Theme.of(context).colorScheme.error,
-                            fontSize: 12,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: Theme.of(context).colorScheme.error,
+                                    fontSize: 12,
+                                  ),
                         )
                       : Container(),
                 ],

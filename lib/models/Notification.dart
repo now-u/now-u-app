@@ -1,8 +1,5 @@
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter/material.dart';
-
-import 'package:nowu/assets/StyleFrom.dart';
-
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/navigation_service.dart';
 
@@ -54,14 +51,12 @@ class InternalNotification {
         _navigationService!.launchLink(href!);
       },
       styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
-        p: textStyleFrom(
-          Theme.of(context).textTheme.bodyLarge,
-          color: Colors.white,
-        ),
-        listBullet: textStyleFrom(
-          Theme.of(context).textTheme.bodyLarge,
-          color: Colors.white,
-        ),
+        p: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              color: Colors.white,
+            ),
+        listBullet: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              color: Colors.white,
+            ),
         textAlign: WrapAlignment.center,
         textScaleFactor: 1.2,
       ),

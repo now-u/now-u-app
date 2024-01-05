@@ -1,10 +1,9 @@
-import 'package:nowu/assets/StyleFrom.dart';
+import 'package:flutter/material.dart' hide Action;
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nowu/assets/components/customAppBar.dart';
 import 'package:nowu/assets/components/textButton.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:nowu/models/Action.dart';
-import 'package:flutter/material.dart' hide Action;
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nowu/themes.dart';
 import 'package:stacked/stacked.dart';
 
@@ -18,6 +17,7 @@ class ActionInfoView extends StackedView<ActionInfoViewModel> {
   // final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>(); (also below)
 
   final int actionId;
+
   ActionInfoView({Key? key, required this.actionId});
 
   @override
@@ -113,12 +113,15 @@ class ActionInfoView extends StackedView<ActionInfoViewModel> {
                                 child: Text(
                                   'See cause',
                                   // TODO Fix
-                                  style: textStyleFrom(
-                                    Theme.of(context).textTheme.displayMedium,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    color: Theme.of(context).primaryColorDark,
-                                  ),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displayMedium
+                                      ?.copyWith(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color:
+                                            Theme.of(context).primaryColorDark,
+                                      ),
                                 ),
                               ),
                             ),

@@ -1,13 +1,11 @@
-import 'package:nowu/assets/StyleFrom.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 import 'package:nowu/assets/components/buttons/darkButton.dart';
 import 'package:nowu/assets/components/inputs.dart';
 import 'package:nowu/assets/constants.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
 import 'package:nowu/themes.dart';
-import 'package:stacked/stacked.dart';
-
 import 'package:nowu/ui/views/profile_setup/profile_setup_viewmodel.dart';
+import 'package:stacked/stacked.dart';
 
 class ProfileSetupView extends StackedView<ProfileSetupViewModel> {
   Widget _nameInput(ProfileSetupViewModel model) {
@@ -31,18 +29,16 @@ class ProfileSetupView extends StackedView<ProfileSetupViewModel> {
     return CustomCheckboxFormField(
       title: RichText(
         text: TextSpan(
-          style: textStyleFrom(
-            Theme.of(context).textTheme.bodyLarge,
-            color: Colors.white,
-          ),
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                color: Colors.white,
+              ),
           children: [
             const TextSpan(text: 'I agree to the user '),
             TextSpan(
               text: 'Terms & Conditions',
-              style: textStyleFrom(
-                Theme.of(context).textTheme.bodyLarge,
-                color: CustomColors.brandColor,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: CustomColors.brandColor,
+                  ),
               recognizer: TapGestureRecognizer()..onTap = model.openTsAndCs,
             ),
           ],
@@ -59,10 +55,9 @@ class ProfileSetupView extends StackedView<ProfileSetupViewModel> {
     return CustomCheckboxFormField(
       title: RichText(
         text: TextSpan(
-          style: textStyleFrom(
-            Theme.of(context).textTheme.bodyLarge,
-            color: Colors.white,
-          ),
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                color: Colors.white,
+              ),
           children: [
             const TextSpan(
               text: 'I am happy to receive the now-u newsletter via email',
@@ -114,11 +109,11 @@ class ProfileSetupView extends StackedView<ProfileSetupViewModel> {
                     padding: const EdgeInsets.only(top: 30, bottom: 10),
                     child: Text(
                       'Account Details',
-                      style: textStyleFrom(
-                        Theme.of(context).textTheme.headlineSmall,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style:
+                          Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
                     ),
                   ),
                 ],
@@ -131,10 +126,10 @@ class ProfileSetupView extends StackedView<ProfileSetupViewModel> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'What should we call you?',
-                      style: textStyleFrom(
-                        Theme.of(context).textTheme.displayMedium,
-                        color: Colors.white,
-                      ),
+                      style:
+                          Theme.of(context).textTheme.displayMedium?.copyWith(
+                                color: Colors.white,
+                              ),
                       textAlign: TextAlign.left,
                     ),
                   ),
@@ -150,17 +145,17 @@ class ProfileSetupView extends StackedView<ProfileSetupViewModel> {
                       children: [
                         TextSpan(
                           text: 'View our privacy policy ',
-                          style: textStyleFrom(
-                            Theme.of(context).textTheme.bodyLarge,
-                            color: Colors.white,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: Colors.white,
+                                  ),
                         ),
                         TextSpan(
                           text: 'here',
-                          style: textStyleFrom(
-                            Theme.of(context).textTheme.bodyLarge,
-                            color: CustomColors.brandColor,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: CustomColors.brandColor,
+                                  ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               model.launchTandCs();

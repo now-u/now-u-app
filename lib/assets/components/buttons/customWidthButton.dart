@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nowu/assets/StyleFrom.dart';
 
 final double defaultBorderRadius = 8.0;
 final double defaultPadding = 14.0;
@@ -83,11 +82,10 @@ class CustomWidthButton extends StatelessWidget {
           ),
           child: Text(
             text,
-            style: textStyleFrom(
-              Theme.of(context).textTheme.labelLarge,
-              color: textColor ?? Colors.white,
-              fontSize: fontSize ?? buttonStyleStyles[size]['fontSize'],
-            ),
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  color: textColor ?? Colors.white,
+                  fontSize: fontSize ?? buttonStyleStyles[size]['fontSize'],
+                ),
           ),
         ),
       ),

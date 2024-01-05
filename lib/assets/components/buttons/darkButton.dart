@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nowu/assets/StyleFrom.dart';
 import 'package:nowu/assets/components/customTile.dart';
 import 'package:nowu/assets/constants.dart';
 
@@ -47,7 +46,8 @@ class DarkButton extends StatelessWidget {
   final double? fontSize;
   final DarkButtonStyle? style;
 
-  DarkButton(this.text, {
+  DarkButton(
+    this.text, {
     this.size = DarkButtonSize.Medium,
     required this.onPressed,
     this.rightIcon,
@@ -102,7 +102,8 @@ class SecondaryButton extends StatelessWidget {
   final DarkButtonSize size;
   final double? fontSize;
 
-  SecondaryButton(this.text, {
+  SecondaryButton(
+    this.text, {
     required this.onPressed,
     required this.rightIcon,
     required this.size,
@@ -153,7 +154,8 @@ class PrimaryButton extends StatelessWidget {
   final DarkButtonSize size;
   final double? fontSize;
 
-  PrimaryButton(this.text, {
+  PrimaryButton(
+    this.text, {
     required this.onPressed,
     required this.rightIcon,
     required this.size,
@@ -179,8 +181,8 @@ class PrimaryButton extends StatelessWidget {
           rightIcon == null
               ? Container()
               : Container(
-            width: 5,
-          ),
+                  width: 5,
+                ),
           Padding(
             padding: EdgeInsets.symmetric(
               vertical: darkButtonStyleStyles[size]['vPadding'],
@@ -188,20 +190,20 @@ class PrimaryButton extends StatelessWidget {
             ),
             child: Text(
               text!,
-              style: textStyleFrom(
-                Theme.of(context).textTheme.labelLarge,
-                color: Colors.white,
-                fontSize: fontSize ?? darkButtonStyleStyles[size]['fontSize'],
-              ),
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    color: Colors.white,
+                    fontSize:
+                        fontSize ?? darkButtonStyleStyles[size]['fontSize'],
+                  ),
             ),
           ),
           rightIcon == null
               ? Container()
               : Icon(
-            rightIcon,
-            size: 25,
-            color: Colors.white,
-          ),
+                  rightIcon,
+                  size: 25,
+                  color: Colors.white,
+                ),
         ],
       ),
     );
@@ -214,7 +216,8 @@ class OutlineButton extends StatelessWidget {
   final DarkButtonSize size;
   final double? fontSize;
 
-  OutlineButton(this.text, {
+  OutlineButton(
+    this.text, {
     required this.onPressed,
     required this.size,
     required this.fontSize,
@@ -229,7 +232,7 @@ class OutlineButton extends StatelessWidget {
       onPressed: onPressed,
       shape: RoundedRectangleBorder(
         borderRadius:
-        BorderRadius.circular(darkButtonStyleStyles[size]['borderRadius']),
+            BorderRadius.circular(darkButtonStyleStyles[size]['borderRadius']),
         side: const BorderSide(
           color: Colors.white,
           width: 1,
@@ -247,11 +250,11 @@ class OutlineButton extends StatelessWidget {
             ),
             child: Text(
               text!,
-              style: textStyleFrom(
-                Theme.of(context).textTheme.labelLarge,
-                color: Colors.white,
-                fontSize: fontSize ?? darkButtonStyleStyles[size]['fontSize'],
-              ),
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    color: Colors.white,
+                    fontSize:
+                        fontSize ?? darkButtonStyleStyles[size]['fontSize'],
+                  ),
             ),
           ),
         ],
