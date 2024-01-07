@@ -144,6 +144,7 @@ class _ExploreTabsState extends State<ExploreTabs>
         backgroundColor: Theme.of(context).colorScheme.background,
         elevation: 1,
         shadowColor: CustomColors.greyLight1,
+        automaticallyImplyLeading: false,
         flexibleSpace: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: horizontalPadding,
