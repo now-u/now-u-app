@@ -62,7 +62,7 @@ class NavigationService {
   }
 
   bool canGoBack() {
-    return navigatorKey.currentState!.canPop();
+    return navigatorKey.currentState?.canPop() ?? false;
   }
 
   bool isInternalLink(String link) {
