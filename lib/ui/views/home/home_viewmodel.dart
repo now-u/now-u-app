@@ -28,12 +28,12 @@ class HomeViewModel extends BaseViewModel {
   List<ActionExploreTileData>? _myActions;
 
   List<ActionExploreTileData>? get myActions => _myActions;
-  List<CampaignExploreTileData>? _myCampaigns;
-
-  List<CampaignExploreTileData>? get myCampaigns => _myCampaigns;
-  List<CampaignExploreTileData>? _suggestedCampaigns;
-
-  List<CampaignExploreTileData>? get suggestedCampaigns => _suggestedCampaigns;
+  List<CampaignExploreTileData>? _recommendedCampaigns;
+  List<CampaignExploreTileData>? get recommendedCampaigns =>
+      _recommendedCampaigns;
+  List<CampaignExploreTileData>? _ofTheMonthCampaigns;
+  List<CampaignExploreTileData>? get ofTheMonthCampaigns =>
+      _ofTheMonthCampaigns;
   List<NewsArticleExploreTileData>? _inTheNews;
 
   List<NewsArticleExploreTileData>? get inTheNews => _inTheNews;
@@ -56,10 +56,11 @@ class HomeViewModel extends BaseViewModel {
           .searchCampaigns(
             filter: CampaignSearchFilter(
               causeIds: causesFilter,
+              recommended: true,
             ),
           )
           .then(
-            (value) => _myCampaigns = value
+            (value) => _recommendedCampaigns = value
                 .map(
                   (campaign) => CampaignExploreTileData(
                     campaign,
@@ -71,12 +72,12 @@ class HomeViewModel extends BaseViewModel {
       _searchService
           .searchCampaigns(
             filter: CampaignSearchFilter(
-              recommended: true,
+              ofTheMonth: true,
               causeIds: causesFilter,
             ),
           )
           .then(
-            (value) => _suggestedCampaigns = value
+            (value) => _ofTheMonthCampaigns = value
                 .map(
                   (campaign) => CampaignExploreTileData(
                     campaign,

@@ -42,7 +42,7 @@ List<MenuItemData> getMenuItems(MoreViewModel viewModel) => [
         action: LinkMenuItemAction(ABOUT_US_URL),
       ),
       const ActionMenuItem(
-        title: 'Our partners',
+        title: 'Collaborations',
         icon: CustomIcons.ic_partners,
         action: RouteMenuItemAction(PartnersViewRoute()),
       ),

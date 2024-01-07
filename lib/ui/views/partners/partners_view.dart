@@ -17,7 +17,7 @@ class PartnersView extends StackedView<PartnersViewModel> {
     // TODO Handle error -> viewModel.hasError -> do something
     return Scaffold(
       appBar: customAppBar(
-        text: 'Partners',
+        text: 'Collaborations',
         context: context,
         backButtonText: 'Menu',
       ),
