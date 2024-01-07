@@ -57,6 +57,7 @@ class HomeViewModel extends BaseViewModel {
             filter: CampaignSearchFilter(
               causeIds: causesFilter,
               recommended: true,
+              completed: false,
             ),
           )
           .then(
@@ -74,6 +75,7 @@ class HomeViewModel extends BaseViewModel {
             filter: CampaignSearchFilter(
               ofTheMonth: true,
               causeIds: causesFilter,
+              completed: false,
             ),
           )
           .then(
@@ -87,7 +89,10 @@ class HomeViewModel extends BaseViewModel {
                 .toList(),
           ),
       _searchService
-          .searchActions(filter: ActionSearchFilter(causeIds: causesFilter))
+          .searchActions(
+            filter:
+                ActionSearchFilter(causeIds: causesFilter, completed: false),
+          )
           .then(
             (value) => _myActions = value
                 .map(
