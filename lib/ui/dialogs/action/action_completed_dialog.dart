@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nowu/assets/constants.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
-import 'package:nowu/theme/spacings.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -39,7 +39,7 @@ class ActionCompletedDialog extends StackedView<ActionCompletedDialogModel> {
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: Spacing.medium_150,
+                horizontal: CustomPaddingSize.normal,
               ),
               child: ActionCompletedDialogContent(
                 viewModel: viewModel,
@@ -71,7 +71,7 @@ class ActionCompletedDialogContent extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const SizedBox(height: Spacing.medium_125),
+        const SizedBox(height: CustomPaddingSize.normal),
         Align(
           alignment: Alignment.topRight,
           child: IconButton(
@@ -81,7 +81,7 @@ class ActionCompletedDialogContent extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: Spacing.medium_125),
+        const SizedBox(height: CustomPaddingSize.normal),
         Flexible(
           child: Text(
             S.of(context).action_completed_dialog_title,
@@ -90,7 +90,7 @@ class ActionCompletedDialogContent extends StatelessWidget {
             maxLines: 2,
           ),
         ),
-        const SizedBox(height: Spacing.medium_125),
+        const SizedBox(height: CustomPaddingSize.normal),
         Flexible(
           child: Text(
             S.of(context).action_completed_dialog_label,
@@ -99,16 +99,17 @@ class ActionCompletedDialogContent extends StatelessWidget {
             maxLines: 2,
           ),
         ),
-        const SizedBox(height: Spacing.medium_125),
+        const SizedBox(height: CustomPaddingSize.normal),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: Spacing.large_100),
+          padding:
+              const EdgeInsets.symmetric(horizontal: CustomPaddingSize.large),
           width: double.infinity,
           child: FilledButton(
             child: Text(S.of(context).action_completed_dialog_explore_action),
             onPressed: viewModel.onNavigateToExplore,
           ),
         ),
-        const SizedBox(height: Spacing.medium_125),
+        const SizedBox(height: CustomPaddingSize.normal),
       ],
     );
   }
