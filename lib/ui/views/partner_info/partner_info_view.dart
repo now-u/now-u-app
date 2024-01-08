@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:nowu/assets/StyleFrom.dart';
 import 'package:nowu/assets/components/customTile.dart';
 import 'package:nowu/assets/components/custom_network_image.dart';
 import 'package:nowu/assets/components/header.dart';
@@ -204,11 +203,10 @@ class ExtraLinkButton extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: Text(
             title,
-            style: textStyleFrom(
-              Theme.of(context).textTheme.bodyLarge,
-              color: CustomColors.brandColor,
-              fontWeight: FontWeight.w800,
-            ),
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: CustomColors.brandColor,
+                  fontWeight: FontWeight.w800,
+                ),
             textAlign: TextAlign.center,
           ),
         ),

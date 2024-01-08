@@ -1,15 +1,13 @@
 import 'package:causeApiClient/causeApiClient.dart';
+import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/models/Notification.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/dialog_service.dart';
+import 'package:nowu/services/internal_notification_service.dart';
+import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/services/router_service.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:nowu/services/user_service.dart';
-
-import 'package:nowu/app/app.locator.dart';
-import 'package:nowu/services/internal_notification_service.dart';
-import 'package:nowu/services/navigation_service.dart';
-
-import 'package:nowu/models/Notification.dart';
 import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -23,16 +21,21 @@ class HomeViewModel extends BaseViewModel {
   final _searchService = locator<SearchService>();
 
   late List<Cause> _causes;
+
   List<Cause> get causes => _causes;
 
   // TODO Multiple futures viewModel
   List<ActionExploreTileData>? _myActions;
+
   List<ActionExploreTileData>? get myActions => _myActions;
   List<CampaignExploreTileData>? _myCampaigns;
+
   List<CampaignExploreTileData>? get myCampaigns => _myCampaigns;
   List<CampaignExploreTileData>? _suggestedCampaigns;
+
   List<CampaignExploreTileData>? get suggestedCampaigns => _suggestedCampaigns;
   List<NewsArticleExploreTileData>? _inTheNews;
+
   List<NewsArticleExploreTileData>? get inTheNews => _inTheNews;
 
   UserProfile? get currentUser => _userService.currentUser;
@@ -41,15 +44,21 @@ class HomeViewModel extends BaseViewModel {
     fetchNotifications();
     _causes = _causesService.causes;
 
-	// TODO Filter by selected causes 
-	List<int>? selectedCausesId = _causesService.userInfo?.selectedCausesIds.toList();
-	List<int>? causesFilter = selectedCausesId?.isEmpty == false ? selectedCausesId : null;
+    // TODO Filter by selected causes
+    List<int>? selectedCausesId =
+        _causesService.userInfo?.selectedCausesIds.toList();
+    List<int>? causesFilter =
+        selectedCausesId?.isEmpty == false ? selectedCausesId : null;
 
     // TODO Multiple futures
     await Future.wait([
-      _searchService.searchCampaigns(filter: CampaignSearchFilter(
-		causeIds: causesFilter,
-	  )).then(
+      _searchService
+          .searchCampaigns(
+            filter: CampaignSearchFilter(
+              causeIds: causesFilter,
+            ),
+          )
+          .then(
             (value) => _myCampaigns = value
                 .map(
                   (campaign) => CampaignExploreTileData(
@@ -60,7 +69,12 @@ class HomeViewModel extends BaseViewModel {
                 .toList(),
           ),
       _searchService
-          .searchCampaigns(filter: CampaignSearchFilter(recommended: true, causeIds: causesFilter))
+          .searchCampaigns(
+            filter: CampaignSearchFilter(
+              recommended: true,
+              causeIds: causesFilter,
+            ),
+          )
           .then(
             (value) => _suggestedCampaigns = value
                 .map(
@@ -71,7 +85,9 @@ class HomeViewModel extends BaseViewModel {
                 )
                 .toList(),
           ),
-      _searchService.searchActions(filter: ActionSearchFilter(causeIds: causesFilter)).then(
+      _searchService
+          .searchActions(filter: ActionSearchFilter(causeIds: causesFilter))
+          .then(
             (value) => _myActions = value
                 .map(
                   (action) => ActionExploreTileData(
@@ -81,7 +97,11 @@ class HomeViewModel extends BaseViewModel {
                 )
                 .toList(),
           ),
-      _searchService.searchNewsArticles(filter: NewsArticleSearchFilter(causeIds: causesFilter)).then(
+      _searchService
+          .searchNewsArticles(
+            filter: NewsArticleSearchFilter(causeIds: causesFilter),
+          )
+          .then(
             (value) => _inTheNews = value
                 .map((action) => NewsArticleExploreTileData(action))
                 .toList(),

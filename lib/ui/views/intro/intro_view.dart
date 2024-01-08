@@ -1,12 +1,9 @@
-import 'package:nowu/assets/StyleFrom.dart';
 import 'package:flutter/material.dart';
-import 'package:nowu/themes.dart';
-
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:rect_getter/rect_getter.dart';
-
 import 'package:nowu/assets/components/buttons/darkButton.dart';
 import 'package:nowu/assets/components/textButton.dart';
+import 'package:nowu/themes.dart';
+import 'package:rect_getter/rect_getter.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stacked/stacked.dart';
 
 import 'intro_viewmodel.dart';
@@ -131,10 +128,7 @@ class IntroViewPages extends StatelessWidget {
                   controller: viewModel.controller,
                   count: viewModel.pages.length,
                   effect: ExpandingDotsEffect(
-                    dotColor: colorFrom(
-                      Colors.white,
-                      opacity: 0.3,
-                    ),
+                    dotColor: Colors.white.withOpacity(0.3),
                     activeDotColor: Colors.orange,
                     spacing: 8.0,
                     dotHeight: 12,

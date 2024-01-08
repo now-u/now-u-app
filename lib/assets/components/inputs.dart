@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nowu/assets/StyleFrom.dart';
 
 final double theWidth = 60;
 final double theHeight = 30;
@@ -196,20 +195,6 @@ class _CustomSwitchState extends State<CustomSwitch>
       },
     );
   }
-
-  _getText(bool active) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 4.0, right: 4.0),
-      child: Text(
-        active ? widget.activeText : widget.inactiveText,
-        style: TextStyle(
-          color: active ? widget.activeTextColor : widget.inactiveTextColor,
-          fontWeight: FontWeight.w900,
-          fontSize: 16.0,
-        ),
-      ),
-    );
-  }
 }
 
 class CustomCheckboxFormField extends FormField<bool> {
@@ -253,11 +238,11 @@ class CustomCheckboxFormField extends FormField<bool> {
                   state.hasError
                       ? Text(
                           state.errorText!,
-                          style: textStyleFrom(
-                            Theme.of(context).textTheme.bodyLarge,
-                            color: Theme.of(context).colorScheme.error,
-                            fontSize: 12,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    color: Theme.of(context).colorScheme.error,
+                                    fontSize: 12,
+                                  ),
                         )
                       : Container(),
                 ],

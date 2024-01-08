@@ -1,6 +1,5 @@
-import 'package:nowu/assets/StyleFrom.dart';
-import 'package:nowu/assets/components/customTile.dart';
 import 'package:flutter/material.dart';
+import 'package:nowu/assets/components/customTile.dart';
 import 'package:nowu/assets/constants.dart';
 
 final double defaultBorderRadius = 8.0;
@@ -169,10 +168,7 @@ class PrimaryButton extends StatelessWidget {
       height: darkButtonStyleStyles[size]['height'],
       elevation: 0,
       color: CustomColors.brandColor,
-      disabledColor: colorFrom(
-        Theme.of(context).primaryColor,
-        opacity: 0.5,
-      ),
+      disabledColor: Theme.of(context).primaryColor.withOpacity(0.5),
       onPressed: onPressed,
       shape: RoundedRectangleBorder(
         borderRadius:
@@ -194,11 +190,11 @@ class PrimaryButton extends StatelessWidget {
             ),
             child: Text(
               text!,
-              style: textStyleFrom(
-                Theme.of(context).textTheme.labelLarge,
-                color: Colors.white,
-                fontSize: fontSize ?? darkButtonStyleStyles[size]['fontSize'],
-              ),
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    color: Colors.white,
+                    fontSize:
+                        fontSize ?? darkButtonStyleStyles[size]['fontSize'],
+                  ),
             ),
           ),
           rightIcon == null
@@ -254,11 +250,11 @@ class OutlineButton extends StatelessWidget {
             ),
             child: Text(
               text!,
-              style: textStyleFrom(
-                Theme.of(context).textTheme.labelLarge,
-                color: Colors.white,
-                fontSize: fontSize ?? darkButtonStyleStyles[size]['fontSize'],
-              ),
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    color: Colors.white,
+                    fontSize:
+                        fontSize ?? darkButtonStyleStyles[size]['fontSize'],
+                  ),
             ),
           ),
         ],

@@ -1,6 +1,4 @@
-import 'package:nowu/assets/StyleFrom.dart';
 import 'package:flutter/material.dart';
-
 import 'package:nowu/assets/components/textButton.dart';
 
 AppBar customAppBar({
@@ -30,9 +28,7 @@ AppBar customAppBar({
                   padding: const EdgeInsets.only(bottom: 5),
                   child: Text(
                     text,
-                    style: textStyleFrom(
-                      Theme.of(context).textTheme.headlineMedium,
-                    ),
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
                 ),
               ],

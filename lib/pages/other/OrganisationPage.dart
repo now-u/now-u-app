@@ -1,18 +1,14 @@
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/assets/components/customTile.dart';
+import 'package:nowu/assets/components/custom_network_image.dart';
 import 'package:nowu/assets/components/header.dart';
 import 'package:nowu/assets/components/sectionTitle.dart';
 import 'package:nowu/assets/constants.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import 'package:nowu/assets/components/customTile.dart';
-import 'package:nowu/assets/components/custom_network_image.dart';
-import 'package:nowu/assets/StyleFrom.dart';
-
 import 'package:nowu/models/Organisation.dart';
-
-import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/navigation_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final double SECTION_TITLE_BOTTOM_PADDING = 8;
 final double BETWEEN_SECTION_PADDING = 12;
@@ -148,31 +144,31 @@ class OraganisationInfoPage extends StatelessWidget {
 
 List<Widget> getSocialMediaChildren(Organisation org) {
   List<Widget> socialButtons = [];
-  if (org.instagramLink != null) {
+  if (org.instagramLink case var instagramLink?) {
     socialButtons
-        .add(SocialMediaButton(org.instagramLink, FontAwesomeIcons.instagram));
+        .add(SocialMediaButton(instagramLink, FontAwesomeIcons.instagram));
   }
-  if (org.facebookLink != null) {
+  if (org.facebookLink case var facebookLink?) {
     socialButtons
-        .add(SocialMediaButton(org.facebookLink, FontAwesomeIcons.facebookF));
+        .add(SocialMediaButton(facebookLink, FontAwesomeIcons.facebookF));
   }
-  if (org.twitterLink != null) {
+  if (org.twitterLink case var twitterLink?) {
+    socialButtons.add(SocialMediaButton(twitterLink, FontAwesomeIcons.twitter));
+  }
+  if (org.emailAddress case var emailAddress?) {
     socialButtons
-        .add(SocialMediaButton(org.twitterLink, FontAwesomeIcons.twitter));
+        .add(SocialMediaButton(emailAddress, FontAwesomeIcons.envelope));
   }
-  if (org.emailAddress != null) {
-    socialButtons
-        .add(SocialMediaButton(org.emailAddress, FontAwesomeIcons.envelope));
-  }
-  if (org.websiteLink != null) {
-    socialButtons.add(SocialMediaButton(org.websiteLink, Icons.language));
+  if (org.websiteLink case var websiteLink?) {
+    socialButtons.add(SocialMediaButton(websiteLink, Icons.language));
   }
   return socialButtons;
 }
 
 class SocialMediaButton extends StatelessWidget {
-  final String? link;
+  final String link;
   final IconData icon;
+
   SocialMediaButton(this.link, this.icon);
 
   @override
@@ -185,7 +181,7 @@ class SocialMediaButton extends StatelessWidget {
           size: 35,
         ),
         onPressed: () {
-          launch(link!);
+          launchUrl(Uri.parse(link));
         },
       ),
     );
@@ -211,11 +207,10 @@ class ExtraLinkButton extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: Text(
             text!,
-            style: textStyleFrom(
-              Theme.of(context).textTheme.bodyLarge,
-              color: CustomColors.brandColor,
-              fontWeight: FontWeight.w800,
-            ),
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: CustomColors.brandColor,
+                  fontWeight: FontWeight.w800,
+                ),
             textAlign: TextAlign.center,
           ),
         ),

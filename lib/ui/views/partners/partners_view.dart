@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nowu/assets/StyleFrom.dart';
-
 import 'package:nowu/assets/components/customAppBar.dart';
 import 'package:nowu/assets/components/custom_network_image.dart';
 import 'package:nowu/models/Organisation.dart';
-
 import 'package:stacked/stacked.dart';
 
 import 'partners_viewmodel.dart';
@@ -97,10 +94,9 @@ class _OrganisationTile extends StatelessWidget {
               ),
               Text(
                 organisation.name,
-                style: textStyleFrom(
-                  Theme.of(context).textTheme.bodyLarge,
-                  fontSize: 12,
-                ),
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontSize: 12,
+                    ),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,

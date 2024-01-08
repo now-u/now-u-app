@@ -1,16 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:nowu/assets/components/buttons/customWidthButton.dart';
+import 'package:nowu/assets/components/customScrollableSheet.dart';
 import 'package:nowu/assets/components/customTile.dart';
 import 'package:nowu/assets/components/progressTile.dart';
-import 'package:flutter/material.dart';
-
-import 'package:nowu/assets/components/customScrollableSheet.dart';
 import 'package:nowu/assets/components/textButton.dart';
-import 'package:nowu/assets/StyleFrom.dart';
-
 import 'package:nowu/models/Notification.dart';
 import 'package:nowu/ui/common/cause_tile.dart';
 import 'package:nowu/ui/views/explore/explore_section_view.dart';
-
 import 'package:stacked/stacked.dart';
 
 import 'home_viewmodel.dart';
@@ -30,25 +26,23 @@ class HomeView extends StackedView<HomeViewModel> {
   }
 
   @override
-  Widget builder(
-    BuildContext context,
-    HomeViewModel viewModel,
-    Widget? childl,
-  ) {
+  Widget builder(BuildContext context,
+      HomeViewModel viewModel,
+      Widget? childl,) {
     final latestNotification = viewModel.notifications!.elementAtOrNull(0);
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor.withOpacity(0.05),
       body: ScrollableSheetPage(
         header: latestNotification != null
             ? HeaderWithNotifications(
-                name: viewModel.currentUser?.name,
-                notification: viewModel.notifications![0],
-                // TODO Fix internal notifiaction type
-                dismissNotification: () =>
-                    viewModel.dismissNotification(latestNotification.id!),
-                openNotification: () =>
-                    viewModel.openNotification(latestNotification),
-              )
+          name: viewModel.currentUser?.name,
+          notification: viewModel.notifications![0],
+          // TODO Fix internal notifiaction type
+          dismissNotification: () =>
+              viewModel.dismissNotification(latestNotification.id!),
+          openNotification: () =>
+              viewModel.openNotification(latestNotification),
+        )
             : HeaderStyle1(name: viewModel.currentUser?.name),
         children: [
           Column(
@@ -130,25 +124,25 @@ class HomeView extends StackedView<HomeViewModel> {
                 Container(
                   child: viewModel.causes != []
                       ? GridView.builder(
-                          shrinkWrap: true,
-                          padding: const EdgeInsets.all(20),
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 20,
-                            crossAxisSpacing: 30,
-                          ),
-                          itemCount: viewModel.causes.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return CauseTile(
-                              gestureFunction: () => null,
-                              cause: viewModel.causes[index],
-                              getInfoFunction: () => viewModel
-                                  .getCausePopup(viewModel.causes[index]),
-                            );
-                          },
-                        )
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.all(20),
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                    const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 20,
+                      crossAxisSpacing: 30,
+                    ),
+                    itemCount: viewModel.causes.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return CauseTile(
+                        gestureFunction: () => null,
+                        cause: viewModel.causes[index],
+                        getInfoFunction: () => viewModel
+                            .getCausePopup(viewModel.causes[index]),
+                      );
+                    },
+                  )
                       : const CircularProgressIndicator(),
                 ),
             ],
@@ -192,11 +186,10 @@ class HeaderStyle1 extends StatelessWidget {
             ),
             child: Text(
               name != null ? 'Welcome \n$name!' : 'Welcome!',
-              style: textStyleFrom(
-                Theme.of(context).textTheme.headlineMedium,
-                color: Colors.white,
-                height: 0.95,
-              ),
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    color: Colors.white,
+                    height: 0.95,
+                  ),
             ),
           ),
           Positioned(
@@ -249,11 +242,10 @@ class HeaderWithNotifications extends StatelessWidget {
                 children: [
                   Text(
                     'Welcome back, $name',
-                    style: textStyleFrom(
-                      Theme.of(context).textTheme.displayMedium,
-                      color: Colors.white,
-                      height: 0.95,
-                    ),
+                    style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                          color: Colors.white,
+                          height: 0.95,
+                        ),
                   ),
                   const SizedBox(height: 10),
                   NotificationTile(
@@ -277,11 +269,11 @@ class NotificationTile extends StatelessWidget {
   final Function dismissFunction;
   final VoidCallback openNotification;
 
-  NotificationTile(
-    this.notification, {
+  NotificationTile(this.notification, {
     required this.dismissFunction,
     required this.openNotification,
   });
+
   @override
   Widget build(BuildContext context) {
     return CustomTile(
@@ -325,10 +317,9 @@ class NotificationTile extends StatelessWidget {
                 ),
                 Text(
                   notification.getSubtitle() ?? '',
-                  style: textStyleFrom(
-                    Theme.of(context).textTheme.bodyLarge,
-                    fontSize: 11,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontSize: 11,
+                      ),
                 ),
               ],
             ),

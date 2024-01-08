@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nowu/assets/components/textButton.dart';
 
-import '../StyleFrom.dart';
-
 // TODO Loads of stuff here isn't used, remove all the things
 class PageHeader extends StatelessWidget {
   final Function? onTap;
@@ -12,8 +10,10 @@ class PageHeader extends StatelessWidget {
   final String? backButtonText;
   final double? padding;
   final int? maxLines;
+
   // For Colour
   final Color? textColor;
+
   // For question mark button
   final String? infoTitle;
   final String? infoText;
@@ -34,6 +34,7 @@ class PageHeader extends StatelessWidget {
     this.fontSize,
     this.extraInnerPadding,
   });
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -60,11 +61,13 @@ class PageHeader extends StatelessWidget {
                         child: Text(
                           title!,
                           textAlign: TextAlign.left,
-                          style: textStyleFrom(
-                            Theme.of(context).textTheme.headlineMedium,
-                            color: textColor,
-                            fontSize: fontSize,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium
+                              ?.copyWith(
+                                color: textColor,
+                                fontSize: fontSize,
+                              ),
                           maxLines: maxLines,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -73,11 +76,13 @@ class PageHeader extends StatelessWidget {
                         child: Text(
                           title!,
                           textAlign: TextAlign.left,
-                          style: textStyleFrom(
-                            Theme.of(context).textTheme.headlineMedium,
-                            color: textColor,
-                            fontSize: fontSize,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium
+                              ?.copyWith(
+                                color: textColor,
+                                fontSize: fontSize,
+                              ),
                         ),
                       ),
                 const SizedBox(

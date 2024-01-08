@@ -39,7 +39,7 @@ class _SocialMediaLoginButton extends StatelessWidget {
     Key? key,
     required this.onPressed,
     required this.iconData,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
