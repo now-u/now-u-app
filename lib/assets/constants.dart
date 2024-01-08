@@ -1,6 +1,7 @@
 import 'dart:io' show Platform;
-import 'package:flutter/material.dart';
+
 import 'package:flutter/foundation.dart' show kReleaseMode;
+import 'package:flutter/material.dart';
 
 // --- Env --- //
 
@@ -78,10 +79,10 @@ class CustomFontSize {
 }
 
 class CustomPaddingSize {
-  static double xsmall = 8;
-  static double small = 14;
-  static double normal = 20;
-  static double large = 40;
+  static const double xsmall = 8;
+  static const double small = 14;
+  static const double normal = 20;
+  static const double large = 40;
 }
 
 TextStyle exploreHeading = TextStyle(
