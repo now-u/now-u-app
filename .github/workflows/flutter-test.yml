@@ -26,7 +26,7 @@ jobs:
         run: flutter analyze --no-fatal-infos
 
       - name: Flutter format
-        run: dart format -o none
+        run: dart format -o none --set-exit-if-changed .
 
       - name: Run tests
         run: flutter test

@@ -54,6 +54,6 @@ class MoreViewModel extends BaseViewModel {
   }
 
   Future<void> launchLinkExternal(String link) {
-	return _navigationService.launchLink(link, isExternal: true);
+    return _navigationService.launchLink(link, isExternal: true);
   }
 }

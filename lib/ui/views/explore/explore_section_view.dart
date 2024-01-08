@@ -23,7 +23,9 @@ class ExploreSectionWidget extends StatelessWidget {
     required this.tileHeight,
   });
 
-  Widget _buildSectionHeader(BuildContext context,) {
+  Widget _buildSectionHeader(
+    BuildContext context,
+  ) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
       child: Column(
@@ -171,8 +173,8 @@ class ActionExploreSection extends StatelessWidget {
     return ExploreSectionWidget(
       tiles: this.tiles?.map(
             (tileData) =>
-            ExploreActionTile(tileData, onTap: () => tileOnClick(tileData)),
-      ),
+                ExploreActionTile(tileData, onTap: () => tileOnClick(tileData)),
+          ),
       tileHeight: 160,
       isLoading: isLoading,
       titleOnClick: titleOnClick,
@@ -204,10 +206,10 @@ class LearningResourceExploreSection extends StatelessWidget {
     return ExploreSectionWidget(
       tiles: this.tiles?.map(
             (tileData) => ExploreLearningResourceTile(
-          tileData,
-          onTap: () => tileOnClick(tileData),
-        ),
-      ),
+              tileData,
+              onTap: () => tileOnClick(tileData),
+            ),
+          ),
       tileHeight: 160,
       isLoading: isLoading,
       titleOnClick: titleOnClick,

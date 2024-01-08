@@ -26,23 +26,25 @@ class HomeView extends StackedView<HomeViewModel> {
   }
 
   @override
-  Widget builder(BuildContext context,
-      HomeViewModel viewModel,
-      Widget? childl,) {
+  Widget builder(
+    BuildContext context,
+    HomeViewModel viewModel,
+    Widget? childl,
+  ) {
     final latestNotification = viewModel.notifications!.elementAtOrNull(0);
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor.withOpacity(0.05),
       body: ScrollableSheetPage(
         header: latestNotification != null
             ? HeaderWithNotifications(
-          name: viewModel.currentUser?.name,
-          notification: viewModel.notifications![0],
-          // TODO Fix internal notifiaction type
-          dismissNotification: () =>
-              viewModel.dismissNotification(latestNotification.id!),
-          openNotification: () =>
-              viewModel.openNotification(latestNotification),
-        )
+                name: viewModel.currentUser?.name,
+                notification: viewModel.notifications![0],
+                // TODO Fix internal notifiaction type
+                dismissNotification: () =>
+                    viewModel.dismissNotification(latestNotification.id!),
+                openNotification: () =>
+                    viewModel.openNotification(latestNotification),
+              )
             : HeaderStyle1(name: viewModel.currentUser?.name),
         children: [
           Column(
@@ -124,25 +126,25 @@ class HomeView extends StackedView<HomeViewModel> {
                 Container(
                   child: viewModel.causes != []
                       ? GridView.builder(
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.all(20),
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 30,
-                    ),
-                    itemCount: viewModel.causes.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return CauseTile(
-                        gestureFunction: () => null,
-                        cause: viewModel.causes[index],
-                        getInfoFunction: () => viewModel
-                            .getCausePopup(viewModel.causes[index]),
-                      );
-                    },
-                  )
+                          shrinkWrap: true,
+                          padding: const EdgeInsets.all(20),
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 20,
+                            crossAxisSpacing: 30,
+                          ),
+                          itemCount: viewModel.causes.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return CauseTile(
+                              gestureFunction: () => null,
+                              cause: viewModel.causes[index],
+                              getInfoFunction: () => viewModel
+                                  .getCausePopup(viewModel.causes[index]),
+                            );
+                          },
+                        )
                       : const CircularProgressIndicator(),
                 ),
             ],
@@ -269,7 +271,8 @@ class NotificationTile extends StatelessWidget {
   final Function dismissFunction;
   final VoidCallback openNotification;
 
-  NotificationTile(this.notification, {
+  NotificationTile(
+    this.notification, {
     required this.dismissFunction,
     required this.openNotification,
   });

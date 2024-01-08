@@ -93,9 +93,7 @@ class ExplorePageViewModel extends FormViewModel {
             : filterData.filterActionTypes.toList(),
         completed: filterData.filterCompleted == true ? true : null,
         recommended: filterData.filterRecommended == true ? true : null,
-        releasedSince: filterData.filterNew == true
-            ? newSinceDate()
-            : null,
+        releasedSince: filterData.filterNew == true ? newSinceDate() : null,
         query: searchBarValue,
       ),
     );
@@ -116,9 +114,7 @@ class ExplorePageViewModel extends FormViewModel {
         //this.filterActionTypes.isEmpty ? null : filterActionTypes.toList(),
         completed: filterData.filterCompleted == true ? true : null,
         recommended: filterData.filterRecommended == true ? true : null,
-        releasedSince: filterData.filterNew == true
-            ? newSinceDate()
-            : null,
+        releasedSince: filterData.filterNew == true ? newSinceDate() : null,
         query: searchBarValue,
       ),
     );
@@ -133,9 +129,7 @@ class ExplorePageViewModel extends FormViewModel {
             : filterData.filterCauseIds.toList(),
         completed: filterData.filterCompleted == true ? true : null,
         recommended: filterData.filterRecommended == true ? true : null,
-        releasedSince: filterData.filterNew == true
-            ? newSinceDate()
-            : null,
+        releasedSince: filterData.filterNew == true ? newSinceDate() : null,
         query: searchBarValue,
       ),
     );
@@ -148,9 +142,7 @@ class ExplorePageViewModel extends FormViewModel {
         causeIds: this.filterData.filterCauseIds.isEmpty
             ? null
             : filterData.filterCauseIds.toList(),
-        releasedSince: filterData.filterNew == true
-            ? newSinceDate()
-            : null,
+        releasedSince: filterData.filterNew == true ? newSinceDate() : null,
         query: searchBarValue,
       ),
     );
@@ -165,7 +157,7 @@ class ExplorePageViewModel extends FormViewModel {
             ? null
             : filterData.filterCauseIds.toList(),
         query: searchBarValue,
-		releasedSince: filterData.filterNew == true ? newSinceDate() : null,
+        releasedSince: filterData.filterNew == true ? newSinceDate() : null,
       ),
     );
     notifyListeners();

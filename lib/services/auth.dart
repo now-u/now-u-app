@@ -57,49 +57,51 @@ class AuthenticationService {
   }
 
   Future signInWithGoogle() async {
-	_logger.info('Singing in with google');
+    _logger.info('Singing in with google');
 
-  	/// Web Client ID that you registered with Google Cloud.
-  	const webClientId = '938145287148-1dt6dldjl7bo0nbflfu3b95uc8lm73gl.apps.googleusercontent.com';
+    /// Web Client ID that you registered with Google Cloud.
+    const webClientId =
+        '938145287148-1dt6dldjl7bo0nbflfu3b95uc8lm73gl.apps.googleusercontent.com';
 
-  	/// iOS Client ID that you registered with Google Cloud.
-  	const iosClientId = '938145287148-3b96qect9a9drnhsio206ld9go22fk1h.apps.googleusercontent.com';
+    /// iOS Client ID that you registered with Google Cloud.
+    const iosClientId =
+        '938145287148-3b96qect9a9drnhsio206ld9go22fk1h.apps.googleusercontent.com';
 
-  	// Google sign in on Android will work without providing the Android
-  	// Client ID registered on Google Cloud.
-  	final GoogleSignIn googleSignIn = GoogleSignIn(
-  	  clientId: iosClientId,
-  	  serverClientId: webClientId,
-  	);
+    // Google sign in on Android will work without providing the Android
+    // Client ID registered on Google Cloud.
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+      clientId: iosClientId,
+      serverClientId: webClientId,
+    );
 
-	_logger.info('Launching google signin dialog');
-	final googleUser = await googleSignIn.signIn();
+    _logger.info('Launching google signin dialog');
+    final googleUser = await googleSignIn.signIn();
 
-	_logger.info('Fetching auth');
-	if (await googleUser == null) {
-		_logger.warning('No user selected from dialog. Aborting google login.');
-		return;
-	}
+    _logger.info('Fetching auth');
+    if (await googleUser == null) {
+      _logger.warning('No user selected from dialog. Aborting google login.');
+      return;
+    }
 
-  	final googleAuth = await googleUser!.authentication;
-  	final accessToken = googleAuth.accessToken;
-  	final idToken = googleAuth.idToken;
+    final googleAuth = await googleUser!.authentication;
+    final accessToken = googleAuth.accessToken;
+    final idToken = googleAuth.idToken;
 
-  	if (accessToken == null) {
-	  _logger.severe('No access token found after google login');
-  	  throw LoginException('No access token found.');
-  	}
-  	if (idToken == null) {
-	  _logger.severe('No id token found after google login');
-  	  throw LoginException('No id token found.');
-  	}
+    if (accessToken == null) {
+      _logger.severe('No access token found after google login');
+      throw LoginException('No access token found.');
+    }
+    if (idToken == null) {
+      _logger.severe('No id token found after google login');
+      throw LoginException('No id token found.');
+    }
 
-	_logger.info('Sending google auth credentials to supabase');
-  	return _client.auth.signInWithIdToken(
-  	  provider: Provider.google,
-  	  idToken: idToken,
-  	  accessToken: accessToken,
-  	);
+    _logger.info('Sending google auth credentials to supabase');
+    return _client.auth.signInWithIdToken(
+      provider: Provider.google,
+      idToken: idToken,
+      accessToken: accessToken,
+    );
   }
 
   Future signInWithFacebook() async {
