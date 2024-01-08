@@ -117,8 +117,6 @@ abstract class ResourceSearchFilter<Self extends ResourceSearchFilter<Self>> {
     return filter;
   }
 
-  Self merge(Self other);
-
   ResourceSearchFilter<Self> mergeBaseFilter(BaseResourceSearchFilter filter) {
     // TODO Add copy with with the freezed package
     this.causeIds = this.causeIds ?? filter.causeIds;
@@ -163,17 +161,6 @@ class CampaignSearchFilter extends ResourceSearchFilter<CampaignSearchFilter> {
 
     return SearchQuery(
       filter: filter,
-    );
-  }
-
-  CampaignSearchFilter merge(CampaignSearchFilter other) {
-    return CampaignSearchFilter(
-      query: query ?? other.query,
-      causeIds: causeIds ?? other.causeIds,
-      ofTheMonth: ofTheMonth ?? other.ofTheMonth,
-      recommended: recommended ?? other.recommended,
-      releasedSince: releasedSince ?? other.releasedSince,
-      completed: completed ?? other.completed,
     );
   }
 }
@@ -229,20 +216,6 @@ class ActionSearchFilter extends ResourceSearchFilter<ActionSearchFilter> {
       filter: filter,
     );
   }
-
-  ActionSearchFilter merge(ActionSearchFilter other) {
-    return ActionSearchFilter(
-      // TODO Update these to have every method!!!! Use freezed?
-      query: query ?? other.query,
-      causeIds: causeIds ?? other.causeIds,
-      ofTheMonth: ofTheMonth ?? other.ofTheMonth,
-      recommended: recommended ?? other.recommended,
-      releasedSince: releasedSince ?? other.releasedSince,
-      types: types ?? other.types,
-      completed: completed ?? other.completed,
-      timeBrackets: timeBrackets ?? other.timeBrackets,
-    );
-  }
 }
 
 class LearningResourceSearchFilter
@@ -290,18 +263,6 @@ class LearningResourceSearchFilter
       filter: filter,
     );
   }
-
-  LearningResourceSearchFilter merge(LearningResourceSearchFilter other) {
-    return LearningResourceSearchFilter(
-      query: query ?? other.query,
-      causeIds: causeIds ?? other.causeIds,
-      ofTheMonth: ofTheMonth ?? other.ofTheMonth,
-      recommended: recommended ?? other.recommended,
-      releasedSince: releasedSince ?? other.releasedSince,
-      completed: completed ?? other.completed,
-      timeBrackets: timeBrackets ?? other.timeBrackets,
-    );
-  }
 }
 
 // TODO THis might not make sense, doeResourceSearchFilterside causes...
@@ -316,14 +277,6 @@ class NewsArticleSearchFilter
   SearchQuery toMeilisearchQuery(CausesUser? userInfo) {
 	final List<String> filter = super._toMeilisearchFilter(userInfo?.selectedCausesIds);
 	return SearchQuery(filter: filter, sort: ['published_at_timestamp:desc']);
-  }
-
-  NewsArticleSearchFilter merge(NewsArticleSearchFilter other) {
-    return NewsArticleSearchFilter(
-      query: query ?? other.query,
-      causeIds: causeIds ?? other.causeIds,
-      releasedSince: releasedSince ?? other.releasedSince,
-    );
   }
 }
 
