@@ -20,7 +20,7 @@ class CauseIndicator extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             cause.title,
-            textScaleFactor: .9,
+            textScaler: const TextScaler.linear(.9),
           ),
         ],
       ),

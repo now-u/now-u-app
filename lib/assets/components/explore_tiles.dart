@@ -192,7 +192,7 @@ abstract class ExploreResourceTile extends ExploreTile {
                     const SizedBox(width: 8),
                     Text(
                       type,
-                      textScaleFactor: .8,
+                      textScaler: const TextScaler.linear(.8),
                     ),
                     VerticalDivider(
                       color: dividerColor,
@@ -208,7 +208,7 @@ abstract class ExploreResourceTile extends ExploreTile {
                     const SizedBox(width: 6),
                     Text(
                       timeText,
-                      textScaleFactor: .8,
+                      textScaler: const TextScaler.linear(.8),
                     ),
                     Expanded(child: Container()),
                     if (isCompleted != null)
@@ -299,7 +299,7 @@ class ExploreNewsArticleTile extends ExploreTile {
                     Text(
                       title,
                       style: Theme.of(context).textTheme.headlineMedium!,
-                      textScaleFactor: .7,
+                      textScaler: const TextScaler.linear(.7),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -330,7 +330,7 @@ class ExploreNewsArticleTile extends ExploreTile {
                   style: Theme.of(context).textTheme.bodyLarge?.apply(
                         color: const Color.fromRGBO(255, 136, 0, 1),
                       ),
-                  textScaleFactor: .7,
+                  textScaler: const TextScaler.linear(.7),
                 ),
               ),
             ),
@@ -351,7 +351,7 @@ class _ExploreTileTitle extends StatelessWidget {
     return Text(
       title,
       style: Theme.of(context).textTheme.headlineMedium!,
-      textScaleFactor: .6,
+      textScaler: const TextScaler.linear(.6),
       maxLines: 3,
       overflow: TextOverflow.ellipsis,
     );

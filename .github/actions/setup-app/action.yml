@@ -17,8 +17,8 @@ runs:
     - name: Setup flutter
       uses: subosito/flutter-action@v2
       with:
-        channel: 'beta' # 'dev', 'alpha', default to: 'stable'
-        flutter-version: '3.14.x'
+        channel: 'stable' # 'dev', 'alpha', default to: 'stable'
+        flutter-version: '3.16.x'
         cache: true
 
     - name: Flutter version
@@ -29,7 +29,7 @@ runs:
 
     - name: Generate openapi client
       shell: bash
-      run: cd openapi && make generate-prod
+      run: cd openapi && make generate-prod && dart format .
 
     # Install your project's dependencies
     - name: Install dependencies

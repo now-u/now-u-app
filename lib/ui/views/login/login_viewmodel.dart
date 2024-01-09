@@ -43,8 +43,9 @@ class LoginViewModel extends FormViewModel with PostLoginViewModelMixin {
       _logger.severe('Login failed: error=$e');
       await Sentry.captureException(e);
       _dialogService.showErrorDialog(
-          title: 'Login failed',
-          description: 'Unknwon error during login. Please try again.');
+        title: 'Login failed',
+        description: 'Unknwon error during login. Please try again.',
+      );
     }
   }
 

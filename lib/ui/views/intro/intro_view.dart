@@ -22,8 +22,8 @@ class IntroView extends StackedView<IntroViewModel> {
     IntroViewModel viewModel,
     Widget? child,
   ) {
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
       child: Theme(
         data: darkTheme,
         child: IntroViewPages(viewModel),

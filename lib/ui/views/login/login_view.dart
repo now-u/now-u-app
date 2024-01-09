@@ -166,9 +166,8 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
       );
     }
 
-    // TODO Fix will pop scope
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
       child: Scaffold(
         body: NotificationListener(
           onNotification: (OverscrollIndicatorNotification overscroll) {

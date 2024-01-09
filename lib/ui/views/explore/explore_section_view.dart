@@ -61,7 +61,7 @@ class ExploreSectionWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
       child: BaseCard(
         Padding(
-          padding: EdgeInsets.all(CustomPaddingSize.normal),
+          padding: const EdgeInsets.all(CustomPaddingSize.normal),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -75,13 +75,13 @@ class ExploreSectionWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: CustomPaddingSize.small),
+                const SizedBox(height: CustomPaddingSize.small),
                 Text(
                   'Looks like we don’t have any ‘${title}’ to recommend right now. Check out our ‘Explore’ page to get involved another way.',
                   style: lightTheme.textTheme.bodyMedium,
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: CustomPaddingSize.small),
+                const SizedBox(height: CustomPaddingSize.small),
                 DarkButton(
                   'Explore',
                   // TODO
@@ -139,9 +139,9 @@ class ExploreSectionWidget extends StatelessWidget {
                 // Text header
                 _buildSectionHeader(context),
                 const SizedBox(height: 2),
-                SizedBox(height: CustomPaddingSize.small),
+                const SizedBox(height: CustomPaddingSize.small),
                 _buildTiles(context),
-                SizedBox(height: CustomPaddingSize.normal),
+                const SizedBox(height: CustomPaddingSize.normal),
               ],
             ),
           ],

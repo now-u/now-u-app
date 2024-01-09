@@ -35,9 +35,8 @@ class LoginCodeView extends StackedView<LoginCodeViewModel>
     LoginCodeViewModel viewModel,
     Widget? child,
   ) {
-    // TODO Does this still work?
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
       child: Theme(
         data: darkTheme,
         child: _Body(viewModel, codeInputController: codeInputController),

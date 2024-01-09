@@ -71,9 +71,11 @@ class BasicDialog extends StackedView<BasicDialogModel> {
                             completer(DialogResponse(confirmed: false)),
                       ),
                   ]
-                      .intersperse(const SizedBox(
-                        height: 10,
-                      ))
+                      .intersperse(
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      )
                       .toList(),
                 ),
                 const SizedBox(height: 20),
