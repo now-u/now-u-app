@@ -38,12 +38,15 @@ class LoginViewModel extends FormViewModel with PostLoginViewModelMixin {
 
   Future loginWithGoogle() async {
     try {
-		await _authenticationService.signInWithGoogle();
-	} catch(e) {
-		_logger.severe('Login failed: error=$e');
-		await Sentry.captureException(e);
-		_dialogService.showErrorDialog(title: 'Login failed', description: 'Unknwon error during login. Please try again.');
-	}
+      await _authenticationService.signInWithGoogle();
+    } catch (e) {
+      _logger.severe('Login failed: error=$e');
+      await Sentry.captureException(e);
+      _dialogService.showErrorDialog(
+        title: 'Login failed',
+        description: 'Unknwon error during login. Please try again.',
+      );
+    }
   }
 
   Future loginWithFacebook() async {

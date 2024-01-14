@@ -39,6 +39,8 @@ class PushNotificationService {
     var view = notificationData['view'];
 
     if (view != null) {
+      // TODO: Fix this!
+      // ignore: deprecated_member_use_from_same_package
       _navigationService!.navigateTo(view);
     }
   }

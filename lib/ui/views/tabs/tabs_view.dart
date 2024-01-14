@@ -83,8 +83,8 @@ class TabsView extends StatelessWidget with WidgetsBindingObserver {
           .cast<BottomNavigationBarItem>();
     }
 
-    return WillPopScope(
-      onWillPop: () async => locator<NavigationService>().canGoBack(),
+    return PopScope(
+      canPop: locator<NavigationService>().canGoBack(),
       child: ViewModelBuilder<TabsViewModel>.reactive(
         viewModelBuilder: () => TabsViewModel(initialPage),
         builder: (context, model, child) {

@@ -11,22 +11,22 @@ jobs:
       CHANGELOG_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     strategy:
       matrix:
-        os: [macos-latest]
+        # os: [macos-latest]
         # os: [ubuntu-latest, macos-latest]
-        # os: [ubuntu-latest]
+        os: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v2
 
       - name: Setup app
         uses: ./.github/actions/setup-app
 
-      - run: pod repo update 
-
-      - name: Flutter analyze
-        run: flutter analyze --no-fatal-infos
+      # - run: pod repo update 
 
       - name: Flutter format
-        run: dart format -o none
+        run: dart format -o none --set-exit-if-changed .
+
+      - name: Flutter analyze
+        run: dart analyze --fatal-warnings --fatal-infos
 
       - name: Run tests
         run: flutter test

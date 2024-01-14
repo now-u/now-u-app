@@ -23,7 +23,9 @@ class ExploreSectionWidget extends StatelessWidget {
     required this.tileHeight,
   });
 
-  Widget _buildSectionHeader(BuildContext context,) {
+  Widget _buildSectionHeader(
+    BuildContext context,
+  ) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
       child: Column(
@@ -59,7 +61,7 @@ class ExploreSectionWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
       child: BaseCard(
         Padding(
-          padding: EdgeInsets.all(CustomPaddingSize.normal),
+          padding: const EdgeInsets.all(CustomPaddingSize.normal),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -73,13 +75,13 @@ class ExploreSectionWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: CustomPaddingSize.small),
+                const SizedBox(height: CustomPaddingSize.small),
                 Text(
                   'Looks like we don’t have any ‘${title}’ to recommend right now. Check out our ‘Explore’ page to get involved another way.',
                   style: lightTheme.textTheme.bodyMedium,
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: CustomPaddingSize.small),
+                const SizedBox(height: CustomPaddingSize.small),
                 DarkButton(
                   'Explore',
                   // TODO
@@ -137,9 +139,9 @@ class ExploreSectionWidget extends StatelessWidget {
                 // Text header
                 _buildSectionHeader(context),
                 const SizedBox(height: 2),
-                SizedBox(height: CustomPaddingSize.small),
+                const SizedBox(height: CustomPaddingSize.small),
                 _buildTiles(context),
-                SizedBox(height: CustomPaddingSize.normal),
+                const SizedBox(height: CustomPaddingSize.normal),
               ],
             ),
           ],
@@ -171,8 +173,8 @@ class ActionExploreSection extends StatelessWidget {
     return ExploreSectionWidget(
       tiles: this.tiles?.map(
             (tileData) =>
-            ExploreActionTile(tileData, onTap: () => tileOnClick(tileData)),
-      ),
+                ExploreActionTile(tileData, onTap: () => tileOnClick(tileData)),
+          ),
       tileHeight: 160,
       isLoading: isLoading,
       titleOnClick: titleOnClick,
@@ -204,10 +206,10 @@ class LearningResourceExploreSection extends StatelessWidget {
     return ExploreSectionWidget(
       tiles: this.tiles?.map(
             (tileData) => ExploreLearningResourceTile(
-          tileData,
-          onTap: () => tileOnClick(tileData),
-        ),
-      ),
+              tileData,
+              onTap: () => tileOnClick(tileData),
+            ),
+          ),
       tileHeight: 160,
       isLoading: isLoading,
       titleOnClick: titleOnClick,

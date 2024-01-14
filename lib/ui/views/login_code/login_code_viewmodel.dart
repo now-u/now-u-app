@@ -36,7 +36,7 @@ class LoginCodeViewModel extends FormViewModel with PostLoginViewModelMixin {
       } catch (e) {
         setBusy(false);
         Sentry.captureException(e);
-		_logger.severe('Login failed', e);
+        _logger.severe('Login failed', e);
         return _dialogService.showErrorDialog(
           title: 'Login error',
           description: S.current.errorAuthenticationFailed,

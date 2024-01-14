@@ -155,9 +155,9 @@ class CausesService {
 
   Future<void> openLearningResource(LearningResource learningResource) async {
     if (_authService.isUserLoggedIn()) {
-		// TODO Should this if be inside here?
-		await completeLearningResource(learningResource.id);
-	}
+      // TODO Should this if be inside here?
+      await completeLearningResource(learningResource.id);
+    }
     _navigationService.launchLink(
       learningResource.link,
     );

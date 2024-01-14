@@ -188,8 +188,8 @@ class ProfileSetupView extends StackedView<ProfileSetupViewModel> {
     Widget? child,
   ) {
     // TODO Check this still works at this level
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
       child: Theme(
         data: darkTheme,
         child: Scaffold(

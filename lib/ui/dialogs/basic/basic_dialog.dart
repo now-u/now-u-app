@@ -70,7 +70,13 @@ class BasicDialog extends StackedView<BasicDialogModel> {
                         onPressed: () =>
                             completer(DialogResponse(confirmed: false)),
                       ),
-                  ].intersperse(const SizedBox(height: 10,)).toList(),
+                  ]
+                      .intersperse(
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      )
+                      .toList(),
                 ),
                 const SizedBox(height: 20),
               ],

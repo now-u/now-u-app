@@ -19,7 +19,7 @@ class CampaignInfoView extends StackedView<CampaignViewModel> {
   Widget _title(void Function() backFunction) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           horizontal: CustomPaddingSize.small,
           vertical: 20,
         ),
@@ -55,7 +55,7 @@ class CampaignInfoView extends StackedView<CampaignViewModel> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.all(CustomPaddingSize.normal),
+          padding: const EdgeInsets.all(CustomPaddingSize.normal),
           child: Text(
             campaign.title,
             maxLines: 3,
@@ -151,7 +151,7 @@ class CampaignInfoView extends StackedView<CampaignViewModel> {
 
   Widget _body(BuildContext context, CampaignViewModel viewModel) {
     return Padding(
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         horizontal: CustomPaddingSize.small,
         vertical: CustomPaddingSize.normal,
       ),
@@ -170,7 +170,7 @@ class CampaignInfoView extends StackedView<CampaignViewModel> {
                 style: Theme.of(context).textTheme.bodyLarge,
                 textAlign: TextAlign.left,
               ),
-              SizedBox(height: CustomPaddingSize.normal),
+              const SizedBox(height: CustomPaddingSize.normal),
               Text(
                 'Support this campaign by completing these actions',
                 style: Theme.of(context)
