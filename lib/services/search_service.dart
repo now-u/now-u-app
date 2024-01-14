@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
 import 'package:causeApiClient/causeApiClient.dart';
@@ -342,6 +344,27 @@ class SearchService {
   final _causeServiceClient = CauseApiClient();
   final _causesService = locator<CausesService>();
 
+  var _random = Random();
+
+  void updateShuffleSeed() {
+    _random = Random();
+  }
+
+  List<T> _shuffleList<T>(List<T> list) {
+    final newList = List<T>.from(list);
+    newList.shuffle(_random);
+    return newList;
+  }
+
+  List<T> _orderSearchResults<T>(List<T> list, SearchQuery? query) {
+    // If the list has already been sorted by query then don't change
+    if (query?.sort != null) {
+      return list;
+    }
+
+    return _shuffleList(list);
+  }
+
   List<ListAction> _searchHitsToActions(List<Map<String, dynamic>> hits) {
     final results = _causeServiceClient.serializers.deserialize(
       hits,
@@ -376,57 +399,63 @@ class SearchService {
     return results.asList();
   }
 
+  Future<List<T>> _searchIndex<T>(
+    MeiliSearchIndex index,
+    ResourceSearchFilter? resourceSearchFilter,
+    List<T> Function(List<Map<String, dynamic>>) responseSerializer,
+  ) async {
+    final searchQuery =
+        resourceSearchFilter?.toMeilisearchQuery(_causesService.userInfo);
+    final result = await index.search(
+      resourceSearchFilter?.query,
+      searchQuery?.copyWith(limit: 100),
+    );
+    return responseSerializer(_orderSearchResults(result.hits, searchQuery));
+  }
+
   Future<List<ListAction>> searchActions({ActionSearchFilter? filter}) async {
-    final _actionsIndex = _meiliSearchClient.index(SearchIndexName.ACTIONS);
-    print(
-      'Searching actions with ${filter?.toMeilisearchQuery(_causesService.userInfo).filter}',
+    return _searchIndex(
+      _meiliSearchClient.index(SearchIndexName.ACTIONS),
+      filter,
+      _searchHitsToActions,
     );
-    final result = await _actionsIndex.search(
-      filter?.query,
-      filter?.toMeilisearchQuery(_causesService.userInfo),
-    );
-    return _searchHitsToActions(result.hits);
   }
 
   Future<List<ListCampaign>> searchCampaigns({
     CampaignSearchFilter? filter,
   }) async {
-    final campaignsIndex = _meiliSearchClient.index(SearchIndexName.CAMPAIGNS);
-    final result = await campaignsIndex.search(
-      filter?.query,
-      filter?.toMeilisearchQuery(_causesService.userInfo),
+    return _searchIndex(
+      _meiliSearchClient.index(SearchIndexName.CAMPAIGNS),
+      filter,
+      _searchHitsToCampaign,
     );
-    return _searchHitsToCampaign(result.hits);
   }
 
   Future<List<LearningResource>> searchLearningResources({
     LearningResourceSearchFilter? filter,
   }) async {
-    final _learningResourcesIndex =
-        _meiliSearchClient.index(SearchIndexName.LEARNING_RESOURCES);
-    final result = await _learningResourcesIndex.search(
-      filter?.query,
-      filter?.toMeilisearchQuery(_causesService.userInfo),
+    return _searchIndex(
+      _meiliSearchClient.index(SearchIndexName.LEARNING_RESOURCES),
+      filter,
+      _searchHitsToLearningResources,
     );
-    return _searchHitsToLearningResources(result.hits);
   }
 
   Future<List<NewsArticle>> searchNewsArticles({
     NewsArticleSearchFilter? filter,
   }) async {
-    final _newsArticleIndex =
-        _meiliSearchClient.index(SearchIndexName.NEWS_ARTICLES);
-    final result = await _newsArticleIndex.search(
-      filter?.query,
-      filter?.toMeilisearchQuery(_causesService.userInfo),
+    return _searchIndex(
+      _meiliSearchClient.index(SearchIndexName.NEWS_ARTICLES),
+      filter,
+      _searchHitsToNewsArticles,
     );
-    return _searchHitsToNewsArticles(result.hits);
   }
 
   // TODO Find out how to search multiple indexes
   Future<ResourcesSearchResult> searchResources({
     BaseResourceSearchFilter? filter,
   }) async {
+    final searchQuery = filter?.toMeilisearchFilter();
     final results = await _meiliSearchClient.multiSearch(
       MultiSearchQuery(
         // TODO Should we put this default stuff into the filters directly??
@@ -435,12 +464,7 @@ class SearchService {
               (resourceType) => IndexSearchQuery(
                 indexUid: getResourceTypeIndexName(resourceType),
                 query: filter?.query,
-                // TODO Can merge with correct type if required
-                // TODO This is completely wrong need to do to meilisearch query thing
-                // TODO This check is a hack, make it so news articles can be filtered by cause
-                filter: resourceType != ResourceType.NEWS_ARTICLE
-                    ? filter?.toMeilisearchFilter()
-                    : null,
+                filter: searchQuery,
               ),
             )
             .toList(),
@@ -458,13 +482,21 @@ class SearchService {
     }
 
     return ResourcesSearchResult(
-      actions: _searchHitsToActions(getIndexHits(SearchIndexName.ACTIONS)),
-      learningResources: _searchHitsToLearningResources(
-        getIndexHits(SearchIndexName.LEARNING_RESOURCES),
+      // For now the order is never defined so we can just use null
+      actions: _searchHitsToActions(
+        _orderSearchResults(getIndexHits(SearchIndexName.ACTIONS), null),
       ),
-      campaigns: _searchHitsToCampaign(getIndexHits(SearchIndexName.CAMPAIGNS)),
+      learningResources: _searchHitsToLearningResources(
+        _orderSearchResults(
+          getIndexHits(SearchIndexName.LEARNING_RESOURCES),
+          null,
+        ),
+      ),
+      campaigns: _searchHitsToCampaign(
+        _orderSearchResults(getIndexHits(SearchIndexName.CAMPAIGNS), null),
+      ),
       newsArticles: _searchHitsToNewsArticles(
-        getIndexHits(SearchIndexName.NEWS_ARTICLES),
+        _orderSearchResults(getIndexHits(SearchIndexName.NEWS_ARTICLES), null),
       ),
     );
   }
