@@ -60,9 +60,9 @@ class HomeView extends StackedView<HomeViewModel> {
                     viewModel.openAction(tileData.action),
               ),
               CampaignExploreSection(
-                title: 'Suggested campaigns',
-                isLoading: viewModel.suggestedCampaigns == null,
-                tiles: viewModel.suggestedCampaigns,
+                title: 'Campaigns of the month',
+                isLoading: viewModel.ofTheMonthCampaigns == null,
+                tiles: viewModel.ofTheMonthCampaigns,
                 tileOnClick: (tileData) =>
                     viewModel.openCampaign(tileData.campaign),
               ),
@@ -88,9 +88,9 @@ class HomeView extends StackedView<HomeViewModel> {
               const SizedBox(height: 30),
               // TODO Rename so page and section have Argument/Definition and then Widget/noPrefix
               CampaignExploreSection(
-                title: 'My campaigns',
-                tiles: viewModel.myCampaigns,
-                isLoading: viewModel.myCampaigns == null,
+                title: 'Suggested campaigns',
+                tiles: viewModel.recommendedCampaigns,
+                isLoading: viewModel.recommendedCampaigns == null,
                 tileOnClick: (tileData) =>
                     viewModel.openCampaign(tileData.campaign),
               ),
