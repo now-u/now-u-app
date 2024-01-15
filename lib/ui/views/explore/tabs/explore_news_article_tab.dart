@@ -29,6 +29,7 @@ class ExploreNewsArticleTab extends StatelessWidget {
           ),
         ),
       ),
+      onBottomReached: () => {},
     );
   }
 }

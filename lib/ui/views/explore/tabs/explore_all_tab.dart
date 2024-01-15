@@ -81,6 +81,7 @@ class ExploreAllTab extends StatelessWidget {
           isLoading: viewModel.allSearchResult == null,
         ),
       ],
+      onBottomReached: () => {},
     );
   }
 }

@@ -37,6 +37,7 @@ class ExploreActionTab extends StatelessWidget {
           ),
         ),
       ),
+      onBottomReached: () => {},
     );
   }
 }

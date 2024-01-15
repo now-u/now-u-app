@@ -35,6 +35,7 @@ class ExploreCampaignTab extends StatelessWidget {
           ),
         ),
       ),
+      onBottomReached: () => {},
     );
   }
 }

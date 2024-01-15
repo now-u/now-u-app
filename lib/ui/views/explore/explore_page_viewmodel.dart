@@ -1,12 +1,12 @@
 import 'package:causeApiClient/causeApiClient.dart';
 import 'package:collection/collection.dart';
-
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/models/time.dart';
 import 'package:nowu/services/bottom_sheet_service.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:nowu/ui/bottom_sheets/explore_filter/explore_filter_sheet.dart';
+import 'package:nowu/ui/views/explore/tabs/explore_tab.dart';
 import 'package:nowu/utils/new_since.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tuple/tuple.dart';
@@ -61,7 +61,7 @@ class ExplorePageViewModel extends FormViewModel {
 
   List<Cause> get causes => _causesService.causes;
   List<ListAction> actions = [];
-  List<LearningResource> learningResources = [];
+  PagingState learningResources = InitialLoading();
   List<ListCampaign> campaigns = [];
   List<NewsArticle> newsArticles = [];
   ResourcesSearchResult? allSearchResult;
@@ -70,7 +70,7 @@ class ExplorePageViewModel extends FormViewModel {
     return Future.wait(
       [
         searchActions(),
-        searchLearningResources(),
+        searchLearningResources(0),
         searchCampaigns(),
         searchNewsArticles(),
         searchAll(),
@@ -100,8 +100,9 @@ class ExplorePageViewModel extends FormViewModel {
     notifyListeners();
   }
 
-  Future<void> searchLearningResources() async {
-    learningResources = await _searchService.searchLearningResources(
+  Future<void> searchLearningResources(int offset) async {
+    List<LearningResource> newItems =
+        await _searchService.searchLearningResources(
       filter: LearningResourceSearchFilter(
         causeIds: this.filterData.filterCauseIds.isEmpty
             ? null
@@ -118,21 +119,27 @@ class ExplorePageViewModel extends FormViewModel {
         query: searchBarValue,
       ),
     );
+
+    learningResources = Data(
+      learningResources.items + newItems,
+      false,
+    );
     notifyListeners();
   }
 
   Future<void> searchCampaigns() async {
     campaigns = await _searchService.searchCampaigns(
-      filter: CampaignSearchFilter(
-        causeIds: this.filterData.filterCauseIds.isEmpty
-            ? null
-            : filterData.filterCauseIds.toList(),
-        completed: filterData.filterCompleted == true ? true : null,
-        recommended: filterData.filterRecommended == true ? true : null,
-        releasedSince: filterData.filterNew == true ? newSinceDate() : null,
-        query: searchBarValue,
-      ),
-    );
+        filter: CampaignSearchFilter(
+          causeIds: this.filterData.filterCauseIds.isEmpty
+              ? null
+              : filterData.filterCauseIds.toList(),
+          completed: filterData.filterCompleted == true ? true : null,
+          recommended: filterData.filterRecommended == true ? true : null,
+          releasedSince: filterData.filterNew == true ? newSinceDate() : null,
+          query: searchBarValue,
+        ),
+        offset: 0 // TODO: offset
+        );
     notifyListeners();
   }
 

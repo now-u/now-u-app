@@ -261,9 +261,7 @@ class LearningResourceSearchFilter
 
     // TODO REcommenede wha is it called?
 
-    return SearchQuery(
-      filter: filter,
-    );
+    return SearchQuery(filter: filter);
   }
 }
 
@@ -403,52 +401,53 @@ class SearchService {
     MeiliSearchIndex index,
     ResourceSearchFilter? resourceSearchFilter,
     List<T> Function(List<Map<String, dynamic>>) responseSerializer,
+    int offset,
   ) async {
     final searchQuery =
         resourceSearchFilter?.toMeilisearchQuery(_causesService.userInfo);
     final result = await index.search(
       resourceSearchFilter?.query,
-      searchQuery?.copyWith(limit: 100),
+      searchQuery?.copyWith(limit: 100, offset: offset),
     );
     return responseSerializer(_orderSearchResults(result.hits, searchQuery));
   }
 
   Future<List<ListAction>> searchActions({ActionSearchFilter? filter}) async {
-    return _searchIndex(
-      _meiliSearchClient.index(SearchIndexName.ACTIONS),
-      filter,
-      _searchHitsToActions,
-    );
+    return _searchIndex(_meiliSearchClient.index(SearchIndexName.ACTIONS),
+        filter, _searchHitsToActions, 0 // TODO: offset
+        );
   }
 
   Future<List<ListCampaign>> searchCampaigns({
     CampaignSearchFilter? filter,
+    int offset = 0,
   }) async {
     return _searchIndex(
       _meiliSearchClient.index(SearchIndexName.CAMPAIGNS),
       filter,
       _searchHitsToCampaign,
+      offset,
     );
   }
 
   Future<List<LearningResource>> searchLearningResources({
     LearningResourceSearchFilter? filter,
+    int offset = 0,
   }) async {
     return _searchIndex(
       _meiliSearchClient.index(SearchIndexName.LEARNING_RESOURCES),
       filter,
       _searchHitsToLearningResources,
+      offset,
     );
   }
 
   Future<List<NewsArticle>> searchNewsArticles({
     NewsArticleSearchFilter? filter,
   }) async {
-    return _searchIndex(
-      _meiliSearchClient.index(SearchIndexName.NEWS_ARTICLES),
-      filter,
-      _searchHitsToNewsArticles,
-    );
+    return _searchIndex(_meiliSearchClient.index(SearchIndexName.NEWS_ARTICLES),
+        filter, _searchHitsToNewsArticles, 0 // TODO: offset
+        );
   }
 
   // TODO Find out how to search multiple indexes
