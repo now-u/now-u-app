@@ -14,30 +14,30 @@ class ExploreLearningResourceTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExploreTabNew(
-        filterChips: [
-          CausesFilter(viewModel: viewModel),
-          TimeFilter(viewModel: viewModel),
-          NewFilter(viewModel: viewModel),
-          RecommendedFilter(viewModel: viewModel),
-          CompletedFilter(viewModel: viewModel),
-        ],
-        onBottomReached: () => {
-              viewModel
-                  .searchLearningResources(viewModel.learningResources.offset())
-            },
-        pagingState: viewModel.learningResources,
-        itemBuilder: (learningResource) => Container(
-              height: 160,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: ExploreLearningResourceTile(
-                  LearningResourceExploreTileData(
-                    learningResource,
-                    viewModel.isLearningResourceComplete(learningResource),
-                  ),
-                  onTap: () => viewModel.openLearningResource(learningResource),
-                ),
-              ),
-            ));
+      filterChips: [
+        CausesFilter(viewModel: viewModel),
+        TimeFilter(viewModel: viewModel),
+        NewFilter(viewModel: viewModel),
+        RecommendedFilter(viewModel: viewModel),
+        CompletedFilter(viewModel: viewModel),
+      ],
+      onBottomReached: () => {
+        viewModel.searchLearningResources(viewModel.learningResources.offset()),
+      },
+      pagingState: viewModel.learningResources,
+      itemBuilder: (learningResource) => Container(
+        height: 160,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: ExploreLearningResourceTile(
+            LearningResourceExploreTileData(
+              learningResource,
+              viewModel.isLearningResourceComplete(learningResource),
+            ),
+            onTap: () => viewModel.openLearningResource(learningResource),
+          ),
+        ),
+      ),
+    );
   }
 }

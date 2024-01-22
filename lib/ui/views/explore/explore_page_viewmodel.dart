@@ -11,6 +11,7 @@ import 'package:nowu/utils/new_since.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tuple/tuple.dart';
 
+import '../../../services/model/search/search_response.dart';
 import 'explore_page_view.form.dart';
 
 enum ExploreSectionType {
@@ -101,8 +102,11 @@ class ExplorePageViewModel extends FormViewModel {
   }
 
   Future<void> searchLearningResources(int offset) async {
-    List<LearningResource> newItems =
+    learningResources = LoadingMore(items: learningResources.items);
+
+    SearchResponse<LearningResource> response =
         await _searchService.searchLearningResources(
+      offset: offset,
       filter: LearningResourceSearchFilter(
         causeIds: this.filterData.filterCauseIds.isEmpty
             ? null
@@ -121,8 +125,8 @@ class ExplorePageViewModel extends FormViewModel {
     );
 
     learningResources = Data(
-      learningResources.items + newItems,
-      false,
+      items: learningResources.items + response.items,
+      hasReachedMax: response.hasReachedMax,
     );
     notifyListeners();
   }

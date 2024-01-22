@@ -66,7 +66,7 @@ class ExploreTabNew<T> extends StatelessWidget {
     return ListView.builder(
       itemCount: itemCount(),
       itemBuilder: (BuildContext context, int index) {
-        if (pagingState == Data && index == pagingState.items.length) {
+        if (pagingState is Data && index == pagingState.items.length) {
           onBottomReached();
         }
 
@@ -127,13 +127,19 @@ class Data<T> extends PagingState {
   final List<T> items;
   final bool hasReachedMax;
 
-  Data(this.items, this.hasReachedMax) : super(items, hasReachedMax);
+  Data({
+    required this.items,
+    required this.hasReachedMax,
+  }) : super(
+          items,
+          hasReachedMax,
+        );
 }
 
 class LoadingMore<T> extends PagingState {
   final List<T> items;
 
-  LoadingMore(this.items) : super(items, false);
+  LoadingMore({required this.items}) : super(items, false);
 }
 
 // class Error extends PagingState {
