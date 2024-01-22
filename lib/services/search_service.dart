@@ -429,7 +429,7 @@ class SearchService {
     );
   }
 
-  Future<List<ListCampaign>> searchCampaigns({
+  Future<SearchResponse<ListCampaign>> searchCampaigns({
     CampaignSearchFilter? filter,
     int offset = 0,
   }) async {
@@ -441,6 +441,11 @@ class SearchService {
       _searchHitsToCampaign,
       offset,
       limit,
+    ).then(
+      (value) => SearchResponse(
+        items: value,
+        hasReachedMax: value.length < limit,
+      ),
     );
   }
 

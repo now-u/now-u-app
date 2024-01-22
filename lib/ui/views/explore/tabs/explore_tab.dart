@@ -117,6 +117,8 @@ sealed class PagingState<T> {
   PagingState(this.items, this.hasReachedMax);
 
   int offset() => items.length;
+
+  bool canLoadMore() => this is Data && !hasReachedMax;
 }
 
 class InitialLoading extends PagingState {

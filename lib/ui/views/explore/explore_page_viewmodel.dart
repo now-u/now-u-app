@@ -63,7 +63,7 @@ class ExplorePageViewModel extends FormViewModel {
   List<Cause> get causes => _causesService.causes;
   List<ListAction> actions = [];
   PagingState learningResources = InitialLoading();
-  List<ListCampaign> campaigns = [];
+  PagingState campaigns = InitialLoading();
   List<NewsArticle> newsArticles = [];
   ResourcesSearchResult? allSearchResult;
 
@@ -71,7 +71,7 @@ class ExplorePageViewModel extends FormViewModel {
     return Future.wait(
       [
         searchActions(),
-        searchLearningResources(0),
+        searchLearningResources(),
         searchCampaigns(),
         searchNewsArticles(),
         searchAll(),
@@ -101,12 +101,14 @@ class ExplorePageViewModel extends FormViewModel {
     notifyListeners();
   }
 
-  Future<void> searchLearningResources(int offset) async {
+  Future<void> searchLearningResources() async {
+    if (!learningResources.canLoadMore()) return;
+
     learningResources = LoadingMore(items: learningResources.items);
 
     SearchResponse<LearningResource> response =
         await _searchService.searchLearningResources(
-      offset: offset,
+      offset: learningResources.offset(),
       filter: LearningResourceSearchFilter(
         causeIds: this.filterData.filterCauseIds.isEmpty
             ? null
@@ -132,18 +134,28 @@ class ExplorePageViewModel extends FormViewModel {
   }
 
   Future<void> searchCampaigns() async {
-    campaigns = await _searchService.searchCampaigns(
-        filter: CampaignSearchFilter(
-          causeIds: this.filterData.filterCauseIds.isEmpty
-              ? null
-              : filterData.filterCauseIds.toList(),
-          completed: filterData.filterCompleted == true ? true : null,
-          recommended: filterData.filterRecommended == true ? true : null,
-          releasedSince: filterData.filterNew == true ? newSinceDate() : null,
-          query: searchBarValue,
-        ),
-        offset: 0 // TODO: offset
-        );
+    if (!campaigns.canLoadMore()) return;
+
+    campaigns = LoadingMore(items: campaigns.items);
+
+    SearchResponse<ListCampaign> response =
+        await _searchService.searchCampaigns(
+      filter: CampaignSearchFilter(
+        causeIds: this.filterData.filterCauseIds.isEmpty
+            ? null
+            : filterData.filterCauseIds.toList(),
+        completed: filterData.filterCompleted == true ? true : null,
+        recommended: filterData.filterRecommended == true ? true : null,
+        releasedSince: filterData.filterNew == true ? newSinceDate() : null,
+        query: searchBarValue,
+      ),
+      offset: campaigns.offset(),
+    );
+
+    campaigns = Data(
+      items: campaigns.items + response.items,
+      hasReachedMax: response.hasReachedMax,
+    );
     notifyListeners();
   }
 

@@ -22,7 +22,7 @@ class ExploreLearningResourceTab extends StatelessWidget {
         CompletedFilter(viewModel: viewModel),
       ],
       onBottomReached: () => {
-        viewModel.searchLearningResources(viewModel.learningResources.offset()),
+        viewModel.searchLearningResources(),
       },
       pagingState: viewModel.learningResources,
       itemBuilder: (learningResource) => Container(
