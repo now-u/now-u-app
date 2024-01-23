@@ -45,7 +45,7 @@ class ExploreTab<T> extends StatelessWidget {
     return ListView.builder(
       itemCount: itemCount(),
       itemBuilder: (BuildContext context, int index) {
-        if (pagingState is Data && index == itemCount()) {
+        if (pagingState is Data && index == itemCount() - 1) {
           onBottomReached();
         }
 
@@ -56,7 +56,7 @@ class ExploreTab<T> extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else if (pagingState is LoadingMore && index == itemCount() - 1) {
-          Container(
+          return Container(
             height: 60,
             child: const Center(
               child: CircularProgressIndicator(),
