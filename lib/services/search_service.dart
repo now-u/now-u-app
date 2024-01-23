@@ -474,8 +474,9 @@ class SearchService {
     );
   }
 
-  Future<List<NewsArticle>> searchNewsArticles({
+  Future<SearchResponse<NewsArticle>> searchNewsArticles({
     NewsArticleSearchFilter? filter,
+    int offset = 0,
   }) async {
     const limit = 20;
 
@@ -483,8 +484,13 @@ class SearchService {
       _meiliSearchClient.index(SearchIndexName.NEWS_ARTICLES),
       filter,
       _searchHitsToNewsArticles,
-      0,
+      offset,
       limit,
+    ).then(
+      (value) => SearchResponse(
+        items: value,
+        hasReachedMax: value.length < limit,
+      ),
     );
   }
 

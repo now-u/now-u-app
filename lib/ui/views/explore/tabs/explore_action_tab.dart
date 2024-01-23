@@ -12,7 +12,7 @@ class ExploreActionTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExploreTabNew(
+    return ExploreTab(
       filterChips: [
         CausesFilter(viewModel: viewModel),
         TimeFilter(viewModel: viewModel),

@@ -6,12 +6,12 @@ import 'package:nowu/services/bottom_sheet_service.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:nowu/ui/bottom_sheets/explore_filter/explore_filter_sheet.dart';
-import 'package:nowu/ui/views/explore/tabs/explore_tab.dart';
 import 'package:nowu/utils/new_since.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tuple/tuple.dart';
 
 import '../../../services/model/search/search_response.dart';
+import '../../paging/paging_state.dart';
 import 'explore_page_view.form.dart';
 
 enum ExploreSectionType {
@@ -64,7 +64,7 @@ class ExplorePageViewModel extends FormViewModel {
   PagingState actions = InitialLoading();
   PagingState learningResources = InitialLoading();
   PagingState campaigns = InitialLoading();
-  List<NewsArticle> newsArticles = [];
+  PagingState newsArticles = InitialLoading();
   ResourcesSearchResult? allSearchResult;
 
   Future<void> search() {
@@ -170,7 +170,12 @@ class ExplorePageViewModel extends FormViewModel {
   }
 
   Future<void> searchNewsArticles() async {
-    newsArticles = await _searchService.searchNewsArticles(
+    if (!newsArticles.canLoadMore()) return;
+
+    newsArticles = LoadingMore(items: newsArticles.items);
+
+    SearchResponse<NewsArticle> response =
+        await _searchService.searchNewsArticles(
       filter: NewsArticleSearchFilter(
         causeIds: this.filterData.filterCauseIds.isEmpty
             ? null
@@ -178,6 +183,12 @@ class ExplorePageViewModel extends FormViewModel {
         releasedSince: filterData.filterNew == true ? newSinceDate() : null,
         query: searchBarValue,
       ),
+      offset: newsArticles.offset(),
+    );
+
+    newsArticles = Data(
+      items: newsArticles.items + response.items,
+      hasReachedMax: response.hasReachedMax,
     );
     notifyListeners();
   }

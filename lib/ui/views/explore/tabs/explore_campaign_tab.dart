@@ -12,7 +12,7 @@ class ExploreCampaignTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExploreTabNew(
+    return ExploreTab(
       filterChips: [
         CausesFilter(viewModel: viewModel),
         NewFilter(viewModel: viewModel),

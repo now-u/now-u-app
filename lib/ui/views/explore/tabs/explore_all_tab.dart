@@ -15,7 +15,7 @@ class ExploreAllTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExploreTab(
+    return ExploreTabHorizontal(
       filterChips: [
         CausesFilter(viewModel: viewModel),
         NewFilter(viewModel: viewModel),
@@ -81,7 +81,6 @@ class ExploreAllTab extends StatelessWidget {
           isLoading: viewModel.allSearchResult == null,
         ),
       ],
-      onBottomReached: () => {},
     );
   }
 }

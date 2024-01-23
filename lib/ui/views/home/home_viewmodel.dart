@@ -110,7 +110,7 @@ class HomeViewModel extends BaseViewModel {
             filter: NewsArticleSearchFilter(causeIds: causesFilter),
           )
           .then(
-            (value) => _inTheNews = value
+            (value) => _inTheNews = value.items
                 .map((action) => NewsArticleExploreTileData(action))
                 .toList(),
           ),

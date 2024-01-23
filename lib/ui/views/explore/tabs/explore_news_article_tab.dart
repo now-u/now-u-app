@@ -13,23 +13,24 @@ class ExploreNewsArticleTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExploreTab(
+      pagingState: viewModel.newsArticles,
       filterChips: [
         CausesFilter(viewModel: viewModel),
       ],
-      filterResults: viewModel.newsArticles.map<Widget>(
-        (article) => Container(
-          // TODO Create shared constant for these/ pull. from ExploreSectionArgs
-          height: 400,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: ExploreNewsArticleTile(
-              NewsArticleExploreTileData(article),
-              onTap: () => viewModel.openNewsArticle(article),
-            ),
+      itemBuilder: (newsArticle) => Container(
+        // TODO Create shared constant for these/ pull. from ExploreSectionArgs
+        height: 400,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: ExploreNewsArticleTile(
+            NewsArticleExploreTileData(newsArticle),
+            onTap: () => viewModel.openNewsArticle(newsArticle),
           ),
         ),
       ),
-      onBottomReached: () => {},
+      onBottomReached: () => {
+        viewModel.searchNewsArticles(),
+      },
     );
   }
 }

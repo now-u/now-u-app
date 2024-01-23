@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:nowu/utils/intersperse.dart';
 
-class ExploreTab extends StatelessWidget {
+import '../../../paging/paging_state.dart';
+import 'filters_container.dart';
+
+class ExploreTabHorizontal extends StatelessWidget {
   final Iterable<Widget> filterChips;
   final Iterable<Widget> filterResults;
-  final VoidCallback onBottomReached;
 
-  const ExploreTab({
+  const ExploreTabHorizontal({
     required this.filterChips,
     required this.filterResults,
-    required this.onBottomReached,
   });
 
   @override
@@ -17,44 +17,23 @@ class ExploreTab extends StatelessWidget {
     return ListView.builder(
       itemCount: filterResults.length + 1,
       itemBuilder: (BuildContext context, int index) {
-        if (index == filterResults.length - 0) {
-          onBottomReached();
-        }
-
         if (index == 0) {
-          return Container(
-            // TODO Do min height possible if possible
-            height: 60,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: ListView(
-                //TODO Not working and probbaly wrong place to define
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                children: filterChips
-                    .intersperseOuter(const SizedBox(width: 8))
-                    .toList(),
-              ),
-            ),
-          );
+          return FiltersContainer(filterChips: filterChips);
         } else {
-          // TODO: Pass list or map before
           return filterResults.toList()[index - 1];
-
-          const SizedBox(height: 8);
         }
       },
     );
   }
 }
 
-class ExploreTabNew<T> extends StatelessWidget {
+class ExploreTab<T> extends StatelessWidget {
   final Iterable<Widget> filterChips;
   final PagingState<T> pagingState;
   final VoidCallback onBottomReached;
   final Function(T) itemBuilder;
 
-  const ExploreTabNew({
+  const ExploreTab({
     required this.filterChips,
     required this.pagingState,
     required this.onBottomReached,
@@ -66,25 +45,15 @@ class ExploreTabNew<T> extends StatelessWidget {
     return ListView.builder(
       itemCount: itemCount(),
       itemBuilder: (BuildContext context, int index) {
-        if (pagingState is Data && index == pagingState.items.length) {
+        if (pagingState is Data && index == itemCount()) {
           onBottomReached();
         }
 
         if (index == 0) {
-          return Container(
-            // TODO Do min height possible if possible
-            height: 60,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: ListView(
-                //TODO Not working and probbaly wrong place to define
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                children: filterChips
-                    .intersperseOuter(const SizedBox(width: 8))
-                    .toList(),
-              ),
-            ),
+          return FiltersContainer(filterChips: filterChips);
+        } else if (pagingState is InitialLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
           );
         } else if (pagingState is LoadingMore && index == itemCount() - 1) {
           Container(
@@ -92,7 +61,7 @@ class ExploreTabNew<T> extends StatelessWidget {
             child: const Center(
               child: CircularProgressIndicator(),
             ),
-          )
+          );
         } else {
           return Padding(
             padding: const EdgeInsets.only(bottom: 8),
@@ -103,53 +72,5 @@ class ExploreTabNew<T> extends StatelessWidget {
     );
   }
 
-  int itemCount() {
-    switch (pagingState.runtimeType) {
-      case InitialLoading:
-        return 1;
-      case Data:
-        return pagingState.items.length + 1;
-      case LoadingMore:
-        return pagingState.items.length + 2;
-      default:
-        throw Exception('Unknown state');
-    }
-  }
-}
-
-sealed class PagingState<T> {
-  final List<T> items;
-  final bool hasReachedMax;
-
-  PagingState(this.items, this.hasReachedMax);
-
-  int offset() => items.length;
-
-  bool canLoadMore() =>
-      (this is InitialLoading || this is Data) && !hasReachedMax;
-
-  int itemsCount() => this is LoadingMore ? items.length + 1 : items.length;
-}
-
-class InitialLoading extends PagingState {
-  InitialLoading() : super([], false);
-}
-
-class Data<T> extends PagingState {
-  final List<T> items;
-  final bool hasReachedMax;
-
-  Data({
-    required this.items,
-    required this.hasReachedMax,
-  }) : super(
-          items,
-          hasReachedMax,
-        );
-}
-
-class LoadingMore<T> extends PagingState {
-  final List<T> items;
-
-  LoadingMore({required this.items}) : super(items, false);
+  int itemCount() => pagingState.itemsCount() + 1;
 }
