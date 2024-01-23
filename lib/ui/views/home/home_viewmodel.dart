@@ -96,7 +96,7 @@ class HomeViewModel extends BaseViewModel {
                 ActionSearchFilter(causeIds: causesFilter, completed: false),
           )
           .then(
-            (value) => _myActions = value
+            (value) => _myActions = value.items
                 .map(
                   (action) => ActionExploreTileData(
                     action,

@@ -414,7 +414,7 @@ class SearchService {
     return responseSerializer(_orderSearchResults(result.hits, searchQuery));
   }
 
-  Future<List<ListAction>> searchActions({
+  Future<SearchResponse<ListAction>> searchActions({
     ActionSearchFilter? filter,
     int offset = 0,
   }) async {
@@ -426,6 +426,11 @@ class SearchService {
       _searchHitsToActions,
       offset,
       limit,
+    ).then(
+      (value) => SearchResponse(
+        items: value,
+        hasReachedMax: value.length < limit,
+      ),
     );
   }
 

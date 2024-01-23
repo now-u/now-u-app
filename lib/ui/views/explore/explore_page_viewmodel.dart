@@ -61,7 +61,7 @@ class ExplorePageViewModel extends FormViewModel {
   }
 
   List<Cause> get causes => _causesService.causes;
-  List<ListAction> actions = [];
+  PagingState actions = InitialLoading();
   PagingState learningResources = InitialLoading();
   PagingState campaigns = InitialLoading();
   List<NewsArticle> newsArticles = [];
@@ -80,8 +80,13 @@ class ExplorePageViewModel extends FormViewModel {
   }
 
   Future<void> searchActions() async {
+    if (!actions.canLoadMore()) return;
+
+    actions = LoadingMore(items: actions.items);
+
     // Remove search fallback to use user causes
-    actions = await _searchService.searchActions(
+    SearchResponse<ListAction> response = await _searchService.searchActions(
+      offset: actions.offset(),
       filter: ActionSearchFilter(
         causeIds: this.filterData.filterCauseIds.isEmpty
             ? null
@@ -97,6 +102,11 @@ class ExplorePageViewModel extends FormViewModel {
         releasedSince: filterData.filterNew == true ? newSinceDate() : null,
         query: searchBarValue,
       ),
+    );
+
+    actions = Data(
+      items: actions.items + response.items,
+      hasReachedMax: response.hasReachedMax,
     );
     notifyListeners();
   }

@@ -86,11 +86,18 @@ class ExploreTabNew<T> extends StatelessWidget {
               ),
             ),
           );
+        } else if (pagingState is LoadingMore && index == itemCount() - 1) {
+          Container(
+            height: 60,
+            child: const Center(
+              child: CircularProgressIndicator(),
+            ),
+          )
         } else {
-          // TODO: Pass list or map before
-          return itemBuilder(pagingState.items.toList()[index - 1]);
-
-          const SizedBox(height: 8);
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: itemBuilder(pagingState.items.toList()[index - 1]),
+          );
         }
       },
     );
@@ -118,7 +125,10 @@ sealed class PagingState<T> {
 
   int offset() => items.length;
 
-  bool canLoadMore() => this is Data && !hasReachedMax;
+  bool canLoadMore() =>
+      (this is InitialLoading || this is Data) && !hasReachedMax;
+
+  int itemsCount() => this is LoadingMore ? items.length + 1 : items.length;
 }
 
 class InitialLoading extends PagingState {
@@ -143,10 +153,3 @@ class LoadingMore<T> extends PagingState {
 
   LoadingMore({required this.items}) : super(items, false);
 }
-
-// class Error extends PagingState {
-//   final List<String> items;
-//   final bool hasReachedMax;
-//
-//   Error(this.items, this.hasReachedMax) : super(items, hasReachedMax);
-// }
