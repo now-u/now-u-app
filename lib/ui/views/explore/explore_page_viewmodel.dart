@@ -67,15 +67,13 @@ class ExplorePageViewModel extends FormViewModel {
   ResourcesSearchResult? allSearchResult;
 
   Future<void> search() {
-    return Future.wait(
-      [
-        searchActions(),
-        searchLearningResources(),
-        searchCampaigns(),
-        searchNewsArticles(),
-        searchAll(),
-      ],
-    );
+    return (
+      searchActions(),
+      searchLearningResources(),
+      searchCampaigns(),
+      searchNewsArticles(),
+      searchAll(),
+    ).wait;
   }
 
   Future<void> searchActions() async {

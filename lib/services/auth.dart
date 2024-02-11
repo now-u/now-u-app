@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:logging/logging.dart';
 import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/shared_preferences_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide User;
@@ -18,10 +19,11 @@ class AuthenticationService {
   final _sharedPreferencesService = locator<SharedPreferencesService>();
   final _apiService = locator<ApiService>();
   final _logger = Logger('AuthenticationService');
+  final _analyticsService = locator<AnalyticsService>();
 
   SupabaseClient get _client => Supabase.instance.client;
 
-  Future init() async {
+  Future<void> init() async {
     await Supabase.initialize(
       url: 'https://uqwaxxhrkpbzvjdlfdqe.supabase.co',
       anonKey:
@@ -34,18 +36,28 @@ class AuthenticationService {
       _apiService.setToken(token!);
     }
 
-    _client.auth.onAuthStateChange.listen((data) {
+    _client.auth.onAuthStateChange.listen((data) async {
       if (data.event == AuthChangeEvent.signedIn ||
           data.event == AuthChangeEvent.tokenRefreshed) {
         _logger.info('Updated user token for causes serivice client');
         _apiService.setToken(token!);
       }
+
+      switch (data.event) {
+        case AuthChangeEvent.signedIn:
+        case AuthChangeEvent.signedOut:
+          return await _analyticsService.logAuthEvent(data.event);
+        default:
+          break;
+      }
+
       // TODO Handle logout
     });
   }
 
   String? get token => _client.auth.currentSession?.accessToken;
   bool get isAuthenticated => _client.auth.currentSession != null;
+  String? get userId => _client.auth.currentSession?.user.id;
 
   bool isUserLoggedIn() {
     return token != null;
