@@ -80,7 +80,7 @@ List<MenuItemData> getMenuItems(MoreViewModel viewModel) => [
         title: 'Send us an email',
         icon: CustomIcons.ic_email,
         action: LinkMenuItemAction(
-          'mailto:hello@now-.com?subject=Hi',
+          'mailto:hello@now-u.com?subject=Hi',
           isExternal: true,
         ),
       ),
