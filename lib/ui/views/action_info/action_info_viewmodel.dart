@@ -1,4 +1,5 @@
 import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/dialog_service.dart';
 import 'package:nowu/services/navigation_service.dart';
@@ -13,6 +14,7 @@ class ActionInfoViewModel extends FutureViewModel<Action> {
   final _causesService = locator<CausesService>();
   final _userService = locator<UserService>();
   final _dialogService = locator<DialogService>();
+  final _analyticsService = locator<AnalyticsService>();
 
   final int actionId;
 
@@ -28,7 +30,7 @@ class ActionInfoViewModel extends FutureViewModel<Action> {
 
     setBusy(true);
     try {
-      await _causesService.completeAction(data!.id);
+      await _causesService.completeAction(data!);
       setBusy(false);
       _dialogService.showActionCompletedDialog();
       notifySourceChanged();
@@ -45,12 +47,16 @@ class ActionInfoViewModel extends FutureViewModel<Action> {
 
   Future removeActionStatus() async {
     setBusy(true);
-    await _causesService.removeActionStatus(data!.id);
+    await _causesService.removeActionStatus(data!);
     setBusy(false);
     notifyListeners();
   }
 
-  void launchAction() {
+  Future launchAction() async {
+    await _analyticsService.logActionEvent(
+      data!,
+      ActionEvent.TakeActionClicked,
+    );
     _navigationService.launchLink(data!.link);
   }
 
