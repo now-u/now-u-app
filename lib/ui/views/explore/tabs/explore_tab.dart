@@ -48,5 +48,7 @@ class ExploreTab<T> extends StatelessWidget {
     );
   }
 
-  int itemCount() => pagingState.itemsCount() + 1;
+  // +1 for the filter chips, +1 for the loading indicator if state is LoadingMore
+  int itemCount() =>
+      pagingState.items.length + (pagingState is LoadingMore ? 1 : 2);
 }
