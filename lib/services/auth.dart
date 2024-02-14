@@ -1,11 +1,11 @@
 import 'dart:async';
 
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logging/logging.dart';
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/shared_preferences_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide User;
-import 'package:google_sign_in/google_sign_in.dart';
 
 const LOGIN_REDIRECT_URL = 'com.nowu.app://login-callback/';
 
@@ -109,8 +109,8 @@ class AuthenticationService {
         .signInWithOAuth(Provider.facebook, redirectTo: LOGIN_REDIRECT_URL);
   }
 
-  Future signInWithApple() async {
-    await _client.auth.signInWithApple();
+  Future<AuthResponse> signInWithApple() async {
+    return _client.auth.signInWithApple();
   }
 
   Future signInWithCode(String email, String code) async {
@@ -120,8 +120,7 @@ class AuthenticationService {
   }
 
   StreamSubscription<AuthState> onAuthStateChange(
-    void onData(AuthState event),
-  ) {
+      void onData(AuthState event),) {
     return _client.auth.onAuthStateChange.listen(onData);
   }
 
@@ -130,5 +129,9 @@ class AuthenticationService {
     // TODO Move to above
     // TODO Do we still need to store user token in shared preferences?
     await _sharedPreferencesService.clearUserToken();
+  }
+
+  String? getCurrentUserName() {
+    return _client.auth.currentUser?.userMetadata?['full_name'];
   }
 }
