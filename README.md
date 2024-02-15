@@ -2,9 +2,15 @@
 
 ## Welcome! :wave:
 
-This is the official repository for the now-u app. now-u is a non-profit started by James and Lizzie Elgar, aimed at driving positive change through coordinated monthly campaigns and actions. Volunteers from all over the world contributed to now-u, and are continuing to do so today, from app and web development, through designing and marketing. If you are reading this, there is a possibility you are a volunteer who has just been onboarded onto the team, and if this is the case, keep on reading! If not we appricate any contributions and are always looking for new members of the team so please don't hesitate to reach out.
+This is the official repository for the now-u app. now-u is a non-profit started by James and Lizzie
+Elgar, aimed at driving positive change through coordinated monthly campaigns and actions.
+Volunteers from all over the world contributed to now-u, and are continuing to do so today, from app
+and web development, through designing and marketing. If you are reading this, there is a
+possibility you are a volunteer who has just been onboarded onto the team, and if this is the case,
+keep on reading! If not we appreciate any contributions and are always looking for new members of
+the team so please don't hesitate to reach out.
 
-If you want to learn more about now-u: 
+If you want to learn more about now-u:
 Checkout our website https://now-u.com
 
 ## Development :computer:
@@ -27,13 +33,26 @@ TLDR guide:
 2. Clone the repo
 3. Run it - `flutter run`
 
+### Translations
+
+We use [intl](https://pub.dev/packages/intl) for translations, for the best experience please
+install translations plugin for your IDE:
+- [Android Studio](https://plugins.jetbrains.com/plugin/13666-flutter-intl)
+- [VSCode](https://marketplace.visualstudio.com/items?itemName=localizely.flutter-intl)
+Plugin should automatically generate `messages` files inside `generated/intl` if not
+run `flutter pub run intl_translation:generate_from_arb lib/l10n/intl_en.arb lib/l10n/intl_messages.arb lib/l10n/intl_*.arb`
+
+To add new translations change them according to documentation inside `lib/l10n`.
+
 ### Where to start? :information_desk_person:
 
-To find out what needs doing checkout the [issues](https://github.com/now-u/now-u-app/issues). Select an issue that looks interesting to you and double check its not been assigned/in-progress. Issues have priorities but the real priority is what you find interesting.
+To find out what needs doing checkout the [issues](https://github.com/now-u/now-u-app/issues).
+Select an issue that looks interesting to you and double check its not been assigned/in-progress.
+Issues have priorities but the real priority is what you find interesting.
 
 ### Testing
 
-To generate mockito mocks run 
+To generate mockito mocks run
 
 ```
 flutter pub run build_runner build
