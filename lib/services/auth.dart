@@ -11,6 +11,7 @@ const LOGIN_REDIRECT_URL = 'com.nowu.app://login-callback/';
 
 class LoginException implements Exception {
   String message;
+
   LoginException(this.message);
 }
 
@@ -45,6 +46,7 @@ class AuthenticationService {
   }
 
   String? get token => _client.auth.currentSession?.accessToken;
+
   bool get isAuthenticated => _client.auth.currentSession != null;
 
   bool isUserLoggedIn() {
@@ -120,7 +122,8 @@ class AuthenticationService {
   }
 
   StreamSubscription<AuthState> onAuthStateChange(
-      void onData(AuthState event),) {
+    void onData(AuthState event),
+  ) {
     return _client.auth.onAuthStateChange.listen(onData);
   }
 
