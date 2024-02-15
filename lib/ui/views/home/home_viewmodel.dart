@@ -29,9 +29,11 @@ class HomeViewModel extends BaseViewModel {
 
   List<ActionExploreTileData>? get myActions => _myActions;
   List<CampaignExploreTileData>? _recommendedCampaigns;
+
   List<CampaignExploreTileData>? get recommendedCampaigns =>
       _recommendedCampaigns;
   List<CampaignExploreTileData>? _ofTheMonthCampaigns;
+
   List<CampaignExploreTileData>? get ofTheMonthCampaigns =>
       _ofTheMonthCampaigns;
   List<NewsArticleExploreTileData>? _inTheNews;
@@ -60,7 +62,7 @@ class HomeViewModel extends BaseViewModel {
             ),
           )
           .then(
-            (value) => _recommendedCampaigns = value
+            (value) => _recommendedCampaigns = value.items
                 .map(
                   (campaign) => CampaignExploreTileData(
                     campaign,
@@ -78,7 +80,7 @@ class HomeViewModel extends BaseViewModel {
             ),
           )
           .then(
-            (value) => _ofTheMonthCampaigns = value
+            (value) => _ofTheMonthCampaigns = value.items
                 .map(
                   (campaign) => CampaignExploreTileData(
                     campaign,
@@ -93,7 +95,7 @@ class HomeViewModel extends BaseViewModel {
                 ActionSearchFilter(causeIds: causesFilter, completed: false),
           )
           .then(
-            (value) => _myActions = value
+            (value) => _myActions = value.items
                 .map(
                   (action) => ActionExploreTileData(
                     action,
@@ -107,7 +109,7 @@ class HomeViewModel extends BaseViewModel {
             filter: NewsArticleSearchFilter(causeIds: causesFilter),
           )
           .then(
-            (value) => _inTheNews = value
+            (value) => _inTheNews = value.items
                 .map((action) => NewsArticleExploreTileData(action))
                 .toList(),
           ),
