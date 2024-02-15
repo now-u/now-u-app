@@ -1,6 +1,7 @@
 import 'package:logging/logging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/causes_service.dart';
@@ -77,6 +78,8 @@ class StartupViewModel extends BaseViewModel with PostLoginViewModelMixin {
 
     if (_authenticationService.isAuthenticated) {
       _logger.info('User is authenticated');
+      locator<AnalyticsService>()
+          .setUserProperties(userId: _authenticationService.userId!);
       return fetchUserAndNavigatePostLogin();
     }
 

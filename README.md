@@ -39,6 +39,16 @@ To generate mockito mocks run
 flutter pub run build_runner build
 ```
 
+### Debugging analytics
+
+To debug analytics run the app in debug mode and run the following command
+
+```
+adb shell setprop debug.firebase.analytics.app com.nowu.app
+```
+
+then visit https://analytics.google.com/analytics/web/#/a164779666p230669081/admin/debugview/overview
+
 ### Documentation :book:
 
 For more detailed documentation checkout the [wiki](https://github.com/now-u/now-u-app/wiki)!

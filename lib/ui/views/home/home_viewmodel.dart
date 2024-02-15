@@ -52,8 +52,7 @@ class HomeViewModel extends BaseViewModel {
     List<int>? causesFilter =
         selectedCausesId?.isEmpty == false ? selectedCausesId : null;
 
-    // TODO Multiple futures
-    await Future.wait([
+    await (
       _searchService
           .searchCampaigns(
             filter: CampaignSearchFilter(
@@ -114,7 +113,7 @@ class HomeViewModel extends BaseViewModel {
                 .map((action) => NewsArticleExploreTileData(action))
                 .toList(),
           ),
-    ]);
+    ).wait;
     notifyListeners();
   }
 
