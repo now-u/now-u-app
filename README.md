@@ -39,8 +39,8 @@ We use [intl](https://pub.dev/packages/intl) for translations, for the best expe
 install translations plugin for your IDE:
 - [Android Studio](https://plugins.jetbrains.com/plugin/13666-flutter-intl)
 - [VSCode](https://marketplace.visualstudio.com/items?itemName=localizely.flutter-intl)
-Plugin should automatically generate `messages` files inside `generated/intl` if not
-run `flutter pub run intl_translation:generate_from_arb lib/l10n/intl_en.arb lib/l10n/intl_messages.arb lib/l10n/intl_*.arb`
+  Plugin should automatically generate `messages` files inside `generated/intl` if not
+  run `/Users/kacper/development/flutter/bin/flutter --no-color pub global run intl_utils:generate`
 
 To add new translations change them according to documentation inside `lib/l10n`.
 
