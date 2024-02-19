@@ -31,6 +31,10 @@ TLDR guide:
 
 To find out what needs doing checkout the [issues](https://github.com/now-u/now-u-app/issues). Select an issue that looks interesting to you and double check its not been assigned/in-progress. Issues have priorities but the real priority is what you find interesting.
 
+### Formatting
+
+During code review CI both dart analyzer and dart format are run. These checks can be run locally (with auto fix) with the command `make format`. (NOTE: `make` is a prerequisite - for the windows users among us see: https://stackoverflow.com/a/32127632/13473952)
+
 ### Testing
 
 To generate mockito mocks run 
