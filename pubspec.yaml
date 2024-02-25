@@ -51,12 +51,14 @@ dependencies:
   device_info: ^2.0.2
   
   # Firebase
-  firebase_analytics: ^10.2.0
-  firebase_crashlytics: ^3.1.0
-  firebase_messaging: ^14.4.0
-  firebase_dynamic_links: ^5.1.0
-  firebase_remote_config: ^4.0.0
-  firebase_core: ^2.9.0
+  firebase_analytics: ^10.8.6
+  firebase_crashlytics: ^3.4.15
+  firebase_messaging: ^14.7.16
+  firebase_dynamic_links: ^5.4.14
+  firebase_remote_config: ^4.3.14
+  firebase_core: ^2.25.4
+
+  dio: ^5.2.1+1
   collection: ^1.15.0-nullsafety.4
   json_serializable: ^6.3.1
   json_annotation: ^4.6.0
@@ -73,7 +75,6 @@ dependencies:
 
   causeApiClient:
     path: openapi/causeApi
-  dio: ^5.2.1+1
 
 dev_dependencies:
   flutter_test:
