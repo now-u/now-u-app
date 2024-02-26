@@ -58,13 +58,15 @@ dependencies:
   firebase_remote_config: ^4.3.14
   firebase_core: ^2.25.4
 
-  supabase_flutter: ^1.10.25
-  meilisearch: ^0.14.0
-  google_sign_in: ^6.1.6
+  faker: ^2.0.0
 
-  sentry_flutter: ^7.9.0
-  sentry_dio: ^7.9.0
-  sentry_logging: ^7.9.0
+  #  TODO: Update with Flutter
+  supabase_flutter: ^1.10.25
+  meilisearch: ^0.15.0
+  google_sign_in: ^6.2.1
+
+  sentry_flutter: ^7.16.1
+  sentry_logging: ^7.16.1
   logging: ^1.2.0
 
   causeApiClient:
