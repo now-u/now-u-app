@@ -12,6 +12,7 @@ const LOGIN_REDIRECT_URL = 'com.nowu.app://login-callback/';
 
 class LoginException implements Exception {
   String message;
+
   LoginException(this.message);
 }
 
@@ -56,7 +57,9 @@ class AuthenticationService {
   }
 
   String? get token => _client.auth.currentSession?.accessToken;
+
   bool get isAuthenticated => _client.auth.currentSession != null;
+
   String? get userId => _client.auth.currentSession?.user.id;
 
   bool isUserLoggedIn() {
@@ -117,8 +120,10 @@ class AuthenticationService {
   }
 
   Future signInWithFacebook() async {
-    await _client.auth.signInWithOAuth(OAuthProvider.facebook,
-        redirectTo: LOGIN_REDIRECT_URL);
+    await _client.auth.signInWithOAuth(
+      OAuthProvider.facebook,
+      redirectTo: LOGIN_REDIRECT_URL,
+    );
   }
 
   Future signInWithApple() async {
