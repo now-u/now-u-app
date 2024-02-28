@@ -39,7 +39,6 @@ dependencies:
   rect_getter: ^1.1.0
   permission_handler: ^11.3.0
   time: ^2.1.4
-  #  TODO: Update with Flutter
   intl: ^0.18.1
   flutter_markdown: ^0.6.20
   cached_network_image: ^3.3.1
@@ -61,14 +60,13 @@ dependencies:
   dio: ^5.4.1
   faker: ^2.0.0
 
-  #  TODO: Update with Flutter
-  supabase_flutter: ^1.10.25
+  supabase_flutter: ^2.3.4
   meilisearch: ^0.15.0
   google_sign_in: ^6.2.1
 
-  sentry_flutter: ^7.16.1
-  sentry_logging: ^7.16.1
-  sentry_dio: ^7.16.1
+  sentry_flutter: ^7.6.0
+  sentry_logging: ^7.6.0
+  sentry_dio: ^7.6.0
   logging: ^1.2.0
 
   causeApiClient:
