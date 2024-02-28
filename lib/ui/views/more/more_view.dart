@@ -38,7 +38,7 @@ List<MenuItemData> getMenuItems(MoreViewModel viewModel) => [
       const SectionHeadingMenuItem(title: 'The app'),
       const ActionMenuItem(
         title: 'About Us',
-        icon: FontAwesomeIcons.infoCircle,
+        icon: FontAwesomeIcons.circleInfo,
         action: LinkMenuItemAction(ABOUT_US_URL),
       ),
       const ActionMenuItem(
