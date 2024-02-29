@@ -21,18 +21,20 @@ class ExploreLearningResourceTab extends StatelessWidget {
         RecommendedFilter(viewModel: viewModel),
         CompletedFilter(viewModel: viewModel),
       ],
-      filterResults: viewModel.learningResources.map<Widget>(
-        (learningResource) => Container(
-          height: 160,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: ExploreLearningResourceTile(
-              LearningResourceExploreTileData(
-                learningResource,
-                viewModel.isLearningResourceComplete(learningResource),
-              ),
-              onTap: () => viewModel.openLearningResource(learningResource),
+      onBottomReached: () => {
+        viewModel.searchLearningResources(),
+      },
+      pagingState: viewModel.learningResources,
+      itemBuilder: (learningResource) => Container(
+        height: 160,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: ExploreLearningResourceTile(
+            LearningResourceExploreTileData(
+              learningResource,
+              viewModel.isLearningResourceComplete(learningResource),
             ),
+            onTap: () => viewModel.openLearningResource(learningResource),
           ),
         ),
       ),

@@ -90,29 +90,6 @@ ExploreTabData getTabData(ExploreTabKey tab) {
   }
 }
 
-final exploreTabs = [
-  ExploreTabData(
-    title: 'All',
-    child: (viewModel, changeTab) => ExploreAllTab(viewModel, changeTab),
-  ),
-  ExploreTabData(
-    title: 'Actions',
-    child: (viewModel, _) => ExploreActionTab(viewModel),
-  ),
-  ExploreTabData(
-    title: 'Learn',
-    child: (viewModel, _) => ExploreLearningResourceTab(viewModel),
-  ),
-  ExploreTabData(
-    title: 'Campaigns',
-    child: (viewModel, _) => ExploreCampaignTab(viewModel),
-  ),
-  ExploreTabData(
-    title: 'News',
-    child: (viewModel, _) => ExploreNewsArticleTab(viewModel),
-  ),
-];
-
 class ExploreTabs extends StatefulWidget {
   final ExplorePageViewModel viewModel;
   final TextEditingController searchBarController;
@@ -134,7 +111,8 @@ class _ExploreTabsState extends State<ExploreTabs>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: exploreTabs.length, vsync: this);
+    _tabController =
+        TabController(length: ExploreTabKey.values.length, vsync: this);
   }
 
   @override

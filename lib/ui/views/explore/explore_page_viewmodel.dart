@@ -1,6 +1,5 @@
 import 'package:causeApiClient/causeApiClient.dart';
 import 'package:collection/collection.dart';
-
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/models/time.dart';
 import 'package:nowu/services/bottom_sheet_service.dart';
@@ -11,6 +10,8 @@ import 'package:nowu/utils/new_since.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tuple/tuple.dart';
 
+import '../../../services/model/search/search_response.dart';
+import '../../paging/paging_state.dart';
 import 'explore_page_view.form.dart';
 
 enum ExploreSectionType {
@@ -60,10 +61,10 @@ class ExplorePageViewModel extends FormViewModel {
   }
 
   List<Cause> get causes => _causesService.causes;
-  List<ListAction> actions = [];
-  List<LearningResource> learningResources = [];
-  List<ListCampaign> campaigns = [];
-  List<NewsArticle> newsArticles = [];
+  PagingState actions = InitialLoading();
+  PagingState learningResources = InitialLoading();
+  PagingState campaigns = InitialLoading();
+  PagingState newsArticles = InitialLoading();
   ResourcesSearchResult? allSearchResult;
 
   Future<void> search() {
@@ -77,8 +78,13 @@ class ExplorePageViewModel extends FormViewModel {
   }
 
   Future<void> searchActions() async {
+    if (!actions.canLoadMore()) return;
+
+    actions = LoadingMore(items: actions.items);
+
     // Remove search fallback to use user causes
-    actions = await _searchService.searchActions(
+    SearchResponse<ListAction> response = await _searchService.searchActions(
+      offset: actions.offset(),
       filter: ActionSearchFilter(
         causeIds: this.filterData.filterCauseIds.isEmpty
             ? null
@@ -95,11 +101,22 @@ class ExplorePageViewModel extends FormViewModel {
         query: searchBarValue,
       ),
     );
+
+    actions = Data(
+      items: actions.items + response.items,
+      hasReachedMax: response.hasReachedMax,
+    );
     notifyListeners();
   }
 
   Future<void> searchLearningResources() async {
-    learningResources = await _searchService.searchLearningResources(
+    if (!learningResources.canLoadMore()) return;
+
+    learningResources = LoadingMore(items: learningResources.items);
+
+    SearchResponse<LearningResource> response =
+        await _searchService.searchLearningResources(
+      offset: learningResources.offset(),
       filter: LearningResourceSearchFilter(
         causeIds: this.filterData.filterCauseIds.isEmpty
             ? null
@@ -116,11 +133,21 @@ class ExplorePageViewModel extends FormViewModel {
         query: searchBarValue,
       ),
     );
+
+    learningResources = Data(
+      items: learningResources.items + response.items,
+      hasReachedMax: response.hasReachedMax,
+    );
     notifyListeners();
   }
 
   Future<void> searchCampaigns() async {
-    campaigns = await _searchService.searchCampaigns(
+    if (!campaigns.canLoadMore()) return;
+
+    campaigns = LoadingMore(items: campaigns.items);
+
+    SearchResponse<ListCampaign> response =
+        await _searchService.searchCampaigns(
       filter: CampaignSearchFilter(
         causeIds: this.filterData.filterCauseIds.isEmpty
             ? null
@@ -130,12 +157,23 @@ class ExplorePageViewModel extends FormViewModel {
         releasedSince: filterData.filterNew == true ? newSinceDate() : null,
         query: searchBarValue,
       ),
+      offset: campaigns.offset(),
+    );
+
+    campaigns = Data(
+      items: campaigns.items + response.items,
+      hasReachedMax: response.hasReachedMax,
     );
     notifyListeners();
   }
 
   Future<void> searchNewsArticles() async {
-    newsArticles = await _searchService.searchNewsArticles(
+    if (!newsArticles.canLoadMore()) return;
+
+    newsArticles = LoadingMore(items: newsArticles.items);
+
+    SearchResponse<NewsArticle> response =
+        await _searchService.searchNewsArticles(
       filter: NewsArticleSearchFilter(
         causeIds: this.filterData.filterCauseIds.isEmpty
             ? null
@@ -143,6 +181,12 @@ class ExplorePageViewModel extends FormViewModel {
         releasedSince: filterData.filterNew == true ? newSinceDate() : null,
         query: searchBarValue,
       ),
+      offset: newsArticles.offset(),
+    );
+
+    newsArticles = Data(
+      items: newsArticles.items + response.items,
+      hasReachedMax: response.hasReachedMax,
     );
     notifyListeners();
   }

@@ -8,6 +8,7 @@ import 'package:meilisearch/meilisearch.dart';
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:nowu/services/causes_service.dart';
+import 'package:nowu/services/model/search/search_response.dart';
 import 'package:tuple/tuple.dart';
 
 class SearchIndexName {
@@ -252,9 +253,7 @@ class LearningResourceSearchFilter
       filter.add(recommendedToMeiliSearchFilter());
     }
 
-    return SearchQuery(
-      filter: filter,
-    );
+    return SearchQuery(filter: filter);
   }
 }
 
@@ -394,51 +393,95 @@ class SearchService {
     MeiliSearchIndex index,
     ResourceSearchFilter? resourceSearchFilter,
     List<T> Function(List<Map<String, dynamic>>) responseSerializer,
+    int offset,
+    int limit,
   ) async {
     final searchQuery =
         resourceSearchFilter?.toMeilisearchQuery(_causesService.userInfo);
     final result = await index.search(
       resourceSearchFilter?.query,
-      searchQuery?.copyWith(limit: 100),
+      searchQuery?.copyWith(limit: limit, offset: offset),
     );
     return responseSerializer(_orderSearchResults(result.hits, searchQuery));
   }
 
-  Future<List<ListAction>> searchActions({ActionSearchFilter? filter}) async {
+  Future<SearchResponse<ListAction>> searchActions({
+    ActionSearchFilter? filter,
+    int offset = 0,
+  }) async {
+    const limit = 20;
+
     return _searchIndex(
       _meiliSearchClient.index(SearchIndexName.ACTIONS),
       filter,
       _searchHitsToActions,
+      offset,
+      limit,
+    ).then(
+      (value) => SearchResponse(
+        items: value,
+        hasReachedMax: value.length < limit,
+      ),
     );
   }
 
-  Future<List<ListCampaign>> searchCampaigns({
+  Future<SearchResponse<ListCampaign>> searchCampaigns({
     CampaignSearchFilter? filter,
+    int offset = 0,
   }) async {
+    const limit = 20;
+
     return _searchIndex(
       _meiliSearchClient.index(SearchIndexName.CAMPAIGNS),
       filter,
       _searchHitsToCampaign,
+      offset,
+      limit,
+    ).then(
+      (value) => SearchResponse(
+        items: value,
+        hasReachedMax: value.length < limit,
+      ),
     );
   }
 
-  Future<List<LearningResource>> searchLearningResources({
+  Future<SearchResponse<LearningResource>> searchLearningResources({
+    required int offset,
     LearningResourceSearchFilter? filter,
   }) async {
+    const limit = 20;
+
     return _searchIndex(
       _meiliSearchClient.index(SearchIndexName.LEARNING_RESOURCES),
       filter,
       _searchHitsToLearningResources,
+      offset,
+      limit,
+    ).then(
+      (value) => SearchResponse(
+        items: value,
+        hasReachedMax: value.length < limit,
+      ),
     );
   }
 
-  Future<List<NewsArticle>> searchNewsArticles({
+  Future<SearchResponse<NewsArticle>> searchNewsArticles({
     NewsArticleSearchFilter? filter,
+    int offset = 0,
   }) async {
+    const limit = 20;
+
     return _searchIndex(
       _meiliSearchClient.index(SearchIndexName.NEWS_ARTICLES),
       filter,
       _searchHitsToNewsArticles,
+      offset,
+      limit,
+    ).then(
+      (value) => SearchResponse(
+        items: value,
+        hasReachedMax: value.length < limit,
+      ),
     );
   }
 
