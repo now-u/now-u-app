@@ -10,8 +10,10 @@ import 'package:nowu/utils/new_since.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tuple/tuple.dart';
 
+import '../../../services/analytics.dart';
 import '../../../services/model/search/search_response.dart';
 import '../../paging/paging_state.dart';
+import 'explore_page_view.dart';
 import 'explore_page_view.form.dart';
 
 enum ExploreSectionType {
@@ -45,6 +47,7 @@ class ExplorePageViewModel extends FormViewModel {
   final _causesService = locator<CausesService>();
   final _searchService = locator<SearchService>();
   final _bottomSheetService = locator<BottomSheetService>();
+  final _analyticsService = locator<AnalyticsService>();
 
   BaseResourceSearchFilter searchFilter = const BaseResourceSearchFilter();
 
@@ -319,6 +322,10 @@ class ExplorePageViewModel extends FormViewModel {
 
   bool? isCampaignComplete(ListCampaign campaign) {
     return _causesService.campaignIsComplete(campaign.id);
+  }
+
+  void onTabChanged(ExploreTabKey tab) {
+    _analyticsService.setCustomRoute(tab.toString());
   }
 }
 
