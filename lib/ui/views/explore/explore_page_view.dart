@@ -141,7 +141,7 @@ class _ExploreTabsState extends State<ExploreTabs>
           isScrollable: true,
           controller: _tabController,
           labelStyle:
-          const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+              const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
           unselectedLabelColor: Colors.grey,
           unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w400),
           tabs: ExploreTabKey.values
@@ -155,7 +155,7 @@ class _ExploreTabsState extends State<ExploreTabs>
         children: ExploreTabKey.values
             .map(
               (tab) => getTabData(tab).child(
-            widget.viewModel,
+                widget.viewModel,
                 (ExploreTabKey tab) {
                   _viewModel?.onTabChanged(tab);
                   _tabController?.animateTo(tab.index);
