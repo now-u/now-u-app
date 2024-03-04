@@ -1,6 +1,5 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:logging/logging.dart';
-
 import 'package:nowu/models/Action.dart';
 import 'package:nowu/models/Learning.dart';
 import 'package:nowu/models/article.dart';
@@ -17,6 +16,10 @@ class AnalyticsService {
 
   Future<void> setUserProperties({required String userId}) async {
     await _analytics.setUserId(id: userId);
+  }
+
+  Future<void> setCustomRoute(String route) async {
+    await _analytics.logScreenView(screenName: route);
   }
 
   Future<void> logActionEvent(
