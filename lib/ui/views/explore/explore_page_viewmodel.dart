@@ -325,7 +325,7 @@ class ExplorePageViewModel extends FormViewModel {
   }
 
   void onTabChanged(ExploreTabKey tab) {
-    _analyticsService.setCustomRoute(tab.toString());
+    _analyticsService.setCustomRoute('explore_${tab.toString()}');
   }
 }
 

@@ -17,7 +17,7 @@ class TabsViewModel extends BaseViewModel {
   TabPage currentPage = TabPage.Home;
 
   void setPage(TabPage newPage) {
-    _analyticsService.setCustomRoute(newPage.name);
+    _analyticsService.setCustomRoute('tab_${newPage.name}');
     currentPage = newPage;
     notifyListeners();
   }

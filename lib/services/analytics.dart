@@ -18,8 +18,8 @@ class AnalyticsService {
     await _analytics.setUserId(id: userId);
   }
 
-  void setCustomRoute(String route) {
-    _analytics.logScreenView(screenName: route);
+  Future<void> setCustomRoute(String route) async {
+    await _analytics.logScreenView(screenName: route);
   }
 
   Future<void> logActionEvent(
