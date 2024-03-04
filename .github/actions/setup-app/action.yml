@@ -35,3 +35,7 @@ runs:
     - name: Install dependencies
       shell: bash
       run: flutter pub get
+
+    - name: Generate translations
+      shell: bash
+      run: flutter pub run intl_utils:generate
