@@ -596,6 +596,81 @@ paths:
               schema:
                 $ref: '#/components/schemas/NewsArticle'
           description: ''
+  /new_articles/{id}/complete/:
+    post:
+      operationId: news_article_complete
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this news article.
+        required: true
+      tags:
+      - new_articles
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /news_articles/:
+    get:
+      operationId: news_articles_list
+      tags:
+      - news_articles
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NewsArticle'
+          description: ''
+  /news_articles/{id}/:
+    get:
+      operationId: news_articles_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this news article.
+        required: true
+      tags:
+      - news_articles
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsArticle'
+          description: ''
+  /news_articles/{id}/complete/:
+    post:
+      operationId: news_article_complete_2
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this news article.
+        required: true
+      tags:
+      - news_articles
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
   /organisations/:
     get:
       operationId: organisations_list
@@ -850,10 +925,16 @@ components:
           items:
             type: integer
           readOnly: true
+        completed_news_article_ids:
+          type: array
+          items:
+            type: integer
+          readOnly: true
       required:
       - completed_action_ids
       - completed_campaign_ids
       - completed_learning_resource_ids
+      - completed_news_article_ids
       - id
       - selected_causes_ids
     Faq:
@@ -914,6 +995,9 @@ components:
             $ref: '#/components/schemas/Cause'
         release_at_timestamp:
           type: integer
+        is_completed:
+          type: boolean
+          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -953,6 +1037,7 @@ components:
       - causes
       - created_at
       - id
+      - is_completed
       - learning_resource_type
       - link
       - release_at
@@ -1069,6 +1154,9 @@ components:
           $ref: '#/components/schemas/Image'
         release_at_timestamp:
           type: integer
+        is_completed:
+          type: boolean
+          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -1111,6 +1199,7 @@ components:
       - created_at
       - header_image
       - id
+      - is_completed
       - link
       - published_at
       - release_at
@@ -1240,6 +1329,11 @@ components:
           items:
             type: integer
         completed_campaign_ids:
+          type: array
+          items:
+            type: integer
+          readOnly: true
+        completed_news_article_ids:
           type: array
           items:
             type: integer
