@@ -28,7 +28,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable' # 'dev', 'alpha', default to: 'stable'
-          flutter-version: '3.16.x'
+          flutter-version: '3.19.2'
           cache: true
 
       - name: Setup cider

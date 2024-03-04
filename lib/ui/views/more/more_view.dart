@@ -38,7 +38,7 @@ List<MenuItemData> getMenuItems(MoreViewModel viewModel) => [
       const SectionHeadingMenuItem(title: 'The app'),
       const ActionMenuItem(
         title: 'About Us',
-        icon: FontAwesomeIcons.infoCircle,
+        icon: FontAwesomeIcons.circleInfo,
         action: LinkMenuItemAction(ABOUT_US_URL),
       ),
       const ActionMenuItem(
@@ -80,7 +80,7 @@ List<MenuItemData> getMenuItems(MoreViewModel viewModel) => [
         title: 'Send us an email',
         icon: CustomIcons.ic_email,
         action: LinkMenuItemAction(
-          'mailto:hello@now-.com?subject=Hi',
+          'mailto:hello@now-u.com?subject=Hi',
           isExternal: true,
         ),
       ),

@@ -1,13 +1,13 @@
-import 'package:nowu/assets/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:nowu/assets/constants.dart';
 import 'package:nowu/ui/views/explore/tabs/explore_all_tab.dart';
 import 'package:nowu/ui/views/explore/tabs/explore_campaign_tab.dart';
 import 'package:nowu/ui/views/explore/tabs/explore_news_article_tab.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
-import 'explore_page_viewmodel.dart';
 import 'explore_page_view.form.dart';
+import 'explore_page_viewmodel.dart';
 import 'tabs/explore_action_tab.dart';
 import 'tabs/explore_learning_resource_tab.dart';
 
@@ -90,29 +90,6 @@ ExploreTabData getTabData(ExploreTabKey tab) {
   }
 }
 
-final exploreTabs = [
-  ExploreTabData(
-    title: 'All',
-    child: (viewModel, changeTab) => ExploreAllTab(viewModel, changeTab),
-  ),
-  ExploreTabData(
-    title: 'Actions',
-    child: (viewModel, _) => ExploreActionTab(viewModel),
-  ),
-  ExploreTabData(
-    title: 'Learn',
-    child: (viewModel, _) => ExploreLearningResourceTab(viewModel),
-  ),
-  ExploreTabData(
-    title: 'Campaigns',
-    child: (viewModel, _) => ExploreCampaignTab(viewModel),
-  ),
-  ExploreTabData(
-    title: 'News',
-    child: (viewModel, _) => ExploreNewsArticleTab(viewModel),
-  ),
-];
-
 class ExploreTabs extends StatefulWidget {
   final ExplorePageViewModel viewModel;
   final TextEditingController searchBarController;
@@ -129,12 +106,15 @@ class ExploreTabs extends StatefulWidget {
 
 class _ExploreTabsState extends State<ExploreTabs>
     with TickerProviderStateMixin {
+  ExplorePageViewModel? _viewModel;
   TabController? _tabController;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: exploreTabs.length, vsync: this);
+    _tabController =
+        TabController(length: ExploreTabKey.values.length, vsync: this);
+    _viewModel = widget.viewModel;
   }
 
   @override
@@ -176,9 +156,12 @@ class _ExploreTabsState extends State<ExploreTabs>
             .map(
               (tab) => getTabData(tab).child(
                 widget.viewModel,
-                (ExploreTabKey tab) => _tabController?.animateTo(tab.index),
+                (ExploreTabKey tab) {
+                  _viewModel?.onTabChanged(tab);
+                  _tabController?.animateTo(tab.index);
+                },
               ),
-            )
+        )
             .toList(),
       ),
     );

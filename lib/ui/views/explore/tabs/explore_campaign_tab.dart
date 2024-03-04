@@ -19,19 +19,21 @@ class ExploreCampaignTab extends StatelessWidget {
         RecommendedFilter(viewModel: viewModel),
         CompletedFilter(viewModel: viewModel),
       ],
-      filterResults: viewModel.campaigns.map<Widget>(
-        (campaign) => Container(
-          // TODO Create shared constant for these/ pull. from ExploreSectionArgs
-          height: 300,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: ExploreCampaignTile(
-              CampaignExploreTileData(
-                campaign,
-                viewModel.isCampaignComplete(campaign),
-              ),
-              onTap: () => viewModel.openCampaign(campaign),
+      onBottomReached: () => {
+        viewModel.searchCampaigns(),
+      },
+      pagingState: viewModel.campaigns,
+      itemBuilder: (campaign) => Container(
+        // TODO Create shared constant for these/ pull. from ExploreSectionArgs
+        height: 300,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: ExploreCampaignTile(
+            CampaignExploreTileData(
+              campaign,
+              viewModel.isCampaignComplete(campaign),
             ),
+            onTap: () => viewModel.openCampaign(campaign),
           ),
         ),
       ),

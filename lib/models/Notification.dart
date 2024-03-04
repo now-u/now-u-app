@@ -58,7 +58,7 @@ class InternalNotification {
               color: Colors.white,
             ),
         textAlign: WrapAlignment.center,
-        textScaleFactor: 1.2,
+        textScaler: const TextScaler.linear(1.2),
       ),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),

@@ -3,6 +3,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:logging/logging.dart';
 import 'package:nowu/app/app.router.dart';
 import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/navigation_service.dart';
@@ -15,6 +16,7 @@ export 'package:nowu/models/Cause.dart';
 
 class CausesService {
   final _authService = locator<AuthenticationService>();
+  final _analyticsService = locator<AnalyticsService>();
   final _apiService = locator<ApiService>();
   final _navigationService = locator<NavigationService>();
   final _routerService = locator<RouterService>();
@@ -101,8 +103,14 @@ class CausesService {
   /// Complete an action
   ///
   /// Used so a user can set an action as completed
-  Future completeAction(int id) async {
-    await _causeServiceClient.getActionsApi().actionsComplete(id: id);
+  Future completeAction(Action action) async {
+    await (
+      _causeServiceClient.getActionsApi().actionsComplete(id: action.id),
+      _analyticsService.logActionEvent(
+        action,
+        ActionEvent.Complete,
+      ),
+    ).wait;
 
     // Update user after request
     await fetchUserInfo();
@@ -111,8 +119,14 @@ class CausesService {
   /// Uncomlete an action
   ///
   /// Sets an action as uncompleted
-  Future removeActionStatus(int id) async {
-    await _causeServiceClient.getActionsApi().actionsUncomplete(id: id);
+  Future removeActionStatus(Action action) async {
+    await (
+      _causeServiceClient.getActionsApi().actionsUncomplete(id: action.id),
+      _analyticsService.logActionEvent(
+        action,
+        ActionEvent.Uncomplete,
+      ),
+    ).wait;
 
     // Update user after request
     await fetchUserInfo();
@@ -121,12 +135,15 @@ class CausesService {
   /// Complete a learning resource
   ///
   /// Marks a learning resource as completed
-  Future completeLearningResource(int id) async {
-    await _causeServiceClient
-        .getLearningResourcesApi()
-        .learningResourcesComplete(id: id);
+  Future completeLearningResource(LearningResource learningResource) async {
+    await (
+      _causeServiceClient
+          .getLearningResourcesApi()
+          .learningResourcesComplete(id: learningResource.id),
+      _analyticsService.logLearningResourceClicked(learningResource),
+    ).wait;
 
-    // // Update user after request
+    // Update user after request
     await fetchUserInfo();
   }
 
@@ -156,7 +173,7 @@ class CausesService {
   Future<void> openLearningResource(LearningResource learningResource) async {
     if (_authService.isUserLoggedIn()) {
       // TODO Should this if be inside here?
-      await completeLearningResource(learningResource.id);
+      await completeLearningResource(learningResource);
     }
     _navigationService.launchLink(
       learningResource.link,

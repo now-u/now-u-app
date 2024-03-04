@@ -1,42 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:nowu/utils/intersperse.dart';
 
-class ExploreTab extends StatelessWidget {
+import '../../../paging/paging_state.dart';
+import 'filters_container.dart';
+
+class ExploreTab<T> extends StatelessWidget {
   final Iterable<Widget> filterChips;
-  final Iterable<Widget> filterResults;
+  final PagingState<T> pagingState;
+  final VoidCallback onBottomReached;
+  final Function(T) itemBuilder;
 
-  const ExploreTab({required this.filterChips, required this.filterResults});
+  const ExploreTab({
+    required this.filterChips,
+    required this.pagingState,
+    required this.onBottomReached,
+    required this.itemBuilder,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        Container(
-          // TODO Do min height possible if possible
-          height: 60,
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: ListView(
-              //TODO Not working and probbaly wrong place to define
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              children: filterChips
-                  .intersperseOuter(const SizedBox(width: 8))
-                  .toList(),
+    return ListView.builder(
+      itemCount: itemCount(),
+      itemBuilder: (BuildContext context, int index) {
+        if (pagingState is Data && index == itemCount() - 1) {
+          onBottomReached();
+        }
+
+        if (index == 0) {
+          return FiltersContainer(filterChips: filterChips);
+        } else if (pagingState is InitialLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (pagingState is LoadingMore && index == itemCount() - 1) {
+          return Container(
+            height: 60,
+            child: const Center(
+              child: CircularProgressIndicator(),
             ),
-          ),
-        ),
-        ...filterResults
-            .intersperse(
-              const SizedBox(
-                height: 8,
-              ),
-            )
-            .toList(),
-        const SizedBox(
-          height: 8,
-        ),
-      ],
+          );
+        } else {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: itemBuilder(pagingState.items.toList()[index - 1]),
+          );
+        }
+      },
     );
   }
+
+  // +1 for the filter chips, +1 for the loading indicator if state is LoadingMore
+  int itemCount() =>
+      pagingState.items.length + (pagingState is LoadingMore ? 1 : 2);
 }

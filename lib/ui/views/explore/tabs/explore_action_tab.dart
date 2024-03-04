@@ -25,15 +25,17 @@ class ExploreActionTab extends StatelessWidget {
         RecommendedFilter(viewModel: viewModel),
         CompletedFilter(viewModel: viewModel),
       ],
-      filterResults: viewModel.actions.map<Widget>(
-        (action) => Container(
-          height: 160,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: ExploreActionTile(
-              ActionExploreTileData(action, viewModel.isActionComplete(action)),
-              onTap: () => viewModel.openAction(action),
-            ),
+      onBottomReached: () => {
+        viewModel.searchActions(),
+      },
+      pagingState: viewModel.actions,
+      itemBuilder: (action) => Container(
+        height: 160,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: ExploreActionTile(
+            ActionExploreTileData(action, viewModel.isActionComplete(action)),
+            onTap: () => viewModel.openAction(action),
           ),
         ),
       ),

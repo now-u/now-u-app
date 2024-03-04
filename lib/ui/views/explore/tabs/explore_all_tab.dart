@@ -4,7 +4,7 @@ import 'package:nowu/ui/views/explore/explore_section_view.dart';
 
 import '../explore_page_viewmodel.dart';
 import '../filters/explore_filter_chip.dart';
-import 'explore_tab.dart';
+import 'explore_tab_horizontal.dart';
 
 class ExploreAllTab extends StatelessWidget {
   final ExplorePageViewModel viewModel;
@@ -15,7 +15,7 @@ class ExploreAllTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExploreTab(
+    return ExploreTabHorizontal(
       filterChips: [
         CausesFilter(viewModel: viewModel),
         NewFilter(viewModel: viewModel),
