@@ -63,6 +63,7 @@ dependencies:
   supabase_flutter: ^2.3.4
   meilisearch: ^0.15.0
   google_sign_in: ^6.2.1
+  sign_in_with_apple: ^6.0.0
 
   sentry_flutter: ^7.6.0
   sentry_logging: ^7.6.0
