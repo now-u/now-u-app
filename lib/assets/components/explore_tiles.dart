@@ -1,10 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nowu/assets/components/card.dart';
 import 'package:nowu/assets/components/cause_indicator.dart';
 import 'package:nowu/assets/components/custom_network_image.dart';
 import 'package:nowu/models/article.dart';
 import 'package:nowu/services/causes_service.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 
 enum ExploreTileStyle {
@@ -385,7 +385,7 @@ class _ExploreTileCheckmark extends StatelessWidget {
           ),
         ),
         FaIcon(
-          FontAwesomeIcons.solidCheckCircle,
+          FontAwesomeIcons.solidCircleCheck,
           color: completed ? _completedColor : _uncompletedColor,
         ),
       ],

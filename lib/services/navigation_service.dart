@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart' hide Action;
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/dialog_service.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 const String INTERNAL_PREFIX = 'internal:';
 
@@ -16,11 +16,6 @@ class CustomChromeSafariBrowser extends ChromeSafariBrowser {
   @override
   void onOpened() {
     print('ChromeSafari browser opened');
-  }
-
-  @override
-  void onCompletedInitialLoad() {
-    print('ChromeSafari browser initial load completed');
   }
 
   @override
@@ -161,7 +156,7 @@ class NavigationService {
     } else {
       if (extraOnConfirmFunction != null) extraOnConfirmFunction();
       await browser.open(
-        url: Uri.parse(url),
+        url: WebUri(url),
       );
     }
   }

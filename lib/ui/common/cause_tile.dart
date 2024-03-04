@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nowu/assets/components/buttons/customIconButton.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nowu/assets/components/buttons/customIconButton.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:nowu/models/Cause.dart';
 
@@ -84,7 +84,7 @@ class CauseTile extends StatelessWidget {
                 ),
                 CircularIconButton(
                   onPressed: getInfoFunction,
-                  icon: FontAwesomeIcons.questionCircle,
+                  icon: FontAwesomeIcons.circleQuestion,
                   iconSize: 14,
                   height: 20,
                   backgroundColor: Colors.transparent,
