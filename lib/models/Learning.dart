@@ -71,7 +71,7 @@ LearningResourceType getResourceTypeFromEnum(LearningResourceTypeEnum type) {
   // TODO Update icon to be custom iconLearning.dart
   return LearningResourceType(
     name: 'Other',
-    icon: FontAwesomeIcons.chalkboardTeacher,
+    icon: FontAwesomeIcons.chalkboardUser,
   );
 }
 

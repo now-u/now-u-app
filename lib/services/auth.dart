@@ -1,17 +1,18 @@
 import 'dart:async';
 
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logging/logging.dart';
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/shared_preferences_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide User;
-import 'package:google_sign_in/google_sign_in.dart';
 
 const LOGIN_REDIRECT_URL = 'com.nowu.app://login-callback/';
 
 class LoginException implements Exception {
   String message;
+
   LoginException(this.message);
 }
 
@@ -56,7 +57,9 @@ class AuthenticationService {
   }
 
   String? get token => _client.auth.currentSession?.accessToken;
+
   bool get isAuthenticated => _client.auth.currentSession != null;
+
   String? get userId => _client.auth.currentSession?.user.id;
 
   bool isUserLoggedIn() {
@@ -110,19 +113,22 @@ class AuthenticationService {
 
     _logger.info('Sending google auth credentials to supabase');
     return _client.auth.signInWithIdToken(
-      provider: Provider.google,
+      provider: OAuthProvider.google,
       idToken: idToken,
       accessToken: accessToken,
     );
   }
 
   Future signInWithFacebook() async {
-    await _client.auth
-        .signInWithOAuth(Provider.facebook, redirectTo: LOGIN_REDIRECT_URL);
+    await _client.auth.signInWithOAuth(
+      OAuthProvider.facebook,
+      redirectTo: LOGIN_REDIRECT_URL,
+    );
   }
 
   Future signInWithApple() async {
-    await _client.auth.signInWithApple();
+    await _client.auth
+        .signInWithOAuth(OAuthProvider.apple, redirectTo: LOGIN_REDIRECT_URL);
   }
 
   Future signInWithCode(String email, String code) async {
