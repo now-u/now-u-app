@@ -1,9 +1,10 @@
-import 'package:nowu/assets/constants.dart';
+import 'package:flutter/widgets.dart';
 import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/assets/constants.dart';
+import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/services/router_service.dart';
 import 'package:nowu/services/user_service.dart';
-import 'package:flutter/widgets.dart';
 import 'package:nowu/ui/views/causes_selection/select_causes_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -11,13 +12,15 @@ class ProfileSetupViewModel extends BaseViewModel {
   final _routerService = locator<RouterService>();
   final _navigationService = locator<NavigationService>();
   final _userSerivce = locator<UserService>();
+  final _authenticationService = locator<AuthenticationService>();
   final formKey = GlobalKey<FormState>();
 
   String? name;
   bool signUpForNewsLetter = false;
 
   ProfileSetupViewModel() {
-    this.name = _userSerivce.currentUser?.name;
+    this.name = _userSerivce.prefilledName ??
+        _authenticationService.getCurrentUserName();
   }
 
   void openTsAndCs() {

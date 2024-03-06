@@ -7,8 +7,11 @@ import 'package:nowu/services/auth.dart';
 class UserService {
   // TODO We hardly actually need the user now we have the auth token
   UserProfile? _currentUser = null;
+
   UserProfile? get currentUser => _currentUser;
   Logger _logger = Logger('UserService');
+
+  String? prefilledName;
 
   final _authService = locator<AuthenticationService>();
   final _apiService = locator<ApiService>();

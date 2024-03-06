@@ -1,16 +1,17 @@
 import 'dart:async';
 
 import 'package:logging/logging.dart';
+import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/assets/constants.dart';
+import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/dialog_service.dart';
 import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/services/router_service.dart';
 import 'package:nowu/services/storage.dart';
+import 'package:nowu/services/user_service.dart';
 import 'package:nowu/ui/common/post_login_viewmodel.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:stacked/stacked.dart';
-import 'package:nowu/app/app.locator.dart';
-import 'package:nowu/services/auth.dart';
 
 import 'login_view.form.dart';
 
@@ -32,6 +33,7 @@ class LoginViewModel extends FormViewModel with PostLoginViewModelMixin {
   final _navigationService = locator<NavigationService>();
   final _secureStroageService = locator<SecureStorageService>();
   final _dialogService = locator<DialogService>();
+  final _userService = locator<UserService>();
   final _logger = Logger('LoginViewModel');
 
   bool showValidation = false;
@@ -54,7 +56,8 @@ class LoginViewModel extends FormViewModel with PostLoginViewModelMixin {
   }
 
   Future loginWithApple() async {
-    await _authenticationService.signInWithApple();
+    final response = await _authenticationService.signInWithApple();
+    _userService.prefilledName = response.user?.userMetadata?['full_name'];
   }
 
   Future loginWithEmail() async {

@@ -1,12 +1,16 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:crypto/crypto.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logging/logging.dart';
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/shared_preferences_service.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide User;
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 const LOGIN_REDIRECT_URL = 'com.nowu.app://login-callback/';
 
@@ -126,9 +130,30 @@ class AuthenticationService {
     );
   }
 
-  Future signInWithApple() async {
-    await _client.auth
-        .signInWithOAuth(OAuthProvider.apple, redirectTo: LOGIN_REDIRECT_URL);
+  Future<AuthResponse> signInWithApple() async {
+    final rawNonce = _client.auth.generateRawNonce();
+    final hashedNonce = sha256.convert(utf8.encode(rawNonce)).toString();
+
+    final credential = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+      nonce: hashedNonce,
+    );
+
+    final idToken = credential.identityToken;
+    if (idToken == null) {
+      throw const AuthException(
+        'Could not find ID Token from generated credential.',
+      );
+    }
+
+    return _client.auth.signInWithIdToken(
+      provider: OAuthProvider.apple,
+      idToken: idToken,
+      nonce: rawNonce,
+    );
   }
 
   Future signInWithCode(String email, String code) async {
@@ -148,5 +173,9 @@ class AuthenticationService {
     // TODO Move to above
     // TODO Do we still need to store user token in shared preferences?
     await _sharedPreferencesService.clearUserToken();
+  }
+
+  String? getCurrentUserName() {
+    return _client.auth.currentUser?.userMetadata?['full_name'];
   }
 }
