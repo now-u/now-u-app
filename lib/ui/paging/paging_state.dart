@@ -9,7 +9,7 @@ sealed class PagingState<T> {
   bool canLoadMore() =>
       (this is InitialLoading || this is Data) && !hasReachedMax;
 
-  int itemsCount() => this is LoadingMore ? items.length + 1 : items.length;
+  int itemsCount() => items.length;
 }
 
 class InitialLoading extends PagingState {

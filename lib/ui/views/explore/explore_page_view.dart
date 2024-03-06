@@ -161,7 +161,7 @@ class _ExploreTabsState extends State<ExploreTabs>
                   _tabController?.animateTo(tab.index);
                 },
               ),
-        )
+            )
             .toList(),
       ),
     );

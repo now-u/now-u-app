@@ -26,7 +26,7 @@ class ExploreActionTab extends StatelessWidget {
         CompletedFilter(viewModel: viewModel),
       ],
       onBottomReached: () => {
-        viewModel.searchActions(),
+        viewModel.loadMoreActions(),
       },
       pagingState: viewModel.actions,
       itemBuilder: (action) => Container(
