@@ -80,7 +80,25 @@ class ExplorePageViewModel extends FormViewModel {
     ).wait;
   }
 
-  Future<void> searchActions() async {
+  ActionSearchFilter _getActionsFilter() {
+    return ActionSearchFilter(
+      causeIds: this.filterData.filterCauseIds.isEmpty
+          ? null
+          : filterData.filterCauseIds.toList(),
+      timeBrackets: this.filterData.filterTimeBrackets.isEmpty
+          ? null
+          : filterData.filterTimeBrackets.toList(),
+      types: this.filterData.filterActionTypes.isEmpty
+          ? null
+          : filterData.filterActionTypes.toList(),
+      completed: filterData.filterCompleted == true ? true : null,
+      recommended: filterData.filterRecommended == true ? true : null,
+      releasedSince: filterData.filterNew == true ? newSinceDate() : null,
+      query: searchBarValue,
+    );
+  }
+
+  Future<void> loadMoreActions() async {
     if (!actions.canLoadMore()) return;
 
     actions = LoadingMore(items: actions.items);
@@ -88,31 +106,49 @@ class ExplorePageViewModel extends FormViewModel {
     // Remove search fallback to use user causes
     SearchResponse<ListAction> response = await _searchService.searchActions(
       offset: actions.offset(),
-      filter: ActionSearchFilter(
-        causeIds: this.filterData.filterCauseIds.isEmpty
-            ? null
-            : filterData.filterCauseIds.toList(),
-        timeBrackets: this.filterData.filterTimeBrackets.isEmpty
-            ? null
-            : filterData.filterTimeBrackets.toList(),
-        types: this.filterData.filterActionTypes.isEmpty
-            ? null
-            : filterData.filterActionTypes.toList(),
-        completed: filterData.filterCompleted == true ? true : null,
-        recommended: filterData.filterRecommended == true ? true : null,
-        releasedSince: filterData.filterNew == true ? newSinceDate() : null,
-        query: searchBarValue,
-      ),
+      filter: _getActionsFilter(),
     );
 
     actions = Data(
       items: actions.items + response.items,
       hasReachedMax: response.hasReachedMax,
     );
+
     notifyListeners();
   }
 
-  Future<void> searchLearningResources() async {
+  Future<void> searchActions() async {
+    SearchResponse<ListAction> response = await _searchService.searchActions(
+      filter: _getActionsFilter(),
+    );
+
+    actions = Data(
+      items: response.items,
+      hasReachedMax: response.hasReachedMax,
+    );
+
+    notifyListeners();
+  }
+
+  LearningResourceSearchFilter _getLearningResourcesFilter() {
+    return LearningResourceSearchFilter(
+      causeIds: this.filterData.filterCauseIds.isEmpty
+          ? null
+          : filterData.filterCauseIds.toList(),
+      timeBrackets: this.filterData.filterTimeBrackets.isEmpty
+          ? null
+          : filterData.filterTimeBrackets.toList(),
+      // TODO Add learning resource types
+      // types:
+      //this.filterActionTypes.isEmpty ? null : filterActionTypes.toList(),
+      completed: filterData.filterCompleted == true ? true : null,
+      recommended: filterData.filterRecommended == true ? true : null,
+      releasedSince: filterData.filterNew == true ? newSinceDate() : null,
+      query: searchBarValue,
+    );
+  }
+
+  Future<void> loadMoreLearningResources() async {
     if (!learningResources.canLoadMore()) return;
 
     learningResources = LoadingMore(items: learningResources.items);
@@ -120,46 +156,51 @@ class ExplorePageViewModel extends FormViewModel {
     SearchResponse<LearningResource> response =
         await _searchService.searchLearningResources(
       offset: learningResources.offset(),
-      filter: LearningResourceSearchFilter(
-        causeIds: this.filterData.filterCauseIds.isEmpty
-            ? null
-            : filterData.filterCauseIds.toList(),
-        timeBrackets: this.filterData.filterTimeBrackets.isEmpty
-            ? null
-            : filterData.filterTimeBrackets.toList(),
-        // TODO Add learning resource types
-        // types:
-        //this.filterActionTypes.isEmpty ? null : filterActionTypes.toList(),
-        completed: filterData.filterCompleted == true ? true : null,
-        recommended: filterData.filterRecommended == true ? true : null,
-        releasedSince: filterData.filterNew == true ? newSinceDate() : null,
-        query: searchBarValue,
-      ),
+      filter: _getLearningResourcesFilter(),
     );
 
     learningResources = Data(
       items: learningResources.items + response.items,
       hasReachedMax: response.hasReachedMax,
     );
+
     notifyListeners();
   }
 
-  Future<void> searchCampaigns() async {
+  Future<void> searchLearningResources() async {
+    SearchResponse<LearningResource> response =
+        await _searchService.searchLearningResources(
+      filter: _getLearningResourcesFilter(),
+    );
+
+    learningResources = Data(
+      items: response.items,
+      hasReachedMax: response.hasReachedMax,
+    );
+
+    notifyListeners();
+  }
+
+  CampaignSearchFilter _getCampaignsFilter() {
+    return CampaignSearchFilter(
+      causeIds: this.filterData.filterCauseIds.isEmpty
+          ? null
+          : filterData.filterCauseIds.toList(),
+      completed: filterData.filterCompleted == true ? true : null,
+      recommended: filterData.filterRecommended == true ? true : null,
+      releasedSince: filterData.filterNew == true ? newSinceDate() : null,
+      query: searchBarValue,
+    );
+  }
+
+  Future<void> loadMoreCampaigns() async {
     if (!campaigns.canLoadMore()) return;
 
     campaigns = LoadingMore(items: campaigns.items);
 
     SearchResponse<ListCampaign> response =
         await _searchService.searchCampaigns(
-      filter: CampaignSearchFilter(
-        causeIds: this.filterData.filterCauseIds.isEmpty
-            ? null
-            : filterData.filterCauseIds.toList(),
-        completed: filterData.filterCompleted == true ? true : null,
-        recommended: filterData.filterRecommended == true ? true : null,
-        releasedSince: filterData.filterNew == true ? newSinceDate() : null,
-        query: searchBarValue,
-      ),
+      filter: _getCampaignsFilter(),
       offset: campaigns.offset(),
     );
 
@@ -167,23 +208,42 @@ class ExplorePageViewModel extends FormViewModel {
       items: campaigns.items + response.items,
       hasReachedMax: response.hasReachedMax,
     );
+
     notifyListeners();
   }
 
-  Future<void> searchNewsArticles() async {
+  Future<void> searchCampaigns() async {
+    SearchResponse<ListCampaign> response =
+        await _searchService.searchCampaigns(
+      filter: _getCampaignsFilter(),
+    );
+
+    campaigns = Data(
+      items: response.items,
+      hasReachedMax: response.hasReachedMax,
+    );
+
+    notifyListeners();
+  }
+
+  NewsArticleSearchFilter _getNewsArticlesFilter() {
+    return NewsArticleSearchFilter(
+      causeIds: this.filterData.filterCauseIds.isEmpty
+          ? null
+          : filterData.filterCauseIds.toList(),
+      releasedSince: filterData.filterNew == true ? newSinceDate() : null,
+      query: searchBarValue,
+    );
+  }
+
+  Future<void> loadMoreNewsArticles() async {
     if (!newsArticles.canLoadMore()) return;
 
     newsArticles = LoadingMore(items: newsArticles.items);
 
     SearchResponse<NewsArticle> response =
         await _searchService.searchNewsArticles(
-      filter: NewsArticleSearchFilter(
-        causeIds: this.filterData.filterCauseIds.isEmpty
-            ? null
-            : filterData.filterCauseIds.toList(),
-        releasedSince: filterData.filterNew == true ? newSinceDate() : null,
-        query: searchBarValue,
-      ),
+      filter: _getNewsArticlesFilter(),
       offset: newsArticles.offset(),
     );
 
@@ -191,6 +251,21 @@ class ExplorePageViewModel extends FormViewModel {
       items: newsArticles.items + response.items,
       hasReachedMax: response.hasReachedMax,
     );
+
+    notifyListeners();
+  }
+
+  Future<void> searchNewsArticles() async {
+    SearchResponse<NewsArticle> response =
+        await _searchService.searchNewsArticles(
+      filter: _getNewsArticlesFilter(),
+    );
+
+    newsArticles = Data(
+      items: response.items,
+      hasReachedMax: response.hasReachedMax,
+    );
+
     notifyListeners();
   }
 

@@ -20,7 +20,7 @@ class ExploreCampaignTab extends StatelessWidget {
         CompletedFilter(viewModel: viewModel),
       ],
       onBottomReached: () => {
-        viewModel.searchCampaigns(),
+        viewModel.loadMoreCampaigns(),
       },
       pagingState: viewModel.campaigns,
       itemBuilder: (campaign) => Container(

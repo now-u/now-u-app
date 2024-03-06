@@ -18,6 +18,15 @@ class ExploreTab<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (pagingState is Data && pagingState.items.isEmpty) {
+      return ListView(
+        children: [
+          FiltersContainer(filterChips: filterChips),
+          const Center(child: Text('No results for search')),
+        ],
+      );
+    }
+
     return ListView.builder(
       itemCount: itemCount(),
       itemBuilder: (BuildContext context, int index) {
@@ -50,5 +59,5 @@ class ExploreTab<T> extends StatelessWidget {
 
   // +1 for the filter chips, +1 for the loading indicator if state is LoadingMore
   int itemCount() =>
-      pagingState.items.length + (pagingState is LoadingMore ? 1 : 2);
+      pagingState.items.length + (pagingState is LoadingMore ? 2 : 1);
 }
