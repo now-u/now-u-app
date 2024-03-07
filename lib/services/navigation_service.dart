@@ -156,7 +156,7 @@ class NavigationService {
     } else {
       if (extraOnConfirmFunction != null) extraOnConfirmFunction();
       await browser.open(
-        url: WebUri(url),
+        url: Uri.parse(url),
       );
     }
   }
