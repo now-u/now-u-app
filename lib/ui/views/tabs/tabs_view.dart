@@ -1,16 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/ui/views/explore/explore_page_view.dart';
 import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:nowu/ui/views/home/home_view.dart';
-import 'package:flutter/material.dart';
-
-import 'package:nowu/assets/icons/customIcons.dart';
-
 import 'package:nowu/ui/views/more/more_view.dart';
 import 'package:stacked/stacked.dart';
 
 import 'tabs_viewmodel.dart';
+
 export 'tabs_viewmodel.dart' show TabPage;
 
 class TabPageDetails {
@@ -84,7 +83,7 @@ class TabsView extends StatelessWidget with WidgetsBindingObserver {
     }
 
     return PopScope(
-      canPop: locator<NavigationService>().canGoBack(),
+      canPop: locator<LauncherService>().canGoBack(),
       child: ViewModelBuilder<TabsViewModel>.reactive(
         viewModelBuilder: () => TabsViewModel(initialPage),
         builder: (context, model, child) {

@@ -6,14 +6,16 @@ import 'package:nowu/services/router_service.dart';
 import 'package:nowu/ui/common/post_login_viewmodel.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class LoginEmailSentViewModel extends BaseViewModel
     with PostLoginViewModelMixin {
   final String email;
+
   LoginEmailSentViewModel({required this.email});
 
   final _dialogService = locator<DialogService>();
-  final _routerService = locator<RouterService>();
+  final _routerService = locator<NavigationService>();
 
   Future backToLogin() async {
     _routerService.navigateToLoginView();

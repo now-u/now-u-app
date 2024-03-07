@@ -5,6 +5,3 @@ targets:
         options:
           create_to_json: false
           field_rename: snake
-      stacked_generator|stackedRouterGenerator:
-        options:
-          navigator2: true

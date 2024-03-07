@@ -1,6 +1,6 @@
-import 'package:nowu/app/app.locator.dart';
-import 'package:nowu/ui/views/login/login_view.dart';
 import 'package:flutter/widgets.dart';
+import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/ui/views/causes_selection/select_causes_viewmodel.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -37,7 +37,7 @@ class IntroPageData {
 
 // TODO Use IndexTracking view model
 class IntroViewModel extends BaseViewModel {
-  final _routerService = locator<RouterService>();
+  final _routerService = locator<NavigationService>();
 
   final PageController controller;
   final Duration animationDuration = const Duration(milliseconds: 500);
@@ -112,15 +112,6 @@ class IntroViewModel extends BaseViewModel {
   }
 
   void _goToNextPage(BuildContext context) {
-    // TODO Is this working?? Can we use named route instead??
-    _routerService.clearStackAndShowView(
-      LoginView(),
-      transitionBuilder: (context, animation1, animation2, child) {
-        return FadeTransition(opacity: animation1, child: child);
-      },
-      transitionDuration: animationDuration,
-    );
-    // Navigator.of(context)
-    //     .push(FadeRouteBuilder(page: LoginPage(LoginPageArguments())));
+    _routerService.navigateToLoginView();
   }
 }

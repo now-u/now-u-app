@@ -7,10 +7,11 @@ import 'package:nowu/services/router_service.dart';
 import 'package:nowu/services/user_service.dart';
 import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class ActionInfoViewModel extends FutureViewModel<Action> {
-  final _navigationService = locator<NavigationService>();
-  final _routerService = locator<RouterService>();
+  final _navigationService = locator<LauncherService>();
+  final _routerService = locator<NavigationService>();
   final _causesService = locator<CausesService>();
   final _userService = locator<UserService>();
   final _dialogService = locator<DialogService>();

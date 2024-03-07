@@ -1,18 +1,19 @@
 import 'dart:async';
+
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/foundation.dart';
-
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/router_service.dart';
 import 'package:nowu/services/storage.dart';
-
+import 'package:stacked_services/stacked_services.dart';
 import 'package:uni_links/uni_links.dart';
 
 // The holy grail link https://nowu.page.link/?link=https://now-u.com/campaigns?id=1&apn=com.nowu.app
 
 class DynamicLinkService {
-  final _routerService = locator<RouterService>();
+  final _routerService = locator<NavigationService>();
   final SecureStorageService _storageProvider = locator<SecureStorageService>();
+
   // TODO Remove/fix for web this service
   // final DeviceInfoService? _deviceInfoService = locator<DeviceInfoService>();
 

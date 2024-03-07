@@ -9,11 +9,12 @@ import 'package:nowu/services/dialog_service.dart';
 import 'package:nowu/services/router_service.dart';
 import 'package:nowu/services/user_service.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 mixin PostLoginViewModelMixin on BaseViewModel implements Initialisable {
   final _userService = locator<UserService>();
-  final _routerService = locator<RouterService>();
+  final _routerService = locator<NavigationService>();
   final _causesService = locator<CausesService>();
   final _dialogService = locator<DialogService>();
   final _authenticationService = locator<AuthenticationService>();
@@ -63,12 +64,12 @@ mixin PostLoginViewModelMixin on BaseViewModel implements Initialisable {
     }
 
     if (!currentUser!.isInitialised) {
-      return _routerService.clearStackAndShow(const ProfileSetupViewRoute());
+      return _routerService.clearStackAndShow(Routes.profileSetupView);
     }
 
     if (!userCausesInfo!.isInitialised) {
       return _routerService
-          .clearStackAndShow(const OnboardingSelectCausesViewRoute());
+          .clearStackAndShow(Routes.onboardingSelectCausesView);
     }
 
     return _routerService.navigateToHome(clearHistory: true);
