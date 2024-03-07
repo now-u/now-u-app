@@ -24,10 +24,6 @@ jobs:
         with:
           ref: ${{ inputs.ref }}
 
-      - uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: '14.3'
-
       # Install the Apple certificate and provisioning profile
       - name: 🔑 Install the Apple certificate and provisioning profile
         env:
