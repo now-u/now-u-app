@@ -8,5 +8,7 @@ enable-beta-ecosystems: true
 updates:
   - package-ecosystem: "pub"
     directory: "/"
+    ignore:
+      - dependency-name: "causeApiClient"
     schedule:
       interval: "weekly"
