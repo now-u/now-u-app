@@ -120,11 +120,11 @@ PODS:
     - PromisesSwift (~> 2.1)
   - FirebaseSharedSwift (10.21.0)
   - Flutter (1.0.0)
-  - flutter_inappwebview_ios (0.0.1):
+  - flutter_inappwebview (0.0.1):
     - Flutter
-    - flutter_inappwebview_ios/Core (= 0.0.1)
+    - flutter_inappwebview/Core (= 0.0.1)
     - OrderedSet (~> 5.0)
-  - flutter_inappwebview_ios/Core (0.0.1):
+  - flutter_inappwebview/Core (0.0.1):
     - Flutter
     - OrderedSet (~> 5.0)
   - flutter_secure_storage (6.0.0):
@@ -234,7 +234,7 @@ DEPENDENCIES:
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - firebase_remote_config (from `.symlinks/plugins/firebase_remote_config/ios`)
   - Flutter (from `Flutter`)
-  - flutter_inappwebview_ios (from `.symlinks/plugins/flutter_inappwebview_ios/ios`)
+  - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/darwin`)
   - open_mail_app (from `.symlinks/plugins/open_mail_app/ios`)
@@ -297,8 +297,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_remote_config/ios"
   Flutter:
     :path: Flutter
-  flutter_inappwebview_ios:
-    :path: ".symlinks/plugins/flutter_inappwebview_ios/ios"
+  flutter_inappwebview:
+    :path: ".symlinks/plugins/flutter_inappwebview/ios"
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   google_sign_in_ios:
@@ -350,7 +350,7 @@ SPEC CHECKSUMS:
   FirebaseSessions: 80c2bbdd28166267b3d132debe5f7531efdb00bc
   FirebaseSharedSwift: 19b3f709993d6fa1d84941d41c01e3c4c11eab93
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_inappwebview_ios: 97215cf7d4677db55df76782dbd2930c5e1c1ea0
+  flutter_inappwebview: 3d32228f1304635e7c028b0d4252937730bbc6cf
   flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
   google_sign_in_ios: 989eea5abe94af62050782714daf920be883d4a2
   GoogleAppMeasurement: bb3c564c3efb933136af0e94899e0a46167466a8
