@@ -40,9 +40,4 @@ class StartupView extends StackedView<StartupViewModel> {
   viewModelBuilder(context) {
     return StartupViewModel();
   }
-
-  @override
-  onViewModelReady(StartupViewModel viewModel) {
-    viewModel.initialise();
-  }
 }
