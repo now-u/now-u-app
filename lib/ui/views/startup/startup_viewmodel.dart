@@ -13,6 +13,7 @@ import 'package:nowu/services/pushNotifications.dart';
 import 'package:nowu/services/router_service.dart';
 import 'package:nowu/services/shared_preferences_service.dart';
 import 'package:nowu/ui/common/post_login_viewmodel.dart';
+import 'package:nowu/ui/views/startup/startup_state.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:stacked/stacked.dart';
 
@@ -27,8 +28,17 @@ class StartupViewModel extends BaseViewModel with PostLoginViewModelMixin {
   final _analyticsService = locator<AnalyticsService>();
   final _causesService = locator<CausesService>();
 
-  static const int MAX_RETRY_COUNT = 3;
+  static const int MAX_RETRY_COUNT = 2;
   int _retryCount = 0;
+
+  StartupState _stateValue = const Loading();
+
+  set _state(StartupState value) {
+    _stateValue = value;
+    notifyListeners();
+  }
+
+  StartupState get state => _stateValue;
 
   @override
   void initialise() {
@@ -36,15 +46,17 @@ class StartupViewModel extends BaseViewModel with PostLoginViewModelMixin {
 
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
+    _authenticationService.initSupabase();
+
     handleStartUpLogic();
   }
 
   Future handleStartUpLogic() async {
     _logger.info('handleStartUpLogic starting');
 
-    await initServices();
-
-    navigateNext();
+    await initServices()
+        .onError((error, _) => _handleStartupError(error))
+        .then((_) => navigateNext());
   }
 
   Future initServices() async {
@@ -66,7 +78,7 @@ class StartupViewModel extends BaseViewModel with PostLoginViewModelMixin {
         _authenticationService.init(),
       ],
       eagerError: true,
-    ).catchError((error) => _handleStartupError(error));
+    );
 
     sentryTransaction.finish();
   }
@@ -91,7 +103,7 @@ class StartupViewModel extends BaseViewModel with PostLoginViewModelMixin {
     _routerService.clearStackAndShow(const IntroViewRoute());
   }
 
-  List<void> _handleStartupError(dynamic error) {
+  void _handleStartupError(dynamic error) {
     _logger.severe('Error during startup: $error');
     if (_retryCount < MAX_RETRY_COUNT) {
       _retryCount++;
@@ -99,9 +111,18 @@ class StartupViewModel extends BaseViewModel with PostLoginViewModelMixin {
       handleStartUpLogic();
     } else {
       _logger.severe('Startup failed after $_retryCount retries');
-      // TODO: _routerService.clearStackAndShow(const ErrorViewRoute());
+      // TODO: correct error messages https://github.com/now-u/now-u-app/issues/255
+      _state = const Error(message: 'Failed to start app');
     }
 
-    return List.empty();
+    throw error;
+  }
+
+  void retryStartup() {
+    if (state is Error) {
+      _state = const Loading();
+      _retryCount = 0;
+      handleStartUpLogic();
+    }
   }
 }
