@@ -30,27 +30,31 @@ import 'package:nowu/ui/views/partners/partners_view.dart';
 import 'package:nowu/ui/views/profile_setup/profile_setup_view.dart';
 import 'package:nowu/ui/views/startup/startup_view.dart';
 import 'package:nowu/ui/views/tabs/tabs_view.dart';
+import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
-import 'package:stacked_services/stacked_services.dart';
+import 'package:stacked_services/stacked_services.dart' hide NavigationService;
 // @stacked-import
 
 @StackedApp(
   routes: [
-    MaterialRoute(page: StartupView, initial: true),
-    MaterialRoute(page: PartnersView),
-    MaterialRoute(page: ActionInfoView),
-    MaterialRoute(page: CampaignInfoView),
-    MaterialRoute(page: FaqView),
-    MaterialRoute(page: IntroView),
-    MaterialRoute(page: ProfileSetupView),
-    MaterialRoute(page: LoginView),
-    MaterialRoute(page: LoginCodeView),
-    MaterialRoute(page: LoginEmailSentView),
-    MaterialRoute(page: ChangeSelectCausesView),
-    MaterialRoute(page: OnboardingSelectCausesView),
-    MaterialRoute(page: TabsView),
-    MaterialRoute(page: PartnerInfoView),
-    MaterialRoute(page: NotificationInfoView),
+    CustomRoute(page: StartupView, initial: true),
+    CustomRoute(page: PartnersView),
+    CustomRoute(page: ActionInfoView, path: 'action/:actionId'),
+    CustomRoute(page: CampaignInfoView),
+    CustomRoute(page: FaqView),
+    CustomRoute(page: IntroView),
+    CustomRoute(page: ProfileSetupView),
+    CustomRoute(
+      page: LoginView,
+      transitionsBuilder: TransitionsBuilders.fadeIn,
+    ),
+    CustomRoute(page: LoginCodeView),
+    CustomRoute(page: LoginEmailSentView),
+    CustomRoute(page: ChangeSelectCausesView),
+    CustomRoute(page: OnboardingSelectCausesView),
+    CustomRoute(page: TabsView),
+    CustomRoute(page: PartnerInfoView),
+    CustomRoute(page: NotificationInfoView),
     // @stacked-route
 
     // TODO Would be nice if these were accessible on the router service (but within tabs)

@@ -145,7 +145,8 @@ class AuthenticationService {
     final idToken = credential.identityToken;
     if (idToken == null) {
       throw const AuthException(
-          'Could not find ID Token from generated credential.');
+        'Could not find ID Token from generated credential.',
+      );
     }
 
     return _client.auth.signInWithIdToken(

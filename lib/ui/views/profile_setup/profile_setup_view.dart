@@ -187,23 +187,19 @@ class ProfileSetupView extends StackedView<ProfileSetupViewModel> {
     ProfileSetupViewModel model,
     Widget? child,
   ) {
-    // TODO Check this still works at this level
-    return PopScope(
-      canPop: false,
-      child: Theme(
-        data: darkTheme,
-        child: Scaffold(
-          backgroundColor: darkTheme.colorScheme.background,
-          body: NotificationListener(
-            onNotification: (OverscrollIndicatorNotification overscroll) {
-              overscroll.disallowIndicator();
-              return true;
-            },
-            child: ListView(
-              children: [
-                _setupProfileForm(context, model),
-              ],
-            ),
+    return Theme(
+      data: darkTheme,
+      child: Scaffold(
+        backgroundColor: darkTheme.colorScheme.background,
+        body: NotificationListener(
+          onNotification: (OverscrollIndicatorNotification overscroll) {
+            overscroll.disallowIndicator();
+            return true;
+          },
+          child: ListView(
+            children: [
+              _setupProfileForm(context, model),
+            ],
           ),
         ),
       ),

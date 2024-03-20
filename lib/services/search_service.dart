@@ -446,8 +446,8 @@ class SearchService {
   }
 
   Future<SearchResponse<LearningResource>> searchLearningResources({
-    required int offset,
     LearningResourceSearchFilter? filter,
+    int offset = 0,
   }) async {
     const limit = 20;
 

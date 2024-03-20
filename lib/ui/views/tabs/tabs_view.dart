@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nowu/app/app.locator.dart';
+import 'package:flutter/material.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
-import 'package:nowu/services/navigation_service.dart';
+import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:nowu/ui/views/explore/explore_page_view.dart';
 import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:nowu/ui/views/home/home_view.dart';
@@ -82,32 +82,29 @@ class TabsView extends StatelessWidget with WidgetsBindingObserver {
           .cast<BottomNavigationBarItem>();
     }
 
-    return PopScope(
-      canPop: locator<LauncherService>().canGoBack(),
-      child: ViewModelBuilder<TabsViewModel>.reactive(
-        viewModelBuilder: () => TabsViewModel(initialPage),
-        builder: (context, model, child) {
-          return Scaffold(
-            body: getPageDetails(model.currentPage).widget,
-            bottomNavigationBar: BottomNavigationBar(
-              currentIndex: model.currentPage.index,
-              type: BottomNavigationBarType.fixed,
-              elevation: 3,
-              iconSize: 25,
-              unselectedLabelStyle: const TextStyle(
-                color: Color.fromRGBO(155, 159, 177, 1),
-                fontSize: 10,
-              ),
-              unselectedItemColor: const Color.fromRGBO(155, 159, 177, 1),
-              selectedItemColor: Theme.of(context).primaryColor,
-              selectedIconTheme: const IconThemeData(color: Colors.white),
-              selectedLabelStyle: const TextStyle(fontSize: 12),
-              items: generateBottomNavBarItems(),
-              onTap: (index) => model.setPage(TabPage.values[index]),
+    return ViewModelBuilder<TabsViewModel>.reactive(
+      viewModelBuilder: () => TabsViewModel(initialPage),
+      builder: (context, model, child) {
+        return Scaffold(
+          body: getPageDetails(model.currentPage).widget,
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: model.currentPage.index,
+            type: BottomNavigationBarType.fixed,
+            elevation: 3,
+            iconSize: 25,
+            unselectedLabelStyle: const TextStyle(
+              color: Color.fromRGBO(155, 159, 177, 1),
+              fontSize: 10,
             ),
-          );
-        },
-      ),
+            unselectedItemColor: const Color.fromRGBO(155, 159, 177, 1),
+            selectedItemColor: Theme.of(context).primaryColor,
+            selectedIconTheme: const IconThemeData(color: Colors.white),
+            selectedLabelStyle: const TextStyle(fontSize: 12),
+            items: generateBottomNavBarItems(),
+            onTap: (index) => model.setPage(TabPage.values[index]),
+          ),
+        );
+      },
     );
   }
 }

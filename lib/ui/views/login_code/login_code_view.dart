@@ -35,12 +35,9 @@ class LoginCodeView extends StackedView<LoginCodeViewModel>
     LoginCodeViewModel viewModel,
     Widget? child,
   ) {
-    return PopScope(
-      canPop: false,
-      child: Theme(
-        data: darkTheme,
-        child: _Body(viewModel, codeInputController: codeInputController),
-      ),
+    return Theme(
+      data: darkTheme,
+      child: _Body(viewModel, codeInputController: codeInputController),
     );
   }
 

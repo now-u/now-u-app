@@ -16,6 +16,7 @@ class ExploreNewsArticleTab extends StatelessWidget {
       pagingState: viewModel.newsArticles,
       filterChips: [
         CausesFilter(viewModel: viewModel),
+        CompletedFilter(viewModel: viewModel),
       ],
       itemBuilder: (newsArticle) => Container(
         // TODO Create shared constant for these/ pull. from ExploreSectionArgs
@@ -29,7 +30,7 @@ class ExploreNewsArticleTab extends StatelessWidget {
         ),
       ),
       onBottomReached: () => {
-        viewModel.searchNewsArticles(),
+        viewModel.loadMoreNewsArticles(),
       },
     );
   }
