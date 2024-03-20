@@ -22,12 +22,9 @@ class IntroView extends StackedView<IntroViewModel> {
     IntroViewModel viewModel,
     Widget? child,
   ) {
-    return PopScope(
-      canPop: false,
-      child: Theme(
-        data: darkTheme,
-        child: IntroViewPages(viewModel),
-      ),
+    return Theme(
+      data: darkTheme,
+      child: IntroViewPages(viewModel),
     );
   }
 }
@@ -165,6 +162,7 @@ class IntroViewPages extends StatelessWidget {
 
 class IntroPageSectionWidget extends StatelessWidget {
   final IntroPageData data;
+
   IntroPageSectionWidget(this.data);
 
   @override

@@ -166,20 +166,17 @@ class LoginView extends StackedView<LoginViewModel> with $LoginView {
       );
     }
 
-    return PopScope(
-      canPop: false,
-      child: Scaffold(
-        body: NotificationListener(
-          onNotification: (OverscrollIndicatorNotification overscroll) {
-            overscroll.disallowIndicator();
-            return true;
-          },
-          child: ListView(
-            children: [
-              // TODO Fix clip scrolling under the status bar
-              _loginForm(viewModel),
-            ],
-          ),
+    return Scaffold(
+      body: NotificationListener(
+        onNotification: (OverscrollIndicatorNotification overscroll) {
+          overscroll.disallowIndicator();
+          return true;
+        },
+        child: ListView(
+          children: [
+            // TODO Fix clip scrolling under the status bar
+            _loginForm(viewModel),
+          ],
         ),
       ),
     );
