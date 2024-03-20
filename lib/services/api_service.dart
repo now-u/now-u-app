@@ -35,7 +35,7 @@ class ApiService {
 
   String get baseUrl => apiClient.dio.options.baseUrl;
 
-  void init() {
+  Future init() async {
     _authInterceptor = AuthInterceptor();
 
     final dio = Dio(

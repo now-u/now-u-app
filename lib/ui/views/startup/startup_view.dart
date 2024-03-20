@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nowu/ui/views/startup/startup_state.dart';
 import 'package:stacked/stacked.dart';
 
 import 'startup_viewmodel.dart';
@@ -24,12 +25,18 @@ class StartupView extends StackedView<StartupViewModel> {
               child: Image.asset('assets/imgs/logo.png'),
             ),
             const SizedBox(height: 25),
-            CircularProgressIndicator(
-              strokeWidth: 3,
-              valueColor: AlwaysStoppedAnimation(
-                Theme.of(context).primaryColor,
-              ),
-            ),
+            switch (model.state) {
+              Loading() => CircularProgressIndicator(
+                  strokeWidth: 3,
+                  valueColor: AlwaysStoppedAnimation(
+                    Theme.of(context).primaryColor,
+                  ),
+                ),
+              Error() => StartupErrorView(
+                  errorMessage: (model.state as Error).message,
+                  model: model,
+                ),
+            },
           ],
         ),
       ),
@@ -39,5 +46,37 @@ class StartupView extends StackedView<StartupViewModel> {
   @override
   viewModelBuilder(context) {
     return StartupViewModel();
+  }
+}
+
+class StartupErrorView extends StatelessWidget {
+  final String errorMessage;
+  final StartupViewModel model;
+
+  const StartupErrorView({
+    Key? key,
+    required this.errorMessage,
+    required this.model,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        const SizedBox(height: 32),
+        Text(
+          errorMessage,
+          style: Theme.of(context)
+              .textTheme
+              .bodyLarge
+              ?.copyWith(color: Colors.red),
+        ),
+        const SizedBox(height: 16),
+        ElevatedButton(
+          onPressed: model.handleStartUpLogic,
+          child: const Text('Retry'),
+        ),
+      ],
+    );
   }
 }
