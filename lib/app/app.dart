@@ -32,7 +32,7 @@ import 'package:nowu/ui/views/startup/startup_view.dart';
 import 'package:nowu/ui/views/tabs/tabs_view.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
-import 'package:stacked_services/stacked_services.dart' hide NavigationService;
+import 'package:stacked_services/stacked_services.dart';
 // @stacked-import
 
 @StackedApp(

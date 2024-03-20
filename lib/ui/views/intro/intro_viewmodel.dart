@@ -1,8 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:nowu/app/app.locator.dart';
-import 'package:nowu/ui/views/causes_selection/select_causes_viewmodel.dart';
-import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/app/app.router.dart';
+import 'package:nowu/ui/views/causes_selection/select_causes_viewmodel.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -117,6 +116,6 @@ class IntroViewModel extends BaseViewModel {
 
   void _goToNextPage(BuildContext context) {
     // TODO: Find a way to apply FadeIn transition only here
-    _routerService.clearStackAndShow(const LoginViewRoute());
+    _routerService.clearStackAndShow(Routes.loginView);
   }
 }
