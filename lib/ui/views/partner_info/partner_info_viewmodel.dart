@@ -3,7 +3,8 @@ import 'package:nowu/services/navigation_service.dart';
 import 'package:stacked/stacked.dart';
 
 class PartnerInfoViewModel extends BaseViewModel {
-  final _navigationService = locator<NavigationService>();
+  final _navigationService = locator<LauncherService>();
+
   void launchLink(String url) {
     _navigationService.launchLink(url, isExternal: true);
   }

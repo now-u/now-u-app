@@ -55,7 +55,7 @@ extension DialogServiceExtension on DialogService {
   Future<bool> showActionCompletedDialog() async {
     final response = await showCustomDialog(
       barrierDismissible: true,
-      variant: DialogType.actionCompleted,
+      variant: DialogType.emailAppPicker,
     );
     return response?.confirmed == true;
   }

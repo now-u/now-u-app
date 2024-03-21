@@ -25,7 +25,7 @@ class CustomChromeSafariBrowser extends ChromeSafariBrowser {
 }
 
 // TODO Start to use router service
-class NavigationService {
+class LauncherService {
   final DialogService _dialogService = locator<DialogService>();
 
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

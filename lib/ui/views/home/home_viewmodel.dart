@@ -10,11 +10,12 @@ import 'package:nowu/services/search_service.dart';
 import 'package:nowu/services/user_service.dart';
 import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class HomeViewModel extends BaseViewModel {
   final _internalNotificationService = locator<InternalNotificationService>();
-  final _navigationService = locator<NavigationService>();
-  final _routerService = locator<RouterService>();
+  final _navigationService = locator<LauncherService>();
+  final _routerService = locator<NavigationService>();
   final _causesService = locator<CausesService>();
   final _dialogService = locator<DialogService>();
   final _userService = locator<UserService>();

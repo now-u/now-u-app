@@ -32,7 +32,7 @@ import 'package:nowu/ui/views/startup/startup_view.dart';
 import 'package:nowu/ui/views/tabs/tabs_view.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
-import 'package:stacked_services/stacked_services.dart' hide NavigationService;
+import 'package:stacked_services/stacked_services.dart';
 // @stacked-import
 
 @StackedApp(
@@ -72,7 +72,8 @@ import 'package:stacked_services/stacked_services.dart' hide NavigationService;
     // TODO Switch to using these services
     LazySingleton(classType: BottomSheetService),
     // LazySingleton(classType: DialogService),
-    LazySingleton(classType: RouterService),
+    LazySingleton(classType: LauncherService),
+    LazySingleton(classType: NavigationService),
     LazySingleton(classType: CausesService),
     LazySingleton(classType: SearchService),
     LazySingleton(classType: SecureStorageService),
@@ -84,7 +85,6 @@ import 'package:stacked_services/stacked_services.dart' hide NavigationService;
     LazySingleton(classType: DynamicLinkService),
     LazySingleton(classType: AnalyticsService),
     // TODO This is super temporary this should be removed
-    LazySingleton(classType: NavigationService),
     // LazySingleton(classType: DialogService),
     LazySingleton(classType: DialogService),
 
@@ -104,14 +104,14 @@ import 'package:stacked_services/stacked_services.dart' hide NavigationService;
   ],
   bottomsheets: [
     StackedBottomsheet(classType: ExploreFilterSheet),
-// @stacked-bottom-sheet
+    // @stacked-bottom-sheet
   ],
   // TODO Switch to these dialogs
   dialogs: [
     StackedDialog(classType: BasicDialog),
     StackedDialog(classType: EmailAppPickerDialog),
     StackedDialog(classType: CauseDialog),
-// @stacked-dialog
+    // @stacked-dialog
   ],
 )
 class App {}

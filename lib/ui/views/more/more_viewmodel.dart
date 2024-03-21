@@ -3,13 +3,15 @@ import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/services/router_service.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 sealed class MenuItemAction {
   const MenuItemAction();
 }
 
 class RouteMenuItemAction extends MenuItemAction {
-  final PageRouteInfo route;
+  final String route;
+
   const RouteMenuItemAction(this.route);
 }
 
@@ -26,17 +28,17 @@ class FunctionMenuItemAction extends MenuItemAction {
 
 class MoreViewModel extends BaseViewModel {
   final _authenticationService = locator<AuthenticationService>();
-  final _navigationService = locator<NavigationService>();
-  final _routerService = locator<RouterService>();
+  final _navigationService = locator<LauncherService>();
+  final _routerService = locator<NavigationService>();
 
   bool get isLoggedIn => _authenticationService.isUserLoggedIn();
 
   Future<void> logout() async {
     await _authenticationService.logout();
-    _routerService.clearStackAndShow(const LoginViewRoute());
+    _routerService.clearStackAndShow(Routes.loginView);
   }
 
-  Future<void> performMenuItemAction(MenuItemAction action) {
+  Future<void>? performMenuItemAction(MenuItemAction action) {
     switch (action) {
       case LinkMenuItemAction():
         return _navigationService.launchLink(

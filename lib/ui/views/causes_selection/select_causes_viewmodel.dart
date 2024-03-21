@@ -1,10 +1,11 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/dialog_service.dart';
-import 'package:nowu/services/router_service.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 export 'package:nowu/services/router_service.dart';
 
@@ -23,9 +24,10 @@ abstract class SelectCausesViewModel extends BaseViewModel
   }
 
   @protected
-  final RouterService routerService = locator<RouterService>();
+  final routerService = locator<NavigationService>();
 
   List<Cause> get causesList => causesData.keys.toList();
+
   bool get areCausesDisabled =>
       !causesData.values.toList().any((value) => value);
 

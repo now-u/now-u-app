@@ -7,10 +7,11 @@ import 'package:nowu/services/router_service.dart';
 import 'package:nowu/services/user_service.dart';
 import 'package:nowu/ui/views/causes_selection/select_causes_viewmodel.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class ProfileSetupViewModel extends BaseViewModel {
-  final _routerService = locator<RouterService>();
-  final _navigationService = locator<NavigationService>();
+  final _routerService = locator<NavigationService>();
+  final _navigationService = locator<LauncherService>();
   final _userSerivce = locator<UserService>();
   final _authenticationService = locator<AuthenticationService>();
   final formKey = GlobalKey<FormState>();

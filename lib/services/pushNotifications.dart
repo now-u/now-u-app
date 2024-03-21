@@ -1,11 +1,10 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/navigation_service.dart';
 
 class PushNotificationService {
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-  final NavigationService? _navigationService = locator<NavigationService>();
+  final LauncherService? _navigationService = locator<LauncherService>();
 
   Future init() async {
     await _fcm.requestPermission(

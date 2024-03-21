@@ -44,12 +44,12 @@ List<MenuItemData> getMenuItems(MoreViewModel viewModel) => [
       const ActionMenuItem(
         title: 'Collaborations',
         icon: CustomIcons.ic_partners,
-        action: RouteMenuItemAction(PartnersViewRoute()),
+        action: RouteMenuItemAction(Routes.partnersView),
       ),
       const ActionMenuItem(
         title: 'FAQ',
         icon: CustomIcons.ic_faq,
-        action: RouteMenuItemAction(FaqViewRoute()),
+        action: RouteMenuItemAction(Routes.faqView),
       ),
       const SectionHeadingMenuItem(title: 'Feedback'),
       const ActionMenuItem(
@@ -108,7 +108,7 @@ List<MenuItemData> getMenuItems(MoreViewModel viewModel) => [
           title: 'Log in',
           // TODO Get icon
           icon: FontAwesomeIcons.solidUser,
-          action: RouteMenuItemAction(LoginViewRoute()),
+          action: RouteMenuItemAction(Routes.loginView),
         ),
     ];
 

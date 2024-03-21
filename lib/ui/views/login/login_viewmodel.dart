@@ -12,6 +12,7 @@ import 'package:nowu/services/user_service.dart';
 import 'package:nowu/ui/common/post_login_viewmodel.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import 'login_view.form.dart';
 
@@ -29,8 +30,8 @@ class LoginFormValidators {
 
 class LoginViewModel extends FormViewModel with PostLoginViewModelMixin {
   final _authenticationService = locator<AuthenticationService>();
-  final _routerService = locator<RouterService>();
-  final _navigationService = locator<NavigationService>();
+  final _routerService = locator<NavigationService>();
+  final _navigationService = locator<LauncherService>();
   final _secureStroageService = locator<SecureStorageService>();
   final _dialogService = locator<DialogService>();
   final _userService = locator<UserService>();

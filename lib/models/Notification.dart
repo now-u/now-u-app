@@ -3,7 +3,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/navigation_service.dart';
 
-final NavigationService? _navigationService = locator<NavigationService>();
+final LauncherService? _navigationService = locator<LauncherService>();
 
 class InternalNotification {
   int? id;

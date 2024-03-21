@@ -1,28 +1,29 @@
-import 'package:causeApiClient/causeApiClient.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:causeApiClient/causeApiClient.dart';
 import 'package:logging/logging.dart';
-import 'package:nowu/app/app.router.dart';
 import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/app/app.router.dart';
 import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/navigation_service.dart';
-import 'package:stacked_services/stacked_services.dart' hide NavigationService;
+import 'package:stacked_services/stacked_services.dart';
 
 export 'package:nowu/models/Action.dart';
 export 'package:nowu/models/Campaign.dart';
-export 'package:nowu/models/Learning.dart';
 export 'package:nowu/models/Cause.dart';
+export 'package:nowu/models/Learning.dart';
 
 class CausesService {
   final _authService = locator<AuthenticationService>();
   final _analyticsService = locator<AnalyticsService>();
   final _apiService = locator<ApiService>();
-  final _navigationService = locator<NavigationService>();
-  final _routerService = locator<RouterService>();
+  final _navigationService = locator<LauncherService>();
+  final _routerService = locator<NavigationService>();
   final _logger = Logger('CausesService');
 
   List<Cause>? _causes;
+
   List<Cause> get causes {
     if (_causes == null) {
       throw Exception('Cannot get causes before initalizing causes service');

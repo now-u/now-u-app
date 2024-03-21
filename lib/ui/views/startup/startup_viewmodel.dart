@@ -1,5 +1,6 @@
-import 'package:logging/logging.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
+import 'package:logging/logging.dart';
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/api_service.dart';
@@ -9,13 +10,13 @@ import 'package:nowu/services/dynamicLinks.dart';
 import 'package:nowu/services/pushNotifications.dart';
 import 'package:nowu/services/router_service.dart';
 import 'package:nowu/services/shared_preferences_service.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:nowu/ui/common/post_login_viewmodel.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class StartupViewModel extends BaseViewModel with PostLoginViewModelMixin {
-  final _routerService = locator<RouterService>();
+  final _routerService = locator<NavigationService>();
   final _logger = Logger('StartupViewModel');
 
   // Override initialise to stop setting up navigate on post login
@@ -85,6 +86,6 @@ class StartupViewModel extends BaseViewModel with PostLoginViewModelMixin {
 
     // TODO Track if device has already finished intro, if so show login page instead
     _logger.info('User is not authenticated');
-    _routerService.clearStackAndShow(const IntroViewRoute());
+    _routerService.clearStackAndShow(Routes.introView);
   }
 }

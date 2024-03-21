@@ -13,10 +13,11 @@ import 'package:url_launcher/url_launcher.dart';
 final double SECTION_TITLE_BOTTOM_PADDING = 8;
 final double BETWEEN_SECTION_PADDING = 12;
 
-final NavigationService? _navigationService = locator<NavigationService>();
+final LauncherService? _navigationService = locator<LauncherService>();
 
 class OraganisationInfoPage extends StatelessWidget {
   final Organisation organisation;
+
   OraganisationInfoPage(
     this.organisation,
   );

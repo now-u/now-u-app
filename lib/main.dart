@@ -1,22 +1,23 @@
 import 'dart:async';
 
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:logging/logging.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:logging/logging.dart';
 import 'package:nowu/app/app.bottomsheets.dart';
 import 'package:nowu/app/app.dialogs.dart';
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/app/app.router.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:nowu/firebase_options.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:nowu/services/analytics.dart';
 import 'package:nowu/themes.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sentry_logging/sentry_logging.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import 'generated/l10n.dart';
 
@@ -40,7 +41,7 @@ void main() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    await setupLocator(stackedRouter: stackedRouter);
+    await setupLocator();
 
     setupDialogUi();
     setupBottomSheetUi();
@@ -72,7 +73,7 @@ void main() async {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return MaterialApp(
       title: 'now-u',
       localizationsDelegates: [
         S.delegate,
@@ -80,14 +81,15 @@ class App extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      // initialRoute: StartupViewRoute.name,
       supportedLocales: S.delegate.supportedLocales,
-      routerDelegate: stackedRouter.delegate(
-        navigatorObservers: () => [
-          locator<AnalyticsService>().getAnalyticsObserver(),
-          SentryNavigatorObserver(),
-        ],
-      ),
-      routeInformationParser: stackedRouter.defaultRouteParser(),
+      navigatorObservers: [
+        StackedService.routeObserver,
+        locator<AnalyticsService>().getAnalyticsObserver(),
+        SentryNavigatorObserver(),
+      ],
+      onGenerateRoute: StackedRouter().onGenerateRoute,
+      navigatorKey: StackedService.navigatorKey,
       theme: regularTheme,
     );
   }
