@@ -97,6 +97,12 @@ List<MenuItemData> getMenuItems(MoreViewModel viewModel) => [
       ),
       const SectionHeadingMenuItem(title: 'User'),
       if (viewModel.isLoggedIn)
+        const ActionMenuItem(
+          title: 'Remove account',
+          icon: FontAwesomeIcons.userMinus,
+          action: RouteMenuItemAction(DeleteAccountViewRoute()),
+        ),
+      if (viewModel.isLoggedIn)
         ActionMenuItem(
           title: 'Log out',
           // TODO Get icon

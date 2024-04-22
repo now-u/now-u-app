@@ -495,6 +495,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/CausesUser'
           description: ''
+  /me/delete/:
+    delete:
+      operationId: me_delete_destroy
+      tags:
+        - me
+      security:
+        - tokenAuth: [ ]
+      responses:
+        '204':
+          description: No response body
   /me/profile/:
     get:
       operationId: me_profile_retrieve
@@ -1348,6 +1358,7 @@ components:
           type: string
           format: email
           readOnly: true
+          nullable: true
           title: Email address
         name:
           type: string
@@ -1362,6 +1373,7 @@ components:
           type: string
           format: email
           readOnly: true
+          nullable: true
           title: Email address
         name:
           type: string

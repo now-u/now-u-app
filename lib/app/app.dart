@@ -19,6 +19,7 @@ import 'package:nowu/ui/views/action_info/action_info_view.dart';
 import 'package:nowu/ui/views/campaign_info/campaign_info_view.dart';
 import 'package:nowu/ui/views/causes_selection/change_view/change_select_causes_view.dart';
 import 'package:nowu/ui/views/causes_selection/onboarding_view/onboarding_select_causes_view.dart';
+import 'package:nowu/ui/views/delete_account/delete_account_view.dart';
 import 'package:nowu/ui/views/faq/faq_view.dart';
 import 'package:nowu/ui/views/intro/intro_view.dart';
 import 'package:nowu/ui/views/login/login_view.dart';
@@ -55,6 +56,7 @@ import 'package:stacked_services/stacked_services.dart' hide NavigationService;
     CustomRoute(page: TabsView),
     CustomRoute(page: PartnerInfoView),
     CustomRoute(page: NotificationInfoView),
+    CustomRoute(page: DeleteAccountView),
     // @stacked-route
 
     // TODO Would be nice if these were accessible on the router service (but within tabs)
