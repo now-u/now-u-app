@@ -4,7 +4,8 @@ import 'package:nowu/ui/views/explore/tabs/explore_all_tab.dart';
 import 'package:nowu/ui/views/explore/tabs/explore_campaign_tab.dart';
 import 'package:nowu/ui/views/explore/tabs/explore_news_article_tab.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked/stacked_annotations.dart';
+import 'package:stacked/stacked_annotations.dart' show FormView, FormTextField;
+import 'package:auto_route/auto_route.dart';
 
 import 'explore_page_view.form.dart';
 import 'explore_page_viewmodel.dart';
@@ -13,11 +14,12 @@ import 'tabs/explore_learning_resource_tab.dart';
 
 final double horizontalPadding = CustomPaddingSize.small;
 
+@RoutePage()
 @FormView(fields: [FormTextField(name: 'searchBar')])
-class ExplorePage extends StackedView<ExplorePageViewModel> with $ExplorePage {
+class ExploreView extends StackedView<ExplorePageViewModel> with $ExploreView {
   final ExplorePageFilterData? filterData;
 
-  ExplorePage({Key? key, this.filterData}) : super(key: key);
+  ExploreView({Key? key, this.filterData}) : super(key: key);
 
   @override
   ExplorePageViewModel viewModelBuilder(BuildContext context) =>

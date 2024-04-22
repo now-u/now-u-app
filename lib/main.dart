@@ -13,10 +13,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:nowu/router.dart';
 import 'package:nowu/services/analytics.dart';
+import 'package:nowu/services/auth.dart';
 import 'package:nowu/themes.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sentry_logging/sentry_logging.dart';
+import 'package:get_it/get_it.dart';
 
 import 'generated/l10n.dart';
 
@@ -30,13 +33,6 @@ void main() async {
 
     usePathUrlStrategy();
 
-    // TODO Find out if we still need this fix?
-    // Fix for network request on old devices: "CERTIFICATE_VERIFY_FAILED"
-    // /ByteData data =
-    //     await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
-    // SecurityContext.defaultContext
-    //     .setTrustedCertificatesBytes(data.buffer.asUint8List());
-
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
@@ -48,6 +44,10 @@ void main() async {
     Logger.root.onRecord.listen((record) {
       print('${record.level.name}: ${record.time}: ${record.message}');
     });
+
+	// TODO Why can't this call be in init??
+	await locator<AuthenticationService>().initSupabase();
+	await locator<AuthenticationService>().init();
 
     await SentryFlutter.init(
       (options) {
@@ -63,13 +63,19 @@ void main() async {
       },
     );
 
+	GetIt.instance.registerSingleton<AppRouter>(AppRouter());
+
     runApp(App());
   }, (exception, stackTrace) async {
+    Logger('Main').severe('Startup failed $exception, $stackTrace', exception, stackTrace);
     await Sentry.captureException(exception, stackTrace: stackTrace);
   });
 }
 
 class App extends StatelessWidget {
+  final _appRouter = locator<AppRouter>();
+  // final _appRouter = AppRouter();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
@@ -81,13 +87,15 @@ class App extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      routerDelegate: stackedRouter.delegate(
+      routerConfig: _appRouter.config(
+	    // TODO inheritNavigatorObservers
         navigatorObservers: () => [
+	      // TODO Make sure this returns a new instance
           locator<AnalyticsService>().getAnalyticsObserver(),
           SentryNavigatorObserver(),
         ],
       ),
-      routeInformationParser: stackedRouter.defaultRouteParser(),
+      // routeInformationParser: stackedRouter.defaultRouteParser(),
       theme: regularTheme,
     );
   }

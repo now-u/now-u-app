@@ -5,11 +5,13 @@ import 'package:nowu/themes.dart';
 import 'package:nowu/ui/common/form.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
+import 'package:auto_route/auto_route.dart';
 
 import 'components/social_media_buttons.dart';
 import 'login_view.form.dart';
 import 'login_viewmodel.dart';
 
+@RoutePage()
 @FormView(
   fields: [
     FormTextField(

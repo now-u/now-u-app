@@ -7,12 +7,15 @@ import 'package:nowu/assets/components/sectionTitle.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:nowu/models/Organisation.dart';
 import 'package:stacked/stacked.dart';
+import 'package:auto_route/auto_route.dart';
 
 import 'partner_info_viewmodel.dart';
 
 final double SECTION_TITLE_BOTTOM_PADDING = 8;
 final double BETWEEN_SECTION_PADDING = 12;
 
+// TODO Take in organisationId as path param
+@RoutePage()
 class PartnerInfoView extends StackedView<PartnerInfoViewModel> {
   final Organisation organisation;
   const PartnerInfoView({Key? key, required this.organisation})

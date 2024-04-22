@@ -20,40 +20,33 @@ class AuthInterceptor extends Interceptor {
 }
 
 class ApiService {
-  late AuthInterceptor _authInterceptor;
+  final AuthInterceptor _authInterceptor = AuthInterceptor();
 
-  CauseApiClient? _apiClient;
-
-  CauseApiClient get apiClient {
-    if (_apiClient == null) {
-      throw Exception(
-        'Cannot get api client before initalizing api service',
-      );
-    }
-    return _apiClient!;
-  }
-
-  String get baseUrl => apiClient.dio.options.baseUrl;
-
-  Future init() async {
-    _authInterceptor = AuthInterceptor();
-
+  late final CauseApiClient _apiClient = _createClient();
+  CauseApiClient _createClient() {
     final dio = Dio(
       BaseOptions(
         baseUrl: CAUSES_API_URL,
         headers: {
           'content-type': 'application/json',
-          'Access-Control-Allow-Origin': 'true',
+          // 'Access-Control-Allow-Origin': 'true',
         },
       ),
     )
       ..addSentry
       ..interceptors.add(_authInterceptor)
       ..interceptors.add(LogInterceptor());
-    _apiClient = CauseApiClient(
+
+    return CauseApiClient(
       dio: dio,
     );
   }
+
+  CauseApiClient get apiClient {
+    return _apiClient;
+  }
+
+  String get baseUrl => apiClient.dio.options.baseUrl;
 
   void setToken(String? token) {
     _authInterceptor.token = token;

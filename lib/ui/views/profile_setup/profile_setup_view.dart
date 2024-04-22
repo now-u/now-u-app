@@ -6,7 +6,9 @@ import 'package:nowu/assets/constants.dart';
 import 'package:nowu/themes.dart';
 import 'package:nowu/ui/views/profile_setup/profile_setup_viewmodel.dart';
 import 'package:stacked/stacked.dart';
+import 'package:auto_route/auto_route.dart';
 
+@RoutePage()
 class ProfileSetupView extends StackedView<ProfileSetupViewModel> {
   Widget _nameInput(ProfileSetupViewModel model) {
     return CustomTextFormField(

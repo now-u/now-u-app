@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nowu/ui/views/startup/startup_state.dart';
 import 'package:stacked/stacked.dart';
+import 'package:auto_route/auto_route.dart';
 
 import 'startup_viewmodel.dart';
 
+@RoutePage()
 class StartupView extends StackedView<StartupViewModel> {
   const StartupView({Key? key}) : super(key: key);
 

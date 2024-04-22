@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:nowu/assets/components/buttons/customWidthButton.dart';
 import 'package:nowu/ui/views/causes_selection/components/causeTileGrid.dart';
 import 'package:stacked/stacked.dart';
+import 'package:auto_route/auto_route.dart';
 
 import 'onboarding_select_causes_viewmodel.dart';
 
+@RoutePage()
 class OnboardingSelectCausesView
     extends StackedView<OnboardingSelectCausesViewModel> {
   @override

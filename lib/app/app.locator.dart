@@ -21,7 +21,6 @@ import '../services/internal_notification_service.dart';
 import '../services/navigation_service.dart';
 import '../services/pushNotifications.dart';
 import '../services/search_service.dart';
-import '../services/shared_preferences_service.dart';
 import '../services/storage.dart';
 import '../services/user_service.dart';
 import 'app.router.dart';
@@ -35,9 +34,7 @@ Future<void> setupLocator({
 }) async {
 // Register environments
   locator.registerEnvironment(
-    environment: environment,
-    environmentFilter: environmentFilter,
-  );
+      environment: environment, environmentFilter: environmentFilter);
 
 // Register dependencies
   locator.registerLazySingleton(() => BottomSheetService());
@@ -45,7 +42,6 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => CausesService());
   locator.registerLazySingleton(() => SearchService());
   locator.registerLazySingleton(() => SecureStorageService());
-  locator.registerLazySingleton(() => SharedPreferencesService());
   locator.registerLazySingleton(() => AuthenticationService());
   locator.registerLazySingleton(() => UserService());
   locator.registerLazySingleton(() => FAQService());
@@ -58,8 +54,7 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => InternalNotificationService());
   if (stackedRouter == null) {
     throw Exception(
-      'Stacked is building to use the Router (Navigator 2.0) navigation but no stackedRouter is supplied. Pass the stackedRouter to the setupLocator function in main.dart',
-    );
+        'Stacked is building to use the Router (Navigator 2.0) navigation but no stackedRouter is supplied. Pass the stackedRouter to the setupLocator function in main.dart');
   }
 
   locator<RouterService>().setRouter(stackedRouter);

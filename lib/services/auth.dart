@@ -7,7 +7,6 @@ import 'package:logging/logging.dart';
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/api_service.dart';
-import 'package:nowu/services/shared_preferences_service.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide User;
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -21,14 +20,13 @@ class LoginException implements Exception {
 }
 
 class AuthenticationService {
-  final _sharedPreferencesService = locator<SharedPreferencesService>();
   final _apiService = locator<ApiService>();
   final _logger = Logger('AuthenticationService');
   final _analyticsService = locator<AnalyticsService>();
 
   SupabaseClient get _client => Supabase.instance.client;
 
-  Future<void> initSupabase() async {
+  initSupabase() async {
     await Supabase.initialize(
       url: 'https://uqwaxxhrkpbzvjdlfdqe.supabase.co',
       anonKey:
@@ -37,7 +35,9 @@ class AuthenticationService {
   }
 
   Future<void> init() async {
-    print('Current session is: ${_client.auth.currentSession}');
+    _logger.info('Current session is: ${_client.auth.currentSession}');
+
+	// await initSupabase();
 
     if (token != null) {
       _apiService.setToken(token!);
@@ -46,7 +46,7 @@ class AuthenticationService {
     _client.auth.onAuthStateChange.listen((data) async {
       if (data.event == AuthChangeEvent.signedIn ||
           data.event == AuthChangeEvent.tokenRefreshed) {
-        _logger.info('Updated user token for causes serivice client');
+        _logger.info('Updated user token for causes service client');
         _apiService.setToken(token!);
       }
 
@@ -60,6 +60,8 @@ class AuthenticationService {
 
       // TODO Handle logout
     });
+
+	return;
   }
 
   String? get token => _client.auth.currentSession?.accessToken;
@@ -172,9 +174,6 @@ class AuthenticationService {
 
   Future<void> logout() async {
     await _client.auth.signOut();
-    // TODO Move to above
-    // TODO Do we still need to store user token in shared preferences?
-    await _sharedPreferencesService.clearUserToken();
   }
 
   String? getCurrentUserName() {

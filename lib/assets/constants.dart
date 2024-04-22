@@ -20,8 +20,8 @@ const LOCAL_STACK_URL = 'http://192.168.1.11';
 
 // devMode ? "staging.api.now-u.com" : "api.now-u.com";
 
-// const CAUSES_API_URL = '$LOCAL_STACK_URL:8000';
 const CAUSES_API_URL = 'https://causes.dev.apiv2.now-u.com/';
+// const CAUSES_API_URL = '$LOCAL_STACK_URL:8000';
 
 // const SEARCH_SERVICE_URL = '$LOCAL_STACK_URL:7700';
 const SEARCH_SERVICE_URL = 'https://search.dev.apiv2.now-u.com';

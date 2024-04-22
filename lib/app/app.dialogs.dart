@@ -4,10 +4,10 @@
 // StackedDialogGenerator
 // **************************************************************************
 
-import 'package:nowu/ui/dialogs/action/action_completed_dialog.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import 'app.locator.dart';
+import '../ui/dialogs/action/action_completed_dialog.dart';
 import '../ui/dialogs/basic/basic_dialog.dart';
 import '../ui/dialogs/cause/cause_dialog.dart';
 import '../ui/dialogs/email_app_picker/email_app_picker_dialog.dart';

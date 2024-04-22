@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/assets/constants.dart';
+import 'package:nowu/router.dart';
+import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/services/router_service.dart';
@@ -9,7 +11,7 @@ import 'package:nowu/ui/views/causes_selection/select_causes_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class ProfileSetupViewModel extends BaseViewModel {
-  final _routerService = locator<RouterService>();
+  final _router = locator<AppRouter>();
   final _navigationService = locator<NavigationService>();
   final _userSerivce = locator<UserService>();
   final _authenticationService = locator<AuthenticationService>();
@@ -37,7 +39,7 @@ class ProfileSetupViewModel extends BaseViewModel {
       newsLetterSignup: signUpForNewsLetter,
     );
     setBusy(false);
-    _routerService.navigateToOnboardingSelectCausesView();
+    _router.push(const OnboardingSelectCausesRoute());
   }
 
   void launchTandCs() {

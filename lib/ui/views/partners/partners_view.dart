@@ -3,10 +3,11 @@ import 'package:nowu/assets/components/customAppBar.dart';
 import 'package:nowu/assets/components/custom_network_image.dart';
 import 'package:nowu/models/Organisation.dart';
 import 'package:stacked/stacked.dart';
+import 'package:auto_route/auto_route.dart';
 
 import 'partners_viewmodel.dart';
 
-// TODO Test this works
+@RoutePage()
 class PartnersView extends StackedView<PartnersViewModel> {
   @override
   Widget builder(

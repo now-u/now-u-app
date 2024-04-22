@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:nowu/router.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/services/dialog_service.dart';
@@ -16,14 +17,17 @@ abstract class SelectCausesViewModel extends BaseViewModel
 
   late Map<Cause, bool> causesData;
 
-  void initialise() {
-    causesData = {
-      for (Cause cause in _causesService.causes) cause: cause.isSelected,
-    };
+  @override
+  Future<void> initialise() async {
+    return _causesService.listCauses().then((value) {
+		causesData = {
+    	  for (Cause cause in value) cause: cause.isSelected,
+    	};
+	});
   }
 
   @protected
-  final RouterService routerService = locator<RouterService>();
+  final router = locator<AppRouter>();
 
   List<Cause> get causesList => causesData.keys.toList();
   bool get areCausesDisabled =>

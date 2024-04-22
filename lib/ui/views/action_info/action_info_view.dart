@@ -6,19 +6,21 @@ import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:nowu/models/Action.dart';
 import 'package:nowu/themes.dart';
 import 'package:stacked/stacked.dart';
+import 'package:auto_route/auto_route.dart';
 
 import 'action_info_viewmodel.dart';
 
 // TODO Use from constants
 final double hPadding = 10;
 
+@RoutePage()
 class ActionInfoView extends StackedView<ActionInfoViewModel> {
   // TODO Can we just remove this?
   // final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>(); (also below)
 
   final int actionId;
 
-  ActionInfoView({Key? key, required this.actionId});
+  const ActionInfoView({Key? key, @pathParam required this.actionId});
 
   @override
   ActionInfoViewModel viewModelBuilder(BuildContext context) {

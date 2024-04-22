@@ -7,11 +7,13 @@ import 'package:nowu/assets/components/customTile.dart';
 
 import 'package:stacked/stacked.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:auto_route/auto_route.dart';
 
 import 'faq_viewmodel.dart';
 
 // TODO There is a bug on this page when you tap the last FAQ the answer is not visible without scrolling
 // Maybe need something like: https://stackoverflow.com/questions/49153087/flutter-scrolling-to-a-widget-in-listview
+@RoutePage()
 class FaqView extends StackedView<FaqViewModel> {
   @override
   FaqViewModel viewModelBuilder(BuildContext context) {

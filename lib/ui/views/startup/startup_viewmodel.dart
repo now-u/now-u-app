@@ -4,29 +4,27 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/router.dart';
+import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/dynamicLinks.dart';
 import 'package:nowu/services/pushNotifications.dart';
-import 'package:nowu/services/router_service.dart';
-import 'package:nowu/services/shared_preferences_service.dart';
 import 'package:nowu/ui/common/post_login_viewmodel.dart';
 import 'package:nowu/ui/views/startup/startup_state.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:stacked/stacked.dart';
 
 class StartupViewModel extends BaseViewModel with PostLoginViewModelMixin {
-  final _routerService = locator<RouterService>();
+  final _router = locator<AppRouter>();
   final _logger = Logger('StartupViewModel');
   final _apiService = locator<ApiService>();
   final _authenticationService = locator<AuthenticationService>();
   final _dynamicLinkService = locator<DynamicLinkService>();
   final _pushNotificationService = locator<PushNotificationService>();
-  final _sharedPreferencesService = locator<SharedPreferencesService>();
   final _analyticsService = locator<AnalyticsService>();
-  final _causesService = locator<CausesService>();
 
   static const int MAX_RETRY_COUNT = 2;
   int _retryCount = 0;
@@ -46,17 +44,19 @@ class StartupViewModel extends BaseViewModel with PostLoginViewModelMixin {
 
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
-    _authenticationService.initSupabase();
-
     handleStartUpLogic();
   }
 
   Future handleStartUpLogic() async {
     _logger.info('handleStartUpLogic starting');
 
-    await initServices()
-        .onError((error, _) => _handleStartupError(error))
-        .then((_) => navigateNext());
+    try {
+		await initServices();
+		_logger.info('Init complete');
+		await navigateNext();
+	} catch (e, s) {
+		_handleStartupError(e, s);
+	}
   }
 
   Future initServices() async {
@@ -72,10 +72,6 @@ class StartupViewModel extends BaseViewModel with PostLoginViewModelMixin {
       [
         if (isMobile) _dynamicLinkService.handleDynamicLinks(),
         if (isMobile) _pushNotificationService.init(),
-        _sharedPreferencesService.init(),
-        _apiService.init(),
-        _causesService.init(),
-        _authenticationService.init(),
       ],
       eagerError: true,
     );
@@ -100,11 +96,13 @@ class StartupViewModel extends BaseViewModel with PostLoginViewModelMixin {
 
     // TODO Track if device has already finished intro, if so show login page instead
     _logger.info('User is not authenticated');
-    _routerService.clearStackAndShow(const IntroViewRoute());
+    _router.replaceAll([const IntroRoute()]);
   }
 
-  void _handleStartupError(dynamic error) {
-    _logger.severe('Error during startup: $error');
+  void _handleStartupError(Object error, StackTrace stackTrace) {
+    _logger.severe('Error during startup', error, stackTrace);
+    _logger.severe(error);
+    _logger.severe(stackTrace);
     if (_retryCount < MAX_RETRY_COUNT) {
       _retryCount++;
       _logger.warning('Retrying startup');

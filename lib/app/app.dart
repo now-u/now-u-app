@@ -8,10 +8,10 @@ import 'package:nowu/services/internal_notification_service.dart';
 import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/services/pushNotifications.dart';
 import 'package:nowu/services/search_service.dart';
-import 'package:nowu/services/shared_preferences_service.dart';
 import 'package:nowu/services/storage.dart';
 import 'package:nowu/services/user_service.dart';
 import 'package:nowu/ui/bottom_sheets/explore_filter/explore_filter_sheet.dart';
+import 'package:nowu/ui/dialogs/action/action_completed_dialog.dart';
 import 'package:nowu/ui/dialogs/basic/basic_dialog.dart';
 import 'package:nowu/ui/dialogs/cause/cause_dialog.dart';
 import 'package:nowu/ui/dialogs/email_app_picker/email_app_picker_dialog.dart';
@@ -76,7 +76,6 @@ import 'package:stacked_services/stacked_services.dart' hide NavigationService;
     LazySingleton(classType: CausesService),
     LazySingleton(classType: SearchService),
     LazySingleton(classType: SecureStorageService),
-    LazySingleton(classType: SharedPreferencesService),
     LazySingleton(classType: AuthenticationService),
     LazySingleton(classType: UserService),
     LazySingleton(classType: FAQService),
@@ -111,6 +110,7 @@ import 'package:stacked_services/stacked_services.dart' hide NavigationService;
     StackedDialog(classType: BasicDialog),
     StackedDialog(classType: EmailAppPickerDialog),
     StackedDialog(classType: CauseDialog),
+    StackedDialog(classType: ActionCompletedDialog),
 // @stacked-dialog
   ],
 )

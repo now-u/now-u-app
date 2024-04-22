@@ -7,9 +7,11 @@ import 'package:nowu/models/Cause.dart';
 import 'package:flutter/material.dart';
 import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:stacked/stacked.dart';
+import 'package:auto_route/auto_route.dart';
 
 import 'campaign_info_viewmodel.dart';
 
+@RoutePage()
 class CampaignInfoView extends StackedView<CampaignViewModel> {
   // TODO Work out how to make this work on web url (and internal link()
   final ListCampaign listCampaign;

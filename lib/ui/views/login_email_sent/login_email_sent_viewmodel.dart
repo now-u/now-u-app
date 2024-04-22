@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/router.dart';
+import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/dialog_service.dart';
 import 'package:nowu/services/router_service.dart';
 import 'package:nowu/ui/common/post_login_viewmodel.dart';
@@ -13,10 +15,10 @@ class LoginEmailSentViewModel extends BaseViewModel
   LoginEmailSentViewModel({required this.email});
 
   final _dialogService = locator<DialogService>();
-  final _routerService = locator<RouterService>();
+  final _router = locator<AppRouter>();
 
   Future backToLogin() async {
-    _routerService.navigateToLoginView();
+    _router.push(const LoginRoute());
   }
 
   Future openMailApp() async {
@@ -38,6 +40,6 @@ class LoginEmailSentViewModel extends BaseViewModel
   }
 
   void navigateToSecretCodePage() {
-    _routerService.navigateToLoginCodeView(email: email);
+    _router.push(LoginCodeRoute(email: email));
   }
 }

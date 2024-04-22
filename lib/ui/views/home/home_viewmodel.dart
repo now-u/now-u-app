@@ -1,6 +1,9 @@
 import 'package:causeApiClient/causeApiClient.dart';
+import 'package:logging/logging.dart';
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/models/Notification.dart';
+import 'package:nowu/router.dart';
+import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/dialog_service.dart';
 import 'package:nowu/services/internal_notification_service.dart';
@@ -12,17 +15,17 @@ import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeViewModel extends BaseViewModel {
+  Logger _logger = Logger('HomeViewModel');
   final _internalNotificationService = locator<InternalNotificationService>();
   final _navigationService = locator<NavigationService>();
-  final _routerService = locator<RouterService>();
+  final _router = locator<AppRouter>();
   final _causesService = locator<CausesService>();
   final _dialogService = locator<DialogService>();
   final _userService = locator<UserService>();
   final _searchService = locator<SearchService>();
 
-  late List<Cause> _causes;
-
-  List<Cause> get causes => _causes;
+  List<Cause>? _causes;
+  List<Cause>? get causes => _causes;
 
   // TODO Multiple futures viewModel
   List<ActionExploreTileData>? _myActions;
@@ -43,8 +46,10 @@ class HomeViewModel extends BaseViewModel {
   UserProfile? get currentUser => _userService.currentUser;
 
   Future<void> init() async {
-    fetchNotifications();
-    _causes = _causesService.causes;
+	await (
+		fetchNotifications(),
+		fetchCauses(),
+	).wait;
 
     // TODO Filter by selected causes
     List<int>? selectedCausesId =
@@ -120,7 +125,7 @@ class HomeViewModel extends BaseViewModel {
   Future getCausePopup(Cause listCause) async {
     final dialogResult = await _dialogService.showCauseDialog(cause: listCause);
     if (dialogResult) {
-      _routerService.navigateToChangeSelectCausesView();
+	  goToEditCausesPage();
     }
   }
 
@@ -145,9 +150,16 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  Future fetchCauses() async {
+    // Assign the value *after* the future is complete
+    final causes = await _causesService.listCauses();
+	this._causes = causes;
+	notifyListeners();
+  }
+
   Future openNotification(InternalNotification notification) async {
-    await _routerService.navigateToNotificationInfoView(
-      notification: notification,
+    await _router.push(
+	  NotificationInfoRoute(notification: notification),
     );
   }
 
@@ -168,11 +180,13 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void goToExplorePage() {
-    _routerService.navigateToExplore();
+    _router.push(
+	  TabsRoute(children: [ExploreRoute()]),
+	);
   }
 
   void goToEditCausesPage() {
-    _routerService.navigateToChangeSelectCausesView();
+    _router.push(const ChangeSelectCausesRoute());
   }
 
   Future<void> openAction(ListAction action) {

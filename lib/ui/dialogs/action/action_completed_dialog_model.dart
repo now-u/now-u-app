@@ -1,16 +1,17 @@
-import 'package:nowu/services/router_service.dart';
+import 'package:nowu/router.dart';
+import 'package:nowu/router.gr.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../app/app.locator.dart';
 
 class ActionCompletedDialogModel extends BaseViewModel {
-  final _routerService = locator<RouterService>();
+  final _router = locator<AppRouter>();
 
   void onNavigateToExplore() {
-    _routerService.navigateToExplore();
+    _router.push(TabsRoute(children: [ExploreRoute()]));
   }
 
   void onClose() {
-    _routerService.pop();
+    _router.maybePop();
   }
 }

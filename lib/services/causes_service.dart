@@ -3,6 +3,8 @@ import 'package:built_collection/built_collection.dart';
 import 'package:logging/logging.dart';
 import 'package:nowu/app/app.router.dart';
 import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/router.dart';
+import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/auth.dart';
@@ -19,19 +21,14 @@ class CausesService {
   final _analyticsService = locator<AnalyticsService>();
   final _apiService = locator<ApiService>();
   final _navigationService = locator<NavigationService>();
-  final _routerService = locator<RouterService>();
+  final _router = locator<AppRouter>();
   final _logger = Logger('CausesService');
 
   List<Cause>? _causes;
-  List<Cause> get causes {
-    if (_causes == null) {
-      throw Exception('Cannot get causes before initalizing causes service');
-    }
-    return _causes!;
-  }
-
-  Future<void> init() async {
-    await _fetchCauses();
+  Future<List<Cause>> _fetchCauses() async {
+	_logger.info("Fetching causes from the service");
+    final response = await _causeServiceClient.getCausesApi().causesList();
+    return response.data!.asList();
   }
 
   CauseApiClient get _causeServiceClient => _apiService.apiClient;
@@ -43,12 +40,16 @@ class CausesService {
   ///
   /// Input params
   /// Returns a list of Causes from the API
-  Future<void> _fetchCauses() async {
-    final response = await _causeServiceClient.getCausesApi().causesList();
-    _causes = response.data!.asList();
+  Future<List<Cause>> listCauses() async {
+    if (_causes == null) {
+	  _causes = await _fetchCauses();
+	}
+	_logger.info("Got causes, $_causes");
+    return _causes!;
   }
 
-  Cause getCause(int id) {
+  Future<Cause> getCause(int id) async {
+    final causes = await listCauses();
     return causes.firstWhere((cause) => cause.id == id);
   }
 
@@ -167,7 +168,7 @@ class CausesService {
   }
 
   Future<void> openAction(int actionId) async {
-    await _routerService.navigateToActionInfoView(actionId: actionId);
+    await _router.push(ActionInfoRoute(actionId: actionId));
   }
 
   Future<void> openLearningResource(LearningResource learningResource) async {
@@ -181,7 +182,7 @@ class CausesService {
   }
 
   Future<void> openCampaign(ListCampaign campaign) async {
-    await _routerService.navigateToCampaignInfoView(listCampaign: campaign);
+    await _router.push(CampaignInfoRoute(listCampaign: campaign));
   }
 
   Future<void> openNewArticle(NewsArticle article) async {

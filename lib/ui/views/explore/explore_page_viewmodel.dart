@@ -63,7 +63,13 @@ class ExplorePageViewModel extends FormViewModel {
         );
   }
 
-  List<Cause> get causes => _causesService.causes;
+  List<Cause>? _causes;
+  List<Cause>? get causes => _causes;
+
+  Future<void> init() async {
+    return _causesService.listCauses().then((value) => _causes = value);
+  }
+
   PagingState actions = InitialLoading();
   PagingState learningResources = InitialLoading();
   PagingState campaigns = InitialLoading();
@@ -286,12 +292,12 @@ class ExplorePageViewModel extends FormViewModel {
   Future<void> _openFilterSheet<T>({
     required String filterName,
     required Set<T> targetParameter,
-    required Iterable<ExploreFilterSheetOption<T>> options,
+    required Iterable<ExploreFilterSheetOption<T>>? options,
   }) async {
     final outputSelection = await _bottomSheetService.showExploreFilterSheet<T>(
       ExploreFilterSheetData(
         filterName: filterName,
-        options: options.toList(),
+        options: options?.toList() ?? [],
         initialSelectedValues: targetParameter,
       ),
     );
@@ -319,7 +325,7 @@ class ExplorePageViewModel extends FormViewModel {
     return _openFilterSheet(
       filterName: 'Causes',
       targetParameter: this.filterData.filterCauseIds,
-      options: causes.map(
+      options: _causes?.map(
         (cause) =>
             ExploreFilterSheetOption(title: cause.title, value: cause.id),
       ),

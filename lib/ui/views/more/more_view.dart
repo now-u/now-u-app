@@ -6,7 +6,9 @@ import 'package:nowu/assets/components/customTile.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:nowu/pages/more/ProfileTile.dart';
+import 'package:nowu/router.gr.dart';
 import 'package:stacked/stacked.dart';
+import 'package:auto_route/auto_route.dart';
 
 import 'more_viewmodel.dart';
 
@@ -44,12 +46,12 @@ List<MenuItemData> getMenuItems(MoreViewModel viewModel) => [
       const ActionMenuItem(
         title: 'Collaborations',
         icon: CustomIcons.ic_partners,
-        action: RouteMenuItemAction(PartnersViewRoute()),
+        action: RouteMenuItemAction(PartnersRoute()),
       ),
       const ActionMenuItem(
         title: 'FAQ',
         icon: CustomIcons.ic_faq,
-        action: RouteMenuItemAction(FaqViewRoute()),
+        action: RouteMenuItemAction(FaqRoute()),
       ),
       const SectionHeadingMenuItem(title: 'Feedback'),
       const ActionMenuItem(
@@ -108,7 +110,7 @@ List<MenuItemData> getMenuItems(MoreViewModel viewModel) => [
           title: 'Log in',
           // TODO Get icon
           icon: FontAwesomeIcons.solidUser,
-          action: RouteMenuItemAction(LoginViewRoute()),
+          action: RouteMenuItemAction(LoginRoute()),
         ),
     ];
 
@@ -117,7 +119,10 @@ List<MenuItemData> getMenuItems(MoreViewModel viewModel) => [
 /// This Widget takes in the [menuItems] and goes over it
 /// checking if the elements inside it is either sectionHeading
 /// or [ProfileTile]
+@RoutePage()
 class MoreView extends StackedView<MoreViewModel> {
+  const MoreView();
+
   @override
   MoreViewModel viewModelBuilder(BuildContext context) => MoreViewModel();
 

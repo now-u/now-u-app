@@ -1,8 +1,10 @@
 import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/router.dart';
+import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/navigation_service.dart';
-import 'package:nowu/services/router_service.dart';
-import 'package:stacked/stacked.dart';
+import 'package:stacked/stacked.dart' hide PageRouteInfo;
+import 'package:auto_route/auto_route.dart';
 
 sealed class MenuItemAction {
   const MenuItemAction();
@@ -27,13 +29,13 @@ class FunctionMenuItemAction extends MenuItemAction {
 class MoreViewModel extends BaseViewModel {
   final _authenticationService = locator<AuthenticationService>();
   final _navigationService = locator<NavigationService>();
-  final _routerService = locator<RouterService>();
+  final _router = locator<AppRouter>();
 
   bool get isLoggedIn => _authenticationService.isUserLoggedIn();
 
   Future<void> logout() async {
     await _authenticationService.logout();
-    _routerService.clearStackAndShow(const LoginViewRoute());
+    _router.replaceAll([const LoginRoute()]);
   }
 
   Future<void> performMenuItemAction(MenuItemAction action) {
@@ -47,7 +49,7 @@ class MoreViewModel extends BaseViewModel {
           isExternal: action.isExternal,
         );
       case RouteMenuItemAction():
-        return _routerService.navigateTo(action.route);
+        return _router.push(action.route);
       case FunctionMenuItemAction():
         return action.function();
     }

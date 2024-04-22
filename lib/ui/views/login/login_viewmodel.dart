@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:logging/logging.dart';
 import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/assets/constants.dart';
+import 'package:nowu/router.dart';
+import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/dialog_service.dart';
 import 'package:nowu/services/navigation_service.dart';
@@ -29,7 +31,7 @@ class LoginFormValidators {
 
 class LoginViewModel extends FormViewModel with PostLoginViewModelMixin {
   final _authenticationService = locator<AuthenticationService>();
-  final _routerService = locator<RouterService>();
+  final _router = locator<AppRouter>();
   final _navigationService = locator<NavigationService>();
   final _secureStroageService = locator<SecureStorageService>();
   final _dialogService = locator<DialogService>();
@@ -70,7 +72,7 @@ class LoginViewModel extends FormViewModel with PostLoginViewModelMixin {
     _logger.info('Logging in with email $emailInputValue');
     await _secureStroageService.setEmail(emailInputValue!);
     _authenticationService.sendSignInEmail(emailInputValue!);
-    await _routerService.navigateToLoginEmailSentView(email: emailInputValue!);
+    await _router.push(LoginEmailSentRoute(email: emailInputValue!));
   }
 
   void launchPrivacyPolicy() {
@@ -78,6 +80,6 @@ class LoginViewModel extends FormViewModel with PostLoginViewModelMixin {
   }
 
   void skipLogin() async {
-    await _routerService.navigateToHome(clearHistory: true);
+    await _router.replaceAll([TabsRoute(children: [const HomeRoute()])]);
   }
 }
