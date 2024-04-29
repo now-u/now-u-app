@@ -9,7 +9,9 @@ class CampaignViewModel extends BaseViewModel {
 
   ListCampaign _listCampaign;
   Campaign? _campaign;
+
   Campaign? get campaign => _campaign;
+
   // TODO Fix, how and why is this used? => We should always be using the above if its defined. Previously
   // they extended each other which helped
   // TODO If not using list campaign then just use FutureViewModel
@@ -50,6 +52,6 @@ class CampaignViewModel extends BaseViewModel {
   }
 
   void back() {
-    _routerService.back();
+    _routerService.pop();
   }
 }
