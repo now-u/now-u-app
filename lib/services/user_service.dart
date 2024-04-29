@@ -46,4 +46,8 @@ class UserService {
             );
     _currentUser = response.data!;
   }
+
+  Future<void> deleteUser() async {
+    await _causeServiceClient.getMeApi().meDeleteDestroy();
+  }
 }
