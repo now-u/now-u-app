@@ -12,8 +12,8 @@ sealed class PagingState<T> {
   int itemsCount() => items.length;
 }
 
-class InitialLoading extends PagingState {
-  InitialLoading() : super([], false);
+class InitialLoading<T> extends PagingState<T> {
+  InitialLoading() : super(<T>[], false);
 }
 
 class Data<T> extends PagingState {

@@ -1,7 +1,6 @@
-import 'package:causeApiClient/causeApiClient.dart';
-import 'package:intl/intl.dart';
+import 'package:causeApiClient/causeApiClient.dart' as Api;
 
-export 'package:causeApiClient/causeApiClient.dart' show NewsArticle;
+export 'package:causeApiClient/causeApiClient.dart' show Image;
 
 // class ArticleType {
 //   final String name;
@@ -22,17 +21,21 @@ export 'package:causeApiClient/causeApiClient.dart' show NewsArticle;
 //   return articleTypes.firstWhere((ArticleType type) => type.name == name);
 // }
 
-extension NewsArticleExtension on NewsArticle {
-  String? get dateString {
-    // TODO: Fix nullability
-    //  return releaseAt != null ? DateFormat('d MMM y').format(releaseAt) : null;
-    return DateFormat('d MMM y').format(releaseAt);
-  }
+class NewsArticle {
+  final int id;
+  final String title;
+  final String subtitle;
+  final Api.Image headerImage;
+  final DateTime releasedAt;
+  final Uri link;
 
-  // TODO Try harder
-  String? getCategory({List<Campaign>? campaigns}) {
-    return 'General';
-  }
+  NewsArticle(Api.NewsArticle apiModel)
+      : id = apiModel.id,
+        title = apiModel.title,
+        subtitle = apiModel.subtitle,
+        headerImage = apiModel.headerImage,
+        releasedAt = apiModel.releaseAt,
+        link = Uri.parse(apiModel.link);
 
-  String get shortUrl => Uri.parse(link).host;
+  String get shortUrl => link.host;
 }

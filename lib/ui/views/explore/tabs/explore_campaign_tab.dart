@@ -33,7 +33,6 @@ class ExploreCampaignTab extends StatelessWidget {
               campaign,
               viewModel.isCampaignComplete(campaign),
             ),
-            onTap: () => viewModel.openCampaign(campaign),
           ),
         ),
       ),

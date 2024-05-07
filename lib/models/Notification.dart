@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/locator.dart';
 import 'package:nowu/services/navigation_service.dart';
 
 final NavigationService? _navigationService = locator<NavigationService>();

@@ -10,13 +10,14 @@ extension DialogServiceExtension on DialogService {
   // each dialog, we should try to auto generate these
 
   // TODO Show error dialog
+  // TODO fix!
   Future<void> showErrorDialog({
     required String title,
     required String description,
   }) {
     return showCustomDialog<void, void>(
       barrierDismissible: true,
-      variant: DialogType.basic,
+      // variant: DialogType.basic,
       title: title,
       description: description,
     );
@@ -39,10 +40,11 @@ extension DialogServiceExtension on DialogService {
     return response?.confirmed == true;
   }
 
+  // TODO fix
   Future<bool> showExitConfirmationDialog() async {
     final response = await showCustomDialog(
       barrierDismissible: true,
-      variant: DialogType.basic,
+      // variant: DialogType.basic,
       title: "You're about to leave",
       description:
           'This link will take you out of the app. Are you sure you want to go?',

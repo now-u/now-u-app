@@ -25,7 +25,6 @@ class ExploreNewsArticleTab extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: ExploreNewsArticleTile(
             NewsArticleExploreTileData(newsArticle),
-            onTap: () => viewModel.openNewsArticle(newsArticle),
           ),
         ),
       ),

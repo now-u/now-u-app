@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' hide Action;
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/locator.dart';
 import 'package:nowu/services/dialog_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 

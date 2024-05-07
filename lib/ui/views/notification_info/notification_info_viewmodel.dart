@@ -1,4 +1,4 @@
-import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/locator.dart';
 import 'package:nowu/models/Notification.dart';
 import 'package:nowu/router.dart';
 
@@ -17,7 +17,7 @@ class NotificationInfoViewModel extends BaseViewModel {
     bool success =
         await _internalNotificationService.dismissNotification(notification.id);
     if (success) {
-	  // TODO Whats the difference with pop?
+      // TODO Whats the difference with pop?
       _router.back();
     }
     // TODO inform user of issue

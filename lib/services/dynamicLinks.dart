@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/locator.dart';
 import 'package:nowu/services/router_service.dart';
 import 'package:nowu/services/storage.dart';
 

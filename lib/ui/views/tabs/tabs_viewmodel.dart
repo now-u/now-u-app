@@ -1,6 +1,6 @@
 import 'package:stacked/stacked.dart';
 
-import '../../../app/app.locator.dart';
+import '../../../locator.dart';
 import '../../../services/analytics.dart';
 
 enum TabPage { Home, Explore, Menu }

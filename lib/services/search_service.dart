@@ -2,11 +2,13 @@ import 'dart:math';
 
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
-import 'package:causeApiClient/causeApiClient.dart';
+import 'package:causeApiClient/causeApiClient.dart' hide NewsArticle;
+import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:collection/collection.dart';
 import 'package:meilisearch/meilisearch.dart';
-import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/locator.dart';
 import 'package:nowu/assets/constants.dart';
+import 'package:nowu/models/article.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/model/search/search_response.dart';
 import 'package:tuple/tuple.dart';
@@ -384,9 +386,9 @@ class SearchService {
   List<NewsArticle> _searchHitsToNewsArticles(List<Map<String, dynamic>> hits) {
     final results = _causeServiceClient.serializers.deserialize(
       hits,
-      specifiedType: const FullType(BuiltList, [FullType(NewsArticle)]),
-    ) as BuiltList<NewsArticle>;
-    return results.asList();
+      specifiedType: const FullType(BuiltList, [FullType(Api.NewsArticle)]),
+    ) as BuiltList<Api.NewsArticle>;
+    return results.map((e) => NewsArticle(e)).toList();
   }
 
   Future<List<T>> _searchIndex<T>(

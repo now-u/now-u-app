@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:nowu/router.dart';
 import 'package:nowu/services/causes_service.dart';
-import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/locator.dart';
 import 'package:nowu/services/dialog_service.dart';
 import 'package:nowu/services/router_service.dart';
 import 'package:stacked/stacked.dart';
@@ -20,10 +20,10 @@ abstract class SelectCausesViewModel extends BaseViewModel
   @override
   Future<void> initialise() async {
     return _causesService.listCauses().then((value) {
-		causesData = {
-    	  for (Cause cause in value) cause: cause.isSelected,
-    	};
-	});
+      causesData = {
+        for (Cause cause in value) cause: cause.isSelected,
+      };
+    });
   }
 
   @protected

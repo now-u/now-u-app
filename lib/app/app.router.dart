@@ -5,63 +5,52 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:causeApiClient/causeApiClient.dart' as _i22;
-import 'package:flutter/foundation.dart' as _i19;
-import 'package:flutter/material.dart' as _i18;
-import 'package:stacked/stacked.dart' as _i17;
-import 'package:stacked_services/stacked_services.dart' as _i16;
+import 'package:flutter/foundation.dart' as _i17;
+import 'package:flutter/material.dart' as _i16;
+import 'package:stacked/stacked.dart' as _i15;
+import 'package:stacked_services/stacked_services.dart' as _i14;
 
-import '../models/Notification.dart' as _i23;
-import '../services/causes_service.dart' as _i20;
-import '../ui/views/action_info/action_info_view.dart' as _i3;
-import '../ui/views/campaign_info/campaign_info_view.dart' as _i4;
+import '../models/Notification.dart' as _i20;
+import '../services/causes_service.dart' as _i18;
+import '../ui/views/action_info/action_info_view.dart' as _i2;
+import '../ui/views/campaign_info/campaign_info_view.dart' as _i3;
 import '../ui/views/causes_selection/change_view/change_select_causes_view.dart'
-    as _i11;
+    as _i10;
 import '../ui/views/causes_selection/onboarding_view/onboarding_select_causes_view.dart'
-    as _i12;
-import '../ui/views/explore/explore_page_viewmodel.dart' as _i21;
-import '../ui/views/faq/faq_view.dart' as _i5;
-import '../ui/views/intro/intro_view.dart' as _i6;
-import '../ui/views/login/login_view.dart' as _i8;
-import '../ui/views/login_code/login_code_view.dart' as _i9;
-import '../ui/views/login_email_sent/login_email_sent_view.dart' as _i10;
-import '../ui/views/notification_info/notification_info_view.dart' as _i15;
-import '../ui/views/partner_info/partner_info_view.dart' as _i14;
-import '../ui/views/partners/partners_view.dart' as _i2;
-import '../ui/views/profile_setup/profile_setup_view.dart' as _i7;
+    as _i11;
+import '../ui/views/explore/explore_page_viewmodel.dart' as _i19;
+import '../ui/views/faq/faq_view.dart' as _i4;
+import '../ui/views/intro/intro_view.dart' as _i5;
+import '../ui/views/login/login_view.dart' as _i7;
+import '../ui/views/login_code/login_code_view.dart' as _i8;
+import '../ui/views/login_email_sent/login_email_sent_view.dart' as _i9;
+import '../ui/views/notification_info/notification_info_view.dart' as _i13;
+import '../ui/views/profile_setup/profile_setup_view.dart' as _i6;
 import '../ui/views/startup/startup_view.dart' as _i1;
-import '../ui/views/tabs/tabs_view.dart' as _i13;
+import '../ui/views/tabs/tabs_view.dart' as _i12;
 
 final stackedRouter =
-    StackedRouterWeb(navigatorKey: _i16.StackedService.navigatorKey);
+    StackedRouterWeb(navigatorKey: _i14.StackedService.navigatorKey);
 
-class StackedRouterWeb extends _i17.RootStackRouter {
-  StackedRouterWeb({_i18.GlobalKey<_i18.NavigatorState>? navigatorKey})
+class StackedRouterWeb extends _i15.RootStackRouter {
+  StackedRouterWeb({_i16.GlobalKey<_i16.NavigatorState>? navigatorKey})
       : super(navigatorKey);
 
   @override
-  final Map<String, _i17.PageFactory> pagesMap = {
+  final Map<String, _i15.PageFactory> pagesMap = {
     StartupViewRoute.name: (routeData) {
-      return _i17.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i1.StartupView(),
         opaque: true,
         barrierDismissible: false,
       );
     },
-    PartnersViewRoute.name: (routeData) {
-      return _i17.CustomPage<dynamic>(
-        routeData: routeData,
-        child: _i2.PartnersView(),
-        opaque: true,
-        barrierDismissible: false,
-      );
-    },
     ActionInfoViewRoute.name: (routeData) {
       final args = routeData.argsAs<ActionInfoViewArgs>();
-      return _i17.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i3.ActionInfoView(
+        child: _i2.ActionInfoView(
           key: args.key,
           actionId: args.actionId,
         ),
@@ -71,51 +60,51 @@ class StackedRouterWeb extends _i17.RootStackRouter {
     },
     CampaignInfoViewRoute.name: (routeData) {
       final args = routeData.argsAs<CampaignInfoViewArgs>();
-      return _i17.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i4.CampaignInfoView(args.listCampaign),
+        child: _i3.CampaignInfoView(args.listCampaign),
         opaque: true,
         barrierDismissible: false,
       );
     },
     FaqViewRoute.name: (routeData) {
-      return _i17.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i5.FaqView(),
+        child: _i4.FaqView(),
         opaque: true,
         barrierDismissible: false,
       );
     },
     IntroViewRoute.name: (routeData) {
-      return _i17.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i6.IntroView(),
+        child: _i5.IntroView(),
         opaque: true,
         barrierDismissible: false,
       );
     },
     ProfileSetupViewRoute.name: (routeData) {
-      return _i17.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i7.ProfileSetupView(),
+        child: _i6.ProfileSetupView(),
         opaque: true,
         barrierDismissible: false,
       );
     },
     LoginViewRoute.name: (routeData) {
-      return _i17.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i8.LoginView(),
-        transitionsBuilder: _i17.TransitionsBuilders.fadeIn,
+        child: _i7.LoginView(),
+        transitionsBuilder: _i15.TransitionsBuilders.fadeIn,
         opaque: true,
         barrierDismissible: false,
       );
     },
     LoginCodeViewRoute.name: (routeData) {
       final args = routeData.argsAs<LoginCodeViewArgs>();
-      return _i17.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i9.LoginCodeView(
+        child: _i8.LoginCodeView(
           key: args.key,
           email: args.email,
         ),
@@ -125,9 +114,9 @@ class StackedRouterWeb extends _i17.RootStackRouter {
     },
     LoginEmailSentViewRoute.name: (routeData) {
       final args = routeData.argsAs<LoginEmailSentViewArgs>();
-      return _i17.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i10.LoginEmailSentView(
+        child: _i9.LoginEmailSentView(
           key: args.key,
           email: args.email,
           token: args.token,
@@ -137,17 +126,17 @@ class StackedRouterWeb extends _i17.RootStackRouter {
       );
     },
     ChangeSelectCausesViewRoute.name: (routeData) {
-      return _i17.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i11.ChangeSelectCausesView(),
+        child: _i10.ChangeSelectCausesView(),
         opaque: true,
         barrierDismissible: false,
       );
     },
     OnboardingSelectCausesViewRoute.name: (routeData) {
-      return _i17.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i12.OnboardingSelectCausesView(),
+        child: _i11.OnboardingSelectCausesView(),
         opaque: true,
         barrierDismissible: false,
       );
@@ -155,9 +144,9 @@ class StackedRouterWeb extends _i17.RootStackRouter {
     TabsViewRoute.name: (routeData) {
       final args =
           routeData.argsAs<TabsViewArgs>(orElse: () => const TabsViewArgs());
-      return _i17.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i13.TabsView(
+        child: _i12.TabsView(
           initialPage: args.initialPage,
           exploreFilterData: args.exploreFilterData,
         ),
@@ -165,23 +154,11 @@ class StackedRouterWeb extends _i17.RootStackRouter {
         barrierDismissible: false,
       );
     },
-    PartnerInfoViewRoute.name: (routeData) {
-      final args = routeData.argsAs<PartnerInfoViewArgs>();
-      return _i17.CustomPage<dynamic>(
-        routeData: routeData,
-        child: _i14.PartnerInfoView(
-          key: args.key,
-          organisation: args.organisation,
-        ),
-        opaque: true,
-        barrierDismissible: false,
-      );
-    },
     NotificationInfoViewRoute.name: (routeData) {
       final args = routeData.argsAs<NotificationInfoViewArgs>();
-      return _i17.CustomPage<dynamic>(
+      return _i15.CustomPage<dynamic>(
         routeData: routeData,
-        child: _i15.NotificationInfoView(notification: args.notification),
+        child: _i13.NotificationInfoView(notification: args.notification),
         opaque: true,
         barrierDismissible: false,
       );
@@ -189,64 +166,56 @@ class StackedRouterWeb extends _i17.RootStackRouter {
   };
 
   @override
-  List<_i17.RouteConfig> get routes => [
-        _i17.RouteConfig(
+  List<_i15.RouteConfig> get routes => [
+        _i15.RouteConfig(
           StartupViewRoute.name,
           path: '/',
         ),
-        _i17.RouteConfig(
-          PartnersViewRoute.name,
-          path: '/partners-view',
-        ),
-        _i17.RouteConfig(
+        _i15.RouteConfig(
           ActionInfoViewRoute.name,
           path: 'action/:actionId',
         ),
-        _i17.RouteConfig(
+        _i15.RouteConfig(
           CampaignInfoViewRoute.name,
           path: '/campaign-info-view',
         ),
-        _i17.RouteConfig(
+        _i15.RouteConfig(
           FaqViewRoute.name,
           path: '/faq-view',
         ),
-        _i17.RouteConfig(
+        _i15.RouteConfig(
           IntroViewRoute.name,
           path: '/intro-view',
         ),
-        _i17.RouteConfig(
+        _i15.RouteConfig(
           ProfileSetupViewRoute.name,
           path: '/profile-setup-view',
         ),
-        _i17.RouteConfig(
+        _i15.RouteConfig(
           LoginViewRoute.name,
           path: '/login-view',
         ),
-        _i17.RouteConfig(
+        _i15.RouteConfig(
           LoginCodeViewRoute.name,
           path: '/login-code-view',
         ),
-        _i17.RouteConfig(
+        _i15.RouteConfig(
           LoginEmailSentViewRoute.name,
           path: '/login-email-sent-view',
         ),
-        _i17.RouteConfig(
+        _i15.RouteConfig(
           ChangeSelectCausesViewRoute.name,
           path: '/change-select-causes-view',
         ),
-        _i17.RouteConfig(
+        _i15.RouteConfig(
           OnboardingSelectCausesViewRoute.name,
           path: '/onboarding-select-causes-view',
         ),
-        _i17.RouteConfig(
+        _i15.RouteConfig(
           TabsViewRoute.name,
           path: '/tabs-view',
         ),
-        _i17.RouteConfig(
-          PartnerInfoViewRoute.name,
-          path: '/partner-info-view',
-        ),
-        _i17.RouteConfig(
+        _i15.RouteConfig(
           NotificationInfoViewRoute.name,
           path: '/notification-info-view',
         ),
@@ -255,7 +224,7 @@ class StackedRouterWeb extends _i17.RootStackRouter {
 
 /// generated route for
 /// [_i1.StartupView]
-class StartupViewRoute extends _i17.PageRouteInfo<void> {
+class StartupViewRoute extends _i15.PageRouteInfo<void> {
   const StartupViewRoute()
       : super(
           StartupViewRoute.name,
@@ -266,22 +235,10 @@ class StartupViewRoute extends _i17.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i2.PartnersView]
-class PartnersViewRoute extends _i17.PageRouteInfo<void> {
-  const PartnersViewRoute()
-      : super(
-          PartnersViewRoute.name,
-          path: '/partners-view',
-        );
-
-  static const String name = 'PartnersView';
-}
-
-/// generated route for
-/// [_i3.ActionInfoView]
-class ActionInfoViewRoute extends _i17.PageRouteInfo<ActionInfoViewArgs> {
+/// [_i2.ActionInfoView]
+class ActionInfoViewRoute extends _i15.PageRouteInfo<ActionInfoViewArgs> {
   ActionInfoViewRoute({
-    _i19.Key? key,
+    _i17.Key? key,
     required int actionId,
   }) : super(
           ActionInfoViewRoute.name,
@@ -301,7 +258,7 @@ class ActionInfoViewArgs {
     required this.actionId,
   });
 
-  final _i19.Key? key;
+  final _i17.Key? key;
 
   final int actionId;
 
@@ -312,9 +269,9 @@ class ActionInfoViewArgs {
 }
 
 /// generated route for
-/// [_i4.CampaignInfoView]
-class CampaignInfoViewRoute extends _i17.PageRouteInfo<CampaignInfoViewArgs> {
-  CampaignInfoViewRoute({required _i20.ListCampaign listCampaign})
+/// [_i3.CampaignInfoView]
+class CampaignInfoViewRoute extends _i15.PageRouteInfo<CampaignInfoViewArgs> {
+  CampaignInfoViewRoute({required _i18.ListCampaign listCampaign})
       : super(
           CampaignInfoViewRoute.name,
           path: '/campaign-info-view',
@@ -327,7 +284,7 @@ class CampaignInfoViewRoute extends _i17.PageRouteInfo<CampaignInfoViewArgs> {
 class CampaignInfoViewArgs {
   const CampaignInfoViewArgs({required this.listCampaign});
 
-  final _i20.ListCampaign listCampaign;
+  final _i18.ListCampaign listCampaign;
 
   @override
   String toString() {
@@ -336,8 +293,8 @@ class CampaignInfoViewArgs {
 }
 
 /// generated route for
-/// [_i5.FaqView]
-class FaqViewRoute extends _i17.PageRouteInfo<void> {
+/// [_i4.FaqView]
+class FaqViewRoute extends _i15.PageRouteInfo<void> {
   const FaqViewRoute()
       : super(
           FaqViewRoute.name,
@@ -348,8 +305,8 @@ class FaqViewRoute extends _i17.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i6.IntroView]
-class IntroViewRoute extends _i17.PageRouteInfo<void> {
+/// [_i5.IntroView]
+class IntroViewRoute extends _i15.PageRouteInfo<void> {
   const IntroViewRoute()
       : super(
           IntroViewRoute.name,
@@ -360,8 +317,8 @@ class IntroViewRoute extends _i17.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i7.ProfileSetupView]
-class ProfileSetupViewRoute extends _i17.PageRouteInfo<void> {
+/// [_i6.ProfileSetupView]
+class ProfileSetupViewRoute extends _i15.PageRouteInfo<void> {
   const ProfileSetupViewRoute()
       : super(
           ProfileSetupViewRoute.name,
@@ -372,8 +329,8 @@ class ProfileSetupViewRoute extends _i17.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i8.LoginView]
-class LoginViewRoute extends _i17.PageRouteInfo<void> {
+/// [_i7.LoginView]
+class LoginViewRoute extends _i15.PageRouteInfo<void> {
   const LoginViewRoute()
       : super(
           LoginViewRoute.name,
@@ -384,10 +341,10 @@ class LoginViewRoute extends _i17.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i9.LoginCodeView]
-class LoginCodeViewRoute extends _i17.PageRouteInfo<LoginCodeViewArgs> {
+/// [_i8.LoginCodeView]
+class LoginCodeViewRoute extends _i15.PageRouteInfo<LoginCodeViewArgs> {
   LoginCodeViewRoute({
-    _i19.Key? key,
+    _i17.Key? key,
     required String email,
   }) : super(
           LoginCodeViewRoute.name,
@@ -407,7 +364,7 @@ class LoginCodeViewArgs {
     required this.email,
   });
 
-  final _i19.Key? key;
+  final _i17.Key? key;
 
   final String email;
 
@@ -418,11 +375,11 @@ class LoginCodeViewArgs {
 }
 
 /// generated route for
-/// [_i10.LoginEmailSentView]
+/// [_i9.LoginEmailSentView]
 class LoginEmailSentViewRoute
-    extends _i17.PageRouteInfo<LoginEmailSentViewArgs> {
+    extends _i15.PageRouteInfo<LoginEmailSentViewArgs> {
   LoginEmailSentViewRoute({
-    _i19.Key? key,
+    _i17.Key? key,
     required String email,
     String? token,
   }) : super(
@@ -445,7 +402,7 @@ class LoginEmailSentViewArgs {
     this.token,
   });
 
-  final _i19.Key? key;
+  final _i17.Key? key;
 
   final String email;
 
@@ -458,8 +415,8 @@ class LoginEmailSentViewArgs {
 }
 
 /// generated route for
-/// [_i11.ChangeSelectCausesView]
-class ChangeSelectCausesViewRoute extends _i17.PageRouteInfo<void> {
+/// [_i10.ChangeSelectCausesView]
+class ChangeSelectCausesViewRoute extends _i15.PageRouteInfo<void> {
   const ChangeSelectCausesViewRoute()
       : super(
           ChangeSelectCausesViewRoute.name,
@@ -470,8 +427,8 @@ class ChangeSelectCausesViewRoute extends _i17.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i12.OnboardingSelectCausesView]
-class OnboardingSelectCausesViewRoute extends _i17.PageRouteInfo<void> {
+/// [_i11.OnboardingSelectCausesView]
+class OnboardingSelectCausesViewRoute extends _i15.PageRouteInfo<void> {
   const OnboardingSelectCausesViewRoute()
       : super(
           OnboardingSelectCausesViewRoute.name,
@@ -482,11 +439,11 @@ class OnboardingSelectCausesViewRoute extends _i17.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i13.TabsView]
-class TabsViewRoute extends _i17.PageRouteInfo<TabsViewArgs> {
+/// [_i12.TabsView]
+class TabsViewRoute extends _i15.PageRouteInfo<TabsViewArgs> {
   TabsViewRoute({
-    _i13.TabPage? initialPage,
-    _i21.ExplorePageFilterData? exploreFilterData,
+    _i12.TabPage? initialPage,
+    _i19.ExplorePageFilterData? exploreFilterData,
   }) : super(
           TabsViewRoute.name,
           path: '/tabs-view',
@@ -505,9 +462,9 @@ class TabsViewArgs {
     this.exploreFilterData,
   });
 
-  final _i13.TabPage? initialPage;
+  final _i12.TabPage? initialPage;
 
-  final _i21.ExplorePageFilterData? exploreFilterData;
+  final _i19.ExplorePageFilterData? exploreFilterData;
 
   @override
   String toString() {
@@ -516,44 +473,10 @@ class TabsViewArgs {
 }
 
 /// generated route for
-/// [_i14.PartnerInfoView]
-class PartnerInfoViewRoute extends _i17.PageRouteInfo<PartnerInfoViewArgs> {
-  PartnerInfoViewRoute({
-    _i19.Key? key,
-    required _i22.Organisation organisation,
-  }) : super(
-          PartnerInfoViewRoute.name,
-          path: '/partner-info-view',
-          args: PartnerInfoViewArgs(
-            key: key,
-            organisation: organisation,
-          ),
-        );
-
-  static const String name = 'PartnerInfoView';
-}
-
-class PartnerInfoViewArgs {
-  const PartnerInfoViewArgs({
-    this.key,
-    required this.organisation,
-  });
-
-  final _i19.Key? key;
-
-  final _i22.Organisation organisation;
-
-  @override
-  String toString() {
-    return 'PartnerInfoViewArgs{key: $key, organisation: $organisation}';
-  }
-}
-
-/// generated route for
-/// [_i15.NotificationInfoView]
+/// [_i13.NotificationInfoView]
 class NotificationInfoViewRoute
-    extends _i17.PageRouteInfo<NotificationInfoViewArgs> {
-  NotificationInfoViewRoute({required _i23.InternalNotification notification})
+    extends _i15.PageRouteInfo<NotificationInfoViewArgs> {
+  NotificationInfoViewRoute({required _i20.InternalNotification notification})
       : super(
           NotificationInfoViewRoute.name,
           path: '/notification-info-view',
@@ -566,7 +489,7 @@ class NotificationInfoViewRoute
 class NotificationInfoViewArgs {
   const NotificationInfoViewArgs({required this.notification});
 
-  final _i23.InternalNotification notification;
+  final _i20.InternalNotification notification;
 
   @override
   String toString() {
@@ -574,27 +497,19 @@ class NotificationInfoViewArgs {
   }
 }
 
-extension RouterStateExtension on _i16.RouterService {
+extension RouterStateExtension on _i14.RouterService {
   Future<dynamic> navigateToStartupView(
-      {void Function(_i17.NavigationFailure)? onFailure}) async {
+      {void Function(_i15.NavigationFailure)? onFailure}) async {
     return navigateTo(
       const StartupViewRoute(),
       onFailure: onFailure,
     );
   }
 
-  Future<dynamic> navigateToPartnersView(
-      {void Function(_i17.NavigationFailure)? onFailure}) async {
-    return navigateTo(
-      const PartnersViewRoute(),
-      onFailure: onFailure,
-    );
-  }
-
   Future<dynamic> navigateToActionInfoView({
-    _i19.Key? key,
+    _i17.Key? key,
     required int actionId,
-    void Function(_i17.NavigationFailure)? onFailure,
+    void Function(_i15.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(
       ActionInfoViewRoute(
@@ -606,8 +521,8 @@ extension RouterStateExtension on _i16.RouterService {
   }
 
   Future<dynamic> navigateToCampaignInfoView({
-    required _i20.ListCampaign listCampaign,
-    void Function(_i17.NavigationFailure)? onFailure,
+    required _i18.ListCampaign listCampaign,
+    void Function(_i15.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(
       CampaignInfoViewRoute(
@@ -618,7 +533,7 @@ extension RouterStateExtension on _i16.RouterService {
   }
 
   Future<dynamic> navigateToFaqView(
-      {void Function(_i17.NavigationFailure)? onFailure}) async {
+      {void Function(_i15.NavigationFailure)? onFailure}) async {
     return navigateTo(
       const FaqViewRoute(),
       onFailure: onFailure,
@@ -626,7 +541,7 @@ extension RouterStateExtension on _i16.RouterService {
   }
 
   Future<dynamic> navigateToIntroView(
-      {void Function(_i17.NavigationFailure)? onFailure}) async {
+      {void Function(_i15.NavigationFailure)? onFailure}) async {
     return navigateTo(
       const IntroViewRoute(),
       onFailure: onFailure,
@@ -634,7 +549,7 @@ extension RouterStateExtension on _i16.RouterService {
   }
 
   Future<dynamic> navigateToProfileSetupView(
-      {void Function(_i17.NavigationFailure)? onFailure}) async {
+      {void Function(_i15.NavigationFailure)? onFailure}) async {
     return navigateTo(
       const ProfileSetupViewRoute(),
       onFailure: onFailure,
@@ -642,7 +557,7 @@ extension RouterStateExtension on _i16.RouterService {
   }
 
   Future<dynamic> navigateToLoginView(
-      {void Function(_i17.NavigationFailure)? onFailure}) async {
+      {void Function(_i15.NavigationFailure)? onFailure}) async {
     return navigateTo(
       const LoginViewRoute(),
       onFailure: onFailure,
@@ -650,9 +565,9 @@ extension RouterStateExtension on _i16.RouterService {
   }
 
   Future<dynamic> navigateToLoginCodeView({
-    _i19.Key? key,
+    _i17.Key? key,
     required String email,
-    void Function(_i17.NavigationFailure)? onFailure,
+    void Function(_i15.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(
       LoginCodeViewRoute(
@@ -664,10 +579,10 @@ extension RouterStateExtension on _i16.RouterService {
   }
 
   Future<dynamic> navigateToLoginEmailSentView({
-    _i19.Key? key,
+    _i17.Key? key,
     required String email,
     String? token,
-    void Function(_i17.NavigationFailure)? onFailure,
+    void Function(_i15.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(
       LoginEmailSentViewRoute(
@@ -680,7 +595,7 @@ extension RouterStateExtension on _i16.RouterService {
   }
 
   Future<dynamic> navigateToChangeSelectCausesView(
-      {void Function(_i17.NavigationFailure)? onFailure}) async {
+      {void Function(_i15.NavigationFailure)? onFailure}) async {
     return navigateTo(
       const ChangeSelectCausesViewRoute(),
       onFailure: onFailure,
@@ -688,7 +603,7 @@ extension RouterStateExtension on _i16.RouterService {
   }
 
   Future<dynamic> navigateToOnboardingSelectCausesView(
-      {void Function(_i17.NavigationFailure)? onFailure}) async {
+      {void Function(_i15.NavigationFailure)? onFailure}) async {
     return navigateTo(
       const OnboardingSelectCausesViewRoute(),
       onFailure: onFailure,
@@ -696,9 +611,9 @@ extension RouterStateExtension on _i16.RouterService {
   }
 
   Future<dynamic> navigateToTabsView({
-    _i13.TabPage? initialPage,
-    _i21.ExplorePageFilterData? exploreFilterData,
-    void Function(_i17.NavigationFailure)? onFailure,
+    _i12.TabPage? initialPage,
+    _i19.ExplorePageFilterData? exploreFilterData,
+    void Function(_i15.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(
       TabsViewRoute(
@@ -709,23 +624,9 @@ extension RouterStateExtension on _i16.RouterService {
     );
   }
 
-  Future<dynamic> navigateToPartnerInfoView({
-    _i19.Key? key,
-    required _i22.Organisation organisation,
-    void Function(_i17.NavigationFailure)? onFailure,
-  }) async {
-    return navigateTo(
-      PartnerInfoViewRoute(
-        key: key,
-        organisation: organisation,
-      ),
-      onFailure: onFailure,
-    );
-  }
-
   Future<dynamic> navigateToNotificationInfoView({
-    required _i23.InternalNotification notification,
-    void Function(_i17.NavigationFailure)? onFailure,
+    required _i20.InternalNotification notification,
+    void Function(_i15.NavigationFailure)? onFailure,
   }) async {
     return navigateTo(
       NotificationInfoViewRoute(
@@ -736,25 +637,17 @@ extension RouterStateExtension on _i16.RouterService {
   }
 
   Future<dynamic> replaceWithStartupView(
-      {void Function(_i17.NavigationFailure)? onFailure}) async {
+      {void Function(_i15.NavigationFailure)? onFailure}) async {
     return replaceWith(
       const StartupViewRoute(),
       onFailure: onFailure,
     );
   }
 
-  Future<dynamic> replaceWithPartnersView(
-      {void Function(_i17.NavigationFailure)? onFailure}) async {
-    return replaceWith(
-      const PartnersViewRoute(),
-      onFailure: onFailure,
-    );
-  }
-
   Future<dynamic> replaceWithActionInfoView({
-    _i19.Key? key,
+    _i17.Key? key,
     required int actionId,
-    void Function(_i17.NavigationFailure)? onFailure,
+    void Function(_i15.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(
       ActionInfoViewRoute(
@@ -766,8 +659,8 @@ extension RouterStateExtension on _i16.RouterService {
   }
 
   Future<dynamic> replaceWithCampaignInfoView({
-    required _i20.ListCampaign listCampaign,
-    void Function(_i17.NavigationFailure)? onFailure,
+    required _i18.ListCampaign listCampaign,
+    void Function(_i15.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(
       CampaignInfoViewRoute(
@@ -778,7 +671,7 @@ extension RouterStateExtension on _i16.RouterService {
   }
 
   Future<dynamic> replaceWithFaqView(
-      {void Function(_i17.NavigationFailure)? onFailure}) async {
+      {void Function(_i15.NavigationFailure)? onFailure}) async {
     return replaceWith(
       const FaqViewRoute(),
       onFailure: onFailure,
@@ -786,7 +679,7 @@ extension RouterStateExtension on _i16.RouterService {
   }
 
   Future<dynamic> replaceWithIntroView(
-      {void Function(_i17.NavigationFailure)? onFailure}) async {
+      {void Function(_i15.NavigationFailure)? onFailure}) async {
     return replaceWith(
       const IntroViewRoute(),
       onFailure: onFailure,
@@ -794,7 +687,7 @@ extension RouterStateExtension on _i16.RouterService {
   }
 
   Future<dynamic> replaceWithProfileSetupView(
-      {void Function(_i17.NavigationFailure)? onFailure}) async {
+      {void Function(_i15.NavigationFailure)? onFailure}) async {
     return replaceWith(
       const ProfileSetupViewRoute(),
       onFailure: onFailure,
@@ -802,7 +695,7 @@ extension RouterStateExtension on _i16.RouterService {
   }
 
   Future<dynamic> replaceWithLoginView(
-      {void Function(_i17.NavigationFailure)? onFailure}) async {
+      {void Function(_i15.NavigationFailure)? onFailure}) async {
     return replaceWith(
       const LoginViewRoute(),
       onFailure: onFailure,
@@ -810,9 +703,9 @@ extension RouterStateExtension on _i16.RouterService {
   }
 
   Future<dynamic> replaceWithLoginCodeView({
-    _i19.Key? key,
+    _i17.Key? key,
     required String email,
-    void Function(_i17.NavigationFailure)? onFailure,
+    void Function(_i15.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(
       LoginCodeViewRoute(
@@ -824,10 +717,10 @@ extension RouterStateExtension on _i16.RouterService {
   }
 
   Future<dynamic> replaceWithLoginEmailSentView({
-    _i19.Key? key,
+    _i17.Key? key,
     required String email,
     String? token,
-    void Function(_i17.NavigationFailure)? onFailure,
+    void Function(_i15.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(
       LoginEmailSentViewRoute(
@@ -840,7 +733,7 @@ extension RouterStateExtension on _i16.RouterService {
   }
 
   Future<dynamic> replaceWithChangeSelectCausesView(
-      {void Function(_i17.NavigationFailure)? onFailure}) async {
+      {void Function(_i15.NavigationFailure)? onFailure}) async {
     return replaceWith(
       const ChangeSelectCausesViewRoute(),
       onFailure: onFailure,
@@ -848,7 +741,7 @@ extension RouterStateExtension on _i16.RouterService {
   }
 
   Future<dynamic> replaceWithOnboardingSelectCausesView(
-      {void Function(_i17.NavigationFailure)? onFailure}) async {
+      {void Function(_i15.NavigationFailure)? onFailure}) async {
     return replaceWith(
       const OnboardingSelectCausesViewRoute(),
       onFailure: onFailure,
@@ -856,9 +749,9 @@ extension RouterStateExtension on _i16.RouterService {
   }
 
   Future<dynamic> replaceWithTabsView({
-    _i13.TabPage? initialPage,
-    _i21.ExplorePageFilterData? exploreFilterData,
-    void Function(_i17.NavigationFailure)? onFailure,
+    _i12.TabPage? initialPage,
+    _i19.ExplorePageFilterData? exploreFilterData,
+    void Function(_i15.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(
       TabsViewRoute(
@@ -869,23 +762,9 @@ extension RouterStateExtension on _i16.RouterService {
     );
   }
 
-  Future<dynamic> replaceWithPartnerInfoView({
-    _i19.Key? key,
-    required _i22.Organisation organisation,
-    void Function(_i17.NavigationFailure)? onFailure,
-  }) async {
-    return replaceWith(
-      PartnerInfoViewRoute(
-        key: key,
-        organisation: organisation,
-      ),
-      onFailure: onFailure,
-    );
-  }
-
   Future<dynamic> replaceWithNotificationInfoView({
-    required _i23.InternalNotification notification,
-    void Function(_i17.NavigationFailure)? onFailure,
+    required _i20.InternalNotification notification,
+    void Function(_i15.NavigationFailure)? onFailure,
   }) async {
     return replaceWith(
       NotificationInfoViewRoute(

@@ -3,13 +3,15 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nowu/services/auth.dart';
+import 'package:nowu/ui/views/login/bloc/login_event.dart';
 
-import '../login_viewmodel.dart';
+import '../bloc/login_bloc.dart';
 
 class SocialMediaLoginButtons extends StatelessWidget {
-  SocialMediaLoginButtons(this._viewModel);
+  SocialMediaLoginButtons(this._loginBloc);
 
-  final LoginViewModel _viewModel;
+  final LoginBloc _loginBloc;
 
   @override
   Widget build(BuildContext context) => Row(
@@ -17,15 +19,27 @@ class SocialMediaLoginButtons extends StatelessWidget {
         children: [
           !kIsWeb && Platform.isIOS
               ? _SocialMediaLoginButton(
-                  onPressed: _viewModel.loginWithApple,
+                  onPressed: () => _loginBloc.add(
+                    const LoginEventLoginWithOAuth(
+                      provider: AuthProvider.Apple,
+                    ),
+                  ),
                   iconData: FontAwesomeIcons.apple,
                 )
               : _SocialMediaLoginButton(
-                  onPressed: _viewModel.loginWithFacebook,
+                  onPressed: () => _loginBloc.add(
+                    const LoginEventLoginWithOAuth(
+                      provider: AuthProvider.Facebook,
+                    ),
+                  ),
                   iconData: FontAwesomeIcons.facebookF,
                 ),
           _SocialMediaLoginButton(
-            onPressed: _viewModel.loginWithGoogle,
+            onPressed: () => _loginBloc.add(
+              const LoginEventLoginWithOAuth(
+                provider: AuthProvider.Google,
+              ),
+            ),
             iconData: FontAwesomeIcons.google,
           ),
         ],

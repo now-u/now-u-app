@@ -71,8 +71,8 @@ class AnalyticsService {
         parameters: _serializeEventParameters({
           'id': article.id,
           'title': article.title,
-          'source': article.source_,
-          'resource_created_at': article.createdAt,
+          'source': article.shortUrl,
+          'resource_released_at': article.releasedAt,
         }),
       );
     } catch (e) {

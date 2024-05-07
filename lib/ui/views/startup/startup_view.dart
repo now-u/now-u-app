@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:nowu/ui/views/startup/startup_state.dart';
-import 'package:stacked/stacked.dart';
 import 'package:auto_route/auto_route.dart';
 
 import 'startup_viewmodel.dart';
 
 @RoutePage()
-class StartupView extends StackedView<StartupViewModel> {
+class StartupView extends StatelessWidget {
   const StartupView({Key? key}) : super(key: key);
 
   @override
-  Widget builder(
-    BuildContext context,
-    StartupViewModel model,
-    Widget? widget,
-  ) {
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -27,27 +21,10 @@ class StartupView extends StackedView<StartupViewModel> {
               child: Image.asset('assets/imgs/logo.png'),
             ),
             const SizedBox(height: 25),
-            switch (model.state) {
-              Loading() => CircularProgressIndicator(
-                  strokeWidth: 3,
-                  valueColor: AlwaysStoppedAnimation(
-                    Theme.of(context).primaryColor,
-                  ),
-                ),
-              Error() => StartupErrorView(
-                  errorMessage: (model.state as Error).message,
-                  model: model,
-                ),
-            },
           ],
         ),
       ),
     );
-  }
-
-  @override
-  viewModelBuilder(context) {
-    return StartupViewModel();
   }
 }
 

@@ -1,12 +1,10 @@
 import 'dart:async';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:flutter/foundation.dart';
-import 'package:nowu/app/app.bottomsheets.dart';
-import 'package:nowu/app/app.dialogs.dart';
-import 'package:nowu/app/app.locator.dart';
-import 'package:nowu/app/app.router.dart';
+import 'package:nowu/locator.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:nowu/firebase_options.dart';
 import 'package:flutter/material.dart';
@@ -14,17 +12,26 @@ import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:nowu/router.dart';
+import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/auth.dart';
+import 'package:nowu/services/causes_service.dart';
+import 'package:nowu/services/user_service.dart';
 import 'package:nowu/themes.dart';
+import 'package:nowu/ui/views/authentication/bloc/authentication_bloc.dart';
+import 'package:nowu/ui/views/authentication/bloc/authentication_state.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sentry_logging/sentry_logging.dart';
 import 'package:get_it/get_it.dart';
+import 'package:auto_route/auto_route.dart';
 
 import 'generated/l10n.dart';
 
+final _logger = Logger('Main');
+
 void main() async {
   await runZonedGuarded(() async {
+    print('App starting up');
     WidgetsFlutterBinding.ensureInitialized();
     if (defaultTargetPlatform == TargetPlatform.android ||
         defaultTargetPlatform == TargetPlatform.iOS) {
@@ -33,21 +40,24 @@ void main() async {
 
     usePathUrlStrategy();
 
+    print('Firebase initializing');
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    await setupLocator(stackedRouter: stackedRouter);
 
-    setupDialogUi();
-    setupBottomSheetUi();
+    setupLocator();
+    // setupDialogUi();
+    // setupBottomSheetUi();
 
     Logger.root.onRecord.listen((record) {
       print('${record.level.name}: ${record.time}: ${record.message}');
     });
 
-	// TODO Why can't this call be in init??
-	await locator<AuthenticationService>().initSupabase();
-	await locator<AuthenticationService>().init();
+    _logger.info('Initing auth');
+
+    // TODO Why can't this call be in init??
+    await locator<AuthenticationService>().initSupabase();
+    await locator<AuthenticationService>().init();
 
     await SentryFlutter.init(
       (options) {
@@ -63,18 +73,19 @@ void main() async {
       },
     );
 
-	GetIt.instance.registerSingleton<AppRouter>(AppRouter());
-
     runApp(App());
   }, (exception, stackTrace) async {
-    Logger('Main').severe('Startup failed $exception, $stackTrace', exception, stackTrace);
+    _logger.severe(
+      'Startup failed $exception, $stackTrace',
+      exception,
+      stackTrace,
+    );
     await Sentry.captureException(exception, stackTrace: stackTrace);
   });
 }
 
 class App extends StatelessWidget {
   final _appRouter = locator<AppRouter>();
-  // final _appRouter = AppRouter();
 
   @override
   Widget build(BuildContext context) {
@@ -88,15 +99,51 @@ class App extends StatelessWidget {
       ],
       supportedLocales: S.delegate.supportedLocales,
       routerConfig: _appRouter.config(
-	    // TODO inheritNavigatorObservers
+        // TODO inheritNavigatorObservers
         navigatorObservers: () => [
-	      // TODO Make sure this returns a new instance
+          // TODO Make sure this returns a new instance
           locator<AnalyticsService>().getAnalyticsObserver(),
           SentryNavigatorObserver(),
         ],
       ),
       // routeInformationParser: stackedRouter.defaultRouteParser(),
       theme: regularTheme,
+      builder: (context, child) {
+        return BlocProvider(
+          create: (_) {
+            return AuthenticationBloc(
+              authenticationService: locator<AuthenticationService>(),
+              userService: locator<UserService>(),
+              causesService: locator<CausesService>(),
+            );
+          },
+          child: BlocListener<AuthenticationBloc, AuthenticationState>(
+            listener: (context, state) {
+              switch (state) {
+                case AuthenticationStateAuthenticated():
+                  // TODO Check if currentUser/causesInfo is intialized and if not copy old post_login_viewmodel
+                  _appRouter.replaceAll(
+                    [
+                      TabsRoute(children: [const HomeRoute()]),
+                    ],
+                  );
+                  break;
+                case AuthenticationStateUnauthenticated():
+                  _appRouter.replaceAll(
+                    [
+                      const OnboardingSelectCausesRoute(),
+                    ],
+                  );
+                  break;
+                case AuthenticationStateUnknown():
+                  // TODO Something
+                  break;
+              }
+            },
+            child: child,
+          ),
+        );
+      },
     );
   }
 }

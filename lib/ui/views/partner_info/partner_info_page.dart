@@ -1,25 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/assets/components/customTile.dart';
 import 'package:nowu/assets/components/custom_network_image.dart';
 import 'package:nowu/assets/components/header.dart';
 import 'package:nowu/assets/components/sectionTitle.dart';
 import 'package:nowu/assets/constants.dart';
-import 'package:nowu/models/Organisation.dart';
-import 'package:nowu/services/navigation_service.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:nowu/models/organisation.dart';
+import 'package:nowu/router.dart';
+import 'package:nowu/ui/dialogs/basic/basic_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final double SECTION_TITLE_BOTTOM_PADDING = 8;
 final double BETWEEN_SECTION_PADDING = 12;
 
-final NavigationService? _navigationService = locator<NavigationService>();
-
-class OraganisationInfoPage extends StatelessWidget {
+// TODO Take in organisationId as path param
+@RoutePage()
+class PartnerInfoView extends StatelessWidget {
   final Organisation organisation;
-  OraganisationInfoPage(
-    this.organisation,
-  );
+  const PartnerInfoView({Key? key, required this.organisation})
+      : super(key: key);
+
+  Iterable<Widget> getSocialMediaChildren(Organisation org) {
+    final List<({Uri? link, IconData icon})> socialButtons = [
+      (link: org.instagramLink, icon: FontAwesomeIcons.instagram),
+      (link: org.facebookLink, icon: FontAwesomeIcons.facebookF),
+      (link: org.twitterLink, icon: FontAwesomeIcons.twitter),
+      (link: org.mailToLink, icon: FontAwesomeIcons.envelope),
+      (link: org.websiteLink, icon: Icons.language),
+    ];
+    return socialButtons
+        .where((button) => button.link != null)
+        .map(
+          (button) => SocialMediaButton(
+            icon: button.icon,
+            url: button.link!,
+          ),
+        )
+        .toList();
+  }
+
+  Iterable<Widget> getExtraLinks(Organisation org) {
+    return org.extraLinks.map(
+      (link) => ExtraLinkButton(
+        title: link.title,
+        url: link.link,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,31 +82,8 @@ class OraganisationInfoPage extends StatelessWidget {
                   vpadding: SECTION_TITLE_BOTTOM_PADDING,
                 ),
                 Text(
-                  organisation.descriptionClean,
+                  organisation.description,
                 ),
-                // organisation.getCampaigns()!.length > 0
-                //     ? Column(
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         children: [
-                //             SizedBox(height: BETWEEN_SECTION_PADDING),
-                //             SectionTitle(
-                //               "Associated campaigns",
-                //               vpadding: SECTION_TITLE_BOTTOM_PADDING,
-                //             ),
-                //             Container(
-                //               height: 120,
-                //               child: PageView.builder(
-                //                 itemCount: organisation.getCampaigns()!.length,
-                //                 itemBuilder: (BuildContext context, int index) {
-                //                   return CampaignSelectionTile(
-                //                     organisation.getCampaigns()![index],
-                //                     height: 120,
-                //                   );
-                //                 },
-                //               ),
-                //             ),
-                //           ])
-                //     : Container(),
                 SizedBox(height: BETWEEN_SECTION_PADDING),
                 organisation.geographicReach == null
                     ? Container()
@@ -117,7 +122,7 @@ class OraganisationInfoPage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   mainAxisSize: MainAxisSize.max,
-                  children: getSocialMediaChildren(organisation),
+                  children: getSocialMediaChildren(organisation).toList(),
                 ),
                 getSocialMediaChildren(organisation).length == 0
                     ? Container()
@@ -130,7 +135,7 @@ class OraganisationInfoPage extends StatelessWidget {
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: getExtraLinks(organisation),
+                  children: getExtraLinks(organisation).toList(),
                 ),
                 const SizedBox(height: 20),
               ],
@@ -142,34 +147,14 @@ class OraganisationInfoPage extends StatelessWidget {
   }
 }
 
-List<Widget> getSocialMediaChildren(Organisation org) {
-  List<Widget> socialButtons = [];
-  if (org.instagramLink case var instagramLink?) {
-    socialButtons
-        .add(SocialMediaButton(instagramLink, FontAwesomeIcons.instagram));
-  }
-  if (org.facebookLink case var facebookLink?) {
-    socialButtons
-        .add(SocialMediaButton(facebookLink, FontAwesomeIcons.facebookF));
-  }
-  if (org.twitterLink case var twitterLink?) {
-    socialButtons.add(SocialMediaButton(twitterLink, FontAwesomeIcons.twitter));
-  }
-  if (org.emailAddress case var emailAddress?) {
-    socialButtons
-        .add(SocialMediaButton(emailAddress, FontAwesomeIcons.envelope));
-  }
-  if (org.websiteLink case var websiteLink?) {
-    socialButtons.add(SocialMediaButton(websiteLink, Icons.language));
-  }
-  return socialButtons;
-}
-
 class SocialMediaButton extends StatelessWidget {
-  final String link;
   final IconData icon;
+  final Uri url;
 
-  SocialMediaButton(this.link, this.icon);
+  const SocialMediaButton({
+    required this.icon,
+    required this.url,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -180,24 +165,21 @@ class SocialMediaButton extends StatelessWidget {
           color: const Color.fromRGBO(155, 159, 177, 1),
           size: 35,
         ),
-        onPressed: () {
-          launchUrl(Uri.parse(link));
-        },
+        onPressed: () => launchLinkExternal(context, url),
       ),
     );
   }
 }
 
-List<Widget> getExtraLinks(Organisation org) {
-  return org.extraLinks
-      .map((link) => ExtraLinkButton(link.title, link.link))
-      .toList();
-}
-
 class ExtraLinkButton extends StatelessWidget {
-  final String? text;
-  final String? link;
-  ExtraLinkButton(this.text, this.link);
+  final String title;
+  final Uri url;
+
+  const ExtraLinkButton({
+    required this.title,
+    required this.url,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -206,7 +188,7 @@ class ExtraLinkButton extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Text(
-            text!,
+            title,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: CustomColors.brandColor,
                   fontWeight: FontWeight.w800,
@@ -214,9 +196,7 @@ class ExtraLinkButton extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ),
-        onClick: () {
-          _navigationService!.launchLink(link!);
-        },
+        onClick: () => launchLinkExternal(context, url),
       ),
     );
   }

@@ -109,7 +109,6 @@ class CampaignInfoView extends StackedView<CampaignViewModel> {
                   action,
                   viewModel.actionIsComplete(action.id),
                 ),
-                onTap: () => viewModel.openAction(action),
               ),
             )
             .toList();

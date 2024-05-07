@@ -1,26 +1,34 @@
 import 'package:causeApiClient/causeApiClient.dart';
 import 'package:dio/dio.dart';
+import 'package:logging/logging.dart';
 import 'package:nowu/assets/constants.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/auth.dart';
 import 'package:sentry_dio/sentry_dio.dart';
 
 // TODO Use causesApiClient generated auth interceptors
 class AuthInterceptor extends Interceptor {
-  String? token;
+  final _logger = Logger('AuthInterceptor');
+  AuthInterceptor(this._authenticationService);
+  AuthenticationService _authenticationService;
 
   @override
   void onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
+    final token = _authenticationService.token;
     if (token != null) {
+	  _logger.info('Bearer token: ${token}');
       options.headers['Authorization'] = 'Bearer $token';
     }
+	_logger.info('Token is null');
     super.onRequest(options, handler);
   }
 }
 
 class ApiService {
-  final AuthInterceptor _authInterceptor = AuthInterceptor();
+  final _authenticationService = locator<AuthenticationService>();
 
   late final CauseApiClient _apiClient = _createClient();
   CauseApiClient _createClient() {
@@ -34,7 +42,7 @@ class ApiService {
       ),
     )
       ..addSentry
-      ..interceptors.add(_authInterceptor)
+      ..interceptors.add(AuthInterceptor(_authenticationService))
       ..interceptors.add(LogInterceptor());
 
     return CauseApiClient(
@@ -47,10 +55,6 @@ class ApiService {
   }
 
   String get baseUrl => apiClient.dio.options.baseUrl;
-
-  void setToken(String? token) {
-    _authInterceptor.token = token;
-  }
 
   void setBaseUrl(String baseUrl) {
     apiClient.dio.options.baseUrl = baseUrl;

@@ -35,7 +35,6 @@ class ExploreActionTab extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: ExploreActionTile(
             ActionExploreTileData(action, viewModel.isActionComplete(action)),
-            onTap: () => viewModel.openAction(action),
           ),
         ),
       ),

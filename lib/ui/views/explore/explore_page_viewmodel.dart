@@ -1,6 +1,6 @@
-import 'package:causeApiClient/causeApiClient.dart';
 import 'package:collection/collection.dart';
-import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/models/article.dart';
 import 'package:nowu/models/time.dart';
 import 'package:nowu/services/bottom_sheet_service.dart';
 import 'package:nowu/services/causes_service.dart';
@@ -46,7 +46,7 @@ class ExplorePageFilterData {
 class ExplorePageViewModel extends FormViewModel {
   final _causesService = locator<CausesService>();
   final _searchService = locator<SearchService>();
-  final _bottomSheetService = locator<BottomSheetService>();
+  // final _bottomSheetService = locator<BottomSheetService>();
   final _analyticsService = locator<AnalyticsService>();
 
   BaseResourceSearchFilter searchFilter = const BaseResourceSearchFilter();
@@ -70,10 +70,10 @@ class ExplorePageViewModel extends FormViewModel {
     return _causesService.listCauses().then((value) => _causes = value);
   }
 
-  PagingState actions = InitialLoading();
-  PagingState learningResources = InitialLoading();
-  PagingState campaigns = InitialLoading();
-  PagingState newsArticles = InitialLoading();
+  PagingState actions = InitialLoading<Action>();
+  PagingState learningResources = InitialLoading<LearningResource>();
+  PagingState campaigns = InitialLoading<Campaign>();
+  PagingState newsArticles = InitialLoading<NewsArticle>();
   ResourcesSearchResult? allSearchResult;
 
   Future<void> search() {
@@ -294,16 +294,16 @@ class ExplorePageViewModel extends FormViewModel {
     required Set<T> targetParameter,
     required Iterable<ExploreFilterSheetOption<T>>? options,
   }) async {
-    final outputSelection = await _bottomSheetService.showExploreFilterSheet<T>(
-      ExploreFilterSheetData(
-        filterName: filterName,
-        options: options?.toList() ?? [],
-        initialSelectedValues: targetParameter,
-      ),
-    );
+    // final outputSelection = await _bottomSheetService.showExploreFilterSheet<T>(
+    //   ExploreFilterSheetData(
+    //     filterName: filterName,
+    //     options: options?.toList() ?? [],
+    //     initialSelectedValues: targetParameter,
+    //   ),
+    // );
 
-    targetParameter = outputSelection ?? Set();
-    search();
+    // targetParameter = outputSelection ?? Set();
+    // search();
   }
 
   Future<void> toggleFilterCompleted() {
@@ -322,57 +322,57 @@ class ExplorePageViewModel extends FormViewModel {
   }
 
   Future<void> openCausesFilterSheet() async {
-    return _openFilterSheet(
-      filterName: 'Causes',
-      targetParameter: this.filterData.filterCauseIds,
-      options: _causes?.map(
-        (cause) =>
-            ExploreFilterSheetOption(title: cause.title, value: cause.id),
-      ),
-    );
+    // return _openFilterSheet(
+    //   filterName: 'Causes',
+    //   targetParameter: this.filterData.filterCauseIds,
+    //   options: _causes?.map(
+    //     (cause) =>
+    //         ExploreFilterSheetOption(title: cause.title, value: cause.id),
+    //   ),
+    // );
   }
 
   Future<void> openTimeBracketsFilterSheet() async {
-    return _openFilterSheet(
-      filterName: 'Times',
-      targetParameter: this.filterData.filterTimeBrackets,
-      options: timeBrackets.map(
-        (timeBracket) => ExploreFilterSheetOption(
-          title: timeBracket.text,
-          value: Tuple2(timeBracket.minTime, timeBracket.maxTime),
-        ),
-      ),
-    );
+    // return _openFilterSheet(
+    //   filterName: 'Times',
+    //   targetParameter: this.filterData.filterTimeBrackets,
+    //   options: timeBrackets.map(
+    //     (timeBracket) => ExploreFilterSheetOption(
+    //       title: timeBracket.text,
+    //       value: Tuple2(timeBracket.minTime, timeBracket.maxTime),
+    //     ),
+    //   ),
+    // );
   }
 
   Future<void> openActionTypesFilterSheet() async {
-    final selectedActionTypes =
-        await _bottomSheetService.showExploreFilterSheet<String>(
-      ExploreFilterSheetData(
-        filterName: 'Action type',
-        options: actionTypes
-            .map(
-              (type) => ExploreFilterSheetOption(
-                title: type.name,
-                value: type.name,
-              ),
-            )
-            .toList(),
-        initialSelectedValues: this
-            .filterData
-            .filterActionTypes
-            .map(getActionTypeFromSubtype)
-            .map((type) => type.name)
-            .toSet(),
-      ),
-    );
+    // final selectedActionTypes =
+    //     await _bottomSheetService.showExploreFilterSheet<String>(
+    //   ExploreFilterSheetData(
+    //     filterName: 'Action type',
+    //     options: actionTypes
+    //         .map(
+    //           (type) => ExploreFilterSheetOption(
+    //             title: type.name,
+    //             value: type.name,
+    //           ),
+    //         )
+    //         .toList(),
+    //     initialSelectedValues: this
+    //         .filterData
+    //         .filterActionTypes
+    //         .map(getActionTypeFromSubtype)
+    //         .map((type) => type.name)
+    //         .toSet(),
+    //   ),
+    // );
 
-    this.filterData.filterActionTypes = actionTypes
-        .where((type) => selectedActionTypes?.contains(type.name) == true)
-        .map((type) => type.subTypes)
-        .flattened
-        .toSet();
-    search();
+    // this.filterData.filterActionTypes = actionTypes
+    //     .where((type) => selectedActionTypes?.contains(type.name) == true)
+    //     .map((type) => type.subTypes)
+    //     .flattened
+    //     .toSet();
+    // search();
   }
 
   Future<void> openAction(ListAction action) {
@@ -385,12 +385,9 @@ class ExplorePageViewModel extends FormViewModel {
         .then((value) => notifyListeners());
   }
 
-  Future<void> openCampaign(ListCampaign campaign) {
-    return _causesService.openCampaign(campaign);
-  }
-
-  Future<void> openNewsArticle(NewsArticle article) {
-    return _causesService.openNewArticle(article);
+  // TODO Fix
+  Future<void> openNewsArticle(NewsArticle article) async {
+    // return _causesService.openNewArticle(article);
   }
 
   bool? isActionComplete(ListAction action) {

@@ -1,14 +1,12 @@
 import 'package:causeApiClient/causeApiClient.dart';
 import 'package:logging/logging.dart';
-import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/locator.dart';
 import 'package:nowu/models/Notification.dart';
 import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/dialog_service.dart';
 import 'package:nowu/services/internal_notification_service.dart';
-import 'package:nowu/services/navigation_service.dart';
-import 'package:nowu/services/router_service.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:nowu/services/user_service.dart';
 import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
@@ -17,7 +15,6 @@ import 'package:stacked/stacked.dart';
 class HomeViewModel extends BaseViewModel {
   Logger _logger = Logger('HomeViewModel');
   final _internalNotificationService = locator<InternalNotificationService>();
-  final _navigationService = locator<NavigationService>();
   final _router = locator<AppRouter>();
   final _causesService = locator<CausesService>();
   final _dialogService = locator<DialogService>();
@@ -46,10 +43,10 @@ class HomeViewModel extends BaseViewModel {
   UserProfile? get currentUser => _userService.currentUser;
 
   Future<void> init() async {
-	await (
-		fetchNotifications(),
-		fetchCauses(),
-	).wait;
+    await (
+      fetchNotifications(),
+      fetchCauses(),
+    ).wait;
 
     // TODO Filter by selected causes
     List<int>? selectedCausesId =
@@ -62,8 +59,8 @@ class HomeViewModel extends BaseViewModel {
           .searchCampaigns(
             filter: CampaignSearchFilter(
               causeIds: causesFilter,
-              recommended: true,
               completed: false,
+              ofTheMonth: false,
             ),
           )
           .then(
@@ -125,7 +122,7 @@ class HomeViewModel extends BaseViewModel {
   Future getCausePopup(Cause listCause) async {
     final dialogResult = await _dialogService.showCauseDialog(cause: listCause);
     if (dialogResult) {
-	  goToEditCausesPage();
+      goToEditCausesPage();
     }
   }
 
@@ -153,13 +150,13 @@ class HomeViewModel extends BaseViewModel {
   Future fetchCauses() async {
     // Assign the value *after* the future is complete
     final causes = await _causesService.listCauses();
-	this._causes = causes;
-	notifyListeners();
+    this._causes = causes;
+    notifyListeners();
   }
 
   Future openNotification(InternalNotification notification) async {
     await _router.push(
-	  NotificationInfoRoute(notification: notification),
+      NotificationInfoRoute(notification: notification),
     );
   }
 
@@ -170,34 +167,13 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  void onPressCampaignButton() {
-    _navigationService.launchLink(
-      'https://docs.google.com/forms/d/e/1FAIpQLSfPKOVlzOOV2Bsb1zcdECCuZfjHAlrX6ZZMuK1Kv8eqF85hIA/viewform',
-      description:
-          'To suggest causes for future campaigns, fill in this Google Form',
-      buttonText: 'Go',
-    );
-  }
-
   void goToExplorePage() {
     _router.push(
-	  TabsRoute(children: [ExploreRoute()]),
-	);
+      TabsRoute(children: [ExploreRoute()]),
+    );
   }
 
   void goToEditCausesPage() {
     _router.push(const ChangeSelectCausesRoute());
-  }
-
-  Future<void> openAction(ListAction action) {
-    return _causesService.openAction(action.id);
-  }
-
-  Future<void> openCampaign(ListCampaign campaign) {
-    return _causesService.openCampaign(campaign);
-  }
-
-  Future<void> openNewsArticle(NewsArticle article) {
-    return _causesService.openNewArticle(article);
   }
 }

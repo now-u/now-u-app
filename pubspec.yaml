@@ -72,6 +72,11 @@ dependencies:
 
   causeApiClient:
     path: openapi/causeApi
+  flutter_bloc: ^8.1.5
+  freezed_annotation: ^2.4.1
+  equatable: ^2.0.5
+  flutter_facebook_auth: ^6.2.0
+  formz: ^0.7.0
 
 dev_dependencies:
   flutter_test:
@@ -79,11 +84,12 @@ dev_dependencies:
   mockito: ^5.4.4
   flutter_launcher_icons: ^0.13.1
   dartdoc: ^8.0.5
-  build_runner: ^2.4.8
+  build_runner: ^2.4.9
   build_verify: ^3.1.0
   stacked_generator: ^1.6.0
   auto_route: ^8.0.3
   auto_route_generator: ^8.0.0
+  freezed: ^2.5.2
 
 flutter_icons:
   ios: true

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
-import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/locator.dart';
 import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/analytics.dart';
@@ -51,12 +51,12 @@ class StartupViewModel extends BaseViewModel with PostLoginViewModelMixin {
     _logger.info('handleStartUpLogic starting');
 
     try {
-		await initServices();
-		_logger.info('Init complete');
-		await navigateNext();
-	} catch (e, s) {
-		_handleStartupError(e, s);
-	}
+      await initServices();
+      _logger.info('Init complete');
+      await navigateNext();
+    } catch (e, s) {
+      _handleStartupError(e, s);
+    }
   }
 
   Future initServices() async {
@@ -85,7 +85,7 @@ class StartupViewModel extends BaseViewModel with PostLoginViewModelMixin {
 
       if (_authenticationService.token != null) {
         _logger.info('Setting token for api service');
-        _apiService.setToken(_authenticationService.token!);
+        // _apiService.setToken(_authenticationService.token!);
       }
 
       _analyticsService.setUserProperties(

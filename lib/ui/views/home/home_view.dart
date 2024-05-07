@@ -60,15 +60,11 @@ class HomeView extends StackedView<HomeViewModel> {
                 title: 'What can I do today?',
                 isLoading: viewModel.myActions == null,
                 tiles: viewModel.myActions,
-                tileOnClick: (tileData) =>
-                    viewModel.openAction(tileData.action),
               ),
               CampaignExploreSection(
                 title: 'Campaigns of the month',
                 isLoading: viewModel.ofTheMonthCampaigns == null,
                 tiles: viewModel.ofTheMonthCampaigns,
-                tileOnClick: (tileData) =>
-                    viewModel.openCampaign(tileData.campaign),
               ),
               CustomWidthButton(
                 'Explore',
@@ -95,15 +91,11 @@ class HomeView extends StackedView<HomeViewModel> {
                 title: 'Suggested campaigns',
                 tiles: viewModel.recommendedCampaigns,
                 isLoading: viewModel.recommendedCampaigns == null,
-                tileOnClick: (tileData) =>
-                    viewModel.openCampaign(tileData.campaign),
               ),
               NewsArticleExploreSection(
                 title: 'In the news',
                 tiles: viewModel.inTheNews,
                 isLoading: viewModel.inTheNews == null,
-                tileOnClick: (tileData) =>
-                    viewModel.openNewsArticle(tileData.article),
               ),
 
               if (viewModel.currentUser != null)

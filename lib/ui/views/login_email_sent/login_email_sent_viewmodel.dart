@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/locator.dart';
 import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/dialog_service.dart';

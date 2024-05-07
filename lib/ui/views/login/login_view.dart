@@ -1,186 +1,226 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nowu/locator.dart';
 import 'package:nowu/assets/constants.dart';
+import 'package:nowu/router.dart';
+import 'package:nowu/router.gr.dart';
+import 'package:nowu/services/auth.dart';
 import 'package:nowu/themes.dart';
 import 'package:nowu/ui/common/form.dart';
-import 'package:stacked/stacked.dart';
-import 'package:stacked/stacked_annotations.dart';
+import 'package:nowu/ui/views/login/bloc/login_bloc.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:nowu/ui/views/login/bloc/login_event.dart';
 
+import 'bloc/login_state.dart';
 import 'components/social_media_buttons.dart';
-import 'login_view.form.dart';
-import 'login_viewmodel.dart';
+import 'models/email.dart';
 
 @RoutePage()
-@FormView(
-  fields: [
-    FormTextField(
-      name: 'emailInput',
-      validator: LoginFormValidators.emailValidator,
-    ),
-  ],
-)
-class LoginView extends StackedView<LoginViewModel> with $LoginView {
+class LoginView extends StatelessWidget {
   @override
-  LoginViewModel viewModelBuilder(BuildContext context) => LoginViewModel();
-
-  @override
-  void onViewModelReady(LoginViewModel viewModel) {
-    syncFormWithViewModel(viewModel);
-    super.onViewModelReady(viewModel);
-  }
-
-  @override
-  void onDispose(LoginViewModel viewModel) => viewModel.dispose();
-
-  @override
-  Widget builder(
-    BuildContext context,
-    LoginViewModel viewModel,
-    Widget? child,
-  ) {
-    Widget _emailInput(LoginViewModel model) {
-      return TextFormFieldWithExternalLabel(
-        externalLabelText: 'Email',
-        textFormField: TextFormField(
-          controller: emailInputController,
-          keyboardType: TextInputType.emailAddress,
-          textCapitalization: TextCapitalization.none,
-          textInputAction: TextInputAction.next,
-          autofocus: false,
-          decoration: InputDecoration(
-            errorText:
-                model.showValidation ? model.emailInputValidationMessage : null,
-            hintText: 'e.g. jane.doe@email.com',
-          ),
-        ),
-      );
-    }
-
-    Widget _skipButton(LoginViewModel model) {
-      return Container(
-        width: double.infinity,
-        child: FilledButton(
-          style: secondaryFilledButtonStyle,
-          child: const Text('Skip'),
-          onPressed: () {
-            model.skipLogin();
-          },
-        ),
-      );
-    }
-
-    Widget _loginButton(LoginViewModel model) {
-      return Container(
-        width: double.infinity,
-        child: FilledButton(
-          child: const Text('Login'),
-          onPressed: model.loginWithEmail,
-        ),
-      );
-    }
-
-    Widget _loginForm(LoginViewModel model) {
-      return Stack(
-        children: [
-          ClipPath(
-            clipper: LoginBackgroundClipper(),
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.2,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.orange, Colors.deepOrangeAccent],
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                const SizedBox(height: 90),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    child: Text(
-                      'Sign up to now-u',
-                      style: Theme.of(context).textTheme.headlineLarge,
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                SocialMediaLoginButtons(model),
-                const SizedBox(height: 30),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: Text(
-                    'Or sign up with email',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                ),
-                const SizedBox(height: 30),
-                _emailInput(model),
-                const SizedBox(height: 20),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.6,
-                  child: Column(
-                    children: [
-                      _loginButton(model),
-                      const SizedBox(height: 20),
-                      _skipButton(model),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'View our privacy policy ',
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                      TextSpan(
-                        text: 'here',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(color: CustomColors.brandColor),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            model.launchPrivacyPolicy();
-                          },
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-              ],
-            ),
-          ),
-        ],
-      );
-    }
-
+  Widget build(BuildContext context) {
     return Scaffold(
       body: NotificationListener(
         onNotification: (OverscrollIndicatorNotification overscroll) {
           overscroll.disallowIndicator();
           return true;
         },
-        child: ListView(
-          children: [
-            // TODO Fix clip scrolling under the status bar
-            _loginForm(viewModel),
-          ],
+        child: BlocProvider(
+          create: (context) {
+            return LoginBloc(
+              authenticationService: locator<AuthenticationService>(),
+            );
+          },
+          child: ListView(
+            children: [
+              // TODO Fix clip scrolling under the status bar
+              LoginForm(),
+            ],
+          ),
         ),
       ),
+    );
+  }
+}
+
+class LoginForm extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        ClipPath(
+          clipper: LoginBackgroundClipper(),
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.2,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.orange, Colors.deepOrangeAccent],
+                begin: Alignment.bottomLeft,
+                end: Alignment.topRight,
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              const SizedBox(height: 90),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: Text(
+                    'Sign up to now-u',
+                    style: Theme.of(context).textTheme.headlineLarge,
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 30),
+              const _OAuthLoginButtons(),
+              const SizedBox(height: 30),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: Text(
+                  'Or sign up with email',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ),
+              const SizedBox(height: 30),
+              const _EmailInput(),
+              const SizedBox(height: 20),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.6,
+                child: const Column(
+                  children: [
+                    const _LoginButton(),
+                    const SizedBox(height: 20),
+                    const _SkipButton(),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'View our privacy policy ',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    TextSpan(
+                      text: 'here',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(color: CustomColors.brandColor),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          launchLinkExternal(context, PRIVACY_POLICY_URI);
+                        },
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _EmailInput extends StatelessWidget {
+  const _EmailInput();
+
+  String? getErrorText(Email email) {
+    switch (email.displayError) {
+      case null:
+        return null;
+      case EmailValidationError.empty:
+        return 'Email must be provided';
+      case EmailValidationError.invalid:
+        return 'Email is invalid';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<LoginBloc, LoginState>(
+      builder: (context, state) {
+        return TextFormFieldWithExternalLabel(
+          externalLabelText: 'Email',
+          textFormField: TextFormField(
+            keyboardType: TextInputType.emailAddress,
+            textCapitalization: TextCapitalization.none,
+            textInputAction: TextInputAction.next,
+            autofocus: false,
+            decoration: InputDecoration(
+              errorText: getErrorText(state.email),
+              hintText: 'e.g. jane.doe@email.com',
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _SkipButton extends StatelessWidget {
+  const _SkipButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      child: FilledButton(
+        style: secondaryFilledButtonStyle,
+        child: const Text('Skip'),
+        onPressed: () async {
+          await context.router.replaceAll([
+            TabsRoute(children: [const HomeRoute()]),
+          ]);
+        },
+      ),
+    );
+  }
+}
+
+class _LoginButton extends StatelessWidget {
+  const _LoginButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<LoginBloc, LoginState>(
+      builder: (context, state) {
+        return Container(
+          width: double.infinity,
+          child: FilledButton(
+            child: const Text('Login'),
+            onPressed: () {
+              context.read<LoginBloc>().add(const LoginEventLoginWithEmail());
+            },
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _OAuthLoginButtons extends StatelessWidget {
+  const _OAuthLoginButtons();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<LoginBloc, LoginState>(
+      builder: (context, state) {
+        return SocialMediaLoginButtons(context.read<LoginBloc>());
+      },
     );
   }
 }

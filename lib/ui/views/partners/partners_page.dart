@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:nowu/assets/components/customAppBar.dart';
 import 'package:nowu/assets/components/custom_network_image.dart';
-import 'package:nowu/models/Organisation.dart';
-import 'package:stacked/stacked.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nowu/router.gr.dart';
+import 'package:nowu/services/causes_service.dart';
 
-import 'partners_viewmodel.dart';
+import './bloc/partners_bloc.dart';
+import './bloc/partners_event.dart';
+import './bloc/partners_state.dart';
 
 @RoutePage()
-class PartnersView extends StackedView<PartnersViewModel> {
+class PartnersView extends StatelessWidget {
   @override
-  Widget builder(
-    BuildContext context,
-    PartnersViewModel viewModel,
-    Widget? child,
-  ) {
+  Widget build(BuildContext context) {
     // TODO Handle error -> viewModel.hasError -> do something
     return Scaffold(
       appBar: customAppBar(
@@ -22,34 +21,43 @@ class PartnersView extends StackedView<PartnersViewModel> {
         context: context,
         backButtonText: 'Menu',
       ),
-      body: !viewModel.dataReady
-          ? const Center(child: CircularProgressIndicator())
-          : GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                childAspectRatio: 0.85,
-              ),
-              itemCount: viewModel.data!.length,
-              itemBuilder: (BuildContext context, int index) {
-                final organisation = viewModel.data!.elementAt(index);
-                return Container(
-                  height: 200,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: _OrganisationTile(
-                      organisation: organisation,
-                      onTap: () => viewModel.openOrganisationInfo(organisation),
+      body: BlocProvider(
+        create: (_) => PartnersBloc(causesService: CausesService())
+          ..add(PartnersFetched()),
+        child:
+            BlocBuilder<PartnersBloc, PartnersState>(builder: (context, state) {
+          switch (state) {
+            case PartnersStateFailure():
+              return const Center(
+                  child: Text('Failed to fetch collaborations'),);
+            case PartnersStateInitial():
+              return const Center(child: CircularProgressIndicator());
+            case PartnersStateSuccess():
+              return GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  childAspectRatio: 0.85,
+                ),
+                itemCount: state.partners.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final organisation = state.partners.elementAt(index);
+                  return Container(
+                    height: 200,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: _OrganisationTile(
+                        organisation: organisation,
+                        onTap: () => context.router
+                            .push(PartnerInfoRoute(organisation: organisation)),
+                      ),
                     ),
-                  ),
-                );
-              },
-            ),
+                  );
+                },
+              );
+          }
+        }),
+      ),
     );
-  }
-
-  @override
-  PartnersViewModel viewModelBuilder(BuildContext context) {
-    return PartnersViewModel();
   }
 }
 

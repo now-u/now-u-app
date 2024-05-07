@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/locator.dart';
 import 'package:nowu/app/app.router.dart';
 import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';

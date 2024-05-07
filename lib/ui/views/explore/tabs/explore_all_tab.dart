@@ -26,7 +26,6 @@ class ExploreAllTab extends StatelessWidget {
           description:
               'Join members of the now-u community in coordinated campaigns to make a difference',
           titleOnClick: () => changeTab(ExploreTabKey.CAMPAIGN),
-          tileOnClick: (tileData) => viewModel.openCampaign(tileData.campaign),
           tiles: viewModel.allSearchResult?.campaigns.map(
             (campaign) => CampaignExploreTileData(
               campaign,
@@ -41,7 +40,6 @@ class ExploreAllTab extends StatelessWidget {
           description:
               'Take a wide range of actions to drive lasting change for issues you care about',
           titleOnClick: () => changeTab(ExploreTabKey.ACTIONS),
-          tileOnClick: (tileData) => viewModel.openAction(tileData.action),
           tiles: viewModel.allSearchResult?.actions.map(
             (action) => ActionExploreTileData(
               action,
@@ -72,9 +70,6 @@ class ExploreAllTab extends StatelessWidget {
           description:
               'Find out what’s going on in the world this week in relation to your chosen causes',
           // TODO Link to actions tab
-          titleOnClick: () => changeTab(ExploreTabKey.NEWS),
-          tileOnClick: (tileData) =>
-              viewModel.openNewsArticle(tileData.article),
           tiles: viewModel.allSearchResult?.newsArticles
               .map((newsArticle) => NewsArticleExploreTileData(newsArticle)),
           // TODO Handle loading state

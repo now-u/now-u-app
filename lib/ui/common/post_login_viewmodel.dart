@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:logging/logging.dart';
-import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/locator.dart';
 import 'package:nowu/models/User.dart';
 import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
@@ -73,6 +73,8 @@ mixin PostLoginViewModelMixin on BaseViewModel implements Initialisable {
       return _router.replaceAll([const OnboardingSelectCausesRoute()]);
     }
 
-    return _router.replaceAll([TabsRoute(children: [const HomeRoute()])]);
+    return _router.replaceAll([
+      TabsRoute(children: [const HomeRoute()])
+    ]);
   }
 }
