@@ -4,41 +4,29 @@ import 'package:nowu/services/auth.dart';
 import 'package:nowu/utils/require.dart';
 
 import '../models/email.dart';
-import './login_event.dart';
 import './login_state.dart';
 
-class LoginBloc extends Bloc<LoginEvent, LoginState> {
-	AuthenticationService _authenticationService;
+class LoginBloc extends Cubit<LoginState> {
+  AuthenticationService _authenticationService;
 
 	LoginBloc({
 		required AuthenticationService authenticationService,
 	}) : 
 		_authenticationService = authenticationService,
-		super(LoginState(email: Email.pure()))
-	{
-		on<LoginEventEmailedChanged>(_onEmailChanged);
-		on<LoginEventLoginWithOAuth>(_onLoginWithOAuth);
-		on<LoginEventLoginWithEmail>(_onLoginWithEmail);
-	}
+        super(LoginState(email: Email.pure()));
 
-	void _onEmailChanged(
-		LoginEventEmailedChanged event,
-		Emitter<LoginState> emit,
-	) {
-		final email = Email.dirty(event.email);
+  void onEmailChanged(String email) {
+		final emailState = Email.dirty(email);
 		emit(
 			state.copyWith(
-				email: email,
-				isValid: Formz.validate([email]),
-			),
+        email: emailState,
+        isValid: Formz.validate([emailState]),
+      ),
 		);
 	}
 
-	Future<void> _onLoginWithEmail(
-		LoginEventLoginWithEmail event,
-		Emitter<LoginState> emit,
-	) async {
-		require(state.isValid, 'Cannot login when email is invalid');
+  Future<void> onLoginWithEmail() async {
+    require(state.isValid, 'Cannot login when email is invalid');
 		emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
 		try {
 			await _authenticationService.sendSignInEmail(state.email.value);
@@ -48,14 +36,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 		}
 	}
 
-	Future<void> _onLoginWithOAuth(
-		LoginEventLoginWithOAuth event,
-		Emitter<LoginState> emit,
-	) async {
-		emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
+  Future<void> onLoginWithOAuth(AuthProvider provider) async {
+    emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
 		try {
-			await _authenticationService.signInWithOAuth(event.provider);
-			emit(state.copyWith(status: FormzSubmissionStatus.success));
+      await _authenticationService.signInWithOAuth(provider);
+      emit(state.copyWith(status: FormzSubmissionStatus.success));
 		} catch (_) {
 			emit(state.copyWith(status: FormzSubmissionStatus.failure));
 		}

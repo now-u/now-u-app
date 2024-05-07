@@ -1,16 +1,15 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nowu/locator.dart';
 import 'package:nowu/assets/constants.dart';
+import 'package:nowu/locator.dart';
 import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/themes.dart';
 import 'package:nowu/ui/common/form.dart';
 import 'package:nowu/ui/views/login/bloc/login_bloc.dart';
-import 'package:auto_route/auto_route.dart';
-import 'package:nowu/ui/views/login/bloc/login_event.dart';
 
 import 'bloc/login_state.dart';
 import 'components/social_media_buttons.dart';
@@ -203,7 +202,7 @@ class _LoginButton extends StatelessWidget {
           child: FilledButton(
             child: const Text('Login'),
             onPressed: () {
-              context.read<LoginBloc>().add(const LoginEventLoginWithEmail());
+              context.read<LoginBloc>().onLoginWithEmail();
             },
           ),
         );
