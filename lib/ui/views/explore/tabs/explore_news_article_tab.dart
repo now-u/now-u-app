@@ -15,7 +15,7 @@ class ExploreNewsArticleTab extends StatelessWidget {
     return ExploreTab(
       pagingState: viewModel.newsArticles,
       filterChips: [
-        CausesFilter(viewModel: viewModel),
+        const CausesFilter(),
         CompletedFilter(viewModel: viewModel),
       ],
       itemBuilder: (newsArticle) => Container(

@@ -15,8 +15,8 @@ class ExploreLearningResourceTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExploreTab(
       filterChips: [
-        CausesFilter(viewModel: viewModel),
-        TimeFilter(viewModel: viewModel),
+        const CausesFilter(),
+        const TimeFilter(),
         NewFilter(viewModel: viewModel),
         RecommendedFilter(viewModel: viewModel),
         CompletedFilter(viewModel: viewModel),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nowu/assets/constants.dart';
+import 'package:nowu/ui/views/explore/bloc/explore_bloc.dart';
 import 'package:nowu/ui/views/explore/tabs/explore_all_tab.dart';
 import 'package:nowu/ui/views/explore/tabs/explore_campaign_tab.dart';
 import 'package:nowu/ui/views/explore/tabs/explore_news_article_tab.dart';
@@ -37,7 +39,11 @@ class ExploreView extends StackedView<ExplorePageViewModel> with $ExploreView {
     ExplorePageViewModel viewModel,
     Widget? child,
   ) {
-    return ExploreTabs(viewModel, searchBarController: searchBarController);
+    return BlocProvider(
+		create: (context) => ExploreBloc(
+		),
+		child: ExploreTabs(viewModel, searchBarController: searchBarController),
+	);
   }
 }
 

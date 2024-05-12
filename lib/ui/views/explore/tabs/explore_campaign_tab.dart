@@ -14,7 +14,7 @@ class ExploreCampaignTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExploreTab(
       filterChips: [
-        CausesFilter(viewModel: viewModel),
+        const CausesFilter(),
         NewFilter(viewModel: viewModel),
         RecommendedFilter(viewModel: viewModel),
         CompletedFilter(viewModel: viewModel),

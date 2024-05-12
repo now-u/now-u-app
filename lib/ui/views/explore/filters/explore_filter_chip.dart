@@ -98,7 +98,19 @@ class TimeFilter extends StatelessWidget {
                   );
                 },
               ).toList(),
-              onSelectOption: (_) => print('TODO'),
+              onSelectOption: (option) {
+                final filterTimeBrackets = state.filterState.filterTimeBrackets;
+                if (filterTimeBrackets.contains(option)) {
+                  filterTimeBrackets.remove(option);
+                } else {
+                  filterTimeBrackets.add(option);
+                }
+                context.read<ExploreBloc>().updateFilter(
+                      state.filterState.copyWith(
+                        filterTimeBrackets: filterTimeBrackets,
+                      ),
+                    );
+              },
             ),
           ),
           label: 'Time',

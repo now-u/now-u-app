@@ -17,7 +17,7 @@ class ExploreAllTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExploreTabHorizontal(
       filterChips: [
-        CausesFilter(viewModel: viewModel),
+        const CausesFilter(),
         NewFilter(viewModel: viewModel),
       ],
       filterResults: [

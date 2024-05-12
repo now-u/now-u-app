@@ -129,6 +129,8 @@ class App extends StatelessWidget {
                   );
                   break;
                 case AuthenticationStateUnauthenticated():
+				  // TODO Decide wether to go to /login
+                  break;
                   _appRouter.replaceAll(
                     [
                       const OnboardingSelectCausesRoute(),

@@ -14,8 +14,8 @@ class ExploreActionTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExploreTab(
       filterChips: [
-        CausesFilter(viewModel: viewModel),
-        TimeFilter(viewModel: viewModel),
+        const CausesFilter(),
+        const TimeFilter(),
         ExploreFilterChip(
           onSelected: (_) => viewModel.openActionTypesFilterSheet(),
           label: 'Type',
