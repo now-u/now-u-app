@@ -8,7 +8,6 @@ import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/dialog_service.dart';
-import 'package:nowu/services/router_service.dart';
 import 'package:nowu/services/user_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -74,7 +73,7 @@ mixin PostLoginViewModelMixin on BaseViewModel implements Initialisable {
     }
 
     return _router.replaceAll([
-      TabsRoute(children: [const HomeRoute()])
+      TabsRoute(children: [const HomeRoute()]),
     ]);
   }
 }

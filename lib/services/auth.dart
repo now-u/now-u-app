@@ -8,7 +8,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logging/logging.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/services/analytics.dart';
-import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/storage.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide User;

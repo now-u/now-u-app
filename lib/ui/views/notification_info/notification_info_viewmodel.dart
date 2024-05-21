@@ -3,7 +3,6 @@ import 'package:nowu/models/Notification.dart';
 import 'package:nowu/router.dart';
 
 import 'package:nowu/services/internal_notification_service.dart';
-import 'package:nowu/services/router_service.dart';
 import 'package:stacked/stacked.dart';
 
 class NotificationInfoViewModel extends BaseViewModel {

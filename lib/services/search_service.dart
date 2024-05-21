@@ -2,7 +2,8 @@ import 'dart:math';
 
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
-import 'package:causeApiClient/causeApiClient.dart' hide NewsArticle;
+import 'package:causeApiClient/causeApiClient.dart'
+    hide NewsArticle, ListAction;
 import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:collection/collection.dart';
 import 'package:meilisearch/meilisearch.dart';
@@ -360,9 +361,9 @@ class SearchService {
   List<ListAction> _searchHitsToActions(List<Map<String, dynamic>> hits) {
     final results = _causeServiceClient.serializers.deserialize(
       hits,
-      specifiedType: const FullType(BuiltList, [FullType(ListAction)]),
-    ) as BuiltList<ListAction>;
-    return results.asList();
+      specifiedType: const FullType(BuiltList, [FullType(Api.ListAction)]),
+    ) as BuiltList<Api.ListAction>;
+    return results.map(ListAction.fromApiModel).toList();
   }
 
   List<LearningResource> _searchHitsToLearningResources(

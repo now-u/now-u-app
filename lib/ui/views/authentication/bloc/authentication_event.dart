@@ -6,5 +6,6 @@ part 'authentication_event.freezed.dart';
 sealed class AuthenticationEvent with _$AuthenticationEvent {
   const factory AuthenticationEvent.signedIn() = AuthenticationSignIn;
   const factory AuthenticationEvent.signedOut() = AuthenticationSignOut;
-  const factory AuthenticationEvent.signOutRequested() = AuthenticationSignOutRequested;
+  const factory AuthenticationEvent.signOutRequested() =
+      AuthenticationSignOutRequested;
 }

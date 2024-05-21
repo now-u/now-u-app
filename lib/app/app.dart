@@ -10,7 +10,6 @@ import 'package:nowu/services/pushNotifications.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:nowu/services/storage.dart';
 import 'package:nowu/services/user_service.dart';
-import 'package:nowu/ui/bottom_sheets/explore_filter/explore_filter_sheet.dart';
 import 'package:nowu/ui/dialogs/action/action_completed_dialog.dart';
 import 'package:nowu/ui/dialogs/cause/cause_dialog.dart';
 import 'package:nowu/ui/dialogs/email_app_picker/email_app_picker_dialog.dart';

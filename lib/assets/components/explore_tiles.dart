@@ -51,7 +51,8 @@ class ExploreCampaignTile extends ExploreTile {
     return AspectRatio(
       aspectRatio: 0.75,
       child: InkWell(
-        onTap: () => context.router.push(CampaignInfoRoute(listCampaign: campaign)),
+        onTap: () =>
+            context.router.push(CampaignInfoRoute(listCampaign: campaign)),
         child: Column(
           children: [
             Container(
@@ -111,7 +112,8 @@ class ExploreActionTile extends ExploreResourceTile {
           timeText: tile.action.timeText,
           isCompleted: tile.isCompleted,
           style: style,
-          onTap: (BuildContext context) => context.router.push(ActionInfoRoute(actionId: tile.action.id)),
+          onTap: (BuildContext context) =>
+              context.router.push(ActionInfoRoute(actionId: tile.action.id)),
           key: key,
         );
 }

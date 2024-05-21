@@ -24,38 +24,40 @@ class PartnersView extends StatelessWidget {
       body: BlocProvider(
         create: (_) => PartnersBloc(causesService: CausesService())
           ..add(PartnersFetched()),
-        child:
-            BlocBuilder<PartnersBloc, PartnersState>(builder: (context, state) {
-          switch (state) {
-            case PartnersStateFailure():
-              return const Center(
-                  child: Text('Failed to fetch collaborations'),);
-            case PartnersStateInitial():
-              return const Center(child: CircularProgressIndicator());
-            case PartnersStateSuccess():
-              return GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  childAspectRatio: 0.85,
-                ),
-                itemCount: state.partners.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final organisation = state.partners.elementAt(index);
-                  return Container(
-                    height: 200,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: _OrganisationTile(
-                        organisation: organisation,
-                        onTap: () => context.router
-                            .push(PartnerInfoRoute(organisation: organisation)),
+        child: BlocBuilder<PartnersBloc, PartnersState>(
+          builder: (context, state) {
+            switch (state) {
+              case PartnersStateFailure():
+                return const Center(
+                  child: Text('Failed to fetch collaborations'),
+                );
+              case PartnersStateInitial():
+                return const Center(child: CircularProgressIndicator());
+              case PartnersStateSuccess():
+                return GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    childAspectRatio: 0.85,
+                  ),
+                  itemCount: state.partners.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final organisation = state.partners.elementAt(index);
+                    return Container(
+                      height: 200,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: _OrganisationTile(
+                          organisation: organisation,
+                          onTap: () => context.router.push(
+                              PartnerInfoRoute(organisation: organisation)),
+                        ),
                       ),
-                    ),
-                  );
-                },
-              );
-          }
-        }),
+                    );
+                  },
+                );
+            }
+          },
+        ),
       ),
     );
   }

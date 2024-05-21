@@ -6,14 +6,11 @@ import 'package:logging/logging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/assets/constants.dart';
-import 'package:nowu/firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
-import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/user_service.dart';
@@ -22,8 +19,6 @@ import 'package:nowu/ui/views/authentication/bloc/authentication_bloc.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_state.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sentry_logging/sentry_logging.dart';
-import 'package:get_it/get_it.dart';
-import 'package:auto_route/auto_route.dart';
 
 import 'generated/l10n.dart';
 
@@ -41,9 +36,10 @@ void main() async {
     usePathUrlStrategy();
 
     print('Firebase initializing');
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+    // TODO Bring back!! - Doesn't work offline
+    // await Firebase.initializeApp(
+    //   options: DefaultFirebaseOptions.currentPlatform,
+    // );
 
     setupLocator();
     // setupDialogUi();
@@ -102,7 +98,8 @@ class App extends StatelessWidget {
         // TODO inheritNavigatorObservers
         navigatorObservers: () => [
           // TODO Make sure this returns a new instance
-          locator<AnalyticsService>().getAnalyticsObserver(),
+          // TODO Bring back!!
+          // locator<AnalyticsService>().getAnalyticsObserver(),
           SentryNavigatorObserver(),
         ],
       ),
@@ -129,7 +126,7 @@ class App extends StatelessWidget {
                   );
                   break;
                 case AuthenticationStateUnauthenticated():
-				  // TODO Decide wether to go to /login
+                  // TODO Decide wether to go to /login
                   break;
                   _appRouter.replaceAll(
                     [

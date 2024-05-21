@@ -1,74 +1,79 @@
-import 'package:causeApiClient/causeApiClient.dart' hide Image;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:nowu/assets/components/customScrollableSheet.dart';
 import 'package:nowu/assets/components/header.dart';
 import 'package:nowu/assets/components/customTile.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/models/faq.dart';
+import 'package:nowu/services/faq_service.dart';
+import 'package:nowu/ui/views/faq/bloc/faq_bloc.dart';
+import 'package:nowu/ui/views/faq/bloc/faq_state.dart';
 
-import 'package:stacked/stacked.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:auto_route/auto_route.dart';
-
-import 'faq_viewmodel.dart';
 
 // TODO There is a bug on this page when you tap the last FAQ the answer is not visible without scrolling
 // Maybe need something like: https://stackoverflow.com/questions/49153087/flutter-scrolling-to-a-widget-in-listview
 @RoutePage()
-class FaqView extends StackedView<FaqViewModel> {
+class FaqView extends StatelessWidget {
   @override
-  FaqViewModel viewModelBuilder(BuildContext context) {
-    return FaqViewModel();
-  }
-
-  @override
-  Widget builder(
-    BuildContext context,
-    FaqViewModel viewModel,
-    Widget? child,
-  ) {
-    return Scaffold(
-      body: ScrollableSheetPage(
-        initialChildSize: 0.85,
-        minChildSize: 0.85,
-        shadow: const BoxShadow(
-          color: Colors.transparent,
-        ),
-        scaffoldBackgroundColor: const Color.fromRGBO(247, 248, 252, 1),
-        sheetBackgroundColor: Colors.white,
-        header: Container(
-          height: MediaQuery.of(context).size.height * (1 - 0.6),
-          child: Stack(
-            children: [
-              Positioned(
-                right: -30,
-                bottom: MediaQuery.of(context).size.height * (1 - 0.6) * 0.3,
-                child: Image.asset(
-                  'assets/imgs/graphics/ilstr_FAQ.png',
-                  height: MediaQuery.of(context).size.height * 0.3,
-                ),
-              ),
-              PageHeader(
-                backButton: true,
-                title: 'FAQs',
-              ),
-            ],
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => FaqBloc(faqService: locator<FAQService>())..getFaqs(),
+      child: Scaffold(
+        body: ScrollableSheetPage(
+          initialChildSize: 0.85,
+          minChildSize: 0.85,
+          shadow: const BoxShadow(
+            color: Colors.transparent,
           ),
-        ),
-        children: [
-          !viewModel.dataReady
-              // TODO Does this work?
-              ? const Center(child: CircularProgressIndicator())
-              : Container(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: viewModel.data!.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return FaqTile(viewModel.data![index]);
-                    },
+          scaffoldBackgroundColor: const Color.fromRGBO(247, 248, 252, 1),
+          sheetBackgroundColor: Colors.white,
+          header: Container(
+            height: MediaQuery.of(context).size.height * (1 - 0.6),
+            child: Stack(
+              children: [
+                Positioned(
+                  right: -30,
+                  bottom: MediaQuery.of(context).size.height * (1 - 0.6) * 0.3,
+                  child: Image.asset(
+                    'assets/imgs/graphics/ilstr_FAQ.png',
+                    height: MediaQuery.of(context).size.height * 0.3,
                   ),
                 ),
-        ],
+                PageHeader(
+                  backButton: true,
+                  title: 'FAQs',
+                ),
+              ],
+            ),
+          ),
+          children: [
+            BlocBuilder<FaqBloc, FaqState>(
+              builder: (context, state) {
+                switch (state) {
+                  case FaqStateInitial():
+                    return const Center(child: CircularProgressIndicator());
+                  case FaqStateSuccess(:final faqs):
+                    return Container(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: faqs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return FaqTile(faqs[index]);
+                        },
+                      ),
+                    );
+                  case FaqStateFailure():
+                    // TODO Better handling? Maybe retry button??
+                    return const Text('Something went wrong!');
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

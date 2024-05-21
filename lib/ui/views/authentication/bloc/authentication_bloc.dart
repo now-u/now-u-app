@@ -44,7 +44,7 @@ class AuthenticationBloc
     final (user, _) = await (
       userService.fetchUser(),
       causesService.fetchUserInfo(),
-	).wait;
+    ).wait;
     if (user != null) {
       emit(AuthenticationState.authenticated(user: user));
     } else {

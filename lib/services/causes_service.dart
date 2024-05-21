@@ -8,8 +8,9 @@ import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/auth.dart';
+import 'package:nowu/models/action.dart';
 
-export 'package:nowu/models/Action.dart';
+export 'package:nowu/models/action.dart';
 export 'package:nowu/models/Campaign.dart';
 export 'package:nowu/models/Learning.dart';
 export 'package:nowu/models/Cause.dart';
@@ -24,7 +25,7 @@ class CausesService {
 
   List<Api.Cause>? _causes;
   Future<List<Api.Cause>> _fetchCauses() async {
-    _logger.info("Fetching causes from the service");
+    _logger.info('Fetching causes from the service');
     final response = await _causeServiceClient.getCausesApi().causesList();
     return response.data!.asList();
   }
@@ -42,7 +43,7 @@ class CausesService {
     if (_causes == null) {
       _causes = await _fetchCauses();
     }
-    _logger.info("Got causes, $_causes");
+    _logger.info('Got causes, $_causes');
     return _causes!;
   }
 
@@ -65,10 +66,10 @@ class CausesService {
   ///
   /// Input params
   /// Return a List of ListActions
-  Future<Api.Action> getAction(int id) async {
+  Future<Action> getAction(int id) async {
     final response =
         await _causeServiceClient.getActionsApi().actionsRetrieve(id: id);
-    return response.data!;
+    return Action(response.data!);
   }
 
   /// Set user's selected causes
@@ -102,7 +103,7 @@ class CausesService {
   /// Complete an action
   ///
   /// Used so a user can set an action as completed
-  Future completeAction(Api.Action action) async {
+  Future completeAction(ListAction action) async {
     await (
       _causeServiceClient.getActionsApi().actionsComplete(id: action.id),
       _analyticsService.logActionEvent(
@@ -118,7 +119,7 @@ class CausesService {
   /// Uncomlete an action
   ///
   /// Sets an action as uncompleted
-  Future removeActionStatus(Api.Action action) async {
+  Future removeActionStatus(ListAction action) async {
     await (
       _causeServiceClient.getActionsApi().actionsUncomplete(id: action.id),
       _analyticsService.logActionEvent(
@@ -159,7 +160,8 @@ class CausesService {
       _logger.warning('Trying to fetch user info when not authenticated');
       return null;
     }
-    final response = await _causeServiceClient.getMeApi().meCausesInfoRetrieve();
+    final response =
+        await _causeServiceClient.getMeApi().meCausesInfoRetrieve();
     return _userInfo = response.data!;
   }
 
@@ -167,12 +169,13 @@ class CausesService {
     await _router.push(ActionInfoRoute(actionId: actionId));
   }
 
-  Future<void> openLearningResource(Api.LearningResource learningResource) async {
+  Future<void> openLearningResource(
+      Api.LearningResource learningResource) async {
     if (_authService.isUserLoggedIn()) {
       // TODO Should this if be inside here?
       await completeLearningResource(learningResource);
     }
-	// TODO Work this out!
+    // TODO Work this out!
     // _navigationService.launchLink(
     //   learningResource.link,
     // );

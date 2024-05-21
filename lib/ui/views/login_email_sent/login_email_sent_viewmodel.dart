@@ -4,7 +4,6 @@ import 'package:nowu/locator.dart';
 import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/dialog_service.dart';
-import 'package:nowu/services/router_service.dart';
 import 'package:nowu/ui/common/post_login_viewmodel.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 import 'package:stacked/stacked.dart';

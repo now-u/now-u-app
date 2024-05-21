@@ -24,13 +24,15 @@ const SEARCH_SERVICE_URL = 'https://search.dev.apiv2.now-u.com';
 const SEARCH_SERVICE_KEY =
     'aaae5a4efcd407ca2c568ad9bcafda8f5362526a4b14ab8d746df52a7e7415a6';
 
-final PRIVACY_POLICY_URI = Uri.parse('https://www.now-u.com/info/privacy-notice');
+final PRIVACY_POLICY_URI =
+    Uri.parse('https://www.now-u.com/info/privacy-notice');
 final TERMS_AND_CONDITIONS_URI = Uri.parse(
-    'https://now-u-docs.s3.eu-west-2.amazonaws.com/now-u+user+terms+and+conditions.pdf',
+  'https://now-u-docs.s3.eu-west-2.amazonaws.com/now-u+user+terms+and+conditions.pdf',
 );
 
 final ABOUT_US_URI = Uri.parse('https://www.now-u.com/about');
-final FEEDBACK_FORM_URI = Uri.parse('https://docs.google.com/forms/d/e/1FAIpQLSflMOarmyXRv7DRbDQPWRayCpE5X4d8afOpQ1hjXfdvzbnzQQ/viewform');
+final FEEDBACK_FORM_URI = Uri.parse(
+    'https://docs.google.com/forms/d/e/1FAIpQLSflMOarmyXRv7DRbDQPWRayCpE5X4d8afOpQ1hjXfdvzbnzQQ/viewform');
 
 final INSTAGRAM_URI = Uri.parse('https://www.instagram.com/now_u_app/');
 final FACEBOOK_URI = Uri.parse('https://www.facebook.com/nowufb');
@@ -38,8 +40,10 @@ final TWITTER_URI = Uri.parse('https://twitter.com/now_u_app');
 final FACEBOOK_MESSENGER_URI = Uri.parse('http://m.me/nowufb');
 final EMAIL_MAILTO_URI = Uri.parse('mailto:hello@now-u.com?subject=Hi');
 
-final APPLE_APP_STORE_URI = Uri.parse('https://apps.apple.com/us/app/now-u/id1516126639');
-final GOOGLE_APP_STORE_URI = Uri.parse('https://play.google.com/store/apps/details?id=com.nowu.app');
+final APPLE_APP_STORE_URI =
+    Uri.parse('https://apps.apple.com/us/app/now-u/id1516126639');
+final GOOGLE_APP_STORE_URI =
+    Uri.parse('https://play.google.com/store/apps/details?id=com.nowu.app');
 
 class CustomColors {
   /// Primary brand color

@@ -19,10 +19,10 @@ class AuthInterceptor extends Interceptor {
   ) async {
     final token = _authenticationService.token;
     if (token != null) {
-	  _logger.info('Bearer token: ${token}');
+      _logger.info('Bearer token: ${token}');
       options.headers['Authorization'] = 'Bearer $token';
     }
-	_logger.info('Token is null');
+    _logger.info('Token is null');
     super.onRequest(options, handler);
   }
 }

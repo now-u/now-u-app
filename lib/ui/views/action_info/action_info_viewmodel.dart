@@ -5,7 +5,6 @@ import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/dialog_service.dart';
 import 'package:nowu/services/navigation_service.dart';
-import 'package:nowu/services/router_service.dart';
 import 'package:nowu/services/user_service.dart';
 import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:stacked/stacked.dart';
@@ -55,6 +54,7 @@ class ActionInfoViewModel extends FutureViewModel<Action> {
   }
 
   Future launchAction() async {
+    // TODO Where should analytics be in bloc model?
     await _analyticsService.logActionEvent(
       data!,
       ActionEvent.TakeActionClicked,

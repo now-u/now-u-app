@@ -1,8 +1,5 @@
-import 'package:collection/collection.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/models/article.dart';
-import 'package:nowu/models/time.dart';
-import 'package:nowu/services/bottom_sheet_service.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:nowu/ui/bottom_sheets/explore_filter/explore_filter_sheet.dart';
@@ -70,10 +67,10 @@ class ExplorePageViewModel extends FormViewModel {
     return _causesService.listCauses().then((value) => _causes = value);
   }
 
-  PagingState actions = InitialLoading<Action>();
-  PagingState learningResources = InitialLoading<LearningResource>();
-  PagingState campaigns = InitialLoading<Campaign>();
-  PagingState newsArticles = InitialLoading<NewsArticle>();
+  PagingState actions = const InitialLoading<Action>();
+  PagingState learningResources = const InitialLoading<LearningResource>();
+  PagingState campaigns = const InitialLoading<Campaign>();
+  PagingState newsArticles = const InitialLoading<NewsArticle>();
   ResourcesSearchResult? allSearchResult;
 
   Future<void> search() {
@@ -102,25 +99,6 @@ class ExplorePageViewModel extends FormViewModel {
       releasedSince: filterData.filterNew == true ? newSinceDate() : null,
       query: searchBarValue,
     );
-  }
-
-  Future<void> loadMoreActions() async {
-    if (!actions.canLoadMore()) return;
-
-    actions = LoadingMore(items: actions.items);
-
-    // Remove search fallback to use user causes
-    SearchResponse<ListAction> response = await _searchService.searchActions(
-      offset: actions.offset(),
-      filter: _getActionsFilter(),
-    );
-
-    actions = Data(
-      items: actions.items + response.items,
-      hasReachedMax: response.hasReachedMax,
-    );
-
-    notifyListeners();
   }
 
   Future<void> searchActions() async {
@@ -154,25 +132,6 @@ class ExplorePageViewModel extends FormViewModel {
     );
   }
 
-  Future<void> loadMoreLearningResources() async {
-    if (!learningResources.canLoadMore()) return;
-
-    learningResources = LoadingMore(items: learningResources.items);
-
-    SearchResponse<LearningResource> response =
-        await _searchService.searchLearningResources(
-      offset: learningResources.offset(),
-      filter: _getLearningResourcesFilter(),
-    );
-
-    learningResources = Data(
-      items: learningResources.items + response.items,
-      hasReachedMax: response.hasReachedMax,
-    );
-
-    notifyListeners();
-  }
-
   Future<void> searchLearningResources() async {
     SearchResponse<LearningResource> response =
         await _searchService.searchLearningResources(
@@ -199,25 +158,6 @@ class ExplorePageViewModel extends FormViewModel {
     );
   }
 
-  Future<void> loadMoreCampaigns() async {
-    if (!campaigns.canLoadMore()) return;
-
-    campaigns = LoadingMore(items: campaigns.items);
-
-    SearchResponse<ListCampaign> response =
-        await _searchService.searchCampaigns(
-      filter: _getCampaignsFilter(),
-      offset: campaigns.offset(),
-    );
-
-    campaigns = Data(
-      items: campaigns.items + response.items,
-      hasReachedMax: response.hasReachedMax,
-    );
-
-    notifyListeners();
-  }
-
   Future<void> searchCampaigns() async {
     SearchResponse<ListCampaign> response =
         await _searchService.searchCampaigns(
@@ -240,25 +180,6 @@ class ExplorePageViewModel extends FormViewModel {
       releasedSince: filterData.filterNew == true ? newSinceDate() : null,
       query: searchBarValue,
     );
-  }
-
-  Future<void> loadMoreNewsArticles() async {
-    if (!newsArticles.canLoadMore()) return;
-
-    newsArticles = LoadingMore(items: newsArticles.items);
-
-    SearchResponse<NewsArticle> response =
-        await _searchService.searchNewsArticles(
-      filter: _getNewsArticlesFilter(),
-      offset: newsArticles.offset(),
-    );
-
-    newsArticles = Data(
-      items: newsArticles.items + response.items,
-      hasReachedMax: response.hasReachedMax,
-    );
-
-    notifyListeners();
   }
 
   Future<void> searchNewsArticles() async {

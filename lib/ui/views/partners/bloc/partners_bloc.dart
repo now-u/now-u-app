@@ -6,10 +6,12 @@ import './partners_state.dart';
 import 'package:bloc/bloc.dart';
 
 class PartnersBloc extends Bloc<PartnersEvent, PartnersState> {
-  final CausesService causesService;
+  final CausesService _causesService;
 
-  PartnersBloc({required this.causesService})
-      : super(const PartnersState.initial()) {
+  PartnersBloc({
+    required CausesService causesService,
+  })  : _causesService = causesService,
+        super(const PartnersState.initial()) {
     on<PartnersFetched>(_onPartnersFetched);
   }
 
@@ -18,14 +20,14 @@ class PartnersBloc extends Bloc<PartnersEvent, PartnersState> {
     Emitter<PartnersState> emit,
   ) async {
     switch (state) {
-	  // If we already have the partners then we don't need to refetch (this might not be true if we want to support refresh)
+      // If we already have the partners then we don't need to refetch (this might not be true if we want to support refresh)
       case PartnersStateSuccess():
         return;
       case PartnersStateFailure():
       case PartnersStateInitial():
         {
           try {
-            final partners = await causesService.getPartners();
+            final partners = await _causesService.getPartners();
             return emit(PartnersStateSuccess(partners: partners));
           } catch (_) {
             emit(const PartnersStateFailure());

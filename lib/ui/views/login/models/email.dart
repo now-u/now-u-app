@@ -18,4 +18,3 @@ class Email extends FormzInput<String, EmailValidationError>
     return null;
   }
 }
-

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nowu/themes.dart';
 import 'package:nowu/utils/intersperse.dart';
-import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
-
-import 'basic_dialog_model.dart';
 
 class BasicDialogButtonArgs {
   final String text;

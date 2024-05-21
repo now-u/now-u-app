@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/ui/dialogs/basic/basic_dialog.dart';
-import 'package:nowu/ui/views/home/home_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'router.gr.dart';
@@ -21,7 +19,9 @@ class AppRouter extends $AppRouter {
         AutoRoute(path: '/login/email_code', page: LoginCodeRoute.page),
         AutoRoute(path: '/onboarding/profile', page: ProfileSetupRoute.page),
         AutoRoute(
-            path: '/onboarding/causes', page: OnboardingSelectCausesRoute.page),
+          path: '/onboarding/causes',
+          page: OnboardingSelectCausesRoute.page,
+        ),
         AutoRoute(
           path: '/',
           page: TabsRoute.page,
@@ -39,13 +39,15 @@ class AppRouter extends $AppRouter {
         AutoRoute(path: '/campaigns/:campaignId', page: CampaignInfoRoute.page),
         AutoRoute(path: '/collaborations', page: PartnersRoute.page),
         AutoRoute(
-            path: '/collaborations/:partnerId', page: PartnerInfoRoute.page),
+          path: '/collaborations/:partnerId',
+          page: PartnerInfoRoute.page,
+        ),
         AutoRoute(path: '/faqs', page: FaqRoute.page),
       ];
 
-  Future<void> launchLink(Uri url, { bool isExternal = false }) async {
+  Future<void> launchLink(Uri url, {bool isExternal = false}) async {
     await launchUrl(url, mode: LaunchMode.externalApplication);
-	launchLinkExternal(this.navigatorKey.currentContext!, url);
+    launchLinkExternal(this.navigatorKey.currentContext!, url);
   }
 }
 

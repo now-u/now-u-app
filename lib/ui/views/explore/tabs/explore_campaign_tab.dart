@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nowu/assets/components/explore_tiles.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/search_service.dart';
+import 'package:nowu/ui/views/explore/bloc/tabs/explore_campaign_tab_bloc.dart';
 
 import '../explore_page_viewmodel.dart';
 import '../filters/explore_filter_chip.dart';
@@ -13,16 +16,14 @@ class ExploreCampaignTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExploreTab(
+      createBloc: (context) =>
+          ExploreCampaignTabBloc(searchService: locator<SearchService>()),
       filterChips: [
         const CausesFilter(),
-        NewFilter(viewModel: viewModel),
-        RecommendedFilter(viewModel: viewModel),
-        CompletedFilter(viewModel: viewModel),
+        const NewFilter(),
+        const RecommendedFilter(),
+        const CompletedFilter(),
       ],
-      onBottomReached: () => {
-        viewModel.loadMoreCampaigns(),
-      },
-      pagingState: viewModel.campaigns,
       itemBuilder: (campaign) => Container(
         // TODO Create shared constant for these/ pull. from ExploreSectionArgs
         height: 300,

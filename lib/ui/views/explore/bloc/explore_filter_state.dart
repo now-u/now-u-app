@@ -1,9 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:nowu/models/Action.dart';
-import 'package:nowu/ui/paging/paging_state.dart';
+import 'package:nowu/services/causes_service.dart';
 import 'package:tuple/tuple.dart';
 
-part 'explore_state.freezed.dart';
+part 'explore_filter_state.freezed.dart';
 
 @freezed
 class ExploreFilterState with _$ExploreFilterState {
@@ -16,15 +16,4 @@ class ExploreFilterState with _$ExploreFilterState {
     @Default(false) bool filterNew,
     @Default('') String queryText,
   }) = _ExploreFilterState;
-}
-
-@freezed
-class ExploreState with _$ExploreState {
-  const factory ExploreState({
-    @Default(ExploreFilterState()) ExploreFilterState filterState,
-    @Default(InitialLoading<Action>()) PagingState actions,
-    PagingState learningResources = InitialLoading<LearningResource>();
-    PagingState campaigns = InitialLoading<Campaign>();
-    PagingState newsArticles = InitialLoading<NewsArticle>();
-  }) = _ExploreState;
 }

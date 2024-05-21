@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
-
-import 'explore_filter_sheet_model.dart';
 
 class ExploreFilterSheetOption<T> {
   final String title;
@@ -21,7 +18,7 @@ class ExploreFilterSheetOption<T> {
 //   final List<ExploreFilterSheetOption<T>> options;
 //   final Function(T) onSelectOption;
 //   final Function()? onClosed;
-// 
+//
 //   ExploreFilterSheetArgs({
 //     required this.filterName,
 //     required this.options,

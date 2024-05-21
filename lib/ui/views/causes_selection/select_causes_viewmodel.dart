@@ -4,7 +4,6 @@ import 'package:nowu/router.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/services/dialog_service.dart';
-import 'package:nowu/services/router_service.dart';
 import 'package:stacked/stacked.dart';
 
 export 'package:nowu/services/router_service.dart';

@@ -1,42 +1,19 @@
-sealed class PagingState<T> {}
-sealed class PagingStateWithData<T> extends PagingState {
-  final List<T> items;
-  final bool hasReachedMax;
-
-  PagingStateWithData({ required this.items, required this.hasReachedMax } );
-
-  int offset() => items.length;
-  int itemsCount() => items.length;
-
-  bool canLoadMore() =>
-      (this is InitialLoading || this is Data) && !hasReachedMax;
+sealed class PagingState<T> {
+  const PagingState();
 }
 
 class InitialLoading<T> extends PagingState<T> {
-  InitialLoading() : super();
+  const InitialLoading() : super();
 }
 
-class Data<T> extends PagingStateWithData {
+class Data<T> extends PagingState<T> {
+  final List<T> items;
+  final bool hasReachedMax;
+  final bool isLoadingMore;
+
   Data({
-    required List<T> items,
-    bool hasReachedMax = false,
-  }) : super(
-          items: items,
-          hasReachedMax: hasReachedMax,
-        );
-}
-
-class LoadingMore<T> extends PagingStateWithData {
-  LoadingMore({
-    required List<T> items,
-  }) : super(
-	items: items,
-	hasReachedMax: false,
-  );
-
-  int offset() => items.length;
-  int itemsCount() => items.length;
-
-  bool canLoadMore() =>
-      (this is InitialLoading || this is Data) && !hasReachedMax;
+    required this.items,
+    this.hasReachedMax = false,
+    this.isLoadingMore = false,
+  }) : super();
 }

@@ -1,13 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:nowu/locator.dart';
-import 'package:nowu/assets/constants.dart';
 import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/navigation_service.dart';
-import 'package:nowu/services/router_service.dart';
 import 'package:nowu/services/user_service.dart';
-import 'package:nowu/ui/views/causes_selection/select_causes_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class ProfileSetupViewModel extends BaseViewModel {

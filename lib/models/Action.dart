@@ -1,5 +1,6 @@
 // Custom Icons
-import 'package:causeApiClient/causeApiClient.dart';
+import 'package:causeApiClient/causeApiClient.dart' as Api;
+import 'package:built_collection/built_collection.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:flutter/material.dart' hide Action;
 import 'package:nowu/models/time.dart';
@@ -30,7 +31,7 @@ class ActionType {
   final Color primaryColor;
   final Color secondaryColor;
   final Color tertiaryColor;
-  final List<ActionTypeEnum> subTypes;
+  final List<Api.ActionTypeEnum> subTypes;
 
   const ActionType({
     required this.name,
@@ -49,12 +50,12 @@ const ActionType getInvolved = ActionType(
   secondaryColor: orange1,
   tertiaryColor: orange2,
   subTypes: [
-    ActionTypeEnum.OTHER,
-    ActionTypeEnum.BEHAVIOR,
-    ActionTypeEnum.PURCHASE,
-    ActionTypeEnum.VOLUNTEER,
-    ActionTypeEnum.PROTEST,
-    ActionTypeEnum.CONNECT,
+    Api.ActionTypeEnum.OTHER,
+    Api.ActionTypeEnum.BEHAVIOR,
+    Api.ActionTypeEnum.PURCHASE,
+    Api.ActionTypeEnum.VOLUNTEER,
+    Api.ActionTypeEnum.PROTEST,
+    Api.ActionTypeEnum.CONNECT,
   ],
 );
 
@@ -65,8 +66,8 @@ const ActionType learn = ActionType(
   secondaryColor: blue1,
   tertiaryColor: blue2,
   subTypes: [
-    ActionTypeEnum.LEARN,
-    ActionTypeEnum.QUIZ,
+    Api.ActionTypeEnum.LEARN,
+    Api.ActionTypeEnum.QUIZ,
   ],
 );
 const ActionType advocate = ActionType(
@@ -76,9 +77,9 @@ const ActionType advocate = ActionType(
   secondaryColor: orange1,
   tertiaryColor: orange2,
   subTypes: [
-    ActionTypeEnum.RAISE_AWARENESS,
-    ActionTypeEnum.SIGN,
-    ActionTypeEnum.CONTACT,
+    Api.ActionTypeEnum.RAISE_AWARENESS,
+    Api.ActionTypeEnum.SIGN,
+    Api.ActionTypeEnum.CONTACT,
   ],
 );
 const ActionType raiseMoney = ActionType(
@@ -88,46 +89,77 @@ const ActionType raiseMoney = ActionType(
   secondaryColor: yellow1,
   tertiaryColor: yellow2,
   subTypes: [
-    ActionTypeEnum.DONATE,
-    ActionTypeEnum.FUNDRAISE,
+    Api.ActionTypeEnum.DONATE,
+    Api.ActionTypeEnum.FUNDRAISE,
   ],
 );
 const List<ActionType> actionTypes = [getInvolved, learn, advocate, raiseMoney];
 
-ActionType getActionTypeFromSubtype(ActionTypeEnum type) {
+ActionType getActionTypeFromSubtype(Api.ActionTypeEnum type) {
   return actionTypes.firstWhere(
     (actionType) => actionType.subTypes.contains(type),
     orElse: () => getInvolved,
   );
 }
 
-// TODO Move out of action
-extension ListActionExtension on ListAction {
-  Cause get cause => causes[0];
-  ActionType get type => getActionTypeFromSubtype(actionType);
+class ListAction {
+  int id;
+  String title;
+  // TODO create type
+  Api.Cause cause;
+  ActionType type;
+  DateTime releaseAt;
+  int time;
 
-  // TODO This is not quite right, it could be enabled - update API to provide releasedTime
-  // which is set based on when the action was enabled/released
-  //  DateTime get releaseTime => releaseAt ?? createdAt;
   DateTime get releaseTime => releaseAt;
 
   bool get isNew => isNewDate(releaseTime);
   String get timeText => getTimeText(time);
 
-  bool isCompletedByUser(CausesUser user) {
+  bool isCompletedByUser(Api.CausesUser user) {
     return user.completedActionIds.contains(this.id);
+  }
+
+  ListAction({
+    required this.id,
+    required this.title,
+    required this.releaseAt,
+    required this.time,
+    required BuiltList<Api.Cause> causes,
+    required Api.ActionTypeEnum actionType,
+  })  : cause = causes[0],
+        type = getActionTypeFromSubtype(actionType);
+
+  factory ListAction.fromApiModel(Api.ListAction apiModel) {
+    return ListAction(
+      id: apiModel.id,
+      title: apiModel.title,
+      releaseAt: apiModel.releaseAt,
+      time: apiModel.time,
+      causes: apiModel.causes,
+      actionType: apiModel.actionType,
+    );
   }
 }
 
-extension ActionExtension on Action {
-  Cause get cause => causes[0];
-  ActionType get type => getActionTypeFromSubtype(actionType);
+class Action extends ListAction {
+  bool isCompleted;
+  String whatDescription;
+  String whyDescription;
+  Uri link;
 
-  // TODO This is not quite right, it could be enabled - update API to provide releasedTime
-  // which is set based on when the action was enabled/released
-  // DateTime get releaseTime => releaseAt ?? createdAt;
-  DateTime get releaseTime => releaseAt;
-
-  bool get isNew => isNewDate(releaseTime);
-  String get timeText => getTimeText(time);
+  Action(
+    Api.Action apiModel,
+  )   : isCompleted = apiModel.isCompleted,
+        whatDescription = apiModel.whatDescription,
+        whyDescription = apiModel.whyDescription,
+        link = Uri.parse(apiModel.link),
+        super(
+          id: apiModel.id,
+          title: apiModel.title,
+          releaseAt: apiModel.releaseAt,
+          time: apiModel.time,
+          causes: apiModel.causes,
+          actionType: apiModel.actionType,
+        );
 }
