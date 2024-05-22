@@ -4,7 +4,7 @@ import 'package:nowu/models/action.dart';
 part 'action_info_state.freezed.dart';
 
 @freezed
-class ActionInfoState {
+sealed class ActionInfoState {
   const factory ActionInfoState.initial() = ActionInfoStateInitial;
   const factory ActionInfoState.fetchFailure() = ActionInfoStateFetchFailure;
   const factory ActionInfoState.success({

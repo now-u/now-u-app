@@ -2,6 +2,8 @@ import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:built_collection/built_collection.dart';
 import 'package:logging/logging.dart';
 import 'package:nowu/locator.dart';
+import 'package:nowu/models/Learning.dart';
+import 'package:nowu/models/campaign.dart';
 import 'package:nowu/models/organisation.dart';
 import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
@@ -11,7 +13,7 @@ import 'package:nowu/services/auth.dart';
 import 'package:nowu/models/action.dart';
 
 export 'package:nowu/models/action.dart';
-export 'package:nowu/models/Campaign.dart';
+export 'package:nowu/models/campaign.dart';
 export 'package:nowu/models/Learning.dart';
 export 'package:nowu/models/Cause.dart';
 export 'package:nowu/models/organisation.dart';
@@ -56,10 +58,10 @@ class CausesService {
   ///
   /// Input Action id
   /// Returns the Action with that id
-  Future<Api.Campaign> getCampaign(int id) async {
+  Future<Campaign> getCampaign(int id) async {
     final response =
         await _causeServiceClient.getCampaignsApi().campaignsRetrieve(id: id);
-    return response.data!;
+    return Campaign.fromApiModel(response.data!);
   }
 
   /// Get an action by id
@@ -135,7 +137,7 @@ class CausesService {
   /// Complete a learning resource
   ///
   /// Marks a learning resource as completed
-  Future completeLearningResource(Api.LearningResource learningResource) async {
+  Future completeLearningResource(LearningResource learningResource) async {
     await (
       _causeServiceClient
           .getLearningResourcesApi()
@@ -169,8 +171,7 @@ class CausesService {
     await _router.push(ActionInfoRoute(actionId: actionId));
   }
 
-  Future<void> openLearningResource(
-      Api.LearningResource learningResource) async {
+  Future<void> openLearningResource(LearningResource learningResource) async {
     if (_authService.isUserLoggedIn()) {
       // TODO Should this if be inside here?
       await completeLearningResource(learningResource);

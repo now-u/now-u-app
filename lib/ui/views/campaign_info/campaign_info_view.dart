@@ -2,7 +2,7 @@ import 'package:nowu/assets/components/cause_indicator.dart';
 import 'package:nowu/assets/components/custom_network_image.dart';
 import 'package:nowu/assets/components/explore_tiles.dart';
 import 'package:nowu/assets/constants.dart';
-import 'package:nowu/models/Campaign.dart';
+import 'package:nowu/models/campaign.dart';
 import 'package:nowu/models/Cause.dart';
 import 'package:flutter/material.dart';
 import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
@@ -167,7 +167,7 @@ class CampaignInfoView extends StackedView<CampaignViewModel> {
                     .copyWith(fontSize: 18),
               ),
               Text(
-                viewModel.campaign?.getDescription() ?? '',
+                viewModel.campaign?.description ?? '',
                 style: Theme.of(context).textTheme.bodyLarge,
                 textAlign: TextAlign.left,
               ),

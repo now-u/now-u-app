@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nowu/assets/components/explore_tiles.dart';
 import 'package:nowu/locator.dart';
-import 'package:nowu/models/Action.dart';
+import 'package:nowu/models/action.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:nowu/ui/views/explore/bloc/tabs/explore_action_tab_bloc.dart';
 
