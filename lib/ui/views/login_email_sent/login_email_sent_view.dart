@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:nowu/themes.dart';
 import 'package:stacked/stacked.dart';
+import 'package:auto_route/auto_route.dart';
 
 import 'login_email_sent_viewmodel.dart';
 
+@RoutePage()
 class LoginEmailSentView extends StackedView<LoginEmailSentViewModel> {
   final String email;
   final String? token;
 
   const LoginEmailSentView({
     Key? key,
-    required this.email,
+    @pathParam required this.email,
     this.token,
   }) : super(key: key);
 

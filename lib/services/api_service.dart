@@ -1,63 +1,60 @@
 import 'package:causeApiClient/causeApiClient.dart';
 import 'package:dio/dio.dart';
+import 'package:logging/logging.dart';
 import 'package:nowu/assets/constants.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/auth.dart';
 import 'package:sentry_dio/sentry_dio.dart';
 
 // TODO Use causesApiClient generated auth interceptors
 class AuthInterceptor extends Interceptor {
-  String? token;
+  final _logger = Logger('AuthInterceptor');
+  AuthInterceptor(this._authenticationService);
+  AuthenticationService _authenticationService;
 
   @override
   void onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
+    final token = _authenticationService.token;
     if (token != null) {
+      _logger.info('Bearer token: ${token}');
       options.headers['Authorization'] = 'Bearer $token';
     }
+    _logger.info('Token is null');
     super.onRequest(options, handler);
   }
 }
 
 class ApiService {
-  late AuthInterceptor _authInterceptor;
+  final _authenticationService = locator<AuthenticationService>();
 
-  CauseApiClient? _apiClient;
-
-  CauseApiClient get apiClient {
-    if (_apiClient == null) {
-      throw Exception(
-        'Cannot get api client before initalizing api service',
-      );
-    }
-    return _apiClient!;
-  }
-
-  String get baseUrl => apiClient.dio.options.baseUrl;
-
-  Future init() async {
-    _authInterceptor = AuthInterceptor();
-
+  late final CauseApiClient _apiClient = _createClient();
+  CauseApiClient _createClient() {
     final dio = Dio(
       BaseOptions(
         baseUrl: CAUSES_API_URL,
         headers: {
           'content-type': 'application/json',
-          'Access-Control-Allow-Origin': 'true',
+          // 'Access-Control-Allow-Origin': 'true',
         },
       ),
     )
       ..addSentry
-      ..interceptors.add(_authInterceptor)
+      ..interceptors.add(AuthInterceptor(_authenticationService))
       ..interceptors.add(LogInterceptor());
-    _apiClient = CauseApiClient(
+
+    return CauseApiClient(
       dio: dio,
     );
   }
 
-  void setToken(String? token) {
-    _authInterceptor.token = token;
+  CauseApiClient get apiClient {
+    return _apiClient;
   }
+
+  String get baseUrl => apiClient.dio.options.baseUrl;
 
   void setBaseUrl(String baseUrl) {
     apiClient.dio.options.baseUrl = baseUrl;

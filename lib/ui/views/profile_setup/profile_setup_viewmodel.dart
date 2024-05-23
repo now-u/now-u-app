@@ -1,15 +1,14 @@
 import 'package:flutter/widgets.dart';
-import 'package:nowu/app/app.locator.dart';
-import 'package:nowu/assets/constants.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/router.dart';
+import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/navigation_service.dart';
-import 'package:nowu/services/router_service.dart';
 import 'package:nowu/services/user_service.dart';
-import 'package:nowu/ui/views/causes_selection/select_causes_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class ProfileSetupViewModel extends BaseViewModel {
-  final _routerService = locator<RouterService>();
+  final _router = locator<AppRouter>();
   final _navigationService = locator<NavigationService>();
   final _userSerivce = locator<UserService>();
   final _authenticationService = locator<AuthenticationService>();
@@ -24,7 +23,8 @@ class ProfileSetupViewModel extends BaseViewModel {
   }
 
   void openTsAndCs() {
-    _navigationService.launchLink(TERMS_AND_CONDITIONS_URL);
+    // TODO Fix
+    // _navigationService.launchLink(TERMS_AND_CONDITIONS_URI);
   }
 
   void saveAndNavigate() async {
@@ -37,13 +37,14 @@ class ProfileSetupViewModel extends BaseViewModel {
       newsLetterSignup: signUpForNewsLetter,
     );
     setBusy(false);
-    _routerService.navigateToOnboardingSelectCausesView();
+    _router.push(const OnboardingSelectCausesRoute());
   }
 
   void launchTandCs() {
-    _navigationService.launchLink(
-      TERMS_AND_CONDITIONS_URL,
-      isExternal: true,
-    );
+    // TODO Fix
+    // _navigationService.launchLink(
+    //   TERMS_AND_CONDITIONS_URL,
+    //   isExternal: true,
+    // );
   }
 }

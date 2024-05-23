@@ -157,13 +157,11 @@ class ActionExploreSection extends StatelessWidget {
   final String title;
   final GestureTapCallback? titleOnClick;
   final String? description;
-  final void Function(ActionExploreTileData tileData) tileOnClick;
 
   const ActionExploreSection({
     required this.title,
     required this.isLoading,
     required this.tiles,
-    required this.tileOnClick,
     this.titleOnClick,
     this.description,
   });
@@ -171,10 +169,7 @@ class ActionExploreSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExploreSectionWidget(
-      tiles: this.tiles?.map(
-            (tileData) =>
-                ExploreActionTile(tileData, onTap: () => tileOnClick(tileData)),
-          ),
+      tiles: this.tiles?.map((tileData) => ExploreActionTile(tileData)),
       tileHeight: 160,
       isLoading: isLoading,
       titleOnClick: titleOnClick,
@@ -225,13 +220,11 @@ class CampaignExploreSection extends StatelessWidget {
   final String title;
   final GestureTapCallback? titleOnClick;
   final String? description;
-  final void Function(CampaignExploreTileData tileData) tileOnClick;
 
   const CampaignExploreSection({
     required this.title,
     required this.isLoading,
     required this.tiles,
-    required this.tileOnClick,
     this.description,
     this.titleOnClick,
   });
@@ -242,7 +235,6 @@ class CampaignExploreSection extends StatelessWidget {
       tiles: this.tiles?.map(
             (tileData) => ExploreCampaignTile(
               tileData,
-              onTap: () => tileOnClick(tileData),
             ),
           ),
       tileHeight: 300,
@@ -260,13 +252,11 @@ class NewsArticleExploreSection extends StatelessWidget {
   final String title;
   final GestureTapCallback? titleOnClick;
   final String? description;
-  final void Function(NewsArticleExploreTileData tileData) tileOnClick;
 
   const NewsArticleExploreSection({
     required this.title,
     required this.isLoading,
     required this.tiles,
-    required this.tileOnClick,
     this.titleOnClick,
     this.description,
   });
@@ -275,10 +265,7 @@ class NewsArticleExploreSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExploreSectionWidget(
       tiles: this.tiles?.map(
-            (tileData) => ExploreNewsArticleTile(
-              tileData,
-              onTap: () => tileOnClick(tileData),
-            ),
+            (tileData) => ExploreNewsArticleTile(tileData),
           ),
       tileHeight: 330,
       isLoading: isLoading,

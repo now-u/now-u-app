@@ -2,11 +2,14 @@ import 'dart:math';
 
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
-import 'package:causeApiClient/causeApiClient.dart';
+import 'package:causeApiClient/causeApiClient.dart'
+    hide NewsArticle, ListAction, ListCampaign, LearningResource;
+import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:collection/collection.dart';
 import 'package:meilisearch/meilisearch.dart';
-import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/locator.dart';
 import 'package:nowu/assets/constants.dart';
+import 'package:nowu/models/article.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/model/search/search_response.dart';
 import 'package:tuple/tuple.dart';
@@ -358,9 +361,9 @@ class SearchService {
   List<ListAction> _searchHitsToActions(List<Map<String, dynamic>> hits) {
     final results = _causeServiceClient.serializers.deserialize(
       hits,
-      specifiedType: const FullType(BuiltList, [FullType(ListAction)]),
-    ) as BuiltList<ListAction>;
-    return results.asList();
+      specifiedType: const FullType(BuiltList, [FullType(Api.ListAction)]),
+    ) as BuiltList<Api.ListAction>;
+    return results.map(ListAction.fromApiModel).toList();
   }
 
   List<LearningResource> _searchHitsToLearningResources(
@@ -368,25 +371,25 @@ class SearchService {
   ) {
     final results = _causeServiceClient.serializers.deserialize(
       hits,
-      specifiedType: const FullType(BuiltList, [FullType(LearningResource)]),
-    ) as BuiltList<LearningResource>;
-    return results.asList();
+      specifiedType: const FullType(BuiltList, [FullType(Api.LearningResource)]),
+    ) as BuiltList<Api.LearningResource>;
+    return results.map(LearningResource.fromApiModel).toList();
   }
 
   List<ListCampaign> _searchHitsToCampaign(List<Map<String, dynamic>> hits) {
     final results = _causeServiceClient.serializers.deserialize(
       hits,
-      specifiedType: const FullType(BuiltList, [FullType(ListCampaign)]),
-    ) as BuiltList<ListCampaign>;
-    return results.asList();
+      specifiedType: const FullType(BuiltList, [FullType(Api.ListCampaign)]),
+    ) as BuiltList<Api.ListCampaign>;
+    return results.map(ListCampaign.fromApiModel).toList();
   }
 
   List<NewsArticle> _searchHitsToNewsArticles(List<Map<String, dynamic>> hits) {
     final results = _causeServiceClient.serializers.deserialize(
       hits,
-      specifiedType: const FullType(BuiltList, [FullType(NewsArticle)]),
-    ) as BuiltList<NewsArticle>;
-    return results.asList();
+      specifiedType: const FullType(BuiltList, [FullType(Api.NewsArticle)]),
+    ) as BuiltList<Api.NewsArticle>;
+    return results.map((e) => NewsArticle(e)).toList();
   }
 
   Future<List<T>> _searchIndex<T>(

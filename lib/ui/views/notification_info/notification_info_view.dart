@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:auto_route/auto_route.dart';
 
 import 'package:nowu/assets/components/buttons/darkButton.dart';
 import 'package:nowu/assets/components/custom_network_image.dart';
@@ -8,6 +9,7 @@ import 'package:nowu/themes.dart';
 
 import 'notification_info_viewmodel.dart';
 
+@RoutePage()
 class NotificationInfoView extends StackedView<NotificationInfoViewModel> {
   final InternalNotification notification;
   const NotificationInfoView({required this.notification});

@@ -1,7 +1,11 @@
+import 'package:nowu/router.gr.dart';
+
 import '../select_causes_viewmodel.dart';
 
 class OnboardingSelectCausesViewModel extends SelectCausesViewModel {
   Future<void> navigateAfterCausesSelection() async {
-    return routerService.navigateToHome(clearHistory: true);
+    return router.replaceAll([
+      TabsRoute(children: [const HomeRoute()]),
+    ]);
   }
 }

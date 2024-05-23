@@ -1,17 +1,39 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:nowu/app/app.router.dart';
 import 'package:nowu/assets/components/customTile.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
-import 'package:nowu/pages/more/ProfileTile.dart';
-import 'package:stacked/stacked.dart';
-
-import 'more_viewmodel.dart';
+import 'package:nowu/router.dart';
+import 'package:nowu/router.gr.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:nowu/ui/views/authentication/bloc/authentication_bloc.dart';
+import 'package:nowu/ui/views/authentication/bloc/authentication_event.dart';
+import 'package:nowu/ui/views/authentication/bloc/authentication_state.dart';
 
 sealed class MenuItemData {
   const MenuItemData();
+}
+
+sealed class MenuItemAction {
+  const MenuItemAction();
+}
+
+class RouteMenuItemAction extends MenuItemAction {
+  final PageRouteInfo route;
+  const RouteMenuItemAction(this.route);
+}
+
+class LinkMenuItemAction extends MenuItemAction {
+  final Uri link;
+  final bool isExternal;
+  const LinkMenuItemAction(this.link, {this.isExternal = false});
+}
+
+class FunctionMenuItemAction extends MenuItemAction {
+  final Future<void> Function() function;
+  const FunctionMenuItemAction(this.function);
 }
 
 class SectionHeadingMenuItem extends MenuItemData {
@@ -34,30 +56,28 @@ class ActionMenuItem extends MenuItemData {
   });
 }
 
-List<MenuItemData> getMenuItems(MoreViewModel viewModel) => [
+List<MenuItemData> getMenuItems(AuthenticationBloc authBloc) => [
       const SectionHeadingMenuItem(title: 'The app'),
-      const ActionMenuItem(
+      ActionMenuItem(
         title: 'About Us',
         icon: FontAwesomeIcons.circleInfo,
-        action: LinkMenuItemAction(ABOUT_US_URL),
+        action: LinkMenuItemAction(ABOUT_US_URI),
       ),
       const ActionMenuItem(
         title: 'Collaborations',
         icon: CustomIcons.ic_partners,
-        action: RouteMenuItemAction(PartnersViewRoute()),
+        action: RouteMenuItemAction(PartnersRoute()),
       ),
       const ActionMenuItem(
         title: 'FAQ',
         icon: CustomIcons.ic_faq,
-        action: RouteMenuItemAction(FaqViewRoute()),
+        action: RouteMenuItemAction(FaqRoute()),
       ),
       const SectionHeadingMenuItem(title: 'Feedback'),
-      const ActionMenuItem(
+      ActionMenuItem(
         title: 'Give feedback on the app',
         icon: CustomIcons.ic_feedback,
-        action: LinkMenuItemAction(
-          'https://docs.google.com/forms/d/e/1FAIpQLSflMOarmyXRv7DRbDQPWRayCpE5X4d8afOpQ1hjXfdvzbnzQQ/viewform',
-        ),
+        action: LinkMenuItemAction(FEEDBACK_FORM_URI),
       ),
       if (defaultTargetPlatform == TargetPlatform.iOS ||
           defaultTargetPlatform == TargetPlatform.android)
@@ -66,73 +86,62 @@ List<MenuItemData> getMenuItems(MoreViewModel viewModel) => [
           icon: CustomIcons.ic_rateus,
           action: LinkMenuItemAction(
             defaultTargetPlatform == TargetPlatform.iOS
-                ? 'https://apps.apple.com/us/app/now-u/id1516126639'
-                : 'https://play.google.com/store/apps/details?id=com.nowu.app',
+                ? APPLE_APP_STORE_URI
+                : GOOGLE_APP_STORE_URI,
             isExternal: true,
           ),
         ),
-      const ActionMenuItem(
+      ActionMenuItem(
         title: 'Send us a message',
         icon: CustomIcons.ic_social_fb,
-        action: LinkMenuItemAction('http://m.me/nowufb', isExternal: true),
+        action: LinkMenuItemAction(FACEBOOK_MESSENGER_URI, isExternal: true),
       ),
-      const ActionMenuItem(
+      ActionMenuItem(
         title: 'Send us an email',
         icon: CustomIcons.ic_email,
         action: LinkMenuItemAction(
-          'mailto:hello@now-u.com?subject=Hi',
+          EMAIL_MAILTO_URI,
           isExternal: true,
         ),
       ),
       const SectionHeadingMenuItem(title: 'Legal'),
-      const ActionMenuItem(
+      ActionMenuItem(
         title: 'Terms & conditions',
         icon: CustomIcons.ic_tc,
-        action: LinkMenuItemAction(TERMS_AND_CONDITIONS_URL, isExternal: true),
+        action: LinkMenuItemAction(TERMS_AND_CONDITIONS_URI, isExternal: true),
       ),
-      const ActionMenuItem(
+      ActionMenuItem(
         title: 'Privacy Notice',
         icon: CustomIcons.ic_privacy,
-        action: LinkMenuItemAction(PRIVACY_POLICY_URL, isExternal: true),
+        action: LinkMenuItemAction(PRIVACY_POLICY_URI, isExternal: true),
       ),
       const SectionHeadingMenuItem(title: 'User'),
-      if (viewModel.isLoggedIn)
-        const ActionMenuItem(
-          title: 'Remove account',
-          icon: FontAwesomeIcons.userMinus,
-          action: RouteMenuItemAction(DeleteAccountViewRoute()),
-        ),
-      if (viewModel.isLoggedIn)
+      if (authBloc.state is AuthenticationStateAuthenticated)
         ActionMenuItem(
           title: 'Log out',
           // TODO Get icon
           icon: FontAwesomeIcons.solidUser,
-          action: FunctionMenuItemAction(viewModel.logout),
+          action: FunctionMenuItemAction(
+            () async => authBloc.add(
+              const AuthenticationEvent.signOutRequested(),
+            ),
+          ),
         )
       else
         const ActionMenuItem(
           title: 'Log in',
           // TODO Get icon
           icon: FontAwesomeIcons.solidUser,
-          action: RouteMenuItemAction(LoginViewRoute()),
+          action: RouteMenuItemAction(LoginRoute()),
         ),
     ];
 
-///The More page ![More Page](https://i.ibb.co/xDHyMPj/slack.png)
-///
-/// This Widget takes in the [menuItems] and goes over it
-/// checking if the elements inside it is either sectionHeading
-/// or [ProfileTile]
-class MoreView extends StackedView<MoreViewModel> {
-  @override
-  MoreViewModel viewModelBuilder(BuildContext context) => MoreViewModel();
+@RoutePage()
+class MoreView extends StatelessWidget {
+  const MoreView();
 
   @override
-  Widget builder(
-    BuildContext context,
-    MoreViewModel viewModel,
-    Widget? child,
-  ) {
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         color: Colors.white,
@@ -149,8 +158,8 @@ class MoreView extends StackedView<MoreViewModel> {
             ListView(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              children: getMenuItems(viewModel)
-                  .map((tile) => MenuItem(tile, viewModel: viewModel))
+              children: getMenuItems(context.read<AuthenticationBloc>())
+                  .map((tile) => MenuItem(tile))
                   .toList(),
             ),
             const SizedBox(height: 15),
@@ -160,18 +169,15 @@ class MoreView extends StackedView<MoreViewModel> {
               children: [
                 SocialButton(
                   icon: FontAwesomeIcons.instagram,
-                  link: 'https://www.instagram.com/now_u_app/',
-                  viewModel: viewModel,
+                  link: INSTAGRAM_URI,
                 ),
                 SocialButton(
                   icon: FontAwesomeIcons.facebookF,
-                  link: 'https://www.facebook.com/nowufb',
-                  viewModel: viewModel,
+                  link: FACEBOOK_URI,
                 ),
                 SocialButton(
                   icon: FontAwesomeIcons.twitter,
-                  link: 'https://twitter.com/now_u_app',
-                  viewModel: viewModel,
+                  link: TWITTER_URI,
                 ),
               ],
             ),
@@ -185,9 +191,21 @@ class MoreView extends StackedView<MoreViewModel> {
 
 class MenuItem extends StatelessWidget {
   final MenuItemData data;
-  final MoreViewModel viewModel;
 
-  const MenuItem(this.data, {required this.viewModel});
+  const MenuItem(this.data);
+
+  void handleOnTap(BuildContext context, MenuItemAction action) {
+    switch (action) {
+      case RouteMenuItemAction(:final route):
+        context.router.push(route);
+      case LinkMenuItemAction(:final link):
+        launchLink(link);
+        break;
+      case FunctionMenuItemAction(:final function):
+        function();
+        break;
+    }
+  }
 
   Widget build(BuildContext context) {
     final data = this.data;
@@ -204,7 +222,7 @@ class MenuItem extends StatelessWidget {
       case ActionMenuItem():
         {
           return GestureDetector(
-            onTap: () => viewModel.performMenuItemAction(data.action),
+            onTap: () => handleOnTap(context, data.action),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
               child: CustomTile(
@@ -215,7 +233,7 @@ class MenuItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.only(right: ICON_PADDING),
+                        padding: const EdgeInsets.only(right: 22),
                         child: Icon(
                           data.icon,
                           size: 30,
@@ -240,19 +258,17 @@ class MenuItem extends StatelessWidget {
 class SocialButton extends StatelessWidget {
   final double size = 50;
   final IconData icon;
-  final String link;
-  final MoreViewModel viewModel;
+  final Uri link;
 
   SocialButton({
     required this.icon,
     required this.link,
-    required this.viewModel,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => viewModel.launchLinkExternal(link),
+      onTap: () => launchLinkExternal(context, link),
       child: CustomTile(
         borderRadius: size / 2,
         child: Container(

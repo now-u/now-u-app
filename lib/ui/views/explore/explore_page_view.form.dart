@@ -13,16 +13,16 @@ const bool _autoTextFieldValidation = true;
 
 const String SearchBarValueKey = 'searchBar';
 
-final Map<String, TextEditingController> _ExplorePageTextEditingControllers =
+final Map<String, TextEditingController> _ExploreViewTextEditingControllers =
     {};
 
-final Map<String, FocusNode> _ExplorePageFocusNodes = {};
+final Map<String, FocusNode> _ExploreViewFocusNodes = {};
 
-final Map<String, String? Function(String?)?> _ExplorePageTextValidations = {
+final Map<String, String? Function(String?)?> _ExploreViewTextValidations = {
   SearchBarValueKey: null,
 };
 
-mixin $ExplorePage {
+mixin $ExploreView {
   TextEditingController get searchBarController =>
       _getFormTextEditingController(SearchBarValueKey);
 
@@ -32,21 +32,21 @@ mixin $ExplorePage {
     String key, {
     String? initialValue,
   }) {
-    if (_ExplorePageTextEditingControllers.containsKey(key)) {
-      return _ExplorePageTextEditingControllers[key]!;
+    if (_ExploreViewTextEditingControllers.containsKey(key)) {
+      return _ExploreViewTextEditingControllers[key]!;
     }
 
-    _ExplorePageTextEditingControllers[key] =
+    _ExploreViewTextEditingControllers[key] =
         TextEditingController(text: initialValue);
-    return _ExplorePageTextEditingControllers[key]!;
+    return _ExploreViewTextEditingControllers[key]!;
   }
 
   FocusNode _getFormFocusNode(String key) {
-    if (_ExplorePageFocusNodes.containsKey(key)) {
-      return _ExplorePageFocusNodes[key]!;
+    if (_ExploreViewFocusNodes.containsKey(key)) {
+      return _ExploreViewFocusNodes[key]!;
     }
-    _ExplorePageFocusNodes[key] = FocusNode();
-    return _ExplorePageFocusNodes[key]!;
+    _ExploreViewFocusNodes[key] = FocusNode();
+    return _ExploreViewFocusNodes[key]!;
   }
 
   /// Registers a listener on every generated controller that calls [model.setData()]
@@ -92,15 +92,15 @@ mixin $ExplorePage {
   void disposeForm() {
     // The dispose function for a TextEditingController sets all listeners to null
 
-    for (var controller in _ExplorePageTextEditingControllers.values) {
+    for (var controller in _ExploreViewTextEditingControllers.values) {
       controller.dispose();
     }
-    for (var focusNode in _ExplorePageFocusNodes.values) {
+    for (var focusNode in _ExploreViewFocusNodes.values) {
       focusNode.dispose();
     }
 
-    _ExplorePageTextEditingControllers.clear();
-    _ExplorePageFocusNodes.clear();
+    _ExploreViewTextEditingControllers.clear();
+    _ExploreViewFocusNodes.clear();
   }
 }
 
@@ -123,8 +123,8 @@ extension ValueProperties on FormStateHelper {
       this.formValueMap..addAll({SearchBarValueKey: value}),
     );
 
-    if (_ExplorePageTextEditingControllers.containsKey(SearchBarValueKey)) {
-      _ExplorePageTextEditingControllers[SearchBarValueKey]?.text = value ?? '';
+    if (_ExploreViewTextEditingControllers.containsKey(SearchBarValueKey)) {
+      _ExploreViewTextEditingControllers[SearchBarValueKey]?.text = value ?? '';
     }
   }
 
@@ -158,11 +158,11 @@ extension Methods on FormStateHelper {
 
 /// Returns the validation message for the given key
 String? getValidationMessage(String key) {
-  final validatorForKey = _ExplorePageTextValidations[key];
+  final validatorForKey = _ExploreViewTextValidations[key];
   if (validatorForKey == null) return null;
 
   String? validationMessageForKey = validatorForKey(
-    _ExplorePageTextEditingControllers[key]!.text,
+    _ExploreViewTextEditingControllers[key]!.text,
   );
 
   return validationMessageForKey;

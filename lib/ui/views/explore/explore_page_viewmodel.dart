@@ -1,8 +1,5 @@
-import 'package:causeApiClient/causeApiClient.dart';
-import 'package:collection/collection.dart';
-import 'package:nowu/app/app.locator.dart';
-import 'package:nowu/models/time.dart';
-import 'package:nowu/services/bottom_sheet_service.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/models/article.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:nowu/ui/bottom_sheets/explore_filter/explore_filter_sheet.dart';
@@ -46,7 +43,7 @@ class ExplorePageFilterData {
 class ExplorePageViewModel extends FormViewModel {
   final _causesService = locator<CausesService>();
   final _searchService = locator<SearchService>();
-  final _bottomSheetService = locator<BottomSheetService>();
+  // final _bottomSheetService = locator<BottomSheetService>();
   final _analyticsService = locator<AnalyticsService>();
 
   BaseResourceSearchFilter searchFilter = const BaseResourceSearchFilter();
@@ -63,11 +60,17 @@ class ExplorePageViewModel extends FormViewModel {
         );
   }
 
-  List<Cause> get causes => _causesService.causes;
-  PagingState actions = InitialLoading();
-  PagingState learningResources = InitialLoading();
-  PagingState campaigns = InitialLoading();
-  PagingState newsArticles = InitialLoading();
+  List<Cause>? _causes;
+  List<Cause>? get causes => _causes;
+
+  Future<void> init() async {
+    return _causesService.listCauses().then((value) => _causes = value);
+  }
+
+  PagingState actions = const InitialLoading<Action>();
+  PagingState learningResources = const InitialLoading<LearningResource>();
+  PagingState campaigns = const InitialLoading<Campaign>();
+  PagingState newsArticles = const InitialLoading<NewsArticle>();
   ResourcesSearchResult? allSearchResult;
 
   Future<void> search() {
@@ -96,25 +99,6 @@ class ExplorePageViewModel extends FormViewModel {
       releasedSince: filterData.filterNew == true ? newSinceDate() : null,
       query: searchBarValue,
     );
-  }
-
-  Future<void> loadMoreActions() async {
-    if (!actions.canLoadMore()) return;
-
-    actions = LoadingMore(items: actions.items);
-
-    // Remove search fallback to use user causes
-    SearchResponse<ListAction> response = await _searchService.searchActions(
-      offset: actions.offset(),
-      filter: _getActionsFilter(),
-    );
-
-    actions = Data(
-      items: actions.items + response.items,
-      hasReachedMax: response.hasReachedMax,
-    );
-
-    notifyListeners();
   }
 
   Future<void> searchActions() async {
@@ -148,25 +132,6 @@ class ExplorePageViewModel extends FormViewModel {
     );
   }
 
-  Future<void> loadMoreLearningResources() async {
-    if (!learningResources.canLoadMore()) return;
-
-    learningResources = LoadingMore(items: learningResources.items);
-
-    SearchResponse<LearningResource> response =
-        await _searchService.searchLearningResources(
-      offset: learningResources.offset(),
-      filter: _getLearningResourcesFilter(),
-    );
-
-    learningResources = Data(
-      items: learningResources.items + response.items,
-      hasReachedMax: response.hasReachedMax,
-    );
-
-    notifyListeners();
-  }
-
   Future<void> searchLearningResources() async {
     SearchResponse<LearningResource> response =
         await _searchService.searchLearningResources(
@@ -193,25 +158,6 @@ class ExplorePageViewModel extends FormViewModel {
     );
   }
 
-  Future<void> loadMoreCampaigns() async {
-    if (!campaigns.canLoadMore()) return;
-
-    campaigns = LoadingMore(items: campaigns.items);
-
-    SearchResponse<ListCampaign> response =
-        await _searchService.searchCampaigns(
-      filter: _getCampaignsFilter(),
-      offset: campaigns.offset(),
-    );
-
-    campaigns = Data(
-      items: campaigns.items + response.items,
-      hasReachedMax: response.hasReachedMax,
-    );
-
-    notifyListeners();
-  }
-
   Future<void> searchCampaigns() async {
     SearchResponse<ListCampaign> response =
         await _searchService.searchCampaigns(
@@ -234,25 +180,6 @@ class ExplorePageViewModel extends FormViewModel {
       releasedSince: filterData.filterNew == true ? newSinceDate() : null,
       query: searchBarValue,
     );
-  }
-
-  Future<void> loadMoreNewsArticles() async {
-    if (!newsArticles.canLoadMore()) return;
-
-    newsArticles = LoadingMore(items: newsArticles.items);
-
-    SearchResponse<NewsArticle> response =
-        await _searchService.searchNewsArticles(
-      filter: _getNewsArticlesFilter(),
-      offset: newsArticles.offset(),
-    );
-
-    newsArticles = Data(
-      items: newsArticles.items + response.items,
-      hasReachedMax: response.hasReachedMax,
-    );
-
-    notifyListeners();
   }
 
   Future<void> searchNewsArticles() async {
@@ -286,18 +213,18 @@ class ExplorePageViewModel extends FormViewModel {
   Future<void> _openFilterSheet<T>({
     required String filterName,
     required Set<T> targetParameter,
-    required Iterable<ExploreFilterSheetOption<T>> options,
+    required Iterable<ExploreFilterSheetOption<T>>? options,
   }) async {
-    final outputSelection = await _bottomSheetService.showExploreFilterSheet<T>(
-      ExploreFilterSheetData(
-        filterName: filterName,
-        options: options.toList(),
-        initialSelectedValues: targetParameter,
-      ),
-    );
+    // final outputSelection = await _bottomSheetService.showExploreFilterSheet<T>(
+    //   ExploreFilterSheetData(
+    //     filterName: filterName,
+    //     options: options?.toList() ?? [],
+    //     initialSelectedValues: targetParameter,
+    //   ),
+    // );
 
-    targetParameter = outputSelection ?? Set();
-    search();
+    // targetParameter = outputSelection ?? Set();
+    // search();
   }
 
   Future<void> toggleFilterCompleted() {
@@ -316,57 +243,57 @@ class ExplorePageViewModel extends FormViewModel {
   }
 
   Future<void> openCausesFilterSheet() async {
-    return _openFilterSheet(
-      filterName: 'Causes',
-      targetParameter: this.filterData.filterCauseIds,
-      options: causes.map(
-        (cause) =>
-            ExploreFilterSheetOption(title: cause.title, value: cause.id),
-      ),
-    );
+    // return _openFilterSheet(
+    //   filterName: 'Causes',
+    //   targetParameter: this.filterData.filterCauseIds,
+    //   options: _causes?.map(
+    //     (cause) =>
+    //         ExploreFilterSheetOption(title: cause.title, value: cause.id),
+    //   ),
+    // );
   }
 
   Future<void> openTimeBracketsFilterSheet() async {
-    return _openFilterSheet(
-      filterName: 'Times',
-      targetParameter: this.filterData.filterTimeBrackets,
-      options: timeBrackets.map(
-        (timeBracket) => ExploreFilterSheetOption(
-          title: timeBracket.text,
-          value: Tuple2(timeBracket.minTime, timeBracket.maxTime),
-        ),
-      ),
-    );
+    // return _openFilterSheet(
+    //   filterName: 'Times',
+    //   targetParameter: this.filterData.filterTimeBrackets,
+    //   options: timeBrackets.map(
+    //     (timeBracket) => ExploreFilterSheetOption(
+    //       title: timeBracket.text,
+    //       value: Tuple2(timeBracket.minTime, timeBracket.maxTime),
+    //     ),
+    //   ),
+    // );
   }
 
   Future<void> openActionTypesFilterSheet() async {
-    final selectedActionTypes =
-        await _bottomSheetService.showExploreFilterSheet<String>(
-      ExploreFilterSheetData(
-        filterName: 'Action type',
-        options: actionTypes
-            .map(
-              (type) => ExploreFilterSheetOption(
-                title: type.name,
-                value: type.name,
-              ),
-            )
-            .toList(),
-        initialSelectedValues: this
-            .filterData
-            .filterActionTypes
-            .map(getActionTypeFromSubtype)
-            .map((type) => type.name)
-            .toSet(),
-      ),
-    );
+    // final selectedActionTypes =
+    //     await _bottomSheetService.showExploreFilterSheet<String>(
+    //   ExploreFilterSheetData(
+    //     filterName: 'Action type',
+    //     options: actionTypes
+    //         .map(
+    //           (type) => ExploreFilterSheetOption(
+    //             title: type.name,
+    //             value: type.name,
+    //           ),
+    //         )
+    //         .toList(),
+    //     initialSelectedValues: this
+    //         .filterData
+    //         .filterActionTypes
+    //         .map(getActionTypeFromSubtype)
+    //         .map((type) => type.name)
+    //         .toSet(),
+    //   ),
+    // );
 
-    this.filterData.filterActionTypes = actionTypes
-        .where((type) => selectedActionTypes?.contains(type.name) == true)
-        .map((type) => type.subTypes)
-        .flattened
-        .toSet();
-    search();
+    // this.filterData.filterActionTypes = actionTypes
+    //     .where((type) => selectedActionTypes?.contains(type.name) == true)
+    //     .map((type) => type.subTypes)
+    //     .flattened
+    //     .toSet();
+    // search();
   }
 
   Future<void> openAction(ListAction action) {
@@ -379,12 +306,9 @@ class ExplorePageViewModel extends FormViewModel {
         .then((value) => notifyListeners());
   }
 
-  Future<void> openCampaign(ListCampaign campaign) {
-    return _causesService.openCampaign(campaign);
-  }
-
-  Future<void> openNewsArticle(NewsArticle article) {
-    return _causesService.openNewArticle(article);
+  // TODO Fix
+  Future<void> openNewsArticle(NewsArticle article) async {
+    // return _causesService.openNewArticle(article);
   }
 
   bool? isActionComplete(ListAction action) {

@@ -5,6 +5,7 @@ import 'package:nowu/themes.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stacked/stacked.dart';
+import 'package:auto_route/auto_route.dart';
 
 import 'intro_viewmodel.dart';
 
@@ -12,6 +13,7 @@ const curve = Curves.ease;
 const duration = Duration(milliseconds: 500);
 const Duration animationDuration = Duration(milliseconds: 500);
 
+@RoutePage()
 class IntroView extends StackedView<IntroViewModel> {
   @override
   IntroViewModel viewModelBuilder(BuildContext context) => IntroViewModel(0);

@@ -8,13 +8,17 @@ import 'package:nowu/models/Notification.dart';
 import 'package:nowu/ui/common/cause_tile.dart';
 import 'package:nowu/ui/views/explore/explore_section_view.dart';
 import 'package:stacked/stacked.dart';
+import 'package:auto_route/auto_route.dart';
 
 import 'home_viewmodel.dart';
 
 const double BUTTON_PADDING = 10;
 const PageStorageKey campaignCarouselPageKey = PageStorageKey(1);
 
+@RoutePage()
 class HomeView extends StackedView<HomeViewModel> {
+  const HomeView();
+
   @override
   viewModelBuilder(context) {
     return HomeViewModel();
@@ -56,15 +60,11 @@ class HomeView extends StackedView<HomeViewModel> {
                 title: 'What can I do today?',
                 isLoading: viewModel.myActions == null,
                 tiles: viewModel.myActions,
-                tileOnClick: (tileData) =>
-                    viewModel.openAction(tileData.action),
               ),
               CampaignExploreSection(
                 title: 'Campaigns of the month',
                 isLoading: viewModel.ofTheMonthCampaigns == null,
                 tiles: viewModel.ofTheMonthCampaigns,
-                tileOnClick: (tileData) =>
-                    viewModel.openCampaign(tileData.campaign),
               ),
               CustomWidthButton(
                 'Explore',
@@ -91,15 +91,11 @@ class HomeView extends StackedView<HomeViewModel> {
                 title: 'Suggested campaigns',
                 tiles: viewModel.recommendedCampaigns,
                 isLoading: viewModel.recommendedCampaigns == null,
-                tileOnClick: (tileData) =>
-                    viewModel.openCampaign(tileData.campaign),
               ),
               NewsArticleExploreSection(
                 title: 'In the news',
                 tiles: viewModel.inTheNews,
                 isLoading: viewModel.inTheNews == null,
-                tileOnClick: (tileData) =>
-                    viewModel.openNewsArticle(tileData.article),
               ),
 
               if (viewModel.currentUser != null)
@@ -124,7 +120,7 @@ class HomeView extends StackedView<HomeViewModel> {
 
               if (viewModel.currentUser != null)
                 Container(
-                  child: viewModel.causes != []
+                  child: viewModel.causes != null
                       ? GridView.builder(
                           shrinkWrap: true,
                           padding: const EdgeInsets.all(20),
@@ -135,13 +131,13 @@ class HomeView extends StackedView<HomeViewModel> {
                             mainAxisSpacing: 20,
                             crossAxisSpacing: 30,
                           ),
-                          itemCount: viewModel.causes.length,
+                          itemCount: viewModel.causes!.length,
                           itemBuilder: (BuildContext context, int index) {
                             return CauseTile(
                               gestureFunction: () => null,
-                              cause: viewModel.causes[index],
+                              cause: viewModel.causes![index],
                               getInfoFunction: () => viewModel
-                                  .getCausePopup(viewModel.causes[index]),
+                                  .getCausePopup(viewModel.causes![index]),
                             );
                           },
                         )

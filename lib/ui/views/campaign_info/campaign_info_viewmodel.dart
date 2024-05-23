@@ -1,11 +1,11 @@
-import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/router.dart';
 import 'package:nowu/services/causes_service.dart';
-import 'package:nowu/services/router_service.dart';
 import 'package:stacked/stacked.dart';
 
 class CampaignViewModel extends BaseViewModel {
   final _causesService = locator<CausesService>();
-  final _routerService = locator<RouterService>();
+  final _router = locator<AppRouter>();
 
   ListCampaign _listCampaign;
   Campaign? _campaign;
@@ -52,6 +52,6 @@ class CampaignViewModel extends BaseViewModel {
   }
 
   void back() {
-    _routerService.pop();
+    _router.maybePop();
   }
 }

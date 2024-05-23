@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:nowu/assets/components/header.dart';
 import 'package:nowu/themes.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked/stacked_annotations.dart';
+import 'package:stacked/stacked_annotations.dart' hide pathParam;
+import 'package:auto_route/auto_route.dart';
 
 import 'login_code_view.form.dart';
 import 'login_code_viewmodel.dart';
 
+@RoutePage()
 @FormView(
   fields: [
     FormTextField(
@@ -21,7 +23,7 @@ class LoginCodeView extends StackedView<LoginCodeViewModel>
 
   const LoginCodeView({
     Key? key,
-    required this.email,
+    @pathParam required this.email,
   }) : super(key: key);
 
   @override

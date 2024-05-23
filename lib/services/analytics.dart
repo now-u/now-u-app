@@ -1,6 +1,5 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:logging/logging.dart';
-import 'package:nowu/models/Action.dart';
+import 'package:nowu/models/action.dart';
 import 'package:nowu/models/Learning.dart';
 import 'package:nowu/models/article.dart';
 import 'package:nowu/services/search_service.dart';
@@ -8,77 +7,77 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AnalyticsService {
-  final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
+  // final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
   final _logger = Logger('AnalyticsService');
 
-  FirebaseAnalyticsObserver getAnalyticsObserver() =>
-      FirebaseAnalyticsObserver(analytics: _analytics);
+//   FirebaseAnalyticsObserver getAnalyticsObserver() =>
+// 	FirebaseAnalyticsObserver(analytics: _analytics);
 
   Future<void> setUserProperties({required String userId}) async {
-    await _analytics.setUserId(id: userId);
+    // await _analytics.setUserId(id: userId);
   }
 
   Future<void> setCustomRoute(String route) async {
-    await _analytics.logScreenView(screenName: route);
+    // await _analytics.logScreenView(screenName: route);
   }
 
   Future<void> logActionEvent(
-    Action action,
+    ListAction action,
     ActionEvent event,
   ) async {
-    try {
-      await _analytics.logEvent(
-        name: 'action_${event.name}',
-        parameters: _serializeEventParameters({
-          'id': action.id,
-          'title': action.title,
-          'type': action.type.name,
-          'super_type': action.actionType.name,
-          'time': action.time,
-          'resource_created_at': action.createdAt,
-        }),
-      );
-    } catch (e) {
-      _logger.log(Level.SEVERE, 'Failed to log action status update', e);
-      await _safeCaptureException(e);
-    }
+    // try {
+    //   await _analytics.logEvent(
+    //     name: 'action_${event.name}',
+    //     parameters: _serializeEventParameters({
+    //       'id': action.id,
+    //       'title': action.title,
+    //       'type': action.type.name,
+    //       'super_type': action.actionType.name,
+    //       'time': action.time,
+    //       'resource_created_at': action.createdAt,
+    //     }),
+    //   );
+    // } catch (e) {
+    //   _logger.log(Level.SEVERE, 'Failed to log action status update', e);
+    //   await _safeCaptureException(e);
+    // }
   }
 
   Future<void> logLearningResourceClicked(
     LearningResource learningResource,
   ) async {
-    try {
-      await _analytics.logEvent(
-        name: 'learning_resource_${ActionEvent.Complete.name}',
-        parameters: _serializeEventParameters({
-          'id': learningResource.id,
-          'title': learningResource.title,
-          'type': learningResource.type.name,
-          'time': learningResource.time,
-          'resource_created_at': learningResource.createdAt,
-        }),
-      );
-    } catch (e) {
-      _logger.log(Level.SEVERE, 'Failed to log action status update', e);
-      await _safeCaptureException(e);
-    }
+    // try {
+    //   await _analytics.logEvent(
+    //     name: 'learning_resource_${ActionEvent.Complete.name}',
+    //     parameters: _serializeEventParameters({
+    //       'id': learningResource.id,
+    //       'title': learningResource.title,
+    //       'type': learningResource.type.name,
+    //       'time': learningResource.time,
+    //       'resource_created_at': learningResource.createdAt,
+    //     }),
+    //   );
+    // } catch (e) {
+    //   _logger.log(Level.SEVERE, 'Failed to log action status update', e);
+    //   await _safeCaptureException(e);
+    // }
   }
 
   Future<void> logNewsArticleClicked(NewsArticle article) async {
-    try {
-      await _analytics.logEvent(
-        name: 'news_article_${ActionEvent.Complete.name}',
-        parameters: _serializeEventParameters({
-          'id': article.id,
-          'title': article.title,
-          'source': article.source_,
-          'resource_created_at': article.createdAt,
-        }),
-      );
-    } catch (e) {
-      _logger.log(Level.SEVERE, 'Failed to log action status update', e);
-      await _safeCaptureException(e);
-    }
+    // try {
+    //   await _analytics.logEvent(
+    //     name: 'news_article_${ActionEvent.Complete.name}',
+    //     parameters: _serializeEventParameters({
+    //       'id': article.id,
+    //       'title': article.title,
+    //       'source': article.shortUrl,
+    //       'resource_released_at': article.releasedAt,
+    //     }),
+    //   );
+    // } catch (e) {
+    //   _logger.log(Level.SEVERE, 'Failed to log action status update', e);
+    //   await _safeCaptureException(e);
+    // }
   }
 
   // TODO Support multi index searches (base search filter)
@@ -91,25 +90,25 @@ class AnalyticsService {
     ResourceType selectedResourceType,
     int selectedResourceId,
   ) async {
-    try {
-      await _analytics.logEvent(
-        name: 'search_conversion',
-        parameters: {
-          ..._getSearchParameters(searchFilter),
-          'selected_resource_type': selectedResourceType,
-          'selected_resource_id': selectedResourceId,
-        },
-      );
-    } catch (e) {
-      _logger.log(Level.SEVERE, 'Failed to log search', e);
-      await _safeCaptureException(e);
-    }
+    // try {
+    //   await _analytics.logEvent(
+    //     name: 'search_conversion',
+    //     parameters: {
+    //       ..._getSearchParameters(searchFilter),
+    //       'selected_resource_type': selectedResourceType,
+    //       'selected_resource_id': selectedResourceId,
+    //     },
+    //   );
+    // } catch (e) {
+    //   _logger.log(Level.SEVERE, 'Failed to log search', e);
+    //   await _safeCaptureException(e);
+    // }
   }
 
-  Future logAuthEvent(AuthChangeEvent event) {
-    return _analytics.logEvent(
-      name: 'auth_${event.name}',
-    );
+  Future logAuthEvent(AuthChangeEvent event) async {
+    // return _analytics.logEvent(
+    //   name: 'auth_${event.name}',
+    // );
   }
 
   Map<String, dynamic> _getSearchParameters(

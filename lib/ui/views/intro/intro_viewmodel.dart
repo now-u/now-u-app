@@ -1,21 +1,9 @@
 import 'package:flutter/widgets.dart';
-import 'package:nowu/app/app.locator.dart';
-import 'package:nowu/app/app.router.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/router.dart';
+import 'package:nowu/router.gr.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
-
-class FadeRouteBuilder<T> extends PageRouteBuilder<T> {
-  final Widget page;
-
-  FadeRouteBuilder({required this.page})
-      : super(
-          pageBuilder: (context, animation1, animation2) => page,
-          transitionsBuilder: (context, animation1, animation2, child) {
-            return FadeTransition(opacity: animation1, child: child);
-          },
-        );
-}
 
 class IntroPageData {
   final String title;
@@ -37,7 +25,7 @@ class IntroPageData {
 
 // TODO Use IndexTracking view model
 class IntroViewModel extends BaseViewModel {
-  final _routerService = locator<RouterService>();
+  final _router = locator<AppRouter>();
 
   final PageController controller;
   final Duration animationDuration = const Duration(milliseconds: 500);
@@ -115,6 +103,6 @@ class IntroViewModel extends BaseViewModel {
 
   void _goToNextPage(BuildContext context) {
     // TODO: Find a way to apply FadeIn transition only here
-    _routerService.clearStackAndShow(const LoginViewRoute());
+    _router.replaceAll([const LoginRoute()]);
   }
 }

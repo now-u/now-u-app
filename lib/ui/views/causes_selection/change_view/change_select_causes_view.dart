@@ -3,10 +3,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nowu/assets/components/buttons/customWidthButton.dart';
 import 'package:nowu/ui/views/causes_selection/components/causeTileGrid.dart';
 import 'package:stacked/stacked.dart';
+import 'package:auto_route/auto_route.dart';
 
 import '../../../../generated/l10n.dart';
 import 'change_select_causes_viewmodel.dart';
 
+@RoutePage()
 class ChangeSelectCausesView extends StackedView<ChangeSelectCausesViewModel> {
   @override
   ChangeSelectCausesViewModel viewModelBuilder(BuildContext context) =>

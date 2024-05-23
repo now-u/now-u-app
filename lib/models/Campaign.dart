@@ -1,23 +1,54 @@
-import 'package:causeApiClient/causeApiClient.dart';
-import 'package:nowu/app/app.locator.dart';
+import 'package:causeApiClient/causeApiClient.dart' as Api;
+import 'package:nowu/locator.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:nowu/models/Learning.dart';
+import 'package:nowu/models/action.dart';
+import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/dynamicLinks.dart';
 
 export 'package:causeApiClient/causeApiClient.dart' show ListCampaign, Campaign;
 
 final DynamicLinkService _dynamicLinkService = locator<DynamicLinkService>();
 
-extension ListCampaignExtension on ListCampaign {
-  Cause get cause => this.causes[0];
+class ListCampaign {
+  int id;
+  String title;
+  Api.Image headerImage;
+  Api.Cause cause;
+
+  ListCampaign.fromApiData({
+    required this.id,
+    required this.title,
+    required this.headerImage,
+    required BuiltList<Api.Cause> causes,
+  }) : cause = causes[0];
+
+  ListCampaign.fromApiModel(Api.ListCampaign apiModel)
+      : this.fromApiData(
+          id: apiModel.id,
+          title: apiModel.title,
+          headerImage: apiModel.headerImage,
+          causes: apiModel.causes,
+        );
 }
 
-extension CampaignExtension on Campaign {
-  Cause get cause {
-    print('Getting cause for action ${id} ${title}');
-    return this.causes[0];
-  }
+class Campaign extends ListCampaign {
+  String description;
+  List<ListAction> actions;
+  List<LearningResource> learningResources;
 
-  // TODO This is really sad, it would be easy to use description by accident
-  String getDescription() => this.description.replaceAll('\\n', '\n\n');
+  Campaign.fromApiModel(Api.Campaign apiModel)
+      : description = apiModel.description.replaceAll('\\n', '\n\n'),
+        actions = apiModel.actions.map(ListAction.fromApiModel).toList(),
+        learningResources = apiModel.learningResources
+            .map(LearningResource.fromApiModel)
+            .toList(),
+        super.fromApiData(
+          id: apiModel.id,
+          title: apiModel.title,
+          headerImage: apiModel.headerImage,
+          causes: apiModel.causes,
+        );
 
   Future<String> getShareText() async {
     Uri uri = await _dynamicLinkService.createDynamicLink(

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:nowu/assets/components/card.dart';
 import 'package:nowu/assets/components/cause_indicator.dart';
 import 'package:nowu/assets/components/custom_network_image.dart';
 import 'package:nowu/models/article.dart';
+import 'package:nowu/router.dart';
+import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
+import 'package:nowu/utils/let.dart';
 
 enum ExploreTileStyle {
   Standard,
@@ -30,11 +35,9 @@ class ExploreCampaignTile extends ExploreTile {
   final Cause cause;
   final bool? completed;
   final ListCampaign campaign;
-  final GestureTapCallback onTap;
 
   ExploreCampaignTile(
     CampaignExploreTileData tile, {
-    required this.onTap,
     Key? key,
   })  : headerImage = tile.campaign.headerImage.url,
         title = tile.campaign.title,
@@ -48,7 +51,8 @@ class ExploreCampaignTile extends ExploreTile {
     return AspectRatio(
       aspectRatio: 0.75,
       child: InkWell(
-        onTap: onTap,
+        onTap: () =>
+            context.router.push(CampaignInfoRoute(listCampaign: campaign)),
         child: Column(
           children: [
             Container(
@@ -94,7 +98,6 @@ class ExploreActionTile extends ExploreResourceTile {
 
   ExploreActionTile(
     ActionExploreTileData tile, {
-    required GestureTapCallback onTap,
     ExploreTileStyle? style,
     Key? key,
   })  : action = tile.action,
@@ -109,7 +112,8 @@ class ExploreActionTile extends ExploreResourceTile {
           timeText: tile.action.timeText,
           isCompleted: tile.isCompleted,
           style: style,
-          onTap: onTap,
+          onTap: (BuildContext context) =>
+              context.router.push(ActionInfoRoute(actionId: tile.action.id)),
           key: key,
         );
 }
@@ -135,7 +139,7 @@ class ExploreLearningResourceTile extends ExploreResourceTile {
           isCompleted: tile.isCompleted,
           key: key,
           style: style,
-          onTap: onTap,
+          onTap: (_) async => onTap(),
         );
 }
 
@@ -152,7 +156,7 @@ abstract class ExploreResourceTile extends ExploreTile {
   final String timeText;
   final bool? isCompleted;
   final ExploreTileStyle style;
-  final GestureTapCallback onTap;
+  final Future<void> Function(BuildContext context) onTap;
 
   ExploreResourceTile({
     required this.title,
@@ -175,7 +179,7 @@ abstract class ExploreResourceTile extends ExploreTile {
     return AspectRatio(
       aspectRatio: 1.65,
       child: InkWell(
-        onTap: onTap,
+        onTap: () => onTap(context),
         child: Column(
           children: [
             Flexible(
@@ -252,40 +256,26 @@ abstract class ExploreResourceTile extends ExploreTile {
 }
 
 class ExploreNewsArticleTile extends ExploreTile {
-  final String title;
-  final String subtitle;
-  final String headerImage;
-  final String dateString;
-  final String url;
-  final String shortUrl;
   final NewsArticle article;
-  final GestureTapCallback onTap;
 
   ExploreNewsArticleTile(
     NewsArticleExploreTileData tile, {
-    required this.onTap,
     Key? key,
-  })  : title = tile.article.title,
-        subtitle = tile.article.subtitle,
-        headerImage = tile.article.headerImage.url,
-        dateString = tile.article.dateString ?? '',
-        url = tile.article.link,
-        shortUrl = tile.article.shortUrl,
-        article = tile.article,
+  })  : article = tile.article,
         super(key: key);
 
   Widget buildBody(BuildContext context) {
     return AspectRatio(
       aspectRatio: 0.8,
       child: InkWell(
-        onTap: onTap,
+        onTap: () => launchLink(article.link),
         child: Column(
           children: [
             AspectRatio(
               aspectRatio: 1.8,
               // TODO ink animation doesn't cover image
               child: CustomNetworkImage(
-                headerImage,
+                article.headerImage.url,
                 fit: BoxFit.cover,
               ),
             ),
@@ -297,14 +287,14 @@ class ExploreNewsArticleTile extends ExploreTile {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title,
+                      article.title,
                       style: Theme.of(context).textTheme.headlineMedium!,
                       textScaler: const TextScaler.linear(.7),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      subtitle,
+                      article.subtitle,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context)
@@ -313,7 +303,7 @@ class ExploreNewsArticleTile extends ExploreTile {
                           .apply(fontStyle: FontStyle.normal),
                     ),
                     Text(
-                      dateString,
+                      article.releasedAt.let(DateFormat('d MMM y').format),
                     ),
                   ],
                 ),
@@ -326,7 +316,7 @@ class ExploreNewsArticleTile extends ExploreTile {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  shortUrl,
+                  article.shortUrl,
                   style: Theme.of(context).textTheme.bodyLarge?.apply(
                         color: const Color.fromRGBO(255, 136, 0, 1),
                       ),

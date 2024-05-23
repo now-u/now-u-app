@@ -11,24 +11,39 @@ bool testMode = Platform.environment.containsKey('FLUTTER_TEST');
 /// Whether the app is currently running in debug mode
 bool devMode = !testMode && !kReleaseMode;
 
-const PRIVACY_POLICY_URL = 'https://www.now-u.com/info/privacy-notice';
-const TERMS_AND_CONDITIONS_URL =
-    'https://now-u-docs.s3.eu-west-2.amazonaws.com/now-u+user+terms+and+conditions.pdf';
-
 const LOCAL_CAUSES_API_URL = '192.168.1.65:3001';
 const LOCAL_STACK_URL = 'http://192.168.1.11';
 
 // devMode ? "staging.api.now-u.com" : "api.now-u.com";
 
-// const CAUSES_API_URL = '$LOCAL_STACK_URL:8000';
 const CAUSES_API_URL = 'https://causes.dev.apiv2.now-u.com/';
+// const CAUSES_API_URL = '$LOCAL_STACK_URL:8000';
 
 // const SEARCH_SERVICE_URL = '$LOCAL_STACK_URL:7700';
 const SEARCH_SERVICE_URL = 'https://search.dev.apiv2.now-u.com';
 const SEARCH_SERVICE_KEY =
     'aaae5a4efcd407ca2c568ad9bcafda8f5362526a4b14ab8d746df52a7e7415a6';
 
-const ABOUT_US_URL = 'https://www.now-u.com/about';
+final PRIVACY_POLICY_URI =
+    Uri.parse('https://www.now-u.com/info/privacy-notice');
+final TERMS_AND_CONDITIONS_URI = Uri.parse(
+  'https://now-u-docs.s3.eu-west-2.amazonaws.com/now-u+user+terms+and+conditions.pdf',
+);
+
+final ABOUT_US_URI = Uri.parse('https://www.now-u.com/about');
+final FEEDBACK_FORM_URI = Uri.parse(
+    'https://docs.google.com/forms/d/e/1FAIpQLSflMOarmyXRv7DRbDQPWRayCpE5X4d8afOpQ1hjXfdvzbnzQQ/viewform');
+
+final INSTAGRAM_URI = Uri.parse('https://www.instagram.com/now_u_app/');
+final FACEBOOK_URI = Uri.parse('https://www.facebook.com/nowufb');
+final TWITTER_URI = Uri.parse('https://twitter.com/now_u_app');
+final FACEBOOK_MESSENGER_URI = Uri.parse('http://m.me/nowufb');
+final EMAIL_MAILTO_URI = Uri.parse('mailto:hello@now-u.com?subject=Hi');
+
+final APPLE_APP_STORE_URI =
+    Uri.parse('https://apps.apple.com/us/app/now-u/id1516126639');
+final GOOGLE_APP_STORE_URI =
+    Uri.parse('https://play.google.com/store/apps/details?id=com.nowu.app');
 
 class CustomColors {
   /// Primary brand color

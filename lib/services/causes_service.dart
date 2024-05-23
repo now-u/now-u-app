@@ -1,54 +1,56 @@
-import 'package:causeApiClient/causeApiClient.dart';
+import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:built_collection/built_collection.dart';
 import 'package:logging/logging.dart';
-import 'package:nowu/app/app.router.dart';
-import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/models/Learning.dart';
+import 'package:nowu/models/campaign.dart';
+import 'package:nowu/models/organisation.dart';
+import 'package:nowu/router.dart';
+import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/auth.dart';
-import 'package:nowu/services/navigation_service.dart';
-import 'package:stacked_services/stacked_services.dart' hide NavigationService;
+import 'package:nowu/models/action.dart';
 
-export 'package:nowu/models/Action.dart';
-export 'package:nowu/models/Campaign.dart';
+export 'package:nowu/models/action.dart';
+export 'package:nowu/models/campaign.dart';
 export 'package:nowu/models/Learning.dart';
 export 'package:nowu/models/Cause.dart';
+export 'package:nowu/models/organisation.dart';
 
 class CausesService {
   final _authService = locator<AuthenticationService>();
   final _analyticsService = locator<AnalyticsService>();
   final _apiService = locator<ApiService>();
-  final _navigationService = locator<NavigationService>();
-  final _routerService = locator<RouterService>();
+  final _router = locator<AppRouter>();
   final _logger = Logger('CausesService');
 
-  List<Cause>? _causes;
-  List<Cause> get causes {
-    if (_causes == null) {
-      throw Exception('Cannot get causes before initalizing causes service');
-    }
-    return _causes!;
+  List<Api.Cause>? _causes;
+  Future<List<Api.Cause>> _fetchCauses() async {
+    _logger.info('Fetching causes from the service');
+    final response = await _causeServiceClient.getCausesApi().causesList();
+    return response.data!.asList();
   }
 
-  Future<void> init() async {
-    await _fetchCauses();
-  }
+  Api.CauseApiClient get _causeServiceClient => _apiService.apiClient;
 
-  CauseApiClient get _causeServiceClient => _apiService.apiClient;
-
-  CausesUser? _userInfo = null;
-  CausesUser? get userInfo => _userInfo;
+  Api.CausesUser? _userInfo = null;
+  Api.CausesUser? get userInfo => _userInfo;
 
   /// Get a list of causes
   ///
   /// Input params
   /// Returns a list of Causes from the API
-  Future<void> _fetchCauses() async {
-    final response = await _causeServiceClient.getCausesApi().causesList();
-    _causes = response.data!.asList();
+  Future<List<Api.Cause>> listCauses() async {
+    if (_causes == null) {
+      _causes = await _fetchCauses();
+    }
+    _logger.info('Got causes, $_causes');
+    return _causes!;
   }
 
-  Cause getCause(int id) {
+  Future<Api.Cause> getCause(int id) async {
+    final causes = await listCauses();
     return causes.firstWhere((cause) => cause.id == id);
   }
 
@@ -59,7 +61,7 @@ class CausesService {
   Future<Campaign> getCampaign(int id) async {
     final response =
         await _causeServiceClient.getCampaignsApi().campaignsRetrieve(id: id);
-    return response.data!;
+    return Campaign.fromApiModel(response.data!);
   }
 
   /// Get an action by id
@@ -69,14 +71,14 @@ class CausesService {
   Future<Action> getAction(int id) async {
     final response =
         await _causeServiceClient.getActionsApi().actionsRetrieve(id: id);
-    return response.data!;
+    return Action(response.data!);
   }
 
   /// Set user's selected causes
   ///
   /// Input causes that the user has selected
   /// Posts the ids of these causes to the API
-  Future<void> selectCauses(List<Cause> selectedCauses) async {
+  Future<void> selectCauses(List<Api.Cause> selectedCauses) async {
     // TOOD Update API to match spec here
     // List<int> ids = selectedCauses.map((cause) => cause.id).toList();
     // // TODO check this is the correct endpoint
@@ -87,7 +89,7 @@ class CausesService {
     final response = await _causeServiceClient
         .getMeApi()
         .meCausesInfoPartialUpdate(
-          patchedCausesUser: PatchedCausesUser(
+          patchedCausesUser: Api.PatchedCausesUser(
             (userInfo) => userInfo
               ..selectedCausesIds =
                   ListBuilder(selectedCauses.map((cause) => cause.id).toList()),
@@ -103,7 +105,7 @@ class CausesService {
   /// Complete an action
   ///
   /// Used so a user can set an action as completed
-  Future completeAction(Action action) async {
+  Future completeAction(ListAction action) async {
     await (
       _causeServiceClient.getActionsApi().actionsComplete(id: action.id),
       _analyticsService.logActionEvent(
@@ -119,7 +121,7 @@ class CausesService {
   /// Uncomlete an action
   ///
   /// Sets an action as uncompleted
-  Future removeActionStatus(Action action) async {
+  Future removeActionStatus(ListAction action) async {
     await (
       _causeServiceClient.getActionsApi().actionsUncomplete(id: action.id),
       _analyticsService.logActionEvent(
@@ -151,23 +153,22 @@ class CausesService {
   Future<List<Organisation>> getPartners() async {
     final response =
         await _causeServiceClient.getOrganisationsApi().organisationsList();
-    return response.data!.toList();
+
+    return response.data!.map((org) => Organisation(org)).toList();
   }
 
-  Future<CausesUser?> fetchUserInfo() async {
+  Future<Api.CausesUser?> fetchUserInfo() async {
     if (!_authService.isAuthenticated) {
       _logger.warning('Trying to fetch user info when not authenticated');
       return null;
     }
     final response =
         await _causeServiceClient.getMeApi().meCausesInfoRetrieve();
-    print('YPatched user select info');
-    print(response.data);
     return _userInfo = response.data!;
   }
 
   Future<void> openAction(int actionId) async {
-    await _routerService.navigateToActionInfoView(actionId: actionId);
+    await _router.push(ActionInfoRoute(actionId: actionId));
   }
 
   Future<void> openLearningResource(LearningResource learningResource) async {
@@ -175,17 +176,10 @@ class CausesService {
       // TODO Should this if be inside here?
       await completeLearningResource(learningResource);
     }
-    _navigationService.launchLink(
-      learningResource.link,
-    );
-  }
-
-  Future<void> openCampaign(ListCampaign campaign) async {
-    await _routerService.navigateToCampaignInfoView(listCampaign: campaign);
-  }
-
-  Future<void> openNewArticle(NewsArticle article) async {
-    await _navigationService.launchLink(article.link);
+    // TODO Work this out!
+    // _navigationService.launchLink(
+    //   learningResource.link,
+    // );
   }
 
   bool? actionIsComplete(int actionId) {

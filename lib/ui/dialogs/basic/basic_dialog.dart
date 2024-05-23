@@ -1,27 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:nowu/themes.dart';
 import 'package:nowu/utils/intersperse.dart';
-import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 
-import 'basic_dialog_model.dart';
+class BasicDialogButtonArgs {
+  final String text;
+  final void Function() onClick;
 
-class BasicDialog extends StackedView<BasicDialogModel> {
-  final DialogRequest request;
-  final Function(DialogResponse) completer;
+  const BasicDialogButtonArgs({
+    required this.text,
+    required this.onClick,
+  });
+}
 
-  const BasicDialog({
-    Key? key,
-    required this.request,
-    required this.completer,
-  }) : super(key: key);
+class BasicDialogArgs {
+  final String title;
+  final String description;
+  final BasicDialogButtonArgs? mainButtonArgs;
+  final BasicDialogButtonArgs? secondaryButtonArgs;
+
+  const BasicDialogArgs({
+    required this.title,
+    required this.description,
+    this.mainButtonArgs,
+    this.secondaryButtonArgs,
+  });
+}
+
+class BasicDialog extends StatelessWidget {
+  final BasicDialogArgs args;
+  const BasicDialog(this.args);
 
   @override
-  Widget builder(
-    BuildContext context,
-    BasicDialogModel viewModel,
-    Widget? child,
-  ) {
+  Widget build(BuildContext context) {
     return AlertDialog(
       contentPadding: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
@@ -40,7 +50,7 @@ class BasicDialog extends StackedView<BasicDialogModel> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Text(
-                  request.title!,
+                  args.title,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
@@ -48,7 +58,7 @@ class BasicDialog extends StackedView<BasicDialogModel> {
                 Padding(
                   padding: const EdgeInsets.all(5),
                   child: Text(
-                    request.description!,
+                    args.description,
                     style: Theme.of(context).textTheme.bodySmall,
                     textAlign: TextAlign.center,
                   ),
@@ -57,18 +67,16 @@ class BasicDialog extends StackedView<BasicDialogModel> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    if (request.mainButtonTitle != null)
+                    if (args.mainButtonArgs != null)
                       FilledButton(
-                        child: Text(request.mainButtonTitle!),
-                        onPressed: () =>
-                            completer(DialogResponse(confirmed: true)),
+                        child: Text(args.mainButtonArgs!.text),
+                        onPressed: args.mainButtonArgs!.onClick,
                       ),
-                    if (request.secondaryButtonTitle != null)
+                    if (args.secondaryButtonArgs != null)
                       FilledButton(
                         style: secondaryFilledButtonStyle,
-                        child: Text(request.secondaryButtonTitle!),
-                        onPressed: () =>
-                            completer(DialogResponse(confirmed: false)),
+                        child: Text(args.secondaryButtonArgs!.text),
+                        onPressed: args.secondaryButtonArgs!.onClick,
                       ),
                   ]
                       .intersperse(
@@ -86,7 +94,4 @@ class BasicDialog extends StackedView<BasicDialogModel> {
       ),
     );
   }
-
-  @override
-  BasicDialogModel viewModelBuilder(BuildContext context) => BasicDialogModel();
 }

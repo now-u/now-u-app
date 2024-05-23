@@ -2,14 +2,16 @@ import 'package:nowu/assets/components/cause_indicator.dart';
 import 'package:nowu/assets/components/custom_network_image.dart';
 import 'package:nowu/assets/components/explore_tiles.dart';
 import 'package:nowu/assets/constants.dart';
-import 'package:nowu/models/Campaign.dart';
+import 'package:nowu/models/campaign.dart';
 import 'package:nowu/models/Cause.dart';
 import 'package:flutter/material.dart';
 import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:stacked/stacked.dart';
+import 'package:auto_route/auto_route.dart';
 
 import 'campaign_info_viewmodel.dart';
 
+@RoutePage()
 class CampaignInfoView extends StackedView<CampaignViewModel> {
   // TODO Work out how to make this work on web url (and internal link()
   final ListCampaign listCampaign;
@@ -107,7 +109,6 @@ class CampaignInfoView extends StackedView<CampaignViewModel> {
                   action,
                   viewModel.actionIsComplete(action.id),
                 ),
-                onTap: () => viewModel.openAction(action),
               ),
             )
             .toList();
@@ -166,7 +167,7 @@ class CampaignInfoView extends StackedView<CampaignViewModel> {
                     .copyWith(fontSize: 18),
               ),
               Text(
-                viewModel.campaign?.getDescription() ?? '',
+                viewModel.campaign?.description ?? '',
                 style: Theme.of(context).textTheme.bodyLarge,
                 textAlign: TextAlign.left,
               ),

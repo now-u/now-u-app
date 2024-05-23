@@ -2,12 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart'
+    as FacebookAuth;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logging/logging.dart';
-import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/locator.dart';
 import 'package:nowu/services/analytics.dart';
-import 'package:nowu/services/api_service.dart';
-import 'package:nowu/services/shared_preferences_service.dart';
+import 'package:nowu/services/storage.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide User;
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -20,15 +21,37 @@ class LoginException implements Exception {
   LoginException(this.message);
 }
 
+enum AuthProvider {
+  Google,
+  Facebook,
+  Apple,
+}
+
+class OAuthLoginResult {
+  String email;
+  String? fullName;
+
+  OAuthLoginResult({
+    required this.email,
+    required this.fullName,
+  });
+
+  factory OAuthLoginResult.fromAuthResponse(AuthResponse authResponse) {
+    return OAuthLoginResult(
+      email: authResponse.user!.email!,
+      fullName: authResponse.user!.userMetadata?['full_name'],
+    );
+  }
+}
+
 class AuthenticationService {
-  final _sharedPreferencesService = locator<SharedPreferencesService>();
-  final _apiService = locator<ApiService>();
   final _logger = Logger('AuthenticationService');
   final _analyticsService = locator<AnalyticsService>();
+  final _secureStroageService = locator<SecureStorageService>();
 
   SupabaseClient get _client => Supabase.instance.client;
 
-  Future<void> initSupabase() async {
+  initSupabase() async {
     await Supabase.initialize(
       url: 'https://uqwaxxhrkpbzvjdlfdqe.supabase.co',
       anonKey:
@@ -36,18 +59,22 @@ class AuthenticationService {
     );
   }
 
+  Stream<AuthState> get authState => _client.auth.onAuthStateChange;
+
   Future<void> init() async {
-    print('Current session is: ${_client.auth.currentSession}');
+    _logger.info('Current session is: ${_client.auth.currentSession}');
+
+    // await initSupabase();
 
     if (token != null) {
-      _apiService.setToken(token!);
+      // _apiService.setToken(token!);
     }
 
     _client.auth.onAuthStateChange.listen((data) async {
       if (data.event == AuthChangeEvent.signedIn ||
           data.event == AuthChangeEvent.tokenRefreshed) {
-        _logger.info('Updated user token for causes serivice client');
-        _apiService.setToken(token!);
+        _logger.info('Updated user token for causes service client');
+        // _apiService.setToken(token!);
       }
 
       switch (data.event) {
@@ -60,6 +87,8 @@ class AuthenticationService {
 
       // TODO Handle logout
     });
+
+    return;
   }
 
   String? get token => _client.auth.currentSession?.accessToken;
@@ -73,11 +102,28 @@ class AuthenticationService {
   }
 
   Future sendSignInEmail(String email) async {
+    await _secureStroageService.setEmail(email);
     await _client.auth
         .signInWithOtp(email: email, emailRedirectTo: LOGIN_REDIRECT_URL);
   }
 
-  Future signInWithGoogle() async {
+  Future<OAuthLoginResult> signInWithOAuth(AuthProvider provider) async {
+    final response = await _signInWithOAuth(provider);
+    return OAuthLoginResult.fromAuthResponse(response);
+  }
+
+  Future<AuthResponse> _signInWithOAuth(AuthProvider provider) {
+    switch (provider) {
+      case AuthProvider.Google:
+        return _signInWithGoogle();
+      case AuthProvider.Apple:
+        return _signInWithApple();
+      case AuthProvider.Facebook:
+        return _signInWithFacebook();
+    }
+  }
+
+  Future<AuthResponse> _signInWithGoogle() async {
     _logger.info('Singing in with google');
 
     /// Web Client ID that you registered with Google Cloud.
@@ -101,7 +147,8 @@ class AuthenticationService {
     _logger.info('Fetching auth');
     if (await googleUser == null) {
       _logger.warning('No user selected from dialog. Aborting google login.');
-      return;
+      // TODO Throw custom exception and handle this exception in the UI
+      throw Exception('No user selected from dialog. Aborting google login.');
     }
 
     final googleAuth = await googleUser!.authentication;
@@ -125,14 +172,28 @@ class AuthenticationService {
     );
   }
 
-  Future signInWithFacebook() async {
-    await _client.auth.signInWithOAuth(
-      OAuthProvider.facebook,
-      redirectTo: LOGIN_REDIRECT_URL,
-    );
+  Future<AuthResponse> _signInWithFacebook() async {
+    try {
+      final FacebookAuth.LoginResult result =
+          await FacebookAuth.FacebookAuth.instance.login();
+
+      if (result.status != FacebookAuth.LoginStatus.success) {
+        throw LoginException('Failed');
+      }
+
+      final String token = result.accessToken!.token;
+      // Now use this authCredential to authenticate with Supabase
+      return _client.auth.signInWithIdToken(
+        provider: OAuthProvider.facebook,
+        idToken: token,
+      );
+    } catch (e) {
+      print('Facebook authentication failed: $e');
+      throw LoginException('Failed');
+    }
   }
 
-  Future<AuthResponse> signInWithApple() async {
+  Future<AuthResponse> _signInWithApple() async {
     final rawNonce = _client.auth.generateRawNonce();
     final hashedNonce = sha256.convert(utf8.encode(rawNonce)).toString();
 
@@ -171,10 +232,8 @@ class AuthenticationService {
   }
 
   Future<void> logout() async {
+    await _secureStroageService.clearEmail();
     await _client.auth.signOut();
-    // TODO Move to above
-    // TODO Do we still need to store user token in shared preferences?
-    await _sharedPreferencesService.clearUserToken();
   }
 
   String? getCurrentUserName() {

@@ -1,4 +1,4 @@
-import 'package:causeApiClient/causeApiClient.dart';
+import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
@@ -6,29 +6,6 @@ import 'package:nowu/models/time.dart';
 
 export 'package:causeApiClient/causeApiClient.dart'
     show LearningResource, LearningResourceTypeEnum;
-
-/// TODO Remove -> The LearningCentre page will be removed in v2
-// class LearningCentre {
-//   // Id of campaign
-//   int? campaign;
-//   List<LearningTopic>? learningTopics;
-//
-//   List<LearningTopic>? getLearningTopics() {
-//     return learningTopics;
-//   }
-//
-//   LearningCentre.fromJson(List json) {
-//     learningTopics = json
-//         .map((e) => LearningTopic.fromJson(e))
-//         .toList()
-//         .cast<LearningTopic>();
-//   }
-//
-//   bool containsNew() {
-//     var c = learningTopics!.firstWhereOrNull((r) => r.containsNew());
-//     return c != null;
-//   }
-// }
 
 // extension on LearningTopic {
 //   bool containsNew() {
@@ -47,16 +24,16 @@ class LearningResourceType {
   });
 }
 
-LearningResourceType getResourceTypeFromEnum(LearningResourceTypeEnum type) {
+LearningResourceType getResourceTypeFromEnum(Api.LearningResourceTypeEnum type) {
   switch (type) {
-    case LearningResourceTypeEnum.VIDEO:
+    case Api.LearningResourceTypeEnum.VIDEO:
       return LearningResourceType(name: 'Video', icon: CustomIcons.ic_video);
-    case LearningResourceTypeEnum.READING:
+    case Api.LearningResourceTypeEnum.READING:
       return LearningResourceType(
         name: 'Reading',
         icon: CustomIcons.ic_learning,
       );
-    case LearningResourceTypeEnum.INFOGRAPHIC:
+    case Api.LearningResourceTypeEnum.INFOGRAPHIC:
       return LearningResourceType(
         name: 'Infographic',
         icon: CustomIcons.ic_report,
@@ -75,32 +52,37 @@ LearningResourceType getResourceTypeFromEnum(LearningResourceTypeEnum type) {
   );
 }
 
-// TODO Add documentation to open api spec and remove this
-/// A learning resources is attached to a [LearningTopic] and offers more information on the topic.
-///
-/// Practially a learning resource is just a link with some extra meta data
-/// like the time expected to completed the resource. We also store if the user
-/// has completed the resource. // TODO Do this
-extension LearningResourceExtension on LearningResource {
+class LearningResource {
+	int id;
+	String title;
+	Api.Cause cause;
+	LearningResourceType type;
+	int time;
+	DateTime createdAt;
+
+	LearningResource.fromApiModel(Api.LearningResource apiModel):
+		id = apiModel.id,
+		title = apiModel.title,
+		cause = apiModel.causes[0],
+		type = getResourceTypeFromEnum(apiModel.learningResourceType),
+		time = apiModel.time,
+		createdAt = apiModel.createdAt;
+
   String get timeText => timeBrackets.firstWhere((b) => b.maxTime > time).text;
 
-  LearningResourceType get type =>
-      getResourceTypeFromEnum(learningResourceType);
   IconData get icon => type.icon;
-
-  Cause get cause => causes[0];
-
-  bool isCompletedByUser(CausesUser user) {
-    print(
-      'Checking is completed: ${user.completedLearningResourceIds.contains(this.id)}',
-    );
-    return user.completedLearningResourceIds.contains(this.id);
-  }
 
   bool isNew() {
     return DateTime.now()
             .difference(createdAt)
             .compareTo(const Duration(days: 2)) <
         0;
+  }
+
+  bool isCompletedByUser(Api.CausesUser user) {
+    print(
+      'Checking is completed: ${user.completedLearningResourceIds.contains(this.id)}',
+    );
+    return user.completedLearningResourceIds.contains(this.id);
   }
 }

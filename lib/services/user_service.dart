@@ -1,6 +1,6 @@
 import 'package:causeApiClient/causeApiClient.dart';
 import 'package:logging/logging.dart';
-import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/locator.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/auth.dart';
 
