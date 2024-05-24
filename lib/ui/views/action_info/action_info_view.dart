@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart' hide Action;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:nowu/assets/components/customAppBar.dart';
 import 'package:nowu/assets/components/textButton.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:nowu/locator.dart';
@@ -10,7 +9,6 @@ import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/themes.dart';
 import 'package:nowu/ui/views/action_info/bloc/action_info_bloc.dart';
-import 'package:nowu/ui/views/action_info/bloc/action_info_event.dart';
 import 'package:nowu/ui/views/action_info/bloc/action_info_state.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';

@@ -59,7 +59,8 @@ class ActionInfoViewModel extends FutureViewModel<Action> {
       data!,
       ActionEvent.TakeActionClicked,
     );
-    _navigationService.launchLink(data!.link);
+	// TODO Fix this!!
+    // _navigationService.launchLink(data!.link);
   }
 
   void navigateToCauseExplorePage() {

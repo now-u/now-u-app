@@ -29,7 +29,16 @@ class NewsArticle {
   final DateTime releasedAt;
   final Uri link;
 
-  NewsArticle(Api.NewsArticle apiModel)
+  NewsArticle({
+    required this.id,
+    required this.title,
+    required this.subtitle,
+    required this.headerImage,
+    required this.releasedAt,
+    required this.link,
+  });
+
+  NewsArticle.fromApiModel(Api.NewsArticle apiModel)
       : id = apiModel.id,
         title = apiModel.title,
         subtitle = apiModel.subtitle,

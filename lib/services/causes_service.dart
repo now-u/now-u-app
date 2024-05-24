@@ -71,7 +71,7 @@ class CausesService {
   Future<Action> getAction(int id) async {
     final response =
         await _causeServiceClient.getActionsApi().actionsRetrieve(id: id);
-    return Action(response.data!);
+    return Action.fromApiModel(response.data!);
   }
 
   /// Set user's selected causes

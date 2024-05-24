@@ -128,7 +128,7 @@ class _ExploreTabsState extends State<ExploreTabs>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 1,
         shadowColor: CustomColors.greyLight1,
         automaticallyImplyLeading: false,

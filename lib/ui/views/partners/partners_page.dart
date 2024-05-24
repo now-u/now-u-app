@@ -49,7 +49,8 @@ class PartnersView extends StatelessWidget {
                         child: _OrganisationTile(
                           organisation: organisation,
                           onTap: () => context.router.push(
-                              PartnerInfoRoute(organisation: organisation)),
+                            PartnerInfoRoute(organisation: organisation),
+                          ),
                         ),
                       ),
                     );

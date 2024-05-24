@@ -118,8 +118,8 @@ class SecondaryButton extends StatelessWidget {
         height: darkButtonStyleStyles[size]['height'],
         child: ElevatedButton(
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.white),
-            shape: MaterialStateProperty.all(
+            backgroundColor: WidgetStateProperty.all(Colors.white),
+            shape: WidgetStateProperty.all(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(
                   darkButtonStyleStyles[size]['borderRadius'],

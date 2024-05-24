@@ -192,7 +192,7 @@ class ProfileSetupView extends StackedView<ProfileSetupViewModel> {
     return Theme(
       data: darkTheme,
       child: Scaffold(
-        backgroundColor: darkTheme.colorScheme.background,
+        backgroundColor: darkTheme.colorScheme.surface,
         body: NotificationListener(
           onNotification: (OverscrollIndicatorNotification overscroll) {
             overscroll.disallowIndicator();

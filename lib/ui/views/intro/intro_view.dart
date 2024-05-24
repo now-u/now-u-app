@@ -48,7 +48,7 @@ class IntroViewPages extends StatelessWidget {
             decoration: viewModel.currentPage.backgroundImage == null
                 ? BoxDecoration(
                     // TODO This Context is wrong, this need to be a subwidget
-                    color: Theme.of(context).colorScheme.background,
+                    color: Theme.of(context).colorScheme.surface,
                   )
                 : BoxDecoration(
                     image: DecorationImage(

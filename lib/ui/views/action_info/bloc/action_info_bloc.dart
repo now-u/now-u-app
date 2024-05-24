@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nowu/services/causes_service.dart';
 
-import 'action_info_event.dart';
 import 'action_info_state.dart';
 
 class ActionInfoBloc extends Cubit<ActionInfoState> {

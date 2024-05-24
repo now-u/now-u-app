@@ -18,7 +18,8 @@ class ExploreLearningResourceTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExploreTab(
       createBloc: (context) => ExploreLearningResourceTabBloc(
-          searchService: locator<SearchService>()),
+        searchService: locator<SearchService>(),
+      ),
       filterChips: [
         const CausesFilter(),
         const TimeFilter(),
