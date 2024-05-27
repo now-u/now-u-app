@@ -12,6 +12,7 @@ analyzer:
   exclude:
     - "openapi/causeApi/**"
     - "lib/generated"
+    - "lib/**.freezed.dart"
 
 linter:
   # The lint rules applied to this project can be customized in the

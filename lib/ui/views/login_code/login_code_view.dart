@@ -164,7 +164,7 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // TODO Why do I need to specify this manually?
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: NotificationListener(
         onNotification: (OverscrollIndicatorNotification overscroll) {
           overscroll.disallowIndicator();

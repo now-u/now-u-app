@@ -125,13 +125,22 @@ class ListAction {
     required this.title,
     required this.releaseAt,
     required this.time,
+    required this.cause,
+    required this.type,
+  });
+
+  ListAction.fromApiData({
+    required this.id,
+    required this.title,
+    required this.releaseAt,
+    required this.time,
     required BuiltList<Api.Cause> causes,
     required Api.ActionTypeEnum actionType,
   })  : cause = causes[0],
         type = getActionTypeFromSubtype(actionType);
 
   factory ListAction.fromApiModel(Api.ListAction apiModel) {
-    return ListAction(
+    return ListAction.fromApiData(
       id: apiModel.id,
       title: apiModel.title,
       releaseAt: apiModel.releaseAt,
@@ -148,13 +157,27 @@ class Action extends ListAction {
   String whyDescription;
   Uri link;
 
-  Action(
+  Action({
+    required this.isCompleted,
+    required this.whatDescription,
+    required this.whyDescription,
+    required this.link,
+
+    required super.id,
+    required super.title,
+    required super.releaseAt,
+    required super.time,
+    required super.cause,
+    required super.type,
+  });
+
+  Action.fromApiModel(
     Api.Action apiModel,
   )   : isCompleted = apiModel.isCompleted,
         whatDescription = apiModel.whatDescription,
         whyDescription = apiModel.whyDescription,
         link = Uri.parse(apiModel.link),
-        super(
+        super.fromApiData(
           id: apiModel.id,
           title: apiModel.title,
           releaseAt: apiModel.releaseAt,

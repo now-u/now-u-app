@@ -51,8 +51,8 @@ class _SocialMediaLoginButton extends StatelessWidget {
       onPressed: onPressed,
       child: Icon(iconData, color: Colors.orange),
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.white),
-        padding: const MaterialStatePropertyAll(
+        backgroundColor: WidgetStateProperty.all(Colors.white),
+        padding: const WidgetStatePropertyAll(
           EdgeInsets.symmetric(vertical: 15, horizontal: 60),
         ),
       ),

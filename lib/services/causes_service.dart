@@ -2,7 +2,7 @@ import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:built_collection/built_collection.dart';
 import 'package:logging/logging.dart';
 import 'package:nowu/locator.dart';
-import 'package:nowu/models/Learning.dart';
+import 'package:nowu/models/learning.dart';
 import 'package:nowu/models/campaign.dart';
 import 'package:nowu/models/organisation.dart';
 import 'package:nowu/router.dart';
@@ -14,7 +14,7 @@ import 'package:nowu/models/action.dart';
 
 export 'package:nowu/models/action.dart';
 export 'package:nowu/models/campaign.dart';
-export 'package:nowu/models/Learning.dart';
+export 'package:nowu/models/learning.dart';
 export 'package:nowu/models/Cause.dart';
 export 'package:nowu/models/organisation.dart';
 
@@ -71,7 +71,7 @@ class CausesService {
   Future<Action> getAction(int id) async {
     final response =
         await _causeServiceClient.getActionsApi().actionsRetrieve(id: id);
-    return Action(response.data!);
+    return Action.fromApiModel(response.data!);
   }
 
   /// Set user's selected causes

@@ -371,7 +371,8 @@ class SearchService {
   ) {
     final results = _causeServiceClient.serializers.deserialize(
       hits,
-      specifiedType: const FullType(BuiltList, [FullType(Api.LearningResource)]),
+      specifiedType:
+          const FullType(BuiltList, [FullType(Api.LearningResource)]),
     ) as BuiltList<Api.LearningResource>;
     return results.map(LearningResource.fromApiModel).toList();
   }
@@ -389,7 +390,7 @@ class SearchService {
       hits,
       specifiedType: const FullType(BuiltList, [FullType(Api.NewsArticle)]),
     ) as BuiltList<Api.NewsArticle>;
-    return results.map((e) => NewsArticle(e)).toList();
+    return results.map((e) => NewsArticle.fromApiModel(e)).toList();
   }
 
   Future<List<T>> _searchIndex<T>(

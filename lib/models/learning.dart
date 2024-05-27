@@ -22,22 +22,25 @@ class LearningResourceType {
     required this.name,
     required this.icon,
   });
+
+  static final video =
+      LearningResourceType(name: 'Video', icon: CustomIcons.ic_video);
+  static final reading =
+      LearningResourceType(name: 'Reading', icon: CustomIcons.ic_learning);
+  static final infographic =
+      LearningResourceType(name: 'Infographic', icon: CustomIcons.ic_report);
 }
 
-LearningResourceType getResourceTypeFromEnum(Api.LearningResourceTypeEnum type) {
+LearningResourceType getResourceTypeFromEnum(
+  Api.LearningResourceTypeEnum type,
+) {
   switch (type) {
     case Api.LearningResourceTypeEnum.VIDEO:
-      return LearningResourceType(name: 'Video', icon: CustomIcons.ic_video);
+      LearningResourceType.video;
     case Api.LearningResourceTypeEnum.READING:
-      return LearningResourceType(
-        name: 'Reading',
-        icon: CustomIcons.ic_learning,
-      );
+		return LearningResourceType.reading;
     case Api.LearningResourceTypeEnum.INFOGRAPHIC:
-      return LearningResourceType(
-        name: 'Infographic',
-        icon: CustomIcons.ic_report,
-      );
+	    return LearningResourceType.infographic;
     // TODO Are these real?
     // case LearningResourceTypeEnum.REPORT:
     // 	return LearningResourceType(name: "report", icon: CustomIcons.ic_report);
@@ -53,20 +56,32 @@ LearningResourceType getResourceTypeFromEnum(Api.LearningResourceTypeEnum type) 
 }
 
 class LearningResource {
-	int id;
-	String title;
-	Api.Cause cause;
-	LearningResourceType type;
-	int time;
-	DateTime createdAt;
+  int id;
+  String title;
+  Api.Cause cause;
+  LearningResourceType type;
+  int time;
+  DateTime createdAt;
+  Uri link;
 
-	LearningResource.fromApiModel(Api.LearningResource apiModel):
-		id = apiModel.id,
-		title = apiModel.title,
-		cause = apiModel.causes[0],
-		type = getResourceTypeFromEnum(apiModel.learningResourceType),
-		time = apiModel.time,
-		createdAt = apiModel.createdAt;
+  LearningResource({
+    required this.id,
+    required this.title,
+    required this.link,
+    required this.cause,
+    required this.type,
+    required this.time,
+    required this.createdAt,
+  });
+
+  LearningResource.fromApiModel(Api.LearningResource apiModel)
+      : id = apiModel.id,
+        title = apiModel.title,
+        link = Uri.parse(apiModel.link),
+        cause = apiModel.causes[0],
+        type = getResourceTypeFromEnum(apiModel.learningResourceType),
+        time = apiModel.time,
+        createdAt = apiModel.createdAt;
 
   String get timeText => timeBrackets.firstWhere((b) => b.maxTime > time).text;
 

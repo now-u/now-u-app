@@ -50,7 +50,7 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // TODO Why do I have to explicitly set this?
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Column(
         children: <Widget>[
           SafeArea(

@@ -32,7 +32,8 @@ final TERMS_AND_CONDITIONS_URI = Uri.parse(
 
 final ABOUT_US_URI = Uri.parse('https://www.now-u.com/about');
 final FEEDBACK_FORM_URI = Uri.parse(
-    'https://docs.google.com/forms/d/e/1FAIpQLSflMOarmyXRv7DRbDQPWRayCpE5X4d8afOpQ1hjXfdvzbnzQQ/viewform');
+  'https://docs.google.com/forms/d/e/1FAIpQLSflMOarmyXRv7DRbDQPWRayCpE5X4d8afOpQ1hjXfdvzbnzQQ/viewform',
+);
 
 final INSTAGRAM_URI = Uri.parse('https://www.instagram.com/now_u_app/');
 final FACEBOOK_URI = Uri.parse('https://www.facebook.com/nowufb');

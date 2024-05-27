@@ -1,6 +1,6 @@
 import 'package:logging/logging.dart';
 import 'package:nowu/models/action.dart';
-import 'package:nowu/models/Learning.dart';
+import 'package:nowu/models/learning.dart';
 import 'package:nowu/models/article.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
