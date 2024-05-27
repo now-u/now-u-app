@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:nowu/models/Action.dart';
+import 'package:nowu/models/action.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:tuple/tuple.dart';
 

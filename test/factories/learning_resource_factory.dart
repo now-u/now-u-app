@@ -1,4 +1,4 @@
-import 'package:nowu/models/Learning.dart';
+import 'package:nowu/models/learning.dart';
 import 'package:flutter/material.dart';
 
 import './cause_factory.dart';

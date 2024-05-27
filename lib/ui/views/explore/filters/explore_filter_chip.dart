@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nowu/models/Action.dart';
+import 'package:nowu/models/action.dart';
 import 'package:nowu/models/time.dart';
 import 'package:nowu/ui/bottom_sheets/explore_filter/explore_filter_sheet.dart';
 import 'package:tuple/tuple.dart';

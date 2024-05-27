@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:nowu/app/app.router.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:flutter/material.dart';
@@ -127,10 +128,9 @@ class App extends StatelessWidget {
                   break;
                 case AuthenticationStateUnauthenticated():
                   // TODO Decide wether to go to /login
-                  break;
                   _appRouter.replaceAll(
                     [
-                      const OnboardingSelectCausesRoute(),
+                      const LoginRoute(),
                     ],
                   );
                   break;
