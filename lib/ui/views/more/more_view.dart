@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +8,6 @@ import 'package:nowu/assets/constants.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_bloc.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_event.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_state.dart';
@@ -116,6 +116,12 @@ List<MenuItemData> getMenuItems(AuthenticationBloc authBloc) => [
         action: LinkMenuItemAction(PRIVACY_POLICY_URI, isExternal: true),
       ),
       const SectionHeadingMenuItem(title: 'User'),
+      if (authBloc.state is AuthenticationStateAuthenticated)
+        const ActionMenuItem(
+          title: 'Remove account',
+          icon: FontAwesomeIcons.userMinus,
+          action: RouteMenuItemAction(DeleteAccountViewRoute()),
+        ),
       if (authBloc.state is AuthenticationStateAuthenticated)
         ActionMenuItem(
           title: 'Log out',
