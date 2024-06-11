@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/router.dart';
@@ -11,6 +12,7 @@ import 'package:nowu/themes.dart';
 import 'package:nowu/ui/common/form.dart';
 import 'package:nowu/ui/views/login/bloc/login_bloc.dart';
 
+import '../../common/center_progress_bar.dart';
 import 'bloc/login_state.dart';
 import 'components/social_media_buttons.dart';
 import 'models/email.dart';
@@ -29,6 +31,7 @@ class LoginView extends StatelessWidget {
           create: (context) {
             return LoginBloc(
               authenticationService: locator<AuthenticationService>(),
+              appRouter: AutoRouter.of(context),
             );
           },
           child: ListView(
@@ -48,6 +51,13 @@ class LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        BlocBuilder<LoginBloc, LoginState>(
+          builder: (context, state) {
+            return CenterProgressBar(
+              isLoading: state.status == FormzSubmissionStatus.inProgress,
+            );
+          },
+        ),
         ClipPath(
           clipper: LoginBackgroundClipper(),
           child: Container(
@@ -163,6 +173,9 @@ class _EmailInput extends StatelessWidget {
               errorText: getErrorText(state.email),
               hintText: 'e.g. jane.doe@email.com',
             ),
+            onChanged: (value) {
+              context.read<LoginBloc>().onEmailChanged(value);
+            },
           ),
         );
       },

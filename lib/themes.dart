@@ -172,15 +172,12 @@ final darkTheme = regularTheme.copyWith(
   colorScheme: ColorScheme(
     brightness: Brightness.dark,
     primary: CustomColors.brandColor,
-    // TODO This is does not quite work as white isn't very visible on orange
-    onPrimary: Colors.white,
+    onPrimary: Colors.black,
     secondary: const Color.fromRGBO(255, 220, 121, 1),
     onSecondary: Colors.black,
-    // TODO What is this really?
-    surface: Colors.white,
-    onSurface: Colors.black,
+    surface: CustomColors.accentBlue,
+    onSurface: Colors.white,
     error: const Color.fromRGBO(211, 0, 1, 1),
-    // TODO Really?
     onError: Colors.white,
   ),
 );

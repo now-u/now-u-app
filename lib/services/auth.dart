@@ -181,7 +181,7 @@ class AuthenticationService {
         throw LoginException('Failed');
       }
 
-      final String token = result.accessToken!.token;
+      final String token = result.accessToken!.tokenString;
       // Now use this authCredential to authenticate with Supabase
       return _client.auth.signInWithIdToken(
         provider: OAuthProvider.facebook,

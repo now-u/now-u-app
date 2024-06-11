@@ -1,7 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:nowu/themes.dart';
 import 'package:stacked/stacked.dart';
-import 'package:auto_route/auto_route.dart';
 
 import 'login_email_sent_viewmodel.dart';
 
@@ -49,7 +49,6 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // TODO Why do I have to explicitly set this?
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Column(
         children: <Widget>[
