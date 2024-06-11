@@ -2,9 +2,11 @@ import 'package:nowu/assets/components/cause_indicator.dart';
 import 'package:nowu/assets/components/custom_network_image.dart';
 import 'package:nowu/assets/components/explore_tiles.dart';
 import 'package:nowu/assets/constants.dart';
+import 'package:nowu/models/action.dart';
 import 'package:nowu/models/campaign.dart';
 import 'package:nowu/models/Cause.dart';
 import 'package:flutter/material.dart';
+import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 import 'package:auto_route/auto_route.dart';
@@ -105,9 +107,9 @@ class CampaignInfoView extends StackedView<CampaignViewModel> {
         viewModel.campaign!.actions
             .map(
               (action) => ExploreActionTile(
-                ActionExploreTileData(
-                  action,
-                  viewModel.actionIsComplete(action.id),
+                ExploreTileData<ListAction>(
+                  item: action,
+                  isCompleted: viewModel.actionIsComplete(action.id),
                 ),
               ),
             )
@@ -117,9 +119,9 @@ class CampaignInfoView extends StackedView<CampaignViewModel> {
             // TODO FIx false here - should get if complete from service
             .map(
               (lr) => ExploreLearningResourceTile(
-                LearningResourceExploreTileData(
-                  lr,
-                  viewModel.learningResourceIsComplete(lr.id),
+                ExploreTileData<LearningResource>(
+                  item: lr,
+                  isCompleted: viewModel.learningResourceIsComplete(lr.id),
                 ),
                 onTap: () => viewModel.openLearningResource(lr),
               ),

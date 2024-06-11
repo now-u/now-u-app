@@ -1,4 +1,5 @@
 import 'package:causeApiClient/causeApiClient.dart' as Api;
+import 'package:nowu/models/exploreable.dart';
 
 export 'package:causeApiClient/causeApiClient.dart' show Image;
 
@@ -21,7 +22,7 @@ export 'package:causeApiClient/causeApiClient.dart' show Image;
 //   return articleTypes.firstWhere((ArticleType type) => type.name == name);
 // }
 
-class NewsArticle {
+class NewsArticle implements Explorable {
   final int id;
   final String title;
   final String subtitle;

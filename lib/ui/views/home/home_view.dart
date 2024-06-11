@@ -56,16 +56,16 @@ class HomeView extends StackedView<HomeViewModel> {
               const SizedBox(
                 height: 10,
               ),
-              ActionExploreSection(
-                title: 'What can I do today?',
-                isLoading: viewModel.myActions == null,
-                tiles: viewModel.myActions,
-              ),
-              CampaignExploreSection(
-                title: 'Campaigns of the month',
-                isLoading: viewModel.ofTheMonthCampaigns == null,
-                tiles: viewModel.ofTheMonthCampaigns,
-              ),
+              // ActionExploreSection(
+              //   title: 'What can I do today?',
+              //   isLoading: viewModel.myActions == null,
+              //   tiles: viewModel.myActions,
+              // ),
+              // CampaignExploreSection(
+              //   title: 'Campaigns of the month',
+              //   isLoading: viewModel.ofTheMonthCampaigns == null,
+              //   tiles: viewModel.ofTheMonthCampaigns,
+              // ),
               CustomWidthButton(
                 'Explore',
                 onPressed: () {
@@ -87,16 +87,16 @@ class HomeView extends StackedView<HomeViewModel> {
 
               const SizedBox(height: 30),
               // TODO Rename so page and section have Argument/Definition and then Widget/noPrefix
-              CampaignExploreSection(
-                title: 'Suggested campaigns',
-                tiles: viewModel.recommendedCampaigns,
-                isLoading: viewModel.recommendedCampaigns == null,
-              ),
-              NewsArticleExploreSection(
-                title: 'In the news',
-                tiles: viewModel.inTheNews,
-                isLoading: viewModel.inTheNews == null,
-              ),
+              // CampaignExploreSection(
+              //   title: 'Suggested campaigns',
+              //   tiles: viewModel.recommendedCampaigns,
+              //   isLoading: viewModel.recommendedCampaigns == null,
+              // ),
+              // NewsArticleExploreSection(
+              //   title: 'In the news',
+              //   tiles: viewModel.inTheNews,
+              //   isLoading: viewModel.inTheNews == null,
+              // ),
 
               if (viewModel.currentUser != null)
                 Padding(

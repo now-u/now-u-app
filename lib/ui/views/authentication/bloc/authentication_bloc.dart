@@ -9,15 +9,15 @@ import './authentication_state.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
-  final AuthenticationService authenticationService;
-  final CausesService causesService;
-  final UserService userService;
+  final AuthenticationService _authenticationService;
+  final CausesService _causesService;
+  final UserService _userService;
 
   AuthenticationBloc({
-    required this.userService,
-    required this.authenticationService,
-    required this.causesService,
-  }) : super(const AuthenticationState.unknown()) {
+    required UserService userService,
+    required AuthenticationService authenticationService,
+    required CausesService causesService,
+  }) : _userService = userService, _authenticationService = authenticationService, _causesService = causesService, super(const AuthenticationState.unknown()) {
     on<AuthenticationSignIn>(_onSignIn);
     on<AuthenticationSignOut>(_onSignOut);
     on<AuthenticationSignOutRequested>(_onSignOutRequested);
@@ -42,8 +42,8 @@ class AuthenticationBloc
     Emitter<AuthenticationState> emit,
   ) async {
     final (user, _) = await (
-      userService.fetchUser(),
-      causesService.fetchUserInfo(),
+      _userService.fetchUser(),
+      _causesService.fetchUserInfo(),
     ).wait;
     if (user != null) {
       emit(AuthenticationState.authenticated(user: user));
@@ -64,6 +64,6 @@ class AuthenticationBloc
     AuthenticationSignOutRequested event,
     Emitter<AuthenticationState> emit,
   ) async {
-    authenticationService.logout();
+    _authenticationService.logout();
   }
 }

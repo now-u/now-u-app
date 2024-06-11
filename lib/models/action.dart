@@ -3,6 +3,7 @@ import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:built_collection/built_collection.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:flutter/material.dart' hide Action;
+import 'package:nowu/models/exploreable.dart';
 import 'package:nowu/models/time.dart';
 
 export 'package:causeApiClient/causeApiClient.dart'
@@ -102,7 +103,7 @@ ActionType getActionTypeFromSubtype(Api.ActionTypeEnum type) {
   );
 }
 
-class ListAction {
+class ListAction implements Explorable {
   int id;
   String title;
   // TODO create type

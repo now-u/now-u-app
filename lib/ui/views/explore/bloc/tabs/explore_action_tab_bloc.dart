@@ -1,33 +1,68 @@
+import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
+import 'package:meilisearch/meilisearch.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/model/search/search_response.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:nowu/ui/paging/paging_state.dart';
 import 'package:nowu/ui/views/explore/bloc/explore_filter_state.dart';
+import 'package:nowu/ui/views/explore/bloc/tabs/explore_all_tab_bloc.dart';
+import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:nowu/utils/new_since.dart';
 
 import './explore_tab_bloc.dart';
 
-class ExploreActionTabBloc extends ExploreTabBloc<ListAction> {
-  ExploreActionTabBloc({
+abstract class ExploreActionSectionBloc extends ExploreTabBloc<ListAction> {
+  ExploreActionSectionBloc({
     required SearchService searchService,
+    required CausesService causesService,
   }) : super(
-          initialState: const ExploreTabState<ListAction>(
-            data: const InitialLoading<ListAction>(),
-          ),
+          initialState: ExploreTabState.initial(),
           searchService: searchService,
+          causesService: causesService,
         );
 
-  Future<SearchResponse<ListAction>> searchImpl(
+  Logger _logger = Logger('ExploreActionSectionBloc');
+
+  @override
+  Future<SearchResponse<ExploreTileData<ListAction>>> searchImpl(
     ExploreFilterState filterState,
     int? offset,
   ) async {
-    return searchService.searchActions(
-      filter: _getActionsFilter(filterState),
+    _logger.info('Searching actions filterState=$filterState offset=$offset');
+
+    final result = await searchService.searchActions(
+      filter: getActionsFilter(filterState),
       offset: offset ?? 0,
+    );
+
+    return SearchResponse(
+      items: result.items
+          .map(
+            (item) => ExploreTileData<ListAction>(
+              item: item,
+              isCompleted: causesService.actionIsComplete(item.id),
+            ),
+          )
+          .toList(),
+      hasReachedMax: result.hasReachedMax,
     );
   }
 
-  ActionSearchFilter _getActionsFilter(ExploreFilterState filterState) {
+  @protected
+  ActionSearchFilter getActionsFilter(ExploreFilterState filterState);
+}
+
+class ExploreActionTabBloc extends ExploreActionSectionBloc {
+  ExploreActionTabBloc({
+    required SearchService searchService,
+    required CausesService causesService,
+  }) : super(
+          searchService: searchService,
+          causesService: causesService,
+        );
+
+  ActionSearchFilter getActionsFilter(ExploreFilterState filterState) {
     return ActionSearchFilter(
       causeIds: filterState.filterCauseIds.isEmpty
           ? null
@@ -42,6 +77,27 @@ class ExploreActionTabBloc extends ExploreTabBloc<ListAction> {
       recommended: filterState.filterRecommended == true ? true : null,
       releasedSince: filterState.filterNew == true ? newSinceDate() : null,
       query: filterState.queryText,
+    );
+  }
+}
+
+class ExploreAllTabActionSectionBloc extends ExploreActionSectionBloc {
+  Logger _logger = Logger('ExploreAllTabActionSectionBloc');
+
+  ExploreAllTabActionSectionBloc({
+    required SearchService searchService,
+    required CausesService causesService,
+  }) : super(
+          searchService: searchService,
+          causesService: causesService,
+        );
+
+  ActionSearchFilter getActionsFilter(ExploreFilterState filterState) {
+    final baseFilter = getAllTabFilterState(filterState);
+    return ActionSearchFilter(
+      causeIds: baseFilter.causeIds,
+      query: baseFilter.query,
+      releasedSince: baseFilter.releasedSince,
     );
   }
 }

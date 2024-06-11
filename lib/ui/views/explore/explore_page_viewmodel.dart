@@ -1,5 +1,6 @@
 import 'package:nowu/locator.dart';
 import 'package:nowu/models/article.dart';
+import 'package:nowu/models/exploreable.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:nowu/ui/bottom_sheets/explore_filter/explore_filter_sheet.dart';
@@ -328,34 +329,12 @@ class ExplorePageViewModel extends FormViewModel {
   }
 }
 
-sealed class ExploreTileData {}
-
-// TODO Move out of this file
-//-- Explore Sections --//
-class ActionExploreTileData extends ExploreTileData {
-  final ListAction action;
+class ExploreTileData<T extends Explorable> {
+  final T item;
   final bool? isCompleted;
 
-  ActionExploreTileData(this.action, this.isCompleted);
-}
-
-class LearningResourceExploreTileData extends ExploreTileData {
-  final LearningResource learningResource;
-  final bool? isCompleted;
-
-  LearningResourceExploreTileData(this.learningResource, this.isCompleted);
-}
-
-// TODO Rename these, they have the same name as the widget
-class CampaignExploreTileData extends ExploreTileData {
-  final ListCampaign campaign;
-  final bool? isCompleted;
-
-  CampaignExploreTileData(this.campaign, this.isCompleted);
-}
-
-class NewsArticleExploreTileData extends ExploreTileData {
-  final NewsArticle article;
-
-  NewsArticleExploreTileData(this.article);
+  ExploreTileData({
+    required this.item,
+    required this.isCompleted,
+  });
 }
