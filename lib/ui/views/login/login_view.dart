@@ -12,7 +12,7 @@ import 'package:nowu/themes.dart';
 import 'package:nowu/ui/common/form.dart';
 import 'package:nowu/ui/views/login/bloc/login_bloc.dart';
 
-import '../../common/center_progress_bar.dart';
+import '../../common/filled_button.dart';
 import 'bloc/login_state.dart';
 import 'components/social_media_buttons.dart';
 import 'models/email.dart';
@@ -51,13 +51,6 @@ class LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        BlocBuilder<LoginBloc, LoginState>(
-          builder: (context, state) {
-            return CenterProgressBar(
-              isLoading: state.status == FormzSubmissionStatus.inProgress,
-            );
-          },
-        ),
         ClipPath(
           clipper: LoginBackgroundClipper(),
           child: Container(
@@ -210,14 +203,13 @@ class _LoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LoginBloc, LoginState>(
       builder: (context, state) {
-        return Container(
-          width: double.infinity,
-          child: FilledButton(
-            child: const Text('Login'),
-            onPressed: () {
-              context.read<LoginBloc>().onLoginWithEmail();
-            },
-          ),
+        return NowFilledButton(
+          title: 'Login',
+          onPressed: () {
+            context.read<LoginBloc>().onLoginWithEmail();
+          },
+          enabled: state.isValid,
+          loading: state.status == FormzSubmissionStatus.inProgress,
         );
       },
     );

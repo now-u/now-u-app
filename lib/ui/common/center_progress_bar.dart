@@ -10,9 +10,10 @@ class CenterProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return isLoading
-        ? const Center(
+        ? Center(
             child: Card(
-              child: Padding(
+              surfaceTintColor: CustomColors.white,
+              child: const Padding(
                 padding: EdgeInsets.all(CustomPaddingSize.normal),
                 child: CircularProgressIndicator(),
               ),
