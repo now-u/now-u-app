@@ -1,19 +1,19 @@
 import 'dart:async';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:logging/logging.dart';
 import 'package:flutter/foundation.dart';
-import 'package:nowu/app/app.router.dart';
-import 'package:nowu/locator.dart';
-import 'package:nowu/assets/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:logging/logging.dart';
+import 'package:nowu/assets/constants.dart';
+import 'package:nowu/locator.dart';
 import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/causes_service.dart';
+import 'package:nowu/services/storage.dart';
 import 'package:nowu/services/user_service.dart';
 import 'package:nowu/themes.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_bloc.dart';
@@ -113,6 +113,7 @@ class App extends StatelessWidget {
               authenticationService: locator<AuthenticationService>(),
               userService: locator<UserService>(),
               causesService: locator<CausesService>(),
+              storageService: locator<SecureStorageService>(),
             );
           },
           child: BlocListener<AuthenticationBloc, AuthenticationState>(
@@ -136,6 +137,13 @@ class App extends StatelessWidget {
                   break;
                 case AuthenticationStateUnknown():
                   // TODO Something
+                  break;
+                case AuthenticationStateIntro():
+                  _appRouter.replaceAll(
+                    [
+                      const IntroRoute(),
+                    ],
+                  );
                   break;
               }
             },

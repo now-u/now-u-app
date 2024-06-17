@@ -12,4 +12,6 @@ sealed class AuthenticationState with _$AuthenticationState {
     // TODO Make user model
     required UserProfile user,
   }) = AuthenticationStateAuthenticated;
+
+  const factory AuthenticationState.intro() = AuthenticationStateIntro;
 }
