@@ -1,12 +1,12 @@
 import 'dart:io' show Platform;
 
-import 'package:flutter/foundation.dart' show kReleaseMode;
+import 'package:flutter/foundation.dart' show kIsWeb, kReleaseMode;
 import 'package:flutter/material.dart';
 
 // --- Env --- //
 
 /// Whether we are currently running tests
-bool testMode = Platform.environment.containsKey('FLUTTER_TEST');
+bool testMode = !kIsWeb && Platform.environment.containsKey('FLUTTER_TEST');
 
 /// Whether the app is currently running in debug mode
 bool devMode = !testMode && !kReleaseMode;

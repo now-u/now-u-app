@@ -25,20 +25,20 @@ class HomeViewModel extends BaseViewModel {
   List<Cause>? get causes => _causes;
 
   // TODO Multiple futures viewModel
-  List<ActionExploreTileData>? _myActions;
+  // List<ActionExploreTileData>? _myActions;
 
-  List<ActionExploreTileData>? get myActions => _myActions;
-  List<CampaignExploreTileData>? _recommendedCampaigns;
+  // List<ActionExploreTileData>? get myActions => _myActions;
+  // List<CampaignExploreTileData>? _recommendedCampaigns;
 
-  List<CampaignExploreTileData>? get recommendedCampaigns =>
-      _recommendedCampaigns;
-  List<CampaignExploreTileData>? _ofTheMonthCampaigns;
+  // List<CampaignExploreTileData>? get recommendedCampaigns =>
+  //     _recommendedCampaigns;
+  // List<CampaignExploreTileData>? _ofTheMonthCampaigns;
 
-  List<CampaignExploreTileData>? get ofTheMonthCampaigns =>
-      _ofTheMonthCampaigns;
-  List<NewsArticleExploreTileData>? _inTheNews;
+  // List<CampaignExploreTileData>? get ofTheMonthCampaigns =>
+  //     _ofTheMonthCampaigns;
+  // List<NewsArticleExploreTileData>? _inTheNews;
 
-  List<NewsArticleExploreTileData>? get inTheNews => _inTheNews;
+  // List<NewsArticleExploreTileData>? get inTheNews => _inTheNews;
 
   UserProfile? get currentUser => _userService.currentUser;
 
@@ -54,68 +54,68 @@ class HomeViewModel extends BaseViewModel {
     List<int>? causesFilter =
         selectedCausesId?.isEmpty == false ? selectedCausesId : null;
 
-    await (
-      _searchService
-          .searchCampaigns(
-            filter: CampaignSearchFilter(
-              causeIds: causesFilter,
-              completed: false,
-              ofTheMonth: false,
-            ),
-          )
-          .then(
-            (value) => _recommendedCampaigns = value.items
-                .map(
-                  (campaign) => CampaignExploreTileData(
-                    campaign,
-                    _causesService.campaignIsComplete(campaign.id),
-                  ),
-                )
-                .toList(),
-          ),
-      _searchService
-          .searchCampaigns(
-            filter: CampaignSearchFilter(
-              ofTheMonth: true,
-              causeIds: causesFilter,
-              completed: false,
-            ),
-          )
-          .then(
-            (value) => _ofTheMonthCampaigns = value.items
-                .map(
-                  (campaign) => CampaignExploreTileData(
-                    campaign,
-                    _causesService.campaignIsComplete(campaign.id),
-                  ),
-                )
-                .toList(),
-          ),
-      _searchService
-          .searchActions(
-            filter:
-                ActionSearchFilter(causeIds: causesFilter, completed: false),
-          )
-          .then(
-            (value) => _myActions = value.items
-                .map(
-                  (action) => ActionExploreTileData(
-                    action,
-                    _causesService.actionIsComplete(action.id),
-                  ),
-                )
-                .toList(),
-          ),
-      _searchService
-          .searchNewsArticles(
-            filter: NewsArticleSearchFilter(causeIds: causesFilter),
-          )
-          .then(
-            (value) => _inTheNews = value.items
-                .map((action) => NewsArticleExploreTileData(action))
-                .toList(),
-          ),
-    ).wait;
+    // await (
+    //   _searchService
+    //       .searchCampaigns(
+    //         filter: CampaignSearchFilter(
+    //           causeIds: causesFilter,
+    //           completed: false,
+    //           ofTheMonth: false,
+    //         ),
+    //       )
+    //       .then(
+    //         (value) => _recommendedCampaigns = value.items
+    //             .map(
+    //               (campaign) => CampaignExploreTileData(
+    //                 campaign,
+    //                 _causesService.campaignIsComplete(campaign.id),
+    //               ),
+    //             )
+    //             .toList(),
+    //       ),
+    //   _searchService
+    //       .searchCampaigns(
+    //         filter: CampaignSearchFilter(
+    //           ofTheMonth: true,
+    //           causeIds: causesFilter,
+    //           completed: false,
+    //         ),
+    //       )
+    //       .then(
+    //         (value) => _ofTheMonthCampaigns = value.items
+    //             .map(
+    //               (campaign) => CampaignExploreTileData(
+    //                 campaign,
+    //                 _causesService.campaignIsComplete(campaign.id),
+    //               ),
+    //             )
+    //             .toList(),
+    //       ),
+    //   _searchService
+    //       .searchActions(
+    //         filter:
+    //             ActionSearchFilter(causeIds: causesFilter, completed: false),
+    //       )
+    //       .then(
+    //         (value) => _myActions = value.items
+    //             .map(
+    //               (action) => ActionExploreTileData(
+    //                 action,
+    //                 _causesService.actionIsComplete(action.id),
+    //               ),
+    //             )
+    //             .toList(),
+    //       ),
+    //   _searchService
+    //       .searchNewsArticles(
+    //         filter: NewsArticleSearchFilter(causeIds: causesFilter),
+    //       )
+    //       .then(
+    //         (value) => _inTheNews = value.items
+    //             .map((action) => NewsArticleExploreTileData(action))
+    //             .toList(),
+    //       ),
+    // ).wait;
     notifyListeners();
   }
 

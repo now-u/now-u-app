@@ -1,3 +1,7 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'paging_state.freezed.dart';
+
 sealed class PagingState<T> {
   const PagingState();
 }
@@ -6,14 +10,11 @@ class InitialLoading<T> extends PagingState<T> {
   const InitialLoading() : super();
 }
 
-class Data<T> extends PagingState<T> {
-  final List<T> items;
-  final bool hasReachedMax;
-  final bool isLoadingMore;
-
-  Data({
-    required this.items,
-    this.hasReachedMax = false,
-    this.isLoadingMore = false,
-  }) : super();
+@freezed
+class Data<T> extends PagingState<T> with _$Data<T> {
+  const factory Data({
+    required List<T> items,
+    @Default(false) bool hasReachedMax,
+    @Default(false) bool isLoadingMore,
+  }) = _Data;
 }

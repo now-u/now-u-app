@@ -69,6 +69,7 @@ class CausesService {
   /// Input params
   /// Return a List of ListActions
   Future<Action> getAction(int id) async {
+    _logger.info('Getting action id=$id');
     final response =
         await _causeServiceClient.getActionsApi().actionsRetrieve(id: id);
     return Action.fromApiModel(response.data!);

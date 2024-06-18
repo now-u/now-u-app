@@ -18,6 +18,7 @@ import 'package:nowu/services/user_service.dart';
 import 'package:nowu/themes.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_bloc.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_state.dart';
+import 'package:nowu/ui/views/causes/bloc/causes_bloc.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sentry_logging/sentry_logging.dart';
 
@@ -73,11 +74,14 @@ void main() async {
     runApp(App());
   }, (exception, stackTrace) async {
     _logger.severe(
-      'Startup failed $exception, $stackTrace',
+      'Unhandled exception: $exception\n$stackTrace',
       exception,
       stackTrace,
     );
-    await Sentry.captureException(exception, stackTrace: stackTrace);
+
+    if (!devMode && !testMode) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+    }
   });
 }
 
@@ -107,7 +111,9 @@ class App extends StatelessWidget {
       // routeInformationParser: stackedRouter.defaultRouteParser(),
       theme: regularTheme,
       builder: (context, child) {
-        return BlocProvider(
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<AuthenticationBloc>(
           create: (_) {
             return AuthenticationBloc(
               authenticationService: locator<AuthenticationService>(),
@@ -115,7 +121,15 @@ class App extends StatelessWidget {
               causesService: locator<CausesService>(),
               storageService: locator<SecureStorageService>(),
             );
-          },
+          },),
+            BlocProvider<CausesBloc>(
+              create: (_) {
+                return CausesBloc(
+                  causesService: locator<CausesService>(),
+                )..fetchCauses();
+              },
+            ),
+          ],
           child: BlocListener<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
               switch (state) {

@@ -94,7 +94,7 @@ class ExploreFilterSheet<T> extends StatelessWidget {
           Container(
             width: double.infinity,
             child: FilledButton(
-              onPressed: () => context.router.pop(),
+              onPressed: () => Navigator.of(context).pop(),
               child: const Text('Apply'),
             ),
           ),

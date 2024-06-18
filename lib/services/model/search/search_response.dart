@@ -1,9 +1,11 @@
-class SearchResponse<T> {
-  final List<T> items;
-  final bool hasReachedMax;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  SearchResponse({
-    required this.items,
-    required this.hasReachedMax,
-  });
+part 'search_response.freezed.dart';
+
+@freezed
+class SearchResponse<T> with _$SearchResponse<T> {
+  const factory SearchResponse({
+    required List<T> items,
+    required bool hasReachedMax,
+  }) = _SearchResponse;
 }

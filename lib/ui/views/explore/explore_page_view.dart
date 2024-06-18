@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:nowu/ui/views/explore/bloc/explore_filter_bloc.dart';
+import 'package:nowu/ui/views/explore/bloc/explore_filter_state.dart';
 import 'package:nowu/ui/views/explore/tabs/explore_all_tab.dart';
 import 'package:nowu/ui/views/explore/tabs/explore_campaign_tab.dart';
 import 'package:nowu/ui/views/explore/tabs/explore_news_article_tab.dart';
@@ -137,11 +138,19 @@ class _ExploreTabsState extends State<ExploreTabs>
             horizontal: horizontalPadding,
             vertical: 50,
           ),
-          child: SearchBar(
-            controller: widget.searchBarController,
-            leading: const Icon(Icons.search),
-            hintText: 'Explore now-u resources',
-            onChanged: (value) => widget.viewModel.search(),
+          child: BlocBuilder<ExploreFilterBloc, ExploreFilterState>(
+            builder: (context, state) {
+              return SearchBar(
+                controller: widget.searchBarController,
+                leading: const Icon(Icons.search),
+                hintText: 'Explore now-u resources',
+                onChanged: (value) {
+                  context
+                      .read<ExploreFilterBloc>()
+                      .updateFilter(state.copyWith(queryText: value));
+                },
+              );
+            },
           ),
         ),
         bottom: TabBar(
