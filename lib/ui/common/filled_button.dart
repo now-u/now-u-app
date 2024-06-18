@@ -34,12 +34,12 @@ class NowFilledButton extends StatelessWidget {
           Center(child: Text(title)),
         ],
       ),
-      onPressed: enabled || !loading ? onPressed : null,
+      onPressed: enabled && !loading ? onPressed : null,
       style: FilledButton.styleFrom(
         foregroundColor: CustomColors.white,
-        backgroundColor: enabled
-            ? CustomColors.brandColor
-            : CustomColors.brandColor.withOpacity(0.5),
+        backgroundColor: CustomColors.brandColor,
+        disabledBackgroundColor: CustomColors.brandColor.withOpacity(0.5),
+        disabledForegroundColor: CustomColors.white,
       ),
     );
   }
