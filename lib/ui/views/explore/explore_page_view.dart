@@ -100,6 +100,7 @@ class ExploreTabs extends StatelessWidget {
               tabAlignment: TabAlignment.start,
             ),
           ),
+          body: child,
         );
       },
     );

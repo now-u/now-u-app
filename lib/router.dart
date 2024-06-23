@@ -33,6 +33,7 @@ class AppRouter extends $AppRouter {
               children: [
                 AutoRoute(path: 'all', page: ExploreAllRoute.page),
                 AutoRoute(path: 'actions', page: ExploreActionRoute.page),
+                AutoRoute(path: 'campaigns', page: ExploreCampaignRoute.page),
                 AutoRoute(path: 'learn', page: ExploreLearningResourceRoute.page),
                 AutoRoute(path: 'news', page: ExploreNewsArticleRoute.page),
               ],
