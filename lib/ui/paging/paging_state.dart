@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:nowu/services/model/search/search_response.dart';
 
 part 'paging_state.freezed.dart';
 
@@ -17,4 +18,11 @@ class Data<T> extends PagingState<T> with _$Data<T> {
     @Default(false) bool hasReachedMax,
     @Default(false) bool isLoadingMore,
   }) = _Data;
+
+  factory Data.fromSearchResponse(SearchResponse<T> searchResponse) {
+    return Data(
+      items: searchResponse.items,
+      hasReachedMax: searchResponse.hasReachedMax,
+    );
+  }
 }

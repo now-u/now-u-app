@@ -4,16 +4,15 @@ import 'package:nowu/locator.dart';
 import 'package:nowu/models/article.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/search_service.dart';
+import 'package:auto_route/auto_route.dart';
 
 import '../bloc/tabs/explore_news_article_tab_bloc.dart';
-import '../explore_page_viewmodel.dart';
 import '../filters/explore_filter_chip.dart';
 import 'explore_tab.dart';
 
+@RoutePage()
 class ExploreNewsArticleTab extends ExploreTab<NewsArticle> {
-  final ExplorePageViewModel viewModel;
-
-  const ExploreNewsArticleTab(this.viewModel, {Key? key}) : super(key: key);
+  const ExploreNewsArticleTab({Key? key}) : super(key: key);
 
   @override
   createBloc(context) {

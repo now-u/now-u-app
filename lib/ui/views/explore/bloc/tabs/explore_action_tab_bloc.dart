@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
-import 'package:meilisearch/meilisearch.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/model/search/search_response.dart';
 import 'package:nowu/services/search_service.dart';
-import 'package:nowu/ui/paging/paging_state.dart';
 import 'package:nowu/ui/views/explore/bloc/explore_filter_state.dart';
 import 'package:nowu/ui/views/explore/bloc/tabs/explore_all_tab_bloc.dart';
-import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:nowu/utils/new_since.dart';
 
 import './explore_tab_bloc.dart';
@@ -25,27 +22,15 @@ abstract class ExploreActionSectionBloc extends ExploreTabBloc<ListAction> {
   Logger _logger = Logger('ExploreActionSectionBloc');
 
   @override
-  Future<SearchResponse<ExploreTileData<ListAction>>> searchImpl(
+  Future<SearchResponse<ListAction>> searchImpl(
     ExploreFilterState filterState,
     int? offset,
   ) async {
     _logger.info('Searching actions filterState=$filterState offset=$offset');
 
-    final result = await searchService.searchActions(
+    return await searchService.searchActions(
       filter: getActionsFilter(filterState),
       offset: offset ?? 0,
-    );
-
-    return SearchResponse(
-      items: result.items
-          .map(
-            (item) => ExploreTileData<ListAction>(
-              item: item,
-              isCompleted: causesService.actionIsComplete(item.id),
-            ),
-          )
-          .toList(),
-      hasReachedMax: result.hasReachedMax,
     );
   }
 

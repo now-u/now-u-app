@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:nowu/router.gr.dart';
-import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
+import 'package:nowu/ui/views/explore/bloc/explore_filter_state.dart';
 import 'package:auto_route/auto_route.dart';
 
 enum TabPage { Home, Explore, Menu }
@@ -18,7 +18,7 @@ class TabPageDetails {
   });
 }
 
-@RoutePage()
+@RoutePage(name: 'TabsRoute')
 class TabsView extends StatelessWidget with WidgetsBindingObserver {
   final TabPage? initialPage;
   final ExplorePageFilterData? exploreFilterData;

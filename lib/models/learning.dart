@@ -64,6 +64,7 @@ class LearningResource extends Explorable {
   int time;
   DateTime createdAt;
   Uri link;
+  bool isCompleted;
 
   LearningResource({
     required this.id,
@@ -73,16 +74,18 @@ class LearningResource extends Explorable {
     required this.type,
     required this.time,
     required this.createdAt,
+    required this.isCompleted,
   });
 
-  LearningResource.fromApiModel(Api.LearningResource apiModel)
+  LearningResource.fromApiModel(Api.LearningResource apiModel, bool isCompleted)
       : id = apiModel.id,
         title = apiModel.title,
         link = Uri.parse(apiModel.link),
         cause = apiModel.causes[0],
         type = getResourceTypeFromEnum(apiModel.learningResourceType),
         time = apiModel.time,
-        createdAt = apiModel.createdAt;
+        createdAt = apiModel.createdAt,
+        isCompleted = isCompleted;
 
   String get timeText => timeBrackets.firstWhere((b) => b.maxTime > time).text;
 

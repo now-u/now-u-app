@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:nowu/assets/components/explore_tiles.dart';
 import 'package:nowu/locator.dart';
-import 'package:nowu/models/campaign.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:nowu/ui/views/explore/bloc/tabs/explore_campaign_tab_bloc.dart';
+import 'package:auto_route/auto_route.dart';
 
-import '../explore_page_viewmodel.dart';
 import '../filters/explore_filter_chip.dart';
 import 'explore_tab.dart';
 
+@RoutePage()
 class ExploreCampaignTab extends ExploreTab<ListCampaign> {
-  final ExplorePageViewModel viewModel;
-
-  const ExploreCampaignTab(this.viewModel, {Key? key}) : super(key: key);
+  const ExploreCampaignTab({Key? key}) : super(key: key);
 
   @override
   createBloc(context) {

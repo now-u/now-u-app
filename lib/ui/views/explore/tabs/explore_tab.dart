@@ -4,8 +4,6 @@ import 'package:nowu/models/exploreable.dart';
 import 'package:nowu/ui/views/explore/bloc/explore_filter_bloc.dart';
 import 'package:nowu/ui/views/explore/bloc/explore_filter_state.dart';
 import 'package:nowu/ui/views/explore/bloc/tabs/explore_tab_bloc.dart';
-import 'package:nowu/ui/views/explore/explore_page_view.dart';
-import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:nowu/ui/views/explore/filters/explore_filter_chip.dart';
 
 import '../../../paging/paging_state.dart';
@@ -15,7 +13,7 @@ abstract class ExploreTab<T extends Explorable> extends StatelessWidget {
   ExploreTabBloc<T> createBloc(BuildContext context);
   // TODO make not a function
   List<FilterConfig> buildFilterChips();
-  Widget itemBuilder(ExploreTileData<T> data);
+  Widget itemBuilder(T data);
 
   const ExploreTab({Key? key}) : super(key: key);
 
@@ -75,7 +73,7 @@ abstract class ExploreTab<T extends Explorable> extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 8),
                         // TODO Find out why casting is required!!
-                        child: itemBuilder((items as List<ExploreTileData<T>>).toList()[index - 1]),
+                        child: itemBuilder((items as List<T>).toList()[index - 1]),
                       );
                     }
                   },

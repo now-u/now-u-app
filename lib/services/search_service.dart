@@ -2,14 +2,13 @@ import 'dart:math';
 
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
-import 'package:causeApiClient/causeApiClient.dart'
-    hide NewsArticle, ListAction, ListCampaign, LearningResource;
 import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
 import 'package:meilisearch/meilisearch.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/assets/constants.dart';
+import 'package:nowu/models/User.dart';
 import 'package:nowu/models/article.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/model/search/search_response.dart';
@@ -335,7 +334,7 @@ class SearchService {
     const Duration(seconds: 10),
   );
 
-  final _causeServiceClient = CauseApiClient();
+  final _causeServiceClient = Api.CauseApiClient();
   final _causesService = locator<CausesService>();
   final _logger = Logger('SearchService');
 
@@ -365,7 +364,15 @@ class SearchService {
       hits,
       specifiedType: const FullType(BuiltList, [FullType(Api.ListAction)]),
     ) as BuiltList<Api.ListAction>;
-    return results.map(ListAction.fromApiModel).toList();
+    return results
+        .map(
+          (action) => ListAction.fromApiModel(
+            action,
+            _causesService.userInfo?.completedActionIds.contains(action.id) ??
+                false,
+          ),
+        )
+        .toList();
   }
 
   List<LearningResource> _searchHitsToLearningResources(
@@ -376,7 +383,16 @@ class SearchService {
       specifiedType:
           const FullType(BuiltList, [FullType(Api.LearningResource)]),
     ) as BuiltList<Api.LearningResource>;
-    return results.map(LearningResource.fromApiModel).toList();
+    return results
+        .map(
+          (learningResource) => LearningResource.fromApiModel(
+            learningResource,
+            _causesService.userInfo?.completedLearningResourceIds
+                    .contains(learningResource.id) ??
+                false,
+          ),
+        )
+        .toList();
   }
 
   List<ListCampaign> _searchHitsToCampaign(List<Map<String, dynamic>> hits) {
@@ -384,7 +400,14 @@ class SearchService {
       hits,
       specifiedType: const FullType(BuiltList, [FullType(Api.ListCampaign)]),
     ) as BuiltList<Api.ListCampaign>;
-    return results.map(ListCampaign.fromApiModel).toList();
+    return results
+        .map(
+          (campaign) => ListCampaign.fromApiModel(
+            campaign,
+            _causesService.userInfo,
+          ),
+        )
+        .toList();
   }
 
   List<NewsArticle> _searchHitsToNewsArticles(List<Map<String, dynamic>> hits) {
@@ -405,14 +428,16 @@ class SearchService {
     final searchQuery =
         resourceSearchFilter?.toMeilisearchQuery(_causesService.userInfo);
 
-    _logger.info('Searching index index=${index.uid} filter=${searchQuery != null ? searchQuery.filter.toString() : 'null'} query=${resourceSearchFilter != null ? resourceSearchFilter.query : 'null'} offset=${offset} limit=${limit}');
+    _logger.info(
+        'Searching index index=${index.uid} filter=${searchQuery != null ? searchQuery.filter.toString() : 'null'} query=${resourceSearchFilter != null ? resourceSearchFilter.query : 'null'} offset=${offset} limit=${limit}');
 
     final result = await index.search(
       resourceSearchFilter?.query,
       searchQuery?.copyWith(limit: limit, offset: offset),
     );
 
-    _logger.info('Searching index result index=${index.uid} resultSize=${result.hits.length}');
+    _logger.info(
+        'Searching index result index=${index.uid} resultSize=${result.hits.length}');
 
     return responseSerializer(_orderSearchResults(result.hits, searchQuery));
   }
@@ -497,53 +522,52 @@ class SearchService {
     );
   }
 
-  // TODO Find out how to search multiple indexes
-  Future<ResourcesSearchResult> searchResources({
-    BaseResourceSearchFilter? filter,
-  }) async {
-    final searchQuery = filter?.toMeilisearchFilter();
-    final results = await _meiliSearchClient.multiSearch(
-      MultiSearchQuery(
-        // TODO Should we put this default stuff into the filters directly??
-        queries: (filter?.resourceTypes ?? ResourceType.values)
-            .map(
-              (resourceType) => IndexSearchQuery(
-                indexUid: getResourceTypeIndexName(resourceType),
-                query: filter?.query,
-                filter: searchQuery,
-              ),
-            )
-            .toList(),
-      ),
-    );
+  // Future<ResourcesSearchResult> searchResources({
+  //   BaseResourceSearchFilter? filter,
+  // }) async {
+  //   final searchQuery = filter?.toMeilisearchFilter();
+  //   final results = await _meiliSearchClient.multiSearch(
+  //     MultiSearchQuery(
+  //       // TODO Should we put this default stuff into the filters directly??
+  //       queries: (filter?.resourceTypes ?? ResourceType.values)
+  //           .map(
+  //             (resourceType) => IndexSearchQuery(
+  //               indexUid: getResourceTypeIndexName(resourceType),
+  //               query: filter?.query,
+  //               filter: searchQuery,
+  //             ),
+  //           )
+  //           .toList(),
+  //     ),
+  //   );
 
-    List<Map<String, dynamic>> getIndexHits(String indexName) {
-      // TODO Should we have null and [] to make it clear if the index was searched or not?
-      return results.results
-              .firstWhereOrNull(
-                (indexResult) => indexResult.indexUid == indexName,
-              )
-              ?.hits ??
-          [];
-    }
+  //   List<Map<String, dynamic>> getIndexHits(String indexName) {
+  //     // TODO Should we have null and [] to make it clear if the index was searched or not?
+  //     return results.results
+  //             .firstWhereOrNull(
+  //               (indexResult) => indexResult.indexUid == indexName,
+  //             )
+  //             ?.hits ??
+  //         [];
+  //   }
 
-    return ResourcesSearchResult(
-      // For now the order is never defined so we can just use null
-      actions: _searchHitsToActions(
-        _orderSearchResults(getIndexHits(SearchIndexName.ACTIONS), null),
-      ),
-      learningResources: _searchHitsToLearningResources(
-        _orderSearchResults(
-          getIndexHits(SearchIndexName.LEARNING_RESOURCES),
-          null,
-        ),
-      ),
-      campaigns: _searchHitsToCampaign(
-        _orderSearchResults(getIndexHits(SearchIndexName.CAMPAIGNS), null),
-      ),
-      newsArticles: _searchHitsToNewsArticles(
-        _orderSearchResults(getIndexHits(SearchIndexName.NEWS_ARTICLES), null),
-      ),
-    );
-  }
+  //   return ResourcesSearchResult(
+  //     // For now the order is never defined so we can just use null
+  //     actions: _searchHitsToActions(
+  //       _orderSearchResults(getIndexHits(SearchIndexName.ACTIONS), null),
+  //     ),
+  //     learningResources: _searchHitsToLearningResources(
+  //       _orderSearchResults(
+  //         getIndexHits(SearchIndexName.LEARNING_RESOURCES),
+  //         null,
+  //       ),
+  //     ),
+  //     campaigns: _searchHitsToCampaign(
+  //       _orderSearchResults(getIndexHits(SearchIndexName.CAMPAIGNS), null),
+  //     ),
+  //     newsArticles: _searchHitsToNewsArticles(
+  //       _orderSearchResults(getIndexHits(SearchIndexName.NEWS_ARTICLES), null),
+  //     ),
+  //   );
+  // }
 }

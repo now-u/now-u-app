@@ -7,7 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'router.gr.dart';
 
-@AutoRouterConfig(replaceInRouteName: 'View,Route')
+@AutoRouterConfig(replaceInRouteName: 'View|Tab,Route')
 class AppRouter extends $AppRouter {
   @override
   List<AutoRoute> get routes => [
@@ -30,7 +30,12 @@ class AppRouter extends $AppRouter {
             AutoRoute(
               path: 'explore',
               page: ExploreRoute.page,
-              children: [],
+              children: [
+                AutoRoute(path: 'all', page: ExploreAllRoute.page),
+                AutoRoute(path: 'actions', page: ExploreActionRoute.page),
+                AutoRoute(path: 'learn', page: ExploreLearningResourceRoute.page),
+                AutoRoute(path: 'news', page: ExploreNewsArticleRoute.page),
+              ],
             ),
             AutoRoute(path: 'more', page: MoreRoute.page),
           ],

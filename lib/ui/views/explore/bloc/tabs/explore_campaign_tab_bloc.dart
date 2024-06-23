@@ -5,7 +5,6 @@ import 'package:nowu/services/model/search/search_response.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:nowu/ui/views/explore/bloc/explore_filter_state.dart';
 import 'package:nowu/ui/views/explore/bloc/tabs/explore_all_tab_bloc.dart';
-import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:nowu/utils/new_since.dart';
 
 import './explore_tab_bloc.dart';
@@ -23,27 +22,15 @@ abstract class ExploreCampaignSectionBloc extends ExploreTabBloc<ListCampaign> {
   Logger _logger = Logger('ExploreCampaignSectionBloc');
 
   @override
-  Future<SearchResponse<ExploreTileData<ListCampaign>>> searchImpl(
+  Future<SearchResponse<ListCampaign>> searchImpl(
     ExploreFilterState filterState,
     int? offset,
   ) async {
     _logger.info('Searching campaigns filterState=$filterState offset=$offset');
 
-    final result = await searchService.searchCampaigns(
+    return await searchService.searchCampaigns(
       filter: getCampaignsFilter(filterState),
       offset: offset ?? 0,
-    );
-
-    return SearchResponse(
-      items: result.items
-          .map(
-            (item) => ExploreTileData<ListCampaign>(
-              item: item,
-              isCompleted: causesService.campaignIsComplete(item.id),
-            ),
-          )
-          .toList(),
-      hasReachedMax: result.hasReachedMax,
     );
   }
 
@@ -91,3 +78,41 @@ class ExploreAllTabCampaignSectionBloc extends ExploreCampaignSectionBloc {
     );
   }
 }
+
+// TODO Write bloc for home page
+// class HomeOfTheMonthCampaignSectionBloc extends ExploreCampaignSectionBloc {
+// 
+//   HomeOfTheMonthCampaignSectionBloc({
+//     required SearchService searchService,
+//     required CausesService causesService,
+//   }) : super(
+//           searchService: searchService,
+//           causesService: causesService,
+//         );
+// 
+//   CampaignSearchFilter getCampaignsFilter() {
+//     return CampaignSearchFilter(
+//       causeIds: causesService.userInfo?.selectedCausesIds,
+//       ofTheMonth: true,
+//       completed: false,
+//     );
+//   }
+// }
+// 
+// class HomeRecommenedCampaignSectionBloc extends ExploreCampaignSectionBloc {
+//   HomeRecommenedCampaignSectionBloc({
+//     required SearchService searchService,
+//     required CausesService causesService,
+//   }) : super(
+//           searchService: searchService,
+//           causesService: causesService,
+//         );
+// 
+//   CampaignSearchFilter getCampaignsFilter() {
+//     return CampaignSearchFilter(
+//       causeIds: causesFilter,
+//       completed: false,
+//       ofTheMonth: false,
+//     );
+//   }
+// }

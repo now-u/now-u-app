@@ -11,7 +11,7 @@ import 'package:nowu/themes.dart';
 import 'package:nowu/ui/views/action_info/bloc/action_info_bloc.dart';
 import 'package:nowu/ui/views/action_info/bloc/action_info_state.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
+import 'package:nowu/ui/views/explore/bloc/explore_filter_state.dart';
 
 // TODO Use from constants
 final double hPadding = 10;

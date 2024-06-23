@@ -8,7 +8,6 @@ import 'package:nowu/models/article.dart';
 import 'package:nowu/models/campaign.dart';
 import 'package:nowu/models/learning.dart';
 import 'package:nowu/ui/views/explore/explore_page_view.dart';
-import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 
 const double RESOURCE_TILE_HEIGHT = 160;
 const double CAMPIGN_TILE_HEIGHT = 300;
@@ -161,7 +160,7 @@ class ExploreSectionWidget extends StatelessWidget {
 
 // TODO Can we get rid of all of these now?
 class ActionExploreSection extends StatelessWidget {
-  final Iterable<ExploreTileData<ListAction>>? tiles;
+  final Iterable<ListAction>? tiles;
   final bool isLoading;
   final String title;
   final GestureTapCallback? titleOnClick;
@@ -189,12 +188,12 @@ class ActionExploreSection extends StatelessWidget {
 }
 
 class LearningResourceExploreSection extends StatelessWidget {
-  final Iterable<ExploreTileData<LearningResource>>? tiles;
+  final Iterable<LearningResource>? tiles;
   final bool isLoading;
   final String title;
   final GestureTapCallback? titleOnClick;
   final String? description;
-  final void Function(ExploreTileData<LearningResource> tileData) tileOnClick;
+  final void Function(LearningResource tileData) tileOnClick;
 
   const LearningResourceExploreSection({
     required this.title,
@@ -209,10 +208,7 @@ class LearningResourceExploreSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExploreSectionWidget(
       tiles: this.tiles?.map(
-            (tileData) => ExploreLearningResourceTile(
-              tileData,
-              onTap: () => tileOnClick(tileData),
-            ),
+            (tileData) => ExploreLearningResourceTile(tileData),
           ),
       tileHeight: 160,
       isLoading: isLoading,
@@ -224,7 +220,7 @@ class LearningResourceExploreSection extends StatelessWidget {
 }
 
 class CampaignExploreSection extends StatelessWidget {
-  final Iterable<ExploreTileData<ListCampaign>>? tiles;
+  final Iterable<ListCampaign>? tiles;
   final bool isLoading;
   final String title;
   final GestureTapCallback? titleOnClick;
@@ -256,7 +252,7 @@ class CampaignExploreSection extends StatelessWidget {
 }
 
 class NewsArticleExploreSection extends StatelessWidget {
-  final Iterable<ExploreTileData<NewsArticle>>? tiles;
+  final Iterable<NewsArticle>? tiles;
   final bool isLoading;
   final String title;
   final GestureTapCallback? titleOnClick;

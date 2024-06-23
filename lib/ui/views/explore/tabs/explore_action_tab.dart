@@ -4,15 +4,14 @@ import 'package:nowu/locator.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:nowu/ui/views/explore/bloc/tabs/explore_action_tab_bloc.dart';
+import 'package:auto_route/auto_route.dart';
 
-import '../explore_page_viewmodel.dart';
 import '../filters/explore_filter_chip.dart';
 import 'explore_tab.dart';
 
+@RoutePage()
 class ExploreActionTab extends ExploreTab<ListAction> {
-  final ExplorePageViewModel viewModel;
-
-  const ExploreActionTab(this.viewModel, {Key? key}) : super(key: key);
+  const ExploreActionTab({Key? key}) : super(key: key);
 
   @override
   createBloc(context) {

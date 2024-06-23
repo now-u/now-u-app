@@ -10,4 +10,9 @@ class CampaignInfoBloc extends Cubit<CampaignInfoState> {
     required causesService,
   })  : _causesService = causesService,
         super(const CampaignInfoState.initial());
+
+  Future<void> fetchCampaign(int campaignId) async {
+    final campaign = await _causesService.getCampaign(campaignId);
+    emit(CampaignInfoState.success(campaign: campaign));
+  }
 }

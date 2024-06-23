@@ -2,6 +2,7 @@ import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:built_collection/built_collection.dart';
 import 'package:logging/logging.dart';
 import 'package:nowu/locator.dart';
+import 'package:nowu/models/User.dart';
 import 'package:nowu/models/learning.dart';
 import 'package:nowu/models/campaign.dart';
 import 'package:nowu/models/organisation.dart';
@@ -11,6 +12,7 @@ import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/models/action.dart';
+import 'package:nowu/utils/let.dart';
 
 export 'package:nowu/models/action.dart';
 export 'package:nowu/models/campaign.dart';
@@ -34,8 +36,8 @@ class CausesService {
 
   Api.CauseApiClient get _causeServiceClient => _apiService.apiClient;
 
-  Api.CausesUser? _userInfo = null;
-  Api.CausesUser? get userInfo => _userInfo;
+  CausesUser? _userInfo = null;
+  CausesUser? get userInfo => _userInfo;
 
   /// Get a list of causes
   ///
@@ -61,7 +63,7 @@ class CausesService {
   Future<Campaign> getCampaign(int id) async {
     final response =
         await _causeServiceClient.getCampaignsApi().campaignsRetrieve(id: id);
-    return Campaign.fromApiModel(response.data!);
+    return Campaign.fromApiModel(response.data!, userInfo);
   }
 
   /// Get an action by id
@@ -72,7 +74,7 @@ class CausesService {
     _logger.info('Getting action id=$id');
     final response =
         await _causeServiceClient.getActionsApi().actionsRetrieve(id: id);
-    return Action.fromApiModel(response.data!);
+    return Action.fromApiModel(response.data!, userInfo?.completedActionIds.contains(id) ?? false);
   }
 
   /// Set user's selected causes
@@ -97,7 +99,7 @@ class CausesService {
           ),
         );
 
-    _userInfo = response.data;
+    _userInfo = response.data?.let(CausesUser.fromApiModel);
 
     // After selecting causes we fetch all causes to updated 'selected' status
     await _fetchCauses();
@@ -158,14 +160,14 @@ class CausesService {
     return response.data!.map((org) => Organisation(org)).toList();
   }
 
-  Future<Api.CausesUser?> fetchUserInfo() async {
+  Future<CausesUser?> fetchUserInfo() async {
     if (!_authService.isAuthenticated) {
       _logger.warning('Trying to fetch user info when not authenticated');
       return null;
     }
     final response =
         await _causeServiceClient.getMeApi().meCausesInfoRetrieve();
-    return _userInfo = response.data!;
+    return _userInfo = response.data?.let(CausesUser.fromApiModel);
   }
 
   Future<void> openAction(int actionId) async {

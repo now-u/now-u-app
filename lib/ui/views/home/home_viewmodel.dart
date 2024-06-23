@@ -9,7 +9,6 @@ import 'package:nowu/services/dialog_service.dart';
 import 'package:nowu/services/internal_notification_service.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:nowu/services/user_service.dart';
-import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeViewModel extends BaseViewModel {

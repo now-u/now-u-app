@@ -18,7 +18,7 @@ import '../ui/views/causes_selection/change_view/change_select_causes_view.dart'
     as _i10;
 import '../ui/views/causes_selection/onboarding_view/onboarding_select_causes_view.dart'
     as _i11;
-import '../ui/views/explore/explore_page_viewmodel.dart' as _i19;
+import '../ui/views/explore/bloc/explore_filter_state.dart' as _i19;
 import '../ui/views/faq/faq_view.dart' as _i4;
 import '../ui/views/intro/intro_view.dart' as _i5;
 import '../ui/views/login/login_view.dart' as _i7;

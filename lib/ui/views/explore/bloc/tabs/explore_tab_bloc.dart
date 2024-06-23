@@ -6,14 +6,13 @@ import 'package:nowu/services/model/search/search_response.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:nowu/ui/paging/paging_state.dart';
 import 'package:nowu/ui/views/explore/bloc/explore_filter_state.dart';
-import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 
 part 'explore_tab_bloc.freezed.dart';
 
 @freezed
 class ExploreTabState<T extends Explorable> with _$ExploreTabState {
   const factory ExploreTabState({
-    required PagingState<ExploreTileData<T>> data,
+    required PagingState<T> data,
   }) = _ExploreTabState;
 
   factory ExploreTabState.initial() {
@@ -36,17 +35,17 @@ abstract class ExploreTabBloc<T extends Explorable>
   }) : super(initialState);
 
   @protected
-  Future<SearchResponse<ExploreTileData<T>>> searchImpl(
+  Future<SearchResponse<T>> searchImpl(
     ExploreFilterState filterState,
     int? offset,
   );
 
-  int _getSearchOffset() {
-    switch (state.data) {
-      case InitialLoading():
-        return 0;
+  int _getSearchOffset(PagingState pagingState) {
+    switch (pagingState) {
       case Data(:final items):
         return items.length;
+      case InitialLoading():
+        return 0;
     }
   }
 
@@ -56,7 +55,7 @@ abstract class ExploreTabBloc<T extends Explorable>
   }) async {
     // Update the state showing so loading is happening
     switch (state.data) {
-      case Data<ExploreTileData<T>> dataState:
+      case Data<T> dataState:
         {
           emit(
             state.copyWith(
@@ -72,15 +71,12 @@ abstract class ExploreTabBloc<T extends Explorable>
 
     final response = await searchImpl(
       filterState,
-      extendCurrentSearch ? _getSearchOffset() : 0,
+      extendCurrentSearch ? _getSearchOffset(state.data) : 0,
     );
 
     emit(
-      ExploreTabState<T>(
-        data: Data<ExploreTileData<T>>(
-          items: response.items,
-          hasReachedMax: response.hasReachedMax,
-        ),
+      ExploreTabState(
+        data: Data.fromSearchResponse(response),
       ),
     );
   }

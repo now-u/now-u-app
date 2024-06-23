@@ -1,5 +1,5 @@
 import 'package:nowu/app/app.router.dart';
-import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
+import 'package:nowu/ui/views/explore/bloc/explore_filter_state.dart';
 import 'package:nowu/ui/views/tabs/tabs_view.dart';
 import 'package:stacked_services/stacked_services.dart' show RouterService;
 

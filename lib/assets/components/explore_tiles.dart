@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/assets/components/card.dart';
 import 'package:nowu/assets/components/cause_indicator.dart';
 import 'package:nowu/assets/components/custom_network_image.dart';
+import 'package:nowu/assets/components/explore_tiles/bloc/explore_learning_resource_tile_bloc.dart';
+import 'package:nowu/assets/components/explore_tiles/bloc/explore_learning_resource_tile_state.dart';
 import 'package:nowu/models/article.dart';
 import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/causes_service.dart';
-import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:nowu/utils/let.dart';
 
 enum ExploreTileStyle {
@@ -37,13 +40,13 @@ class ExploreCampaignTile extends ExploreTile {
   final ListCampaign campaign;
 
   ExploreCampaignTile(
-    ExploreTileData<ListCampaign> tile, {
+    ListCampaign tile, {
     Key? key,
-  })  : headerImage = tile.item.headerImage.url,
-        title = tile.item.title,
-        cause = tile.item.cause,
+  })  : headerImage = tile.headerImage.url,
+        title = tile.title,
+        cause = tile.cause,
         completed = tile.isCompleted,
-        campaign = tile.item,
+        campaign = tile,
         super(key: key);
 
   @override
@@ -97,45 +100,63 @@ class ExploreActionTile extends ExploreResourceTile {
   final ListAction action;
 
   ExploreActionTile(
-    ExploreTileData<ListAction> tile, {
+    ListAction tile, {
     ExploreTileStyle? style,
     Key? key,
-  })  : action = tile.item,
+  })  : action = tile,
         super(
-          title: tile.item.title,
-          type: tile.item.type.name,
-          iconColor: tile.item.type.primaryColor,
-          headerColor: tile.item.type.secondaryColor,
-          dividerColor: tile.item.type.tertiaryColor,
-          icon: tile.item.type.icon,
-          cause: tile.item.cause,
-          timeText: tile.item.timeText,
+          title: tile.title,
+          type: tile.type.name,
+          iconColor: tile.type.primaryColor,
+          headerColor: tile.type.secondaryColor,
+          dividerColor: tile.type.tertiaryColor,
+          icon: tile.type.icon,
+          cause: tile.cause,
+          timeText: tile.timeText,
           isCompleted: tile.isCompleted,
           style: style,
           onTap: (BuildContext context) =>
-              context.router.push(ActionInfoRoute(actionId: tile.item.id)),
+              context.router.push(ActionInfoRoute(actionId: tile.id)),
           key: key,
         );
 }
 
-class ExploreLearningResourceTile extends ExploreResourceTile {
+class ExploreLearningResourceTile extends StatelessWidget {
+  final LearningResource tile;
+
+  ExploreLearningResourceTile(this.tile);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => ExploreLearningResourceTileBloc(learningResource: tile, causesService: locator<CausesService>()),
+      child: BlocBuilder<ExploreLearningResourceTileBloc, ExploreLearningResourceTileState>(
+        builder: (context, state) {
+          return ExploreLearningResourceTileInner(tile, onTap: context.read<ExploreLearningResourceTileBloc>().launchLearningResource);
+        },
+      ),
+    );
+  }
+}
+
+class ExploreLearningResourceTileInner extends ExploreResourceTile {
   final LearningResource resource;
 
-  ExploreLearningResourceTile(
-    ExploreTileData<LearningResource> tile, {
+  ExploreLearningResourceTileInner(
+    LearningResource tile, {
     required GestureTapCallback onTap,
     ExploreTileStyle? style,
     Key? key,
-  })  : resource = tile.item,
+  })  : resource = tile,
         super(
-          title: tile.item.title,
-          type: tile.item.type.name,
+          title: tile.title,
+          type: tile.type.name,
           iconColor: blue0,
           headerColor: blue1,
           dividerColor: blue2,
-          icon: tile.item.icon,
-          cause: tile.item.cause,
-          timeText: tile.item.timeText,
+          icon: tile.icon,
+          cause: tile.cause,
+          timeText: tile.timeText,
           isCompleted: tile.isCompleted,
           key: key,
           style: style,
@@ -259,9 +280,9 @@ class ExploreNewsArticleTile extends ExploreTile {
   final NewsArticle article;
 
   ExploreNewsArticleTile(
-    ExploreTileData<NewsArticle> tile, {
+    NewsArticle tile, {
     Key? key,
-  })  : article = tile.item,
+  })  : article = tile,
         super(key: key);
 
   Widget buildBody(BuildContext context) {

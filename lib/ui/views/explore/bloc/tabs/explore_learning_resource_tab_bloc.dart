@@ -3,10 +3,8 @@ import 'package:logging/logging.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/model/search/search_response.dart';
 import 'package:nowu/services/search_service.dart';
-import 'package:nowu/ui/paging/paging_state.dart';
 import 'package:nowu/ui/views/explore/bloc/explore_filter_state.dart';
 import 'package:nowu/ui/views/explore/bloc/tabs/explore_all_tab_bloc.dart';
-import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:nowu/utils/new_since.dart';
 
 import './explore_tab_bloc.dart';
@@ -24,27 +22,15 @@ abstract class ExploreLearningResourceSectionBloc extends ExploreTabBloc<Learnin
   Logger _logger = Logger('ExploreLearningResourceSectionBloc');
 
   @override
-  Future<SearchResponse<ExploreTileData<LearningResource>>> searchImpl(
+  Future<SearchResponse<LearningResource>> searchImpl(
     ExploreFilterState filterState,
     int? offset,
   ) async {
     _logger.info('Searching learning resources filterState=$filterState offset=$offset');
 
-    final result = await searchService.searchLearningResources(
+    return await searchService.searchLearningResources(
       filter: getLearningResourcesFilter(filterState),
       offset: offset ?? 0,
-    );
-
-    return SearchResponse(
-      items: result.items
-          .map(
-            (item) => ExploreTileData<LearningResource>(
-              item: item,
-              isCompleted: causesService.actionIsComplete(item.id),
-            ),
-          )
-          .toList(),
-      hasReachedMax: result.hasReachedMax,
     );
   }
 
@@ -61,6 +47,7 @@ class ExploreLearningResourceTabBloc extends ExploreLearningResourceSectionBloc 
           causesService: causesService,
         );
 
+  @override
   LearningResourceSearchFilter getLearningResourcesFilter(
     ExploreFilterState filterState,
   ) {

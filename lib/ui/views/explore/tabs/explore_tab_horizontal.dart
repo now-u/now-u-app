@@ -5,7 +5,6 @@ import 'package:nowu/ui/paging/paging_state.dart';
 import 'package:nowu/ui/views/explore/bloc/explore_filter_bloc.dart';
 import 'package:nowu/ui/views/explore/bloc/explore_filter_state.dart';
 import 'package:nowu/ui/views/explore/bloc/tabs/explore_tab_bloc.dart';
-import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
 import 'package:nowu/ui/views/explore/explore_section_view.dart';
 import 'package:nowu/ui/views/explore/filters/explore_filter_chip.dart';
 
@@ -14,7 +13,7 @@ import 'filters_container.dart';
 class ExploreSection<T extends Explorable> {
   double tileHeight;
   ExploreTabBloc<T> Function() buildBloc;
-  Widget Function(ExploreTileData<T> item) buildTile;
+  Widget Function(T item) buildTile;
 
   void Function()? titleOnClick;
 
@@ -53,7 +52,7 @@ class ExploreSection<T extends Explorable> {
                 return ExploreSectionWidget(
                   // TODO Work out why this cast is needed??
                   tiles: items
-                      .map((item) => buildTile(item as ExploreTileData<T>)),
+                      .map((item) => buildTile(item as T)),
                   tileHeight: tileHeight,
                   titleOnClick: titleOnClick,
                   title: title,

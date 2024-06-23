@@ -111,6 +111,7 @@ class ListAction implements Explorable {
   ActionType type;
   DateTime releaseAt;
   int time;
+  bool isCompleted;
 
   DateTime get releaseTime => releaseAt;
 
@@ -128,6 +129,7 @@ class ListAction implements Explorable {
     required this.time,
     required this.cause,
     required this.type,
+    required this.isCompleted,
   });
 
   ListAction.fromApiData({
@@ -137,10 +139,12 @@ class ListAction implements Explorable {
     required this.time,
     required BuiltList<Api.Cause> causes,
     required Api.ActionTypeEnum actionType,
+
+    required this.isCompleted,
   })  : cause = causes[0],
         type = getActionTypeFromSubtype(actionType);
 
-  factory ListAction.fromApiModel(Api.ListAction apiModel) {
+  factory ListAction.fromApiModel(Api.ListAction apiModel, bool isCompleted) {
     return ListAction.fromApiData(
       id: apiModel.id,
       title: apiModel.title,
@@ -148,18 +152,18 @@ class ListAction implements Explorable {
       time: apiModel.time,
       causes: apiModel.causes,
       actionType: apiModel.actionType,
+
+      isCompleted: isCompleted,
     );
   }
 }
 
 class Action extends ListAction {
-  bool isCompleted;
   String whatDescription;
   String whyDescription;
   Uri link;
 
   Action({
-    required this.isCompleted,
     required this.whatDescription,
     required this.whyDescription,
     required this.link,
@@ -170,12 +174,13 @@ class Action extends ListAction {
     required super.time,
     required super.cause,
     required super.type,
+    required super.isCompleted,
   });
 
   Action.fromApiModel(
     Api.Action apiModel,
-  )   : isCompleted = apiModel.isCompleted,
-        whatDescription = apiModel.whatDescription,
+    bool isCompleted,
+  )   : whatDescription = apiModel.whatDescription,
         whyDescription = apiModel.whyDescription,
         link = Uri.parse(apiModel.link),
         super.fromApiData(
@@ -185,5 +190,6 @@ class Action extends ListAction {
           time: apiModel.time,
           causes: apiModel.causes,
           actionType: apiModel.actionType,
+          isCompleted: isCompleted,
         );
 }
