@@ -9,7 +9,7 @@ import 'package:nowu/utils/new_since.dart';
 
 import './explore_tab_bloc.dart';
 
-abstract class ExploreActionSectionBloc extends ExploreTabBloc<ListAction> {
+abstract class ExploreActionSectionBloc extends ExploreSectionBloc<ListAction, ExploreFilterState> {
   ExploreActionSectionBloc({
     required SearchService searchService,
     required CausesService causesService,

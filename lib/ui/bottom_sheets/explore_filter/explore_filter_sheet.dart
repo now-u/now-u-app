@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stacked/stacked.dart';
 
 class ExploreFilterSheetOption<T> {
   final String title;
@@ -12,20 +11,6 @@ class ExploreFilterSheetOption<T> {
     required this.isSelected,
   });
 }
-
-// class ExploreFilterSheetArgs<T> {
-//   final String filterName;
-//   final List<ExploreFilterSheetOption<T>> options;
-//   final Function(T) onSelectOption;
-//   final Function()? onClosed;
-//
-//   ExploreFilterSheetArgs({
-//     required this.filterName,
-//     required this.options,
-//     required this.onSelectOption,
-//     this.onClosed,
-//   });
-// }
 
 class ExploreFilterSheet<T> extends StatelessWidget {
   final String filterName;

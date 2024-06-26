@@ -10,7 +10,7 @@ import '../../../paging/paging_state.dart';
 import 'filters_container.dart';
 
 abstract class ExploreTab<T extends Explorable> extends StatelessWidget {
-  ExploreTabBloc<T> createBloc(BuildContext context);
+  ExploreSectionBloc<T, ExploreFilterState> createBloc(BuildContext context);
   // TODO make not a function
   List<FilterConfig> buildFilterChips();
   Widget itemBuilder(T data);
@@ -27,9 +27,9 @@ abstract class ExploreTab<T extends Explorable> extends StatelessWidget {
       },
       child: BlocListener<ExploreFilterBloc, ExploreFilterState>(
         listener: (context, state) {
-          context.read<ExploreTabBloc<T>>().search(state);
+          context.read<ExploreSectionBloc<T, ExploreFilterState>>().search(state);
         },
-        child: BlocBuilder<ExploreTabBloc<T>, ExploreTabState<T>>(
+        child: BlocBuilder<ExploreSectionBloc<T, ExploreFilterState>, ExploreTabState<T>>(
           builder: (context, state) {
             switch (state.data) {
               case InitialLoading():

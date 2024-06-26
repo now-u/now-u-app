@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nowu/assets/components/buttons/darkButton.dart';
 import 'package:nowu/assets/components/card.dart';
-import 'package:nowu/assets/components/explore_tiles.dart';
 import 'package:nowu/assets/constants.dart';
-import 'package:nowu/models/action.dart';
-import 'package:nowu/models/article.dart';
-import 'package:nowu/models/campaign.dart';
-import 'package:nowu/models/learning.dart';
+import 'package:nowu/ui/paging/paging_state.dart';
 import 'package:nowu/ui/views/explore/explore_page_view.dart';
 
 const double RESOURCE_TILE_HEIGHT = 160;
@@ -14,20 +10,18 @@ const double CAMPIGN_TILE_HEIGHT = 300;
 const double ARTICLE_TILE_HEIGHT = 330;
 
 class ExploreSectionWidget extends StatelessWidget {
-  final bool isLoading;
   final String title;
   final GestureTapCallback? titleOnClick;
   final String? description;
-  final Iterable<Widget>? tiles;
   final double tileHeight;
+  final PagingState<Widget> tileData;
 
   ExploreSectionWidget({
-    required this.isLoading,
     required this.title,
     required this.titleOnClick,
     required this.description,
-    required this.tiles,
     required this.tileHeight,
+    required this.tileData,
   });
 
   Widget _buildSectionHeader(
@@ -105,30 +99,35 @@ class ExploreSectionWidget extends StatelessWidget {
   Widget _buildTiles(BuildContext context) {
     final sectionHeight = tileHeight;
 
-    if (isLoading) {
-      return Container(
-        height: sectionHeight,
-        child: const Center(child: CircularProgressIndicator()),
-      );
-    }
+    switch (tileData) {
+      case InitialLoading():
+        {
+          return Container(
+            height: sectionHeight,
+            child: const Center(child: CircularProgressIndicator()),
+          );
+        }
+      case Data(:final items):
+        {
+          if (items.length == 0) {
+            return _noTilesFound();
+          }
 
-    if (tiles?.length == 0) {
-      return _noTilesFound();
+          return Container(
+            height: sectionHeight,
+            clipBehavior: Clip.none,
+            child: ListView(
+              clipBehavior: Clip.none,
+              scrollDirection: Axis.horizontal,
+              children: <Widget>[
+                const SizedBox(width: 8.0),
+                ...items,
+                const SizedBox(width: 8.0),
+              ],
+            ),
+          );
+        }
     }
-
-    return Container(
-      height: sectionHeight,
-      clipBehavior: Clip.none,
-      child: ListView(
-        clipBehavior: Clip.none,
-        scrollDirection: Axis.horizontal,
-        children: <Widget>[
-          const SizedBox(width: 8.0),
-          ...(tiles ?? []),
-          const SizedBox(width: 8.0),
-        ],
-      ),
-    );
   }
 
   @override
@@ -154,129 +153,6 @@ class ExploreSectionWidget extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-// TODO Can we get rid of all of these now?
-class ActionExploreSection extends StatelessWidget {
-  final Iterable<ListAction>? tiles;
-  final bool isLoading;
-  final String title;
-  final GestureTapCallback? titleOnClick;
-  final String? description;
-
-  const ActionExploreSection({
-    required this.title,
-    required this.isLoading,
-    required this.tiles,
-    this.titleOnClick,
-    this.description,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ExploreSectionWidget(
-      tiles: this.tiles?.map((tileData) => ExploreActionTile(tileData)),
-      tileHeight: 160,
-      isLoading: isLoading,
-      titleOnClick: titleOnClick,
-      title: title,
-      description: description,
-    );
-  }
-}
-
-class LearningResourceExploreSection extends StatelessWidget {
-  final Iterable<LearningResource>? tiles;
-  final bool isLoading;
-  final String title;
-  final GestureTapCallback? titleOnClick;
-  final String? description;
-  final void Function(LearningResource tileData) tileOnClick;
-
-  const LearningResourceExploreSection({
-    required this.title,
-    required this.isLoading,
-    required this.tiles,
-    required this.tileOnClick,
-    this.titleOnClick,
-    this.description,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ExploreSectionWidget(
-      tiles: this.tiles?.map(
-            (tileData) => ExploreLearningResourceTile(tileData),
-          ),
-      tileHeight: 160,
-      isLoading: isLoading,
-      titleOnClick: titleOnClick,
-      title: title,
-      description: description,
-    );
-  }
-}
-
-class CampaignExploreSection extends StatelessWidget {
-  final Iterable<ListCampaign>? tiles;
-  final bool isLoading;
-  final String title;
-  final GestureTapCallback? titleOnClick;
-  final String? description;
-
-  const CampaignExploreSection({
-    required this.title,
-    required this.isLoading,
-    required this.tiles,
-    this.description,
-    this.titleOnClick,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ExploreSectionWidget(
-      tiles: this.tiles?.map(
-            (tileData) => ExploreCampaignTile(
-              tileData,
-            ),
-          ),
-      tileHeight: 300,
-      isLoading: isLoading,
-      titleOnClick: titleOnClick,
-      title: title,
-      description: description,
-    );
-  }
-}
-
-class NewsArticleExploreSection extends StatelessWidget {
-  final Iterable<NewsArticle>? tiles;
-  final bool isLoading;
-  final String title;
-  final GestureTapCallback? titleOnClick;
-  final String? description;
-
-  const NewsArticleExploreSection({
-    required this.title,
-    required this.isLoading,
-    required this.tiles,
-    this.titleOnClick,
-    this.description,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ExploreSectionWidget(
-      tiles: this.tiles?.map(
-            (tileData) => ExploreNewsArticleTile(tileData),
-          ),
-      tileHeight: 330,
-      isLoading: isLoading,
-      titleOnClick: titleOnClick,
-      title: title,
-      description: description,
     );
   }
 }

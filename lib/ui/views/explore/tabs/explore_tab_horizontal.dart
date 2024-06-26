@@ -12,7 +12,7 @@ import 'filters_container.dart';
 
 class ExploreSection<T extends Explorable> {
   double tileHeight;
-  ExploreTabBloc<T> Function() buildBloc;
+  ExploreSectionBloc<T, ExploreFilterState> Function() buildBloc;
   Widget Function(T item) buildTile;
 
   void Function()? titleOnClick;
@@ -34,32 +34,17 @@ class ExploreSection<T extends Explorable> {
       create: (_) => buildBloc()..search(filterState),
       child: BlocListener<ExploreFilterBloc, ExploreFilterState>(
         listener: (context, filterState) {
-          context.read<ExploreTabBloc<T>>().search(filterState);
+          context.read<ExploreSectionBloc<T, ExploreFilterState>>().search(filterState);
         },
-        child: BlocBuilder<ExploreTabBloc<T>, ExploreTabState<T>>(
+        child: BlocBuilder<ExploreSectionBloc<T, ExploreFilterState>, ExploreTabState<T>>(
           builder: (context, state) {
-            switch (state.data) {
-              case InitialLoading():
-                return ExploreSectionWidget(
-                  tiles: [],
-                  tileHeight: tileHeight,
-                  titleOnClick: titleOnClick,
-                  title: title,
-                  description: description,
-                  isLoading: true,
-                );
-              case Data(:final items):
-                return ExploreSectionWidget(
-                  // TODO Work out why this cast is needed??
-                  tiles: items
-                      .map((item) => buildTile(item as T)),
-                  tileHeight: tileHeight,
-                  titleOnClick: titleOnClick,
-                  title: title,
-                  description: description,
-                  isLoading: false,
-                );
-            }
+            return ExploreSectionWidget(
+              title: title,
+              description: description,
+              tileData: state.data.map((item) => buildTile(item as T)),
+              titleOnClick: titleOnClick,
+              tileHeight: tileHeight,
+            );
           },
         ),
       ),

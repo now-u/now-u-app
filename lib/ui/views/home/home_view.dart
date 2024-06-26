@@ -6,7 +6,6 @@ import 'package:nowu/assets/components/progressTile.dart';
 import 'package:nowu/assets/components/textButton.dart';
 import 'package:nowu/models/Notification.dart';
 import 'package:nowu/ui/common/cause_tile.dart';
-import 'package:nowu/ui/views/explore/explore_section_view.dart';
 import 'package:stacked/stacked.dart';
 import 'package:auto_route/auto_route.dart';
 

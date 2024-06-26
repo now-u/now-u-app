@@ -10,7 +10,7 @@ import 'package:nowu/utils/new_since.dart';
 
 import './explore_tab_bloc.dart';
 
-abstract class ExploreNewsArticleSectionBloc extends ExploreTabBloc<NewsArticle> {
+abstract class ExploreNewsArticleSectionBloc<TSearchContext> extends ExploreSectionBloc<NewsArticle, TSearchContext> {
   ExploreNewsArticleSectionBloc({
     required SearchService searchService,
     required CausesService causesService,
@@ -24,7 +24,7 @@ abstract class ExploreNewsArticleSectionBloc extends ExploreTabBloc<NewsArticle>
 
   @override
   Future<SearchResponse<NewsArticle>> searchImpl(
-    ExploreFilterState filterState,
+    TSearchContext filterState,
     int? offset,
   ) async {
     _logger.info('Searching news articles filterState=$filterState offset=$offset');
@@ -36,10 +36,10 @@ abstract class ExploreNewsArticleSectionBloc extends ExploreTabBloc<NewsArticle>
   }
 
   @protected
-  NewsArticleSearchFilter getNewsArticlesFilter(ExploreFilterState filterState);
+  NewsArticleSearchFilter getNewsArticlesFilter(TSearchContext filterState);
 }
 
-class ExploreNewsArticleTabBloc extends ExploreNewsArticleSectionBloc {
+class ExploreNewsArticleTabBloc extends ExploreNewsArticleSectionBloc<ExploreFilterState> {
   ExploreNewsArticleTabBloc({
     required SearchService searchService,
     required CausesService causesService,
@@ -61,7 +61,7 @@ class ExploreNewsArticleTabBloc extends ExploreNewsArticleSectionBloc {
   }
 }
 
-class ExploreAllTabNewsArticleSectionBloc extends ExploreNewsArticleSectionBloc {
+class ExploreAllTabNewsArticleSectionBloc extends ExploreNewsArticleSectionBloc<ExploreFilterState> {
   ExploreAllTabNewsArticleSectionBloc({
     required SearchService searchService,
     required CausesService causesService,

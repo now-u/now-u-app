@@ -9,7 +9,7 @@ import 'package:nowu/utils/new_since.dart';
 
 import './explore_tab_bloc.dart';
 
-abstract class ExploreLearningResourceSectionBloc extends ExploreTabBloc<LearningResource> {
+abstract class ExploreLearningResourceSectionBloc<TSearchContext> extends ExploreSectionBloc<LearningResource, TSearchContext> {
   ExploreLearningResourceSectionBloc({
     required SearchService searchService,
     required CausesService causesService,
@@ -23,22 +23,22 @@ abstract class ExploreLearningResourceSectionBloc extends ExploreTabBloc<Learnin
 
   @override
   Future<SearchResponse<LearningResource>> searchImpl(
-    ExploreFilterState filterState,
+    TSearchContext searchContext,
     int? offset,
   ) async {
-    _logger.info('Searching learning resources filterState=$filterState offset=$offset');
+    _logger.info('Searching learning resources searchContext=$searchContext offset=$offset');
 
     return await searchService.searchLearningResources(
-      filter: getLearningResourcesFilter(filterState),
+      filter: getLearningResourcesFilter(searchContext),
       offset: offset ?? 0,
     );
   }
 
   @protected
-  LearningResourceSearchFilter getLearningResourcesFilter(ExploreFilterState filterState);
+  LearningResourceSearchFilter getLearningResourcesFilter(TSearchContext filterState);
 }
 
-class ExploreLearningResourceTabBloc extends ExploreLearningResourceSectionBloc {
+class ExploreLearningResourceTabBloc extends ExploreLearningResourceSectionBloc<ExploreFilterState> {
   ExploreLearningResourceTabBloc({
     required SearchService searchService,
     required CausesService causesService,
@@ -69,7 +69,7 @@ class ExploreLearningResourceTabBloc extends ExploreLearningResourceSectionBloc 
   }
 }
 
-class ExploreAllTabLearningResourceSectionBloc extends ExploreLearningResourceSectionBloc {
+class ExploreAllTabLearningResourceSectionBloc extends ExploreLearningResourceSectionBloc<ExploreFilterState> {
   ExploreAllTabLearningResourceSectionBloc({
     required SearchService searchService,
     required CausesService causesService,

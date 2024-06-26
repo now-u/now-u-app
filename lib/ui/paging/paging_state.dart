@@ -26,3 +26,18 @@ class Data<T> extends PagingState<T> with _$Data<T> {
     );
   }
 }
+
+extension PagingStateExtension<E> on PagingState<E> {
+  PagingState<T> map<T>(T Function(E) toElement) {
+    switch(this) {
+      case InitialLoading():
+        return const InitialLoading();
+      case Data(:final items):
+        return Data(
+          items: items.map(toElement).toList(),
+          hasReachedMax: false,
+          isLoadingMore: false,
+        );
+    }
+  }
+}

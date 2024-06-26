@@ -5,7 +5,6 @@ import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/model/search/search_response.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:nowu/ui/paging/paging_state.dart';
-import 'package:nowu/ui/views/explore/bloc/explore_filter_state.dart';
 
 part 'explore_tab_bloc.freezed.dart';
 
@@ -20,23 +19,26 @@ class ExploreTabState<T extends Explorable> with _$ExploreTabState {
   }
 }
 
-abstract class ExploreTabBloc<T extends Explorable>
-    extends Cubit<ExploreTabState<T>> {
+// TODO Ive added TContext here so we can have ExploreFilterState in some places
+// and void on the home page...
+// Will void actually work?? Is there a nice way of doing this...
+abstract class ExploreSectionBloc<TExplorable extends Explorable, TContext>
+    extends Cubit<ExploreTabState<TExplorable>> {
   @protected
   SearchService searchService;
 
   @protected
   CausesService causesService;
 
-  ExploreTabBloc({
+  ExploreSectionBloc({
     required this.searchService,
     required this.causesService,
-    required ExploreTabState<T> initialState,
+    required ExploreTabState<TExplorable> initialState,
   }) : super(initialState);
 
   @protected
-  Future<SearchResponse<T>> searchImpl(
-    ExploreFilterState filterState,
+  Future<SearchResponse<TExplorable>> searchImpl(
+    TContext searchContext,
     int? offset,
   );
 
@@ -50,19 +52,19 @@ abstract class ExploreTabBloc<T extends Explorable>
   }
 
   void search(
-    ExploreFilterState filterState, {
+    TContext filterState, {
     bool extendCurrentSearch = false,
   }) async {
     // Update the state showing so loading is happening
     switch (state.data) {
-      case Data<T> dataState:
+      case Data<TExplorable> dataState:
         {
           emit(
             state.copyWith(
               data: dataState.copyWith(
                 isLoadingMore: true,
               ),
-            ) as ExploreTabState<T>,
+            ) as ExploreTabState<TExplorable>,
           );
         }
       default:

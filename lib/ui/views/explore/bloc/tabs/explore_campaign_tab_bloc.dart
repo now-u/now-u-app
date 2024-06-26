@@ -9,7 +9,7 @@ import 'package:nowu/utils/new_since.dart';
 
 import './explore_tab_bloc.dart';
 
-abstract class ExploreCampaignSectionBloc extends ExploreTabBloc<ListCampaign> {
+abstract class ExploreCampaignSectionBloc<TSearchContext> extends ExploreSectionBloc<ListCampaign, TSearchContext> {
   ExploreCampaignSectionBloc({
     required SearchService searchService,
     required CausesService causesService,
@@ -23,22 +23,22 @@ abstract class ExploreCampaignSectionBloc extends ExploreTabBloc<ListCampaign> {
 
   @override
   Future<SearchResponse<ListCampaign>> searchImpl(
-    ExploreFilterState filterState,
+    TSearchContext searchContext,
     int? offset,
   ) async {
-    _logger.info('Searching campaigns filterState=$filterState offset=$offset');
+    _logger.info('Searching campaigns filterState=$searchContext offset=$offset');
 
     return await searchService.searchCampaigns(
-      filter: getCampaignsFilter(filterState),
+      filter: getCampaignsFilter(searchContext: searchContext),
       offset: offset ?? 0,
     );
   }
 
   @protected
-  CampaignSearchFilter getCampaignsFilter(ExploreFilterState filterState);
+  CampaignSearchFilter getCampaignsFilter({ required TSearchContext searchContext });
 }
 
-class ExploreCampaignTabBloc extends ExploreCampaignSectionBloc {
+class ExploreCampaignTabBloc extends ExploreCampaignSectionBloc<ExploreFilterState> {
   ExploreCampaignTabBloc({
     required SearchService searchService,
     required CausesService causesService,
@@ -47,20 +47,20 @@ class ExploreCampaignTabBloc extends ExploreCampaignSectionBloc {
           causesService: causesService,
         );
 
-  CampaignSearchFilter getCampaignsFilter(ExploreFilterState filterState) {
+  CampaignSearchFilter getCampaignsFilter({ required ExploreFilterState searchContext }) {
     return CampaignSearchFilter(
-      causeIds: filterState.filterCauseIds.isEmpty
+      causeIds: searchContext.filterCauseIds.isEmpty
           ? null
-          : filterState.filterCauseIds.toList(),
-      completed: filterState.filterCompleted == true ? true : null,
-      recommended: filterState.filterRecommended == true ? true : null,
-      releasedSince: filterState.filterNew == true ? newSinceDate() : null,
-      query: filterState.queryText,
+          : searchContext.filterCauseIds.toList(),
+      completed: searchContext.filterCompleted == true ? true : null,
+      recommended: searchContext.filterRecommended == true ? true : null,
+      releasedSince: searchContext.filterNew == true ? newSinceDate() : null,
+      query: searchContext.queryText,
     );
   }
 }
 
-class ExploreAllTabCampaignSectionBloc extends ExploreCampaignSectionBloc {
+class ExploreAllTabCampaignSectionBloc extends ExploreCampaignSectionBloc<ExploreFilterState> {
   ExploreAllTabCampaignSectionBloc({
     required SearchService searchService,
     required CausesService causesService,
@@ -69,8 +69,8 @@ class ExploreAllTabCampaignSectionBloc extends ExploreCampaignSectionBloc {
           causesService: causesService,
         );
 
-  CampaignSearchFilter getCampaignsFilter(ExploreFilterState filterState) {
-    final baseFilter = getAllTabFilterState(filterState);
+  CampaignSearchFilter getCampaignsFilter({ required ExploreFilterState searchContext }) {
+    final baseFilter = getAllTabFilterState(searchContext);
     return CampaignSearchFilter(
       causeIds: baseFilter.causeIds, 
       query: baseFilter.query,
@@ -79,40 +79,51 @@ class ExploreAllTabCampaignSectionBloc extends ExploreCampaignSectionBloc {
   }
 }
 
-// TODO Write bloc for home page
-// class HomeOfTheMonthCampaignSectionBloc extends ExploreCampaignSectionBloc {
-// 
-//   HomeOfTheMonthCampaignSectionBloc({
-//     required SearchService searchService,
-//     required CausesService causesService,
-//   }) : super(
-//           searchService: searchService,
-//           causesService: causesService,
-//         );
-// 
-//   CampaignSearchFilter getCampaignsFilter() {
-//     return CampaignSearchFilter(
-//       causeIds: causesService.userInfo?.selectedCausesIds,
-//       ofTheMonth: true,
-//       completed: false,
-//     );
-//   }
-// }
-// 
-// class HomeRecommenedCampaignSectionBloc extends ExploreCampaignSectionBloc {
-//   HomeRecommenedCampaignSectionBloc({
-//     required SearchService searchService,
-//     required CausesService causesService,
-//   }) : super(
-//           searchService: searchService,
-//           causesService: causesService,
-//         );
-// 
-//   CampaignSearchFilter getCampaignsFilter() {
-//     return CampaignSearchFilter(
-//       causeIds: causesFilter,
-//       completed: false,
-//       ofTheMonth: false,
-//     );
-//   }
-// }
+class HomePageSearchContext {
+  Set<String> selectedCausesIds;
+
+  HomePageSearchContext({
+    required this.selectedCausesIds,
+  });
+}
+
+class HomeOfTheMonthCampaignSectionBloc extends ExploreCampaignSectionBloc<void> {
+
+  HomeOfTheMonthCampaignSectionBloc({
+    required SearchService searchService,
+    required CausesService causesService,
+  }) : super(
+          searchService: searchService,
+          causesService: causesService,
+        );
+
+  @override
+  CampaignSearchFilter getCampaignsFilter({ void searchContext = null }) {
+    return CampaignSearchFilter(
+      // TODO Should we take this in as context (and re call search from the view listening to the CausesBloc) 
+      // or should we listen to the causes service repository and internally recall search?
+      causeIds: causesService.userInfo?.selectedCausesIds,
+      ofTheMonth: true,
+      completed: false,
+    );
+  }
+}
+
+class HomeRecommenedCampaignSectionBloc extends ExploreCampaignSectionBloc<void> {
+  HomeRecommenedCampaignSectionBloc({
+    required SearchService searchService,
+    required CausesService causesService,
+  }) : super(
+          searchService: searchService,
+          causesService: causesService,
+        );
+
+  @override
+  CampaignSearchFilter getCampaignsFilter({ void searchContext = null }) {
+    return CampaignSearchFilter(
+      causeIds: causesService.userInfo?.selectedCausesIds,
+      completed: false,
+      ofTheMonth: false,
+    );
+  }
+}
