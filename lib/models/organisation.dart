@@ -1,8 +1,7 @@
 import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:logging/logging.dart';
 import 'package:nowu/utils/let.dart';
-export 'package:causeApiClient/causeApiClient.dart'
-    show OrganisationTypeEnum, Image;
+export 'package:causeApiClient/causeApiClient.dart' show OrganisationTypeEnum;
 
 class OrganisationTypeMeta {
   final String name;

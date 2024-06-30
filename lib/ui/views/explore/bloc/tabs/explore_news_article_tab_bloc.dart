@@ -30,13 +30,13 @@ abstract class ExploreNewsArticleSectionBloc<TSearchContext> extends ExploreSect
     _logger.info('Searching news articles filterState=$filterState offset=$offset');
 
     return await searchService.searchNewsArticles(
-      filter: getNewsArticlesFilter(filterState),
+      filter: await getNewsArticlesFilter(searchContext: filterState),
       offset: offset ?? 0,
     );
   }
 
   @protected
-  NewsArticleSearchFilter getNewsArticlesFilter(TSearchContext filterState);
+  Future<NewsArticleSearchFilter> getNewsArticlesFilter({ required TSearchContext searchContext });
 }
 
 class ExploreNewsArticleTabBloc extends ExploreNewsArticleSectionBloc<ExploreFilterState> {
@@ -48,15 +48,15 @@ class ExploreNewsArticleTabBloc extends ExploreNewsArticleSectionBloc<ExploreFil
           causesService: causesService,
         );
 
-  NewsArticleSearchFilter getNewsArticlesFilter(
-    ExploreFilterState filterState,
-  ) {
+  Future<NewsArticleSearchFilter> getNewsArticlesFilter({
+    required searchContext,
+  }) async {
     return NewsArticleSearchFilter(
-      causeIds: filterState.filterCauseIds.isEmpty
+      causeIds: searchContext.filterCauseIds.isEmpty
           ? null
-          : filterState.filterCauseIds.toList(),
-      releasedSince: filterState.filterNew == true ? newSinceDate() : null,
-      query: filterState.queryText,
+          : searchContext.filterCauseIds.toList(),
+      releasedSince: searchContext.filterNew == true ? newSinceDate() : null,
+      query: searchContext.queryText,
     );
   }
 }
@@ -70,14 +70,31 @@ class ExploreAllTabNewsArticleSectionBloc extends ExploreNewsArticleSectionBloc<
           causesService: causesService,
         );
 
-  NewsArticleSearchFilter getNewsArticlesFilter(
-    ExploreFilterState filterState,
-  ) {
-    final baseFilter = getAllTabFilterState(filterState);
+  Future<NewsArticleSearchFilter> getNewsArticlesFilter({
+    required searchContext,
+  }) async {
+    final baseFilter = getAllTabFilterState(searchContext);
     return NewsArticleSearchFilter(
       causeIds: baseFilter.causeIds,
       query: baseFilter.query,
       releasedSince: baseFilter.releasedSince,
+    );
+  }
+}
+
+class HomeNewsArticleSectionBloc extends ExploreNewsArticleSectionBloc<void> {
+  HomeNewsArticleSectionBloc({
+    required SearchService searchService,
+    required CausesService causesService,
+  }) : super(
+          searchService: searchService,
+          causesService: causesService,
+        );
+
+  @override
+  Future<NewsArticleSearchFilter> getNewsArticlesFilter({ void searchContext = null }) async {
+    return NewsArticleSearchFilter(
+      causeIds: (await causesService.getUserInfo())?.selectedCausesIds,
     );
   }
 }

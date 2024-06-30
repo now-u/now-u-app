@@ -6,7 +6,7 @@ import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/ui/bottom_sheets/explore_filter/explore_filter_sheet.dart';
 import 'package:nowu/ui/views/causes/bloc/causes_bloc.dart';
 import 'package:nowu/ui/views/causes/bloc/causes_state.dart' as CausesState;
-import 'package:nowu/ui/views/startup/startup_state.dart';
+import 'package:nowu/ui/views/causes/bloc/causes_state.dart';
 import 'package:tuple/tuple.dart';
 
 import '../bloc/explore_filter_bloc.dart';
@@ -139,12 +139,10 @@ class CausesFilter extends DialogFilterConfig<int> {
   List<ExploreFilterSheetOption<int>> getOptions(context, state) {
     // TODO Get causes from somewhere - maybe we need to add the causes provider as well
     switch (context.read<CausesBloc>().state) {
-      case CausesState.Initial():
-        throw Exception('Causes state should nenver be initial - loading should be called when provided');
-      case CausesState.Loading():
+      case CausesStateLoading():
         // TODO In an ideal world we could show some loading animation here
         return [];
-      case CausesState.Loaded(:final causes):
+      case CausesStateLoaded(:final causes):
         return causes.map((cause) {
           return ExploreFilterSheetOption(
             title: cause.title,
@@ -152,7 +150,7 @@ class CausesFilter extends DialogFilterConfig<int> {
             isSelected: state.filterCauseIds.contains(cause.id),
           );
         }).toList();
-      case CausesState.Error():
+      case CausesStateError():
         // TODO In an ideal world we could show some error here
         return [];
     }

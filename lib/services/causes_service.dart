@@ -3,11 +3,10 @@ import 'package:built_collection/built_collection.dart';
 import 'package:logging/logging.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/models/User.dart';
+import 'package:nowu/models/cause.dart';
 import 'package:nowu/models/learning.dart';
 import 'package:nowu/models/campaign.dart';
 import 'package:nowu/models/organisation.dart';
-import 'package:nowu/router.dart';
-import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/auth.dart';
@@ -17,33 +16,42 @@ import 'package:nowu/utils/let.dart';
 export 'package:nowu/models/action.dart';
 export 'package:nowu/models/campaign.dart';
 export 'package:nowu/models/learning.dart';
-export 'package:nowu/models/Cause.dart';
+export 'package:nowu/models/cause.dart';
 export 'package:nowu/models/organisation.dart';
 
 class CausesService {
   final _authService = locator<AuthenticationService>();
   final _analyticsService = locator<AnalyticsService>();
   final _apiService = locator<ApiService>();
-  final _router = locator<AppRouter>();
   final _logger = Logger('CausesService');
 
-  List<Api.Cause>? _causes;
-  Future<List<Api.Cause>> _fetchCauses() async {
+  // Cache of user info
+  CausesUser? _userInfo = null;
+
+  List<Cause>? _causes;
+  Future<List<Cause>> _fetchCauses() async {
     _logger.info('Fetching causes from the service');
-    final response = await _causeServiceClient.getCausesApi().causesList();
-    return response.data!.asList();
+    final (response, userInfo) = await (
+      _causeServiceClient.getCausesApi().causesList(),
+      getUserInfo(),
+    ).wait;
+    return response.data!
+        .map(
+          (model) => Cause.fromApiModel(
+            model,
+            userInfo,
+          ),
+        )
+        .toList();
   }
 
   Api.CauseApiClient get _causeServiceClient => _apiService.apiClient;
-
-  CausesUser? _userInfo = null;
-  CausesUser? get userInfo => _userInfo;
 
   /// Get a list of causes
   ///
   /// Input params
   /// Returns a list of Causes from the API
-  Future<List<Api.Cause>> listCauses() async {
+  Future<List<Cause>> listCauses() async {
     if (_causes == null) {
       _causes = await _fetchCauses();
     }
@@ -51,7 +59,7 @@ class CausesService {
     return _causes!;
   }
 
-  Future<Api.Cause> getCause(int id) async {
+  Future<Cause> getCause(int id) async {
     final causes = await listCauses();
     return causes.firstWhere((cause) => cause.id == id);
   }
@@ -61,8 +69,10 @@ class CausesService {
   /// Input Action id
   /// Returns the Action with that id
   Future<Campaign> getCampaign(int id) async {
-    final response =
-        await _causeServiceClient.getCampaignsApi().campaignsRetrieve(id: id);
+    final (response, userInfo) = await (
+      _causeServiceClient.getCampaignsApi().campaignsRetrieve(id: id),
+      getUserInfo(),
+    ).wait;
     return Campaign.fromApiModel(response.data!, userInfo);
   }
 
@@ -72,30 +82,28 @@ class CausesService {
   /// Return a List of ListActions
   Future<Action> getAction(int id) async {
     _logger.info('Getting action id=$id');
-    final response =
-        await _causeServiceClient.getActionsApi().actionsRetrieve(id: id);
-    return Action.fromApiModel(response.data!, userInfo?.completedActionIds.contains(id) ?? false);
+    final (response, userInfo) = await (
+        _causeServiceClient.getActionsApi().actionsRetrieve(id: id),
+        getUserInfo(),
+    ).wait;
+    return Action.fromApiModel(
+      response.data!,
+      userInfo,
+    );
   }
 
   /// Set user's selected causes
   ///
   /// Input causes that the user has selected
   /// Posts the ids of these causes to the API
-  Future<void> selectCauses(List<Api.Cause> selectedCauses) async {
-    // TOOD Update API to match spec here
-    // List<int> ids = selectedCauses.map((cause) => cause.id).toList();
-    // // TODO check this is the correct endpoint
-    // await _apiService.postRequest('v2/me/causes', body: {'cause_ids': ids});
-
-    // // Update user after request
-    // await locator<AuthenticationService>().fetchUser();
+  Future<void> selectCauses(Set<int> selectedCausesIds) async {
     final response = await _causeServiceClient
         .getMeApi()
         .meCausesInfoPartialUpdate(
           patchedCausesUser: Api.PatchedCausesUser(
             (userInfo) => userInfo
               ..selectedCausesIds =
-                  ListBuilder(selectedCauses.map((cause) => cause.id).toList()),
+                  ListBuilder(selectedCausesIds.toList()),
           ),
         );
 
@@ -160,6 +168,7 @@ class CausesService {
     return response.data!.map((org) => Organisation(org)).toList();
   }
 
+  // TODO Make private
   Future<CausesUser?> fetchUserInfo() async {
     if (!_authService.isAuthenticated) {
       _logger.warning('Trying to fetch user info when not authenticated');
@@ -170,40 +179,10 @@ class CausesService {
     return _userInfo = response.data?.let(CausesUser.fromApiModel);
   }
 
-  Future<void> openAction(int actionId) async {
-    await _router.push(ActionInfoRoute(actionId: actionId));
-  }
-
-  Future<void> openLearningResource(LearningResource learningResource) async {
-    if (_authService.isUserLoggedIn()) {
-      // TODO Should this if be inside here?
-      await completeLearningResource(learningResource);
+  Future<CausesUser?> getUserInfo() async {
+    if (_userInfo != null) {
+      return _userInfo;
     }
-    // TODO Work this out!
-    // _navigationService.launchLink(
-    //   learningResource.link,
-    // );
-  }
-
-  bool? actionIsComplete(int actionId) {
-    if (_userInfo == null) {
-      return null;
-    }
-    return _userInfo!.completedActionIds.contains(actionId);
-  }
-
-  bool? learningResourceIsComplete(int learningResourceId) {
-    if (_userInfo == null) {
-      return null;
-    }
-    // TODO Store copy of these values as set so don't have to loop through
-    return _userInfo!.completedLearningResourceIds.contains(learningResourceId);
-  }
-
-  bool? campaignIsComplete(int campaignId) {
-    if (_userInfo == null) {
-      return null;
-    }
-    return _userInfo!.completedCampaignIds.contains(campaignId);
+    return fetchUserInfo();
   }
 }

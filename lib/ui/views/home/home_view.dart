@@ -1,147 +1,246 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/assets/components/buttons/customWidthButton.dart';
 import 'package:nowu/assets/components/customScrollableSheet.dart';
 import 'package:nowu/assets/components/customTile.dart';
-import 'package:nowu/assets/components/progressTile.dart';
+import 'package:nowu/assets/components/explore_tiles.dart';
 import 'package:nowu/assets/components/textButton.dart';
 import 'package:nowu/models/Notification.dart';
+import 'package:nowu/models/exploreable.dart';
+import 'package:nowu/router.gr.dart';
+import 'package:nowu/services/causes_service.dart';
+import 'package:nowu/services/search_service.dart';
 import 'package:nowu/ui/common/cause_tile.dart';
-import 'package:stacked/stacked.dart';
+import 'package:nowu/ui/components/user_progress/user_progress.dart';
+import 'package:nowu/ui/paging/paging_state.dart';
+import 'package:nowu/ui/views/authentication/bloc/authentication_bloc.dart';
+import 'package:nowu/ui/views/authentication/bloc/authentication_state.dart';
+import 'package:nowu/ui/views/causes/bloc/causes_bloc.dart';
+import 'package:nowu/ui/views/causes/bloc/causes_state.dart';
+import 'package:nowu/ui/views/explore/bloc/tabs/explore_action_tab_bloc.dart';
+import 'package:nowu/ui/views/explore/bloc/tabs/explore_campaign_tab_bloc.dart';
+import 'package:nowu/ui/views/explore/bloc/tabs/explore_news_article_tab_bloc.dart';
+import 'package:nowu/ui/views/explore/bloc/tabs/explore_tab_bloc.dart';
+import 'package:nowu/ui/views/explore/explore_section_view.dart';
 import 'package:auto_route/auto_route.dart';
-
-import 'home_viewmodel.dart';
+import 'package:nowu/ui/views/home/bloc/internal_notifications_bloc.dart';
+import 'package:nowu/ui/views/home/bloc/internal_notifications_state.dart';
 
 const double BUTTON_PADDING = 10;
 const PageStorageKey campaignCarouselPageKey = PageStorageKey(1);
 
+class ExploreSection<T extends Explorable> extends StatelessWidget {
+  final double tileHeight;
+  final ExploreSectionBloc<T, void> Function() buildBloc;
+  final Widget Function(T item) buildTile;
+  final String title;
+
+  ExploreSection({
+    required this.tileHeight,
+    required this.buildBloc,
+    required this.buildTile,
+    required this.title,
+  });
+
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => buildBloc()..search(null),
+      child: BlocBuilder<ExploreSectionBloc<T, void>,
+          ExploreTabState<T>>(
+        builder: (context, state) {
+          return ExploreSectionWidget(
+            title: title,
+            description: null,
+            tileData: state.data.map((item) => buildTile(item as T)),
+            titleOnClick: null,
+            tileHeight: tileHeight,
+          );
+        },
+      ),
+    );
+  }
+}
+
 @RoutePage()
-class HomeView extends StackedView<HomeViewModel> {
+class HomeView extends StatelessWidget {
   const HomeView();
 
   @override
-  viewModelBuilder(context) {
-    return HomeViewModel();
-  }
-
-  @override
-  onViewModelReady(viewModel) {
-    viewModel.init();
-  }
-
-  @override
-  Widget builder(
-    BuildContext context,
-    HomeViewModel viewModel,
-    Widget? childl,
-  ) {
-    final latestNotification = viewModel.notifications!.elementAtOrNull(0);
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor.withOpacity(0.05),
       body: ScrollableSheetPage(
-        header: latestNotification != null
-            ? HeaderWithNotifications(
-                name: viewModel.currentUser?.name,
-                notification: viewModel.notifications![0],
-                // TODO Fix internal notifiaction type
-                dismissNotification: () =>
-                    viewModel.dismissNotification(latestNotification.id!),
-                openNotification: () =>
-                    viewModel.openNotification(latestNotification),
-              )
-            : HeaderStyle1(name: viewModel.currentUser?.name),
+        header: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+            builder: (context, state) {
+              String? getUserName() {
+                switch (state) {
+                  case AuthenticationStateUnknown():
+                  case AuthenticationStateUnauthenticated():
+                    return null;
+                  case AuthenticationStateAuthenticated(:final user):
+                    return user.name;
+                }
+              }
+
+              return BlocBuilder<InternalNotificationsBloc, InternalNotificationsState>(
+                builder: (context, state) {
+                  switch (state) {
+                    case InternalNotificationsStateLoading():
+                    case InternalNotificationsStateError():
+                    case InternalNotificationsStateLoaded(:final notifications) when notifications.isEmpty:
+                      return HeaderStyle1(name: getUserName());
+                    case InternalNotificationsStateLoaded(:final notifications):
+                      return HeaderWithNotifications(
+                        name: getUserName(),
+                        notification: notifications[0],
+                        dismissNotification: () => context
+                            .read<InternalNotificationsBloc>()
+                            .dismissNotification(notifications[0].id!),
+                        openNotification: () {
+                          // TODO Navigate to internal notifications page
+                        },
+                      );
+                  }
+                },
+              );
+            },
+        ),
         children: [
           Column(
             children: <Widget>[
               const SizedBox(
                 height: 10,
               ),
-              // ActionExploreSection(
-              //   title: 'What can I do today?',
-              //   isLoading: viewModel.myActions == null,
-              //   tiles: viewModel.myActions,
-              // ),
-              // CampaignExploreSection(
-              //   title: 'Campaigns of the month',
-              //   isLoading: viewModel.ofTheMonthCampaigns == null,
-              //   tiles: viewModel.ofTheMonthCampaigns,
-              // ),
+              ExploreSection(
+                title: 'What can I do today?',
+                buildBloc: () => HomeActionSectionBloc(
+                  causesService: locator<CausesService>(),
+                  searchService: locator<SearchService>(),
+                ),
+                buildTile: (item) => ExploreActionTile(item),
+                tileHeight: RESOURCE_TILE_HEIGHT,
+              ),
+              ExploreSection(
+                title: 'Campaigns of the month',
+                buildBloc: () => HomeOfTheMonthCampaignSectionBloc(
+                  causesService: locator<CausesService>(),
+                  searchService: locator<SearchService>(),
+                ),
+                buildTile: (item) => ExploreCampaignTile(item),
+                tileHeight: CAMPIGN_TILE_HEIGHT,
+              ),
               CustomWidthButton(
                 'Explore',
                 onPressed: () {
-                  viewModel.goToExplorePage();
+                  context.router.push(
+                    TabsRoute(children: [ExploreRoute()]),
+                  );
                 },
                 size: ButtonSize.Medium,
                 fontSize: 20.0,
                 buttonWidthProportion: 0.8,
               ),
-              const SizedBox(height: 30),
-
-              // Campaigns
-              if (viewModel.currentUser != null)
-                ProgressTile(
-                  campaignsScore: viewModel.numberOfCompletedCampaigns,
-                  actionsScore: viewModel.numberOfCompletedActions,
-                  learningsScore: viewModel.numberOfCompletedLearningResources,
-                ),
 
               const SizedBox(height: 30),
-              // TODO Rename so page and section have Argument/Definition and then Widget/noPrefix
-              // CampaignExploreSection(
-              //   title: 'Suggested campaigns',
-              //   tiles: viewModel.recommendedCampaigns,
-              //   isLoading: viewModel.recommendedCampaigns == null,
-              // ),
-              // NewsArticleExploreSection(
-              //   title: 'In the news',
-              //   tiles: viewModel.inTheNews,
-              //   isLoading: viewModel.inTheNews == null,
-              // ),
+              ProgressTile(),
+              const SizedBox(height: 30),
 
-              if (viewModel.currentUser != null)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'My causes',
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                      CustomTextButton(
-                        'Edit',
-                        onClick: () {
-                          viewModel.goToEditCausesPage();
-                        },
-                      ),
-                    ],
-                  ),
+              ExploreSection(
+                title: 'Suggested campaigns',
+                buildBloc: () => HomeRecommenedCampaignSectionBloc(
+                  causesService: locator<CausesService>(),
+                  searchService: locator<SearchService>(),
                 ),
+                buildTile: (item) => ExploreCampaignTile(item),
+                tileHeight: CAMPIGN_TILE_HEIGHT,
+              ),
+              ExploreSection(
+                title: 'In the news',
+                buildBloc: () => HomeNewsArticleSectionBloc(
+                  causesService: locator<CausesService>(),
+                  searchService: locator<SearchService>(),
+                ),
+                buildTile: (item) => ExploreNewsArticleTile(item),
+                tileHeight: ARTICLE_TILE_HEIGHT,
+              ),
 
-              if (viewModel.currentUser != null)
-                Container(
-                  child: viewModel.causes != null
-                      ? GridView.builder(
-                          shrinkWrap: true,
-                          padding: const EdgeInsets.all(20),
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 20,
-                            crossAxisSpacing: 30,
-                          ),
-                          itemCount: viewModel.causes!.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return CauseTile(
-                              gestureFunction: () => null,
-                              cause: viewModel.causes![index],
-                              getInfoFunction: () => viewModel
-                                  .getCausePopup(viewModel.causes![index]),
-                            );
-                          },
-                        )
-                      : const CircularProgressIndicator(),
-                ),
+              BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                builder: (context, authState) {
+                  switch (authState) {
+                    case AuthenticationStateUnauthenticated():
+                    case AuthenticationStateUnknown():
+                      return Container();
+                    case AuthenticationStateAuthenticated():
+                      {
+                        return Column(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'My causes',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall,
+                                  ),
+                                  CustomTextButton(
+                                    'Edit',
+                                    onClick: () {
+                                      context.router.push(
+                                          const ChangeSelectCausesRoute());
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                            BlocBuilder<CausesBloc, CausesState>(
+                              builder: (context, state) {
+                                switch (state) {
+                                  case CausesStateLoading():
+                                  // TODO Handle error
+                                  case CausesStateError():
+                                    return const CircularProgressIndicator();
+                                  case CausesStateLoaded(:final causes):
+                                    {
+                                      return GridView.builder(
+                                        shrinkWrap: true,
+                                        padding: const EdgeInsets.all(20),
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          mainAxisSpacing: 20,
+                                          crossAxisSpacing: 30,
+                                        ),
+                                        itemCount: causes.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return CauseTile(
+                                            onSelect: () {
+                                              context.router.push(
+                                                const ChangeSelectCausesRoute(),
+                                              );
+                                            },
+                                            cause: causes[index],
+                                          );
+                                        },
+                                      );
+                                    }
+                                }
+                              },
+                            ),
+                          ],
+                        );
+                      }
+                  }
+                },
+              ),
             ],
           ),
           const SizedBox(height: 10),

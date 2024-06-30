@@ -1,11 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/causes_service.dart';
 
+import 'bloc/user_progress_state.dart';
+import 'bloc/user_progress_bloc.dart';
+
+// TODO Add state for when there is no user
 class ProgressTile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => UserProgressBloc(causesService: locator<CausesService>())
+        ..fetchUserState(),
+      child: BlocBuilder<UserProgressBloc, UserProgressState>(
+        builder: (context, state) {
+          switch (state) {
+            case Loading():
+            case Error():
+              return Container();
+            case Loaded(:final userInfo):
+              return _ProgressTile(
+                campaignsScore: userInfo?.completedCampaignIds.length ?? 0,
+                actionsScore: userInfo?.completedActionIds.length ?? 0,
+                learningsScore:
+                    userInfo?.completedLearningResourceIds.length ?? 0,
+              );
+          }
+        },
+      ),
+    );
+  }
+}
+
+class _ProgressTile extends StatelessWidget {
   final int campaignsScore;
   final int actionsScore;
   final int learningsScore;
 
-  ProgressTile({
+  _ProgressTile({
     required this.campaignsScore,
     required this.actionsScore,
     required this.learningsScore,

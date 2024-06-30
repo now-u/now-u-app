@@ -9,7 +9,7 @@ import 'package:nowu/utils/new_since.dart';
 
 import './explore_tab_bloc.dart';
 
-abstract class ExploreActionSectionBloc extends ExploreSectionBloc<ListAction, ExploreFilterState> {
+abstract class ExploreActionSectionBloc<TSearchContext> extends ExploreSectionBloc<ListAction, TSearchContext> {
   ExploreActionSectionBloc({
     required SearchService searchService,
     required CausesService causesService,
@@ -23,22 +23,22 @@ abstract class ExploreActionSectionBloc extends ExploreSectionBloc<ListAction, E
 
   @override
   Future<SearchResponse<ListAction>> searchImpl(
-    ExploreFilterState filterState,
+    TSearchContext filterState,
     int? offset,
   ) async {
     _logger.info('Searching actions filterState=$filterState offset=$offset');
 
     return await searchService.searchActions(
-      filter: getActionsFilter(filterState),
+      filter: await getActionsFilter(searchContext: filterState),
       offset: offset ?? 0,
     );
   }
 
   @protected
-  ActionSearchFilter getActionsFilter(ExploreFilterState filterState);
+  Future<ActionSearchFilter> getActionsFilter({ required TSearchContext searchContext });
 }
 
-class ExploreActionTabBloc extends ExploreActionSectionBloc {
+class ExploreActionTabBloc extends ExploreActionSectionBloc<ExploreFilterState> {
   ExploreActionTabBloc({
     required SearchService searchService,
     required CausesService causesService,
@@ -47,26 +47,26 @@ class ExploreActionTabBloc extends ExploreActionSectionBloc {
           causesService: causesService,
         );
 
-  ActionSearchFilter getActionsFilter(ExploreFilterState filterState) {
+  Future<ActionSearchFilter> getActionsFilter({ required searchContext }) async {
     return ActionSearchFilter(
-      causeIds: filterState.filterCauseIds.isEmpty
+      causeIds: searchContext.filterCauseIds.isEmpty
           ? null
-          : filterState.filterCauseIds.toList(),
-      timeBrackets: filterState.filterTimeBrackets.isEmpty
+          : searchContext.filterCauseIds.toList(),
+      timeBrackets: searchContext.filterTimeBrackets.isEmpty
           ? null
-          : filterState.filterTimeBrackets.toList(),
-      types: filterState.filterActionTypes.isEmpty
+          : searchContext.filterTimeBrackets.toList(),
+      types: searchContext.filterActionTypes.isEmpty
           ? null
-          : filterState.filterActionTypes.toList(),
-      completed: filterState.filterCompleted == true ? true : null,
-      recommended: filterState.filterRecommended == true ? true : null,
-      releasedSince: filterState.filterNew == true ? newSinceDate() : null,
-      query: filterState.queryText,
+          : searchContext.filterActionTypes.toList(),
+      completed: searchContext.filterCompleted == true ? true : null,
+      recommended: searchContext.filterRecommended == true ? true : null,
+      releasedSince: searchContext.filterNew == true ? newSinceDate() : null,
+      query: searchContext.queryText,
     );
   }
 }
 
-class ExploreAllTabActionSectionBloc extends ExploreActionSectionBloc {
+class ExploreAllTabActionSectionBloc extends ExploreActionSectionBloc<ExploreFilterState> {
   Logger _logger = Logger('ExploreAllTabActionSectionBloc');
 
   ExploreAllTabActionSectionBloc({
@@ -77,12 +77,30 @@ class ExploreAllTabActionSectionBloc extends ExploreActionSectionBloc {
           causesService: causesService,
         );
 
-  ActionSearchFilter getActionsFilter(ExploreFilterState filterState) {
-    final baseFilter = getAllTabFilterState(filterState);
+  Future<ActionSearchFilter> getActionsFilter({ required searchContext }) async {
+    final baseFilter = getAllTabFilterState(searchContext);
     return ActionSearchFilter(
       causeIds: baseFilter.causeIds,
       query: baseFilter.query,
       releasedSince: baseFilter.releasedSince,
+    );
+  }
+}
+
+class HomeActionSectionBloc extends ExploreActionSectionBloc<void> {
+  HomeActionSectionBloc({
+    required SearchService searchService,
+    required CausesService causesService,
+  }) : super(
+          searchService: searchService,
+          causesService: causesService,
+        );
+
+  @override
+  Future<ActionSearchFilter> getActionsFilter({ void searchContext = null }) async {
+    return ActionSearchFilter(
+      causeIds: (await causesService.getUserInfo())?.selectedCausesIds,
+      completed: false,
     );
   }
 }

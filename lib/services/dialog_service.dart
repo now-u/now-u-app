@@ -1,5 +1,5 @@
 import 'package:nowu/app/app.dialogs.dart';
-import 'package:nowu/models/Cause.dart';
+import 'package:nowu/models/cause.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -29,15 +29,6 @@ extension DialogServiceExtension on DialogService {
       variant: DialogType.emailAppPicker,
       data: mailApps,
     );
-  }
-
-  Future<bool> showCauseDialog({required Cause cause}) async {
-    final response = await showCustomDialog(
-      barrierDismissible: true,
-      variant: DialogType.cause,
-      data: cause,
-    );
-    return response?.confirmed == true;
   }
 
   // TODO fix

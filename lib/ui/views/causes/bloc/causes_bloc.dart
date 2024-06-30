@@ -8,7 +8,7 @@ class CausesBloc extends Cubit<CausesState> {
 
   CausesBloc({ required CausesService causesService })
       : _causesService = causesService,
-        super(const CausesState.initial());
+        super(const CausesState.loading());
 
   void fetchCauses() async {
     emit(const CausesState.loading());

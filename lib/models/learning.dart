@@ -2,6 +2,8 @@ import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
+import 'package:nowu/models/User.dart';
+import 'package:nowu/models/cause.dart';
 import 'package:nowu/models/exploreable.dart';
 import 'package:nowu/models/time.dart';
 
@@ -59,7 +61,7 @@ LearningResourceType getResourceTypeFromEnum(
 class LearningResource extends Explorable {
   int id;
   String title;
-  Api.Cause cause;
+  Cause cause;
   LearningResourceType type;
   int time;
   DateTime createdAt;
@@ -77,15 +79,15 @@ class LearningResource extends Explorable {
     required this.isCompleted,
   });
 
-  LearningResource.fromApiModel(Api.LearningResource apiModel, bool isCompleted)
+  LearningResource.fromApiModel(Api.LearningResource apiModel, CausesUser? userInfo)
       : id = apiModel.id,
         title = apiModel.title,
         link = Uri.parse(apiModel.link),
-        cause = apiModel.causes[0],
+        cause = Cause.fromApiModel(apiModel.causes[0], userInfo),
         type = getResourceTypeFromEnum(apiModel.learningResourceType),
         time = apiModel.time,
         createdAt = apiModel.createdAt,
-        isCompleted = isCompleted;
+        isCompleted = userInfo?.completedLearningResourceIds.contains(apiModel.id) ?? false;
 
   String get timeText => timeBrackets.firstWhere((b) => b.maxTime > time).text;
 

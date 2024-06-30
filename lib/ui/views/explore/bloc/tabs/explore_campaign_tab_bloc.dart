@@ -29,13 +29,13 @@ abstract class ExploreCampaignSectionBloc<TSearchContext> extends ExploreSection
     _logger.info('Searching campaigns filterState=$searchContext offset=$offset');
 
     return await searchService.searchCampaigns(
-      filter: getCampaignsFilter(searchContext: searchContext),
+      filter: await getCampaignsFilter(searchContext: searchContext),
       offset: offset ?? 0,
     );
   }
 
   @protected
-  CampaignSearchFilter getCampaignsFilter({ required TSearchContext searchContext });
+  Future<CampaignSearchFilter> getCampaignsFilter({ required TSearchContext searchContext });
 }
 
 class ExploreCampaignTabBloc extends ExploreCampaignSectionBloc<ExploreFilterState> {
@@ -47,7 +47,7 @@ class ExploreCampaignTabBloc extends ExploreCampaignSectionBloc<ExploreFilterSta
           causesService: causesService,
         );
 
-  CampaignSearchFilter getCampaignsFilter({ required ExploreFilterState searchContext }) {
+  Future<CampaignSearchFilter> getCampaignsFilter({ required ExploreFilterState searchContext }) async {
     return CampaignSearchFilter(
       causeIds: searchContext.filterCauseIds.isEmpty
           ? null
@@ -69,7 +69,7 @@ class ExploreAllTabCampaignSectionBloc extends ExploreCampaignSectionBloc<Explor
           causesService: causesService,
         );
 
-  CampaignSearchFilter getCampaignsFilter({ required ExploreFilterState searchContext }) {
+  Future<CampaignSearchFilter> getCampaignsFilter({ required ExploreFilterState searchContext }) async {
     final baseFilter = getAllTabFilterState(searchContext);
     return CampaignSearchFilter(
       causeIds: baseFilter.causeIds, 
@@ -98,11 +98,11 @@ class HomeOfTheMonthCampaignSectionBloc extends ExploreCampaignSectionBloc<void>
         );
 
   @override
-  CampaignSearchFilter getCampaignsFilter({ void searchContext = null }) {
+  Future<CampaignSearchFilter> getCampaignsFilter({ void searchContext = null }) async {
     return CampaignSearchFilter(
       // TODO Should we take this in as context (and re call search from the view listening to the CausesBloc) 
       // or should we listen to the causes service repository and internally recall search?
-      causeIds: causesService.userInfo?.selectedCausesIds,
+      causeIds: (await causesService.getUserInfo())?.selectedCausesIds,
       ofTheMonth: true,
       completed: false,
     );
@@ -119,9 +119,9 @@ class HomeRecommenedCampaignSectionBloc extends ExploreCampaignSectionBloc<void>
         );
 
   @override
-  CampaignSearchFilter getCampaignsFilter({ void searchContext = null }) {
+  Future<CampaignSearchFilter> getCampaignsFilter({ void searchContext = null }) async {
     return CampaignSearchFilter(
-      causeIds: causesService.userInfo?.selectedCausesIds,
+      causeIds: (await causesService.getUserInfo())?.selectedCausesIds,
       completed: false,
       ofTheMonth: false,
     );

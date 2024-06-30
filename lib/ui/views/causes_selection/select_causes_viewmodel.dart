@@ -29,6 +29,7 @@ abstract class SelectCausesViewModel extends BaseViewModel
   final router = locator<AppRouter>();
 
   List<Cause> get causesList => causesData.keys.toList();
+
   bool get areCausesDisabled =>
       !causesData.values.toList().any((value) => value);
 

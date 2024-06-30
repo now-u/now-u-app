@@ -359,7 +359,7 @@ class SearchService {
     return _shuffleList(list);
   }
 
-  List<ListAction> _searchHitsToActions(List<Map<String, dynamic>> hits) {
+  List<ListAction> _searchHitsToActions(List<Map<String, dynamic>> hits, CausesUser? userInfo) {
     final results = _causeServiceClient.serializers.deserialize(
       hits,
       specifiedType: const FullType(BuiltList, [FullType(Api.ListAction)]),
@@ -368,8 +368,7 @@ class SearchService {
         .map(
           (action) => ListAction.fromApiModel(
             action,
-            _causesService.userInfo?.completedActionIds.contains(action.id) ??
-                false,
+            userInfo,
           ),
         )
         .toList();
@@ -377,6 +376,7 @@ class SearchService {
 
   List<LearningResource> _searchHitsToLearningResources(
     List<Map<String, dynamic>> hits,
+    CausesUser? userInfo,
   ) {
     final results = _causeServiceClient.serializers.deserialize(
       hits,
@@ -387,30 +387,29 @@ class SearchService {
         .map(
           (learningResource) => LearningResource.fromApiModel(
             learningResource,
-            _causesService.userInfo?.completedLearningResourceIds
-                    .contains(learningResource.id) ??
-                false,
+            userInfo,
           ),
         )
         .toList();
   }
 
-  List<ListCampaign> _searchHitsToCampaign(List<Map<String, dynamic>> hits) {
+  List<ListCampaign> _searchHitsToCampaign(List<Map<String, dynamic>> hits, CausesUser? userInfo) {
     final results = _causeServiceClient.serializers.deserialize(
       hits,
       specifiedType: const FullType(BuiltList, [FullType(Api.ListCampaign)]),
     ) as BuiltList<Api.ListCampaign>;
+
     return results
         .map(
           (campaign) => ListCampaign.fromApiModel(
             campaign,
-            _causesService.userInfo,
+            userInfo,
           ),
         )
         .toList();
   }
 
-  List<NewsArticle> _searchHitsToNewsArticles(List<Map<String, dynamic>> hits) {
+  List<NewsArticle> _searchHitsToNewsArticles(List<Map<String, dynamic>> hits, CausesUser? _) {
     final results = _causeServiceClient.serializers.deserialize(
       hits,
       specifiedType: const FullType(BuiltList, [FullType(Api.NewsArticle)]),
@@ -421,12 +420,13 @@ class SearchService {
   Future<List<T>> _searchIndex<T>(
     MeiliSearchIndex index,
     ResourceSearchFilter? resourceSearchFilter,
-    List<T> Function(List<Map<String, dynamic>>) responseSerializer,
+    List<T> Function(List<Map<String, dynamic>>, CausesUser? userInfo)
+        responseSerializer,
     int offset,
     int limit,
   ) async {
-    final searchQuery =
-        resourceSearchFilter?.toMeilisearchQuery(_causesService.userInfo);
+    final userInfo = await _causesService.getUserInfo();
+    final searchQuery = resourceSearchFilter?.toMeilisearchQuery(userInfo);
 
     _logger.info(
         'Searching index index=${index.uid} filter=${searchQuery != null ? searchQuery.filter.toString() : 'null'} query=${resourceSearchFilter != null ? resourceSearchFilter.query : 'null'} offset=${offset} limit=${limit}');
@@ -437,9 +437,13 @@ class SearchService {
     );
 
     _logger.info(
-        'Searching index result index=${index.uid} resultSize=${result.hits.length}');
+      'Searching index result index=${index.uid} resultSize=${result.hits.length}',
+    );
 
-    return responseSerializer(_orderSearchResults(result.hits, searchQuery));
+    return responseSerializer(
+      _orderSearchResults(result.hits, searchQuery),
+      userInfo,
+    );
   }
 
   Future<SearchResponse<ListAction>> searchActions({
@@ -521,53 +525,4 @@ class SearchService {
       ),
     );
   }
-
-  // Future<ResourcesSearchResult> searchResources({
-  //   BaseResourceSearchFilter? filter,
-  // }) async {
-  //   final searchQuery = filter?.toMeilisearchFilter();
-  //   final results = await _meiliSearchClient.multiSearch(
-  //     MultiSearchQuery(
-  //       // TODO Should we put this default stuff into the filters directly??
-  //       queries: (filter?.resourceTypes ?? ResourceType.values)
-  //           .map(
-  //             (resourceType) => IndexSearchQuery(
-  //               indexUid: getResourceTypeIndexName(resourceType),
-  //               query: filter?.query,
-  //               filter: searchQuery,
-  //             ),
-  //           )
-  //           .toList(),
-  //     ),
-  //   );
-
-  //   List<Map<String, dynamic>> getIndexHits(String indexName) {
-  //     // TODO Should we have null and [] to make it clear if the index was searched or not?
-  //     return results.results
-  //             .firstWhereOrNull(
-  //               (indexResult) => indexResult.indexUid == indexName,
-  //             )
-  //             ?.hits ??
-  //         [];
-  //   }
-
-  //   return ResourcesSearchResult(
-  //     // For now the order is never defined so we can just use null
-  //     actions: _searchHitsToActions(
-  //       _orderSearchResults(getIndexHits(SearchIndexName.ACTIONS), null),
-  //     ),
-  //     learningResources: _searchHitsToLearningResources(
-  //       _orderSearchResults(
-  //         getIndexHits(SearchIndexName.LEARNING_RESOURCES),
-  //         null,
-  //       ),
-  //     ),
-  //     campaigns: _searchHitsToCampaign(
-  //       _orderSearchResults(getIndexHits(SearchIndexName.CAMPAIGNS), null),
-  //     ),
-  //     newsArticles: _searchHitsToNewsArticles(
-  //       _orderSearchResults(getIndexHits(SearchIndexName.NEWS_ARTICLES), null),
-  //     ),
-  //   );
-  // }
 }

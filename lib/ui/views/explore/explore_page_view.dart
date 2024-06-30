@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nowu/assets/constants.dart';
-import 'package:nowu/locator.dart';
 import 'package:nowu/router.gr.dart';
-import 'package:nowu/services/causes_service.dart';
+import 'package:nowu/ui/views/causes/bloc/causes_bloc.dart';
+import 'package:nowu/ui/views/causes/bloc/causes_state.dart';
 import 'package:nowu/ui/views/explore/bloc/explore_filter_bloc.dart';
 import 'package:nowu/ui/views/explore/bloc/explore_filter_state.dart';
 import 'package:auto_route/auto_route.dart';
@@ -20,9 +20,22 @@ class ExploreView extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) {
+    Set<int> getSelectedCausesIds() {
+      switch (context.read<CausesBloc>().state) {
+        case CausesStateLoading():
+        case CausesStateError():
+          return {};
+        case CausesStateLoaded(:final causes):
+          return causes
+              .where((cause) => cause.isSelected)
+              .map((cause) => cause.id)
+              .toSet();
+      }
+    }
+
     return BlocProvider(
       create: (context) => ExploreFilterBloc(
-        causesService: locator<CausesService>(),
+        selectedCausesIds: getSelectedCausesIds(),
       ),
       child: ExploreTabs(),
     );

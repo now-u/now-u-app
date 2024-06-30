@@ -30,7 +30,7 @@ class Campaign extends ListCampaign {
             .map(
               (action) => ListAction.fromApiModel(
                 action,
-                causesUser?.completedActionIds.contains(action.id) ?? false,
+                causesUser,
               ),
             )
             .toList(),
@@ -38,8 +38,7 @@ class Campaign extends ListCampaign {
             .map(
               (learningResource) => LearningResource.fromApiModel(
                 learningResource,
-                causesUser?.completedLearningResourceIds
-                    .contains(learningResource.id) ?? false,
+                causesUser,
               ),
             )
             .toList(),
@@ -66,7 +65,7 @@ class ListCampaign implements Explorable {
   int id;
   String title;
   Api.Image headerImage;
-  Api.Cause cause;
+  Cause cause;
   bool isCompleted;
 
   ListCampaign({
@@ -83,7 +82,8 @@ class ListCampaign implements Explorable {
     required this.headerImage,
     required BuiltList<Api.Cause> causes,
     required CausesUser? causesUser,
-  }) : cause = causes[0], isCompleted = causesUser?.completedCampaignIds.contains(id) ?? false;
+  }) : cause = Cause.fromApiModel(causes[0], causesUser),
+       isCompleted = causesUser?.completedCampaignIds.contains(id) ?? false;
 
   ListCampaign.fromApiModel(Api.ListCampaign apiModel, CausesUser? causesUser)
       : this.fromApiData(

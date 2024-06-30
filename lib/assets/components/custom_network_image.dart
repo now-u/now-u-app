@@ -1,9 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class CustomNetworkImage extends StatelessWidget {
-  final String? url;
+  final String url;
   final BoxFit? fit;
   final double? height;
 
@@ -22,12 +23,16 @@ class CustomNetworkImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // If there is no image then return an error icon
-    if (url == null) {
-      return const Center(child: Icon(Icons.error));
+    if (kIsWeb) {
+      return Image.network(
+        url,
+        errorBuilder: (context, url, error) => const Center(child: Icon(Icons.error)),
+        fit: fit,
+      );
     }
+
     return CachedNetworkImage(
-      imageUrl: url!,
+      imageUrl: url,
       placeholder: placeholder == null
           ? (context, url) => const Center(child: CircularProgressIndicator())
           : placeholder as Widget Function(BuildContext, String)?,

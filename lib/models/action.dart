@@ -3,6 +3,8 @@ import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:built_collection/built_collection.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:flutter/material.dart' hide Action;
+import 'package:nowu/models/User.dart';
+import 'package:nowu/models/cause.dart';
 import 'package:nowu/models/exploreable.dart';
 import 'package:nowu/models/time.dart';
 
@@ -107,7 +109,7 @@ class ListAction implements Explorable {
   int id;
   String title;
   // TODO create type
-  Api.Cause cause;
+  Cause cause;
   ActionType type;
   DateTime releaseAt;
   int time;
@@ -139,12 +141,12 @@ class ListAction implements Explorable {
     required this.time,
     required BuiltList<Api.Cause> causes,
     required Api.ActionTypeEnum actionType,
-
-    required this.isCompleted,
-  })  : cause = causes[0],
+    required CausesUser? userInfo,
+  })  : cause = Cause.fromApiModel(causes[0], userInfo),
+        isCompleted = userInfo?.completedActionIds.contains(id) ?? false,
         type = getActionTypeFromSubtype(actionType);
 
-  factory ListAction.fromApiModel(Api.ListAction apiModel, bool isCompleted) {
+  factory ListAction.fromApiModel(Api.ListAction apiModel, CausesUser? userInfo) {
     return ListAction.fromApiData(
       id: apiModel.id,
       title: apiModel.title,
@@ -152,8 +154,7 @@ class ListAction implements Explorable {
       time: apiModel.time,
       causes: apiModel.causes,
       actionType: apiModel.actionType,
-
-      isCompleted: isCompleted,
+      userInfo: userInfo,
     );
   }
 }
@@ -179,7 +180,7 @@ class Action extends ListAction {
 
   Action.fromApiModel(
     Api.Action apiModel,
-    bool isCompleted,
+    CausesUser? userInfo,
   )   : whatDescription = apiModel.whatDescription,
         whyDescription = apiModel.whyDescription,
         link = Uri.parse(apiModel.link),
@@ -190,6 +191,6 @@ class Action extends ListAction {
           time: apiModel.time,
           causes: apiModel.causes,
           actionType: apiModel.actionType,
-          isCompleted: isCompleted,
+          userInfo: userInfo,
         );
 }

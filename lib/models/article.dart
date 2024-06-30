@@ -1,8 +1,6 @@
 import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:nowu/models/exploreable.dart';
 
-export 'package:causeApiClient/causeApiClient.dart' show Image;
-
 // class ArticleType {
 //   final String name;
 //   final IconData icon;

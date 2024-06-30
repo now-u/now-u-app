@@ -11,7 +11,6 @@ import 'package:nowu/services/search_service.dart';
 import 'package:nowu/services/storage.dart';
 import 'package:nowu/services/user_service.dart';
 import 'package:nowu/ui/dialogs/action/action_completed_dialog.dart';
-import 'package:nowu/ui/dialogs/cause/cause_dialog.dart';
 import 'package:nowu/ui/dialogs/email_app_picker/email_app_picker_dialog.dart';
 import 'package:nowu/ui/views/action_info/action_info_view.dart';
 import 'package:nowu/ui/views/campaign_info/campaign_info_view.dart';
@@ -99,7 +98,6 @@ import 'package:stacked_services/stacked_services.dart' hide NavigationService;
   dialogs: [
     // StackedDialog(classType: BasicDialog),
     StackedDialog(classType: EmailAppPickerDialog),
-    StackedDialog(classType: CauseDialog),
     StackedDialog(classType: ActionCompletedDialog),
 // @stacked-dialog
   ],

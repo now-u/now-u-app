@@ -48,8 +48,14 @@ class NotificationInfoView extends StackedView<NotificationInfoViewModel> {
             ),
 
             // Main Stuff
-            CustomNetworkImage(notification.getImage(), height: 150),
-            const SizedBox(height: 60),
+            ...(notification.getImage() != null
+              ? [
+                CustomNetworkImage(notification.getImage()!, height: 150),
+                const SizedBox(height: 60),
+              ]
+              : []
+            ),
+
             Text(
               notification.getTitle()!,
               style: Theme.of(context).textTheme.headlineMedium,

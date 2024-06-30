@@ -1,32 +1,16 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nowu/assets/components/buttons/darkButton.dart';
-import 'package:nowu/models/Cause.dart';
-import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
+import 'package:nowu/assets/components/custom_network_image.dart';
+import 'package:nowu/models/cause.dart';
 
-import 'cause_dialog_model.dart';
+class CauseInfoDialog extends StatelessWidget {
+  final Cause cause;
+  final void Function() onSelectCause;
 
-class CauseDialog extends StackedView<CausesDialogModel> {
-  final DialogRequest<Cause> request;
-  final Function(DialogResponse) completer;
-
-  const CauseDialog({
-    Key? key,
-    required DialogRequest request,
-    required this.completer,
-  })  :
-        // TODO Figure out how to remove this cast
-        this.request = request as DialogRequest<Cause>,
-        super(key: key);
+  const CauseInfoDialog({ required this.cause, required this.onSelectCause });
 
   @override
-  Widget builder(
-    BuildContext context,
-    CausesDialogModel viewModel,
-    Widget? child,
-  ) {
-    final cause = request.data!;
+  Widget build(BuildContext context) {
     return AlertDialog(
       contentPadding: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
@@ -39,16 +23,14 @@ class CauseDialog extends StackedView<CausesDialogModel> {
         children: [
           Stack(
             children: [
-              CachedNetworkImage(imageUrl: cause.headerImage.url),
+              CustomNetworkImage(cause.headerImage.url),
               Padding(
                 padding: const EdgeInsets.all(5),
                 child: Align(
                   alignment: Alignment.topRight,
                   child: IconButton(
                     icon: const Icon(Icons.close),
-                    onPressed: () {
-                      completer(DialogResponse(confirmed: false));
-                    },
+                    onPressed: () => Navigator.of(context).pop(),
                     color: Theme.of(context).primaryColor,
                   ),
                 ),
@@ -78,7 +60,9 @@ class CauseDialog extends StackedView<CausesDialogModel> {
                   child: DarkButton(
                     'Select Cause',
                     onPressed: () {
-                      completer(DialogResponse(confirmed: true));
+                      onSelectCause();
+                      // TODO Check if this is the wrong way round (because we also navigate in the above method)
+                      Navigator.of(context).pop();
                     },
                   ),
                 ),
@@ -89,8 +73,4 @@ class CauseDialog extends StackedView<CausesDialogModel> {
       ),
     );
   }
-
-  @override
-  CausesDialogModel viewModelBuilder(BuildContext context) =>
-      CausesDialogModel();
 }

@@ -14,11 +14,13 @@ import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/causes_service.dart';
+import 'package:nowu/services/internal_notification_service.dart';
 import 'package:nowu/services/user_service.dart';
 import 'package:nowu/themes.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_bloc.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_state.dart';
 import 'package:nowu/ui/views/causes/bloc/causes_bloc.dart';
+import 'package:nowu/ui/views/home/bloc/internal_notifications_bloc.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sentry_logging/sentry_logging.dart';
 
@@ -113,7 +115,7 @@ class App extends StatelessWidget {
       builder: (context, child) {
         return MultiBlocProvider(
           providers: [
-            BlocProvider<AuthenticationBloc>(
+            BlocProvider(
               create: (_) {
                 return AuthenticationBloc(
                   authenticationService: locator<AuthenticationService>(),
@@ -122,11 +124,18 @@ class App extends StatelessWidget {
                 );
               },
             ),
-            BlocProvider<CausesBloc>(
+            BlocProvider(
               create: (_) {
                 return CausesBloc(
                   causesService: locator<CausesService>(),
                 )..fetchCauses();
+              },
+            ),
+            BlocProvider(
+              create: (_) {
+                return InternalNotificationsBloc(
+                  internalNotificationService: locator<InternalNotificationService>(),
+                )..fetchInternalNotifactions();
               },
             ),
           ],
