@@ -1,26 +1,28 @@
 import 'dart:async';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:logging/logging.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
-import 'package:nowu/app/app.router.dart';
-import 'package:nowu/locator.dart';
-import 'package:nowu/assets/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:logging/logging.dart';
+import 'package:nowu/assets/constants.dart';
+import 'package:nowu/locator.dart';
 import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/internal_notification_service.dart';
+import 'package:nowu/services/storage.dart';
 import 'package:nowu/services/user_service.dart';
 import 'package:nowu/themes.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_bloc.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_state.dart';
 import 'package:nowu/ui/views/causes/bloc/causes_bloc.dart';
 import 'package:nowu/ui/views/home/bloc/internal_notifications_bloc.dart';
+import 'package:nowu/utils/let.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sentry_logging/sentry_logging.dart';
 
@@ -116,14 +118,14 @@ class App extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (_) {
-                return AuthenticationBloc(
-                  authenticationService: locator<AuthenticationService>(),
-                  userService: locator<UserService>(),
-                  causesService: locator<CausesService>(),
-                );
-              },
-            ),
+          create: (_) {
+            return AuthenticationBloc(
+              authenticationService: locator<AuthenticationService>(),
+              userService: locator<UserService>(),
+              causesService: locator<CausesService>(),
+              storageService: locator<SecureStorageService>(),
+            );
+          },),
             BlocProvider(
               create: (_) {
                 return CausesBloc(
@@ -141,27 +143,26 @@ class App extends StatelessWidget {
           ],
           child: BlocListener<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
-              switch (state) {
-                case AuthenticationStateAuthenticated():
-                  // TODO Check if currentUser/causesInfo is intialized and if not copy old post_login_viewmodel
-                  _appRouter.replaceAll(
-                    [
-                      TabsRoute(children: [const HomeRoute()]),
-                    ],
-                  );
-                  break;
-                case AuthenticationStateUnauthenticated():
-                  // TODO Decide wether to go to /login
-                  _appRouter.replaceAll(
-                    [
-                      const LoginRoute(),
-                    ],
-                  );
-                  break;
-                case AuthenticationStateUnknown():
-                  // TODO Something
-                  break;
+              PageRouteInfo? getInitialRoute() {
+                switch (state) {
+                  case AuthenticationStateUnauthenticated(:final hasShownIntro) when !hasShownIntro:
+                    return const IntroRoute();
+                  case AuthenticationStateUnauthenticated(:final hasSkippedLogin) when !hasSkippedLogin:
+                    return const LoginRoute();
+                  case AuthenticationStateUnauthenticated():
+                  case AuthenticationStateAuthenticated():
+                    return TabsRoute(children: [const HomeRoute()]);
+                  // TODO Presumably show a splash screen?
+                  case AuthenticationStateUnknown():
+                    return null;
+                }
               }
+
+              final route = getInitialRoute();
+              route?.let((route) {
+                _logger.info('Navigating to ${route.routeName}');
+                _appRouter.replaceAll([route]);
+              });
             },
             child: child,
           ),

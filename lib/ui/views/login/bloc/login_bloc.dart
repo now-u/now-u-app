@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/utils/require.dart';
 
@@ -8,10 +10,13 @@ import './login_state.dart';
 
 class LoginBloc extends Cubit<LoginState> {
   AuthenticationService _authenticationService;
+  StackRouter _appRouter;
 
   LoginBloc({
     required AuthenticationService authenticationService,
+    required StackRouter appRouter,
   })  : _authenticationService = authenticationService,
+        _appRouter = appRouter,
         super(LoginState(email: Email.pure()));
 
   void onEmailChanged(String email) {
@@ -30,6 +35,7 @@ class LoginBloc extends Cubit<LoginState> {
     try {
       await _authenticationService.sendSignInEmail(state.email.value);
       emit(state.copyWith(status: FormzSubmissionStatus.success));
+      _appRouter.push(LoginEmailSentRoute(email: state.email.value));
     } catch (e) {
       emit(state.copyWith(status: FormzSubmissionStatus.failure));
     }

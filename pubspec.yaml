@@ -75,7 +75,7 @@ dependencies:
   flutter_bloc: ^8.1.5
   freezed_annotation: ^2.4.1
   equatable: ^2.0.5
-  flutter_facebook_auth: ^6.2.0
+  flutter_facebook_auth: ^7.0.0
   formz: ^0.7.0
   bloc_test: ^9.1.7
 
