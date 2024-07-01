@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/auth.dart';
-import 'package:nowu/utils/require.dart';
 
 import '../models/email.dart';
 import './login_state.dart';
@@ -20,17 +19,19 @@ class LoginBloc extends Cubit<LoginState> {
         super(LoginState(email: Email.pure()));
 
   void onEmailChanged(String email) {
-    final emailState = Email.dirty(email);
     emit(
       state.copyWith(
-        email: emailState,
-        isValid: Formz.validate([emailState]),
+        email: Email.dirty(email),
       ),
     );
   }
 
   Future<void> onLoginWithEmail() async {
-    require(state.isValid, 'Cannot login when email is invalid');
+    final isValid = Formz.validate([state.email]);
+    if (isValid == false) {
+      emit(state.copyWith(isValid: isValid));
+      return;
+    }
     emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
     try {
       await _authenticationService.sendSignInEmail(state.email.value);

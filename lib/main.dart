@@ -14,7 +14,9 @@ import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/causes_service.dart';
+import 'package:nowu/services/dynamicLinks.dart';
 import 'package:nowu/services/internal_notification_service.dart';
+import 'package:nowu/services/pushNotifications.dart';
 import 'package:nowu/services/storage.dart';
 import 'package:nowu/services/user_service.dart';
 import 'package:nowu/themes.dart';
@@ -29,6 +31,9 @@ import 'package:sentry_logging/sentry_logging.dart';
 import 'generated/l10n.dart';
 
 final _logger = Logger('Main');
+
+final isMobile = defaultTargetPlatform == TargetPlatform.iOS ||
+    defaultTargetPlatform == TargetPlatform.android;
 
 void main() async {
   await runZonedGuarded(() async {
@@ -55,12 +60,6 @@ void main() async {
       print('${record.level.name}: ${record.time}: ${record.message}');
     });
 
-    _logger.info('Initing auth');
-
-    // TODO Why can't this call be in init??
-    await locator<AuthenticationService>().initSupabase();
-    await locator<AuthenticationService>().init();
-
     await SentryFlutter.init(
       (options) {
         options.dsn =
@@ -73,6 +72,18 @@ void main() async {
         options.debug = devMode;
         options.diagnosticLevel = SentryLevel.info;
       },
+    );
+
+    _logger.info('Initing auth');
+
+    await Future.wait(
+      <Future>[
+        locator<AuthenticationService>().init(),
+        if (isMobile) locator<PushNotificationService>().init(),
+        // TODO Fix??
+        // if (isMobile) locator<DynamicLinkService>().init(),
+      ],
+      eagerError: true,
     );
 
     runApp(App());
@@ -118,14 +129,15 @@ class App extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider(
-          create: (_) {
-            return AuthenticationBloc(
-              authenticationService: locator<AuthenticationService>(),
-              userService: locator<UserService>(),
-              causesService: locator<CausesService>(),
-              storageService: locator<SecureStorageService>(),
-            );
-          },),
+              create: (_) {
+                return AuthenticationBloc(
+                  authenticationService: locator<AuthenticationService>(),
+                  userService: locator<UserService>(),
+                  causesService: locator<CausesService>(),
+                  storageService: locator<SecureStorageService>(),
+                );
+              },
+            ),
             BlocProvider(
               create: (_) {
                 return CausesBloc(
@@ -136,18 +148,25 @@ class App extends StatelessWidget {
             BlocProvider(
               create: (_) {
                 return InternalNotificationsBloc(
-                  internalNotificationService: locator<InternalNotificationService>(),
+                  internalNotificationService:
+                      locator<InternalNotificationService>(),
                 )..fetchInternalNotifactions();
               },
             ),
           ],
           child: BlocListener<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
+              // TODO This should only be on startup route... i.e. so if you go to a specific route
+              // you actually go there - rather than getting redirected always
               PageRouteInfo? getInitialRoute() {
                 switch (state) {
-                  case AuthenticationStateUnauthenticated(:final hasShownIntro) when !hasShownIntro:
+                  case AuthenticationStateUnauthenticated(:final hasShownIntro)
+                      when !hasShownIntro:
                     return const IntroRoute();
-                  case AuthenticationStateUnauthenticated(:final hasSkippedLogin) when !hasSkippedLogin:
+                  case AuthenticationStateUnauthenticated(
+                        :final hasSkippedLogin
+                      )
+                      when !hasSkippedLogin:
                     return const LoginRoute();
                   case AuthenticationStateUnauthenticated():
                   case AuthenticationStateAuthenticated():

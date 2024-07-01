@@ -9,7 +9,7 @@ import 'package:nowu/ui/views/intro/intro_state.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../../app/app.locator.dart';
+import 'package:nowu/locator.dart';
 import '../../../services/storage.dart';
 import 'data/intro_page_data.dart';
 

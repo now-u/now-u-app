@@ -9,7 +9,6 @@ import 'package:nowu/services/pushNotifications.dart';
 import 'package:nowu/services/faq_service.dart';
 import 'package:nowu/services/internal_notification_service.dart';
 import 'package:nowu/services/device_info_service.dart';
-import 'package:nowu/services/dialog_service.dart';
 import 'package:nowu/services/google_location_search_service.dart';
 import 'package:nowu/services/remote_config_service.dart';
 import 'package:nowu/services/api_service.dart';
@@ -31,7 +30,6 @@ void setupLocator() {
   locator.registerLazySingleton(() => FAQService());
   locator.registerLazySingleton(() => InternalNotificationService());
   locator.registerLazySingleton(() => DeviceInfoService());
-  locator.registerLazySingleton(() => DialogService());
   locator.registerLazySingleton(() => GoogleLocationSearchService());
   locator.registerLazySingleton(() => AnalyticsService());
   locator.registerLazySingleton(() => CausesService());

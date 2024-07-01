@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 
-import 'startup_viewmodel.dart';
-
 @RoutePage()
 class StartupView extends StatelessWidget {
   const StartupView({Key? key}) : super(key: key);
@@ -28,14 +26,13 @@ class StartupView extends StatelessWidget {
   }
 }
 
+// TODO Use startup error view
 class StartupErrorView extends StatelessWidget {
   final String errorMessage;
-  final StartupViewModel model;
 
   const StartupErrorView({
     Key? key,
     required this.errorMessage,
-    required this.model,
   }) : super(key: key);
 
   @override
@@ -51,10 +48,11 @@ class StartupErrorView extends StatelessWidget {
               ?.copyWith(color: Colors.red),
         ),
         const SizedBox(height: 16),
-        ElevatedButton(
-          onPressed: model.handleStartUpLogic,
-          child: const Text('Retry'),
-        ),
+        // TODO Add retry button!
+        // ElevatedButton(
+        //   onPressed: model.handleStartUpLogic,
+        //   child: const Text('Retry'),
+        // ),
       ],
     );
   }

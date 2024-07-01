@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/assets/components/buttons/customWidthButton.dart';
 import 'package:nowu/assets/components/customScrollableSheet.dart';
 import 'package:nowu/assets/components/customTile.dart';
 import 'package:nowu/assets/components/explore_tiles.dart';
 import 'package:nowu/assets/components/textButton.dart';
+import 'package:nowu/locator.dart';
 import 'package:nowu/models/Notification.dart';
 import 'package:nowu/models/exploreable.dart';
 import 'package:nowu/router.gr.dart';

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:nowu/app/app.locator.dart';
 import 'package:nowu/assets/components/card.dart';
 import 'package:nowu/assets/components/cause_indicator.dart';
 import 'package:nowu/assets/components/custom_network_image.dart';
@@ -14,6 +13,7 @@ import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/utils/let.dart';
+import 'package:nowu/locator.dart';
 
 enum ExploreTileStyle {
   Standard,

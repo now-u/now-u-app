@@ -6,7 +6,7 @@ class InternalNotificationService {
 
   List<InternalNotification>? _notifications = [];
 
-  List<InternalNotification>? getNotification(int id) {
+  InternalNotification? getNotification(int id) {
     // TODO
     return null;
   }

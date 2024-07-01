@@ -51,7 +51,7 @@ class AuthenticationService {
 
   SupabaseClient get _client => Supabase.instance.client;
 
-  initSupabase() async {
+  Future<void> _initSupabase() async {
     await Supabase.initialize(
       url: 'https://uqwaxxhrkpbzvjdlfdqe.supabase.co',
       anonKey:
@@ -62,19 +62,14 @@ class AuthenticationService {
   Stream<AuthState> get authState => _client.auth.onAuthStateChange;
 
   Future<void> init() async {
+    await _initSupabase();
+
     _logger.info('Current session is: ${_client.auth.currentSession}');
-
-    // await initSupabase();
-
-    if (token != null) {
-      // _apiService.setToken(token!);
-    }
 
     _client.auth.onAuthStateChange.listen((data) async {
       if (data.event == AuthChangeEvent.signedIn ||
           data.event == AuthChangeEvent.tokenRefreshed) {
         _logger.info('Updated user token for causes service client');
-        // _apiService.setToken(token!);
       }
 
       switch (data.event) {

@@ -201,6 +201,7 @@ class CustomCheckboxFormField extends FormField<bool> {
   CustomCheckboxFormField({
     Widget? title,
     FormFieldSetter<bool>? onSaved,
+    ValueChanged<bool>? onChanged,
     FormFieldValidator<bool>? validator,
     bool initialValue = false,
     bool autovalidate = false,
@@ -218,7 +219,13 @@ class CustomCheckboxFormField extends FormField<bool> {
                     children: [
                       Checkbox(
                         value: state.value,
-                        onChanged: state.didChange,
+                        onChanged: (value) {
+                          state.didChange(value);
+                          if (onChanged != null) {
+                            // Note value will never be null as tristate is false
+                            onChanged(value!);
+                          }
+                        },
                         shape: const CircleBorder(),
                         side: BorderSide(
                           color: Theme.of(context).primaryColor,
