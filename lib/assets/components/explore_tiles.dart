@@ -14,6 +14,7 @@ import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/utils/let.dart';
 import 'package:nowu/locator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 enum ExploreTileStyle {
   Standard,
@@ -130,10 +131,17 @@ class ExploreLearningResourceTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => ExploreLearningResourceTileBloc(learningResource: tile, causesService: locator<CausesService>()),
-      child: BlocBuilder<ExploreLearningResourceTileBloc, ExploreLearningResourceTileState>(
-        builder: (context, state) {
-          return ExploreLearningResourceTileInner(tile, onTap: context.read<ExploreLearningResourceTileBloc>().launchLearningResource);
+      child: BlocListener<ExploreLearningResourceTileBloc, ExploreLearningResourceTileState>(
+        listener: (context, state) {
+          if (state is ExploreLearningResourceTileStateLaunching) {
+            launchUrl(tile.link);
+          }
         },
+        child: BlocBuilder<ExploreLearningResourceTileBloc, ExploreLearningResourceTileState>(
+          builder: (context, state) {
+            return ExploreLearningResourceTileInner(tile, onTap: context.read<ExploreLearningResourceTileBloc>().launchLearningResource);
+          },
+        ),
       ),
     );
   }

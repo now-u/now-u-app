@@ -18,16 +18,15 @@ class ExploreLearningResourceTileBloc
 
   Future<void> launchLearningResource() async {
     switch (state) {
-      case Static(:final learningResource): {
+      case ExploreLearningResourceTileStateStatic(:final learningResource): {
         emit(ExploreLearningResourceTileState.launching(learningResource: learningResource));
 
         await _causesService.completeLearningResource(learningResource);
 
+        // TODO Refetch learning resource
         emit(ExploreLearningResourceTileState.static(learningResource: learningResource));
-
-        // TODO Launch the learning resource/emit to new event/state so it can be opened
       }
-      case Launching(): {
+      case ExploreLearningResourceTileStateLaunching(): {
         throw Exception('Learning resource already launching');
       }
     }

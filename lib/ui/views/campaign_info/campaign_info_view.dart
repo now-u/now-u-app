@@ -193,7 +193,7 @@ class CampaignInfoView extends StatelessWidget {
     return Scaffold(
       body: BlocProvider(
         create: (_) =>
-            CampaignInfoBloc(causesService: locator<CausesService>()),
+            CampaignInfoBloc(causesService: locator<CausesService>())..fetchCampaign(listCampaign.id),
         child: BlocBuilder<CampaignInfoBloc, CampaignInfoState>(
           builder: (context, state) {
             return ListView(

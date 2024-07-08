@@ -7,8 +7,8 @@ part 'explore_learning_resource_tile_state.freezed.dart';
 sealed class ExploreLearningResourceTileState with _$ExploreLearningResourceTileState {
   const factory ExploreLearningResourceTileState.static({
     required LearningResource learningResource,
-  }) = Static;
+  }) = ExploreLearningResourceTileStateStatic;
   const factory ExploreLearningResourceTileState.launching({
     required LearningResource learningResource,
-  }) = Launching;
+  }) = ExploreLearningResourceTileStateLaunching;
 }
