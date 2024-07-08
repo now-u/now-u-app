@@ -112,6 +112,7 @@ class ListAction implements Explorable {
   Cause cause;
   ActionType type;
   DateTime releaseAt;
+  DateTime createdAt;
   int time;
   bool isCompleted;
 
@@ -128,6 +129,7 @@ class ListAction implements Explorable {
     required this.id,
     required this.title,
     required this.releaseAt,
+    required this.createdAt,
     required this.time,
     required this.cause,
     required this.type,
@@ -138,6 +140,7 @@ class ListAction implements Explorable {
     required this.id,
     required this.title,
     required this.releaseAt,
+    required this.createdAt,
     required this.time,
     required BuiltList<Api.Cause> causes,
     required Api.ActionTypeEnum actionType,
@@ -151,6 +154,7 @@ class ListAction implements Explorable {
       id: apiModel.id,
       title: apiModel.title,
       releaseAt: apiModel.releaseAt,
+      createdAt: apiModel.createdAt,
       time: apiModel.time,
       causes: apiModel.causes,
       actionType: apiModel.actionType,
@@ -172,6 +176,7 @@ class Action extends ListAction {
     required super.id,
     required super.title,
     required super.releaseAt,
+    required super.createdAt,
     required super.time,
     required super.cause,
     required super.type,
@@ -188,6 +193,7 @@ class Action extends ListAction {
           id: apiModel.id,
           title: apiModel.title,
           releaseAt: apiModel.releaseAt,
+          createdAt: apiModel.createdAt,
           time: apiModel.time,
           causes: apiModel.causes,
           actionType: apiModel.actionType,
