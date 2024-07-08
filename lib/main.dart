@@ -14,7 +14,6 @@ import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/causes_service.dart';
-import 'package:nowu/services/dynamicLinks.dart';
 import 'package:nowu/services/internal_notification_service.dart';
 import 'package:nowu/services/pushNotifications.dart';
 import 'package:nowu/services/storage.dart';

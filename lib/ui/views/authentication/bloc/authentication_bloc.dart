@@ -31,6 +31,7 @@ class AuthenticationBloc
     authenticationService.authState.listen((event) {
       switch (event.event) {
         case AuthChangeEvent.signedIn:
+        case AuthChangeEvent.initialSession:
           add(const AuthenticationSignIn());
           break;
         case AuthChangeEvent.signedOut:

@@ -56,7 +56,7 @@ class ActionMenuItem extends MenuItemData {
   });
 }
 
-List<MenuItemData> getMenuItems(AuthenticationBloc authBloc) => [
+List<MenuItemData> getMenuItems(BuildContext context, AuthenticationState authState) => [
       const SectionHeadingMenuItem(title: 'The app'),
       ActionMenuItem(
         title: 'About Us',
@@ -116,13 +116,13 @@ List<MenuItemData> getMenuItems(AuthenticationBloc authBloc) => [
         action: LinkMenuItemAction(PRIVACY_POLICY_URI, isExternal: true),
       ),
       const SectionHeadingMenuItem(title: 'User'),
-      if (authBloc.state is AuthenticationStateAuthenticated)
+      if (authState is AuthenticationStateAuthenticated)
         ActionMenuItem(
           title: 'Log out',
           // TODO Get icon
           icon: FontAwesomeIcons.solidUser,
           action: FunctionMenuItemAction(
-            () async => authBloc.add(
+            () async => context.read<AuthenticationBloc>().add(
               const AuthenticationEvent.signOutRequested(),
             ),
           ),
@@ -155,12 +155,16 @@ class MoreView extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
             ),
-            ListView(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              children: getMenuItems(context.read<AuthenticationBloc>())
-                  .map((tile) => MenuItem(tile))
-                  .toList(),
+            BlocBuilder<AuthenticationBloc, AuthenticationState>(
+              builder: (context, state) {
+                return ListView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: getMenuItems(context, state)
+                      .map((tile) => MenuItem(tile))
+                      .toList(),
+                );
+              },
             ),
             const SizedBox(height: 15),
             Row(

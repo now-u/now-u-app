@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:nowu/locator.dart';
@@ -57,7 +58,11 @@ class AppRouter extends $AppRouter {
   }
 }
 
-void launchLink(Uri url) {
+Future<void> launchLink(Uri url) async {
+  if (kIsWeb) {
+    await launchUrl(url, mode: LaunchMode.externalApplication);
+  }
+
   final browser = locator<CustomChromeSafariBrowser>();
   browser.open(url: url);
 }

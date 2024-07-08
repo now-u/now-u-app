@@ -10,6 +10,7 @@ class LoginState with _$LoginState {
   factory LoginState({
     @Default(FormzSubmissionStatus.initial) FormzSubmissionStatus status,
     @Default(false) bool isValid,
+    @Default(false) bool showValidation,
     required Email email,
   }) = _LoginState;
 }

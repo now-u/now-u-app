@@ -29,7 +29,7 @@ class LoginBloc extends Cubit<LoginState> {
   Future<void> onLoginWithEmail() async {
     final isValid = Formz.validate([state.email]);
     if (isValid == false) {
-      emit(state.copyWith(isValid: isValid));
+      emit(state.copyWith(isValid: isValid, showValidation: true));
       return;
     }
     emit(state.copyWith(status: FormzSubmissionStatus.inProgress));

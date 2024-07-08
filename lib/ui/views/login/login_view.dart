@@ -163,7 +163,8 @@ class _EmailInput extends StatelessWidget {
             textInputAction: TextInputAction.next,
             autofocus: false,
             decoration: InputDecoration(
-              errorText: getErrorText(state.email),
+              errorText:
+                  state.showValidation ? getErrorText(state.email) : null,
               hintText: 'e.g. jane.doe@email.com',
             ),
             onChanged: (value) {
@@ -208,7 +209,6 @@ class _LoginButton extends StatelessWidget {
           onPressed: () {
             context.read<LoginBloc>().onLoginWithEmail();
           },
-          enabled: state.isValid,
           loading: state.status == FormzSubmissionStatus.inProgress,
         );
       },

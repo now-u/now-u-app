@@ -22,8 +22,6 @@ import 'package:get_it/get_it.dart';
 GetIt locator = GetIt.instance;
 
 void setupLocator() {
-  // locator.registerLazySingleton(() => NavigationService(
-  //     GlobalKey<NavigatorState>(), UrlLauncher(), CustomChromeSafariBrowser()));
   locator.registerLazySingleton(() => SecureStorageService());
   locator.registerLazySingleton(() => AuthenticationService());
   locator.registerLazySingleton(() => UserService());
@@ -37,10 +35,6 @@ void setupLocator() {
   locator.registerLazySingleton(() => SearchService());
   locator.registerLazySingleton(() => AppRouter());
   locator.registerLazySingleton(() => CustomChromeSafariBrowser());
-  // TODO This is super temporary, we should use the stacked auto generated router
-}
-
-void registerFirebaseServicesToLocator() {
   locator.registerLazySingleton(() => PushNotificationService());
   locator.registerLazySingleton(() => DynamicLinkService());
   locator.registerLazySingleton(() => RemoteConfigService());

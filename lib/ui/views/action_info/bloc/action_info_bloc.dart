@@ -16,7 +16,7 @@ class ActionInfoBloc extends Cubit<ActionInfoState> {
     try {
       final action = await _causesService.getAction(_actionId);
       emit(
-        ActionInfoState.success(action: action),
+        ActionInfoState.success(action: action, statusUpdateState: const ActionInfoStatusUpdateState.initial()),
       );
     } catch (_) {
       emit(
@@ -29,12 +29,15 @@ class ActionInfoBloc extends Cubit<ActionInfoState> {
     final state = requireSuccessState();
     try {
       await _causesService.completeAction(state.action);
-    } catch (err) {
-      // TODO Google how dialogs are done in bloc.
-      // Either add a state for this (which I guess is cleared after the dialog is closed?), or make it so we can emit and event and listen for it in the UI (without a state change)
       emit(
-        ActionInfoStateUpdateFailed(
-          action: state.action,
+        state.copyWith(
+          statusUpdateState: const ActionInfoStatusUpdateStateMarkCompleteSuccess(),
+        ),
+      );
+    } catch (err) {
+      emit(
+        state.copyWith(
+          statusUpdateState: const ActionInfoStatusUpdateStateClearStatusSuccess(),
         ),
       );
     }
@@ -53,5 +56,14 @@ class ActionInfoBloc extends Cubit<ActionInfoState> {
       default:
         throw Exception('Mark complete can only be done in completed state');
     }
+  }
+
+  void clearActionInfoStatusUpdateState() {
+    final state = requireSuccessState();
+    emit(
+      state.copyWith(
+        statusUpdateState: const ActionInfoStatusUpdateStateInitial(),
+      ),
+    );
   }
 }
