@@ -13,6 +13,8 @@ class ListActionFactory extends ModelFactory<ListAction> {
       cause: CauseFactory().generate(),
       time: faker.randomGenerator.integer(10),
       releaseAt: faker.date.dateTime(),
+      createdAt: faker.date.dateTime(),
+      isCompleted: true,
     );
   }
 }
@@ -27,6 +29,7 @@ class ActionFactory extends ModelFactory<Action> {
       cause: CauseFactory().generate(),
       time: faker.randomGenerator.integer(10),
       releaseAt: faker.date.dateTime(),
+      createdAt: faker.date.dateTime(),
       whatDescription: faker.lorem.words(100).join(' '),
       whyDescription: faker.lorem.words(100).join(' '),
       isCompleted: faker.randomGenerator.boolean(),

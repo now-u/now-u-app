@@ -83,7 +83,6 @@ dependencies:
   bloc: any
   built_collection: any
   flutter_cache_manager: any
-  flutter_web_plugins: any
   built_value: any
   crypto: any
   http: any

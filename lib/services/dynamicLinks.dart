@@ -54,7 +54,7 @@ class DynamicLinkService {
         String? email = await _storageProvider.getEmail();
         if (email == null) return;
 
-        String? token = deepLink.queryParameters['token'];
+        //. String? token = deepLink.queryParameters['token'];
         print('Navigating to emailSent');
         // TODO WTF is going on here? Do we need this and the supabase stuff
         // _routerService.navigateToLoginEmailSentView(email: email, token: token);

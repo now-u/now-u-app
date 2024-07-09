@@ -37,6 +37,7 @@ void main() {
       expect: () => [
         ActionInfoStateSuccess(
           action: action,
+          statusUpdateState: const ActionInfoStatusUpdateState.initial(),
         ),
       ],
       verify: (_) {
