@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/causes_service.dart';
-import 'package:nowu/ui/views/causes/bloc/causes_bloc.dart';
 import 'package:nowu/ui/views/causes_selection/bloc/causes_selection_bloc.dart';
 import 'package:nowu/ui/views/causes_selection/bloc/causes_selection_state.dart';
 import 'package:nowu/ui/views/causes_selection/components/causeTileGrid.dart';
@@ -20,9 +19,8 @@ class OnboardingSelectCausesView extends StatelessWidget {
       ),
       child: BlocListener<CausesSelectionBloc, CausesSelectionState>(
         listener: (context, state) {
-          if (
-            state.submissionState is CausesSelectionSubmissionStateSubmitted
-          ) {
+          if (state.submissionState
+              is CausesSelectionSubmissionStateSubmitted) {
             context.router.replaceAll([
               TabsRoute(children: [const HomeRoute()]),
             ]);

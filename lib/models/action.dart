@@ -149,7 +149,10 @@ class ListAction implements Explorable {
         isCompleted = userInfo?.completedActionIds.contains(id) ?? false,
         type = getActionTypeFromSubtype(actionType);
 
-  factory ListAction.fromApiModel(Api.ListAction apiModel, CausesUser? userInfo) {
+  factory ListAction.fromApiModel(
+    Api.ListAction apiModel,
+    CausesUser? userInfo,
+  ) {
     return ListAction.fromApiData(
       id: apiModel.id,
       title: apiModel.title,
@@ -172,7 +175,6 @@ class Action extends ListAction {
     required this.whatDescription,
     required this.whyDescription,
     required this.link,
-
     required super.id,
     required super.title,
     required super.releaseAt,

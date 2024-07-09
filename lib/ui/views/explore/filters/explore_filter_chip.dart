@@ -5,7 +5,6 @@ import 'package:nowu/models/time.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/ui/bottom_sheets/explore_filter/explore_filter_sheet.dart';
 import 'package:nowu/ui/views/causes/bloc/causes_bloc.dart';
-import 'package:nowu/ui/views/causes/bloc/causes_state.dart' as CausesState;
 import 'package:nowu/ui/views/causes/bloc/causes_state.dart';
 import 'package:tuple/tuple.dart';
 

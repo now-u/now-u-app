@@ -16,7 +16,10 @@ class ExploreNewsArticleTab extends ExploreTab<NewsArticle> {
 
   @override
   createBloc(context) {
-    return ExploreNewsArticleTabBloc(searchService: locator<SearchService>(), causesService: locator<CausesService>());
+    return ExploreNewsArticleTabBloc(
+      searchService: locator<SearchService>(),
+      causesService: locator<CausesService>(),
+    );
   }
 
   @override

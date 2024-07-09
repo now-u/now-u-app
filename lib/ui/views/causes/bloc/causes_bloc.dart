@@ -6,7 +6,7 @@ import 'causes_state.dart';
 class CausesBloc extends Cubit<CausesState> {
   final CausesService _causesService;
 
-  CausesBloc({ required CausesService causesService })
+  CausesBloc({required CausesService causesService})
       : _causesService = causesService,
         super(const CausesState.loading());
 

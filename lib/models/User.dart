@@ -21,8 +21,9 @@ class CausesUser {
   });
 
   CausesUser.fromApiModel(Api.CausesUser apiModel)
-    : selectedCausesIds = apiModel.selectedCausesIds.toSet(),
-      completedActionIds = apiModel.completedActionIds.toSet(),
-      completedCampaignIds = apiModel.completedCampaignIds.toSet(),
-      completedLearningResourceIds = apiModel.completedLearningResourceIds.toSet();
+      : selectedCausesIds = apiModel.selectedCausesIds.toSet(),
+        completedActionIds = apiModel.completedActionIds.toSet(),
+        completedCampaignIds = apiModel.completedCampaignIds.toSet(),
+        completedLearningResourceIds =
+            apiModel.completedLearningResourceIds.toSet();
 }

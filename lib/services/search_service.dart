@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
 import 'package:causeApiClient/causeApiClient.dart' as Api;
-import 'package:collection/collection.dart';
 import 'package:logging/logging.dart';
 import 'package:meilisearch/meilisearch.dart';
 import 'package:nowu/locator.dart';
@@ -359,7 +358,10 @@ class SearchService {
     return _shuffleList(list);
   }
 
-  List<ListAction> _searchHitsToActions(List<Map<String, dynamic>> hits, CausesUser? userInfo) {
+  List<ListAction> _searchHitsToActions(
+    List<Map<String, dynamic>> hits,
+    CausesUser? userInfo,
+  ) {
     final results = _causeServiceClient.serializers.deserialize(
       hits,
       specifiedType: const FullType(BuiltList, [FullType(Api.ListAction)]),
@@ -393,7 +395,10 @@ class SearchService {
         .toList();
   }
 
-  List<ListCampaign> _searchHitsToCampaign(List<Map<String, dynamic>> hits, CausesUser? userInfo) {
+  List<ListCampaign> _searchHitsToCampaign(
+    List<Map<String, dynamic>> hits,
+    CausesUser? userInfo,
+  ) {
     final results = _causeServiceClient.serializers.deserialize(
       hits,
       specifiedType: const FullType(BuiltList, [FullType(Api.ListCampaign)]),
@@ -409,7 +414,10 @@ class SearchService {
         .toList();
   }
 
-  List<NewsArticle> _searchHitsToNewsArticles(List<Map<String, dynamic>> hits, CausesUser? _) {
+  List<NewsArticle> _searchHitsToNewsArticles(
+    List<Map<String, dynamic>> hits,
+    CausesUser? _,
+  ) {
     final results = _causeServiceClient.serializers.deserialize(
       hits,
       specifiedType: const FullType(BuiltList, [FullType(Api.NewsArticle)]),
@@ -429,7 +437,8 @@ class SearchService {
     final searchQuery = resourceSearchFilter?.toMeilisearchQuery(userInfo);
 
     _logger.info(
-        'Searching index index=${index.uid} filter=${searchQuery != null ? searchQuery.filter.toString() : 'null'} query=${resourceSearchFilter != null ? resourceSearchFilter.query : 'null'} offset=${offset} limit=${limit}');
+      'Searching index index=${index.uid} filter=${searchQuery != null ? searchQuery.filter.toString() : 'null'} query=${resourceSearchFilter != null ? resourceSearchFilter.query : 'null'} offset=${offset} limit=${limit}',
+    );
 
     final result = await index.search(
       resourceSearchFilter?.query,

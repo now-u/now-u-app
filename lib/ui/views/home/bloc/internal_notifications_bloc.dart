@@ -6,8 +6,9 @@ import 'internal_notifications_state.dart';
 class InternalNotificationsBloc extends Cubit<InternalNotificationsState> {
   final InternalNotificationService _notificationsService;
 
-  InternalNotificationsBloc({ required InternalNotificationService internalNotificationService })
-      : _notificationsService = internalNotificationService,
+  InternalNotificationsBloc({
+    required InternalNotificationService internalNotificationService,
+  })  : _notificationsService = internalNotificationService,
         super(const InternalNotificationsState.loading());
 
   void fetchInternalNotifactions() async {
@@ -17,7 +18,11 @@ class InternalNotificationsBloc extends Cubit<InternalNotificationsState> {
       emit(InternalNotificationsState.loaded(notifications: notifications));
     } catch (e) {
       // Handle error
-      emit(const InternalNotificationsState.error('Failed to fetch internal_notifications'));
+      emit(
+        const InternalNotificationsState.error(
+          'Failed to fetch internal_notifications',
+        ),
+      );
     }
   }
 
@@ -29,7 +34,11 @@ class InternalNotificationsBloc extends Cubit<InternalNotificationsState> {
       emit(InternalNotificationsState.loaded(notifications: notifications));
     } catch (e) {
       // Handle error
-      emit(const InternalNotificationsState.error('Failed to dismiss notification'));
+      emit(
+        const InternalNotificationsState.error(
+          'Failed to dismiss notification',
+        ),
+      );
     }
   }
 }

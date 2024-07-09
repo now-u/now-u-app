@@ -9,8 +9,8 @@ class UserProgressBloc extends Cubit<UserProgressState> {
 
   UserProgressBloc({
     required CausesService causesService,
-  }) : _causesService = causesService,
-      super(const UserProgressState.loading());
+  })  : _causesService = causesService,
+        super(const UserProgressState.loading());
 
   void fetchUserState() async {
     try {

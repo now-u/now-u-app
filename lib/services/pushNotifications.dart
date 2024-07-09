@@ -1,8 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-import 'package:nowu/locator.dart';
-import 'package:nowu/services/navigation_service.dart';
-
 class PushNotificationService {
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   // final NavigationService? _navigationService = locator<NavigationService>();

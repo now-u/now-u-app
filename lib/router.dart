@@ -35,7 +35,10 @@ class AppRouter extends $AppRouter {
                 AutoRoute(path: 'all', page: ExploreAllRoute.page),
                 AutoRoute(path: 'actions', page: ExploreActionRoute.page),
                 AutoRoute(path: 'campaigns', page: ExploreCampaignRoute.page),
-                AutoRoute(path: 'learn', page: ExploreLearningResourceRoute.page),
+                AutoRoute(
+                  path: 'learn',
+                  page: ExploreLearningResourceRoute.page,
+                ),
                 AutoRoute(path: 'news', page: ExploreNewsArticleRoute.page),
               ],
             ),

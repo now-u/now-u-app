@@ -59,7 +59,9 @@ class CausesSelectionBloc extends Cubit<CausesSelectionState> {
       emit(
         state.copyWith(
           selectedCausesIds: selectedCausesIds,
-          submissionState: const CausesSelectionSubmissionState.error('Failed to update causes selection'),
+          submissionState: const CausesSelectionSubmissionState.error(
+            'Failed to update causes selection',
+          ),
         ),
       );
     }

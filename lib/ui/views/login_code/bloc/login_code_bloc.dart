@@ -31,14 +31,19 @@ class LoginCodeBloc extends Cubit<LoginCodeState> {
     // Loading
     emit(state.copyWith(status: const LoginCodeSubmissionState.inProgress()));
     try {
-      await _authenticationService.signInWithCode(state.email, state.loginCode.value);
+      await _authenticationService.signInWithCode(
+        state.email,
+        state.loginCode.value,
+      );
       final user = await _userService.fetchUser();
       if (user == null) {
         emit(state.copyWith(status: const LoginCodeSubmissionState.failure()));
         return;
       }
-      emit(state.copyWith(status: LoginCodeSubmissionState.success(user: user)));
-    } catch(e) {
+      emit(
+        state.copyWith(status: LoginCodeSubmissionState.success(user: user)),
+      );
+    } catch (e) {
       emit(state.copyWith(status: const LoginCodeSubmissionState.failure()));
     }
   }

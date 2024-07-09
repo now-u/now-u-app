@@ -5,8 +5,10 @@ part 'login_code.freezed.dart';
 
 @freezed
 sealed class LoginCodeValidationError {
-  const factory LoginCodeValidationError.empty() = LoginCodeValidationErrorEmpty;
-  const factory LoginCodeValidationError.invalid(String message) = LoginCodeValidationErrorInvalid;
+  const factory LoginCodeValidationError.empty() =
+      LoginCodeValidationErrorEmpty;
+  const factory LoginCodeValidationError.invalid(String message) =
+      LoginCodeValidationErrorInvalid;
 }
 
 class LoginCode extends FormzInput<String, LoginCodeValidationError>
@@ -17,7 +19,10 @@ class LoginCode extends FormzInput<String, LoginCodeValidationError>
   @override
   LoginCodeValidationError? validator(String value) {
     if (value.isEmpty) return const LoginCodeValidationError.empty();
-    if (value.length != 6) return const LoginCodeValidationError.invalid('The secret code must be 6 digits long');
+    if (value.length != 6)
+      return const LoginCodeValidationError.invalid(
+        'The secret code must be 6 digits long',
+      );
     return null;
   }
 }

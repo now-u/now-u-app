@@ -9,7 +9,6 @@ import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/themes.dart';
 import 'package:nowu/ui/dialogs/action/action_completed_dialog.dart';
-import 'package:nowu/ui/dialogs/basic/basic_dialog.dart';
 import 'package:nowu/ui/views/action_info/bloc/action_info_bloc.dart';
 import 'package:nowu/ui/views/action_info/bloc/action_info_state.dart';
 import 'package:auto_route/auto_route.dart';
@@ -416,7 +415,11 @@ class ActionInfoView extends StatelessWidget {
                                   : Container(
                                       height: 65,
                                       color: const Color.fromRGBO(
-                                          155, 159, 177, 1),
+                                        155,
+                                        159,
+                                        177,
+                                        1,
+                                      ),
                                       child: Center(
                                         child: Text(
                                           'You completed this action',

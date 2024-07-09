@@ -27,9 +27,12 @@ abstract class ExploreTab<T extends Explorable> extends StatelessWidget {
       },
       child: BlocListener<ExploreFilterBloc, ExploreFilterState>(
         listener: (context, state) {
-          context.read<ExploreSectionBloc<T, ExploreFilterState>>().search(state);
+          context
+              .read<ExploreSectionBloc<T, ExploreFilterState>>()
+              .search(state);
         },
-        child: BlocBuilder<ExploreSectionBloc<T, ExploreFilterState>, ExploreTabState<T>>(
+        child: BlocBuilder<ExploreSectionBloc<T, ExploreFilterState>,
+            ExploreTabState<T>>(
           builder: (context, state) {
             switch (state.data) {
               case InitialLoading():
@@ -73,7 +76,8 @@ abstract class ExploreTab<T extends Explorable> extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 8),
                         // TODO Find out why casting is required!!
-                        child: itemBuilder((items as List<T>).toList()[index - 1]),
+                        child:
+                            itemBuilder((items as List<T>).toList()[index - 1]),
                       );
                     }
                   },

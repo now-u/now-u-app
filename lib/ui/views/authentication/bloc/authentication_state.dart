@@ -9,8 +9,7 @@ sealed class AuthenticationState with _$AuthenticationState {
   const factory AuthenticationState.unauthenticated({
     required bool hasSkippedLogin,
     required bool hasShownIntro,
-  }) =
-      AuthenticationStateUnauthenticated;
+  }) = AuthenticationStateUnauthenticated;
   const factory AuthenticationState.authenticated({
     // TODO Make user model
     required UserProfile user,

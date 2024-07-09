@@ -26,7 +26,8 @@ class CustomNetworkImage extends StatelessWidget {
     if (kIsWeb) {
       return Image.network(
         url,
-        errorBuilder: (context, url, error) => const Center(child: Icon(Icons.error)),
+        errorBuilder: (context, url, error) =>
+            const Center(child: Icon(Icons.error)),
         fit: fit,
       );
     }

@@ -130,16 +130,26 @@ class ExploreLearningResourceTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ExploreLearningResourceTileBloc(learningResource: tile, causesService: locator<CausesService>()),
-      child: BlocListener<ExploreLearningResourceTileBloc, ExploreLearningResourceTileState>(
+      create: (_) => ExploreLearningResourceTileBloc(
+        learningResource: tile,
+        causesService: locator<CausesService>(),
+      ),
+      child: BlocListener<ExploreLearningResourceTileBloc,
+          ExploreLearningResourceTileState>(
         listener: (context, state) {
           if (state is ExploreLearningResourceTileStateLaunching) {
             launchUrl(tile.link);
           }
         },
-        child: BlocBuilder<ExploreLearningResourceTileBloc, ExploreLearningResourceTileState>(
+        child: BlocBuilder<ExploreLearningResourceTileBloc,
+            ExploreLearningResourceTileState>(
           builder: (context, state) {
-            return ExploreLearningResourceTileInner(tile, onTap: context.read<ExploreLearningResourceTileBloc>().launchLearningResource);
+            return ExploreLearningResourceTileInner(
+              tile,
+              onTap: context
+                  .read<ExploreLearningResourceTileBloc>()
+                  .launchLearningResource,
+            );
           },
         ),
       ),

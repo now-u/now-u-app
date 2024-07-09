@@ -7,7 +7,7 @@ class CauseInfoDialog extends StatelessWidget {
   final Cause cause;
   final void Function() onSelectCause;
 
-  const CauseInfoDialog({ required this.cause, required this.onSelectCause });
+  const CauseInfoDialog({required this.cause, required this.onSelectCause});
 
   @override
   Widget build(BuildContext context) {

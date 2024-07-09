@@ -34,9 +34,12 @@ class ExploreSection<T extends Explorable> {
       create: (_) => buildBloc()..search(filterState),
       child: BlocListener<ExploreFilterBloc, ExploreFilterState>(
         listener: (context, filterState) {
-          context.read<ExploreSectionBloc<T, ExploreFilterState>>().search(filterState);
+          context
+              .read<ExploreSectionBloc<T, ExploreFilterState>>()
+              .search(filterState);
         },
-        child: BlocBuilder<ExploreSectionBloc<T, ExploreFilterState>, ExploreTabState<T>>(
+        child: BlocBuilder<ExploreSectionBloc<T, ExploreFilterState>,
+            ExploreTabState<T>>(
           builder: (context, state) {
             return ExploreSectionWidget(
               title: title,

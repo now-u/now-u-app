@@ -17,5 +17,6 @@ sealed class NotificationInfoState with _$NotificationInfoState {
   const factory NotificationInfoState.success({
     required InternalNotification notification,
   }) = NotificationInfoStateSuccess;
-  const factory NotificationInfoState.dismissed() = NotificationInfoStateDismissed;
+  const factory NotificationInfoState.dismissed() =
+      NotificationInfoStateDismissed;
 }

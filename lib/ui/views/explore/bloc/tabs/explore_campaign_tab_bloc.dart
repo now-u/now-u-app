@@ -9,7 +9,8 @@ import 'package:nowu/utils/new_since.dart';
 
 import './explore_tab_bloc.dart';
 
-abstract class ExploreCampaignSectionBloc<TSearchContext> extends ExploreSectionBloc<ListCampaign, TSearchContext> {
+abstract class ExploreCampaignSectionBloc<TSearchContext>
+    extends ExploreSectionBloc<ListCampaign, TSearchContext> {
   ExploreCampaignSectionBloc({
     required SearchService searchService,
     required CausesService causesService,
@@ -26,7 +27,8 @@ abstract class ExploreCampaignSectionBloc<TSearchContext> extends ExploreSection
     TSearchContext searchContext,
     int? offset,
   ) async {
-    _logger.info('Searching campaigns filterState=$searchContext offset=$offset');
+    _logger
+        .info('Searching campaigns filterState=$searchContext offset=$offset');
 
     return await searchService.searchCampaigns(
       filter: await getCampaignsFilter(searchContext: searchContext),
@@ -35,10 +37,13 @@ abstract class ExploreCampaignSectionBloc<TSearchContext> extends ExploreSection
   }
 
   @protected
-  Future<CampaignSearchFilter> getCampaignsFilter({ required TSearchContext searchContext });
+  Future<CampaignSearchFilter> getCampaignsFilter({
+    required TSearchContext searchContext,
+  });
 }
 
-class ExploreCampaignTabBloc extends ExploreCampaignSectionBloc<ExploreFilterState> {
+class ExploreCampaignTabBloc
+    extends ExploreCampaignSectionBloc<ExploreFilterState> {
   ExploreCampaignTabBloc({
     required SearchService searchService,
     required CausesService causesService,
@@ -47,7 +52,9 @@ class ExploreCampaignTabBloc extends ExploreCampaignSectionBloc<ExploreFilterSta
           causesService: causesService,
         );
 
-  Future<CampaignSearchFilter> getCampaignsFilter({ required ExploreFilterState searchContext }) async {
+  Future<CampaignSearchFilter> getCampaignsFilter({
+    required ExploreFilterState searchContext,
+  }) async {
     return CampaignSearchFilter(
       causeIds: searchContext.filterCauseIds.isEmpty
           ? null
@@ -60,7 +67,8 @@ class ExploreCampaignTabBloc extends ExploreCampaignSectionBloc<ExploreFilterSta
   }
 }
 
-class ExploreAllTabCampaignSectionBloc extends ExploreCampaignSectionBloc<ExploreFilterState> {
+class ExploreAllTabCampaignSectionBloc
+    extends ExploreCampaignSectionBloc<ExploreFilterState> {
   ExploreAllTabCampaignSectionBloc({
     required SearchService searchService,
     required CausesService causesService,
@@ -69,10 +77,12 @@ class ExploreAllTabCampaignSectionBloc extends ExploreCampaignSectionBloc<Explor
           causesService: causesService,
         );
 
-  Future<CampaignSearchFilter> getCampaignsFilter({ required ExploreFilterState searchContext }) async {
+  Future<CampaignSearchFilter> getCampaignsFilter({
+    required ExploreFilterState searchContext,
+  }) async {
     final baseFilter = getAllTabFilterState(searchContext);
     return CampaignSearchFilter(
-      causeIds: baseFilter.causeIds, 
+      causeIds: baseFilter.causeIds,
       query: baseFilter.query,
       releasedSince: baseFilter.releasedSince,
     );
@@ -87,8 +97,8 @@ class HomePageSearchContext {
   });
 }
 
-class HomeOfTheMonthCampaignSectionBloc extends ExploreCampaignSectionBloc<void> {
-
+class HomeOfTheMonthCampaignSectionBloc
+    extends ExploreCampaignSectionBloc<void> {
   HomeOfTheMonthCampaignSectionBloc({
     required SearchService searchService,
     required CausesService causesService,
@@ -98,9 +108,11 @@ class HomeOfTheMonthCampaignSectionBloc extends ExploreCampaignSectionBloc<void>
         );
 
   @override
-  Future<CampaignSearchFilter> getCampaignsFilter({ void searchContext = null }) async {
+  Future<CampaignSearchFilter> getCampaignsFilter({
+    void searchContext = null,
+  }) async {
     return CampaignSearchFilter(
-      // TODO Should we take this in as context (and re call search from the view listening to the CausesBloc) 
+      // TODO Should we take this in as context (and re call search from the view listening to the CausesBloc)
       // or should we listen to the causes service repository and internally recall search?
       causeIds: (await causesService.getUserInfo())?.selectedCausesIds,
       ofTheMonth: true,
@@ -109,7 +121,8 @@ class HomeOfTheMonthCampaignSectionBloc extends ExploreCampaignSectionBloc<void>
   }
 }
 
-class HomeRecommenedCampaignSectionBloc extends ExploreCampaignSectionBloc<void> {
+class HomeRecommenedCampaignSectionBloc
+    extends ExploreCampaignSectionBloc<void> {
   HomeRecommenedCampaignSectionBloc({
     required SearchService searchService,
     required CausesService causesService,
@@ -119,7 +132,9 @@ class HomeRecommenedCampaignSectionBloc extends ExploreCampaignSectionBloc<void>
         );
 
   @override
-  Future<CampaignSearchFilter> getCampaignsFilter({ void searchContext = null }) async {
+  Future<CampaignSearchFilter> getCampaignsFilter({
+    void searchContext = null,
+  }) async {
     return CampaignSearchFilter(
       causeIds: (await causesService.getUserInfo())?.selectedCausesIds,
       completed: false,

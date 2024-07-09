@@ -9,7 +9,8 @@ import 'package:nowu/utils/new_since.dart';
 
 import './explore_tab_bloc.dart';
 
-abstract class ExploreActionSectionBloc<TSearchContext> extends ExploreSectionBloc<ListAction, TSearchContext> {
+abstract class ExploreActionSectionBloc<TSearchContext>
+    extends ExploreSectionBloc<ListAction, TSearchContext> {
   ExploreActionSectionBloc({
     required SearchService searchService,
     required CausesService causesService,
@@ -35,10 +36,13 @@ abstract class ExploreActionSectionBloc<TSearchContext> extends ExploreSectionBl
   }
 
   @protected
-  Future<ActionSearchFilter> getActionsFilter({ required TSearchContext searchContext });
+  Future<ActionSearchFilter> getActionsFilter({
+    required TSearchContext searchContext,
+  });
 }
 
-class ExploreActionTabBloc extends ExploreActionSectionBloc<ExploreFilterState> {
+class ExploreActionTabBloc
+    extends ExploreActionSectionBloc<ExploreFilterState> {
   ExploreActionTabBloc({
     required SearchService searchService,
     required CausesService causesService,
@@ -47,7 +51,7 @@ class ExploreActionTabBloc extends ExploreActionSectionBloc<ExploreFilterState> 
           causesService: causesService,
         );
 
-  Future<ActionSearchFilter> getActionsFilter({ required searchContext }) async {
+  Future<ActionSearchFilter> getActionsFilter({required searchContext}) async {
     return ActionSearchFilter(
       causeIds: searchContext.filterCauseIds.isEmpty
           ? null
@@ -66,7 +70,8 @@ class ExploreActionTabBloc extends ExploreActionSectionBloc<ExploreFilterState> 
   }
 }
 
-class ExploreAllTabActionSectionBloc extends ExploreActionSectionBloc<ExploreFilterState> {
+class ExploreAllTabActionSectionBloc
+    extends ExploreActionSectionBloc<ExploreFilterState> {
   Logger _logger = Logger('ExploreAllTabActionSectionBloc');
 
   ExploreAllTabActionSectionBloc({
@@ -77,7 +82,7 @@ class ExploreAllTabActionSectionBloc extends ExploreActionSectionBloc<ExploreFil
           causesService: causesService,
         );
 
-  Future<ActionSearchFilter> getActionsFilter({ required searchContext }) async {
+  Future<ActionSearchFilter> getActionsFilter({required searchContext}) async {
     final baseFilter = getAllTabFilterState(searchContext);
     return ActionSearchFilter(
       causeIds: baseFilter.causeIds,
@@ -97,7 +102,9 @@ class HomeActionSectionBloc extends ExploreActionSectionBloc<void> {
         );
 
   @override
-  Future<ActionSearchFilter> getActionsFilter({ void searchContext = null }) async {
+  Future<ActionSearchFilter> getActionsFilter({
+    void searchContext = null,
+  }) async {
     return ActionSearchFilter(
       causeIds: (await causesService.getUserInfo())?.selectedCausesIds,
       completed: false,

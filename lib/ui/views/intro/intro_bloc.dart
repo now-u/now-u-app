@@ -44,8 +44,11 @@ class IntroBloc extends Cubit<IntroState> {
   }
 
   void getStarted(BuildContext context) {
-    emit(state.copyWith(
-        animationRect: RectGetter.getRectFromKey(getStartedKey)!));
+    emit(
+      state.copyWith(
+        animationRect: RectGetter.getRectFromKey(getStartedKey)!,
+      ),
+    );
     _nextPage(context);
   }
 

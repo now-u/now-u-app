@@ -5,10 +5,14 @@ part 'action_info_state.freezed.dart';
 
 @freezed
 sealed class ActionInfoStatusUpdateState {
-  const factory ActionInfoStatusUpdateState.initial() = ActionInfoStatusUpdateStateInitial;
-  const factory ActionInfoStatusUpdateState.failed() = ActionInfoStatusUpdateStateFailed;
-  const factory ActionInfoStatusUpdateState.markCompleteSuccess() = ActionInfoStatusUpdateStateMarkCompleteSuccess;
-  const factory ActionInfoStatusUpdateState.clearStatusSuccess() = ActionInfoStatusUpdateStateClearStatusSuccess;
+  const factory ActionInfoStatusUpdateState.initial() =
+      ActionInfoStatusUpdateStateInitial;
+  const factory ActionInfoStatusUpdateState.failed() =
+      ActionInfoStatusUpdateStateFailed;
+  const factory ActionInfoStatusUpdateState.markCompleteSuccess() =
+      ActionInfoStatusUpdateStateMarkCompleteSuccess;
+  const factory ActionInfoStatusUpdateState.clearStatusSuccess() =
+      ActionInfoStatusUpdateStateClearStatusSuccess;
 }
 
 @freezed

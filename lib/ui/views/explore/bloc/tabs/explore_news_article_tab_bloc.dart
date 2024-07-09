@@ -10,7 +10,8 @@ import 'package:nowu/utils/new_since.dart';
 
 import './explore_tab_bloc.dart';
 
-abstract class ExploreNewsArticleSectionBloc<TSearchContext> extends ExploreSectionBloc<NewsArticle, TSearchContext> {
+abstract class ExploreNewsArticleSectionBloc<TSearchContext>
+    extends ExploreSectionBloc<NewsArticle, TSearchContext> {
   ExploreNewsArticleSectionBloc({
     required SearchService searchService,
     required CausesService causesService,
@@ -27,7 +28,9 @@ abstract class ExploreNewsArticleSectionBloc<TSearchContext> extends ExploreSect
     TSearchContext filterState,
     int? offset,
   ) async {
-    _logger.info('Searching news articles filterState=$filterState offset=$offset');
+    _logger.info(
+      'Searching news articles filterState=$filterState offset=$offset',
+    );
 
     return await searchService.searchNewsArticles(
       filter: await getNewsArticlesFilter(searchContext: filterState),
@@ -36,10 +39,13 @@ abstract class ExploreNewsArticleSectionBloc<TSearchContext> extends ExploreSect
   }
 
   @protected
-  Future<NewsArticleSearchFilter> getNewsArticlesFilter({ required TSearchContext searchContext });
+  Future<NewsArticleSearchFilter> getNewsArticlesFilter({
+    required TSearchContext searchContext,
+  });
 }
 
-class ExploreNewsArticleTabBloc extends ExploreNewsArticleSectionBloc<ExploreFilterState> {
+class ExploreNewsArticleTabBloc
+    extends ExploreNewsArticleSectionBloc<ExploreFilterState> {
   ExploreNewsArticleTabBloc({
     required SearchService searchService,
     required CausesService causesService,
@@ -61,7 +67,8 @@ class ExploreNewsArticleTabBloc extends ExploreNewsArticleSectionBloc<ExploreFil
   }
 }
 
-class ExploreAllTabNewsArticleSectionBloc extends ExploreNewsArticleSectionBloc<ExploreFilterState> {
+class ExploreAllTabNewsArticleSectionBloc
+    extends ExploreNewsArticleSectionBloc<ExploreFilterState> {
   ExploreAllTabNewsArticleSectionBloc({
     required SearchService searchService,
     required CausesService causesService,
@@ -92,7 +99,9 @@ class HomeNewsArticleSectionBloc extends ExploreNewsArticleSectionBloc<void> {
         );
 
   @override
-  Future<NewsArticleSearchFilter> getNewsArticlesFilter({ void searchContext = null }) async {
+  Future<NewsArticleSearchFilter> getNewsArticlesFilter({
+    void searchContext = null,
+  }) async {
     return NewsArticleSearchFilter(
       causeIds: (await causesService.getUserInfo())?.selectedCausesIds,
     );

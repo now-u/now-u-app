@@ -35,11 +35,15 @@ class CauseTileGrid extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(10),
                         child: CauseTile(
-                          onSelect: () => context.read<CausesSelectionBloc>().toggleCauseSelection(
-                            cause.id,
-                          ),
+                          onSelect: () => context
+                              .read<CausesSelectionBloc>()
+                              .toggleCauseSelection(
+                                cause.id,
+                              ),
                           cause: cause,
-                          isSelectedOverride: causeSelectionState.selectedCausesIds.contains(cause.id),
+                          isSelectedOverride: causeSelectionState
+                              .selectedCausesIds
+                              .contains(cause.id),
                         ),
                       ),
                     );

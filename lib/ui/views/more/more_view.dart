@@ -56,7 +56,11 @@ class ActionMenuItem extends MenuItemData {
   });
 }
 
-List<MenuItemData> getMenuItems(BuildContext context, AuthenticationState authState) => [
+List<MenuItemData> getMenuItems(
+  BuildContext context,
+  AuthenticationState authState,
+) =>
+    [
       const SectionHeadingMenuItem(title: 'The app'),
       ActionMenuItem(
         title: 'About Us',
@@ -123,8 +127,8 @@ List<MenuItemData> getMenuItems(BuildContext context, AuthenticationState authSt
           icon: FontAwesomeIcons.solidUser,
           action: FunctionMenuItemAction(
             () async => context.read<AuthenticationBloc>().add(
-              const AuthenticationEvent.signOutRequested(),
-            ),
+                  const AuthenticationEvent.signOutRequested(),
+                ),
           ),
         )
       else

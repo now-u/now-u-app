@@ -28,7 +28,7 @@ class CampaignFactory extends ModelFactory<Campaign> {
       cause: CauseFactory().generate(),
       actions: ListActionFactory().generateList(length: 2),
       learningResources: LearningResourceFactory().generateList(length: 2),
-	  description: faker.lorem.words(100).join(' '),
+      description: faker.lorem.words(100).join(' '),
     );
   }
 }

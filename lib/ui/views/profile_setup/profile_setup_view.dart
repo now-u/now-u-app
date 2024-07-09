@@ -17,7 +17,6 @@ import 'bloc/profile_setup_state.dart';
 
 @RoutePage()
 class ProfileSetupView extends StatelessWidget {
-
   Widget _setupProfileForm(BuildContext context) {
     return BlocProvider(
       create: (_) => ProfileSetupBloc(
@@ -187,7 +186,8 @@ class _NewsLetterSignup extends StatelessWidget {
           ],
         ),
       ),
-      onChanged: context.read<ProfileSetupBloc>().updateShouldSubscribeToNewsLetter,
+      onChanged:
+          context.read<ProfileSetupBloc>().updateShouldSubscribeToNewsLetter,
     );
   }
 }

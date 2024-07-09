@@ -46,8 +46,7 @@ class ExploreSection<T extends Explorable> extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => buildBloc()..search(null),
-      child: BlocBuilder<ExploreSectionBloc<T, void>,
-          ExploreTabState<T>>(
+      child: BlocBuilder<ExploreSectionBloc<T, void>, ExploreTabState<T>>(
         builder: (context, state) {
           return ExploreSectionWidget(
             title: title,
@@ -72,39 +71,41 @@ class HomeView extends StatelessWidget {
       backgroundColor: Theme.of(context).primaryColor.withOpacity(0.05),
       body: ScrollableSheetPage(
         header: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-            builder: (context, state) {
-              String? getUserName() {
-                switch (state) {
-                  case AuthenticationStateUnknown():
-                  case AuthenticationStateUnauthenticated():
-                    return null;
-                  case AuthenticationStateAuthenticated(:final user):
-                    return user.name;
-                }
+          builder: (context, state) {
+            String? getUserName() {
+              switch (state) {
+                case AuthenticationStateUnknown():
+                case AuthenticationStateUnauthenticated():
+                  return null;
+                case AuthenticationStateAuthenticated(:final user):
+                  return user.name;
               }
+            }
 
-              return BlocBuilder<InternalNotificationsBloc, InternalNotificationsState>(
-                builder: (context, state) {
-                  switch (state) {
-                    case InternalNotificationsStateLoading():
-                    case InternalNotificationsStateError():
-                    case InternalNotificationsStateLoaded(:final notifications) when notifications.isEmpty:
-                      return HeaderStyle1(name: getUserName());
-                    case InternalNotificationsStateLoaded(:final notifications):
-                      return HeaderWithNotifications(
-                        name: getUserName(),
-                        notification: notifications[0],
-                        dismissNotification: () => context
-                            .read<InternalNotificationsBloc>()
-                            .dismissNotification(notifications[0].id!),
-                        openNotification: () {
-                          // TODO Navigate to internal notifications page
-                        },
-                      );
-                  }
-                },
-              );
-            },
+            return BlocBuilder<InternalNotificationsBloc,
+                InternalNotificationsState>(
+              builder: (context, state) {
+                switch (state) {
+                  case InternalNotificationsStateLoading():
+                  case InternalNotificationsStateError():
+                  case InternalNotificationsStateLoaded(:final notifications)
+                      when notifications.isEmpty:
+                    return HeaderStyle1(name: getUserName());
+                  case InternalNotificationsStateLoaded(:final notifications):
+                    return HeaderWithNotifications(
+                      name: getUserName(),
+                      notification: notifications[0],
+                      dismissNotification: () => context
+                          .read<InternalNotificationsBloc>()
+                          .dismissNotification(notifications[0].id!),
+                      openNotification: () {
+                        // TODO Navigate to internal notifications page
+                      },
+                    );
+                }
+              },
+            );
+          },
         ),
         children: [
           Column(
@@ -141,11 +142,9 @@ class HomeView extends StatelessWidget {
                 fontSize: 20.0,
                 buttonWidthProportion: 0.8,
               ),
-
               const SizedBox(height: 30),
               ProgressTile(),
               const SizedBox(height: 30),
-
               ExploreSection(
                 title: 'Suggested campaigns',
                 buildBloc: () => HomeRecommenedCampaignSectionBloc(
@@ -164,7 +163,6 @@ class HomeView extends StatelessWidget {
                 buildTile: (item) => ExploreNewsArticleTile(item),
                 tileHeight: ARTICLE_TILE_HEIGHT,
               ),
-
               BlocBuilder<AuthenticationBloc, AuthenticationState>(
                 builder: (context, authState) {
                   switch (authState) {
@@ -192,7 +190,8 @@ class HomeView extends StatelessWidget {
                                     'Edit',
                                     onClick: () {
                                       context.router.push(
-                                          const ChangeSelectCausesRoute());
+                                        const ChangeSelectCausesRoute(),
+                                      );
                                     },
                                   ),
                                 ],

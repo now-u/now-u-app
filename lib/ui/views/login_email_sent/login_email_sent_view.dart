@@ -94,7 +94,8 @@ class LoginEmailSentView extends StatelessWidget {
                 width: double.infinity,
                 child: FilledButton(
                   child: const Text('Use secret code'),
-                  onPressed: () => context.router.push(LoginCodeRoute(email: email)),
+                  onPressed: () =>
+                      context.router.push(LoginCodeRoute(email: email)),
                 ),
               ),
             ),
@@ -126,8 +127,7 @@ class LoginEmailSentView extends StatelessWidget {
     } else if (!result.didOpen && result.canOpen) {
       return showDialog(
         context: context,
-        builder: (_) =>
-          EmailAppPickerDialog(mailApps: result.options),
+        builder: (_) => EmailAppPickerDialog(mailApps: result.options),
       );
     }
   }

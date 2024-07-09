@@ -11,9 +11,7 @@ import 'explore_tab.dart';
 
 @RoutePage()
 class ExploreLearningResourceTab extends ExploreTab<LearningResource> {
-
-  const ExploreLearningResourceTab({Key? key})
-      : super(key: key);
+  const ExploreLearningResourceTab({Key? key}) : super(key: key);
 
   @override
   createBloc(context) {

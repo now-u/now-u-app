@@ -76,8 +76,10 @@ class NotificationInfoView extends StatelessWidget {
                             // Main Stuff
                             ...(notification.getImage() != null
                                 ? [
-                                    CustomNetworkImage(notification.getImage()!,
-                                        height: 150),
+                                    CustomNetworkImage(
+                                      notification.getImage()!,
+                                      height: 150,
+                                    ),
                                     const SizedBox(height: 60),
                                   ]
                                 : []),

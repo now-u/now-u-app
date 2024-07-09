@@ -10,8 +10,7 @@ class ProfileSetupBloc extends Cubit<ProfileSetupState> {
 
   ProfileSetupBloc({
     required UserService userService,
-  })
-      : _userSerivce = userService,
+  })  : _userSerivce = userService,
         super(
           ProfileSetupState(
             name: Name.pure(),

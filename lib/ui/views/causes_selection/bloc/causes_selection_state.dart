@@ -4,9 +4,12 @@ part 'causes_selection_state.freezed.dart';
 
 @freezed
 class CausesSelectionSubmissionState with _$CausesSelectionSubmissionState {
-  const factory CausesSelectionSubmissionState.none() = CausesSelectionSubmissionStateNone;
-  const factory CausesSelectionSubmissionState.submitting() = CausesSelectionSubmissionStateSubmitting;
-  const factory CausesSelectionSubmissionState.submitted() = CausesSelectionSubmissionStateSubmitted;
+  const factory CausesSelectionSubmissionState.none() =
+      CausesSelectionSubmissionStateNone;
+  const factory CausesSelectionSubmissionState.submitting() =
+      CausesSelectionSubmissionStateSubmitting;
+  const factory CausesSelectionSubmissionState.submitted() =
+      CausesSelectionSubmissionStateSubmitted;
   const factory CausesSelectionSubmissionState.error(String message) =
       CausesSelectionSubmissionStateError;
 }

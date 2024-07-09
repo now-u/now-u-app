@@ -41,9 +41,9 @@ LearningResourceType getResourceTypeFromEnum(
     case Api.LearningResourceTypeEnum.VIDEO:
       LearningResourceType.video;
     case Api.LearningResourceTypeEnum.READING:
-		return LearningResourceType.reading;
+      return LearningResourceType.reading;
     case Api.LearningResourceTypeEnum.INFOGRAPHIC:
-	    return LearningResourceType.infographic;
+      return LearningResourceType.infographic;
     // TODO Are these real?
     // case LearningResourceTypeEnum.REPORT:
     // 	return LearningResourceType(name: "report", icon: CustomIcons.ic_report);
@@ -79,15 +79,19 @@ class LearningResource extends Explorable {
     required this.isCompleted,
   });
 
-  LearningResource.fromApiModel(Api.LearningResource apiModel, CausesUser? userInfo)
-      : id = apiModel.id,
+  LearningResource.fromApiModel(
+    Api.LearningResource apiModel,
+    CausesUser? userInfo,
+  )   : id = apiModel.id,
         title = apiModel.title,
         link = Uri.parse(apiModel.link),
         cause = Cause.fromApiModel(apiModel.causes[0], userInfo),
         type = getResourceTypeFromEnum(apiModel.learningResourceType),
         time = apiModel.time,
         createdAt = apiModel.createdAt,
-        isCompleted = userInfo?.completedLearningResourceIds.contains(apiModel.id) ?? false;
+        isCompleted =
+            userInfo?.completedLearningResourceIds.contains(apiModel.id) ??
+                false;
 
   String get timeText => timeBrackets.firstWhere((b) => b.maxTime > time).text;
 

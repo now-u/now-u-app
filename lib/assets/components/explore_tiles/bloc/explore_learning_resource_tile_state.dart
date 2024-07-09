@@ -4,7 +4,8 @@ import 'package:nowu/services/causes_service.dart';
 part 'explore_learning_resource_tile_state.freezed.dart';
 
 @freezed
-sealed class ExploreLearningResourceTileState with _$ExploreLearningResourceTileState {
+sealed class ExploreLearningResourceTileState
+    with _$ExploreLearningResourceTileState {
   const factory ExploreLearningResourceTileState.static({
     required LearningResource learningResource,
   }) = ExploreLearningResourceTileStateStatic;

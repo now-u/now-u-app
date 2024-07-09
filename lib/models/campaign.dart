@@ -82,8 +82,8 @@ class ListCampaign implements Explorable {
     required this.headerImage,
     required BuiltList<Api.Cause> causes,
     required CausesUser? causesUser,
-  }) : cause = Cause.fromApiModel(causes[0], causesUser),
-       isCompleted = causesUser?.completedCampaignIds.contains(id) ?? false;
+  })  : cause = Cause.fromApiModel(causes[0], causesUser),
+        isCompleted = causesUser?.completedCampaignIds.contains(id) ?? false;
 
   ListCampaign.fromApiModel(Api.ListCampaign apiModel, CausesUser? causesUser)
       : this.fromApiData(

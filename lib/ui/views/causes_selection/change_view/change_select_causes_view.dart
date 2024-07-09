@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:nowu/assets/components/buttons/customWidthButton.dart';
-import 'package:nowu/assets/components/buttons/darkButton.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/ui/views/causes/bloc/causes_bloc.dart';
@@ -44,9 +42,8 @@ class ChangeSelectCausesView extends StatelessWidget {
       },
       child: BlocListener<CausesSelectionBloc, CausesSelectionState>(
         listener: (context, state) {
-          if (
-            state.submissionState is CausesSelectionSubmissionStateSubmitted
-          ) {
+          if (state.submissionState
+              is CausesSelectionSubmissionStateSubmitted) {
             context.router.maybePop();
           }
         },
@@ -107,8 +104,10 @@ class ChangeSelectCausesView extends StatelessWidget {
                         ),
                         Text(
                           S.of(context).changeSelectCausesSelectCausesLabel,
-                          style:
-                              const TextStyle(fontSize: 15, color: Colors.black),
+                          style: const TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
@@ -121,7 +120,8 @@ class ChangeSelectCausesView extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: Center(
-                    child: BlocBuilder<CausesSelectionBloc, CausesSelectionState>(
+                    child:
+                        BlocBuilder<CausesSelectionBloc, CausesSelectionState>(
                       builder: (context, causesSelectionState) {
                         return ElevatedButton(
                           child: Text(

@@ -4,10 +4,11 @@ import 'package:auto_route/auto_route.dart';
 
 class EmailAppPickerDialog extends StatelessWidget {
   final List<MailApp> mailApps;
-  const EmailAppPickerDialog({ required this.mailApps, Key? key }) : super(key: key);
+  const EmailAppPickerDialog({required this.mailApps, Key? key})
+      : super(key: key);
 
   @override
-  Widget build( BuildContext context) {
+  Widget build(BuildContext context) {
     return SimpleDialog(
       title: const Text('Open an email app'),
       children: <Widget>[

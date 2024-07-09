@@ -36,7 +36,7 @@ class LoginCodeView extends StatelessWidget {
         listener: (context, state) {
           switch (state.status) {
             case LoginCodeSubmissionStateSuccess(:final user):
-            // TODO Navigate (don't forget setup profile and share code)
+              // TODO Navigate (don't forget setup profile and share code)
               PageRouteInfo getPostLoginRoute() {
                 if (!user.isInitialised) {
                   return const ProfileSetupRoute();

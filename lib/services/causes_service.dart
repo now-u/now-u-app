@@ -83,8 +83,8 @@ class CausesService {
   Future<Action> getAction(int id) async {
     _logger.info('Getting action id=$id');
     final (response, userInfo) = await (
-        _causeServiceClient.getActionsApi().actionsRetrieve(id: id),
-        getUserInfo(),
+      _causeServiceClient.getActionsApi().actionsRetrieve(id: id),
+      getUserInfo(),
     ).wait;
     return Action.fromApiModel(
       response.data!,
@@ -97,15 +97,13 @@ class CausesService {
   /// Input causes that the user has selected
   /// Posts the ids of these causes to the API
   Future<void> selectCauses(Set<int> selectedCausesIds) async {
-    final response = await _causeServiceClient
-        .getMeApi()
-        .meCausesInfoPartialUpdate(
-          patchedCausesUser: Api.PatchedCausesUser(
-            (userInfo) => userInfo
-              ..selectedCausesIds =
-                  ListBuilder(selectedCausesIds.toList()),
-          ),
-        );
+    final response =
+        await _causeServiceClient.getMeApi().meCausesInfoPartialUpdate(
+              patchedCausesUser: Api.PatchedCausesUser(
+                (userInfo) => userInfo
+                  ..selectedCausesIds = ListBuilder(selectedCausesIds.toList()),
+              ),
+            );
 
     _userInfo = response.data?.let(CausesUser.fromApiModel);
 

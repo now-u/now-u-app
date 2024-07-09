@@ -16,7 +16,10 @@ class ActionInfoBloc extends Cubit<ActionInfoState> {
     try {
       final action = await _causesService.getAction(_actionId);
       emit(
-        ActionInfoState.success(action: action, statusUpdateState: const ActionInfoStatusUpdateState.initial()),
+        ActionInfoState.success(
+          action: action,
+          statusUpdateState: const ActionInfoStatusUpdateState.initial(),
+        ),
       );
     } catch (_) {
       emit(
@@ -31,13 +34,15 @@ class ActionInfoBloc extends Cubit<ActionInfoState> {
       await _causesService.completeAction(state.action);
       emit(
         state.copyWith(
-          statusUpdateState: const ActionInfoStatusUpdateStateMarkCompleteSuccess(),
+          statusUpdateState:
+              const ActionInfoStatusUpdateStateMarkCompleteSuccess(),
         ),
       );
     } catch (err) {
       emit(
         state.copyWith(
-          statusUpdateState: const ActionInfoStatusUpdateStateClearStatusSuccess(),
+          statusUpdateState:
+              const ActionInfoStatusUpdateStateClearStatusSuccess(),
         ),
       );
     }

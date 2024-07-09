@@ -18,13 +18,13 @@ class LearningResourceFactory extends ModelFactory<LearningResource> {
   @override
   LearningResource generate() {
     return LearningResource(
-        id: faker.randomGenerator.integer(100),
-        title: faker.lorem.sentence(),
-        time: faker.randomGenerator.integer(10),
-        link: Uri.parse(faker.internet.httpUrl()),
-        type: LearningResourceType.video,
-        createdAt: faker.date.dateTime(),
-        cause: CauseFactory().generate(),
+      id: faker.randomGenerator.integer(100),
+      title: faker.lorem.sentence(),
+      time: faker.randomGenerator.integer(10),
+      link: Uri.parse(faker.internet.httpUrl()),
+      type: LearningResourceType.video,
+      createdAt: faker.date.dateTime(),
+      cause: CauseFactory().generate(),
     );
   }
 }

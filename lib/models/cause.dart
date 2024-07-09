@@ -36,7 +36,6 @@ class Cause implements Explorable {
         description = apiModel.description,
         headerImage = apiModel.headerImage,
         icon = _iconFromApiModelIcon(apiModel.icon),
-
         isSelected = userInfo?.selectedCausesIds.contains(apiModel.id) ?? false;
 }
 

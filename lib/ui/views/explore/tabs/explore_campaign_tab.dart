@@ -15,7 +15,10 @@ class ExploreCampaignTab extends ExploreTab<ListCampaign> {
 
   @override
   createBloc(context) {
-    return ExploreCampaignTabBloc(searchService: locator<SearchService>(), causesService: locator<CausesService>());
+    return ExploreCampaignTabBloc(
+      searchService: locator<SearchService>(),
+      causesService: locator<CausesService>(),
+    );
   }
 
   @override

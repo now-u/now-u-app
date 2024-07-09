@@ -15,7 +15,10 @@ class ExploreActionTab extends ExploreTab<ListAction> {
 
   @override
   createBloc(context) {
-    return ExploreActionTabBloc(searchService: locator<SearchService>(), causesService: locator<CausesService>());
+    return ExploreActionTabBloc(
+      searchService: locator<SearchService>(),
+      causesService: locator<CausesService>(),
+    );
   }
 
   @override
