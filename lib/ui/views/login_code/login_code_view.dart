@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nowu/assets/components/header.dart';
@@ -7,10 +8,9 @@ import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/user_service.dart';
 import 'package:nowu/themes.dart';
-import 'package:auto_route/auto_route.dart';
-import '../../../generated/l10n.dart';
 import 'package:nowu/ui/dialogs/basic/basic_dialog.dart';
 
+import '../../../generated/l10n.dart';
 import 'bloc/login_code_bloc.dart';
 import 'bloc/login_code_state.dart';
 import 'model/login_code.dart';
@@ -70,21 +70,28 @@ class LoginCodeView extends StatelessWidget {
         },
         child: Theme(
           data: darkTheme,
-          child: Scaffold(
-            // TODO Why do I need to specify this manually?
-            backgroundColor: Theme.of(context).colorScheme.surface,
-            body: NotificationListener(
-              onNotification: (OverscrollIndicatorNotification overscroll) {
-                overscroll.disallowIndicator();
-                return true;
-              },
-              child: ListView(
-                children: [
-                  const _LoginForm(),
-                ],
-              ),
-            ),
-          ),
+          child: _Body(),
+        ),
+      ),
+    );
+  }
+}
+
+class _Body extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // TODO Why do I need to specify this manually?
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      body: NotificationListener(
+        onNotification: (OverscrollIndicatorNotification overscroll) {
+          overscroll.disallowIndicator();
+          return true;
+        },
+        child: ListView(
+          children: [
+            const _LoginForm(),
+          ],
         ),
       ),
     );
