@@ -61,6 +61,7 @@ class LoginCodeView extends StatelessWidget {
                   );
                 },
               );
+              BlocProvider.of<LoginCodeBloc>(context).onErrorDialogShown();
               break;
 
             default:
@@ -81,7 +82,6 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // TODO Why do I need to specify this manually?
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: NotificationListener(
         onNotification: (OverscrollIndicatorNotification overscroll) {
