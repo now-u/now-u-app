@@ -28,7 +28,8 @@ class LoginCodeBloc extends Cubit<LoginCodeState> {
   }
 
   Future<void> loginWithCode() async {
-    // Loading
+    if (state.isValid != true) return;
+
     emit(state.copyWith(status: const LoginCodeSubmissionState.inProgress()));
     try {
       await _authenticationService.signInWithCode(
@@ -46,5 +47,9 @@ class LoginCodeBloc extends Cubit<LoginCodeState> {
     } catch (e) {
       emit(state.copyWith(status: const LoginCodeSubmissionState.failure()));
     }
+  }
+
+  void onErrorDialogShown() {
+    emit(state.copyWith(status: const LoginCodeSubmissionState.initial()));
   }
 }
