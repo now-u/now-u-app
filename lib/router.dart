@@ -4,27 +4,25 @@ import 'package:auto_route/auto_route.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/ui/dialogs/basic/basic_dialog.dart';
+import 'package:nowu/ui/views/authentication/bloc/authentication_bloc.dart';
+import 'package:nowu/ui/views/intro/intro_route_guard.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'View|Tab,Route')
 class AppRouter extends $AppRouter {
+  AuthenticationBloc _authBloc;
+
+  AppRouter({
+    required AuthenticationBloc authenticationBloc,
+  }) : _authBloc = authenticationBloc;
+
   @override
   List<AutoRoute> get routes => [
-        AutoRoute(path: '/', page: StartupRoute.page, initial: true),
-        AutoRoute(path: '/intro', page: IntroRoute.page),
-        AutoRoute(path: '/login', page: LoginRoute.page),
-        AutoRoute(path: '/login/email_sent', page: LoginEmailSentRoute.page),
-        AutoRoute(path: '/login/email_code', page: LoginCodeRoute.page),
-        AutoRoute(path: '/login/email_code', page: LoginCodeRoute.page),
-        AutoRoute(path: '/onboarding/profile', page: ProfileSetupRoute.page),
-        AutoRoute(
-          path: '/onboarding/causes',
-          page: OnboardingSelectCausesRoute.page,
-        ),
         AutoRoute(
           path: '/',
+          guards: [IntroRouteGuard(authenticationBloc: _authBloc)],
           page: TabsRoute.page,
           children: [
             AutoRoute(path: 'home', page: HomeRoute.page, initial: true),
@@ -44,6 +42,16 @@ class AppRouter extends $AppRouter {
             ),
             AutoRoute(path: 'more', page: MoreRoute.page),
           ],
+        ),
+        AutoRoute(path: '/intro', page: IntroRoute.page),
+        AutoRoute(path: '/login', page: LoginRoute.page),
+        AutoRoute(path: '/login/email_sent', page: LoginEmailSentRoute.page),
+        AutoRoute(path: '/login/email_code', page: LoginCodeRoute.page),
+        AutoRoute(path: '/login/email_code', page: LoginCodeRoute.page),
+        AutoRoute(path: '/onboarding/profile', page: ProfileSetupRoute.page),
+        AutoRoute(
+          path: '/onboarding/causes',
+          page: OnboardingSelectCausesRoute.page,
         ),
         AutoRoute(path: '/actions/:actionId', page: ActionInfoRoute.page),
         AutoRoute(path: '/campaigns/:campaignId', page: CampaignInfoRoute.page),

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,6 @@ import 'package:nowu/assets/constants.dart';
 import 'package:nowu/firebase_options.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/router.dart';
-import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/causes_service.dart';
@@ -26,7 +24,6 @@ import 'package:nowu/ui/views/authentication/bloc/authentication_bloc.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_state.dart';
 import 'package:nowu/ui/views/causes/bloc/causes_bloc.dart';
 import 'package:nowu/ui/views/home/bloc/internal_notifications_bloc.dart';
-import 'package:nowu/utils/let.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sentry_logging/sentry_logging.dart';
 
@@ -54,8 +51,6 @@ void main() async {
     );
 
     setupLocator();
-    // setupDialogUi();
-    // setupBottomSheetUi();
 
     Logger.root.onRecord.listen((record) {
       print('${record.level.name}: ${record.time}: ${record.message}');
@@ -102,92 +97,87 @@ void main() async {
 }
 
 class App extends StatelessWidget {
-  final _appRouter = locator<AppRouter>();
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'now-u',
-      localizationsDelegates: [
-        S.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) {
+            return AuthenticationBloc(
+              authenticationService: locator<AuthenticationService>(),
+              userService: locator<UserService>(),
+              causesService: locator<CausesService>(),
+              storageService: locator<SecureStorageService>(),
+            );
+          },
+        ),
+        BlocProvider(
+          create: (_) {
+            return CausesBloc(
+              causesService: locator<CausesService>(),
+            )..fetchCauses();
+          },
+        ),
+        BlocProvider(
+          create: (_) {
+            return InternalNotificationsBloc(
+              internalNotificationService:
+                  locator<InternalNotificationService>(),
+            )..fetchInternalNotifactions();
+          },
+        ),
       ],
-      supportedLocales: S.delegate.supportedLocales,
-      routerConfig: _appRouter.config(
-        // TODO inheritNavigatorObservers
-        navigatorObservers: () => [
-          // TODO Make sure this returns a new instance
-          // TODO Bring back!!
-          locator<AnalyticsService>().getAnalyticsObserver(),
-          SentryNavigatorObserver(),
-        ],
-      ),
-      // routeInformationParser: stackedRouter.defaultRouteParser(),
-      theme: regularTheme,
-      builder: (context, child) {
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (_) {
-                return AuthenticationBloc(
-                  authenticationService: locator<AuthenticationService>(),
-                  userService: locator<UserService>(),
-                  causesService: locator<CausesService>(),
-                  storageService: locator<SecureStorageService>(),
+      child: Builder(
+        builder: (context) {
+          final _appRouter = AppRouter(authenticationBloc: context.read());
+          locator.registerLazySingleton<AppRouter>(() => _appRouter);
+
+          return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+            builder: (context, state) {
+              if (state is AuthenticationStateUnknown) {
+                return Theme(
+                  data: regularTheme,
+                  child: Container(
+                    color: Colors.white,
+                    child: Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          SizedBox(
+                            width: 300,
+                            height: 100,
+                            child: Image.asset('assets/imgs/logo.png'),
+                          ),
+                          const SizedBox(height: 25),
+                          const CircularProgressIndicator(),
+                        ],
+                      ),
+                    ),
+                  ),
                 );
-              },
-            ),
-            BlocProvider(
-              create: (_) {
-                return CausesBloc(
-                  causesService: locator<CausesService>(),
-                )..fetchCauses();
-              },
-            ),
-            BlocProvider(
-              create: (_) {
-                return InternalNotificationsBloc(
-                  internalNotificationService:
-                      locator<InternalNotificationService>(),
-                )..fetchInternalNotifactions();
-              },
-            ),
-          ],
-          child: BlocListener<AuthenticationBloc, AuthenticationState>(
-            listener: (context, state) {
-              // TODO This should only be on startup route... i.e. so if you go to a specific route
-              // you actually go there - rather than getting redirected always
-              PageRouteInfo? getInitialRoute() {
-                switch (state) {
-                  case AuthenticationStateUnauthenticated(:final hasShownIntro)
-                      when !hasShownIntro:
-                    return const IntroRoute();
-                  case AuthenticationStateUnauthenticated(
-                        :final hasSkippedLogin
-                      )
-                      when !hasSkippedLogin:
-                    return const LoginRoute();
-                  case AuthenticationStateUnauthenticated():
-                  case AuthenticationStateAuthenticated():
-                    return TabsRoute(children: [const HomeRoute()]);
-                  // TODO Presumably show a splash screen?
-                  case AuthenticationStateUnknown():
-                    return null;
-                }
               }
 
-              final route = getInitialRoute();
-              route?.let((route) {
-                _logger.info('Navigating to ${route.routeName}');
-                _appRouter.replaceAll([route]);
-              });
+              return MaterialApp.router(
+                title: 'now-u',
+                localizationsDelegates: [
+                  S.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                supportedLocales: S.delegate.supportedLocales,
+                routerConfig: _appRouter.config(
+                  navigatorObservers: () => [
+                    locator<AnalyticsService>().getAnalyticsObserver(),
+                    SentryNavigatorObserver(),
+                  ],
+                ),
+                theme: regularTheme,
+              );
             },
-            child: child,
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

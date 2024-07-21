@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:flutter/widgets.dart';
 import 'package:causeApiClient/src/model/icon_enum.dart';
-import 'package:nowu/models/User.dart';
+import 'package:nowu/models/user.dart';
 import 'package:nowu/models/exploreable.dart';
 
 export 'package:causeApiClient/causeApiClient.dart' show Cause, IconEnum;

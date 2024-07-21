@@ -7,7 +7,7 @@ import 'package:logging/logging.dart';
 import 'package:meilisearch/meilisearch.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/assets/constants.dart';
-import 'package:nowu/models/User.dart';
+import 'package:nowu/models/user.dart';
 import 'package:nowu/models/article.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/model/search/search_response.dart';

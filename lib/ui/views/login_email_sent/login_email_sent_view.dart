@@ -4,6 +4,7 @@ import 'package:nowu/router.gr.dart';
 import 'package:nowu/themes.dart';
 import 'package:nowu/ui/dialogs/basic/basic_dialog.dart';
 import 'package:nowu/ui/dialogs/email_app_picker/email_app_picker_dialog.dart';
+import 'package:nowu/ui/views/login/components/login_auth_state_listener.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 
 // TODO Need to listen for login on this page!!
@@ -20,100 +21,94 @@ class LoginEmailSentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: darkTheme,
-      child: _Body(email: email, token: token),
-    );
-  }
-}
-
-class _Body extends StatelessWidget {
-  final String email;
-  final String? token;
-
-  const _Body({super.key, required this.email, this.token});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      body: Column(
-        children: <Widget>[
-          SafeArea(
-            child: Container(),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(top: 20, bottom: 40),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            ),
-          ),
-          token == null
-              ? Container()
-              : Container(
-                  height: 40,
-                  child: const CircularProgressIndicator(),
-                ),
-          const Flexible(
-            child: Padding(
-              padding: EdgeInsets.all(20),
-              child: Image(
-                image: AssetImage(
-                  'assets/imgs/intro/il-mail@4x.png',
-                ),
+    return LoginAuthStateListener(
+      child: Theme(
+        data: darkTheme,
+        child: Builder(
+          builder: (context) {
+            return Scaffold(
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              body: Column(
+                children: <Widget>[
+                  SafeArea(
+                    child: Container(),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 20, bottom: 40),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    ),
+                  ),
+                  token == null
+                      ? Container()
+                      : Container(
+                          height: 40,
+                          child: const CircularProgressIndicator(),
+                        ),
+                  const Flexible(
+                    child: Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Image(
+                        image: AssetImage(
+                          'assets/imgs/intro/il-mail@4x.png',
+                        ),
+                      ),
+                    ),
+                  ),
+                  Text(
+                    'Check your email',
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+                  const SizedBox(height: 30),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: Container(
+                      width: double.infinity,
+                      child: FilledButton(
+                        child: const Text('Open Email'),
+                        onPressed: () => openMailApp(context),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // TODO Replace with actual text button
+                      TextButton(
+                        child: const Text("I didn't get my email"),
+                        onPressed: () => context.router.maybePop(),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: Text(
+                      'If the email link does not work, use the code we have emailed you.',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: Container(
+                      width: double.infinity,
+                      child: FilledButton(
+                        child: const Text('Use secret code'),
+                        onPressed: () =>
+                            context.router.push(LoginCodeRoute(email: email)),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
               ),
-            ),
-          ),
-          Text(
-            'Check your email',
-            style: Theme.of(context).textTheme.headlineLarge,
-          ),
-          const SizedBox(height: 30),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: Container(
-              width: double.infinity,
-              child: FilledButton(
-                child: const Text('Open Email'),
-                onPressed: () => openMailApp(context),
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // TODO Replace with actual text button
-              TextButton(
-                child: const Text("I didn't get my email"),
-                onPressed: () => context.router.maybePop(),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: Text(
-              'If the email link does not work, use the code we have emailed you.',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: Container(
-              width: double.infinity,
-              child: FilledButton(
-                child: const Text('Use secret code'),
-                onPressed: () =>
-                    context.router.push(LoginCodeRoute(email: email)),
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-        ],
+            );
+          },
+        ),
       ),
     );
   }

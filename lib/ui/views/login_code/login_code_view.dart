@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nowu/assets/components/header.dart';
 import 'package:nowu/locator.dart';
-import 'package:nowu/models/User.dart';
-import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/user_service.dart';
 import 'package:nowu/themes.dart';
+import 'package:nowu/ui/views/login/components/login_auth_state_listener.dart';
+import '../../../generated/l10n.dart';
 import 'package:nowu/ui/dialogs/basic/basic_dialog.dart';
 
-import '../../../generated/l10n.dart';
 import 'bloc/login_code_bloc.dart';
 import 'bloc/login_code_state.dart';
 import 'model/login_code.dart';
@@ -26,72 +25,58 @@ class LoginCodeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LoginCodeBloc(
-        email: email,
-        authenticationService: locator<AuthenticationService>(),
-        userService: locator<UserService>(),
-      ),
-      child: BlocListener<LoginCodeBloc, LoginCodeState>(
-        listener: (context, state) {
-          switch (state.status) {
-            case LoginCodeSubmissionStateSuccess(:final user):
-              // TODO Navigate (don't forget setup profile and share code)
-              PageRouteInfo getPostLoginRoute() {
-                if (!user.isInitialised) {
-                  return const ProfileSetupRoute();
-                }
-
-                return TabsRoute(children: [const HomeRoute()]);
-              }
-
-              context.router.replaceAll([getPostLoginRoute()]);
-              break;
-
-            case LoginCodeSubmissionStateFailure():
-              // TODO Show failed dialog
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return BasicDialog(
-                    BasicDialogArgs(
-                      title: 'Login failed',
-                      description: S.current.errorAuthenticationFailed,
-                    ),
-                  );
-                },
-              );
-              BlocProvider.of<LoginCodeBloc>(context).onErrorDialogShown();
-              break;
-
-            default:
-              // We don't need to do anything for other states
-              break;
-          }
-        },
-        child: Theme(
-          data: darkTheme,
-          child: _Body(),
+    return LoginAuthStateListener(
+      child: BlocProvider(
+        create: (context) => LoginCodeBloc(
+          email: email,
+          authenticationService: locator<AuthenticationService>(),
+          userService: locator<UserService>(),
         ),
-      ),
-    );
-  }
-}
+        child: BlocListener<LoginCodeBloc, LoginCodeState>(
+          listener: (context, state) {
+            switch (state.status) {
+              case LoginCodeSubmissionStateFailure():
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return BasicDialog(
+                      BasicDialogArgs(
+                        title: 'Login failed',
+                        description: S.current.errorAuthenticationFailed,
+                      ),
+                    );
+                  },
+                );
+                context.read<LoginCodeBloc>().onErrorDialogShown();
+                break;
 
-class _Body extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      body: NotificationListener(
-        onNotification: (OverscrollIndicatorNotification overscroll) {
-          overscroll.disallowIndicator();
-          return true;
-        },
-        child: ListView(
-          children: [
-            const _LoginForm(),
-          ],
+              default:
+                // We don't need to do anything for other states
+                break;
+            }
+          },
+          child: Theme(
+            data: darkTheme,
+            child: Builder(
+              builder: (context) {
+                return Scaffold(
+                  // TODO Why do I need to specify this manually?
+                  backgroundColor: Theme.of(context).colorScheme.surface,
+                  body: NotificationListener(
+                    onNotification: (OverscrollIndicatorNotification overscroll) {
+                      overscroll.disallowIndicator();
+                      return true;
+                    },
+                    child: ListView(
+                      children: [
+                        const _LoginForm(),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
         ),
       ),
     );

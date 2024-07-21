@@ -1,5 +1,5 @@
-import 'package:causeApiClient/causeApiClient.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:nowu/models/user.dart';
 import 'package:nowu/ui/views/login_code/model/login_code.dart';
 
 part 'login_code_state.freezed.dart';

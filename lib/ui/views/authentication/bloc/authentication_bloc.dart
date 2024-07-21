@@ -77,8 +77,6 @@ class AuthenticationBloc
     emit(
       AuthenticationState.unauthenticated(
         hasShownIntro: (await storageService.getIntroShown()),
-        // TODO Remember if login has previously been skipped
-        hasSkippedLogin: false,
       ),
     );
   }

@@ -3,7 +3,7 @@ import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:built_collection/built_collection.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:flutter/material.dart' hide Action;
-import 'package:nowu/models/User.dart';
+import 'package:nowu/models/user.dart';
 import 'package:nowu/models/cause.dart';
 import 'package:nowu/models/exploreable.dart';
 import 'package:nowu/models/time.dart';

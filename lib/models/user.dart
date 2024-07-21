@@ -1,6 +1,21 @@
 import 'package:causeApiClient/causeApiClient.dart' as Api;
 
-extension UserProfileExtension on Api.UserProfile {
+class UserProfile {
+  final int id;
+  final String email;
+  final String? name;
+
+  UserProfile({
+    required this.id,
+    required this.email,
+    required this.name,
+  });
+
+  UserProfile.fromApiModel(Api.UserProfile apiModel)
+      : id = apiModel.id,
+        name = apiModel.name,
+        email = apiModel.email;
+
   // TODO Find out why user name can be empty string - that should be impossible at server level
   bool get isInitialised => name != null && name != '';
 }
@@ -8,10 +23,10 @@ extension UserProfileExtension on Api.UserProfile {
 class CausesUser {
   bool get isInitialised => selectedCausesIds.isNotEmpty;
 
-  Set<int> selectedCausesIds;
-  Set<int> completedActionIds;
-  Set<int> completedCampaignIds;
-  Set<int> completedLearningResourceIds;
+  final Set<int> selectedCausesIds;
+  final Set<int> completedActionIds;
+  final Set<int> completedCampaignIds;
+  final Set<int> completedLearningResourceIds;
 
   CausesUser({
     required this.selectedCausesIds,

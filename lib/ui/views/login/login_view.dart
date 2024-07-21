@@ -11,6 +11,7 @@ import 'package:nowu/services/auth.dart';
 import 'package:nowu/themes.dart';
 import 'package:nowu/ui/common/form.dart';
 import 'package:nowu/ui/views/login/bloc/login_bloc.dart';
+import 'package:nowu/ui/views/login/components/login_auth_state_listener.dart';
 
 import '../../common/filled_button.dart';
 import 'bloc/login_state.dart';
@@ -22,23 +23,25 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: NotificationListener(
-        onNotification: (OverscrollIndicatorNotification overscroll) {
-          overscroll.disallowIndicator();
-          return true;
-        },
-        child: BlocProvider(
-          create: (context) {
-            return LoginBloc(
-              authenticationService: locator<AuthenticationService>(),
-              appRouter: AutoRouter.of(context),
-            );
+      body: LoginAuthStateListener(
+        child: NotificationListener(
+          onNotification: (OverscrollIndicatorNotification overscroll) {
+            overscroll.disallowIndicator();
+            return true;
           },
-          child: ListView(
-            children: [
-              // TODO Fix clip scrolling under the status bar
-              LoginForm(),
-            ],
+          child: BlocProvider(
+            create: (context) {
+              return LoginBloc(
+                authenticationService: locator<AuthenticationService>(),
+                appRouter: AutoRouter.of(context),
+              );
+            },
+            child: ListView(
+              children: [
+                // TODO Fix clip scrolling under the status bar
+                LoginForm(),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:nowu/models/User.dart';
+import 'package:nowu/models/user.dart';
 
 part 'user_progress_state.freezed.dart';
 

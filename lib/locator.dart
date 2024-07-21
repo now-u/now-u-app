@@ -1,4 +1,3 @@
-import 'package:nowu/router.dart';
 import 'package:nowu/services/dynamicLinks.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/navigation_service.dart';
@@ -33,7 +32,6 @@ void setupLocator() {
   locator.registerLazySingleton(() => CausesService());
   locator.registerLazySingleton(() => ApiService());
   locator.registerLazySingleton(() => SearchService());
-  locator.registerLazySingleton(() => AppRouter());
   locator.registerLazySingleton(() => CustomChromeSafariBrowser());
   locator.registerLazySingleton(() => PushNotificationService());
   locator.registerLazySingleton(() => DynamicLinkService());

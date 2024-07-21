@@ -1,5 +1,5 @@
-import 'package:causeApiClient/causeApiClient.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:nowu/models/user.dart';
 
 part 'authentication_state.freezed.dart';
 
@@ -7,7 +7,6 @@ part 'authentication_state.freezed.dart';
 sealed class AuthenticationState with _$AuthenticationState {
   const factory AuthenticationState.unknown() = AuthenticationStateUnknown;
   const factory AuthenticationState.unauthenticated({
-    required bool hasSkippedLogin,
     required bool hasShownIntro,
   }) = AuthenticationStateUnauthenticated;
   const factory AuthenticationState.authenticated({

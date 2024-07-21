@@ -146,51 +146,58 @@ class MoreView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Colors.white,
-        child: ListView(
-          children: <Widget>[
-            const SizedBox(height: 45),
-            Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: Text(
-                'More',
-                style: Theme.of(context).textTheme.headlineMedium,
+    return BlocListener<AuthenticationBloc, AuthenticationState>(
+      listener: (context, state) {
+        if (state is AuthenticationStateUnauthenticated) {
+          // TODO Do something so say log out completed
+        }
+      },
+      child: Scaffold(
+        body: Container(
+          color: Colors.white,
+          child: ListView(
+            children: <Widget>[
+              const SizedBox(height: 45),
+              Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: Text(
+                  'More',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
               ),
-            ),
-            BlocBuilder<AuthenticationBloc, AuthenticationState>(
-              builder: (context, state) {
-                return ListView(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: getMenuItems(context, state)
-                      .map((tile) => MenuItem(tile))
-                      .toList(),
-                );
-              },
-            ),
-            const SizedBox(height: 15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                SocialButton(
-                  icon: FontAwesomeIcons.instagram,
-                  link: INSTAGRAM_URI,
-                ),
-                SocialButton(
-                  icon: FontAwesomeIcons.facebookF,
-                  link: FACEBOOK_URI,
-                ),
-                SocialButton(
-                  icon: FontAwesomeIcons.twitter,
-                  link: TWITTER_URI,
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-          ],
+              BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                builder: (context, state) {
+                  return ListView(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: getMenuItems(context, state)
+                        .map((tile) => MenuItem(tile))
+                        .toList(),
+                  );
+                },
+              ),
+              const SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  SocialButton(
+                    icon: FontAwesomeIcons.instagram,
+                    link: INSTAGRAM_URI,
+                  ),
+                  SocialButton(
+                    icon: FontAwesomeIcons.facebookF,
+                    link: FACEBOOK_URI,
+                  ),
+                  SocialButton(
+                    icon: FontAwesomeIcons.twitter,
+                    link: TWITTER_URI,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );

@@ -2,7 +2,7 @@ import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:built_collection/built_collection.dart';
 import 'package:logging/logging.dart';
 import 'package:nowu/locator.dart';
-import 'package:nowu/models/User.dart';
+import 'package:nowu/models/user.dart';
 import 'package:nowu/models/cause.dart';
 import 'package:nowu/models/learning.dart';
 import 'package:nowu/models/campaign.dart';

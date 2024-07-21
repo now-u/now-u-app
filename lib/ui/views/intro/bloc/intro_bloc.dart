@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:rect_getter/rect_getter.dart';
 
-import '../../../services/storage.dart';
-import 'data/intro_page_data.dart';
+import '../../../../services/storage.dart';
+import '../data/intro_page_data.dart';
 import 'intro_state.dart';
 
 class IntroBloc extends Cubit<IntroState> {
