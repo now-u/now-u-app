@@ -16,16 +16,16 @@ class ProgressTile extends StatelessWidget {
       child: BlocBuilder<UserProgressBloc, UserProgressState>(
         builder: (context, state) {
           switch (state) {
-            case Loading():
-            case Error():
-              return Container();
             case Loaded(:final userInfo):
               return _ProgressTile(
-                campaignsScore: userInfo?.completedCampaignIds.length ?? 0,
-                actionsScore: userInfo?.completedActionIds.length ?? 0,
-                learningsScore:
-                    userInfo?.completedLearningResourceIds.length ?? 0,
+                campaignsScore: userInfo.completedCampaignIds.length,
+                actionsScore: userInfo.completedActionIds.length,
+                learningsScore: userInfo.completedLearningResourceIds.length,
               );
+            case Loading():
+            case Error():
+            case NoUser():
+              return Container();
           }
         },
       ),

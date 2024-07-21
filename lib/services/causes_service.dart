@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:built_collection/built_collection.dart';
 import 'package:logging/logging.dart';
@@ -12,6 +14,7 @@ import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/models/action.dart';
 import 'package:nowu/utils/let.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 export 'package:nowu/models/action.dart';
 export 'package:nowu/models/campaign.dart';
@@ -19,14 +22,42 @@ export 'package:nowu/models/learning.dart';
 export 'package:nowu/models/cause.dart';
 export 'package:nowu/models/organisation.dart';
 
+class UserInfoStore {
+  final _userInfoStreamController = StreamController<CausesUser?>.broadcast();
+  CausesUser? _userInfo;
+
+  Stream<CausesUser?> get userInfoStream => _userInfoStreamController.stream;
+  CausesUser? get userInfo => _userInfo;
+  void set userInfo(CausesUser? userInfo) {
+    _userInfo = userInfo;
+    _userInfoStreamController.add(_userInfo);
+  }
+
+  UserInfoStore(CausesUser? userInfo) : _userInfo = userInfo;
+}
+
 class CausesService {
   final _authService = locator<AuthenticationService>();
   final _analyticsService = locator<AnalyticsService>();
   final _apiService = locator<ApiService>();
   final _logger = Logger('CausesService');
 
+  CausesService() {
+    _authService.authState.listen((event) {
+      switch (event.event) {
+        case AuthChangeEvent.signedOut:
+          _userInfoStore.userInfo = null;
+          break;
+        default:
+          break;
+      }
+    });
+  }
+
   // Cache of user info
-  CausesUser? _userInfo = null;
+  UserInfoStore _userInfoStore = UserInfoStore(null);
+
+  Stream<CausesUser?> get userInfoStream => _userInfoStore.userInfoStream;
 
   List<Cause>? _causes;
   Future<List<Cause>> _fetchCauses() async {
@@ -105,7 +136,7 @@ class CausesService {
               ),
             );
 
-    _userInfo = response.data?.let(CausesUser.fromApiModel);
+    _userInfoStore.userInfo = response.data?.let(CausesUser.fromApiModel);
 
     // After selecting causes we fetch all causes to updated 'selected' status
     await _fetchCauses();
@@ -174,12 +205,13 @@ class CausesService {
     }
     final response =
         await _causeServiceClient.getMeApi().meCausesInfoRetrieve();
-    return _userInfo = response.data?.let(CausesUser.fromApiModel);
+    return _userInfoStore.userInfo =
+        response.data?.let(CausesUser.fromApiModel);
   }
 
   Future<CausesUser?> getUserInfo() async {
-    if (_userInfo != null) {
-      return _userInfo;
+    if (_userInfoStore.userInfo != null) {
+      return _userInfoStore.userInfo;
     }
     return fetchUserInfo();
   }
