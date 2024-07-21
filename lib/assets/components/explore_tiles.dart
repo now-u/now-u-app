@@ -56,7 +56,7 @@ class ExploreCampaignTile extends ExploreTile {
       aspectRatio: 0.75,
       child: InkWell(
         onTap: () =>
-            context.router.push(CampaignInfoRoute(listCampaign: campaign)),
+            context.router.push(CampaignInfoRoute(campaignId: campaign.id, listCampaign: campaign)),
         child: Column(
           children: [
             Container(

@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_bloc.dart';
@@ -17,6 +18,7 @@ class IntroRouteGuard extends AutoRouteGuard {
     // the navigation is paused until resolver.next() is called with either
     // true to resume/continue navigation or false to abort navigation
     switch (_authBloc.state) {
+      case _ when kIsWeb:
       case AuthenticationStateAuthenticated():
       case AuthenticationStateUnauthenticated(:final hasShownIntro)
           when hasShownIntro:
