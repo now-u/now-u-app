@@ -63,7 +63,8 @@ class LoginCodeView extends StatelessWidget {
                   // TODO Why do I need to specify this manually?
                   backgroundColor: Theme.of(context).colorScheme.surface,
                   body: NotificationListener(
-                    onNotification: (OverscrollIndicatorNotification overscroll) {
+                    onNotification:
+                        (OverscrollIndicatorNotification overscroll) {
                       overscroll.disallowIndicator();
                       return true;
                     },
