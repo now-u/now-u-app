@@ -159,10 +159,14 @@ class _Body extends StatelessWidget {
                         // TODO This must go to the causes info page
                         // For now this can be the home explore page filtered by a single cause
                         onTap: () => context.router.push(
-                          ExploreRoute(
-                            filterData: ExplorePageFilterData(
-                              filterCauseIds: Set.of([action.cause.id]),
-                            ),
+                          TabsRoute(
+                            children: [
+                              ExploreRoute(
+                                filterData: ExplorePageFilterData(
+                                  filterCauseIds: Set.of([action.cause.id]),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         child: Container(

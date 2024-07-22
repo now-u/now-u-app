@@ -35,7 +35,7 @@ class ExploreView extends StatelessWidget {
 
     return BlocProvider(
       create: (context) => ExploreFilterBloc(
-        selectedCausesIds: getSelectedCausesIds(),
+        selectedCausesIds: this.filterData?.filterCauseIds ?? getSelectedCausesIds(),
       ),
       child: ExploreTabs(),
     );
