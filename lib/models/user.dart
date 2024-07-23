@@ -2,7 +2,7 @@ import 'package:causeApiClient/causeApiClient.dart' as Api;
 
 class UserProfile {
   final int id;
-  final String email;
+  final String? email;
   final String? name;
 
   UserProfile({
