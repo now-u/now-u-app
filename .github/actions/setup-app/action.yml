@@ -11,6 +11,7 @@ runs:
       shell: bash
       run: |
         brew install docker
+        brew install colima
         colima start
 
     # Setup the flutter environment.
