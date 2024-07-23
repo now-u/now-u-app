@@ -11,7 +11,6 @@ runs:
       shell: bash
       run: |
         brew install docker
-        brew install colima
         colima start
 
     # Setup the flutter environment.
@@ -36,3 +35,7 @@ runs:
     - name: Install dependencies
       shell: bash
       run: flutter pub get
+
+    - name: Run build runner
+      shell: bash
+      run: flutter pub run build_runner build --delete-conflicting-outputs
