@@ -51,9 +51,11 @@ class MockCause extends Mock implements Cause {
   String get description => 'Test Description';
 
   @override
-  Image get headerImage => Image((b) => b
-    ..id = 2
-    ..url = 'https://example.com/image.jpg');
+  Image get headerImage => Image(
+        (b) => b
+          ..id = 2
+          ..url = 'https://example.com/image.jpg',
+      );
 
   @override
   IconEnum get icon => IconEnum.economicOpportunity;
