@@ -10,8 +10,7 @@ runs:
       if: runner.os == 'macos'
       shell: bash
       run: |
-        brew install colima
-        colima delete 
+        brew install docker
         colima start
 
     # Setup the flutter environment.
