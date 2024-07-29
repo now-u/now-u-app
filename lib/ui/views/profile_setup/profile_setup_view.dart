@@ -11,7 +11,6 @@ import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/user_service.dart';
 import 'package:nowu/themes.dart';
-import 'package:nowu/ui/views/causes_selection/onboarding_view/onboarding_select_causes_view.dart';
 import 'package:nowu/ui/views/profile_setup/bloc/profile_setup_bloc.dart';
 import 'package:nowu/ui/views/profile_setup/model/name.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -51,9 +50,9 @@ class _Body extends StatelessWidget {
                     case FormzSubmissionStatus.success:
                       context.router.push(const OnboardingSelectCausesRoute());
                     case FormzSubmissionStatus.failure:
-                      // TODO Do something
+                    // TODO Do something
                     case FormzSubmissionStatus.inProgress:
-                      // TODO Handle loading state (somewhere) - use that nice button
+                    // TODO Handle loading state (somewhere) - use that nice button
                     case FormzSubmissionStatus.initial:
                     case FormzSubmissionStatus.canceled:
                       break;
@@ -71,7 +70,7 @@ class _Body extends StatelessWidget {
                         children: <Widget>[
                           _AccountDetailsTitle(),
                           _AccountDetailsInputs(),
-                
+
                           // Uncomment to readd Skip button
                           //skipButton(),
                         ],

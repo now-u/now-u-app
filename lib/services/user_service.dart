@@ -19,8 +19,10 @@ class UserService {
   final _authService = locator<AuthenticationService>();
   final _apiService = locator<ApiService>();
 
-  final _currentUserStreamController = StreamController<UserProfile?>.broadcast();
-  Stream<UserProfile?> get currentUserStream => _currentUserStreamController.stream;
+  final _currentUserStreamController =
+      StreamController<UserProfile?>.broadcast();
+  Stream<UserProfile?> get currentUserStream =>
+      _currentUserStreamController.stream;
 
   Api.CauseApiClient get _causeServiceClient => _apiService.apiClient;
 

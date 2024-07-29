@@ -20,7 +20,8 @@ class IntroRouteGuard extends AutoRouteGuard {
     // true to resume/continue navigation or false to abort navigation
     switch (_authBloc.state) {
       case _ when kIsWeb:
-      case AuthenticationStateAuthenticated(:final user) when !user.isInitialised:
+      case AuthenticationStateAuthenticated(:final user)
+          when !user.isInitialised:
         resolver.redirect(
           const ProfileSetupRoute(),
         );

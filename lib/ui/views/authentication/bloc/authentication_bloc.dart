@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logging/logging.dart';
-import 'package:nowu/models/user.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/services/user_service.dart';
@@ -37,7 +34,8 @@ class AuthenticationBloc
       switch (event.event) {
         case AuthChangeEvent.signedIn:
         case AuthChangeEvent.tokenRefreshed:
-        case AuthChangeEvent.initialSession when event.session?.isExpired == false:
+        case AuthChangeEvent.initialSession
+            when event.session?.isExpired == false:
           add(const AuthenticationSignIn());
           break;
         case AuthChangeEvent.signedOut:

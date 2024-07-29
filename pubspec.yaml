@@ -86,6 +86,7 @@ dependencies:
   built_value: any
   crypto: any
   http: any
+  flutter_web_plugins: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
