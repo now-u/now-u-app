@@ -54,7 +54,7 @@ jobs:
         serviceAccountJsonPlainText: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON }}
         packageName: com.nowu.app
         releaseFiles: /home/runner/work/now-u-app/now-u-app/build/app/outputs/bundle/release/app-release.aab
-        track: production
+        track: beta
         status: completed
         # inAppUpdatePriority: 2
         # userFraction: 0.33
