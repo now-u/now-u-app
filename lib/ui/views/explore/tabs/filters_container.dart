@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nowu/ui/views/explore/filters/explore_filter_chip.dart';
 import 'package:nowu/utils/intersperse.dart';
 
 class FiltersContainer extends StatelessWidget {
@@ -7,7 +8,7 @@ class FiltersContainer extends StatelessWidget {
     required this.filterChips,
   });
 
-  final Iterable<Widget> filterChips;
+  final Iterable<FilterConfig> filterChips;
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +21,10 @@ class FiltersContainer extends StatelessWidget {
           //TODO Not working and probbaly wrong place to define
           scrollDirection: Axis.horizontal,
           shrinkWrap: true,
-          children:
-              filterChips.intersperseOuter(const SizedBox(width: 8)).toList(),
+          children: filterChips
+              .map<Widget>((config) => ExploreFilterChip(config))
+              .intersperseOuter(const SizedBox(width: 8))
+              .toList(),
         ),
       ),
     );

@@ -1,61 +1,102 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nowu/assets/components/header.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/services/auth.dart';
+import 'package:nowu/services/user_service.dart';
 import 'package:nowu/themes.dart';
-import 'package:stacked/stacked.dart';
-import 'package:stacked/stacked_annotations.dart';
+import 'package:nowu/ui/views/login/components/login_auth_state_listener.dart';
+import '../../../generated/l10n.dart';
+import 'package:nowu/ui/dialogs/basic/basic_dialog.dart';
 
-import 'login_code_view.form.dart';
-import 'login_code_viewmodel.dart';
+import 'bloc/login_code_bloc.dart';
+import 'bloc/login_code_state.dart';
+import 'model/login_code.dart';
 
-@FormView(
-  fields: [
-    FormTextField(
-      name: 'codeInput',
-      validator: LoginCodeFormValidators.codeInputValidator,
-    ),
-  ],
-)
-class LoginCodeView extends StackedView<LoginCodeViewModel>
-    with $LoginCodeView {
+@RoutePage()
+class LoginCodeView extends StatelessWidget {
   final String email;
 
   const LoginCodeView({
     Key? key,
-    required this.email,
+    @pathParam required this.email,
   }) : super(key: key);
 
   @override
-  void onViewModelReady(LoginCodeViewModel viewModel) {
-    syncFormWithViewModel(viewModel);
-  }
+  Widget build(BuildContext context) {
+    return LoginAuthStateListener(
+      child: BlocProvider(
+        create: (context) => LoginCodeBloc(
+          email: email,
+          authenticationService: locator<AuthenticationService>(),
+          userService: locator<UserService>(),
+        ),
+        child: BlocListener<LoginCodeBloc, LoginCodeState>(
+          listener: (context, state) {
+            switch (state.status) {
+              case LoginCodeSubmissionStateFailure():
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return BasicDialog(
+                      BasicDialogArgs(
+                        title: 'Login failed',
+                        description: S.current.errorAuthenticationFailed,
+                      ),
+                    );
+                  },
+                );
+                context.read<LoginCodeBloc>().onErrorDialogShown();
+                break;
 
-  @override
-  Widget builder(
-    BuildContext context,
-    LoginCodeViewModel viewModel,
-    Widget? child,
-  ) {
-    return Theme(
-      data: darkTheme,
-      child: _Body(viewModel, codeInputController: codeInputController),
+              default:
+                // We don't need to do anything for other states
+                break;
+            }
+          },
+          child: Theme(
+            data: darkTheme,
+            child: Builder(
+              builder: (context) {
+                return Scaffold(
+                  // TODO Why do I need to specify this manually?
+                  backgroundColor: Theme.of(context).colorScheme.surface,
+                  body: NotificationListener(
+                    onNotification:
+                        (OverscrollIndicatorNotification overscroll) {
+                      overscroll.disallowIndicator();
+                      return true;
+                    },
+                    child: ListView(
+                      children: [
+                        const _LoginForm(),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      ),
     );
   }
-
-  @override
-  LoginCodeViewModel viewModelBuilder(
-    BuildContext context,
-  ) =>
-      LoginCodeViewModel(email: email);
 }
 
 class _LoginForm extends StatelessWidget {
-  final LoginCodeViewModel viewModel;
-  final TextEditingController codeInputController;
+  const _LoginForm();
 
-  const _LoginForm(
-    this.viewModel, {
-    required this.codeInputController,
-  });
+  String? getErrorText(LoginCode code) {
+    switch (code.displayError) {
+      case null:
+        return null;
+      case LoginCodeValidationErrorEmpty():
+        return 'Login code must be provided';
+      case LoginCodeValidationErrorInvalid(:final message):
+        return message;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,19 +151,21 @@ class _LoginForm extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                TextFormField(
-                  controller: codeInputController,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: false),
-                  textCapitalization: TextCapitalization.none,
-                  autofocus: false,
-                  decoration: const InputDecoration(
-                    hintText: 'e.g. 123456',
-                  ),
-                  onChanged: (value) {
-                    if (viewModel.codeInputValidationMessage != null) {
-                      viewModel.validateForm();
-                    }
+                BlocBuilder<LoginCodeBloc, LoginCodeState>(
+                  builder: (context, state) {
+                    return TextFormField(
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: false),
+                      textCapitalization: TextCapitalization.none,
+                      autofocus: false,
+                      decoration: InputDecoration(
+                        hintText: 'e.g. 123456',
+                        errorText: getErrorText(state.loginCode),
+                      ),
+                      onChanged: (value) {
+                        context.read<LoginCodeBloc>().updateLoginCode(value);
+                      },
+                    );
                   },
                 ),
                 Padding(
@@ -130,7 +173,8 @@ class _LoginForm extends StatelessWidget {
                   child: FilledButton(
                     child: const Text('Log in'),
                     onPressed: () {
-                      viewModel.loginWithCode();
+                      context.read<LoginCodeBloc>().loginWithCode();
+                      // TODO Navigate post login!
                     },
                   ),
                 ),
@@ -142,35 +186,6 @@ class _LoginForm extends StatelessWidget {
 
             // Uncomment to readd Skip button
             //skipButton(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _Body extends StatelessWidget {
-  final LoginCodeViewModel viewModel;
-  final TextEditingController codeInputController;
-
-  const _Body(
-    this.viewModel, {
-    required this.codeInputController,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      // TODO Why do I need to specify this manually?
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: NotificationListener(
-        onNotification: (OverscrollIndicatorNotification overscroll) {
-          overscroll.disallowIndicator();
-          return true;
-        },
-        child: ListView(
-          children: [
-            _LoginForm(viewModel, codeInputController: codeInputController),
           ],
         ),
       ),

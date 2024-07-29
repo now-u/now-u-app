@@ -5,12 +5,20 @@ class InternalNotificationService {
   // final ApiService _apiService = locator<ApiService>();
 
   List<InternalNotification>? _notifications = [];
-  List<InternalNotification>? get notifications {
-    return _notifications;
+
+  InternalNotification? getNotification(int id) {
+    // TODO
+    return null;
   }
 
-// TODO Fix
-  Future fetchNotifications() async {
+  List<InternalNotification> getNotifications() {
+    if (_notifications == null) {
+      _fetchNotifications();
+    }
+    return _notifications!;
+  }
+
+  Future _fetchNotifications() async {
     // try {
     //   _notifications = await _apiService.getModelListRequest(
     //     'v1/users/me/notifications',

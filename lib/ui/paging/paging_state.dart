@@ -1,36 +1,43 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:nowu/services/model/search/search_response.dart';
+
+part 'paging_state.freezed.dart';
+
 sealed class PagingState<T> {
-  final List<T> items;
-  final bool hasReachedMax;
-
-  PagingState(this.items, this.hasReachedMax);
-
-  int offset() => items.length;
-
-  bool canLoadMore() =>
-      (this is InitialLoading || this is Data) && !hasReachedMax;
-
-  int itemsCount() => items.length;
+  const PagingState();
 }
 
-class InitialLoading extends PagingState {
-  InitialLoading() : super([], false);
+class InitialLoading<T> extends PagingState<T> {
+  const InitialLoading() : super();
 }
 
-class Data<T> extends PagingState {
-  final List<T> items;
-  final bool hasReachedMax;
+@freezed
+class Data<T> extends PagingState<T> with _$Data<T> {
+  const factory Data({
+    required List<T> items,
+    @Default(false) bool hasReachedMax,
+    @Default(false) bool isLoadingMore,
+  }) = _Data;
 
-  Data({
-    required this.items,
-    required this.hasReachedMax,
-  }) : super(
-          items,
-          hasReachedMax,
+  factory Data.fromSearchResponse(SearchResponse<T> searchResponse) {
+    return Data(
+      items: searchResponse.items,
+      hasReachedMax: searchResponse.hasReachedMax,
+    );
+  }
+}
+
+extension PagingStateExtension<E> on PagingState<E> {
+  PagingState<T> map<T>(T Function(E) toElement) {
+    switch (this) {
+      case InitialLoading():
+        return const InitialLoading();
+      case Data(:final items):
+        return Data(
+          items: items.map(toElement).toList(),
+          hasReachedMax: false,
+          isLoadingMore: false,
         );
-}
-
-class LoadingMore<T> extends PagingState {
-  final List<T> items;
-
-  LoadingMore({required this.items}) : super(items, false);
+    }
+  }
 }

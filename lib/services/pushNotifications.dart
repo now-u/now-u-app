@@ -1,11 +1,8 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-import 'package:nowu/app/app.locator.dart';
-import 'package:nowu/services/navigation_service.dart';
-
 class PushNotificationService {
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-  final NavigationService? _navigationService = locator<NavigationService>();
+  // final NavigationService? _navigationService = locator<NavigationService>();
 
   Future init() async {
     await _fcm.requestPermission(
@@ -38,7 +35,7 @@ class PushNotificationService {
     if (view != null) {
       // TODO: Fix this!
       // ignore: deprecated_member_use_from_same_package
-      _navigationService!.navigateTo(view);
+      // _navigationService!.navigateTo(view);
     }
   }
 }

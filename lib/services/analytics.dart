@@ -1,7 +1,7 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:logging/logging.dart';
-import 'package:nowu/models/Action.dart';
-import 'package:nowu/models/Learning.dart';
+import 'package:nowu/models/action.dart';
+import 'package:nowu/models/learning.dart';
 import 'package:nowu/models/article.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -23,7 +23,7 @@ class AnalyticsService {
   }
 
   Future<void> logActionEvent(
-    Action action,
+    ListAction action,
     ActionEvent event,
   ) async {
     try {
@@ -33,7 +33,7 @@ class AnalyticsService {
           'id': action.id,
           'title': action.title,
           'type': action.type.name,
-          'super_type': action.actionType.name,
+          'super_type': action.type.name,
           'time': action.time,
           'resource_created_at': action.createdAt,
         }),
@@ -71,8 +71,8 @@ class AnalyticsService {
         parameters: _serializeEventParameters({
           'id': article.id,
           'title': article.title,
-          'source': article.source_,
-          'resource_created_at': article.createdAt,
+          'source': article.shortUrl,
+          'resource_released_at': article.releasedAt,
         }),
       );
     } catch (e) {
@@ -106,7 +106,7 @@ class AnalyticsService {
     }
   }
 
-  Future logAuthEvent(AuthChangeEvent event) {
+  Future logAuthEvent(AuthChangeEvent event) async {
     return _analytics.logEvent(
       name: 'auth_${event.name}',
     );

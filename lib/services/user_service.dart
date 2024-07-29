@@ -1,11 +1,14 @@
-import 'package:causeApiClient/causeApiClient.dart';
+import 'dart:async';
+
+import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:logging/logging.dart';
-import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/locator.dart';
+import 'package:nowu/models/user.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/auth.dart';
+import 'package:nowu/utils/let.dart';
 
 class UserService {
-  // TODO We hardly actually need the user now we have the auth token
   UserProfile? _currentUser = null;
 
   UserProfile? get currentUser => _currentUser;
@@ -16,7 +19,12 @@ class UserService {
   final _authService = locator<AuthenticationService>();
   final _apiService = locator<ApiService>();
 
-  CauseApiClient get _causeServiceClient => _apiService.apiClient;
+  final _currentUserStreamController =
+      StreamController<UserProfile?>.broadcast();
+  Stream<UserProfile?> get currentUserStream =>
+      _currentUserStreamController.stream;
+
+  Api.CauseApiClient get _causeServiceClient => _apiService.apiClient;
 
   Future<UserProfile?> fetchUser() async {
     if (!_authService.isAuthenticated) {
@@ -26,7 +34,7 @@ class UserService {
 
     try {
       final response = await _causeServiceClient.getMeApi().meProfileRetrieve();
-      return _currentUser = response.data;
+      return _currentUser = response.data!.let(UserProfile.fromApiModel);
     } catch (e) {
       _logger.warning('Fetch user failed, $e');
       throw e;
@@ -42,8 +50,9 @@ class UserService {
     final response =
         await _causeServiceClient.getMeApi().meProfilePartialUpdate(
               patchedUserProfile:
-                  PatchedUserProfile((profile) => profile..name = name),
+                  Api.PatchedUserProfile((profile) => profile..name = name),
             );
-    _currentUser = response.data!;
+    _currentUser = UserProfile.fromApiModel(response.data!);
+    _currentUserStreamController.add(_currentUser);
   }
 }

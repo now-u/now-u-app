@@ -4,7 +4,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 
-import 'package:nowu/app/app.locator.dart';
+import 'package:nowu/locator.dart';
 import 'package:nowu/services/remote_config_service.dart';
 
 // Taken from:

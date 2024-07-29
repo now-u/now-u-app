@@ -12,6 +12,8 @@ migrate_working_dir/
 openapi/causeApi/
 .env
 android/app/*.jks*
+lib/router.gr.dart
+*.freezed.dart
 
 # IntelliJ related
 *.iml

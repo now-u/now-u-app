@@ -109,8 +109,6 @@ final regularTheme = ThemeData(
     primary: CustomColors.brandColor,
     // TODO This is does not quite work as white isn't very visible on orange
     onPrimary: Colors.white,
-    background: const Color.fromRGBO(247, 248, 252, 1),
-    onBackground: Colors.black,
     secondary: const Color.fromRGBO(255, 220, 121, 1),
     onSecondary: Colors.black,
     // TODO What is this really?
@@ -131,12 +129,12 @@ final regularTheme = ThemeData(
   // TODO Bring back!
   // TODO Fix buttons
   searchBarTheme: SearchBarThemeData(
-    surfaceTintColor: const MaterialStatePropertyAll(Colors.transparent),
-    hintStyle: MaterialStatePropertyAll(
+    surfaceTintColor: const WidgetStatePropertyAll(Colors.transparent),
+    hintStyle: WidgetStatePropertyAll(
       textTheme.bodyLarge!.copyWith(color: Colors.grey),
     ),
-    elevation: const MaterialStatePropertyAll(tileElevation),
-    shadowColor: MaterialStatePropertyAll(tileBoxShadowLight.color),
+    elevation: const WidgetStatePropertyAll(tileElevation),
+    shadowColor: WidgetStatePropertyAll(tileBoxShadowLight.color),
   ),
   cardTheme: const CardTheme(
     surfaceTintColor: Colors.transparent,
@@ -174,17 +172,12 @@ final darkTheme = regularTheme.copyWith(
   colorScheme: ColorScheme(
     brightness: Brightness.dark,
     primary: CustomColors.brandColor,
-    // TODO This is does not quite work as white isn't very visible on orange
-    onPrimary: Colors.white,
-    background: const Color.fromRGBO(1, 26, 67, 1),
-    onBackground: Colors.black,
+    onPrimary: Colors.black,
     secondary: const Color.fromRGBO(255, 220, 121, 1),
     onSecondary: Colors.black,
-    // TODO What is this really?
-    surface: Colors.white,
-    onSurface: Colors.black,
+    surface: CustomColors.accentBlue,
+    onSurface: Colors.white,
     error: const Color.fromRGBO(211, 0, 1, 1),
-    // TODO Really?
     onError: Colors.white,
   ),
 );

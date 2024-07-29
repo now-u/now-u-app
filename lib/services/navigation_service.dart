@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart' hide Action;
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:nowu/app/app.locator.dart';
-import 'package:nowu/services/dialog_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const String INTERNAL_PREFIX = 'internal:';
@@ -26,8 +24,6 @@ class CustomChromeSafariBrowser extends ChromeSafariBrowser {
 
 // TODO Start to use router service
 class NavigationService {
-  final DialogService _dialogService = locator<DialogService>();
-
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   final UrlLauncher urlLauncher = UrlLauncher();
   final ChromeSafariBrowser browser = CustomChromeSafariBrowser();
@@ -145,14 +141,15 @@ class NavigationService {
     //   navigateTo(route);
     // } else if ((isExternal ?? false) || isMailTo(url)) {
     if ((isExternal ?? false) || isMailTo(url)) {
-      await launchLinkExternal(
-        url,
-        title: title,
-        description: description,
-        buttonText: buttonText,
-        closeButtonText: closeButtonText,
-        extraOnConfirmFunction: extraOnConfirmFunction,
-      );
+      // TODO Fix
+      // await launchLinkExternal(
+      //   url,
+      //   title: title,
+      //   description: description,
+      //   buttonText: buttonText,
+      //   closeButtonText: closeButtonText,
+      //   extraOnConfirmFunction: extraOnConfirmFunction,
+      // );
     } else {
       if (extraOnConfirmFunction != null) extraOnConfirmFunction();
       await browser.open(
@@ -161,22 +158,22 @@ class NavigationService {
     }
   }
 
-  Future<void> launchLinkExternal(
-    String url, {
-    String? title,
-    String? description,
-    String? buttonText,
-    String? closeButtonText,
-    Function? extraOnConfirmFunction,
-  }) async {
-    bool shouldExit = await _dialogService.showExitConfirmationDialog();
-    if (shouldExit) {
-      if (extraOnConfirmFunction != null) {
-        extraOnConfirmFunction();
-      }
-      await urlLauncher.openUrl(Uri.parse(url));
-    }
-  }
+  // Future<void> launchLinkExternal(
+  //   String url, {
+  //   String? title,
+  //   String? description,
+  //   String? buttonText,
+  //   String? closeButtonText,
+  //   Function? extraOnConfirmFunction,
+  // }) async {
+  //   // bool shouldExit = await _dialogService.showExitConfirmationDialog();
+  //   if (shouldExit) {
+  //     if (extraOnConfirmFunction != null) {
+  //       extraOnConfirmFunction();
+  //     }
+  //     await urlLauncher.openUrl(Uri.parse(url));
+  //   }
+  // }
 
-  void launchPDF() {}
+  // void launchPDF() {}
 }

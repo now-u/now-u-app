@@ -2,8 +2,7 @@ import 'dart:async';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:nowu/app/app.locator.dart';
-import 'package:nowu/services/router_service.dart';
+import 'package:nowu/locator.dart';
 import 'package:nowu/services/storage.dart';
 
 import 'package:uni_links/uni_links.dart';
@@ -11,7 +10,6 @@ import 'package:uni_links/uni_links.dart';
 // The holy grail link https://nowu.page.link/?link=https://now-u.com/campaigns?id=1&apn=com.nowu.app
 
 class DynamicLinkService {
-  final _routerService = locator<RouterService>();
   final SecureStorageService _storageProvider = locator<SecureStorageService>();
   // TODO Remove/fix for web this service
   // final DeviceInfoService? _deviceInfoService = locator<DeviceInfoService>();
@@ -56,10 +54,10 @@ class DynamicLinkService {
         String? email = await _storageProvider.getEmail();
         if (email == null) return;
 
-        String? token = deepLink.queryParameters['token'];
+        //. String? token = deepLink.queryParameters['token'];
         print('Navigating to emailSent');
         // TODO WTF is going on here? Do we need this and the supabase stuff
-        _routerService.navigateToLoginEmailSentView(email: email, token: token);
+        // _routerService.navigateToLoginEmailSentView(email: email, token: token);
       }
       if (RegExp('campaigns/[0-9]+').hasMatch(deepLink.path)) {
         String campaignNumberString = deepLink.path.substring(11);

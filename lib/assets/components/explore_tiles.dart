@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:nowu/assets/components/card.dart';
 import 'package:nowu/assets/components/cause_indicator.dart';
 import 'package:nowu/assets/components/custom_network_image.dart';
+import 'package:nowu/assets/components/explore_tiles/bloc/explore_learning_resource_tile_bloc.dart';
+import 'package:nowu/assets/components/explore_tiles/bloc/explore_learning_resource_tile_state.dart';
 import 'package:nowu/models/article.dart';
+import 'package:nowu/router.dart';
+import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/causes_service.dart';
-import 'package:nowu/ui/views/explore/explore_page_viewmodel.dart';
+import 'package:nowu/utils/let.dart';
+import 'package:nowu/locator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 enum ExploreTileStyle {
   Standard,
@@ -30,17 +39,15 @@ class ExploreCampaignTile extends ExploreTile {
   final Cause cause;
   final bool? completed;
   final ListCampaign campaign;
-  final GestureTapCallback onTap;
 
   ExploreCampaignTile(
-    CampaignExploreTileData tile, {
-    required this.onTap,
+    ListCampaign tile, {
     Key? key,
-  })  : headerImage = tile.campaign.headerImage.url,
-        title = tile.campaign.title,
-        cause = tile.campaign.cause,
+  })  : headerImage = tile.headerImage.url,
+        title = tile.title,
+        cause = tile.cause,
         completed = tile.isCompleted,
-        campaign = tile.campaign,
+        campaign = tile,
         super(key: key);
 
   @override
@@ -48,7 +55,9 @@ class ExploreCampaignTile extends ExploreTile {
     return AspectRatio(
       aspectRatio: 0.75,
       child: InkWell(
-        onTap: onTap,
+        onTap: () => context.router.push(
+          CampaignInfoRoute(campaignId: campaign.id, listCampaign: campaign),
+        ),
         child: Column(
           children: [
             Container(
@@ -93,49 +102,84 @@ class ExploreActionTile extends ExploreResourceTile {
   final ListAction action;
 
   ExploreActionTile(
-    ActionExploreTileData tile, {
-    required GestureTapCallback onTap,
+    ListAction tile, {
     ExploreTileStyle? style,
     Key? key,
-  })  : action = tile.action,
+  })  : action = tile,
         super(
-          title: tile.action.title,
-          type: tile.action.type.name,
-          iconColor: tile.action.type.primaryColor,
-          headerColor: tile.action.type.secondaryColor,
-          dividerColor: tile.action.type.tertiaryColor,
-          icon: tile.action.type.icon,
-          cause: tile.action.cause,
-          timeText: tile.action.timeText,
+          title: tile.title,
+          type: tile.type.name,
+          iconColor: tile.type.primaryColor,
+          headerColor: tile.type.secondaryColor,
+          dividerColor: tile.type.tertiaryColor,
+          icon: tile.type.icon,
+          cause: tile.cause,
+          timeText: tile.timeText,
           isCompleted: tile.isCompleted,
           style: style,
-          onTap: onTap,
+          onTap: (BuildContext context) =>
+              context.router.push(ActionInfoRoute(actionId: tile.id)),
           key: key,
         );
 }
 
-class ExploreLearningResourceTile extends ExploreResourceTile {
+class ExploreLearningResourceTile extends StatelessWidget {
+  final LearningResource tile;
+
+  ExploreLearningResourceTile(this.tile);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => ExploreLearningResourceTileBloc(
+        learningResource: tile,
+        causesService: locator<CausesService>(),
+      ),
+      child: BlocListener<ExploreLearningResourceTileBloc,
+          ExploreLearningResourceTileState>(
+        listener: (context, state) {
+          if (state is ExploreLearningResourceTileStateLaunching) {
+            launchUrl(tile.link);
+          }
+        },
+        child: BlocBuilder<ExploreLearningResourceTileBloc,
+            ExploreLearningResourceTileState>(
+          builder: (context, state) {
+            return ExploreLearningResourceTileInner(
+              tile,
+              onTap: context
+                  .read<ExploreLearningResourceTileBloc>()
+                  .launchLearningResource,
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class ExploreLearningResourceTileInner extends ExploreResourceTile {
   final LearningResource resource;
 
-  ExploreLearningResourceTile(
-    LearningResourceExploreTileData tile, {
+  ExploreLearningResourceTileInner(
+    LearningResource tile, {
     required GestureTapCallback onTap,
     ExploreTileStyle? style,
     Key? key,
-  })  : resource = tile.learningResource,
+  })  : resource = tile,
         super(
-          title: tile.learningResource.title,
-          type: tile.learningResource.type.name,
+          title: tile.title,
+          type: tile.type.name,
           iconColor: blue0,
           headerColor: blue1,
           dividerColor: blue2,
-          icon: tile.learningResource.icon,
-          cause: tile.learningResource.cause,
-          timeText: tile.learningResource.timeText,
+          icon: tile.icon,
+          cause: tile.cause,
+          timeText: tile.timeText,
           isCompleted: tile.isCompleted,
           key: key,
           style: style,
-          onTap: onTap,
+          onTap: (_) async => onTap(),
         );
 }
 
@@ -152,7 +196,7 @@ abstract class ExploreResourceTile extends ExploreTile {
   final String timeText;
   final bool? isCompleted;
   final ExploreTileStyle style;
-  final GestureTapCallback onTap;
+  final Future<void> Function(BuildContext context) onTap;
 
   ExploreResourceTile({
     required this.title,
@@ -175,7 +219,7 @@ abstract class ExploreResourceTile extends ExploreTile {
     return AspectRatio(
       aspectRatio: 1.65,
       child: InkWell(
-        onTap: onTap,
+        onTap: () => onTap(context),
         child: Column(
           children: [
             Flexible(
@@ -252,40 +296,26 @@ abstract class ExploreResourceTile extends ExploreTile {
 }
 
 class ExploreNewsArticleTile extends ExploreTile {
-  final String title;
-  final String subtitle;
-  final String headerImage;
-  final String dateString;
-  final String url;
-  final String shortUrl;
   final NewsArticle article;
-  final GestureTapCallback onTap;
 
   ExploreNewsArticleTile(
-    NewsArticleExploreTileData tile, {
-    required this.onTap,
+    NewsArticle tile, {
     Key? key,
-  })  : title = tile.article.title,
-        subtitle = tile.article.subtitle,
-        headerImage = tile.article.headerImage.url,
-        dateString = tile.article.dateString ?? '',
-        url = tile.article.link,
-        shortUrl = tile.article.shortUrl,
-        article = tile.article,
+  })  : article = tile,
         super(key: key);
 
   Widget buildBody(BuildContext context) {
     return AspectRatio(
       aspectRatio: 0.8,
       child: InkWell(
-        onTap: onTap,
+        onTap: () => launchLink(article.link),
         child: Column(
           children: [
             AspectRatio(
               aspectRatio: 1.8,
               // TODO ink animation doesn't cover image
               child: CustomNetworkImage(
-                headerImage,
+                article.headerImage.url,
                 fit: BoxFit.cover,
               ),
             ),
@@ -297,14 +327,14 @@ class ExploreNewsArticleTile extends ExploreTile {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title,
+                      article.title,
                       style: Theme.of(context).textTheme.headlineMedium!,
                       textScaler: const TextScaler.linear(.7),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      subtitle,
+                      article.subtitle,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context)
@@ -313,7 +343,7 @@ class ExploreNewsArticleTile extends ExploreTile {
                           .apply(fontStyle: FontStyle.normal),
                     ),
                     Text(
-                      dateString,
+                      article.releasedAt.let(DateFormat('d MMM y').format),
                     ),
                   ],
                 ),
@@ -326,7 +356,7 @@ class ExploreNewsArticleTile extends ExploreTile {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  shortUrl,
+                  article.shortUrl,
                   style: Theme.of(context).textTheme.bodyLarge?.apply(
                         color: const Color.fromRGBO(255, 136, 0, 1),
                       ),

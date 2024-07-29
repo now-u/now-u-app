@@ -1,48 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
-
-import 'explore_filter_sheet_model.dart';
 
 class ExploreFilterSheetOption<T> {
   final String title;
   final T value;
+  final bool isSelected;
 
   ExploreFilterSheetOption({
     required this.title,
     required this.value,
+    required this.isSelected,
   });
 }
 
-class ExploreFilterSheetData<T> {
+class ExploreFilterSheet<T> extends StatelessWidget {
   final String filterName;
   final List<ExploreFilterSheetOption<T>> options;
-  final Set<T> initialSelectedValues;
-
-  ExploreFilterSheetData({
-    required this.filterName,
-    required this.options,
-    required this.initialSelectedValues,
-  });
-}
-
-class ExploreFilterSheet extends StackedView<ExploreFilterSheetModel> {
-  final Function(SheetResponse response)? completer;
-  final SheetRequest request;
+  final Function(T) onSelectOption;
+  final Function()? onClosed;
 
   const ExploreFilterSheet({
     Key? key,
-    required this.completer,
-    required this.request,
+    required this.filterName,
+    required this.options,
+    required this.onSelectOption,
+    this.onClosed,
   }) : super(key: key);
 
   @override
-  Widget builder(
-    BuildContext context,
-    ExploreFilterSheetModel viewModel,
-    Widget? child,
-  ) {
-    ExploreFilterSheetData data = request.data!;
+  Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -58,15 +43,15 @@ class ExploreFilterSheet extends StackedView<ExploreFilterSheetModel> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            data.filterName,
+            filterName,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: 10),
-          ...data.options.map(
+          ...options.map(
             (option) => Material(
               color: Colors.white,
               child: InkWell(
-                onTap: () => viewModel.toggleSelectOption(option),
+                onTap: () => onSelectOption(option.value),
                 child: Container(
                   width: double.infinity,
                   child: Row(
@@ -79,7 +64,7 @@ class ExploreFilterSheet extends StackedView<ExploreFilterSheetModel> {
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
-                      if (viewModel.isSelected(option))
+                      if (option.isSelected)
                         Icon(
                           Icons.check,
                           color: Theme.of(context).primaryColor,
@@ -94,14 +79,7 @@ class ExploreFilterSheet extends StackedView<ExploreFilterSheetModel> {
           Container(
             width: double.infinity,
             child: FilledButton(
-              onPressed: () {
-                completer!(
-                  SheetResponse(
-                    confirmed: true,
-                    data: viewModel.selectedOptionValues,
-                  ),
-                );
-              },
+              onPressed: () => Navigator.of(context).pop(),
               child: const Text('Apply'),
             ),
           ),
@@ -109,10 +87,4 @@ class ExploreFilterSheet extends StackedView<ExploreFilterSheetModel> {
       ),
     );
   }
-
-  @override
-  ExploreFilterSheetModel viewModelBuilder(BuildContext context) =>
-      ExploreFilterSheetModel(
-        selectedOptionValues: request.data!.initialSelectedValues,
-      );
 }

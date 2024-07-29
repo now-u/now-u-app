@@ -1,28 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
-import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:nowu/router.gr.dart';
 
 import '../../../generated/l10n.dart';
 import '../../../theme/assets.dart';
-import 'action_completed_dialog_model.dart';
 
-class ActionCompletedDialog extends StackedView<ActionCompletedDialogModel> {
-  final Function(DialogResponse) completer;
-
+class ActionCompletedDialog extends StatelessWidget {
   const ActionCompletedDialog({
     Key? key,
-    required DialogRequest request,
-    required this.completer,
   }) : super(key: key);
 
   @override
-  Widget builder(
-    BuildContext context,
-    ActionCompletedDialogModel viewModel,
-    Widget? child,
-  ) {
+  Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: Colors.transparent,
       surfaceTintColor: Colors.transparent,
@@ -37,13 +28,11 @@ class ActionCompletedDialog extends StackedView<ActionCompletedDialogModel> {
               color: Colors.white,
               borderRadius: BorderRadius.circular(30.0),
             ),
-            child: Padding(
+            child: const Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: CustomPaddingSize.normal,
               ),
-              child: ActionCompletedDialogContent(
-                viewModel: viewModel,
-              ),
+              child: const ActionCompletedDialogContent(),
             ),
           ),
           Image.asset(
@@ -55,16 +44,10 @@ class ActionCompletedDialog extends StackedView<ActionCompletedDialogModel> {
       ),
     );
   }
-
-  @override
-  ActionCompletedDialogModel viewModelBuilder(BuildContext context) =>
-      ActionCompletedDialogModel();
 }
 
 class ActionCompletedDialogContent extends StatelessWidget {
-  final ActionCompletedDialogModel viewModel;
-
-  const ActionCompletedDialogContent({super.key, required this.viewModel});
+  const ActionCompletedDialogContent({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +58,7 @@ class ActionCompletedDialogContent extends StatelessWidget {
         Align(
           alignment: Alignment.topRight,
           child: IconButton(
-            onPressed: () => viewModel.onClose(),
+            onPressed: () => context.router.maybePop(),
             icon: const Icon(
               CustomIcons.ic_close,
             ),
@@ -106,7 +89,9 @@ class ActionCompletedDialogContent extends StatelessWidget {
           width: double.infinity,
           child: FilledButton(
             child: Text(S.of(context).action_completed_dialog_explore_action),
-            onPressed: viewModel.onNavigateToExplore,
+            onPressed: () => context.router.push(
+              TabsRoute(children: [ExploreRoute()]),
+            ),
           ),
         ),
         const SizedBox(height: CustomPaddingSize.normal),

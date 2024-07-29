@@ -2,27 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nowu/assets/components/buttons/customIconButton.dart';
 import 'package:nowu/assets/constants.dart';
-import 'package:nowu/models/Cause.dart';
+import 'package:nowu/models/cause.dart';
+import 'package:nowu/ui/dialogs/cause/cause_dialog.dart';
 
 class CauseTile extends StatelessWidget {
   final Cause cause;
   final bool isSelected;
   final IconData icon;
-  final VoidCallback gestureFunction;
-  final VoidCallback getInfoFunction;
+  final VoidCallback onSelect;
 
   CauseTile({
     required this.cause,
-    required this.gestureFunction,
-    required this.getInfoFunction,
-    bool? isSelected,
-  })  : this.isSelected = isSelected ?? cause.isSelected,
-        this.icon = cause.icon.toIconData();
+    required this.onSelect,
+    bool? isSelectedOverride,
+  })  : this.isSelected = isSelectedOverride ?? cause.isSelected,
+        this.icon = cause.icon;
+
+  void openInfoDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return CauseInfoDialog(
+          cause: cause,
+          onSelectCause: onSelect,
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: gestureFunction,
+      onTap: onSelect,
       child: Container(
         decoration: BoxDecoration(
           color: isSelected ? const Color(0XFFFFF3E5) : Colors.white,
@@ -79,11 +90,11 @@ class CauseTile extends StatelessWidget {
                     'Learn more',
                     textAlign: TextAlign.center,
                   ),
-                  onPressed: getInfoFunction,
+                  onPressed: () => openInfoDialog(context),
                   padding: const EdgeInsets.symmetric(horizontal: 0),
                 ),
                 CircularIconButton(
-                  onPressed: getInfoFunction,
+                  onPressed: () => openInfoDialog(context),
                   icon: FontAwesomeIcons.circleQuestion,
                   iconSize: 14,
                   height: 20,
