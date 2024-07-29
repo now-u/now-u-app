@@ -2,13 +2,16 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:formz/formz.dart';
 import 'package:nowu/assets/components/buttons/darkButton.dart';
 import 'package:nowu/assets/components/inputs.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/router.dart';
+import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/user_service.dart';
 import 'package:nowu/themes.dart';
+import 'package:nowu/ui/views/causes_selection/onboarding_view/onboarding_select_causes_view.dart';
 import 'package:nowu/ui/views/profile_setup/bloc/profile_setup_bloc.dart';
 import 'package:nowu/ui/views/profile_setup/model/name.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -42,22 +45,37 @@ class _Body extends StatelessWidget {
               create: (_) => ProfileSetupBloc(
                 userService: locator<UserService>(),
               ),
-              child: Form(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 24, right: 24),
-                  child: SafeArea(
-                    child: Column(
-                      //shrinkWrap: true,
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        _AccountDetailsTitle(),
-                        _AccountDetailsInputs(),
-
-                        // Uncomment to readd Skip button
-                        //skipButton(),
-                      ],
+              child: BlocListener<ProfileSetupBloc, ProfileSetupState>(
+                listener: (context, state) {
+                  switch (state.status) {
+                    case FormzSubmissionStatus.success:
+                      context.router.push(const OnboardingSelectCausesRoute());
+                    case FormzSubmissionStatus.failure:
+                      // TODO Do something
+                    case FormzSubmissionStatus.inProgress:
+                      // TODO Handle loading state (somewhere) - use that nice button
+                    case FormzSubmissionStatus.initial:
+                    case FormzSubmissionStatus.canceled:
+                      break;
+                  }
+                },
+                child: Form(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 24, right: 24),
+                    child: SafeArea(
+                      child: Column(
+                        //shrinkWrap: true,
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          _AccountDetailsTitle(),
+                          _AccountDetailsInputs(),
+                
+                          // Uncomment to readd Skip button
+                          //skipButton(),
+                        ],
+                      ),
                     ),
                   ),
                 ),

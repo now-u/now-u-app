@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:logging/logging.dart';
 import 'package:nowu/locator.dart';
@@ -17,6 +19,9 @@ class UserService {
   final _authService = locator<AuthenticationService>();
   final _apiService = locator<ApiService>();
 
+  final _currentUserStreamController = StreamController<UserProfile?>.broadcast();
+  Stream<UserProfile?> get currentUserStream => _currentUserStreamController.stream;
+
   Api.CauseApiClient get _causeServiceClient => _apiService.apiClient;
 
   Future<UserProfile?> fetchUser() async {
@@ -27,7 +32,7 @@ class UserService {
 
     try {
       final response = await _causeServiceClient.getMeApi().meProfileRetrieve();
-      return _currentUser = response.data?.let(UserProfile.fromApiModel);
+      return _currentUser = response.data!.let(UserProfile.fromApiModel);
     } catch (e) {
       _logger.warning('Fetch user failed, $e');
       throw e;
@@ -46,5 +51,6 @@ class UserService {
                   Api.PatchedUserProfile((profile) => profile..name = name),
             );
     _currentUser = UserProfile.fromApiModel(response.data!);
+    _currentUserStreamController.add(_currentUser);
   }
 }

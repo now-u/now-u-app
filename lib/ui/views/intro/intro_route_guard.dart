@@ -15,10 +15,15 @@ class IntroRouteGuard extends AutoRouteGuard {
 
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {
+    _logger.info('Checking auth state: ${_authBloc.state}');
     // the navigation is paused until resolver.next() is called with either
     // true to resume/continue navigation or false to abort navigation
     switch (_authBloc.state) {
       case _ when kIsWeb:
+      case AuthenticationStateAuthenticated(:final user) when !user.isInitialised:
+        resolver.redirect(
+          const ProfileSetupRoute(),
+        );
       case AuthenticationStateAuthenticated():
       case AuthenticationStateUnauthenticated(:final hasShownIntro)
           when hasShownIntro:
