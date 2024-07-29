@@ -57,7 +57,6 @@ paths:
       - actions
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           description: No response body
@@ -75,7 +74,6 @@ paths:
       - actions
       security:
       - tokenAuth: []
-      - {}
       responses:
         '204':
           description: No response body
@@ -425,7 +423,6 @@ paths:
       - learning_resources
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           description: No response body
@@ -495,6 +492,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/CausesUser'
           description: ''
+  /me/delete/:
+    delete:
+      operationId: me_delete_destroy
+      tags:
+      - me
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
   /me/profile/:
     get:
       operationId: me_profile_retrieve
@@ -524,6 +531,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/UserProfile'
+        required: true
       security:
       - tokenAuth: []
       responses:
@@ -610,7 +618,6 @@ paths:
       - new_articles
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           description: No response body
@@ -667,7 +674,6 @@ paths:
       - news_articles
       security:
       - tokenAuth: []
-      - {}
       responses:
         '200':
           description: No response body
@@ -1348,10 +1354,12 @@ components:
           type: string
           format: email
           readOnly: true
+          nullable: true
           title: Email address
         name:
           type: string
           maxLength: 150
+          minLength: 1
     UserProfile:
       type: object
       properties:
@@ -1362,13 +1370,16 @@ components:
           type: string
           format: email
           readOnly: true
+          nullable: true
           title: Email address
         name:
           type: string
           maxLength: 150
+          minLength: 1
       required:
       - email
       - id
+      - name
   securitySchemes:
     tokenAuth:
       type: http

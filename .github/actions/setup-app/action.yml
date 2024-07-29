@@ -6,12 +6,10 @@ runs:
   steps:
     - uses: actions/checkout@v2
 
-    - name: Setup docker
-      if: runner.os == 'macos'
+    - name: Install openapi generator
       shell: bash
       run: |
-        brew install docker
-        colima start
+        npm install @openapitools/openapi-generator-cli -g
 
     # Setup the flutter environment.
     - name: Setup flutter
