@@ -9,7 +9,6 @@ import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_bloc.dart';
-import 'package:nowu/ui/views/authentication/bloc/authentication_event.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_state.dart';
 
 sealed class MenuItemData {
@@ -126,9 +125,7 @@ List<MenuItemData> getMenuItems(
           // TODO Get icon
           icon: FontAwesomeIcons.solidUser,
           action: FunctionMenuItemAction(
-            () async => context.read<AuthenticationBloc>().add(
-                  const AuthenticationEvent.signOutRequested(),
-                ),
+            () async => context.read<AuthenticationBloc>().signOut(),
           ),
         )
       else

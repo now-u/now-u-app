@@ -7,7 +7,7 @@ import 'package:nowu/ui/views/authentication/bloc/authentication_bloc.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_state.dart';
 
 class LoginAuthStateListener extends StatelessWidget {
-  Logger _logger = Logger('LoginAuthStateListener');
+  final Logger _logger = Logger('LoginAuthStateListener');
 
   final Widget child;
 
