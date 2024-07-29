@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nowu/assets/constants.dart';
@@ -6,7 +7,6 @@ import 'package:nowu/ui/views/causes/bloc/causes_bloc.dart';
 import 'package:nowu/ui/views/causes/bloc/causes_state.dart';
 import 'package:nowu/ui/views/explore/bloc/explore_filter_bloc.dart';
 import 'package:nowu/ui/views/explore/bloc/explore_filter_state.dart';
-import 'package:auto_route/auto_route.dart';
 
 final double horizontalPadding = CustomPaddingSize.small;
 
@@ -35,7 +35,8 @@ class ExploreView extends StatelessWidget {
 
     return BlocProvider(
       create: (context) => ExploreFilterBloc(
-        selectedCausesIds: this.filterData?.filterCauseIds ?? getSelectedCausesIds(),
+        selectedCausesIds:
+            this.filterData?.filterCauseIds ?? getSelectedCausesIds(),
       ),
       child: ExploreTabs(),
     );
