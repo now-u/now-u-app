@@ -10,7 +10,11 @@ class DeleteAccountView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => DeleteAccountBloc(),
+      create: (context) => DeleteAccountBloc(
+        authenticationService: context.read(),
+        appRouter: context.read(),
+        userService: context.read(),
+      ),
       child: BlocListener<DeleteAccountBloc, DeleteAccountState>(
         listener: (context, state) {
           Scaffold(
