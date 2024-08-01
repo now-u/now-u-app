@@ -55,4 +55,8 @@ class UserService {
     _currentUser = UserProfile.fromApiModel(response.data!);
     _currentUserStreamController.add(_currentUser);
   }
+
+  Future<void> deleteUser() async {
+    await _causeServiceClient.getMeApi().meDeleteDestroy();
+  }
 }
