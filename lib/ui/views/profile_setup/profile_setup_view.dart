@@ -3,7 +3,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:nowu/assets/components/buttons/darkButton.dart';
 import 'package:nowu/assets/components/inputs.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:nowu/locator.dart';
@@ -128,8 +127,8 @@ class _AccountDetailsInputs extends StatelessWidget {
         _NewsLetterSignup(),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
-          child: DarkButton(
-            'Next',
+          child: FilledButton(
+            child: const Text('Next'),
             onPressed: () {
               context.read<ProfileSetupBloc>().submit();
             },

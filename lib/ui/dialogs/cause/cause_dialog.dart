@@ -1,5 +1,5 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:nowu/assets/components/buttons/darkButton.dart';
 import 'package:nowu/assets/components/custom_network_image.dart';
 import 'package:nowu/models/cause.dart';
 
@@ -57,12 +57,12 @@ class CauseInfoDialog extends StatelessWidget {
                 const SizedBox(height: 20),
                 Container(
                   width: double.infinity,
-                  child: DarkButton(
-                    'Select Cause',
+                  child: FilledButton(
+                    child: const Text('Select Cause'),
                     onPressed: () {
                       onSelectCause();
                       // TODO Check if this is the wrong way round (because we also navigate in the above method)
-                      Navigator.of(context).pop();
+                      context.router.maybePop();
                     },
                   ),
                 ),

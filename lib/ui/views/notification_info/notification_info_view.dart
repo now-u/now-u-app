@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:nowu/assets/components/buttons/darkButton.dart';
 import 'package:nowu/assets/components/custom_network_image.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/services/internal_notification_service.dart';
@@ -99,9 +98,8 @@ class NotificationInfoView extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                // TODO Remove dark button
-                                DarkButton(
-                                  'Got it',
+                                FilledButton(
+                                  child: const Text('Got it'),
                                   onPressed: () => context
                                       .read<NotificationInfoBloc>()
                                       .dismissNotification(),

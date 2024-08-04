@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:nowu/assets/components/buttons/customIconButton.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:nowu/models/cause.dart';
 import 'package:nowu/ui/dialogs/cause/cause_dialog.dart';
@@ -93,13 +92,9 @@ class CauseTile extends StatelessWidget {
                   onPressed: () => openInfoDialog(context),
                   padding: const EdgeInsets.symmetric(horizontal: 0),
                 ),
-                CircularIconButton(
+                IconButton(
+                  icon: const Icon(FontAwesomeIcons.circleQuestion, size: 14),
                   onPressed: () => openInfoDialog(context),
-                  icon: FontAwesomeIcons.circleQuestion,
-                  iconSize: 14,
-                  height: 20,
-                  backgroundColor: Colors.transparent,
-                  iconColor: Theme.of(context).primaryColor,
                 ),
               ],
             ),
