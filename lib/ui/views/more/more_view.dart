@@ -121,7 +121,7 @@ List<MenuItemData> getMenuItems(
       const SectionHeadingMenuItem(title: 'User'),
       if (authState is AuthenticationStateAuthenticated)
         const ActionMenuItem(
-          title: 'Remove account',
+          title: 'Delete Account',
           icon: FontAwesomeIcons.userMinus,
           action: RouteMenuItemAction(DeleteAccountRoute()),
         ),
