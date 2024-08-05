@@ -2,6 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../locator.dart';
+import '../../../services/auth.dart';
+import '../../../services/user_service.dart';
 import 'delete_account_bloc.dart';
 import 'delete_account_state.dart';
 
@@ -10,14 +13,14 @@ class DeleteAccountView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => DeleteAccountBloc(
-        authenticationService: context.read(),
-        appRouter: context.read(),
-        userService: context.read(),
+      create: (_) => DeleteAccountBloc(
+        authenticationService: locator<AuthenticationService>(),
+        appRouter: AutoRouter.of(context),
+        userService: locator<UserService>(),
       ),
-      child: BlocListener<DeleteAccountBloc, DeleteAccountState>(
-        listener: (context, state) {
-          Scaffold(
+      child: BlocBuilder<DeleteAccountBloc, DeleteAccountState>(
+        builder: (context, state) {
+          return Scaffold(
             appBar: AppBar(
               title: Text('Delete Account'),
             ),
@@ -36,7 +39,8 @@ class DeleteAccountView extends StatelessWidget {
                       ),
                       const Padding(padding: EdgeInsets.all(8)),
                       TextField(
-                        onChanged: context.read().updateInputName,
+                        onChanged:
+                            context.read<DeleteAccountBloc>().updateInputName,
                         decoration: const InputDecoration(
                           hintText: 'Type account name to confirm',
                         ),
@@ -44,7 +48,7 @@ class DeleteAccountView extends StatelessWidget {
                       const Padding(padding: EdgeInsets.all(8)),
                       ElevatedButton(
                         onPressed: state.isNameValid
-                            ? context.read().deleteAccount
+                            ? context.read<DeleteAccountBloc>().deleteAccount
                             : null,
                         child: Text('Delete Account'),
                       ),
