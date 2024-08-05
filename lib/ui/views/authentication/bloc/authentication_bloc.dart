@@ -28,9 +28,14 @@ class AuthenticationBloc extends Cubit<AuthenticationState> {
       switch (event.event) {
         case AuthChangeEvent.signedIn:
         case AuthChangeEvent.tokenRefreshed:
+        // If there is an initialSession but its expired we do not handle the event, instead we wait for the tokenRefreshed event
         case AuthChangeEvent.initialSession
             when event.session?.isExpired == false:
           _onSignIn();
+          break;
+        // If the initial session is null, the user has never signed in so we know the state is unauthenticated
+        case AuthChangeEvent.initialSession when event.session == null:
+          _onUnauthenticated();
           break;
         case AuthChangeEvent.signedOut:
           _onSignOut();

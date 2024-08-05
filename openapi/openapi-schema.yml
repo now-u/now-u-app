@@ -1160,6 +1160,8 @@ components:
           $ref: '#/components/schemas/Image'
         release_at_timestamp:
           type: integer
+        published_at_timestamp:
+          type: integer
         is_completed:
           type: boolean
           readOnly: true
@@ -1208,6 +1210,7 @@ components:
       - is_completed
       - link
       - published_at
+      - published_at_timestamp
       - release_at
       - release_at_timestamp
       - source
