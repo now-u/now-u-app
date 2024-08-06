@@ -1,5 +1,5 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:nowu/assets/components/textButton.dart';
 
 AppBar customAppBar({
   required String text,
@@ -31,11 +31,20 @@ AppBar customAppBar({
           child: Align(
             alignment: Alignment.centerRight,
             child: Container(
-              child: CustomTextButton(
-                backButtonText ?? 'Back',
-                iconLeft: true,
-                onClick: () {
-                  Navigator.pop(context);
+              child: TextButton.icon(
+                icon: Icon(
+                  Icons.chevron_left,
+                  size: 25,
+                  color: Theme.of(context).primaryColor,
+                ),
+                label: Text(
+                  backButtonText ?? 'Back',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                onPressed: () {
+                  context.router.maybePop();
                 },
               ),
             ),

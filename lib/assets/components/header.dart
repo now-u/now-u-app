@@ -1,5 +1,5 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:nowu/assets/components/textButton.dart';
 
 // TODO Loads of stuff here isn't used, remove all the things
 class PageHeader extends StatelessWidget {
@@ -129,13 +129,21 @@ class PageHeaderBackButton extends StatelessWidget {
                       horizontal: padding ?? 10.0,
                       vertical: 10.0,
                     ),
-                    child: CustomTextButton(
-                      backButtonText ?? 'Back',
-                      onClick: () {
-                        Navigator.of(context).pop();
+                    child: TextButton.icon(
+                      icon: Icon(
+                        Icons.chevron_left,
+                        size: 25,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      label: Text(
+                        backButtonText ?? 'Back',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      onPressed: () {
+                        context.router.maybePop();
                       },
-                      iconLeft: true,
-                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 )
