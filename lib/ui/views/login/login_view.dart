@@ -20,10 +20,17 @@ import 'models/email.dart';
 
 @RoutePage()
 class LoginView extends StatelessWidget {
+  final String? initialRoute;
+
+  LoginView({
+    @QueryParam() this.initialRoute,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: LoginAuthStateListener(
+        initialRoute: initialRoute,
         child: NotificationListener(
           onNotification: (OverscrollIndicatorNotification overscroll) {
             overscroll.disallowIndicator();
@@ -33,14 +40,26 @@ class LoginView extends StatelessWidget {
             create: (context) {
               return LoginBloc(
                 authenticationService: locator<AuthenticationService>(),
-                appRouter: AutoRouter.of(context),
               );
             },
-            child: ListView(
-              children: [
-                // TODO Fix clip scrolling under the status bar
-                LoginForm(),
-              ],
+            child: BlocListener<LoginBloc, LoginState>(
+              listener: (context, state) {
+                // Note we don't have to listen to social media state because thats handled in LoginAuthStateListener.
+                if (state.emailFormStatus == FormzSubmissionStatus.success) {
+                  context.router.push(
+                    LoginEmailSentRoute(
+                      email: state.email.value,
+                      initialRoute: initialRoute,
+                    ),
+                  );
+                }
+              },
+              child: ListView(
+                children: [
+                  // TODO Fix clip scrolling under the status bar
+                  LoginForm(initialRoute: initialRoute),
+                ],
+              ),
             ),
           ),
         ),
@@ -50,6 +69,12 @@ class LoginView extends StatelessWidget {
 }
 
 class LoginForm extends StatelessWidget {
+  final String? initialRoute;
+
+  LoginForm({
+    required this.initialRoute,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -101,11 +126,11 @@ class LoginForm extends StatelessWidget {
               const SizedBox(height: 20),
               Container(
                 width: MediaQuery.of(context).size.width * 0.6,
-                child: const Column(
+                child: Column(
                   children: [
                     const _LoginButton(),
                     const SizedBox(height: 20),
-                    const _SkipButton(),
+                    _SkipButton(initialRoute: initialRoute),
                   ],
                 ),
               ),
@@ -181,7 +206,9 @@ class _EmailInput extends StatelessWidget {
 }
 
 class _SkipButton extends StatelessWidget {
-  const _SkipButton();
+  final String? initialRoute;
+
+  const _SkipButton({required this.initialRoute});
 
   @override
   Widget build(BuildContext context) {
@@ -191,9 +218,13 @@ class _SkipButton extends StatelessWidget {
         style: secondaryFilledButtonStyle,
         child: const Text('Skip'),
         onPressed: () async {
-          await context.router.replaceAll([
-            TabsRoute(children: [const HomeRoute()]),
-          ]);
+          await context.router.pushNamedRouteWithFallback(
+            path: initialRoute,
+            fallback: postLoginInitialRouteFallback,
+            // For the skip button we don't clear history so they can come back and
+            // try to login if they wish
+            clearHistroy: false,
+          );
         },
       ),
     );
@@ -212,7 +243,7 @@ class _LoginButton extends StatelessWidget {
           onPressed: () {
             context.read<LoginBloc>().onLoginWithEmail();
           },
-          loading: state.status == FormzSubmissionStatus.inProgress,
+          loading: state.emailFormIsValid == FormzSubmissionStatus.inProgress || state.socialMediaLoginStatus == SocialMediaLoginStatus.loading,
         );
       },
     );

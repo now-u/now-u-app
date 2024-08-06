@@ -12,16 +12,19 @@ import 'package:open_mail_app/open_mail_app.dart';
 class LoginEmailSentView extends StatelessWidget {
   final String email;
   final String? token;
+  final String? initialRoute;
 
   const LoginEmailSentView({
     Key? key,
     @pathParam required this.email,
     @pathParam this.token,
+    @pathParam this.initialRoute,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return LoginAuthStateListener(
+      initialRoute: initialRoute,
       child: Theme(
         data: darkTheme,
         child: Builder(

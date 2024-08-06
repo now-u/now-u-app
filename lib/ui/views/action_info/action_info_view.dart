@@ -9,9 +9,12 @@ import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/themes.dart';
 import 'package:nowu/ui/dialogs/action/action_completed_dialog.dart';
+import 'package:nowu/ui/dialogs/basic/basic_dialog.dart';
 import 'package:nowu/ui/views/action_info/bloc/action_info_bloc.dart';
 import 'package:nowu/ui/views/action_info/bloc/action_info_state.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:nowu/ui/views/authentication/bloc/authentication_bloc.dart';
+import 'package:nowu/ui/views/authentication/bloc/authentication_state.dart';
 import 'package:nowu/ui/views/explore/bloc/explore_filter_state.dart';
 
 const hPadding = CustomPaddingSize.small;
@@ -91,7 +94,7 @@ class _Body extends StatelessWidget {
                       label: const Text('Back'),
                       icon: const Icon(Icons.chevron_left),
                       onPressed: () {
-                        Navigator.pop(context);
+                        context.router.maybePop();
                       },
                     ),
                   ),
@@ -278,9 +281,44 @@ class _Body extends StatelessWidget {
                             alignment: Alignment.topCenter,
                             child: FilledButton(
                               child: const Text('Mark as done'),
-                              onPressed: () => context
-                                  .read<ActionInfoBloc>()
-                                  .markActionComplete(),
+                              onPressed: () {
+                                switch (
+                                    context.read<AuthenticationBloc>().state) {
+                                  case AuthenticationStateUnknown():
+                                  case AuthenticationStateUnauthenticated():
+                                    showDialog(
+                                      builder: (context) => BasicDialog(
+                                        BasicDialogArgs(
+                                          title: 'Login required',
+                                          description:
+                                              'Create a now-u account to track your progress and choose the causes you care about',
+                                          mainButtonArgs: BasicDialogButtonArgs(
+                                            text: 'Login',
+                                            onClick: () {
+                                              context.router
+                                                  .push(const LoginRoute(
+                                                    initalRoute: context.router.currentRoute,
+                                                  ));
+                                            },
+                                          ),
+                                          secondaryButtonArgs: BasicDialogButtonArgs(
+                                            text: 'Cancel',
+                                            onClick: () {
+                                              context.router.maybePop();
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                      context: context,
+                                    );
+                                    break;
+                                  case AuthenticationStateAuthenticated():
+                                    context
+                                        .read<ActionInfoBloc>()
+                                        .markActionComplete();
+                                    break;
+                                }
+                              },
                               style: secondaryFilledButtonStyle,
                             ),
                           ),
