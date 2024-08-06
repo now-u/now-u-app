@@ -17,15 +17,18 @@ import 'model/login_code.dart';
 @RoutePage()
 class LoginCodeView extends StatelessWidget {
   final String email;
+  final String? initialRoute;
 
   const LoginCodeView({
     Key? key,
     @pathParam required this.email,
+    @pathParam this.initialRoute,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return LoginAuthStateListener(
+      initialRoute: initialRoute,
       child: BlocProvider(
         create: (context) => LoginCodeBloc(
           email: email,

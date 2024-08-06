@@ -10,6 +10,31 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'router.gr.dart';
 
+const postLoginInitialRouteFallback = HomeRoute();
+
+extension AutoRouterXExtension on StackRouter {
+  Future<void> pushNamedRouteWithFallback({
+    required String? path,
+    required PageRouteInfo fallback,
+    bool clearHistroy = false,
+  }) async {
+    if (clearHistroy) {
+      removeWhere((_) => true);
+    }
+
+    if (path == null) {
+      await push(fallback);
+    } else {
+      await pushNamed(
+        path,
+        onFailure: (_) {
+          push(fallback);
+        },
+      );
+    }
+  }
+}
+
 @AutoRouterConfig(replaceInRouteName: 'View|Tab,Route')
 class AppRouter extends $AppRouter {
   AuthenticationBloc _authBloc;
