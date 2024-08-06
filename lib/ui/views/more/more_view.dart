@@ -129,7 +129,7 @@ List<MenuItemData> getMenuItems(
           ),
         )
       else
-        const ActionMenuItem(
+        ActionMenuItem(
           title: 'Log in',
           // TODO Get icon
           icon: FontAwesomeIcons.solidUser,

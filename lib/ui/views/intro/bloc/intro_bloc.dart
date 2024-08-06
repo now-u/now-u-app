@@ -72,6 +72,6 @@ class IntroBloc extends Cubit<IntroState> {
 
   void _goToNextPage(BuildContext context) {
     _storageService.setIntroShown(true);
-    _appRouter.push(const LoginRoute());
+    _appRouter.push(LoginRoute());
   }
 }
