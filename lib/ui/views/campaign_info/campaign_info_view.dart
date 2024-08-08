@@ -63,6 +63,7 @@ class CampaignInfoView extends StatelessWidget {
           CustomNetworkImage(
             campaign.headerImage.url,
             height: 193,
+            width: double.infinity,
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
               Colors.black.withOpacity(0.6),

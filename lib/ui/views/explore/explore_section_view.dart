@@ -1,7 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:nowu/assets/components/buttons/darkButton.dart';
 import 'package:nowu/assets/components/card.dart';
 import 'package:nowu/assets/constants.dart';
+import 'package:nowu/router.gr.dart';
 import 'package:nowu/ui/paging/paging_state.dart';
 import 'package:nowu/ui/views/explore/explore_page_view.dart';
 
@@ -57,7 +58,7 @@ class ExploreSectionWidget extends StatelessWidget {
     );
   }
 
-  Widget _noTilesFound() {
+  Widget _noTilesFound(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
       child: BaseCard(
@@ -83,10 +84,11 @@ class ExploreSectionWidget extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: CustomPaddingSize.small),
-                DarkButton(
-                  'Explore',
-                  // TODO
-                  onPressed: () {},
+                FilledButton(
+                  child: const Text('Explore'),
+                  onPressed: () {
+                    context.router.push(ExploreRoute());
+                  },
                 ),
               ],
             ),
@@ -110,7 +112,7 @@ class ExploreSectionWidget extends StatelessWidget {
       case Data(:final items):
         {
           if (items.length == 0) {
-            return _noTilesFound();
+            return _noTilesFound(context);
           }
 
           return Container(

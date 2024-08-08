@@ -1,8 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nowu/assets/components/buttons/darkButton.dart';
-import 'package:nowu/assets/components/textButton.dart';
 import 'package:nowu/themes.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -76,9 +74,9 @@ class IntroViewPages extends StatelessWidget {
                               width: 70,
                               child: RectGetter(
                                 key: context.read<IntroBloc>().skipKey,
-                                child: CustomTextButton(
-                                  'Skip',
-                                  onClick: () =>
+                                child: TextButton(
+                                  child: const Text('Skip'),
+                                  onPressed: () =>
                                       context.read<IntroBloc>().skip(context),
                                 ),
                               ),
@@ -117,8 +115,8 @@ class IntroViewPages extends StatelessWidget {
                               ? Container()
                               : RectGetter(
                                   key: context.read<IntroBloc>().getStartedKey,
-                                  child: DarkButton(
-                                    'Get Started!',
+                                  child: FilledButton(
+                                    child: const Text('Get Started!'),
                                     onPressed: () => context
                                         .read<IntroBloc>()
                                         .getStarted(context),

@@ -58,40 +58,45 @@ class ExploreCampaignTile extends ExploreTile {
         onTap: () => context.router.push(
           CampaignInfoRoute(campaignId: campaign.id, listCampaign: campaign),
         ),
-        child: Column(
-          children: [
-            Container(
-              constraints: const BoxConstraints(maxHeight: 150),
-              child: Stack(
-                alignment: Alignment.topRight,
-                children: [
-                  // FIXME ink animation doesn't cover image
-                  CustomNetworkImage(
-                    headerImage,
-                    fit: BoxFit.cover,
-                  ),
-                  if (completed != null)
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: _ExploreTileCheckmark(
-                        completed: completed!,
-                      ),
+        child: Container(
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                constraints: const BoxConstraints(maxHeight: 150),
+                child: Stack(
+                  alignment: Alignment.topRight,
+                  children: [
+                    // FIXME ink animation doesn't cover image
+                    CustomNetworkImage(
+                      headerImage,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: 150,
                     ),
-                ],
+                    if (completed != null)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: _ExploreTileCheckmark(
+                          completed: completed!,
+                        ),
+                      ),
+                  ],
+                ),
               ),
-            ),
-            Expanded(
-              child: Container(
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: _ExploreTileTitle(title),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: _ExploreTileTitle(title),
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: CauseIndicator(cause),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: CauseIndicator(cause),
+              ),
+            ],
+          ),
         ),
       ),
     );

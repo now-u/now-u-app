@@ -60,6 +60,10 @@ List<ExploreTabData> getTabs() {
       route: const ExploreAllRoute(),
     ),
     const ExploreTabData(
+      title: 'Campaigns',
+      route: const ExploreCampaignRoute(),
+    ),
+    const ExploreTabData(
       title: 'Actions',
       route: const ExploreActionRoute(),
     ),

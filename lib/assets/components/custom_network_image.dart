@@ -7,6 +7,7 @@ class CustomNetworkImage extends StatelessWidget {
   final String url;
   final BoxFit? fit;
   final double? height;
+  final double? width;
 
   final Function? placeholder;
   final BaseCacheManager? cacheManager;
@@ -16,6 +17,7 @@ class CustomNetworkImage extends StatelessWidget {
     this.url, {
     this.fit,
     this.height,
+    this.width,
     this.placeholder,
     this.cacheManager,
     this.colorFilter,
@@ -29,6 +31,8 @@ class CustomNetworkImage extends StatelessWidget {
         errorBuilder: (context, url, error) =>
             const Center(child: Icon(Icons.error)),
         fit: fit,
+        height: height,
+        width: width,
       );
     }
 
@@ -40,6 +44,7 @@ class CustomNetworkImage extends StatelessWidget {
       errorWidget: (context, url, error) =>
           const Center(child: Icon(Icons.error)),
       height: height,
+      width: width,
       imageBuilder: (context, imageProvider) => Container(
         decoration: BoxDecoration(
           image: DecorationImage(

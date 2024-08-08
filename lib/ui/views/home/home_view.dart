@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nowu/assets/components/buttons/customWidthButton.dart';
 import 'package:nowu/assets/components/customScrollableSheet.dart';
 import 'package:nowu/assets/components/customTile.dart';
 import 'package:nowu/assets/components/explore_tiles.dart';
-import 'package:nowu/assets/components/textButton.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/models/Notification.dart';
 import 'package:nowu/models/exploreable.dart';
@@ -131,16 +129,14 @@ class HomeView extends StatelessWidget {
                 buildTile: (item) => ExploreCampaignTile(item),
                 tileHeight: CAMPIGN_TILE_HEIGHT,
               ),
-              CustomWidthButton(
-                'Explore',
+              FilledButton(
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text('Explore'),
+                ),
                 onPressed: () {
-                  context.router.push(
-                    TabsRoute(children: [ExploreRoute()]),
-                  );
+                  context.router.push(ExploreRoute());
                 },
-                size: ButtonSize.Medium,
-                fontSize: 20.0,
-                buttonWidthProportion: 0.8,
               ),
               const SizedBox(height: 30),
               ProgressTile(),
@@ -186,9 +182,9 @@ class HomeView extends StatelessWidget {
                                         .textTheme
                                         .headlineSmall,
                                   ),
-                                  CustomTextButton(
-                                    'Edit',
-                                    onClick: () {
+                                  TextButton(
+                                    child: const Text('Edit'),
+                                    onPressed: () {
                                       context.router.push(
                                         const ChangeSelectCausesRoute(),
                                       );

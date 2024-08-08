@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart' hide Action;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:nowu/assets/components/textButton.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:nowu/locator.dart';
@@ -386,26 +385,18 @@ class _Body extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     action.isCompleted
-                        ? CustomTextButton(
-                            'Mark as not done',
-                            fontSize: 14,
-                            onClick: () {
+                        ? TextButton(
+                            child: const Text(
+                              'Mark as not done',
+                              style: TextStyle(fontSize: 14),
+                            ),
+                            onPressed: () {
                               context
                                   .read<ActionInfoBloc>()
                                   .clearActionStatus();
                             },
                           )
                         : Container(),
-                    //TextButton("Hide this action", fontSize: 14,
-                    //    onClick: () {
-                    //  showDialog(
-                    //    context: context,
-                    //    barrierDismissible: true,
-                    //    builder: (_) =>
-                    //        RejectDialogue(_action, viewModel),
-                    //  );
-                    //}),
-
                     const SizedBox(width: 10),
                   ],
                 ),
