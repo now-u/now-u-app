@@ -1,6 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/ui/dialogs/basic/basic_dialog.dart';
@@ -61,6 +61,7 @@ class AppRouter extends $AppRouter {
           page: PartnerInfoRoute.page,
         ),
         AutoRoute(path: '/faqs', page: FaqRoute.page),
+        AutoRoute(path: '/delete_account', page: DeleteAccountRoute.page),
       ];
 
   Future<void> launchLink(Uri url, {bool isExternal = false}) async {
