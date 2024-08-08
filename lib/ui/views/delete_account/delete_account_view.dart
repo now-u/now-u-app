@@ -12,13 +12,12 @@ import 'delete_account_state.dart';
 class DeleteAccountView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) =>
-          DeleteAccountBloc(
-            authenticationService: locator<AuthenticationService>(),
-            appRouter: AutoRouter.of(context),
-            userService: locator<UserService>(),
-          ),
+    return BlocProvider<DeleteAccountBloc>(
+      create: (_) => DeleteAccountBloc(
+        authenticationService: locator<AuthenticationService>(),
+        appRouter: AutoRouter.of(context),
+        userService: locator<UserService>(),
+      ),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Delete Account'),
@@ -33,31 +32,25 @@ class DeleteAccountView extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     'Are you sure you want to delete your account? This action cannot be undone.',
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .titleMedium,
+                    style: Theme.of(context).textTheme.titleMedium,
                     textAlign: TextAlign.center,
                   ),
                   const Padding(padding: EdgeInsets.all(8)),
                   TextField(
                     onChanged:
-                    context
-                        .read<DeleteAccountBloc>()
-                        .updateInputName,
+                        context.read<DeleteAccountBloc>().updateInputName,
                     decoration: const InputDecoration(
                       hintText: 'Type account name to confirm',
                     ),
                   ),
                   const Padding(padding: EdgeInsets.all(8)),
-
                   DeleteAccountButton(),
                 ],
               ),
             ),
           ),
         ),
-      );,
+      ),
     );
   }
 }
@@ -69,9 +62,7 @@ class DeleteAccountButton extends StatelessWidget {
       builder: (context, state) {
         return ElevatedButton(
           onPressed: state.isNameValid
-              ? context
-              .read<DeleteAccountBloc>()
-              .deleteAccount
+              ? context.read<DeleteAccountBloc>().deleteAccount
               : null,
           child: const Text('Delete Account'),
         );
