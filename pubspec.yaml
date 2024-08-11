@@ -78,13 +78,13 @@ dependencies:
 
   get_it: ^7.7.0
 
-  auto_route: any
-  bloc: any
-  built_collection: any
-  flutter_cache_manager: any
-  built_value: any
-  crypto: any
-  http: any
+  auto_route: ^9.2.0
+  bloc: ^8.1.4
+  built_collection: ^5.1.1
+  flutter_cache_manager: ^3.4.0
+  built_value: ^8.9.2
+  crypto: ^3.0.3
+  http: ^1.2.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -96,9 +96,8 @@ dev_dependencies:
   freezed: ^2.5.2
   integration_test:
     sdk: flutter
-
-  test: any
-  mocktail: any
+  test: ^1.25.8
+  mocktail: ^1.0.4
 flutter_icons:
   ios: true
   android: true
