@@ -54,12 +54,12 @@ class BasicDialog extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 15),
                 Padding(
                   padding: const EdgeInsets.all(5),
                   child: Text(
                     args.description,
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: Theme.of(context).textTheme.bodyLarge,
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -81,12 +81,12 @@ class BasicDialog extends StatelessWidget {
                   ]
                       .intersperse(
                         const SizedBox(
-                          height: 10,
+                          height: 15,
                         ),
                       )
                       .toList(),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
               ],
             ),
           ),

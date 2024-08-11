@@ -178,6 +178,12 @@ class CausesService {
   ///
   /// Marks a learning resource as completed
   Future completeLearningResource(LearningResource learningResource) async {
+    if (!_authService.isAuthenticated) {
+      _logger.warning(
+        'User is not logged in, skipping learning resource completion',
+      );
+      return;
+    }
     await (
       _causeServiceClient
           .getLearningResourcesApi()
