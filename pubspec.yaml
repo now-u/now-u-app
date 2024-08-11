@@ -79,7 +79,6 @@ dependencies:
   get_it: ^7.7.0
 
   auto_route: any
-  stacked: any
   bloc: any
   built_collection: any
   flutter_cache_manager: any
