@@ -6,65 +6,50 @@ on:
       - '[0-9]+.[0-9]+.[0-9]+*'
 
   workflow_dispatch: # to manually run this workflow
+    inputs:
+      version:
+        description: 'Version number to release'
+        required: true
+        type: string
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}
   cancel-in-progress: true
 
 jobs:
-  prepare:
-    name: Release setup
-    runs-on: macos-latest
+  test:
+    name: Test
+    uses: now-u/now-u-app/.github/workflows/flutter-test.yml@main
+    secrets: inherit
+
+  get-version:
+    name: Get version
+    runs-on: ubuntu-latest
     outputs:
-      ref: ${{ steps.commit.outputs.commit_long_sha }}
-    timeout-minutes: 30
+      build-name: ${{ steps.get-build-name.outputs.build-name }}
+      build-number: ${{ steps.get-build-number.outputs.build-number }}
+    env:
+      TAG: ${{ github.event.inputs.version != '' && github.event.inputs.version || github.ref_name }}
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Extract version from tag
-        uses: damienaicheh/extract-version-from-tag-action@v1.1.0
-
-      - name: Setup flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable' # 'dev', 'alpha', default to: 'stable'
-          flutter-version: '3.22.3'
-          cache: true
-
-      - name: Setup cider
-        run: |
-          export PATH="$PATH":"$HOME/.pub-cache/bin"
-          flutter pub global activate cider
-
-      - name: Set version
-        run: |
-          echo "Setting version to ${{ github.ref_name }}"
-          cider version ${{ github.ref_name }}
-
-      - name: Update change log
-        run: cider release
-
-      - id: commit
-        name: Commit changes
-        uses: EndBug/add-and-commit@v9
-        with:
-          author_name: GitHub Actions
-          author_email: actions@github.com
-          branch: main
-          message: "Release ${{ github.ref_name }} - Updates version in pubspec.yaml & update change log"
+        - id: get-build-name
+          run:  echo "build-name=${TAG%+*}" >> "$GITHUB_OUTPUT"
+        - id: get-build-number
+          run: echo "build-number=${TAG##*+}" >> "$GITHUB_OUTPUT"
 
   release-ios:
     name: Release IOS
-    needs: prepare
+    needs: [test, get-version]
     uses: now-u/now-u-app/.github/workflows/ios-release.yml@main
     secrets: inherit
     with:
-      ref: ${{ needs.prepare.outputs.ref }}
+      build-name: ${{ needs.get-version.outputs.build-name }}
+      build-number: ${{ needs.get-version.outputs.build-number }}
 
   release-android:
     name: Release Android
-    needs: prepare
+    needs: [test, get-version]
     uses: now-u/now-u-app/.github/workflows/android-release.yml@main
     secrets: inherit
     with:
-      ref: ${{ needs.prepare.outputs.ref }}
+      build-name: ${{ needs.get-version.outputs.build-name }}
+      build-number: ${{ needs.get-version.outputs.build-number }}
