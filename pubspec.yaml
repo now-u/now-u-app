@@ -96,7 +96,7 @@ dev_dependencies:
   freezed: ^2.5.2
   integration_test:
     sdk: flutter
-  test: ^1.25.7
+  test: any
   mocktail: ^1.0.4
 flutter_icons:
   ios: true
