@@ -1,6 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/ui/dialogs/basic/basic_dialog.dart';
@@ -36,7 +36,7 @@ extension AutoRouterXExtension on StackRouter {
 }
 
 @AutoRouterConfig(replaceInRouteName: 'View|Tab,Route')
-class AppRouter extends $AppRouter {
+class AppRouter extends RootStackRouter {
   AuthenticationBloc _authBloc;
 
   AppRouter({
