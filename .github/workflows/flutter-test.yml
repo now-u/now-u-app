@@ -1,7 +1,9 @@
 name: Flutter tests
 
 # Run this workflow every time a new commit pushed to your repository
-on: pull_request
+on:
+  pull_request:
+  workflow_call:
 
 jobs:
   test:
@@ -20,7 +22,7 @@ jobs:
       - name: Setup app
         uses: ./.github/actions/setup-app
 
-      # - run: pod repo update 
+      # - run: pod repo update
 
       - name: Flutter format
         run: dart format -o none --set-exit-if-changed .

@@ -4,7 +4,10 @@ on:
   workflow_dispatch:
   workflow_call:
     inputs:
-      ref:
+      build-name:
+        required: true
+        type: string
+      build-number:
         required: true
         type: string
 
@@ -18,8 +21,6 @@ jobs:
     timeout-minutes: 30
     steps:
     - uses: actions/checkout@v4
-      with:
-        ref: ${{ inputs.ref }}
 
     - name: 🧰 Setup app
       uses: ./.github/actions/setup-app
@@ -40,7 +41,7 @@ jobs:
         cache: 'gradle'
 
     - name: 🛠️ Build app
-      run: flutter build appbundle --release
+      run: flutter build appbundle --release --build-name=${{ inputs.build-name }} --build-number=${{ inputs.build-number }}
 
     # - name: ⏫ Upload bundle as gh artifact
     #   uses: actions/upload-artifact@v2
