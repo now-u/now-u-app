@@ -1,12 +1,8 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:causeApiClient/causeApiClient.dart' as Api;
-import 'package:nowu/locator.dart';
-import 'package:nowu/models/user.dart';
 import 'package:nowu/models/exploreable.dart';
+import 'package:nowu/models/user.dart';
 import 'package:nowu/services/causes_service.dart';
-import 'package:nowu/services/dynamicLinks.dart';
-
-final DynamicLinkService _dynamicLinkService = locator<DynamicLinkService>();
 
 class Campaign extends ListCampaign {
   String description;
@@ -51,13 +47,14 @@ class Campaign extends ListCampaign {
         );
 
   Future<String> getShareText() async {
-    Uri uri = await _dynamicLinkService.createDynamicLink(
-      linkPath: 'campaigns/$id',
-      title: title,
-      description: description,
-      imageUrl: headerImage.url,
-    );
-    return 'Check out the $title campaign on now-u! ${uri.toString()}';
+    // TODO: Uri uri = await _dynamicLinkService.createDynamicLink(
+    //   linkPath: 'campaigns/$id',
+    //   title: title,
+    //   description: description,
+    //   imageUrl: headerImage.url,
+    // );
+    // return 'Check out the $title campaign on now-u! ${uri.toString()}';
+    return '';
   }
 }
 
