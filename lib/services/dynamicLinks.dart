@@ -1,5 +1,3 @@
-
-
 // The holy grail link https://nowu.page.link/?link=https://now-u.com/campaigns?id=1&apn=com.nowu.app
 
 class DynamicLinkService {
