@@ -34,6 +34,6 @@ class DeleteAccountBloc extends Cubit<DeleteAccountState> {
 
     await _userService.deleteUser();
     await _authenticationService.logout();
-    _appRouter.pushAndPopUntil(const LoginRoute(), predicate: (r) => false);
+    _appRouter.pushAndPopUntil(LoginRoute(), predicate: (r) => false);
   }
 }
