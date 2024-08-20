@@ -12,12 +12,14 @@ import 'delete_account_state.dart';
 class DeleteAccountView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    DeleteAccountBloc bloc = DeleteAccountBloc(
+      authenticationService: locator<AuthenticationService>(),
+      appRouter: AutoRouter.of(context),
+      userService: locator<UserService>(),
+    );
+
     return BlocProvider<DeleteAccountBloc>(
-      create: (_) => DeleteAccountBloc(
-        authenticationService: locator<AuthenticationService>(),
-        appRouter: AutoRouter.of(context),
-        userService: locator<UserService>(),
-      ),
+      create: (_) => bloc,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Delete Account'),
@@ -37,8 +39,7 @@ class DeleteAccountView extends StatelessWidget {
                   ),
                   const Padding(padding: EdgeInsets.all(8)),
                   TextField(
-                    onChanged:
-                        context.read<DeleteAccountBloc>().updateInputName,
+                    onChanged: bloc.updateInputName,
                     decoration: const InputDecoration(
                       hintText: 'Type account name to confirm',
                     ),
