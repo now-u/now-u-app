@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:nowu/locator.dart';
-import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/themes.dart';
@@ -16,6 +15,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_bloc.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_state.dart';
 import 'package:nowu/ui/views/explore/bloc/explore_filter_state.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 const hPadding = CustomPaddingSize.small;
 
@@ -238,7 +238,7 @@ class _Body extends StatelessWidget {
                     child: const Text('Take action'),
                     style: secondaryFilledButtonStyle,
                     onPressed: () {
-                      launchLinkExternal(context, action.link);
+                      launchUrl(action.link);
                     },
                   ),
                 ),
