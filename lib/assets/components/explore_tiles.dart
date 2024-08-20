@@ -348,7 +348,7 @@ class ExploreNewsArticleTile extends ExploreTile {
                           .apply(fontStyle: FontStyle.normal),
                     ),
                     Text(
-                      article.releasedAt.let(DateFormat('d MMM y').format),
+                      article.publishedAt.let(DateFormat('d MMM y').format),
                     ),
                   ],
                 ),
