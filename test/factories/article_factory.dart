@@ -13,6 +13,7 @@ class ArticleFactory extends ModelFactory<NewsArticle> {
       headerImage: ImageFactory().generate(),
       link: Uri.parse(faker.internet.httpsUrl()),
       releasedAt: faker.date.dateTime(),
+      publishedAt: faker.date.dateTime(),
     );
   }
 }

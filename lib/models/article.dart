@@ -26,6 +26,7 @@ class NewsArticle implements Explorable {
   final String subtitle;
   final Api.Image headerImage;
   final DateTime releasedAt;
+  final DateTime publishedAt;
   final Uri link;
 
   NewsArticle({
@@ -34,6 +35,7 @@ class NewsArticle implements Explorable {
     required this.subtitle,
     required this.headerImage,
     required this.releasedAt,
+    required this.publishedAt,
     required this.link,
   });
 
@@ -43,6 +45,7 @@ class NewsArticle implements Explorable {
         subtitle = apiModel.subtitle,
         headerImage = apiModel.headerImage,
         releasedAt = apiModel.releaseAt,
+        publishedAt = apiModel.publishedAt,
         link = Uri.parse(apiModel.link);
 
   String get shortUrl => link.host;
