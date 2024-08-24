@@ -32,19 +32,36 @@ class DeleteAccountView extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      style: Theme.of(context).textTheme.titleMedium,
+                      children: [
+                        const TextSpan(
+                          text:
+                              'Are you sure you want to delete your account? ',
+                        ),
+                        const TextSpan(
+                          text: 'This action cannot be undone.',
+                          style: TextStyle(fontWeight: FontWeight.w700),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
                   Text(
-                    'Are you sure you want to delete your account? This action cannot be undone.',
+                    'To confirm, please type "$deleteUserConfirmationText" below.',
                     style: Theme.of(context).textTheme.titleMedium,
                     textAlign: TextAlign.center,
                   ),
-                  const Padding(padding: EdgeInsets.all(8)),
+                  const SizedBox(height: 8),
                   TextField(
                     onChanged: bloc.updateInputName,
                     decoration: const InputDecoration(
-                      hintText: 'Type account name to confirm',
+                      hintText: deleteUserConfirmationText,
                     ),
                   ),
-                  const Padding(padding: EdgeInsets.all(8)),
+                  const SizedBox(height: 8),
                   DeleteAccountButton(),
                 ],
               ),

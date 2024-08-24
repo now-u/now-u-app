@@ -6,6 +6,8 @@ import 'package:nowu/ui/views/delete_account/delete_account_state.dart';
 import '../../../services/auth.dart';
 import '../../../services/user_service.dart';
 
+const String deleteUserConfirmationText = 'delete me';
+
 class DeleteAccountBloc extends Cubit<DeleteAccountState> {
   AuthenticationService _authenticationService;
   StackRouter _appRouter;
@@ -24,7 +26,7 @@ class DeleteAccountBloc extends Cubit<DeleteAccountState> {
     emit(
       state.copyWith(
         name: name,
-        isNameValid: name == _userService.currentUser?.name,
+        isNameValid: name == deleteUserConfirmationText,
       ),
     );
   }
