@@ -21,17 +21,20 @@ sealed class MenuItemAction {
 
 class RouteMenuItemAction extends MenuItemAction {
   final PageRouteInfo route;
+
   const RouteMenuItemAction(this.route);
 }
 
 class LinkMenuItemAction extends MenuItemAction {
   final Uri link;
   final bool isExternal;
+
   const LinkMenuItemAction(this.link, {this.isExternal = false});
 }
 
 class FunctionMenuItemAction extends MenuItemAction {
   final Future<void> Function() function;
+
   const FunctionMenuItemAction(this.function);
 }
 
@@ -216,8 +219,12 @@ class MenuItem extends StatelessWidget {
     switch (action) {
       case RouteMenuItemAction(:final route):
         context.router.push(route);
-      case LinkMenuItemAction(:final link):
-        launchLink(link);
+      case LinkMenuItemAction(:final link, :final isExternal):
+        if (isExternal) {
+          launchLinkExternal(context, link);
+        } else {
+          launchLink(link);
+        }
         break;
       case FunctionMenuItemAction(:final function):
         function();
