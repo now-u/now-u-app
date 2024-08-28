@@ -28,6 +28,7 @@ class BasicDialogArgs {
 
 class BasicDialog extends StatelessWidget {
   final BasicDialogArgs args;
+
   const BasicDialog(this.args);
 
   @override
@@ -58,12 +59,12 @@ class BasicDialog extends StatelessWidget {
                 if (args.description != null)
                   Padding(
                     padding: const EdgeInsets.all(5),
-                  child: Text(
+                    child: Text(
                       args.description!,
                       style: Theme.of(context).textTheme.bodyLarge,
-                    textAlign: TextAlign.center,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
                 SizedBox(height: args.description == null ? 0 : 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
