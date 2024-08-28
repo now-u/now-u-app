@@ -11,6 +11,8 @@ import 'package:nowu/router.gr.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_bloc.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_state.dart';
 
+import '../../dialogs/logout/logout_confirmation_dialog.dart';
+
 sealed class MenuItemData {
   const MenuItemData();
 }
@@ -131,7 +133,7 @@ List<MenuItemData> getMenuItems(
           // TODO Get icon
           icon: FontAwesomeIcons.solidUser,
           action: FunctionMenuItemAction(
-            () async => context.read<AuthenticationBloc>().signOut(),
+            () async => launchLogoutConfirmationDialog(context),
           ),
         )
       else
