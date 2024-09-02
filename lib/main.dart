@@ -171,6 +171,10 @@ class App extends StatelessWidget {
                     locator<AnalyticsService>().getAnalyticsObserver(),
                     SentryNavigatorObserver(),
                   ],
+                  deepLinkBuilder: (deepLink) {
+                    _logger.info('Handling deep link ${deepLink.uri}');
+                    return deepLink;
+                  },
                 ),
                 theme: regularTheme,
               );
