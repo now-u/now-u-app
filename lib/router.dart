@@ -18,6 +18,7 @@ extension AutoRouterXExtension on StackRouter {
     required PageRouteInfo fallback,
     bool clearHistroy = false,
   }) async {
+    print('Clearning history');
     if (clearHistroy) {
       removeWhere((_) => true);
     }
@@ -50,7 +51,7 @@ class AppRouter extends RootStackRouter {
           guards: [IntroRouteGuard(authenticationBloc: _authBloc)],
           page: TabsRoute.page,
           children: [
-            AutoRoute(path: 'home', page: HomeRoute.page, initial: true),
+            AutoRoute(page: HomeRoute.page, initial: true),
             AutoRoute(
               path: 'explore',
               page: ExploreRoute.page,

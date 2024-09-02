@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -76,6 +77,7 @@ void main() async {
       <Future>[
         locator<AuthenticationService>().init(),
         if (isMobile) locator<PushNotificationService>().init(),
+
         // TODO Fix??
         // if (isMobile) locator<DynamicLinkService>().init(),
       ],

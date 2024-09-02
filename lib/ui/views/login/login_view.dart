@@ -218,6 +218,7 @@ class _SkipButton extends StatelessWidget {
         style: secondaryFilledButtonStyle,
         child: const Text('Skip'),
         onPressed: () async {
+          print('Clicked skip, routing');
           await context.router.pushNamedRouteWithFallback(
             path: initialRoute,
             fallback: postLoginInitialRouteFallback,

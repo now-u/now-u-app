@@ -3,6 +3,7 @@ import 'package:nowu/assets/constants.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:nowu/router.gr.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../generated/l10n.dart';
 import '../../../theme/assets.dart';
@@ -92,6 +93,19 @@ class ActionCompletedDialogContent extends StatelessWidget {
             onPressed: () => context.router.push(
               TabsRoute(children: [ExploreRoute()]),
             ),
+          ),
+        ),
+        const SizedBox(height: CustomPaddingSize.normal),
+        Container(
+          padding:
+              const EdgeInsets.symmetric(horizontal: CustomPaddingSize.large),
+          width: double.infinity,
+          child: ElevatedButton(
+            child: const Text('Share'),
+            onPressed: () => Share.shareUri(Uri.parse('com.nowu.app://app/more')),
+            //   'Checkout https://now-u.com/more',
+            //   subject: 'example',
+            // ),
           ),
         ),
         const SizedBox(height: CustomPaddingSize.normal),
