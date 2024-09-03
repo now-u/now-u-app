@@ -14,13 +14,13 @@ class BasicDialogButtonArgs {
 
 class BasicDialogArgs {
   final String title;
-  final String description;
+  final String? description;
   final BasicDialogButtonArgs? mainButtonArgs;
   final BasicDialogButtonArgs? secondaryButtonArgs;
 
   const BasicDialogArgs({
     required this.title,
-    required this.description,
+    this.description,
     this.mainButtonArgs,
     this.secondaryButtonArgs,
   });
@@ -28,6 +28,7 @@ class BasicDialogArgs {
 
 class BasicDialog extends StatelessWidget {
   final BasicDialogArgs args;
+
   const BasicDialog(this.args);
 
   @override
@@ -55,15 +56,16 @@ class BasicDialog extends StatelessWidget {
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 const SizedBox(height: 15),
-                Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: Text(
-                    args.description,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                    textAlign: TextAlign.center,
+                if (args.description != null)
+                  Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Text(
+                      args.description!,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
+                SizedBox(height: args.description == null ? 0 : 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
