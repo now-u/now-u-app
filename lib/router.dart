@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/services/navigation_service.dart';
-import 'package:nowu/ui/dialogs/basic/basic_dialog.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_bloc.dart';
 import 'package:nowu/ui/views/intro/intro_route_guard.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -104,31 +103,6 @@ Future<void> launchLink(Uri url) async {
   browser.open(url: url);
 }
 
-// TODO Move somewhere
 void launchLinkExternal(BuildContext context, Uri url) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return BasicDialog(
-        BasicDialogArgs(
-          title: "You're about to leave",
-          description:
-              'This link will take you out of the app. Are you sure you want to go?',
-          mainButtonArgs: BasicDialogButtonArgs(
-            text: "Let's go",
-            onClick: () async {
-              context.router.maybePop();
-              await launchUrl(url, mode: LaunchMode.externalApplication);
-            },
-          ),
-          secondaryButtonArgs: BasicDialogButtonArgs(
-            text: 'Close',
-            onClick: () {
-              context.router.maybePop();
-            },
-          ),
-        ),
-      );
-    },
-  );
+  launchUrl(url, mode: LaunchMode.externalApplication);
 }

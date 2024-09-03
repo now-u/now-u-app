@@ -25,8 +25,9 @@ TLDR guide:
 
 1. Install flutter (and get a device setup)
 2. Clone the repo
-3. Run build runner - `flutter pub run build_runner build --delete-conflicting-outputs`
-4. Run it - `flutter run`
+3. Generate openapi client - `cd openapi && make generate-prod`
+4. Run build runner - `flutter pub run build_runner build --delete-conflicting-outputs`
+5. Run it - `flutter run`
 
 ### Where to start? :information_desk_person:
 
