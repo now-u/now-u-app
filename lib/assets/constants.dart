@@ -27,7 +27,7 @@ const SEARCH_SERVICE_KEY =
 final PRIVACY_POLICY_URI =
     Uri.parse('https://www.now-u.com/info/privacy-notice');
 final TERMS_AND_CONDITIONS_URI = Uri.parse(
-  'https://now-u-docs.s3.eu-west-2.amazonaws.com/now-u+user+terms+and+conditions.pdf',
+  'https://www.now-u.com/info/terms-and-conditions-for-users',
 );
 
 final ABOUT_US_URI = Uri.parse('https://www.now-u.com/about');

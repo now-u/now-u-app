@@ -222,6 +222,45 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+  /blogs/:
+    get:
+      operationId: blogs_list
+      tags:
+      - blogs
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Blog'
+          description: ''
+  /blogs/{id}/:
+    get:
+      operationId: blogs_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this blog.
+        required: true
+      tags:
+      - blogs
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Blog'
+          description: ''
   /campaigns/:
     get:
       operationId: campaigns_list
@@ -815,6 +854,81 @@ components:
         * `LEARN` - Learn
         * `QUIZ` - Quiz
         * `OTHER` - Other
+    Author:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+          maxLength: 150
+        description:
+          type: string
+        picture:
+          $ref: '#/components/schemas/Image'
+      required:
+      - description
+      - picture
+    Blog:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        release_at_timestamp:
+          type: integer
+        authors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Author'
+        header_image:
+          $ref: '#/components/schemas/Image'
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        release_at:
+          type: string
+          format: date-time
+          description: The date from which this resource should be available in the
+            app. If not provided the resource will not be visible
+        end_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: The date from which this resource should no longer be available
+            in the app. If not provided the reosurce will stay visible after its released
+        title:
+          type: string
+          maxLength: 128
+        subtitle:
+          type: string
+        slug:
+          type: string
+          description: The text shown in the url
+          maxLength: 128
+        reading_time:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        body:
+          type: string
+      required:
+      - authors
+      - body
+      - created_at
+      - header_image
+      - id
+      - reading_time
+      - release_at
+      - release_at_timestamp
+      - slug
+      - subtitle
+      - title
+      - updated_at
     Campaign:
       type: object
       properties:
