@@ -90,23 +90,25 @@ class ExploreTabs extends StatelessWidget {
             elevation: 1,
             shadowColor: CustomColors.greyLight1,
             automaticallyImplyLeading: false,
-            flexibleSpace: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: horizontalPadding,
-                vertical: 50,
-              ),
-              child: BlocBuilder<ExploreFilterBloc, ExploreFilterState>(
-                builder: (context, state) {
-                  return SearchBar(
-                    leading: const Icon(Icons.search),
-                    hintText: 'Explore now-u resources',
-                    onChanged: (value) {
-                      context
-                          .read<ExploreFilterBloc>()
-                          .updateFilter(state.copyWith(queryText: value));
-                    },
-                  );
-                },
+            flexibleSpace: SafeArea(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: horizontalPadding,
+                  vertical: 5,
+                ),
+                child: BlocBuilder<ExploreFilterBloc, ExploreFilterState>(
+                  builder: (context, state) {
+                    return SearchBar(
+                      leading: const Icon(Icons.search),
+                      hintText: 'Explore now-u resources',
+                      onChanged: (value) {
+                        context
+                            .read<ExploreFilterBloc>()
+                            .updateFilter(state.copyWith(queryText: value));
+                      },
+                    );
+                  },
+                ),
               ),
             ),
             // TODO Fix the routing here!

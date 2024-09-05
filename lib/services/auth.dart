@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart'
     as FacebookAuth;
 import 'package:google_sign_in/google_sign_in.dart';
@@ -9,6 +10,7 @@ import 'package:logging/logging.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/storage.dart';
+import 'package:nowu/utils/let.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide User;
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -102,12 +104,12 @@ class AuthenticationService {
         .signInWithOtp(email: email, emailRedirectTo: LOGIN_REDIRECT_URL);
   }
 
-  Future<OAuthLoginResult> signInWithOAuth(AuthProvider provider) async {
+  Future<OAuthLoginResult?> signInWithOAuth(AuthProvider provider) async {
     final response = await _signInWithOAuth(provider);
-    return OAuthLoginResult.fromAuthResponse(response);
+    return response?.let(OAuthLoginResult.fromAuthResponse);
   }
 
-  Future<AuthResponse> _signInWithOAuth(AuthProvider provider) {
+  Future<AuthResponse?> _signInWithOAuth(AuthProvider provider) {
     switch (provider) {
       case AuthProvider.Google:
         return _signInWithGoogle();
@@ -118,8 +120,16 @@ class AuthenticationService {
     }
   }
 
-  Future<AuthResponse> _signInWithGoogle() async {
+  Future<AuthResponse?> _signInWithGoogle() async {
     _logger.info('Singing in with google');
+
+    if (kIsWeb) {
+      await _client.auth.signInWithOAuth(
+        OAuthProvider.google,
+        redirectTo: 'http://localhost:5000/',
+      );
+      return null;
+    }
 
     /// Web Client ID that you registered with Google Cloud.
     const webClientId =
