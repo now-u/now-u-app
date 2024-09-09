@@ -76,7 +76,7 @@ class CustomColors {
   //-- Background --//
   static Color lightOrange = const Color.fromRGBO(255, 243, 230, 0.5);
 
-  //-- Shadow colors --//
+//-- Shadow colors --//
 }
 
 //-- Fonts --//
