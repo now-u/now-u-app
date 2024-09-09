@@ -7,6 +7,19 @@ paths:
   /actions/:
     get:
       operationId: actions_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
       tags:
       - actions
       security:
@@ -17,9 +30,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ListAction'
+                $ref: '#/components/schemas/PaginatedListActionList'
           description: ''
   /actions/{id}/:
     get:
@@ -225,6 +236,19 @@ paths:
   /blogs/:
     get:
       operationId: blogs_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
       tags:
       - blogs
       security:
@@ -235,19 +259,17 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Blog'
+                $ref: '#/components/schemas/PaginatedBlogList'
           description: ''
-  /blogs/{id}/:
+  /blogs/{slug}/:
     get:
       operationId: blogs_retrieve
       parameters:
       - in: path
-        name: id
+        name: slug
         schema:
-          type: integer
-        description: A unique integer value identifying this blog.
+          type: string
+          description: The text shown in the url
         required: true
       tags:
       - blogs
@@ -264,6 +286,19 @@ paths:
   /campaigns/:
     get:
       operationId: campaigns_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
       tags:
       - campaigns
       security:
@@ -274,9 +309,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ListCampaign'
+                $ref: '#/components/schemas/PaginatedListCampaignList'
           description: ''
   /campaigns/{id}/:
     get:
@@ -303,6 +336,19 @@ paths:
   /causes/:
     get:
       operationId: causes_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
       tags:
       - causes
       security:
@@ -313,9 +359,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Cause'
+                $ref: '#/components/schemas/PaginatedCauseList'
           description: ''
   /causes/{id}/:
     get:
@@ -374,6 +418,19 @@ paths:
   /faqs/:
     get:
       operationId: faqs_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
       tags:
       - faqs
       security:
@@ -384,9 +441,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Faq'
+                $ref: '#/components/schemas/PaginatedFaqList'
           description: ''
   /faqs/{id}/:
     get:
@@ -413,6 +468,19 @@ paths:
   /learning_resources/:
     get:
       operationId: learning_resources_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
       tags:
       - learning_resources
       security:
@@ -423,9 +491,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/LearningResource'
+                $ref: '#/components/schemas/PaginatedLearningResourceList'
           description: ''
   /learning_resources/{id}/:
     get:
@@ -608,6 +674,19 @@ paths:
   /new_articles/:
     get:
       operationId: new_articles_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
       tags:
       - new_articles
       security:
@@ -618,9 +697,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/NewsArticle'
+                $ref: '#/components/schemas/PaginatedNewsArticleList'
           description: ''
   /new_articles/{id}/:
     get:
@@ -664,6 +741,19 @@ paths:
   /news_articles/:
     get:
       operationId: news_articles_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
       tags:
       - news_articles
       security:
@@ -674,9 +764,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/NewsArticle'
+                $ref: '#/components/schemas/PaginatedNewsArticleList'
           description: ''
   /news_articles/{id}/:
     get:
@@ -720,6 +808,19 @@ paths:
   /organisations/:
     get:
       operationId: organisations_list
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
       tags:
       - organisations
       security:
@@ -730,9 +831,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Organisation'
+                $ref: '#/components/schemas/PaginatedOrganisationList'
           description: ''
   /organisations/{id}/:
     get:
@@ -857,6 +956,9 @@ components:
     Author:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         name:
           type: string
           nullable: true
@@ -867,6 +969,7 @@ components:
           $ref: '#/components/schemas/Image'
       required:
       - description
+      - id
       - picture
     Blog:
       type: object
@@ -1432,6 +1535,166 @@ components:
         * `CHARITY` - Charity
         * `SOCIAL_ENTERPRISE` - Social Enterprise
         * `UNKNOWN` - Unknown - Please fix
+    PaginatedBlogList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Blog'
+    PaginatedCauseList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Cause'
+    PaginatedFaqList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Faq'
+    PaginatedLearningResourceList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/LearningResource'
+    PaginatedListActionList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ListAction'
+    PaginatedListCampaignList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ListCampaign'
+    PaginatedNewsArticleList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/NewsArticle'
+    PaginatedOrganisationList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Organisation'
     PatchedCausesUser:
       type: object
       properties:
