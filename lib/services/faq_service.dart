@@ -10,6 +10,6 @@ class FAQService {
 
   Future<List<Faq>> getFaqs() async {
     final response = await _causeServiceClient.getFaqsApi().faqsList();
-    return response.data!.map((faq) => Faq(faq)).toList();
+    return response.data!.results!.map((faq) => Faq(faq)).toList();
   }
 }

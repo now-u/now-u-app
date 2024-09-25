@@ -67,6 +67,7 @@ class CausesService {
       getUserInfo(),
     ).wait;
     return response.data!
+        .results!
         .map(
           (model) => Cause.fromApiModel(
             model,
@@ -200,7 +201,7 @@ class CausesService {
     final response =
         await _causeServiceClient.getOrganisationsApi().organisationsList();
 
-    return response.data!.map((org) => Organisation(org)).toList();
+    return response.data!.results!.map((org) => Organisation(org)).toList();
   }
 
   // TODO Make private
