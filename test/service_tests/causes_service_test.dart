@@ -1,4 +1,3 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:causeApiClient/causeApiClient.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -87,11 +86,7 @@ void main() {
       when(() => mockApiClient.getCausesApi().causesList()).thenAnswer(
         (_) async => Response(
           requestOptions: RequestOptions(path: ''),
-          data: BuiltList<Cause>(
-            [
-              MockCause(),
-            ],
-          ),
+          data: PaginatedCauseList(),
           statusCode: 200,
         ),
       );
