@@ -1,25 +1,25 @@
 import 'dart:async';
 
-import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:built_collection/built_collection.dart';
+import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:logging/logging.dart';
 import 'package:nowu/locator.dart';
-import 'package:nowu/models/user.dart';
+import 'package:nowu/models/action.dart';
+import 'package:nowu/models/campaign.dart';
 import 'package:nowu/models/cause.dart';
 import 'package:nowu/models/learning.dart';
-import 'package:nowu/models/campaign.dart';
 import 'package:nowu/models/organisation.dart';
+import 'package:nowu/models/user.dart';
 import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/auth.dart';
-import 'package:nowu/models/action.dart';
 import 'package:nowu/utils/let.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 export 'package:nowu/models/action.dart';
 export 'package:nowu/models/campaign.dart';
-export 'package:nowu/models/learning.dart';
 export 'package:nowu/models/cause.dart';
+export 'package:nowu/models/learning.dart';
 export 'package:nowu/models/organisation.dart';
 
 class UserInfoStore {
@@ -27,7 +27,9 @@ class UserInfoStore {
   CausesUser? _userInfo;
 
   Stream<CausesUser?> get userInfoStream => _userInfoStreamController.stream;
+
   CausesUser? get userInfo => _userInfo;
+
   void set userInfo(CausesUser? userInfo) {
     _userInfo = userInfo;
     _userInfoStreamController.add(_userInfo);
@@ -60,14 +62,15 @@ class CausesService {
   Stream<CausesUser?> get userInfoStream => _userInfoStore.userInfoStream;
 
   List<Cause>? _causes;
-  Future<List<Cause>> _fetchCauses() async {
+
+  Future<List<Cause>?> _fetchCauses() async {
     _logger.info('Fetching causes from the service');
     final (response, userInfo) = await (
       _causeServiceClient.getCausesApi().causesList(),
       getUserInfo(),
     ).wait;
-    return response.data!
-        .map(
+    return response.data!.results
+        ?.map(
           (model) => Cause.fromApiModel(
             model,
             userInfo,
@@ -196,11 +199,11 @@ class CausesService {
   }
 
   /// Fetch organisation which are partnered with now-u
-  Future<List<Organisation>> getPartners() async {
+  Future<List<Organisation>?> getPartners() async {
     final response =
         await _causeServiceClient.getOrganisationsApi().organisationsList();
 
-    return response.data!.map((org) => Organisation(org)).toList();
+    return response.data?.results?.map((org) => Organisation(org)).toList();
   }
 
   // TODO Make private
