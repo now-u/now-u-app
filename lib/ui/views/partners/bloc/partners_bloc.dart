@@ -1,9 +1,8 @@
+import 'package:bloc/bloc.dart';
 import 'package:nowu/services/causes_service.dart';
 
 import './partners_event.dart';
 import './partners_state.dart';
-
-import 'package:bloc/bloc.dart';
 
 class PartnersBloc extends Bloc<PartnersEvent, PartnersState> {
   final CausesService _causesService;
@@ -28,7 +27,11 @@ class PartnersBloc extends Bloc<PartnersEvent, PartnersState> {
         {
           try {
             final partners = await _causesService.getPartners();
-            return emit(PartnersStateSuccess(partners: partners));
+            if (partners == null) {
+              return emit(const PartnersStateFailure());
+            } else {
+              return emit(PartnersStateSuccess(partners: partners));
+            }
           } catch (_) {
             emit(const PartnersStateFailure());
           }

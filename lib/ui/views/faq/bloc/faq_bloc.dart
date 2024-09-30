@@ -14,9 +14,11 @@ class FaqBloc extends Cubit<FaqState> {
   Future<void> getFaqs() async {
     try {
       final faqs = await _faqService.getFaqs();
-      emit(
-        FaqState.success(faqs: faqs),
-      );
+      if (faqs == null) {
+        return emit(const FaqState.failure());
+      } else {
+        emit(FaqState.success(faqs: faqs));
+      }
     } catch (_) {
       emit(
         const FaqState.failure(),
