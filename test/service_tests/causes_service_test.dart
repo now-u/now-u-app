@@ -87,12 +87,10 @@ void main() {
       when(() => mockApiClient.getCausesApi().causesList()).thenAnswer(
         (_) async => Response(
           requestOptions: RequestOptions(path: ''),
-          data: PaginatedCauseList(
-            (b) => b
-              ..count = 1
-              ..results = ListBuilder<Cause>(
-                [MockCause()],
-              ),
+          data: BuiltList<Cause>(
+            [
+              MockCause(),
+            ],
           ),
         ),
       );
