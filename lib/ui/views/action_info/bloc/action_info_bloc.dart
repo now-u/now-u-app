@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logging/logging.dart';
 import 'package:nowu/services/causes_service.dart';
 
 import 'action_info_state.dart';
@@ -6,6 +7,7 @@ import 'action_info_state.dart';
 class ActionInfoBloc extends Cubit<ActionInfoState> {
   final CausesService _causesService;
   final int _actionId;
+  final _logger = Logger('ActionInfoBloc');
 
   ActionInfoBloc({required int actionId, required CausesService causesService})
       : _causesService = causesService,
@@ -21,7 +23,8 @@ class ActionInfoBloc extends Cubit<ActionInfoState> {
           statusUpdateState: const ActionInfoStatusUpdateState.initial(),
         ),
       );
-    } catch (_) {
+    } catch (e) {
+      _logger.severe('Failed to fetch action $_actionId', e);
       emit(
         const ActionInfoState.fetchFailure(),
       );
