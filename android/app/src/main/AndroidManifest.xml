@@ -40,8 +40,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="http" android:host="links.now-u.com" />
-                <data android:scheme="https" />
+                <data android:scheme="https" android:host="links.now-u.com" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
