@@ -69,7 +69,7 @@ class CausesService {
       _causeServiceClient.getCausesApi().causesList(),
       getUserInfo(),
     ).wait;
-    return response.data!.results
+    return response.data
         ?.map(
           (model) => Cause.fromApiModel(
             model,
