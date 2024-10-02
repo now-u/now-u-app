@@ -2,6 +2,13 @@ name: Android release
 
 on:
   workflow_dispatch:
+    inputs:
+      build-name:
+        required: true
+        type: string
+      build-number:
+        required: true
+        type: string
   workflow_call:
     inputs:
       build-name:
@@ -42,12 +49,6 @@ jobs:
 
     - name: 🛠️ Build app
       run: flutter build appbundle --release --build-name=${{ inputs.build-name }} --build-number=${{ inputs.build-number }}
-
-    # - name: ⏫ Upload bundle as gh artifact
-    #   uses: actions/upload-artifact@v2
-    #   with:
-    #     name: Signed app bundle
-    #     path: ${{steps.sign_app.outputs.signedReleaseFile}}
 
     - name: ⏫ Upload bundle to Play Store
       uses: r0adkll/upload-google-play@v1

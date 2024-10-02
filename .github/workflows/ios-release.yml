@@ -2,6 +2,13 @@ name: IOS release
 
 on:
   workflow_dispatch:
+    inputs:
+      build-name:
+        required: true
+        type: string
+      build-number:
+        required: true
+        type: string
   workflow_call:
     inputs:
       build-name:
@@ -74,14 +81,6 @@ jobs:
       # Build and sign the ipa using a single flutter command
       - name: 🛠️ Building IPA
         run: flutter build ipa --release --export-options-plist=ios/Runner/ExportOptions.plist --build-name=${{ inputs.build-name }} --build-number=${{ inputs.build-number }}
-
-      # Collect the file and upload as artifact
-      - name: ⏫ Upload bundle as gh artifact
-        uses: actions/upload-artifact@v2
-        with:
-         name: release-ipa
-         # Path to the release files
-         path: build/ios/ipa/*.ipa
 
       # Important! Cleanup: remove the certificate and provisioning profile from the runner!
       - name: 🧹 Clean up keychain and provisioning profile
