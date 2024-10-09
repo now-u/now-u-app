@@ -153,27 +153,27 @@ class NavigationService {
     } else {
       if (extraOnConfirmFunction != null) extraOnConfirmFunction();
       await browser.open(
-        url: Uri.parse(url),
+        url: WebUri(url),
       );
     }
   }
 
-  // Future<void> launchLinkExternal(
-  //   String url, {
-  //   String? title,
-  //   String? description,
-  //   String? buttonText,
-  //   String? closeButtonText,
-  //   Function? extraOnConfirmFunction,
-  // }) async {
-  //   // bool shouldExit = await _dialogService.showExitConfirmationDialog();
-  //   if (shouldExit) {
-  //     if (extraOnConfirmFunction != null) {
-  //       extraOnConfirmFunction();
-  //     }
-  //     await urlLauncher.openUrl(Uri.parse(url));
-  //   }
-  // }
+// Future<void> launchLinkExternal(
+//   String url, {
+//   String? title,
+//   String? description,
+//   String? buttonText,
+//   String? closeButtonText,
+//   Function? extraOnConfirmFunction,
+// }) async {
+//   // bool shouldExit = await _dialogService.showExitConfirmationDialog();
+//   if (shouldExit) {
+//     if (extraOnConfirmFunction != null) {
+//       extraOnConfirmFunction();
+//     }
+//     await urlLauncher.openUrl(Uri.parse(url));
+//   }
+// }
 
-  // void launchPDF() {}
+// void launchPDF() {}
 }

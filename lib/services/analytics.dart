@@ -1,8 +1,8 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:logging/logging.dart';
 import 'package:nowu/models/action.dart';
-import 'package:nowu/models/learning.dart';
 import 'package:nowu/models/article.dart';
+import 'package:nowu/models/learning.dart';
 import 'package:nowu/services/search_service.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -119,7 +119,7 @@ class AnalyticsService {
       return {};
     }
 
-    final parameters = <String, dynamic>{
+    final parameters = <String, Object?>{
       'search_term': searchFilter.query,
       'cause_ids': searchFilter.causeIds?.join(','),
       'released_since': searchFilter.releasedSince,
@@ -160,8 +160,8 @@ class AnalyticsService {
     }
   }
 
-  Map<String, dynamic> _serializeEventParameters(
-    Map<String, dynamic> parameters,
+  Map<String, Object> _serializeEventParameters(
+    Map<String, Object?> parameters,
   ) {
     return Map.fromEntries(
       parameters.entries.where((e) => e.value != null).map((e) {
@@ -174,7 +174,7 @@ class AnalyticsService {
           case Enum():
             return MapEntry(e.key, value.name);
           default:
-            return e;
+            return MapEntry(e.key, value!);
         }
       }),
     );
