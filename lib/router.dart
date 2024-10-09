@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/services/navigation_service.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_bloc.dart';
@@ -100,7 +101,7 @@ Future<void> launchLink(Uri url) async {
   }
 
   final browser = locator<CustomChromeSafariBrowser>();
-  browser.open(url: url);
+  browser.open(url: WebUri(url.toString()));
 }
 
 void launchLinkExternal(BuildContext context, Uri url) {
