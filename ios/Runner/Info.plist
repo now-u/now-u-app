@@ -22,10 +22,42 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.938145287148-3b96qect9a9drnhsio206ld9go22fk1h</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>FlutterDeepLinkingEnabled</key>
+	<true/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>googlegmail</string>
+		<string>x-dispatch</string>
+		<string>readdle-spark</string>
+		<string>airmail</string>
+		<string>ms-outlook</string>
+		<string>ymail</string>
+		<string>fastmail</string>
+		<string>superhuman</string>
+		<string>protonmail</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+		<string>fetch</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -45,32 +77,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>googlegmail</string>
-		<string>x-dispatch</string>
-		<string>readdle-spark</string>
-		<string>airmail</string>
-		<string>ms-outlook</string>
-		<string>ymail</string>
-		<string>fastmail</string>
-		<string>superhuman</string>
-		<string>protonmail</string>
-	</array>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.938145287148-3b96qect9a9drnhsio206ld9go22fk1h</string>
-			</array>
-		</dict>
-	</array>
-	<key>FlutterDeepLinkingEnabled</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
 </dict>
 </plist>
