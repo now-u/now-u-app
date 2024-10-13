@@ -11,6 +11,7 @@ import 'package:nowu/locator.dart';
 import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/storage.dart';
 import 'package:nowu/utils/let.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide User;
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -105,8 +106,14 @@ class AuthenticationService {
   }
 
   Future<OAuthLoginResult?> signInWithOAuth(AuthProvider provider) async {
-    final response = await _signInWithOAuth(provider);
-    return response?.let(OAuthLoginResult.fromAuthResponse);
+    try {
+      final response = await _signInWithOAuth(provider);
+      return response?.let(OAuthLoginResult.fromAuthResponse);
+    } catch (exception, stackTrace) {
+      _logger.warning('Login with oauth failed provider=$provider', exception);
+      await Sentry.captureException(exception, stackTrace: stackTrace);
+      throw exception;
+    }
   }
 
   Future<AuthResponse?> _signInWithOAuth(AuthProvider provider) {
