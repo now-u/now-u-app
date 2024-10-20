@@ -41,9 +41,9 @@ class ApiService {
         },
       ),
     )
-      ..addSentry
       ..interceptors.add(AuthInterceptor(_authenticationService))
-      ..interceptors.add(LogInterceptor());
+      ..interceptors.add(LogInterceptor())
+      ..addSentry();
 
     return CauseApiClient(
       dio: dio,
