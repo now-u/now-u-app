@@ -11,7 +11,7 @@ class UserProfile {
     required this.name,
   });
 
-  UserProfile.fromApiModel(Api.UserProfile apiModel)
+  UserProfile.fromApiModel(Api.UserProfileGet apiModel)
       : id = apiModel.id,
         name = apiModel.name,
         email = apiModel.email;

@@ -6,7 +6,6 @@ import 'package:nowu/locator.dart';
 import 'package:nowu/models/user.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/auth.dart';
-import 'package:nowu/utils/let.dart';
 
 class UserService {
   UserProfile? _currentUser = null;
@@ -34,7 +33,10 @@ class UserService {
 
     try {
       final response = await _causeServiceClient.getMeApi().meProfileRetrieve();
-      return _currentUser = response.data!.let(UserProfile.fromApiModel);
+      _currentUser = UserProfile.fromApiModel(response.data!);
+      _currentUserStreamController.add(_currentUser);
+
+      return _currentUser;
     } catch (e) {
       _logger.warning('Fetch user failed, $e');
       throw e;
@@ -47,13 +49,11 @@ class UserService {
     required bool newsLetterSignup,
   }) async {
     // TODO Handle news letter
-    final response =
-        await _causeServiceClient.getMeApi().meProfilePartialUpdate(
-              patchedUserProfile:
-                  Api.PatchedUserProfile((profile) => profile..name = name),
-            );
-    _currentUser = UserProfile.fromApiModel(response.data!);
-    _currentUserStreamController.add(_currentUser);
+    await _causeServiceClient.getMeApi().meProfilePartialUpdate(
+          patchedUserProfileUpdate:
+              Api.PatchedUserProfileUpdate((profile) => profile..name = name),
+        );
+    await fetchUser();
   }
 
   Future<void> deleteUser() async {
