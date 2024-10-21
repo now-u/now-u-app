@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,7 +9,6 @@ import 'package:nowu/ui/views/causes/bloc/causes_state.dart';
 import 'package:nowu/ui/views/causes_selection/bloc/causes_selection_bloc.dart';
 import 'package:nowu/ui/views/causes_selection/bloc/causes_selection_state.dart';
 import 'package:nowu/ui/views/causes_selection/components/causeTileGrid.dart';
-import 'package:auto_route/auto_route.dart';
 
 import '../../../../generated/l10n.dart';
 
@@ -49,7 +49,7 @@ class ChangeSelectCausesView extends StatelessWidget {
         },
         child: Scaffold(
           body: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 60, 0, 0),
+            padding: const EdgeInsets.only(top: 60),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               mainAxisSize: MainAxisSize.max,
