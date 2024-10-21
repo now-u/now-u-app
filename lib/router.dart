@@ -87,6 +87,10 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(path: '/faqs', page: FaqRoute.page),
         AutoRoute(path: '/delete_account', page: DeleteAccountRoute.page),
+        AutoRoute(
+          path: '/change_select_causes',
+          page: ChangeSelectCausesRoute.page,
+        ),
       ];
 
   Future<void> launchLink(Uri url, {bool isExternal = false}) async {
