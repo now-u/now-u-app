@@ -8,7 +8,13 @@ class CausesBloc extends Cubit<CausesState> {
 
   CausesBloc({required CausesService causesService})
       : _causesService = causesService,
-        super(const CausesState.loading());
+        super(const CausesState.loading()) {
+    _causesService.causesStream.listen((causes) {
+      if (causes != null) {
+        emit(CausesState.loaded(causes: causes));
+      }
+    });
+  }
 
   void fetchCauses() async {
     emit(const CausesState.loading());
