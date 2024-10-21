@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:formz/formz.dart';
+import 'package:nowu/ui/views/profile_setup/model/tsAndCsAcceptInput.dart';
 
 import '../model/name.dart';
 
@@ -12,5 +13,6 @@ class ProfileSetupState with _$ProfileSetupState {
     @Default(false) bool isValid,
     required Name name,
     required bool shouldSubscribeToNewsLetter,
+    required TsAndCsAcceptInput tsAndCsAccepted,
   }) = _ProfileSetupState;
 }

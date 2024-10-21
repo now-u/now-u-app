@@ -12,6 +12,7 @@ import 'package:nowu/services/user_service.dart';
 import 'package:nowu/themes.dart';
 import 'package:nowu/ui/views/profile_setup/bloc/profile_setup_bloc.dart';
 import 'package:nowu/ui/views/profile_setup/model/name.dart';
+import 'package:nowu/ui/views/profile_setup/model/tsAndCsAcceptInput.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'bloc/profile_setup_state.dart';
@@ -219,32 +220,43 @@ class _NewsLetterSignup extends StatelessWidget {
 }
 
 class _AcceptTandCInput extends StatelessWidget {
+  String? _getErrorText(ProfileSetupState state) {
+    switch (state.tsAndCsAccepted.displayError) {
+      case null:
+        return null;
+      case TsAndCsValidationError.acceptRequired:
+        return 'You must accept our terms and conditions to use the app';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return CustomCheckboxFormField(
-      title: RichText(
-        text: TextSpan(
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Colors.white,
-              ),
-          children: [
-            const TextSpan(text: 'I agree to the user '),
-            TextSpan(
-              text: 'Terms & Conditions',
+    return BlocBuilder<ProfileSetupBloc, ProfileSetupState>(
+      builder: (context, state) {
+        return CustomCheckboxFormField(
+          title: RichText(
+            text: TextSpan(
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: CustomColors.brandColor,
+                    color: Colors.white,
                   ),
-              recognizer: TapGestureRecognizer()
-                ..onTap = () => launchUrl(
-                      TERMS_AND_CONDITIONS_URI,
-                    ),
+              children: [
+                const TextSpan(text: 'I agree to the user '),
+                TextSpan(
+                  text: 'Terms & Conditions',
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: CustomColors.brandColor,
+                      ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => launchUrl(
+                          TERMS_AND_CONDITIONS_URI,
+                        ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
-      validator: (value) {
-        if (!value!) return 'You must accept our terms and conditions';
-        return null;
+          ),
+          onChanged: context.read<ProfileSetupBloc>().updateTsAndCsAccepted,
+          errorText: _getErrorText(state),
+        );
       },
     );
   }

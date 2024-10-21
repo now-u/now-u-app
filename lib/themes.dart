@@ -101,23 +101,25 @@ final secondaryFilledButtonStyle = TextButton.styleFrom(
   foregroundColor: CustomColors.brandColor,
 ).merge(primaryTextButtonStyle);
 
+final regularColorScheme = ColorScheme(
+  brightness: Brightness.light,
+  primary: CustomColors.brandColor,
+  // TODO This is does not quite work as white isn't very visible on orange
+  onPrimary: Colors.white,
+  secondary: const Color.fromRGBO(255, 220, 121, 1),
+  onSecondary: Colors.black,
+  // TODO What is this really?
+  surface: Colors.white,
+  onSurface: Colors.black,
+  error: const Color.fromRGBO(211, 0, 1, 1),
+  // TODO Really?
+  onError: Colors.white,
+);
+
 final regularTheme = ThemeData(
   primaryColor: CustomColors.brandColor,
   fontFamily: fontFamily,
-  colorScheme: ColorScheme(
-    brightness: Brightness.light,
-    primary: CustomColors.brandColor,
-    // TODO This is does not quite work as white isn't very visible on orange
-    onPrimary: Colors.white,
-    secondary: const Color.fromRGBO(255, 220, 121, 1),
-    onSecondary: Colors.black,
-    // TODO What is this really?
-    surface: Colors.white,
-    onSurface: Colors.black,
-    error: const Color.fromRGBO(211, 0, 1, 1),
-    // TODO Really?
-    onError: Colors.white,
-  ),
+  colorScheme: regularColorScheme,
   textTheme: textTheme,
   buttonTheme: ButtonThemeData(
     buttonColor: CustomColors.brandColor,
@@ -163,6 +165,11 @@ final regularTheme = ThemeData(
           BorderSide(color: Color.fromRGBO(222, 224, 232, 1), width: 2.0),
     ),
     hintStyle: textTheme.labelMedium,
+    errorStyle: TextStyle(
+      color: regularColorScheme.error,
+      fontStyle: FontStyle.italic,
+      fontSize: textTheme.bodyMedium?.fontSize,
+    ),
   ),
 );
 
