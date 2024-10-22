@@ -5,12 +5,11 @@ class CustomCheckboxFormField extends FormField<bool> {
     Widget? title,
     FormFieldSetter<bool>? onSaved,
     ValueChanged<bool>? onChanged,
-    FormFieldValidator<bool>? validator,
+    String? errorText,
     bool initialValue = false,
     bool autovalidate = false,
   }) : super(
           onSaved: onSaved,
-          validator: validator,
           initialValue: initialValue,
           autovalidateMode: AutovalidateMode.disabled,
           builder: (FormFieldState<bool> state) {
@@ -42,14 +41,11 @@ class CustomCheckboxFormField extends FormField<bool> {
                       Expanded(child: title!),
                     ],
                   ),
-                  state.hasError
+                  errorText != null
                       ? Text(
-                          state.errorText!,
+                          errorText,
                           style:
-                              Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    color: Theme.of(context).colorScheme.error,
-                                    fontSize: 12,
-                                  ),
+                              Theme.of(context).inputDecorationTheme.errorStyle,
                         )
                       : Container(),
                 ],
