@@ -14,6 +14,7 @@ import 'package:nowu/services/analytics.dart';
 import 'package:nowu/services/api_service.dart';
 import 'package:nowu/services/auth.dart';
 import 'package:nowu/utils/let.dart';
+import 'package:nowu/utils/stream_store.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 export 'package:nowu/models/action.dart';
@@ -21,22 +22,6 @@ export 'package:nowu/models/campaign.dart';
 export 'package:nowu/models/cause.dart';
 export 'package:nowu/models/learning.dart';
 export 'package:nowu/models/organisation.dart';
-
-class UserInfoStore {
-  final _userInfoStreamController = StreamController<CausesUser?>.broadcast();
-  CausesUser? _userInfo;
-
-  Stream<CausesUser?> get userInfoStream => _userInfoStreamController.stream;
-
-  CausesUser? get userInfo => _userInfo;
-
-  void set userInfo(CausesUser? userInfo) {
-    _userInfo = userInfo;
-    _userInfoStreamController.add(_userInfo);
-  }
-
-  UserInfoStore(CausesUser? userInfo) : _userInfo = userInfo;
-}
 
 class CausesService {
   final _authService = locator<AuthenticationService>();
@@ -48,7 +33,7 @@ class CausesService {
     _authService.authState.listen((event) {
       switch (event.event) {
         case AuthChangeEvent.signedOut:
-          _userInfoStore.userInfo = null;
+          _userInfoStore.value = null;
           break;
         default:
           break;
@@ -57,11 +42,11 @@ class CausesService {
   }
 
   // Cache of user info
-  UserInfoStore _userInfoStore = UserInfoStore(null);
+  StreamStore<CausesUser?> _userInfoStore = StreamStore<CausesUser?>(null);
+  StreamStore<List<Cause>?> _causesStore = StreamStore<List<Cause>?>(null);
 
-  Stream<CausesUser?> get userInfoStream => _userInfoStore.userInfoStream;
-
-  List<Cause>? _causes;
+  Stream<CausesUser?> get userInfoStream => _userInfoStore.stream;
+  Stream<List<Cause>?> get causesStream => _causesStore.stream;
 
   Future<List<Cause>?> _fetchCauses() async {
     _logger.info('Fetching causes from the service');
@@ -69,7 +54,8 @@ class CausesService {
       _causeServiceClient.getCausesApi().causesList(),
       getUserInfo(),
     ).wait;
-    return response.data
+
+    final causes = response.data
         ?.map(
           (model) => Cause.fromApiModel(
             model,
@@ -77,6 +63,11 @@ class CausesService {
           ),
         )
         .toList();
+
+    _logger.info('Got causes, ${_causesStore.value}');
+
+    _causesStore.value = causes;
+    return causes;
   }
 
   Api.CauseApiClient get _causeServiceClient => _apiService.apiClient;
@@ -86,11 +77,10 @@ class CausesService {
   /// Input params
   /// Returns a list of Causes from the API
   Future<List<Cause>> listCauses() async {
-    if (_causes == null) {
-      _causes = await _fetchCauses();
+    if (_causesStore.value == null) {
+      await _fetchCauses();
     }
-    _logger.info('Got causes, $_causes');
-    return _causes!;
+    return _causesStore.value!;
   }
 
   Future<Cause> getCause(int id) async {
@@ -139,7 +129,7 @@ class CausesService {
               ),
             );
 
-    _userInfoStore.userInfo = response.data?.let(CausesUser.fromApiModel);
+    _userInfoStore.value = response.data?.let(CausesUser.fromApiModel);
 
     // After selecting causes we fetch all causes to updated 'selected' status
     await _fetchCauses();
@@ -214,13 +204,12 @@ class CausesService {
     }
     final response =
         await _causeServiceClient.getMeApi().meCausesInfoRetrieve();
-    return _userInfoStore.userInfo =
-        response.data?.let(CausesUser.fromApiModel);
+    return _userInfoStore.value = response.data?.let(CausesUser.fromApiModel);
   }
 
   Future<CausesUser?> getUserInfo() async {
-    if (_userInfoStore.userInfo != null) {
-      return _userInfoStore.userInfo;
+    if (_userInfoStore.value != null) {
+      return _userInfoStore.value;
     }
     return fetchUserInfo();
   }
