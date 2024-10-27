@@ -22,9 +22,9 @@ const CAUSES_API_URL = 'https://causes.dev.apiv2.now-u.com/';
 // const SEARCH_SERVICE_URL = '$LOCAL_STACK_URL:7700';
 const SEARCH_SERVICE_URL = 'https://search.dev.apiv2.now-u.com';
 
-// Key id: c2255403-c0a0-4887-81c6-10c977493d9c
+// Key uid: c41c4e65-0b7e-468b-b346-4f277cc9e8b7
 const SEARCH_SERVICE_KEY =
-    '09b9f93f001978781fb45536858152c41ba4b06a951c6fb216a827250f99ddc2';
+    'aaae5a4efcd407ca2c568ad9bcafda8f5362526a4b14ab8d746df52a7e7415a6';
 
 final PRIVACY_POLICY_URI =
     Uri.parse('https://www.now-u.com/info/privacy-notice');
