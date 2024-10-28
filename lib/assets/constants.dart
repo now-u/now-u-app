@@ -35,7 +35,7 @@ final FEEDBACK_FORM_URI = Uri.parse('https://forms.gle/xenzFkRVrELsqnnB9');
 
 final INSTAGRAM_URI = Uri.parse('https://www.instagram.com/now_u_app/');
 final FACEBOOK_URI = Uri.parse('https://www.facebook.com/nowufb');
-final TWITTER_URI = Uri.parse('https://twitter.com/now_u_app');
+final X_TWITTER_URI = Uri.parse('https://x.com/now_u_app');
 final FACEBOOK_MESSENGER_URI = Uri.parse('http://m.me/nowufb');
 final EMAIL_MAILTO_URI = Uri.parse('mailto:hello@now-u.com?subject=Hi');
 
