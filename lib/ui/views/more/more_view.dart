@@ -198,8 +198,8 @@ class MoreView extends StatelessWidget {
                     link: FACEBOOK_URI,
                   ),
                   SocialButton(
-                    icon: FontAwesomeIcons.twitter,
-                    link: TWITTER_URI,
+                    icon: FontAwesomeIcons.xTwitter,
+                    link: X_TWITTER_URI,
                   ),
                 ],
               ),
