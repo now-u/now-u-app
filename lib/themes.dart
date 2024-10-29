@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nowu/assets/constants.dart';
+import 'package:nowu/ui/common/app_colors.dart';
 
 // TODO This apply doesn't seem to work
 final baseTextTheme =
@@ -117,6 +118,7 @@ final regularColorScheme = ColorScheme(
 );
 
 final regularTheme = ThemeData(
+  scaffoldBackgroundColor: greyLight1,
   primaryColor: CustomColors.brandColor,
   fontFamily: fontFamily,
   colorScheme: regularColorScheme,
@@ -146,7 +148,7 @@ final regularTheme = ThemeData(
   ),
   inputDecorationTheme: InputDecorationTheme(
     filled: true,
-    fillColor: const Color.fromRGBO(221, 221, 221, 0.2),
+    fillColor: Colors.white,
     contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15),
     border: const OutlineInputBorder(),
     focusedBorder: UnderlineInputBorder(

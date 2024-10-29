@@ -14,7 +14,7 @@ class SocialMediaLoginButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisSize: MainAxisSize.max,
         children: [
           !kIsWeb && Platform.isIOS
               ? _SocialMediaLoginButton(
@@ -27,6 +27,7 @@ class SocialMediaLoginButtons extends StatelessWidget {
                       _loginBloc.onLoginWithOAuth(AuthProvider.Facebook),
                   iconData: FontAwesomeIcons.facebookF,
                 ),
+          const SizedBox(width: 10),
           _SocialMediaLoginButton(
             onPressed: () => _loginBloc.onLoginWithOAuth(AuthProvider.Google),
             iconData: FontAwesomeIcons.google,
@@ -47,13 +48,14 @@ class _SocialMediaLoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
-      child: Icon(iconData, color: Colors.orange),
-      style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(Colors.white),
-        padding: const WidgetStatePropertyAll(
-          EdgeInsets.symmetric(vertical: 15, horizontal: 60),
+    return Expanded(
+      child: FilledButton(
+        onPressed: onPressed,
+        child: Icon(iconData, color: Colors.orange, size: 32),
+        style: ButtonStyle(
+          padding:
+              WidgetStateProperty.all(const EdgeInsets.symmetric(vertical: 20)),
+          backgroundColor: WidgetStateProperty.all(Colors.white),
         ),
       ),
     );
