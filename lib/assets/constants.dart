@@ -21,6 +21,8 @@ const CAUSES_API_URL = 'https://causes.dev.apiv2.now-u.com/';
 
 // const SEARCH_SERVICE_URL = '$LOCAL_STACK_URL:7700';
 const SEARCH_SERVICE_URL = 'https://search.dev.apiv2.now-u.com';
+
+// Key uid: c41c4e65-0b7e-468b-b346-4f277cc9e8b7
 const SEARCH_SERVICE_KEY =
     'aaae5a4efcd407ca2c568ad9bcafda8f5362526a4b14ab8d746df52a7e7415a6';
 
