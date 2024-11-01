@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nowu/assets/constants.dart';
 import 'package:nowu/router.gr.dart';
-import 'package:nowu/ui/views/causes/bloc/causes_bloc.dart';
-import 'package:nowu/ui/views/causes/bloc/causes_state.dart';
+import 'package:nowu/ui/components/user_progress/bloc/user_progress_bloc.dart';
+import 'package:nowu/ui/components/user_progress/bloc/user_progress_state.dart';
 import 'package:nowu/ui/views/explore/bloc/explore_filter_bloc.dart';
 import 'package:nowu/ui/views/explore/bloc/explore_filter_state.dart';
 
@@ -21,15 +21,13 @@ class ExploreView extends StatelessWidget {
     BuildContext context,
   ) {
     Set<int> getSelectedCausesIds() {
-      switch (context.read<CausesBloc>().state) {
-        case CausesStateLoading():
-        case CausesStateError():
+      switch (context.read<UserProgressBloc>().state) {
+        case UserProgressStateLoading():
+        case UserProgressStateNoUser():
+        case UserProgressStateError():
           return {};
-        case CausesStateLoaded(:final causes):
-          return causes
-              .where((cause) => cause.isSelected)
-              .map((cause) => cause.id)
-              .toSet();
+        case UserProgressStateLoaded(:final userInfo):
+          return userInfo.selectedCausesIds;
       }
     }
 

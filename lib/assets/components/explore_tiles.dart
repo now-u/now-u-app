@@ -13,6 +13,8 @@ import 'package:nowu/models/article.dart';
 import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/causes_service.dart';
+import 'package:nowu/ui/components/user_progress/bloc/user_progress_bloc.dart';
+import 'package:nowu/ui/components/user_progress/bloc/user_progress_state.dart';
 import 'package:nowu/utils/let.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -37,7 +39,6 @@ class ExploreCampaignTile extends ExploreTile {
   final String headerImage;
   final String title;
   final Cause cause;
-  final bool? completed;
   final ListCampaign campaign;
 
   ExploreCampaignTile(
@@ -46,7 +47,6 @@ class ExploreCampaignTile extends ExploreTile {
   })  : headerImage = tile.headerImage.url,
         title = tile.title,
         cause = tile.cause,
-        completed = tile.isCompleted,
         campaign = tile,
         super(key: key);
 
@@ -74,13 +74,16 @@ class ExploreCampaignTile extends ExploreTile {
                       width: double.infinity,
                       height: 150,
                     ),
-                    if (completed != null)
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: _ExploreTileCheckmark(
-                          completed: completed!,
-                        ),
-                      ),
+                    BlocBuilder<UserProgressBloc, UserProgressState>(
+                      builder: (context, state) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: _ExploreTileCheckmark(
+                            completed: state.campaignIsCompleted(campaign.id),
+                          ),
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -120,7 +123,7 @@ class ExploreActionTile extends ExploreResourceTile {
           icon: tile.type.icon,
           cause: tile.cause,
           timeText: tile.timeText,
-          isCompleted: tile.isCompleted,
+          getIsComplete: (state) => state.actionIsCompleted(tile.id),
           style: style,
           onTap: (BuildContext context) =>
               context.router.push(ActionInfoRoute(actionId: tile.id)),
@@ -181,10 +184,10 @@ class ExploreLearningResourceTileInner extends ExploreResourceTile {
           icon: tile.icon,
           cause: tile.cause,
           timeText: tile.timeText,
-          isCompleted: tile.isCompleted,
           key: key,
           style: style,
           onTap: (_) async => onTap(),
+          getIsComplete: (state) => state.learningResourceIsCompleted(tile.id),
         );
 }
 
@@ -199,9 +202,9 @@ abstract class ExploreResourceTile extends ExploreTile {
   final IconData icon;
   final Cause cause;
   final String timeText;
-  final bool? isCompleted;
   final ExploreTileStyle style;
   final Future<void> Function(BuildContext context) onTap;
+  final bool Function(UserProgressState state) getIsComplete;
 
   ExploreResourceTile({
     required this.title,
@@ -212,8 +215,8 @@ abstract class ExploreResourceTile extends ExploreTile {
     required this.icon,
     required this.cause,
     required this.timeText,
-    required this.isCompleted,
     required this.onTap,
+    required this.getIsComplete,
     ExploreTileStyle? style,
     Key? key,
   })  : this.style = style ?? ExploreTileStyle.Standard,
@@ -260,10 +263,17 @@ abstract class ExploreResourceTile extends ExploreTile {
                       textScaler: const TextScaler.linear(.8),
                     ),
                     Expanded(child: Container()),
-                    if (isCompleted != null)
-                      _ExploreTileCheckmark(
-                        completed: isCompleted!,
-                      ),
+                    BlocBuilder<UserProgressBloc, UserProgressState>(
+                      builder: (context, state) {
+                        final isComplete = getIsComplete(state);
+                        if (isComplete) {
+                          return _ExploreTileCheckmark(
+                            completed: isComplete,
+                          );
+                        }
+                        return Container();
+                      },
+                    ),
                   ],
                 ),
               ),

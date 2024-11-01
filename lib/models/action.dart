@@ -3,7 +3,6 @@ import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:built_collection/built_collection.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:flutter/material.dart' hide Action;
-import 'package:nowu/models/user.dart';
 import 'package:nowu/models/cause.dart';
 import 'package:nowu/models/exploreable.dart';
 import 'package:nowu/models/time.dart';
@@ -114,16 +113,11 @@ class ListAction implements Explorable {
   DateTime releaseAt;
   DateTime createdAt;
   int time;
-  bool isCompleted;
 
   DateTime get releaseTime => releaseAt;
 
   bool get isNew => isNewDate(releaseTime);
   String get timeText => getTimeText(time);
-
-  bool isCompletedByUser(Api.CausesUser user) {
-    return user.completedActionIds.contains(this.id);
-  }
 
   ListAction({
     required this.id,
@@ -133,7 +127,6 @@ class ListAction implements Explorable {
     required this.time,
     required this.cause,
     required this.type,
-    required this.isCompleted,
   });
 
   ListAction.fromApiData({
@@ -144,14 +137,11 @@ class ListAction implements Explorable {
     required this.time,
     required BuiltList<Api.Cause> causes,
     required Api.ActionTypeEnum actionType,
-    required CausesUser? userInfo,
-  })  : cause = Cause.fromApiModel(causes[0], userInfo),
-        isCompleted = userInfo?.completedActionIds.contains(id) ?? false,
+  })  : cause = Cause.fromApiModel(causes[0]),
         type = getActionTypeFromSubtype(actionType);
 
   factory ListAction.fromApiModel(
     Api.ListAction apiModel,
-    CausesUser? userInfo,
   ) {
     return ListAction.fromApiData(
       id: apiModel.id,
@@ -161,7 +151,6 @@ class ListAction implements Explorable {
       time: apiModel.time,
       causes: apiModel.causes,
       actionType: apiModel.actionType,
-      userInfo: userInfo,
     );
   }
 }
@@ -182,12 +171,10 @@ class Action extends ListAction {
     required super.time,
     required super.cause,
     required super.type,
-    required super.isCompleted,
   });
 
   Action.fromApiModel(
     Api.Action apiModel,
-    CausesUser? userInfo,
   )   : whatDescription = apiModel.whatDescription,
         whyDescription = apiModel.whyDescription,
         link = Uri.parse(apiModel.link),
@@ -199,6 +186,5 @@ class Action extends ListAction {
           time: apiModel.time,
           causes: apiModel.causes,
           actionType: apiModel.actionType,
-          userInfo: userInfo,
         );
 }

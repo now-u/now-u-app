@@ -8,6 +8,8 @@ import 'package:nowu/locator.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:nowu/ui/components/user_progress/bloc/user_progress_bloc.dart';
+import 'package:nowu/ui/components/user_progress/bloc/user_progress_state.dart';
 import 'package:nowu/ui/views/campaign_info/bloc/campaign_info_bloc.dart';
 import 'package:nowu/ui/views/campaign_info/bloc/campaign_info_state.dart';
 import 'package:tuple/tuple.dart';
@@ -119,14 +121,23 @@ class CampaignInfoView extends StatelessWidget {
         List<Tuple2<Widget, bool>> campaignResourceTiles = [];
         campaignResourceTiles.addAll(
           campaign.actions.map(
-            (action) => Tuple2(ExploreActionTile(action), action.isCompleted),
+            (action) => Tuple2(
+              ExploreActionTile(action),
+              context
+                  .read<UserProgressBloc>()
+                  .state
+                  .actionIsCompleted(action.id),
+            ),
           ),
         );
         campaignResourceTiles.addAll(
           campaign.learningResources.map(
             (learningResource) => Tuple2(
               ExploreLearningResourceTile(learningResource),
-              learningResource.isCompleted,
+              context
+                  .read<UserProgressBloc>()
+                  .state
+                  .learningResourceIsCompleted(learningResource.id),
             ),
           ),
         );

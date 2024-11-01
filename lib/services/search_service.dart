@@ -366,14 +366,7 @@ class SearchService {
       hits,
       specifiedType: const FullType(BuiltList, [FullType(Api.ListAction)]),
     ) as BuiltList<Api.ListAction>;
-    return results
-        .map(
-          (action) => ListAction.fromApiModel(
-            action,
-            userInfo,
-          ),
-        )
-        .toList();
+    return results.map(ListAction.fromApiModel).toList();
   }
 
   List<LearningResource> _searchHitsToLearningResources(
@@ -385,14 +378,7 @@ class SearchService {
       specifiedType:
           const FullType(BuiltList, [FullType(Api.LearningResource)]),
     ) as BuiltList<Api.LearningResource>;
-    return results
-        .map(
-          (learningResource) => LearningResource.fromApiModel(
-            learningResource,
-            userInfo,
-          ),
-        )
-        .toList();
+    return results.map(LearningResource.fromApiModel).toList();
   }
 
   List<ListCampaign> _searchHitsToCampaign(
@@ -404,14 +390,7 @@ class SearchService {
       specifiedType: const FullType(BuiltList, [FullType(Api.ListCampaign)]),
     ) as BuiltList<Api.ListCampaign>;
 
-    return results
-        .map(
-          (campaign) => ListCampaign.fromApiModel(
-            campaign,
-            userInfo,
-          ),
-        )
-        .toList();
+    return results.map(ListCampaign.fromApiModel).toList();
   }
 
   List<NewsArticle> _searchHitsToNewsArticles(
@@ -422,7 +401,7 @@ class SearchService {
       hits,
       specifiedType: const FullType(BuiltList, [FullType(Api.NewsArticle)]),
     ) as BuiltList<Api.NewsArticle>;
-    return results.map((e) => NewsArticle.fromApiModel(e)).toList();
+    return results.map(NewsArticle.fromApiModel).toList();
   }
 
   Future<List<T>> _searchIndex<T>(

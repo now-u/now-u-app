@@ -1,7 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:causeApiClient/causeApiClient.dart' as Api;
 import 'package:nowu/models/exploreable.dart';
-import 'package:nowu/models/user.dart';
 import 'package:nowu/services/causes_service.dart';
 
 class Campaign extends ListCampaign {
@@ -14,36 +13,22 @@ class Campaign extends ListCampaign {
     required super.title,
     required super.headerImage,
     required super.cause,
-    required super.isCompleted,
     required this.description,
     required this.actions,
     required this.learningResources,
   });
 
-  Campaign.fromApiModel(Api.Campaign apiModel, CausesUser? causesUser)
+  Campaign.fromApiModel(Api.Campaign apiModel)
       : description = apiModel.description.replaceAll('\\n', '\n\n'),
-        actions = apiModel.actions
-            .map(
-              (action) => ListAction.fromApiModel(
-                action,
-                causesUser,
-              ),
-            )
-            .toList(),
+        actions = apiModel.actions.map(ListAction.fromApiModel).toList(),
         learningResources = apiModel.learningResources
-            .map(
-              (learningResource) => LearningResource.fromApiModel(
-                learningResource,
-                causesUser,
-              ),
-            )
+            .map(LearningResource.fromApiModel)
             .toList(),
         super.fromApiData(
           id: apiModel.id,
           title: apiModel.title,
           headerImage: apiModel.headerImage,
           causes: apiModel.causes,
-          causesUser: causesUser,
         );
 
   Future<String> getShareText() async {
@@ -63,14 +48,12 @@ class ListCampaign implements Explorable {
   String title;
   Api.Image headerImage;
   Cause cause;
-  bool isCompleted;
 
   ListCampaign({
     required this.id,
     required this.title,
     required this.headerImage,
     required this.cause,
-    required this.isCompleted,
   });
 
   ListCampaign.fromApiData({
@@ -78,16 +61,13 @@ class ListCampaign implements Explorable {
     required this.title,
     required this.headerImage,
     required BuiltList<Api.Cause> causes,
-    required CausesUser? causesUser,
-  })  : cause = Cause.fromApiModel(causes[0], causesUser),
-        isCompleted = causesUser?.completedCampaignIds.contains(id) ?? false;
+  }) : cause = Cause.fromApiModel(causes[0]);
 
-  ListCampaign.fromApiModel(Api.ListCampaign apiModel, CausesUser? causesUser)
+  ListCampaign.fromApiModel(Api.ListCampaign apiModel)
       : this.fromApiData(
           id: apiModel.id,
           title: apiModel.title,
           headerImage: apiModel.headerImage,
           causes: apiModel.causes,
-          causesUser: causesUser,
         );
 }
