@@ -8,6 +8,7 @@ import 'package:nowu/assets/constants.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_bloc.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_state.dart';
 
@@ -81,11 +82,26 @@ List<MenuItemData> getMenuItems(
         icon: CustomIcons.ic_faq,
         action: RouteMenuItemAction(FaqRoute()),
       ),
+      ActionMenuItem(
+        title: 'Refer a friend',
+        icon: FontAwesomeIcons.userGroup,
+        action: FunctionMenuItemAction(() async {
+          await Share.share(
+            'Download the now-u app to learn more about important social and environmental issues and to find effective ways to support causes you care about. https://links.now-u.com',
+            subject: 'Checkout now-u 🎉',
+          );
+        }),
+      ),
       const SectionHeadingMenuItem(title: 'Feedback'),
       ActionMenuItem(
         title: 'Give feedback on the app',
         icon: CustomIcons.ic_feedback,
         action: LinkMenuItemAction(FEEDBACK_FORM_URI),
+      ),
+      ActionMenuItem(
+        title: 'Join research panel',
+        icon: FontAwesomeIcons.peopleGroup,
+        action: LinkMenuItemAction(JOIN_RESEARCH_FORM_URI),
       ),
       if (defaultTargetPlatform == TargetPlatform.iOS ||
           defaultTargetPlatform == TargetPlatform.android)
