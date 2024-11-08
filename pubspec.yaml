@@ -162,6 +162,16 @@ flutter:
           weight: 600
         - asset: assets/fonts/Nunito/Nunito-Black.ttf
           weight: 800
+    - family: PPPangrams
+      fonts:
+        - asset: assets/fonts/now-u-fonts/PPPangramSansRounded-Regular/PPPangramSansRounded-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/now-u-fonts/PPPangramSansRounded-Medium/PPPangramSansRounded-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/now-u-fonts/PPPangramSansRounded-Semibold/PPPangramSansRounded-Semibold.ttf
+          weight: 600
+        - asset: assets/fonts/now-u-fonts/PPPangramSansRounded-Bold/PPPangramSansRounded-Bold.ttf
+          weight: 700
     - family: Poppins
       fonts:
         - asset: assets/fonts/Poppins/Poppins-SemiBold.ttf
