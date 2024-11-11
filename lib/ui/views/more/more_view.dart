@@ -87,7 +87,7 @@ List<MenuItemData> getMenuItems(
         icon: FontAwesomeIcons.userGroup,
         action: FunctionMenuItemAction(() async {
           await Share.share(
-            'Download the now-u app to learn more about important social and environmental issues and to find effective ways to support causes you care about. https://links.now-u.com',
+            'Hey! I recently downloaded this app on my phone to support charities and causes that are important to me. You should give it a try! Check-out now-u! https://links.now-u.com',
             subject: 'Checkout now-u 🎉',
           );
         }),
