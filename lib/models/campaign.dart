@@ -61,7 +61,7 @@ class ListCampaign implements Explorable {
     required this.title,
     required this.headerImage,
     required BuiltList<Api.Cause> causes,
-  }) : cause = Cause.fromApiModel(causes[0]);
+  }) : cause = Cause.fromApiModel(causes.first);
 
   ListCampaign.fromApiModel(Api.ListCampaign apiModel)
       : this.fromApiData(

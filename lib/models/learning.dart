@@ -81,7 +81,7 @@ class LearningResource extends Explorable {
   )   : id = apiModel.id,
         title = apiModel.title,
         link = Uri.parse(apiModel.link),
-        cause = Cause.fromApiModel(apiModel.causes[0]),
+        cause = Cause.fromApiModel(apiModel.causes.first),
         type = getResourceTypeFromEnum(apiModel.learningResourceType),
         time = apiModel.time,
         createdAt = apiModel.createdAt;

@@ -19,7 +19,7 @@ class UserProgressBloc extends Cubit<UserProgressState> {
     });
   }
 
-  void fetchUserState() async {
+  void init() async {
     try {
       final userInfo = await _causesService.getUserInfo();
       if (userInfo == null) {

@@ -137,7 +137,7 @@ class ListAction implements Explorable {
     required this.time,
     required BuiltList<Api.Cause> causes,
     required Api.ActionTypeEnum actionType,
-  })  : cause = Cause.fromApiModel(causes[0]),
+  })  : cause = Cause.fromApiModel(causes.first),
         type = getActionTypeFromSubtype(actionType);
 
   factory ListAction.fromApiModel(

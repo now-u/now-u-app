@@ -130,7 +130,7 @@ class App extends StatelessWidget {
         BlocProvider(
           create: (_) => UserProgressBloc(
             causesService: locator<CausesService>(),
-          )..fetchUserState(),
+          )..init(),
         ),
       ],
       child: Builder(
