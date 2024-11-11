@@ -20,6 +20,7 @@ import 'package:nowu/services/pushNotifications.dart';
 import 'package:nowu/services/storage.dart';
 import 'package:nowu/services/user_service.dart';
 import 'package:nowu/themes.dart';
+import 'package:nowu/ui/components/user_progress/bloc/user_progress_bloc.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_bloc.dart';
 import 'package:nowu/ui/views/authentication/bloc/authentication_state.dart';
 import 'package:nowu/ui/views/causes/bloc/causes_bloc.dart';
@@ -125,6 +126,11 @@ class App extends StatelessWidget {
                   locator<InternalNotificationService>(),
             )..fetchInternalNotifactions();
           },
+        ),
+        BlocProvider(
+          create: (_) => UserProgressBloc(
+            causesService: locator<CausesService>(),
+          )..init(),
         ),
       ],
       child: Builder(

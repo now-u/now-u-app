@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nowu/assets/icons/customIcons.dart';
 import 'package:flutter/widgets.dart';
 import 'package:causeApiClient/src/model/icon_enum.dart';
-import 'package:nowu/models/user.dart';
 import 'package:nowu/models/exploreable.dart';
 
 export 'package:causeApiClient/causeApiClient.dart' show Cause, IconEnum;
@@ -18,7 +17,6 @@ class Cause implements Explorable {
   final String title;
   final String description;
   final IconData icon;
-  final bool isSelected;
   final Api.Image headerImage;
 
   Cause({
@@ -26,17 +24,15 @@ class Cause implements Explorable {
     required this.title,
     required this.description,
     required this.icon,
-    required this.isSelected,
     required this.headerImage,
   });
 
-  Cause.fromApiModel(Api.Cause apiModel, CausesUser? userInfo)
+  Cause.fromApiModel(Api.Cause apiModel)
       : id = apiModel.id,
         title = apiModel.title,
         description = apiModel.description,
         headerImage = apiModel.headerImage,
-        icon = _iconFromApiModelIcon(apiModel.icon),
-        isSelected = userInfo?.selectedCausesIds.contains(apiModel.id) ?? false;
+        icon = _iconFromApiModelIcon(apiModel.icon);
 }
 
 IconData _iconFromApiModelIcon(IconEnum icon) {

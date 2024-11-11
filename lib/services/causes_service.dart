@@ -50,19 +50,9 @@ class CausesService {
 
   Future<List<Cause>?> _fetchCauses() async {
     _logger.info('Fetching causes from the service');
-    final (response, userInfo) = await (
-      _causeServiceClient.getCausesApi().causesList(),
-      getUserInfo(),
-    ).wait;
+    final response = await _causeServiceClient.getCausesApi().causesList();
 
-    final causes = response.data
-        ?.map(
-          (model) => Cause.fromApiModel(
-            model,
-            userInfo,
-          ),
-        )
-        .toList();
+    final causes = response.data?.map(Cause.fromApiModel).toList();
 
     _logger.info('Got causes, ${_causesStore.value}');
 
@@ -93,11 +83,9 @@ class CausesService {
   /// Input Action id
   /// Returns the Action with that id
   Future<Campaign> getCampaign(int id) async {
-    final (response, userInfo) = await (
-      _causeServiceClient.getCampaignsApi().campaignsRetrieve(id: id),
-      getUserInfo(),
-    ).wait;
-    return Campaign.fromApiModel(response.data!, userInfo);
+    final response =
+        await _causeServiceClient.getCampaignsApi().campaignsRetrieve(id: id);
+    return Campaign.fromApiModel(response.data!);
   }
 
   /// Get an action by id
@@ -106,14 +94,9 @@ class CausesService {
   /// Return a List of ListActions
   Future<Action> getAction(int id) async {
     _logger.info('Getting action id=$id');
-    final (response, userInfo) = await (
-      _causeServiceClient.getActionsApi().actionsRetrieve(id: id),
-      getUserInfo(),
-    ).wait;
-    return Action.fromApiModel(
-      response.data!,
-      userInfo,
-    );
+    final response =
+        await _causeServiceClient.getActionsApi().actionsRetrieve(id: id);
+    return Action.fromApiModel(response.data!);
   }
 
   /// Set user's selected causes

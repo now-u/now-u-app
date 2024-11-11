@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nowu/locator.dart';
-import 'package:nowu/services/causes_service.dart';
 
 import 'bloc/user_progress_state.dart';
 import 'bloc/user_progress_bloc.dart';
@@ -10,25 +8,21 @@ import 'bloc/user_progress_bloc.dart';
 class ProgressTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => UserProgressBloc(causesService: locator<CausesService>())
-        ..fetchUserState(),
-      child: BlocBuilder<UserProgressBloc, UserProgressState>(
-        builder: (context, state) {
-          switch (state) {
-            case Loaded(:final userInfo):
-              return _ProgressTile(
-                campaignsScore: userInfo.completedCampaignIds.length,
-                actionsScore: userInfo.completedActionIds.length,
-                learningsScore: userInfo.completedLearningResourceIds.length,
-              );
-            case Loading():
-            case Error():
-            case NoUser():
-              return Container();
-          }
-        },
-      ),
+    return BlocBuilder<UserProgressBloc, UserProgressState>(
+      builder: (context, state) {
+        switch (state) {
+          case UserProgressStateLoaded(:final userInfo):
+            return _ProgressTile(
+              campaignsScore: userInfo.completedCampaignIds.length,
+              actionsScore: userInfo.completedActionIds.length,
+              learningsScore: userInfo.completedLearningResourceIds.length,
+            );
+          case UserProgressStateLoading():
+          case UserProgressStateError():
+          case UserProgressStateNoUser():
+            return Container();
+        }
+      },
     );
   }
 }

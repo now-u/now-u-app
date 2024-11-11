@@ -25,7 +25,6 @@ class LearningResourceFactory extends ModelFactory<LearningResource> {
       type: LearningResourceType.video,
       createdAt: faker.date.dateTime(),
       cause: CauseFactory().generate(),
-      isCompleted: true,
     );
   }
 }

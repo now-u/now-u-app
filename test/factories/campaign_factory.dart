@@ -14,7 +14,6 @@ class ListCampaignFactory extends ModelFactory<ListCampaign> {
       title: faker.lorem.sentence(),
       headerImage: ImageFactory().generate(),
       cause: CauseFactory().generate(),
-      isCompleted: true,
     );
   }
 }
@@ -30,7 +29,6 @@ class CampaignFactory extends ModelFactory<Campaign> {
       actions: ListActionFactory().generateList(length: 2),
       learningResources: LearningResourceFactory().generateList(length: 2),
       description: faker.lorem.words(100).join(' '),
-      isCompleted: true,
     );
   }
 }

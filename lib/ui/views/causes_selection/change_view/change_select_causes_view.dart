@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/services/causes_service.dart';
-import 'package:nowu/ui/views/causes/bloc/causes_bloc.dart';
-import 'package:nowu/ui/views/causes/bloc/causes_state.dart';
+import 'package:nowu/ui/components/user_progress/bloc/user_progress_bloc.dart';
+import 'package:nowu/ui/components/user_progress/bloc/user_progress_state.dart';
 import 'package:nowu/ui/views/causes_selection/bloc/causes_selection_bloc.dart';
 import 'package:nowu/ui/views/causes_selection/bloc/causes_selection_state.dart';
 import 'package:nowu/ui/views/causes_selection/components/causeTileGrid.dart';
@@ -21,17 +21,13 @@ class ChangeSelectCausesView extends StatelessWidget {
         Set<int> getInitialSelectedCausesIds() {
           // NOTE We don't want to use a bloc builder here as if the state changes we don't want to
           // reload and update the users selection which they are working on.
-          switch (context.read<CausesBloc>().state) {
-            case CausesStateLoaded(:final causes):
-              {
-                return causes
-                    .where((cause) => cause.isSelected)
-                    .map((cause) => cause.id)
-                    .toSet();
-              }
-            case CausesStateLoading():
-            case CausesStateError():
-              return Set();
+          switch (context.read<UserProgressBloc>().state) {
+            case UserProgressStateLoading():
+            case UserProgressStateError():
+            case UserProgressStateNoUser():
+              return {};
+            case UserProgressStateLoaded(:final userInfo):
+              return userInfo.selectedCausesIds;
           }
         }
 
