@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_facebook_app_links/flutter_facebook_app_links.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:logging/logging.dart';
@@ -95,6 +97,16 @@ void main() async {
       await Sentry.captureException(exception, stackTrace: stackTrace);
     }
   });
+
+  try {
+    String deepLinkUrl = await FlutterFacebookAppLinks.initFBLinks();
+    if(Platform.isIOS)
+      deepLinkUrl = await FlutterFacebookAppLinks.getDeepLink();
+
+    _logger.info('Handling deep link ' + deepLinkUrl);
+  } catch(e) {
+    /// in case of error...
+  }
 }
 
 class App extends StatelessWidget {
