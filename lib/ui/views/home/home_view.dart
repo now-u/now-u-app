@@ -112,39 +112,6 @@ class HomeView extends StatelessWidget {
                 height: 10,
               ),
 
-              const Text(
-                'Bold',
-                style: TextStyle(
-                  fontFamily: 'PPPangrams',
-                  fontWeight: FontWeight.w700,
-                  fontSize: 48,
-                ),
-              ),
-              const Text(
-                'Semibold',
-                style: TextStyle(
-                  fontFamily: 'PPPangrams',
-                  fontWeight: FontWeight.w600,
-                  fontSize: 48,
-                ),
-              ),
-              const Text(
-                'Medium',
-                style: TextStyle(
-                  fontFamily: 'PPPangrams',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 48,
-                ),
-              ),
-              const Text(
-                'Regular',
-                style: TextStyle(
-                  fontFamily: 'PPPangrams',
-                  fontWeight: FontWeight.w400,
-                  fontSize: 48,
-                ),
-              ),
-
               ExploreSection(
                 title: 'What can I do today?',
                 buildBloc: () => HomeActionSectionBloc(
