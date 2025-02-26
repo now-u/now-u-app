@@ -43,6 +43,5 @@ class CausesUser {
         completedCampaignIds = apiModel.completedCampaignIds.toSet(),
         completedLearningResourceIds =
             apiModel.completedLearningResourceIds.toSet(),
-        completedNewsArticleIds =
-            apiModel.completedNewsArticleIds.toSet();
+        completedNewsArticleIds = apiModel.completedNewsArticleIds.toSet();
 }

@@ -12,7 +12,6 @@ import 'package:nowu/assets/components/explore_tiles/bloc/explore_news_article_t
 import 'package:nowu/assets/components/explore_tiles/bloc/explore_news_article_tile_state.dart';
 import 'package:nowu/locator.dart';
 import 'package:nowu/models/article.dart';
-import 'package:nowu/router.dart';
 import 'package:nowu/router.gr.dart';
 import 'package:nowu/services/causes_service.dart';
 import 'package:nowu/ui/components/user_progress/bloc/user_progress_bloc.dart';
@@ -417,7 +416,8 @@ class ExploreNewsArticleTile extends ExploreTile {
                     Ink(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       decoration: const BoxDecoration(
-                          color: Color.fromRGBO(247, 248, 252, 1)),
+                        color: Color.fromRGBO(247, 248, 252, 1),
+                      ),
                       child: Align(
                         alignment: Alignment.center,
                         child: Text(

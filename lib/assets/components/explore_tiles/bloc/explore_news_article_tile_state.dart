@@ -9,8 +9,7 @@ enum ExploreNewsArticleTileLaunchingState {
 }
 
 @freezed
-sealed class ExploreNewsArticleTileState
-    with _$ExploreNewsArticleTileState {
+sealed class ExploreNewsArticleTileState with _$ExploreNewsArticleTileState {
   const factory ExploreNewsArticleTileState({
     required NewsArticle newsArticle,
     required ExploreNewsArticleTileLaunchingState launchingState,
