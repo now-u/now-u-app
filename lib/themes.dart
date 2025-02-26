@@ -71,7 +71,8 @@ final textTheme = baseTextTheme.merge(
 final primaryTextButtonStyle = TextButton.styleFrom(
   backgroundColor: Colors.transparent,
   foregroundColor: CustomColors.brandColor,
-  textStyle: textTheme.displayMedium!.copyWith(fontFamily: 'PPPangramsSemibold'),
+  textStyle:
+      textTheme.displayMedium!.copyWith(fontFamily: 'PPPangramsSemibold'),
   padding: const EdgeInsets.symmetric(
     vertical: 12.0,
     horizontal: 16.0,
@@ -84,7 +85,8 @@ final primaryTextButtonStyle = TextButton.styleFrom(
 final primaryFilledButtonStyle = TextButton.styleFrom(
   backgroundColor: CustomColors.brandColor,
   foregroundColor: Colors.white,
-  textStyle: textTheme.displayMedium!.copyWith(fontFamily: 'PPPangramsSemibold'),
+  textStyle:
+      textTheme.displayMedium!.copyWith(fontFamily: 'PPPangramsSemibold'),
   padding: const EdgeInsets.symmetric(
     vertical: 12.0,
     horizontal: 36.0,

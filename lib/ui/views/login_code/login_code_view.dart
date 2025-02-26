@@ -90,7 +90,7 @@ class LoginCodeView extends StatelessWidget {
 class _LoginForm extends StatelessWidget {
   final String email;
 
-  _LoginForm({ required this.email });
+  _LoginForm({required this.email});
 
   String? getErrorText(LoginCode code) {
     switch (code.displayError) {
@@ -114,25 +114,26 @@ class _LoginForm extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-                SafeArea(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextButton.icon(
-                        onPressed: () => context.router.push(LoginEmailSentRoute(email: email)),
-                        label: const Text('Back'),
-                        icon: const Icon(Icons.chevron_left),
-                      ),
-                      Text(
-                        'Login',
-                        style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+            SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextButton.icon(
+                    onPressed: () =>
+                        context.router.push(LoginEmailSentRoute(email: email)),
+                    label: const Text('Back'),
+                    icon: const Icon(Icons.chevron_left),
+                  ),
+                  Text(
+                    'Login',
+                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                           // TODO This should be in the default theme
                           color: Colors.black,
                         ),
-                      ),
-                    ],
                   ),
-                ),
+                ],
+              ),
+            ),
 
             const SizedBox(height: 35),
 

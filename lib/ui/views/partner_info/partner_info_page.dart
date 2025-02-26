@@ -68,7 +68,7 @@ class PartnerInfoView extends StatelessWidget {
                       Text(
                         organisation.name,
                         style: Theme.of(context).textTheme.headlineMedium,
-                      )
+                      ),
                     ],
                   ),
                 ),

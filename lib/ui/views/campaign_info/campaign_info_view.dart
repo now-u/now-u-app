@@ -81,9 +81,9 @@ class CampaignInfoView extends StatelessWidget {
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: Colors.white,
-              fontSize: 28,
-            ),
+                  color: Colors.white,
+                  fontSize: 28,
+                ),
           ),
         ),
       ],
