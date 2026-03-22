@@ -18,7 +18,7 @@ sealed class LoginCodeSubmissionState with _$LoginCodeSubmissionState {
 }
 
 @freezed
-class LoginCodeState with _$LoginCodeState {
+sealed class LoginCodeState with _$LoginCodeState {
   factory LoginCodeState({
     @Default(LoginCodeSubmissionState.initial())
     LoginCodeSubmissionState status,

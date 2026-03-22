@@ -150,6 +150,7 @@ paths:
           - hi
           - hr
           - hsb
+          - ht
           - hu
           - hy
           - ia
@@ -1103,6 +1104,8 @@ components:
           $ref: '#/components/schemas/IconEnum'
         description:
           type: string
+        long_description:
+          type: string
         is_selected:
           type: boolean
           readOnly: true
@@ -1112,6 +1115,7 @@ components:
       - icon
       - id
       - is_selected
+      - long_description
       - title
     CausesUser:
       type: object
@@ -1526,6 +1530,9 @@ components:
         * `UNKNOWN` - Unknown - Please fix
     PaginatedBlogList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -1546,6 +1553,9 @@ components:
             $ref: '#/components/schemas/Blog'
     PaginatedFaqList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -1566,6 +1576,9 @@ components:
             $ref: '#/components/schemas/Faq'
     PaginatedLearningResourceList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -1586,6 +1599,9 @@ components:
             $ref: '#/components/schemas/LearningResource'
     PaginatedListActionList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -1606,6 +1622,9 @@ components:
             $ref: '#/components/schemas/ListAction'
     PaginatedListCampaignList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -1626,6 +1645,9 @@ components:
             $ref: '#/components/schemas/ListCampaign'
     PaginatedNewsArticleList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -1646,6 +1668,9 @@ components:
             $ref: '#/components/schemas/NewsArticle'
     PaginatedOrganisationList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer

@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'login_code.freezed.dart';
 
 @freezed
-sealed class LoginCodeValidationError {
+sealed class LoginCodeValidationError with _$LoginCodeValidationError {
   const factory LoginCodeValidationError.empty() =
       LoginCodeValidationErrorEmpty;
   const factory LoginCodeValidationError.invalid(String message) =

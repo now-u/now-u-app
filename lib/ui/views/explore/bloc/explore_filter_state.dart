@@ -26,7 +26,7 @@ class ExplorePageFilterData {
 }
 
 @freezed
-class ExploreFilterState with _$ExploreFilterState {
+sealed class ExploreFilterState with _$ExploreFilterState {
   const factory ExploreFilterState({
     @Default({}) Set<int> filterCauseIds,
     @Default({}) Set<Tuple2<double, double>> filterTimeBrackets,

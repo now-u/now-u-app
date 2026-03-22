@@ -9,7 +9,7 @@ import 'package:nowu/ui/paging/paging_state.dart';
 part 'explore_tab_bloc.freezed.dart';
 
 @freezed
-class ExploreTabState<T extends Explorable> with _$ExploreTabState {
+sealed class ExploreTabState<T extends Explorable> with _$ExploreTabState {
   const factory ExploreTabState({
     required PagingState<T> data,
   }) = _ExploreTabState;

@@ -44,7 +44,7 @@ class _ProgressTile extends StatelessWidget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
+            color: Colors.grey.withValues(alpha: 0.3),
             spreadRadius: 5,
             blurRadius: 7,
             offset: const Offset(0, 3), // changes position of shadow
@@ -109,7 +109,7 @@ class ProgressCircle extends StatelessWidget {
             border: Border.all(width: 4, color: const Color(0XFFE6F0DD)),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.3),
+                color: Colors.grey.withValues(alpha: 0.3),
                 spreadRadius: 3,
                 blurRadius: 7,
                 offset: const Offset(0, 7), // changes position of shadow

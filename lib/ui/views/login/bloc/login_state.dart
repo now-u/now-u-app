@@ -13,7 +13,7 @@ enum SocialMediaLoginStatus {
 }
 
 @freezed
-class LoginState with _$LoginState {
+sealed class LoginState with _$LoginState {
   factory LoginState({
     @Default(SocialMediaLoginStatus.initial) socialMediaLoginStatus,
     @Default(FormzSubmissionStatus.initial)
