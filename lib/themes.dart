@@ -126,7 +126,7 @@ final regularTheme = ThemeData(
   textTheme: textTheme,
   buttonTheme: ButtonThemeData(
     buttonColor: CustomColors.brandColor,
-    disabledColor: CustomColors.brandColor.withOpacity(0.5),
+    disabledColor: CustomColors.brandColor.withValues(alpha: 0.5),
     height: 48,
   ),
   textButtonTheme: TextButtonThemeData(style: primaryTextButtonStyle),
@@ -141,7 +141,7 @@ final regularTheme = ThemeData(
     elevation: const WidgetStatePropertyAll(tileElevation),
     shadowColor: WidgetStatePropertyAll(tileBoxShadowLight.color),
   ),
-  cardTheme: const CardTheme(
+  cardTheme: const CardThemeData(
     surfaceTintColor: Colors.transparent,
   ),
   appBarTheme: const AppBarTheme(

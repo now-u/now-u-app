@@ -37,7 +37,7 @@ class ExploreFilterChip extends StatelessWidget {
             borderRadius: BorderRadius.circular(30.0),
           ),
           backgroundColor:
-              Theme.of(context).colorScheme.primary.withOpacity(0.23),
+              Theme.of(context).colorScheme.primary.withValues(alpha: 0.23),
           label: Text(
             filterConfig.label,
             style: const TextStyle(

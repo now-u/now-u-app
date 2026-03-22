@@ -25,7 +25,7 @@ extension AutoRouterXExtension on StackRouter {
     if (path == null) {
       await push(fallback);
     } else {
-      await pushNamed(
+      await pushPath(
         path,
         onFailure: (_) {
           push(fallback);
@@ -71,7 +71,6 @@ class AppRouter extends RootStackRouter {
         AutoRoute(path: '/intro', page: IntroRoute.page),
         AutoRoute(path: '/login', page: LoginRoute.page),
         AutoRoute(path: '/login/email_sent', page: LoginEmailSentRoute.page),
-        AutoRoute(path: '/login/email_code', page: LoginCodeRoute.page),
         AutoRoute(path: '/login/email_code', page: LoginCodeRoute.page),
         AutoRoute(path: '/onboarding/profile', page: ProfileSetupRoute.page),
         AutoRoute(

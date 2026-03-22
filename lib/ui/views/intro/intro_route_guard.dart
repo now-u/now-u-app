@@ -25,7 +25,7 @@ class IntroRouteGuard extends AutoRouteGuard {
         break;
       case AuthenticationStateAuthenticated(:final user)
           when !user.isInitialised:
-        resolver.redirect(
+        resolver.redirectUntil(
           const ProfileSetupRoute(),
         );
       case AuthenticationStateAuthenticated():
@@ -36,7 +36,7 @@ class IntroRouteGuard extends AutoRouteGuard {
         break;
       default:
         _logger.info('Showing intro ${_authBloc.state}');
-        resolver.redirect(
+        resolver.redirectUntil(
           const IntroRoute(),
         );
     }

@@ -66,7 +66,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor.withOpacity(0.05),
+      backgroundColor: Theme.of(context).primaryColor.withValues(alpha: 0.05),
       body: ScrollableSheetPage(
         header: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           builder: (context, state) {

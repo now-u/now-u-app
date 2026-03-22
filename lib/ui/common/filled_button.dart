@@ -38,7 +38,7 @@ class NowFilledButton extends StatelessWidget {
       style: FilledButton.styleFrom(
         foregroundColor: CustomColors.white,
         backgroundColor: CustomColors.brandColor,
-        disabledBackgroundColor: CustomColors.brandColor.withOpacity(0.5),
+        disabledBackgroundColor: CustomColors.brandColor.withValues(alpha: 0.5),
         disabledForegroundColor: CustomColors.white,
       ),
     );

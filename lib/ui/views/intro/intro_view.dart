@@ -129,7 +129,7 @@ class IntroViewPages extends StatelessWidget {
                       controller: context.read<IntroBloc>().controller,
                       count: introPages.length,
                       effect: ExpandingDotsEffect(
-                        dotColor: Colors.white.withOpacity(0.3),
+                        dotColor: Colors.white.withValues(alpha: 0.3),
                         activeDotColor: Colors.orange,
                         spacing: 8.0,
                         dotHeight: 12,

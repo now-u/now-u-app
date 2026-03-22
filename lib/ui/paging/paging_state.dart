@@ -12,7 +12,9 @@ class InitialLoading<T> extends PagingState<T> {
 }
 
 @freezed
-class Data<T> extends PagingState<T> with _$Data<T> {
+sealed class Data<T> extends PagingState<T> with _$Data<T> {
+  const Data._() : super();
+
   const factory Data({
     required List<T> items,
     @Default(false) bool hasReachedMax,

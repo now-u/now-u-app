@@ -15,7 +15,7 @@ class CausesSelectionSubmissionState with _$CausesSelectionSubmissionState {
 }
 
 @freezed
-class CausesSelectionState with _$CausesSelectionState {
+sealed class CausesSelectionState with _$CausesSelectionState {
   factory CausesSelectionState({
     required Set<int> selectedCausesIds,
     required CausesSelectionSubmissionState submissionState,

@@ -64,7 +64,7 @@ class ScrollableSheetPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: scaffoldBackgroundColor ??
-          Theme.of(context).primaryColor.withOpacity(0.5),
+          Theme.of(context).primaryColor.withValues(alpha: 0.5),
       body: Stack(
         children: [
           // Header

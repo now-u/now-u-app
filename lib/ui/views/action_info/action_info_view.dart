@@ -96,7 +96,7 @@ class _Body extends StatelessWidget {
                       label: const Text('Back'),
                       icon: const Icon(Icons.chevron_left),
                       onPressed: () {
-                        context.router.popForced();
+                        context.router.pop();
                       },
                     ),
                   ),

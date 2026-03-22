@@ -7,7 +7,7 @@ import '../model/name.dart';
 part 'profile_setup_state.freezed.dart';
 
 @freezed
-class ProfileSetupState with _$ProfileSetupState {
+sealed class ProfileSetupState with _$ProfileSetupState {
   factory ProfileSetupState({
     @Default(FormzSubmissionStatus.initial) FormzSubmissionStatus status,
     @Default(false) bool isValid,
