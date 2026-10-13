@@ -43,6 +43,15 @@ class AuthenticationBloc extends Cubit<AuthenticationState> {
         default:
           break;
       }
+    }, onError: (Object error, StackTrace stackTrace) {
+      // Refreshing an expired session can fail with a retryable error (e.g. no
+      // network or the auth server is unreachable). No auth event follows, so
+      // without this the app would sit on the loading screen forever. Fall back
+      // to unauthenticated; a later tokenRefreshed event signs the user back in.
+      _logger.warning('Auth state error', error, stackTrace);
+      if (state is AuthenticationStateUnknown) {
+        _onUnauthenticated();
+      }
     });
 
     userService.currentUserStream.listen((user) {
