@@ -24,6 +24,16 @@ class AuthenticationBloc extends Cubit<AuthenticationState> {
         _authenticationService = authenticationService,
         _causesService = causesService,
         super(const AuthenticationState.unknown()) {
+    // Never leave the user on the loading screen. If no auth event has
+    // resolved the state by now, carry on as signed out; a later signedIn or
+    // tokenRefreshed event still signs the user in.
+    Future.delayed(const Duration(seconds: 15), () {
+      if (state is AuthenticationStateUnknown) {
+        _logger.warning('Auth state still unknown after timeout');
+        _onUnauthenticated();
+      }
+    });
+
     authenticationService.authState.listen((event) {
       switch (event.event) {
         case AuthChangeEvent.signedIn:
@@ -90,10 +100,12 @@ class AuthenticationBloc extends Cubit<AuthenticationState> {
   }
 
   Future<void> _onUnauthenticated() async {
-    emit(
-      AuthenticationState.unauthenticated(
-        hasShownIntro: (await storageService.getIntroShown()),
-      ),
-    );
+    var hasShownIntro = false;
+    try {
+      hasShownIntro = await storageService.getIntroShown();
+    } catch (e, stackTrace) {
+      _logger.warning('Failed to read intro shown flag', e, stackTrace);
+    }
+    emit(AuthenticationState.unauthenticated(hasShownIntro: hasShownIntro));
   }
 }
