@@ -43,8 +43,14 @@ class StorageProvider {
 }
 
 class SecureStorageService {
-  final _store =
-      StorageProvider(flutterSecureStorage: const FlutterSecureStorage());
+  // resetOnError wipes the store instead of throwing when Android can no
+  // longer decrypt it (e.g. the data was restored from a backup without its
+  // keystore key), which otherwise breaks every read.
+  final _store = StorageProvider(
+    flutterSecureStorage: const FlutterSecureStorage(
+      aOptions: AndroidOptions(resetOnError: true),
+    ),
+  );
 
   Future<void> setEmail(String email) => _store.setEmail(email);
   Future<void> clearEmail() => _store.clearEmail();

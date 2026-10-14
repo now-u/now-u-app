@@ -24,26 +24,48 @@ class AuthenticationBloc extends Cubit<AuthenticationState> {
         _authenticationService = authenticationService,
         _causesService = causesService,
         super(const AuthenticationState.unknown()) {
-    authenticationService.authState.listen((event) {
-      switch (event.event) {
-        case AuthChangeEvent.signedIn:
-        case AuthChangeEvent.tokenRefreshed:
-        // If there is an initialSession but its expired we do not handle the event, instead we wait for the tokenRefreshed event
-        case AuthChangeEvent.initialSession
-            when event.session?.isExpired == false:
-          _onSignIn();
-          break;
-        // If the initial session is null, the user has never signed in so we know the state is unauthenticated
-        case AuthChangeEvent.initialSession when event.session == null:
-          _onUnauthenticated();
-          break;
-        case AuthChangeEvent.signedOut:
-          _onSignOut();
-          break;
-        default:
-          break;
+    // Never leave the user on the loading screen. If no auth event has
+    // resolved the state by now, carry on as signed out; a later signedIn or
+    // tokenRefreshed event still signs the user in.
+    Future.delayed(const Duration(seconds: 15), () {
+      if (state is AuthenticationStateUnknown) {
+        _logger.warning('Auth state still unknown after timeout');
+        _onUnauthenticated();
       }
     });
+
+    authenticationService.authState.listen(
+      (event) {
+        switch (event.event) {
+          case AuthChangeEvent.signedIn:
+          case AuthChangeEvent.tokenRefreshed:
+          // If there is an initialSession but its expired we do not handle the event, instead we wait for the tokenRefreshed event
+          case AuthChangeEvent.initialSession
+              when event.session?.isExpired == false:
+            _onSignIn();
+            break;
+          // If the initial session is null, the user has never signed in so we know the state is unauthenticated
+          case AuthChangeEvent.initialSession when event.session == null:
+            _onUnauthenticated();
+            break;
+          case AuthChangeEvent.signedOut:
+            _onSignOut();
+            break;
+          default:
+            break;
+        }
+      },
+      onError: (Object error, StackTrace stackTrace) {
+        // Refreshing an expired session can fail with a retryable error (e.g. no
+        // network or the auth server is unreachable). No auth event follows, so
+        // without this the app would sit on the loading screen forever. Fall back
+        // to unauthenticated; a later tokenRefreshed event signs the user back in.
+        _logger.warning('Auth state error', error, stackTrace);
+        if (state is AuthenticationStateUnknown) {
+          _onUnauthenticated();
+        }
+      },
+    );
 
     userService.currentUserStream.listen((user) {
       if (user != null) {
@@ -81,10 +103,12 @@ class AuthenticationBloc extends Cubit<AuthenticationState> {
   }
 
   Future<void> _onUnauthenticated() async {
-    emit(
-      AuthenticationState.unauthenticated(
-        hasShownIntro: (await storageService.getIntroShown()),
-      ),
-    );
+    var hasShownIntro = false;
+    try {
+      hasShownIntro = await storageService.getIntroShown();
+    } catch (e, stackTrace) {
+      _logger.warning('Failed to read intro shown flag', e, stackTrace);
+    }
+    emit(AuthenticationState.unauthenticated(hasShownIntro: hasShownIntro));
   }
 }

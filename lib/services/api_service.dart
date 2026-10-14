@@ -35,6 +35,8 @@ class ApiService {
     final dio = Dio(
       BaseOptions(
         baseUrl: CAUSES_API_URL,
+        connectTimeout: const Duration(seconds: 10),
+        receiveTimeout: const Duration(seconds: 20),
         headers: {
           'content-type': 'application/json',
           // 'Access-Control-Allow-Origin': 'true',
