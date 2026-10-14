@@ -34,35 +34,38 @@ class AuthenticationBloc extends Cubit<AuthenticationState> {
       }
     });
 
-    authenticationService.authState.listen((event) {
-      switch (event.event) {
-        case AuthChangeEvent.signedIn:
-        case AuthChangeEvent.tokenRefreshed:
-        // If there is an initialSession but its expired we do not handle the event, instead we wait for the tokenRefreshed event
-        case AuthChangeEvent.initialSession
-            when event.session?.isExpired == false:
-          _onSignIn();
-          break;
-        // If the initial session is null, the user has never signed in so we know the state is unauthenticated
-        case AuthChangeEvent.initialSession when event.session == null:
+    authenticationService.authState.listen(
+      (event) {
+        switch (event.event) {
+          case AuthChangeEvent.signedIn:
+          case AuthChangeEvent.tokenRefreshed:
+          // If there is an initialSession but its expired we do not handle the event, instead we wait for the tokenRefreshed event
+          case AuthChangeEvent.initialSession
+              when event.session?.isExpired == false:
+            _onSignIn();
+            break;
+          // If the initial session is null, the user has never signed in so we know the state is unauthenticated
+          case AuthChangeEvent.initialSession when event.session == null:
+            _onUnauthenticated();
+            break;
+          case AuthChangeEvent.signedOut:
+            _onSignOut();
+            break;
+          default:
+            break;
+        }
+      },
+      onError: (Object error, StackTrace stackTrace) {
+        // Refreshing an expired session can fail with a retryable error (e.g. no
+        // network or the auth server is unreachable). No auth event follows, so
+        // without this the app would sit on the loading screen forever. Fall back
+        // to unauthenticated; a later tokenRefreshed event signs the user back in.
+        _logger.warning('Auth state error', error, stackTrace);
+        if (state is AuthenticationStateUnknown) {
           _onUnauthenticated();
-          break;
-        case AuthChangeEvent.signedOut:
-          _onSignOut();
-          break;
-        default:
-          break;
-      }
-    }, onError: (Object error, StackTrace stackTrace) {
-      // Refreshing an expired session can fail with a retryable error (e.g. no
-      // network or the auth server is unreachable). No auth event follows, so
-      // without this the app would sit on the loading screen forever. Fall back
-      // to unauthenticated; a later tokenRefreshed event signs the user back in.
-      _logger.warning('Auth state error', error, stackTrace);
-      if (state is AuthenticationStateUnknown) {
-        _onUnauthenticated();
-      }
-    });
+        }
+      },
+    );
 
     userService.currentUserStream.listen((user) {
       if (user != null) {
